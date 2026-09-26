@@ -1,0 +1,1405 @@
+{
+  "python": "3.13.15 (main, Aug  5 2026, 12:25:43) [GCC 15.3.0]",
+  "executable": "/tmp/curling-reproduction-env/bin/python",
+  "isolated_workspace": "/tmp/curling-reproduction-run2",
+  "numeric_tolerance": {
+    "absolute": 1e-09,
+    "relative": 1e-09
+  },
+  "ignored_comparison_metadata": [
+    "cache_context",
+    "input_sha256",
+    "processing_seconds",
+    "script_sha256"
+  ],
+  "scope": "Saved input media and annotations; no source redownload or manual relabelling.",
+  "steps": [
+    {
+      "name": "calibrate_rectification",
+      "command": [
+        "prototype/scripts/calibrate_rectification.py"
+      ],
+      "returncode": 0,
+      "seconds": 1.37
+    },
+    {
+      "name": "evaluate",
+      "command": [
+        "feasibility/scripts/evaluate.py"
+      ],
+      "returncode": 0,
+      "seconds": 13.93
+    },
+    {
+      "name": "build_report",
+      "command": [
+        "feasibility/scripts/build_report.py"
+      ],
+      "returncode": 0,
+      "seconds": 6.32
+    },
+    {
+      "name": "evaluate_stone_accuracy",
+      "command": [
+        "prototype/scripts/evaluate_stone_accuracy.py"
+      ],
+      "returncode": 0,
+      "seconds": 3.51
+    },
+    {
+      "name": "evaluate_body_localization",
+      "command": [
+        "prototype/scripts/evaluate_body_localization.py"
+      ],
+      "returncode": 0,
+      "seconds": 5.01
+    },
+    {
+      "name": "run_vision",
+      "command": [
+        "prototype/scripts/run_vision.py"
+      ],
+      "returncode": 0,
+      "seconds": 13.35
+    },
+    {
+      "name": "evaluate_vision",
+      "command": [
+        "prototype/scripts/evaluate_vision.py"
+      ],
+      "returncode": 0,
+      "seconds": 0.43
+    },
+    {
+      "name": "evaluate_vision-check",
+      "command": [
+        "prototype/scripts/evaluate_vision.py",
+        "--include-check"
+      ],
+      "returncode": 0,
+      "seconds": 0.48
+    },
+    {
+      "name": "build_vision_viewer",
+      "command": [
+        "prototype/scripts/build_vision_viewer.py"
+      ],
+      "returncode": 0,
+      "seconds": 0.78
+    },
+    {
+      "name": "audit_rectification",
+      "command": [
+        "prototype/scripts/audit_rectification.py"
+      ],
+      "returncode": 0,
+      "seconds": 19.58
+    },
+    {
+      "name": "check_body_transfer",
+      "command": [
+        "prototype/scripts/check_body_transfer.py"
+      ],
+      "returncode": 0,
+      "seconds": 8.52
+    },
+    {
+      "name": "detect_throws",
+      "command": [
+        "prototype/scripts/detect_throws.py"
+      ],
+      "returncode": 0,
+      "seconds": 94.71
+    },
+    {
+      "name": "evaluate_throws",
+      "command": [
+        "prototype/scripts/evaluate_throws.py"
+      ],
+      "returncode": 0,
+      "seconds": 2.01
+    },
+    {
+      "name": "audit_pre_gate",
+      "command": [
+        "prototype/scripts/audit_pre_gate.py"
+      ],
+      "returncode": 0,
+      "seconds": 0.55
+    },
+    {
+      "name": "process_continuous",
+      "command": [
+        "prototype/scripts/process_continuous.py"
+      ],
+      "returncode": 0,
+      "seconds": 136.79
+    },
+    {
+      "name": "audit_continuous",
+      "command": [
+        "prototype/scripts/audit_continuous.py"
+      ],
+      "returncode": 0,
+      "seconds": 0.12
+    },
+    {
+      "name": "render_rectification",
+      "command": [
+        "prototype/scripts/render_rectification.py"
+      ],
+      "returncode": 0,
+      "seconds": 478.27
+    },
+    {
+      "name": "process_body_video",
+      "command": [
+        "prototype/scripts/process_body_video.py"
+      ],
+      "returncode": 0,
+      "seconds": 141.61
+    },
+    {
+      "name": "process_throw_segments",
+      "command": [
+        "prototype/scripts/process_throw_segments.py"
+      ],
+      "returncode": 0,
+      "seconds": 865.0
+    },
+    {
+      "name": "process_departure_geometry",
+      "command": [
+        "prototype/scripts/process_departure_geometry.py"
+      ],
+      "returncode": 0,
+      "seconds": 0.87
+    },
+    {
+      "name": "build_throw_segments",
+      "command": [
+        "prototype/scripts/build_throw_segments.py"
+      ],
+      "returncode": 0,
+      "seconds": 0.17
+    },
+    {
+      "name": "build_cross_view",
+      "command": [
+        "prototype/scripts/build_cross_view.py"
+      ],
+      "returncode": 0,
+      "seconds": 0.32
+    },
+    {
+      "name": "render_cross_view_evidence",
+      "command": [
+        "prototype/scripts/render_cross_view_evidence.py"
+      ],
+      "returncode": 0,
+      "seconds": 10.68
+    },
+    {
+      "name": "render_pre_gate_evidence",
+      "command": [
+        "prototype/scripts/render_pre_gate_evidence.py"
+      ],
+      "returncode": 0,
+      "seconds": 7.61
+    },
+    {
+      "name": "analyse_throw_target",
+      "command": [
+        "prototype/scripts/analyse_throw_target.py"
+      ],
+      "returncode": 0,
+      "seconds": 6.34
+    },
+    {
+      "name": "audit_trajectory",
+      "command": [
+        "prototype/scripts/audit_trajectory.py"
+      ],
+      "returncode": 0,
+      "seconds": 0.37
+    },
+    {
+      "name": "build_trajectory_evidence",
+      "command": [
+        "prototype/scripts/build_trajectory_evidence.py"
+      ],
+      "returncode": 0,
+      "seconds": 2.88
+    },
+    {
+      "name": "build_throw_viewer",
+      "command": [
+        "prototype/scripts/build_throw_viewer.py"
+      ],
+      "returncode": 0,
+      "seconds": 0.07
+    },
+    {
+      "name": "build_briefing",
+      "command": [
+        "research/meeting/build_briefing.py"
+      ],
+      "returncode": 0,
+      "seconds": 0.37
+    },
+    {
+      "name": "validate",
+      "command": [
+        "scripts/validate.py",
+        "--artifacts",
+        "--browser"
+      ],
+      "returncode": 0,
+      "seconds": 45.47
+    }
+  ],
+  "comparisons": [
+    {
+      "file": "feasibility/results/summary.json",
+      "passed": true,
+      "original_sha256": "be96b1bfb364222fdf9c8fae60f417ee9b75cb772fa81a5733d3c65c88c611b9",
+      "fresh_sha256": "be96b1bfb364222fdf9c8fae60f417ee9b75cb772fa81a5733d3c65c88c611b9",
+      "differences": []
+    },
+    {
+      "file": "feasibility/results/homographies.json",
+      "passed": true,
+      "original_sha256": "3e3f1c417ae06020f3ff1731e4ee4e6dfb5d3b18792eb1a8a3b74e8063f00c08",
+      "fresh_sha256": "3e3f1c417ae06020f3ff1731e4ee4e6dfb5d3b18792eb1a8a3b74e8063f00c08",
+      "differences": []
+    },
+    {
+      "file": "feasibility/results/calibration_metrics.csv",
+      "passed": true,
+      "original_sha256": "6e4426bf63e5227f4e24c8d3b082dd1b1aa8ddbdc589c9611aa578f70ade01fe",
+      "fresh_sha256": "6e4426bf63e5227f4e24c8d3b082dd1b1aa8ddbdc589c9611aa578f70ade01fe",
+      "differences": []
+    },
+    {
+      "file": "feasibility/results/landmark_errors.csv",
+      "passed": true,
+      "original_sha256": "549e1f8801fd4b403b4fa79eecc0f387999bc629a8b1cac14af8b928883593f2",
+      "fresh_sha256": "ae09c5c1436e94b5dce134fd9947092b2138af0c34e98fb5568800f8921a57a8",
+      "differences": []
+    },
+    {
+      "file": "feasibility/results/measured_stones.csv",
+      "passed": true,
+      "original_sha256": "8587a02ebd28a33ad2a5a8a0919353a03ef69bb5d4ee57268704a14939f96352",
+      "fresh_sha256": "8587a02ebd28a33ad2a5a8a0919353a03ef69bb5d4ee57268704a14939f96352",
+      "differences": []
+    },
+    {
+      "file": "feasibility/results/stone_comparisons.csv",
+      "passed": true,
+      "original_sha256": "0c5c8b088e85a6b6b8aae48e8613c8e17222a63a7b4a0fc208bf37868d51c30b",
+      "fresh_sha256": "0c5c8b088e85a6b6b8aae48e8613c8e17222a63a7b4a0fc208bf37868d51c30b",
+      "differences": []
+    },
+    {
+      "file": "feasibility/results/repeat_zoom_consistency.csv",
+      "passed": true,
+      "original_sha256": "a4cb6fe5a6643a30e26f19b51549f1697969c7c89de725fd3e062c483e59d632",
+      "fresh_sha256": "a4cb6fe5a6643a30e26f19b51549f1697969c7c89de725fd3e062c483e59d632",
+      "differences": []
+    },
+    {
+      "file": "prototype/stone-accuracy/results.json",
+      "passed": true,
+      "original_sha256": "a33fdd7f20721e9848aed0cc97e4435cf7d491ba33448e62dbce1387dd2d6b29",
+      "fresh_sha256": "f6171978435d8916b45e158016d23f8078ec2cad4c52abc8f8480c96f67bc0fe",
+      "differences": []
+    },
+    {
+      "file": "prototype/body-localization/results.json",
+      "passed": true,
+      "original_sha256": "f0a3ee1fdcaec6142f3e933c47465374110aa44dbbc49c42e48e07fe68297bc0",
+      "fresh_sha256": "165897333769e850eeb34a597b5fec32af00d9597641919580a6b5530ded00d6",
+      "differences": []
+    },
+    {
+      "file": "prototype/body-localization/transfer-check.json",
+      "passed": true,
+      "original_sha256": "e3ba6909031680212e9d9d9852dc8c4cfc0d7539ee78a7af76971dd602c422b7",
+      "fresh_sha256": "e3ba6909031680212e9d9d9852dc8c4cfc0d7539ee78a7af76971dd602c422b7",
+      "differences": []
+    },
+    {
+      "file": "prototype/vision/results.json",
+      "passed": true,
+      "original_sha256": "b2cb101cacf875b9c109432c5a3acad555adf6b4c3db6b22c018f2742aeaf2e7",
+      "fresh_sha256": "7f107fbf76c2d9bb04f29f315575465e6c9fb2cf691111fd542e65c467fdd4b9",
+      "differences": []
+    },
+    {
+      "file": "prototype/vision/evaluation.json",
+      "passed": true,
+      "original_sha256": "430b751dc98e16028e1204f81b113a8e7aa1eab6b3d2ec9d4bff91db46cd8c69",
+      "fresh_sha256": "430b751dc98e16028e1204f81b113a8e7aa1eab6b3d2ec9d4bff91db46cd8c69",
+      "differences": []
+    },
+    {
+      "file": "prototype/vision/development-evaluation.json",
+      "passed": true,
+      "original_sha256": "b29237bd00d7f9895dbc5577c56960c28c2ac4ae6faff4e66b2a232f48f540d0",
+      "fresh_sha256": "b29237bd00d7f9895dbc5577c56960c28c2ac4ae6faff4e66b2a232f48f540d0",
+      "differences": []
+    },
+    {
+      "file": "prototype/rectification/calibration.json",
+      "passed": false,
+      "original_sha256": "fe7c6c832c2bc6b5095ce932ffd7905a59f9fdf8c0b4e029816e1108d1238402",
+      "fresh_sha256": "8a6a28b67e7c08d1376696ebb488d2f02667add6e52dcc95562181ff5003ccd9",
+      "differences": [
+        "$.left.refined_H[0][2]: -3.667296101173111 -> -3.6672961518282943",
+        "$.left.refined_H[1][2]: -16.248202364603483 -> -16.24820242557203",
+        "$.right.heldout_outer_middle_after.p95_abs_radial_error_m: 0.032676289399300174 -> 0.03267628708286122",
+        "$.right.refined_H[0][0]: 0.007033625053406901 -> 0.0070336265595113065",
+        "$.right.refined_H[0][2]: -10.349103101899669 -> -10.349105542853259",
+        "$.right.refined_H[1][1]: 0.06292260262879952 -> 0.06292261617503085",
+        "$.right.refined_H[1][2]: -28.37480856476807 -> -28.374814558947993",
+        "$.right.training_after.p95_abs_radial_error_m: 0.03845500805892872 -> 0.038455001709660264",
+        "$.right.withheld_inner_after.p95_abs_radial_error_m: 0.039367323215682294 -> 0.03936733317845955",
+        "$.right.withheld_inner_after.radial_rmse_m: 0.020298517963740794 -> 0.020298521284265326",
+        "$.right.withheld_manual_inner_tee_after.max_m: 0.026195385826186537 -> 0.026195370795563198",
+        "$.right.withheld_manual_inner_tee_after.rmse_m: 0.02060874875874497 -> 0.020608745003551643"
+      ]
+    },
+    {
+      "file": "prototype/rectification/audit.json",
+      "passed": false,
+      "original_sha256": "2be27180b8f3ce1174828feed44dcda981bfbd7b38e849bb72696ab532f65c87",
+      "fresh_sha256": "7cbef32bf5b30ef6d08dbfedb717c7a2a42201c1aff79af1a4b9db29e196480b",
+      "differences": [
+        "$.other_timestamp_checks[0].inner_check.radial_rmse_m: 0.0109529709034645 -> 0.010952958471705335",
+        "$.other_timestamp_checks[0].quality.p90_normal_error_px: 1.1533913891187464 -> 1.1533908239748725",
+        "$.other_timestamp_checks[0].quality.radial_rmse_m: 0.008103772409196614 -> 0.008103737750967822",
+        "$.other_timestamp_checks[2].inner_check.radial_rmse_m: 0.008764927094680764 -> 0.00876492942032612",
+        "$.other_timestamp_checks[3].inner_check.radial_rmse_m: 0.007793464916982933 -> 0.007793461154609445",
+        "$.other_timestamp_checks[3].quality.radial_rmse_m: 0.008669529808317821 -> 0.008669527584577376",
+        "$.other_timestamp_checks[4].inner_check.radial_rmse_m: 0.013727461142074045 -> 0.013727505564126385",
+        "$.other_timestamp_checks[4].quality.p95_abs_radial_error_m: 0.024178570785884812 -> 0.024179024970788738",
+        "$.other_timestamp_checks[4].quality.radial_rmse_m: 0.01050564358185809 -> 0.010505673471068499",
+        "$.other_timestamp_checks[5].inner_check.radial_rmse_m: 0.006734146739734912 -> 0.006734143312953805",
+        "$.other_timestamp_checks[5].quality.median_abs_radial_error_m: 0.00303616555976316 -> 0.0030361352949537235",
+        "$.other_timestamp_checks[5].quality.radial_rmse_m: 0.008164032219200621 -> 0.008164030541233007"
+      ]
+    },
+    {
+      "file": "prototype/rectification/timeline.json",
+      "passed": false,
+      "original_sha256": "5a310388ba5adef7bd29bdebdecc847bfa1f97a5c36d63ea11fa7e94194c93e4",
+      "fresh_sha256": "d50c291b75f2635ad58bd59b113bc71caa3fa776f0d6e1cf3b274de9c3fbb1d4",
+      "differences": [
+        "$.records[0].views.left.H[0][2]: -3.6717548371497393 -> -3.6717548878263795",
+        "$.records[0].views.left.H[1][2]: -16.249349108766594 -> -16.249349169730582",
+        "$.records[0].views.left.ring_check.p95_abs_radial_error_m: 0.03335870623437472 -> 0.03335869683569968",
+        "$.records[0].views.left.ring_check.radial_rmse_m: 0.014071182424310956 -> 0.014071169872043902",
+        "$.records[0].views.right.H[0][0]: 0.006552788052813623 -> 0.006552789454164653",
+        "$.records[0].views.right.H[0][2]: -9.64150563781354 -> -9.641507909130956",
+        "$.records[0].views.right.H[1][1]: 0.05870556414094879 -> 0.05870557677867373",
+        "$.records[0].views.right.H[1][2]: -26.09542108627362 -> -26.095426595840735",
+        "$.records[0].views.right.H[2][2]: 1.0327192807016494 -> 1.0327193049090935",
+        "$.records[0].views.right.ring_check.p95_abs_radial_error_m: 0.08976897602481608 -> 0.0897689790888382",
+        "$.records[0].views.right.ring_check.radial_rmse_m: 0.041108207146109195 -> 0.04110821321489965",
+        "$.records[1].views.left.H[0][2]: -3.671790628007636 -> -3.6717906786841477"
+      ]
+    },
+    {
+      "file": "prototype/continuous/timeline.json",
+      "passed": true,
+      "original_sha256": "38d190ae30785294a0e4ec71e5e79b19470ee6945cecb75d148dc6503ebd1412",
+      "fresh_sha256": "810e540aa670a317f49707ad0430cce79f418a8b11609e3715fc99858ccbaaf1",
+      "differences": []
+    },
+    {
+      "file": "prototype/continuous/diagnostics.json",
+      "passed": true,
+      "original_sha256": "31d00b4fcddb0d8373492a4a9ddb06a50425ab749618ac52486e684c0e45ce71",
+      "fresh_sha256": "31d00b4fcddb0d8373492a4a9ddb06a50425ab749618ac52486e684c0e45ce71",
+      "differences": []
+    },
+    {
+      "file": "prototype/body-localization/video-timeline.json",
+      "passed": false,
+      "original_sha256": "99565a287fbe6d269e8cd3a87f5cd173089750261e2250a5d5c10fae18e342be",
+      "fresh_sha256": "6540c1f7ee85b0b46fe2a910db67203494dc94ce2761993143a66ae80212ed47",
+      "differences": [
+        "$.records[0].views.left.stones[0].ground_position_m[1]: -0.5489318886683748 -> -0.5489318924159103",
+        "$.records[0].views.left.stones[0].ice_plane_projection_m[1]: -1.0086908460905144 -> -1.008690850074535",
+        "$.records[0].views.left.stones[0].localization.camera.camera_centre_m[0]: 0.07539063550735911 -> 0.07539067715474045",
+        "$.records[0].views.left.stones[0].localization.camera.camera_centre_m[1]: 20.609272462979998 -> 20.60927233886161",
+        "$.records[0].views.left.stones[0].localization.camera.camera_centre_m[2]: 6.393690995375307 -> 6.393690956555787",
+        "$.records[0].views.left.stones[0].localization.camera.focal_y_px: 5068.971481880607 -> 5068.971451257409",
+        "$.records[0].views.left.stones[0].localization.camera.orthogonality_residual: 0.006229855164553736 -> 0.0062298541112413165",
+        "$.records[0].views.left.stones[0].localization.uncorrected_position_m[1]: -1.00876855908735 -> -1.0087685630714254",
+        "$.records[0].views.left.stones[1].ground_position_m[0]: -0.0022928966342349814 -> -0.002292905582967878",
+        "$.records[0].views.left.stones[1].ground_position_m[1]: -4.087141500543758 -> -4.0871415050387645",
+        "$.records[0].views.left.stones[1].ice_plane_projection_m[0]: -0.004004249029384116 -> -0.004004259088182984",
+        "$.records[0].views.left.stones[1].ice_plane_projection_m[1]: -4.623849002543528 -> -4.62384900776823"
+      ]
+    },
+    {
+      "file": "prototype/throw-analysis/predictions.json",
+      "passed": true,
+      "original_sha256": "e6b856b8da7e396d9300080856b5c5142fd74211c5df1e257dfc43905df2184a",
+      "fresh_sha256": "e163becf9c6e41d3c9d5594519c33ec5f344cf4d94857248298b2473426aef27",
+      "differences": []
+    },
+    {
+      "file": "prototype/throw-analysis/evaluation.json",
+      "passed": true,
+      "original_sha256": "9bee4218a55a6531e94134846de0ef7b06e747d308c04fc6b6101bfd588acdeb",
+      "fresh_sha256": "9bee4218a55a6531e94134846de0ef7b06e747d308c04fc6b6101bfd588acdeb",
+      "differences": []
+    },
+    {
+      "file": "prototype/throw-analysis/target-analysis.json",
+      "passed": false,
+      "original_sha256": "390e1b868f248d9cd3678818231a00a693dc92044007395e10df8be1eaab857f",
+      "fresh_sha256": "db456a696c40f301b606ccb6cf494157522ad026f49393085f4078e99d14bcf9",
+      "differences": [
+        "$.examples[0].broom_cue.position_m_if_ice_contact[0]: -0.6849372868805874 -> -0.6849372774158538",
+        "$.examples[0].broom_cue.position_m_if_ice_contact[1]: 0.6811805275232706 -> 0.6811805484170652",
+        "$.examples[0].outcome.settled.position_m[0]: -0.3969129046976443 -> -0.3969128961955611",
+        "$.examples[0].outcome.settled.position_m[1]: 0.7311032043316412 -> 0.7311032289315008",
+        "$.examples[0].outcome.trajectory[0].position_m[0]: -0.5538237370656207 -> -0.5538236504734216",
+        "$.examples[0].outcome.trajectory[0].position_m[1]: 7.085831450504747 -> 7.0858311604613595",
+        "$.examples[0].outcome.trajectory[1].position_m[0]: -0.550306971856911 -> -0.5503068965467713",
+        "$.examples[0].outcome.trajectory[1].position_m[1]: 6.1698968249856545 -> 6.169896618421907",
+        "$.examples[0].outcome.trajectory[2].position_m[0]: -0.5374676765667495 -> -0.5374676126446385",
+        "$.examples[0].outcome.trajectory[2].position_m[1]: 5.272046806948495 -> 5.2720466697143635",
+        "$.examples[0].outcome.trajectory[3].position_m[0]: -0.5194371199365796 -> -0.5194370660278175",
+        "$.examples[0].outcome.trajectory[3].position_m[1]: 4.489697014258858 -> 4.489696927356464"
+      ]
+    },
+    {
+      "file": "prototype/trajectory-accuracy/results.json",
+      "passed": false,
+      "original_sha256": "66add3344f8eac6aacc4e638dc491cfbdbde5ce03bd9f21d05d191ed66c879d6",
+      "fresh_sha256": "9fa83445d1c869dd103b8ee90b8c533324b8691dcb2860658adf77f1fc89cbb2",
+      "differences": [
+        "$.aiming_reference.position_m_if_ice_contact[0]: -0.6849372868805874 -> -0.6849372774158538",
+        "$.aiming_reference.position_m_if_ice_contact[1]: 0.6811805275232706 -> 0.6811805484170652",
+        "$.all_labels.conditional_cm_rmse: 2.598740637785477 -> 2.598740582326484",
+        "$.moving_labels.conditional_cm_rmse: 3.9036630536284584 -> 3.9036629620974104",
+        "$.rows[0].conditional_error_cm: 1.3032670198617788 -> 1.3032669443886065",
+        "$.rows[0].prediction.position_m[0]: -0.5194371199365796 -> -0.5194370660278175",
+        "$.rows[0].prediction.position_m[1]: 4.489697014258858 -> 4.489696927356464",
+        "$.rows[0].reference_position_m[0]: -0.5209110072102684 -> -0.5209109534051322",
+        "$.rows[0].reference_position_m[1]: 4.476747954493361 -> 4.476747868362367",
+        "$.rows[1].conditional_error_cm: 5.503132106982904 -> 5.503131919699216",
+        "$.rows[1].prediction.position_m[0]: -0.4773206970750567 -> -0.47732066269515555",
+        "$.rows[1].prediction.position_m[1]: 2.923936528352167 -> 2.9239365141252067"
+      ]
+    },
+    {
+      "file": "prototype/pre-gate-audit/results.json",
+      "passed": true,
+      "original_sha256": "30bb8abcd6cdaae5e5a740fc5b35d1722aa88487fdb33c647961bfc2bf845393",
+      "fresh_sha256": "313d905645e7c85ab5dbde844405192414b8927031fc8e447cdc2ad370a6052a",
+      "differences": []
+    },
+    {
+      "file": "prototype/throw-segments/manifest.json",
+      "passed": true,
+      "original_sha256": "0c999cf6e7170205dc9ca0a4c8d447789af4b5d5c49ff7df5e8a7c4015a332a0",
+      "fresh_sha256": "a560edab8aac653a2f551e40914c84e3f1f00be173d34b7a1dd927dfb494c5a9",
+      "differences": []
+    },
+    {
+      "file": "prototype/throw-segments/results.json",
+      "passed": false,
+      "original_sha256": "4f219aff9c2a13206a730398f6efae45b4e8d44f3156fb959b2fb73be91ebb02",
+      "fresh_sha256": "26bcb116d8e8e8c913010f2d1c4687a0276bf04ff323884a6d8e12c21fdf470d",
+      "differences": [
+        "$.segments[0].arrival_trajectory[0].position_m[0]: -0.3249541528418055 -> -0.3249540781721931",
+        "$.segments[0].arrival_trajectory[0].position_m[1]: 7.126757753102273 -> 7.126757456709683",
+        "$.segments[0].arrival_trajectory[1].position_m[0]: -0.29246757696359515 -> -0.29246750786070147",
+        "$.segments[0].arrival_trajectory[1].position_m[1]: 6.752030743160225 -> 6.752030482410323",
+        "$.segments[0].arrival_trajectory[2].position_m[0]: -0.2561111090488931 -> -0.2561110446046381",
+        "$.segments[0].arrival_trajectory[2].position_m[1]: 6.469650443546166 -> 6.469650208126655",
+        "$.segments[0].arrival_trajectory[3].position_m[0]: -0.22354860525588785 -> -0.22354854491148218",
+        "$.segments[0].arrival_trajectory[3].position_m[1]: 6.2105364042066755 -> 6.210536190973561",
+        "$.segments[0].arrival_trajectory[4].position_m[0]: -0.19008467349259558 -> -0.19008461688239575",
+        "$.segments[0].arrival_trajectory[4].position_m[1]: 5.981163968858543 -> 5.981163774369102",
+        "$.segments[0].arrival_trajectory[5].position_m[0]: -0.1551840804294256 -> -0.1551840274056799",
+        "$.segments[0].arrival_trajectory[5].position_m[1]: 5.7621670859541245 -> 5.762166908586851"
+      ]
+    },
+    {
+      "file": "prototype/cross-view/results.json",
+      "passed": false,
+      "original_sha256": "8e70b05465f3f2a4ccc61f2463579e7fa007cc0d578cf8fc99fd8203adc8ec2c",
+      "fresh_sha256": "c3f373bf833b38a1b56b283d2bffe3c19d2f0a0475055333be67384c7dc9cd37",
+      "differences": [
+        "$.throws[0].arrival[0].local_m[0]: -0.3249541528418055 -> -0.3249540781721931",
+        "$.throws[0].arrival[0].local_m[1]: 7.126757753102273 -> 7.126757456709683",
+        "$.throws[0].arrival[0].world_m[0]: -0.3249541528418055 -> -0.3249540781721931",
+        "$.throws[0].arrival[0].world_m[1]: 27.620242246897725 -> 27.620242543290317",
+        "$.throws[0].arrival[1].local_m[0]: -0.29246757696359515 -> -0.29246750786070147",
+        "$.throws[0].arrival[1].local_m[1]: 6.752030743160225 -> 6.752030482410323",
+        "$.throws[0].arrival[1].world_m[0]: -0.29246757696359515 -> -0.29246750786070147",
+        "$.throws[0].arrival[1].world_m[1]: 27.994969256839774 -> 27.994969517589677",
+        "$.throws[0].arrival[2].local_m[0]: -0.2561111090488931 -> -0.2561110446046381",
+        "$.throws[0].arrival[2].local_m[1]: 6.469650443546166 -> 6.469650208126655",
+        "$.throws[0].arrival[2].world_m[0]: -0.2561111090488931 -> -0.2561110446046381",
+        "$.throws[0].arrival[2].world_m[1]: 28.277349556453835 -> 28.277349791873345"
+      ]
+    },
+    {
+      "file": "prototype/throw-segments/T01.json",
+      "passed": false,
+      "original_sha256": "f559057f467a76a6273341eda9bf83b3997aceb3061888372515c85c59821a0c",
+      "fresh_sha256": "d354808eda8383f9b355aefc87f2ddb3c7f56fbdf479ef11bdc9f0e198a8a308",
+      "differences": [
+        "$.outcome.settled.position_m[0]: -0.034864650443070494 -> -0.03486460930346436",
+        "$.outcome.settled.position_m[1]: 4.956680752456124 -> 4.95668063189817",
+        "$.outcome.trajectory[0].position_m[0]: -0.3249541528418055 -> -0.3249540781721931",
+        "$.outcome.trajectory[0].position_m[1]: 7.126757753102273 -> 7.126757456709683",
+        "$.outcome.trajectory[1].position_m[0]: -0.29246757696359515 -> -0.29246750786070147",
+        "$.outcome.trajectory[1].position_m[1]: 6.752030743160225 -> 6.752030482410323",
+        "$.outcome.trajectory[2].position_m[0]: -0.2561111090488931 -> -0.2561110446046381",
+        "$.outcome.trajectory[2].position_m[1]: 6.469650443546166 -> 6.469650208126655",
+        "$.outcome.trajectory[3].position_m[0]: -0.22354860525588785 -> -0.22354854491148218",
+        "$.outcome.trajectory[3].position_m[1]: 6.2105364042066755 -> 6.210536190973561",
+        "$.outcome.trajectory[4].position_m[0]: -0.19008467349259558 -> -0.19008461688239575",
+        "$.outcome.trajectory[4].position_m[1]: 5.981163968858543 -> 5.981163774369102"
+      ]
+    },
+    {
+      "file": "prototype/throw-segments/T02.json",
+      "passed": false,
+      "original_sha256": "aa47d65ed2aa8ca2d58ef9d776cf26a3e8405ff2e6275cc9c4635891eb397e07",
+      "fresh_sha256": "d085a3b027563741ef2278c3e2b82bd1e8318c4ff4a599d2329d3b48b703d599",
+      "differences": [
+        "$.outcome.settled.position_m[0]: -0.9161496689629347 -> -0.9161496392122601",
+        "$.outcome.settled.position_m[1]: 1.96703939652181 -> 1.9670394124573798",
+        "$.outcome.trajectory[0].position_m[0]: -0.3780907268803553 -> -0.37809065314926227",
+        "$.outcome.trajectory[0].position_m[1]: 6.772590466805856 -> 6.772590204997716",
+        "$.outcome.trajectory[1].position_m[0]: -0.40290020527706416 -> -0.40290013601418745",
+        "$.outcome.trajectory[1].position_m[1]: 6.2494191958346805 -> 6.24941898106622",
+        "$.outcome.trajectory[2].position_m[0]: -0.429765751619742 -> -0.4297656861049524",
+        "$.outcome.trajectory[2].position_m[1]: 5.80029019875178 -> 5.800290021086479",
+        "$.outcome.trajectory[3].position_m[0]: -0.45767178825002724 -> -0.45767172729925953",
+        "$.outcome.trajectory[3].position_m[1]: 5.292062170368267 -> 5.292062030948299",
+        "$.outcome.trajectory[4].position_m[0]: -0.48984985106259543 -> -0.4898497943452728",
+        "$.outcome.trajectory[4].position_m[1]: 4.817461092053602 -> 4.817460984845049"
+      ]
+    },
+    {
+      "file": "prototype/throw-segments/T03.json",
+      "passed": false,
+      "original_sha256": "e903f189af7e6fda3dbdc12e89f98b130be3efa1619708da43678d76441a67a6",
+      "fresh_sha256": "e1c90dea7276b8729b8253c3424a2540d69df3aafe013bf887806d8beea05395",
+      "differences": [
+        "$.outcome.settled.position_m[0]: -0.08573758028479676 -> -0.08573757244672128",
+        "$.outcome.settled.position_m[1]: 0.8461608152648598 -> 0.846160836961333",
+        "$.outcome.trajectory[0].position_m[0]: -0.6870747136902089 -> -0.6870746147922321",
+        "$.outcome.trajectory[0].position_m[1]: 7.47577087795311 -> 7.475770549836017",
+        "$.outcome.trajectory[1].position_m[0]: -0.66117627856771 -> -0.6611761887571409",
+        "$.outcome.trajectory[1].position_m[1]: 6.887899950431754 -> 6.887899680600146",
+        "$.outcome.trajectory[2].position_m[0]: -0.6310977153497228 -> -0.6310976339396557",
+        "$.outcome.trajectory[2].position_m[1]: 6.351515473708431 -> 6.351515252403898",
+        "$.outcome.trajectory[3].position_m[0]: -0.6092776745325234 -> -0.6092776017922683",
+        "$.outcome.trajectory[3].position_m[1]: 5.745093363428104 -> 5.745093191833791",
+        "$.outcome.trajectory[4].position_m[0]: -0.5724437583738337 -> -0.572443692633079",
+        "$.outcome.trajectory[4].position_m[1]: 5.306023315397348 -> 5.306023176096803"
+      ]
+    },
+    {
+      "file": "prototype/throw-segments/T04.json",
+      "passed": false,
+      "original_sha256": "74091dc7909df80d440c1fa90a21161efab4f44e972e22df0ac5b44fdd8baa1e",
+      "fresh_sha256": "6b670289b2cfdac8893b4b20f276e1d5eba2ba8647fcac2c11c474998bdb1aeb",
+      "differences": [
+        "$.outcome.settled.position_m[0]: -0.29172652391612147 -> -0.2917265121388611",
+        "$.outcome.settled.position_m[1]: 1.1229521967156546 -> 1.1229522186909546",
+        "$.outcome.trajectory[0].position_m[0]: -0.4181591341684226 -> -0.41815905632303857",
+        "$.outcome.trajectory[0].position_m[1]: 6.956981075889223 -> 6.956980796998544",
+        "$.outcome.trajectory[1].position_m[0]: -0.40104720776574143 -> -0.40104713889501764",
+        "$.outcome.trajectory[1].position_m[1]: 6.221718764604775 -> 6.221718552179071",
+        "$.outcome.trajectory[2].position_m[0]: -0.3807986551110793 -> -0.3807985959482743",
+        "$.outcome.trajectory[2].position_m[1]: 5.413079440528701 -> 5.413079291678668",
+        "$.outcome.trajectory[3].position_m[0]: -0.3589555609803064 -> -0.35895551027416844",
+        "$.outcome.trajectory[3].position_m[1]: 4.703744503783818 -> 4.703744402462966",
+        "$.outcome.trajectory[4].position_m[0]: -0.33402324740530326 -> -0.3340232040414919",
+        "$.outcome.trajectory[4].position_m[1]: 4.087356991576055 -> 4.087356925278654"
+      ]
+    },
+    {
+      "file": "prototype/throw-segments/T05.json",
+      "passed": false,
+      "original_sha256": "502661ae0c3dce6ef52fa8e0d08abc537b600d476fc2a2a1659511a92fc90d68",
+      "fresh_sha256": "7ec4989e98cc9705b1702f0c6ceaffd14c08b8dd8709b44b54996209628f9883",
+      "differences": [
+        "$.outcome.settled.position_m[0]: 0.341014857241681 -> 0.34101486142178133",
+        "$.outcome.settled.position_m[1]: 0.6968066664861444 -> 0.6968066849059268",
+        "$.outcome.trajectory[0].position_m[0]: -0.4182077748754861 -> -0.4182076994318876",
+        "$.outcome.trajectory[0].position_m[1]: 6.740444821702546 -> 6.740444563292467",
+        "$.outcome.trajectory[1].position_m[0]: -0.3918028893566752 -> -0.3918028227668488",
+        "$.outcome.trajectory[1].position_m[1]: 6.052689543934187 -> 6.052689345571587",
+        "$.outcome.trajectory[2].position_m[0]: -0.3620468694940594 -> -0.3620468110031162",
+        "$.outcome.trajectory[2].position_m[1]: 5.422577440476003 -> 5.422577290752823",
+        "$.outcome.trajectory[3].position_m[0]: -0.3290059840138726 -> -0.3290059329144597",
+        "$.outcome.trajectory[3].position_m[1]: 4.84445868517708 -> 4.844458574709343",
+        "$.outcome.trajectory[4].position_m[0]: -0.2960592652935362 -> -0.2960592208230079",
+        "$.outcome.trajectory[4].position_m[1]: 4.312438387339195 -> 4.31243830847966"
+      ]
+    },
+    {
+      "file": "prototype/throw-segments/T06.json",
+      "passed": false,
+      "original_sha256": "1a9967a59d24d56c2d0bbda782ffe3853b36bbb87818b9124ca7fde4a892e33e",
+      "fresh_sha256": "13636458fb9a8f77dce0112bbd72615ce8834aaef3d3c80fca07c5dd77967912",
+      "differences": [
+        "$.outcome.settled.position_m[0]: 0.2966903317465834 -> 0.29669033729466027",
+        "$.outcome.settled.position_m[1]: 0.8903812731394463 -> 0.8903812914224566",
+        "$.outcome.trajectory[0].position_m[0]: 0.4357600976985365 -> 0.4357601299755073",
+        "$.outcome.trajectory[0].position_m[1]: 6.926005028709066 -> 6.926004744182897",
+        "$.outcome.trajectory[1].position_m[0]: 0.4245016104551422 -> 0.42450163852228756",
+        "$.outcome.trajectory[1].position_m[1]: 5.898666169847902 -> 5.898665975987108",
+        "$.outcome.trajectory[2].position_m[0]: 0.4076303174296284 -> 0.4076303418987069",
+        "$.outcome.trajectory[2].position_m[1]: 4.991440670098144 -> 4.991440542986589",
+        "$.outcome.trajectory[3].position_m[0]: 0.38159453008073224 -> 0.3815945506348861",
+        "$.outcome.trajectory[3].position_m[1]: 4.009929940152329 -> 4.009929871189583",
+        "$.outcome.trajectory[4].position_m[0]: 0.3651102085915667 -> 0.36511022494630696",
+        "$.outcome.trajectory[4].position_m[1]: 3.092553166096216 -> 3.0925531381218643"
+      ]
+    },
+    {
+      "file": "prototype/throw-segments/T07.json",
+      "passed": false,
+      "original_sha256": "38786c0579c66eed7541b26b5475a1e0759f6dd3d09ce328c8b4d57b4b4691f1",
+      "fresh_sha256": "b7f398349ec7a15dde95f34ae742d70bc98a99d8b37195819f3f03d6c7fe7912",
+      "differences": [
+        "$.outcome.settled.position_m[0]: -0.39796701016466873 -> -0.3979670000429054",
+        "$.outcome.settled.position_m[1]: 0.8711134915025555 -> 0.8711135157992375",
+        "$.outcome.trajectory[0].position_m[0]: -0.5382602555888332 -> -0.5382601731407975",
+        "$.outcome.trajectory[0].position_m[1]: 6.81081802675755 -> 6.810817762976788",
+        "$.outcome.trajectory[1].position_m[0]: -0.5381309308094855 -> -0.5381308599063752",
+        "$.outcome.trajectory[1].position_m[1]: 5.85072331174299 -> 5.8507231311574275",
+        "$.outcome.trajectory[2].position_m[0]: -0.5318285377778236 -> -0.5318284788385634",
+        "$.outcome.trajectory[2].position_m[1]: 4.874641632655671 -> 4.874641522187",
+        "$.outcome.trajectory[3].position_m[0]: -0.5196479679298284 -> -0.519647918850316",
+        "$.outcome.trajectory[3].position_m[1]: 4.082483030839877 -> 4.082482966535699",
+        "$.outcome.trajectory[4].position_m[0]: -0.5088893121311238 -> -0.5088892758273613",
+        "$.outcome.trajectory[4].position_m[1]: 3.027622429739735 -> 3.027622412116273"
+      ]
+    },
+    {
+      "file": "prototype/throw-segments/T08.json",
+      "passed": false,
+      "original_sha256": "57019a966e1b7aaeb370f0cfc7e157b13b3ac5488cc8e2717d164d373a03600e",
+      "fresh_sha256": "d3250750840fbf6a97ade7b9cffdf75ce4793b0da7b57b5eb2ebcebbd0d90005",
+      "differences": [
+        "$.timeline.records[0].views.right.H[0][0]: 0.007067076294398582 -> 0.007067077808479376",
+        "$.timeline.records[0].views.right.H[0][2]: -10.418558696282979 -> -10.418561154433233",
+        "$.timeline.records[0].views.right.H[1][1]: 0.06327585629046921 -> 0.06327586991296462",
+        "$.timeline.records[0].views.right.H[1][2]: -28.66776238141284 -> -28.667768438076738",
+        "$.timeline.records[0].views.right.H[2][2]: 0.9949789011348907 -> 0.9949788978540833",
+        "$.timeline.records[0].views.right.stones[0].ground_position_m[0]: -0.0332931725463106 -> -0.03329313170315002",
+        "$.timeline.records[0].views.right.stones[0].ground_position_m[1]: 4.92828001182678 -> 4.928279893105346",
+        "$.timeline.records[0].views.right.stones[0].ice_plane_projection_m[0]: -0.040813710016482575 -> -0.040813678282146874",
+        "$.timeline.records[0].views.right.stones[0].ice_plane_projection_m[1]: 3.796471904647155 -> 3.7964718177234564",
+        "$.timeline.records[0].views.right.stones[0].localization.camera.camera_centre_m[0]: 0.3247213389217408 -> 0.32472165079113174",
+        "$.timeline.records[0].views.right.stones[0].localization.camera.camera_centre_m[1]: 58.84645414428592 -> 58.84642797516524",
+        "$.timeline.records[0].views.right.stones[0].localization.camera.camera_centre_m[2]: 6.615470111725104 -> 6.615467163211137"
+      ]
+    },
+    {
+      "file": "prototype/throw-segments/T09.json",
+      "passed": false,
+      "original_sha256": "a53ddef5381efe1853d0a9267269ad786d3e24136a94da8f0c1ec6fe7f630f7a",
+      "fresh_sha256": "7ceb2bf12f1acdbacafa7b80d9e7c35fe1790578662863d00cad8debeff0427b",
+      "differences": [
+        "$.outcome.settled.position_m[0]: -0.45154227199560754 -> -0.4515422692364422",
+        "$.outcome.settled.position_m[1]: 0.18959166195583557 -> 0.1895916855068038",
+        "$.outcome.trajectory[0].position_m[0]: -1.2176726126499402 -> -1.217672495035512",
+        "$.outcome.trajectory[0].position_m[1]: 6.81583518286436 -> 6.81583492544262",
+        "$.outcome.trajectory[1].position_m[0]: -1.22789736074361 -> -1.2278972592514183",
+        "$.outcome.trajectory[1].position_m[1]: 5.8520996326213135 -> 5.852099458692658",
+        "$.outcome.trajectory[2].position_m[0]: -1.239252850951778 -> -1.2392527639002169",
+        "$.outcome.trajectory[2].position_m[1]: 4.991479341909262 -> 4.991479230590164",
+        "$.outcome.trajectory[3].position_m[0]: -1.2536152561508003 -> -1.2536151857968827",
+        "$.outcome.trajectory[3].position_m[1]: 4.004867786471525 -> 4.0048677330429685",
+        "$.outcome.trajectory[4].position_m[0]: -1.258948795553571 -> -1.258948740370247",
+        "$.outcome.trajectory[4].position_m[1]: 3.129413609427983 -> 3.1294135948689856"
+      ]
+    },
+    {
+      "file": "prototype/throw-segments/T10.json",
+      "passed": false,
+      "original_sha256": "e10c3727c1b8a6b481f709477b29f91fb42aaaeadf419e68a665cc9157a5da6e",
+      "fresh_sha256": "8234f2c0311dbdb69ff64196ae6d7ab021ec3cb4cc87bfe5d8da7b250b501263",
+      "differences": [
+        "$.outcome.settled.position_m[0]: -0.4453293044578814 -> -0.4453292977487084",
+        "$.outcome.settled.position_m[1]: 0.5120304291487553 -> 0.5120304539384376",
+        "$.outcome.trajectory[0].position_m[0]: -0.5621026854809898 -> -0.5621025968736518",
+        "$.outcome.trajectory[0].position_m[1]: 7.214430685234797 -> 7.2144303825260385",
+        "$.outcome.trajectory[1].position_m[0]: -0.5558882257520238 -> -0.5558881488524017",
+        "$.outcome.trajectory[1].position_m[1]: 6.27914009728858 -> 6.279139881491069",
+        "$.outcome.trajectory[2].position_m[0]: -0.5543935079406811 -> -0.5543934427471384",
+        "$.outcome.trajectory[2].position_m[1]: 5.320900235411507 -> 5.320900094878035",
+        "$.outcome.trajectory[3].position_m[0]: -0.5527510815183766 -> -0.5527510267015218",
+        "$.outcome.trajectory[3].position_m[1]: 4.470865884226562 -> 4.470865798739974",
+        "$.outcome.trajectory[4].position_m[0]: -0.5384759363320266 -> -0.5384758925703773",
+        "$.outcome.trajectory[4].position_m[1]: 3.5915023380469586 -> 3.5915022977997397"
+      ]
+    },
+    {
+      "file": "prototype/throw-segments/T11.json",
+      "passed": false,
+      "original_sha256": "c3db3d46489e31878a8955ec7390212ab45fd420f157ff8bdc9cc2505e70e326",
+      "fresh_sha256": "34677464d3417616663cbd07df1a07b2588e15175bc37542b8144e5fc6b2747a",
+      "differences": [
+        "$.outcome.settled.position_m[0]: -0.3929183947314775 -> -0.3929183859528883",
+        "$.outcome.settled.position_m[1]: 0.7090733098175529 -> 0.7090733344359607",
+        "$.outcome.trajectory[0].position_m[0]: -0.5553100183304788 -> -0.555309931673865",
+        "$.outcome.trajectory[0].position_m[1]: 7.084540100396668 -> 7.084539810495088",
+        "$.outcome.trajectory[1].position_m[0]: -0.5499919312452904 -> -0.5499918558827048",
+        "$.outcome.trajectory[1].position_m[1]: 6.175448653228719 -> 6.1754484461941574",
+        "$.outcome.trajectory[2].position_m[0]: -0.5319897860103477 -> -0.5319897220041917",
+        "$.outcome.trajectory[2].position_m[1]: 5.297407135330306 -> 5.297406996250026",
+        "$.outcome.trajectory[3].position_m[0]: -0.5220030646675229 -> -0.5220030107944191",
+        "$.outcome.trajectory[3].position_m[1]: 4.479337884262597 -> 4.479337797990654",
+        "$.outcome.trajectory[4].position_m[0]: -0.501944956237258 -> -0.5019449114812007",
+        "$.outcome.trajectory[4].position_m[1]: 3.761051985020594 -> 3.7610519366031174"
+      ]
+    },
+    {
+      "file": "prototype/throw-segments/T12.json",
+      "passed": false,
+      "original_sha256": "513f028be5864af817945c2b606e446cfcc9bec750fb1b62de5a15cb9db898a0",
+      "fresh_sha256": "1b082704bef543408bf84f10b6959b3e634b224110098480e332581412c87020",
+      "differences": [
+        "$.outcome.settled.position_m[0]: -0.5750531590839112 -> -0.575053146751036",
+        "$.outcome.settled.position_m[1]: 0.9536551190629066 -> 0.9536551444591623",
+        "$.outcome.trajectory[0].position_m[0]: -0.5590137708669245 -> -0.5590136866401203",
+        "$.outcome.trajectory[0].position_m[1]: 6.8686101411518905 -> 6.8686098721237325",
+        "$.outcome.trajectory[1].position_m[0]: -0.547025505900795 -> -0.5470254326198938",
+        "$.outcome.trajectory[1].position_m[1]: 6.014729433050104 -> 6.0147292393354626",
+        "$.outcome.trajectory[2].position_m[0]: -0.5306806021505894 -> -0.5306805396662713",
+        "$.outcome.trajectory[2].position_m[1]: 5.174582035186548 -> 5.174581904687367",
+        "$.outcome.trajectory[3].position_m[0]: -0.5183339836171916 -> -0.5183339318813294",
+        "$.outcome.trajectory[3].position_m[1]: 4.30976294142822 -> 4.309762864811664",
+        "$.outcome.trajectory[4].position_m[0]: -0.5104530603628029 -> -0.5104530181778336",
+        "$.outcome.trajectory[4].position_m[1]: 3.5226971147524626 -> 3.522697077299966"
+      ]
+    },
+    {
+      "file": "prototype/throw-segments/T13.json",
+      "passed": false,
+      "original_sha256": "906b1bd78e9fb3dfbdb22c257ab6017af55229eec0907e745d3f83b5b824b4f4",
+      "fresh_sha256": "3077c2e6715de185efb56380f211e4f40fde6d46351aae328f4984965cc65aaf",
+      "differences": [
+        "$.outcome.trajectory[0].position_m[0]: -0.2693544573036138 -> -0.2693543831114291",
+        "$.outcome.trajectory[0].position_m[1]: 7.3819070061246554 -> 7.381906683449245",
+        "$.outcome.trajectory[1].position_m[0]: -0.24200659898027546 -> -0.24200653692076113",
+        "$.outcome.trajectory[1].position_m[1]: 6.296644710916578 -> 6.296644490499369",
+        "$.outcome.trajectory[2].position_m[0]: -0.43622192583953057 -> -0.4362218682246177",
+        "$.outcome.trajectory[2].position_m[1]: 5.072158404003462 -> 5.072158279586867",
+        "$.outcome.trajectory[3].position_m[0]: -0.714214783424633 -> -0.7142147192207904",
+        "$.outcome.trajectory[3].position_m[1]: 4.763520977939704 -> 4.763520876278299",
+        "$.outcome.trajectory[4].position_m[0]: -1.0097148244235048 -> -1.0097147540378055",
+        "$.outcome.trajectory[4].position_m[1]: 4.477403927868566 -> 4.477403846323557",
+        "$.outcome.trajectory[5].position_m[0]: -1.234116440658407 -> -1.2341163648870916",
+        "$.outcome.trajectory[5].position_m[1]: 4.3514390821477225 -> 4.351439009938981"
+      ]
+    },
+    {
+      "file": "prototype/throw-segments/T14.json",
+      "passed": false,
+      "original_sha256": "d764dcff2c048d3ec9d0023b36058768eee0a31fb8c815c824f407ae3b3af389",
+      "fresh_sha256": "18bffddd2fe3e30d8e081aca9346b91b74a0f577bbc42b3bd2884cec3ccda243",
+      "differences": [
+        "$.outcome.trajectory[0].position_m[0]: 0.1785301589290083 -> 0.17853020694345142",
+        "$.outcome.trajectory[0].position_m[1]: 7.242592474284978 -> 7.242592161224233",
+        "$.outcome.trajectory[1].position_m[0]: 0.21906719050102655 -> 0.21906723215370072",
+        "$.outcome.trajectory[1].position_m[1]: 6.584106037066993 -> 6.584105786629617",
+        "$.outcome.trajectory[2].position_m[0]: 0.255591634203206 -> 0.2555916697838151",
+        "$.outcome.trajectory[2].position_m[1]: 5.875552661366701 -> 5.875552471016013",
+        "$.outcome.trajectory[3].position_m[0]: 0.280526856896468 -> 0.2805268878025309",
+        "$.outcome.trajectory[3].position_m[1]: 5.261089592958395 -> 5.261089448594754",
+        "$.outcome.trajectory[4].position_m[0]: 0.32165547189335186 -> 0.32165549828671636",
+        "$.outcome.trajectory[4].position_m[1]: 4.739479666411251 -> 4.739479556384631",
+        "$.outcome.trajectory[5].position_m[0]: 0.3572055803545533 -> 0.35720560215753994",
+        "$.outcome.trajectory[5].position_m[1]: 4.1052001846265265 -> 4.105200110915782"
+      ]
+    },
+    {
+      "file": "prototype/throw-segments/T15.json",
+      "passed": false,
+      "original_sha256": "66feb1303e04196b3c979ab7297428d0612345c69ca93dabf8a33c1a6aa5037a",
+      "fresh_sha256": "7cc2868a163dbaca2103abf039f6bf94510e96751fe13f9974628bf998d86188",
+      "differences": [
+        "$.outcome.settled.position_m[1]: 0.7569025691645133 -> 0.7569025801736715",
+        "$.outcome.trajectory[0].position_m[0]: 0.1778365541814429 -> 0.17783660231606757",
+        "$.outcome.trajectory[0].position_m[1]: 7.255047742288993 -> 7.255047427979417",
+        "$.outcome.trajectory[1].position_m[0]: 0.20765733695678854 -> 0.20765737726734906",
+        "$.outcome.trajectory[1].position_m[1]: 6.281289698495641 -> 6.28128947494052",
+        "$.outcome.trajectory[2].position_m[0]: 0.23670925410213475 -> 0.23670928665521435",
+        "$.outcome.trajectory[2].position_m[1]: 5.240946386865301 -> 5.240946244342813",
+        "$.outcome.trajectory[3].position_m[0]: 0.2653010635808119 -> 0.2653010895574669",
+        "$.outcome.trajectory[3].position_m[1]: 4.320365699478297 -> 4.320365614886429",
+        "$.outcome.trajectory[4].position_m[0]: 0.304033251741745 -> 0.30403327162698013",
+        "$.outcome.trajectory[4].position_m[1]: 3.462330550981561 -> 3.4623305086530936",
+        "$.outcome.trajectory[5].position_m[0]: 0.3456353267388014 -> 0.3456353409944772"
+      ]
+    },
+    {
+      "file": "prototype/throw-segments/T16.json",
+      "passed": false,
+      "original_sha256": "f19e3e04fc8c983b63599e44b9fbe718ae8bdc62a1680fb9d1dc9c208c9b6d2b",
+      "fresh_sha256": "2fcd3b04541dbe5e86830c8a73675930f4a48a58009ee8e68e30de065eae3ede",
+      "differences": [
+        "$.outcome.trajectory[0].position_m[0]: -0.0978551111377157 -> -0.09785504871774234",
+        "$.outcome.trajectory[0].position_m[1]: 7.138288255464526 -> 7.138287955629435",
+        "$.outcome.trajectory[1].position_m[0]: -0.06642257823618003 -> -0.06642252200090193",
+        "$.outcome.trajectory[1].position_m[1]: 6.607491156311844 -> 6.607490906604236",
+        "$.outcome.trajectory[2].position_m[0]: -0.03645355714814074 -> -0.0364535074488957",
+        "$.outcome.trajectory[2].position_m[1]: 5.994538788611143 -> 5.994538591518907",
+        "$.outcome.trajectory[3].position_m[0]: 0.002275216324131686 -> 0.0022752598455697123",
+        "$.outcome.trajectory[3].position_m[1]: 5.437216863460277 -> 5.4372167091335495",
+        "$.outcome.trajectory[4].position_m[0]: 0.03442705359904179 -> 0.034427091847546006",
+        "$.outcome.trajectory[4].position_m[1]: 4.9231095763157215 -> 4.923109457283929",
+        "$.outcome.trajectory[5].position_m[0]: 0.07630558572547708 -> 0.07630561906446442",
+        "$.outcome.trajectory[5].position_m[1]: 4.469102908644951 -> 4.469102817311311"
+      ]
+    },
+    {
+      "file": "prototype/cross-view/T01-departure.json",
+      "passed": false,
+      "original_sha256": "8cac35e4bb9c0f89699bdfabfea073624422efbe6e253f3bb528ddb66d9856a9",
+      "fresh_sha256": "443d08cb7daba422ade812358f95b0172d39917d47249d36b4b9d5faa49831bc",
+      "differences": [
+        "$.records[0].H[0][2]: -3.666519206872299 -> -3.6665192575140573",
+        "$.records[0].H[1][2]: -16.243482954499715 -> -16.243483015449605",
+        "$.records[0].localization.camera.camera_centre_m[0]: 0.07539063550735911 -> 0.07539067715474045",
+        "$.records[0].localization.camera.camera_centre_m[1]: 20.609272462979998 -> 20.60927233886161",
+        "$.records[0].localization.camera.camera_centre_m[2]: 6.393690995375307 -> 6.393690956555787",
+        "$.records[0].localization.camera.focal_y_px: 5068.971481880607 -> 5068.971451257409",
+        "$.records[0].localization.camera.orthogonality_residual: 0.006229855164553736 -> 0.0062298541112413165",
+        "$.records[0].localization.uncorrected_position_m[0]: -0.2536272831699047 -> -0.2536273031373555",
+        "$.records[0].localization.uncorrected_position_m[1]: -8.95116126791073 -> -8.951161288588617",
+        "$.records[0].position_local_m[0]: -0.246628753373505 -> -0.24662877198785663",
+        "$.records[0].position_local_m[1]: -8.322382212071306 -> -8.322382231131817",
+        "$.records[1].H[0][2]: -3.668517534928194 -> -3.668517585597832"
+      ]
+    },
+    {
+      "file": "prototype/cross-view/T02-departure.json",
+      "passed": false,
+      "original_sha256": "fd054b622b4587cd34f7ec0ca1cb841fb9d8e7f88e70f510639cd4b920872553",
+      "fresh_sha256": "c866f0982017309ef3df25c7cd04a9e753e9ebcd995c229068cb3abed3759c5d",
+      "differences": [
+        "$.records[0].H[0][2]: -3.669365396893521 -> -3.6693654475759567",
+        "$.records[0].H[1][2]: -16.256804255681583 -> -16.256804316682743",
+        "$.records[0].localization.camera.camera_centre_m[0]: 0.07539063550735911 -> 0.07539067715474045",
+        "$.records[0].localization.camera.camera_centre_m[1]: 20.609272462979998 -> 20.60927233886161",
+        "$.records[0].localization.camera.camera_centre_m[2]: 6.393690995375307 -> 6.393690956555787",
+        "$.records[0].localization.camera.focal_y_px: 5068.971481880607 -> 5068.971451257409",
+        "$.records[0].localization.camera.orthogonality_residual: 0.006229855164553736 -> 0.0062298541112413165",
+        "$.records[0].localization.uncorrected_position_m[0]: -0.011909810384851867 -> -0.01190982839282459",
+        "$.records[0].localization.uncorrected_position_m[1]: -8.31363503017262 -> -8.313635048455769",
+        "$.records[0].position_local_m[0]: -0.010052845346984012 -> -0.01005286207475497",
+        "$.records[0].position_local_m[1]: -7.69841677487784 -> -7.698416791676883",
+        "$.records[1].H[0][2]: -3.669369936381101 -> -3.669369987061712"
+      ]
+    },
+    {
+      "file": "prototype/cross-view/T03-departure.json",
+      "passed": false,
+      "original_sha256": "250e0a62c30c3b69aeeca1e1f3faa3713c9f3c5d2b3fb905a330c961dba88db8",
+      "fresh_sha256": "31ed274a05ac8e01dd966a10e0c80573b37a285fb9e4a78bde5108e563f4fdc5",
+      "differences": [
+        "$.records[0].H[0][2]: -3.667122070431166 -> -3.667122121062222",
+        "$.records[0].H[1][2]: -16.237290536373504 -> -16.23729059729546",
+        "$.records[0].localization.camera.camera_centre_m[0]: 0.07539063550735911 -> 0.07539067715474045",
+        "$.records[0].localization.camera.camera_centre_m[1]: 20.609272462979998 -> 20.60927233886161",
+        "$.records[0].localization.camera.camera_centre_m[2]: 6.393690995375307 -> 6.393690956555787",
+        "$.records[0].localization.camera.focal_y_px: 5068.971481880607 -> 5068.971451257409",
+        "$.records[0].localization.camera.orthogonality_residual: 0.006229855164553736 -> 0.0062298541112413165",
+        "$.records[0].localization.uncorrected_position_m[0]: -0.23193838648713522 -> -0.23193840560930185",
+        "$.records[0].localization.uncorrected_position_m[1]: -8.592717864588822 -> -8.59271788360491",
+        "$.records[0].position_local_m[0]: -0.22540120052968346 -> -0.22540121831953283",
+        "$.records[0].position_local_m[1]: -7.97156324710387 -> -7.971563264584228",
+        "$.records[1].H[0][2]: -3.6679598873514303 -> -3.667959937980597"
+      ]
+    },
+    {
+      "file": "prototype/cross-view/T04-departure.json",
+      "passed": false,
+      "original_sha256": "f38c40b28725333c6aa42f88b01163d5c0012c56e7f05198adb3b12c740f0cf8",
+      "fresh_sha256": "a7b12e365279fce53bdfc13a5b237937dd06adae71c383168aef5127b426b0d2",
+      "differences": [
+        "$.records[0].H[0][2]: -3.666849517401886 -> -3.666849568052976",
+        "$.records[0].H[1][2]: -16.24718049831162 -> -16.24718055927672",
+        "$.records[0].localization.camera.camera_centre_m[0]: 0.07539063550735911 -> 0.07539067715474045",
+        "$.records[0].localization.camera.camera_centre_m[1]: 20.609272462979998 -> 20.60927233886161",
+        "$.records[0].localization.camera.camera_centre_m[2]: 6.393690995375307 -> 6.393690956555787",
+        "$.records[0].localization.camera.focal_y_px: 5068.971481880607 -> 5068.971451257409",
+        "$.records[0].localization.camera.orthogonality_residual: 0.006229855164553736 -> 0.0062298541112413165",
+        "$.records[0].localization.uncorrected_position_m[0]: -0.3359775871401268 -> -0.3359776065248064",
+        "$.records[0].localization.uncorrected_position_m[1]: -8.602187227499446 -> -8.602187246295903",
+        "$.records[0].position_local_m[0]: -0.3272273866189368 -> -0.32722740465227723",
+        "$.records[0].position_local_m[1]: -7.980831187493947 -> -7.980831204758125",
+        "$.records[1].H[0][2]: -3.6670696122884916 -> -3.6670696629360404"
+      ]
+    },
+    {
+      "file": "prototype/cross-view/T05-departure.json",
+      "passed": false,
+      "original_sha256": "51f6d997b8a50025b4b6731a886f944d0ba51b59b3adf0954e76a24c96712bcc",
+      "fresh_sha256": "545f06e0a6016032729d9df08a3777a4d2d63bca1ae7da3675d7e44eabb4014f",
+      "differences": [
+        "$.records[0].H[0][2]: -3.664890236315793 -> -3.6648902869483106",
+        "$.records[0].H[1][2]: -16.24240999040218 -> -16.24241005135092",
+        "$.records[0].localization.camera.camera_centre_m[0]: 0.07539063550735911 -> 0.07539067715474045",
+        "$.records[0].localization.camera.camera_centre_m[1]: 20.609272462979998 -> 20.60927233886161",
+        "$.records[0].localization.camera.camera_centre_m[2]: 6.393690995375307 -> 6.393690956555787",
+        "$.records[0].localization.camera.focal_y_px: 5068.971481880607 -> 5068.971451257409",
+        "$.records[0].localization.camera.orthogonality_residual: 0.006229855164553736 -> 0.0062298541112413165",
+        "$.records[0].localization.uncorrected_position_m[0]: -0.3822403281203293 -> -0.3822403488786918",
+        "$.records[0].localization.uncorrected_position_m[1]: -9.164436462264474 -> -9.16443648366725",
+        "$.records[0].position_local_m[0]: -0.3725060742913005 -> -0.37250609366312964",
+        "$.records[0].position_local_m[1]: -8.531120836476163 -> -8.531120856218587",
+        "$.records[1].H[0][2]: -3.665399813764237 -> -3.665399864406037"
+      ]
+    },
+    {
+      "file": "prototype/cross-view/T06-departure.json",
+      "passed": false,
+      "original_sha256": "25a04c58e5ff9306bb715b8798974fb751d669fc7195e0cf25e4ef4333f7422f",
+      "fresh_sha256": "2ef24aa6e7763a684d11ddcce303db999ed57be67a8018dc3038ecfbb70a8e89",
+      "differences": [
+        "$.records[0].H[0][2]: -3.6668011911535654 -> -3.6668012417907496",
+        "$.records[0].H[1][2]: -16.240787732009075 -> -16.240787792946765",
+        "$.records[0].localization.camera.camera_centre_m[0]: 0.07539063550735911 -> 0.07539067715474045",
+        "$.records[0].localization.camera.camera_centre_m[1]: 20.609272462979998 -> 20.60927233886161",
+        "$.records[0].localization.camera.camera_centre_m[2]: 6.393690995375307 -> 6.393690956555787",
+        "$.records[0].localization.camera.focal_y_px: 5068.971481880607 -> 5068.971451257409",
+        "$.records[0].localization.camera.orthogonality_residual: 0.006229855164553736 -> 0.0062298541112413165",
+        "$.records[0].localization.uncorrected_position_m[0]: 0.30859952788267164 -> 0.3085995093889391",
+        "$.records[0].localization.uncorrected_position_m[1]: -8.903630403819736 -> -8.903630425701152",
+        "$.records[0].position_local_m[0]: 0.3036389488703321 -> 0.30363893162574096",
+        "$.records[0].position_local_m[1]: -8.27586237549494 -> -8.275862395739523",
+        "$.records[1].H[0][2]: -3.666504843777654 -> -3.666504894406091"
+      ]
+    },
+    {
+      "file": "prototype/cross-view/T07-departure.json",
+      "passed": false,
+      "original_sha256": "ed8d056abedfcc21766af073e9cf2edb53032b49a8c945153646b66c72441338",
+      "fresh_sha256": "d9ace7d5ef876cbaa7c5b233a8943b928ab21e44692ca6f1466af1a506c5d6b9",
+      "differences": [
+        "$.records[0].H[0][2]: -3.6681787207007925 -> -3.6681787713751812",
+        "$.records[0].H[1][2]: -16.255409087027186 -> -16.255409148024867",
+        "$.records[0].localization.camera.camera_centre_m[0]: 0.07539063550735911 -> 0.07539067715474045",
+        "$.records[0].localization.camera.camera_centre_m[1]: 20.609272462979998 -> 20.60927233886161",
+        "$.records[0].localization.camera.camera_centre_m[2]: 6.393690995375307 -> 6.393690956555787",
+        "$.records[0].localization.camera.focal_y_px: 5068.971481880607 -> 5068.971451257409",
+        "$.records[0].localization.camera.orthogonality_residual: 0.006229855164553736 -> 0.0062298541112413165",
+        "$.records[0].localization.uncorrected_position_m[0]: -0.18573704237010646 -> -0.18573706338540116",
+        "$.records[0].localization.uncorrected_position_m[1]: -9.502457445565245 -> -9.502457469195782",
+        "$.records[0].position_local_m[0]: -0.180182603749751 -> -0.1801826233984256",
+        "$.records[0].position_local_m[1]: -8.86195178607618 -> -8.861951807955341",
+        "$.records[1].H[0][2]: -3.665657334923551 -> -3.6656573855886303"
+      ]
+    },
+    {
+      "file": "prototype/cross-view/T08-departure.json",
+      "passed": false,
+      "original_sha256": "b7e8c910e532f4e6570890104fc279468cb514e7b5ff4df5118919275addc853",
+      "fresh_sha256": "f141eddb00d5aac2d60ee80c1f1888f7178ae1b6ab3e2554bac7ec74e97894dc",
+      "differences": [
+        "$.records[0].H[0][2]: -3.6689558529127906 -> -3.6689559035652626",
+        "$.records[0].H[1][2]: -16.243637099343402 -> -16.243637160288767",
+        "$.records[1].H[0][2]: -3.668375804450457 -> -3.6683758551186396",
+        "$.records[1].H[1][2]: -16.252121267704705 -> -16.252121328687817",
+        "$.records[2].H[0][2]: -3.669497991618045 -> -3.669498042292411",
+        "$.records[2].H[1][2]: -16.25277532327549 -> -16.252775384259028",
+        "$.records[2].localization.camera.camera_centre_m[0]: 0.07539063550735911 -> 0.07539067715474045",
+        "$.records[2].localization.camera.camera_centre_m[1]: 20.609272462979998 -> 20.60927233886161",
+        "$.records[2].localization.camera.camera_centre_m[2]: 6.393690995375307 -> 6.393690956555787",
+        "$.records[2].localization.camera.focal_y_px: 5068.971481880607 -> 5068.971451257409",
+        "$.records[2].localization.camera.orthogonality_residual: 0.006229855164553736 -> 0.0062298541112413165",
+        "$.records[2].localization.uncorrected_position_m[0]: -0.36735641643905975 -> -0.36735643800843326"
+      ]
+    },
+    {
+      "file": "prototype/cross-view/T09-departure.json",
+      "passed": false,
+      "original_sha256": "892de3dfc0a69c2423cfe6927b653cb57caff67a8ab69af5275ddc2f97442a5e",
+      "fresh_sha256": "b9c7ec42c3ec768e69744bbebdd8a15f9c1de8e597729908f58280de389847ac",
+      "differences": [
+        "$.records[0].H[0][2]: -3.669836625235356 -> -3.6698366759287384",
+        "$.records[0].H[1][2]: -16.260975417177978 -> -16.260975478196084",
+        "$.records[0].localization.camera.camera_centre_m[0]: 0.07539063550735911 -> 0.07539067715474045",
+        "$.records[0].localization.camera.camera_centre_m[1]: 20.609272462979998 -> 20.60927233886161",
+        "$.records[0].localization.camera.camera_centre_m[2]: 6.393690995375307 -> 6.393690956555787",
+        "$.records[0].localization.camera.focal_y_px: 5068.971481880607 -> 5068.971451257409",
+        "$.records[0].localization.camera.orthogonality_residual: 0.006229855164553736 -> 0.0062298541112413165",
+        "$.records[0].localization.uncorrected_position_m[0]: -0.22151471445152 -> -0.22151473229900998",
+        "$.records[0].localization.uncorrected_position_m[1]: -8.026615775169192 -> -8.026615791642243",
+        "$.records[0].position_local_m[0]: -0.21519925009398133 -> -0.21519926663761288",
+        "$.records[0].position_local_m[1]: -7.417502697417195 -> -7.417502712481714",
+        "$.records[1].H[0][2]: -3.669970270724111 -> -3.6699703214199064"
+      ]
+    },
+    {
+      "file": "prototype/cross-view/T10-departure.json",
+      "passed": false,
+      "original_sha256": "23a12a913ad057f76b216fa2261863ce8a7f1bf00b22b0227e0c6c08791b8f37",
+      "fresh_sha256": "7db47e1dabc905d525f791d4f50363ad43544a2aeb44d652fbbb0e16c7ca7fd5",
+      "differences": [
+        "$.records[0].H[0][2]: -3.6760500668429503 -> -3.676050117590468",
+        "$.records[0].H[1][2]: -16.27388139735102 -> -16.27388145841144",
+        "$.records[0].localization.camera.camera_centre_m[0]: 0.07539063550735911 -> 0.07539067715474045",
+        "$.records[0].localization.camera.camera_centre_m[1]: 20.609272462979998 -> 20.60927233886161",
+        "$.records[0].localization.camera.camera_centre_m[2]: 6.393690995375307 -> 6.393690956555787",
+        "$.records[0].localization.camera.focal_y_px: 5068.971481880607 -> 5068.971451257409",
+        "$.records[0].localization.camera.orthogonality_residual: 0.006229855164553736 -> 0.0062298541112413165",
+        "$.records[0].localization.uncorrected_position_m[0]: -0.16422846952249723 -> -0.1642284875090464",
+        "$.records[0].localization.uncorrected_position_m[1]: -8.146789818817624 -> -8.146789835965693",
+        "$.records[0].position_local_m[0]: -0.1591315390784663 -> -0.15913155576559665",
+        "$.records[0].position_local_m[1]: -7.535120522764181 -> -7.535120538473835",
+        "$.records[1].H[0][2]: -3.6738080757029072 -> -3.6738081264453326"
+      ]
+    },
+    {
+      "file": "prototype/cross-view/T11-departure.json",
+      "passed": false,
+      "original_sha256": "3d51338f878e053e44bb6abbdd09159c61057e8a82efbf59e40aa58d697a51c3",
+      "fresh_sha256": "fa83c77280bf0586ba2c38dc509e2815ce41d6e759d2642472fd2062d816022c",
+      "differences": [
+        "$.records[0].H[0][2]: -3.6672732989788988 -> -3.667273349638713",
+        "$.records[0].H[1][2]: -16.25040861056662 -> -16.25040867154471",
+        "$.records[0].localization.camera.camera_centre_m[0]: 0.07539063550735911 -> 0.07539067715474045",
+        "$.records[0].localization.camera.camera_centre_m[1]: 20.609272462979998 -> 20.60927233886161",
+        "$.records[0].localization.camera.camera_centre_m[2]: 6.393690995375307 -> 6.393690956555787",
+        "$.records[0].localization.camera.focal_y_px: 5068.971481880607 -> 5068.971451257409",
+        "$.records[0].localization.camera.orthogonality_residual: 0.006229855164553736 -> 0.0062298541112413165",
+        "$.records[0].localization.uncorrected_position_m[0]: -0.15505755556199197 -> -0.15505757566180126",
+        "$.records[0].localization.uncorrected_position_m[1]: -9.120675054705252 -> -9.120675076472121",
+        "$.records[0].position_local_m[0]: -0.15015569934027242 -> -0.1501557180968972",
+        "$.records[0].position_local_m[1]: -8.488290276440274 -> -8.488290296544713",
+        "$.records[1].H[0][2]: -3.6670968425151775 -> -3.6670968931755623"
+      ]
+    },
+    {
+      "file": "prototype/cross-view/T12-departure.json",
+      "passed": false,
+      "original_sha256": "2f6f9e0b03c7703f1c7cc203b635c3c242b5f53d773b53806947b7d67e311ce1",
+      "fresh_sha256": "d76f5e771de55e9703e8677052f97c2cb6a4b786bb5ecb3cc2db3b1238d97866",
+      "differences": [
+        "$.records[0].H[0][2]: -3.6667222913088198 -> -3.6667223419890402",
+        "$.records[0].H[1][2]: -16.261026251246356 -> -16.261026312271316",
+        "$.records[0].localization.camera.camera_centre_m[0]: 0.07539063550735911 -> 0.07539067715474045",
+        "$.records[0].localization.camera.camera_centre_m[1]: 20.609272462979998 -> 20.60927233886161",
+        "$.records[0].localization.camera.camera_centre_m[2]: 6.393690995375307 -> 6.393690956555787",
+        "$.records[0].localization.camera.focal_y_px: 5068.971481880607 -> 5068.971451257409",
+        "$.records[0].localization.camera.orthogonality_residual: 0.006229855164553736 -> 0.0062298541112413165",
+        "$.records[0].localization.uncorrected_position_m[0]: -0.1610715718788485 -> -0.16107158989232684",
+        "$.records[0].localization.uncorrected_position_m[1]: -8.162254004838578 -> -8.16225402206352",
+        "$.records[0].position_local_m[0]: -0.15604179170527044 -> -0.15604180841916582",
+        "$.records[0].position_local_m[1]: -7.550255770570829 -> -7.550255786353724",
+        "$.records[1].H[0][2]: -3.6688342843496318 -> -3.6688343350399313"
+      ]
+    },
+    {
+      "file": "prototype/cross-view/T13-departure.json",
+      "passed": false,
+      "original_sha256": "5c1cb7376d43012ebe68e617f1027e948a7ac941ba0627a9b3c7346aab209946",
+      "fresh_sha256": "f66599c45a3331b39841170e7ebb44c79672f244eba602b6371c43e77fbd6180",
+      "differences": [
+        "$.records[0].H[0][2]: -3.66840118604718 -> -3.6684012367283882",
+        "$.records[0].H[1][2]: -16.258148755926744 -> -16.258148816935744",
+        "$.records[1].H[0][2]: -3.662547204972773 -> -3.6625472555759764",
+        "$.records[1].H[1][2]: -16.233390255880682 -> -16.233390316795596",
+        "$.records[2].H[0][2]: -3.666692736091114 -> -3.6666927867461188",
+        "$.records[2].H[1][2]: -16.24931877223971 -> -16.249318833214346",
+        "$.records[3].H[0][2]: -3.666926415525129 -> -3.66692646619119",
+        "$.records[3].H[1][2]: -16.25401308113892 -> -16.25401314213326",
+        "$.records[3].localization.camera.camera_centre_m[0]: 0.07539063550735911 -> 0.07539067715474045",
+        "$.records[3].localization.camera.camera_centre_m[1]: 20.609272462979998 -> 20.60927233886161",
+        "$.records[3].localization.camera.camera_centre_m[2]: 6.393690995375307 -> 6.393690956555787",
+        "$.records[3].localization.camera.focal_y_px: 5068.971481880607 -> 5068.971451257409"
+      ]
+    },
+    {
+      "file": "prototype/cross-view/T14-departure.json",
+      "passed": false,
+      "original_sha256": "4a7e9c6ece5f0b6112772afe3e3e72a40e6a61a0f139c6bd12d6204184efc480",
+      "fresh_sha256": "73f344d3ffc5fae1926581030987f8c463d555c7d6a71a25671fa412c9b36d89",
+      "differences": [
+        "$.records[0].H[0][2]: -3.6669243740692363 -> -3.6669244247071724",
+        "$.records[0].H[1][2]: -16.24089378063395 -> -16.240893841571832",
+        "$.records[1].H[0][2]: -3.664907633594718 -> -3.6649076842065047",
+        "$.records[1].H[1][2]: -16.232701939395792 -> -16.232702000302716",
+        "$.records[1].localization.camera.camera_centre_m[0]: 0.07539063550735911 -> 0.07539067715474045",
+        "$.records[1].localization.camera.camera_centre_m[1]: 20.609272462979998 -> 20.60927233886161",
+        "$.records[1].localization.camera.camera_centre_m[2]: 6.393690995375307 -> 6.393690956555787",
+        "$.records[1].localization.camera.focal_y_px: 5068.971481880607 -> 5068.971451257409",
+        "$.records[1].localization.camera.orthogonality_residual: 0.006229855164553736 -> 0.0062298541112413165",
+        "$.records[1].localization.uncorrected_position_m[0]: -0.04951233801839623 -> -0.049512357587391795",
+        "$.records[1].localization.uncorrected_position_m[1]: -8.99625219217792 -> -8.996252213598694",
+        "$.records[1].position_local_m[0]: -0.0468555307983096 -> -0.046855549049044834"
+      ]
+    },
+    {
+      "file": "prototype/cross-view/T15-departure.json",
+      "passed": false,
+      "original_sha256": "d43c25d049cca80ef5e4bae2c7603c0a5f727f4d629ed52a3dfd2b1882d93fb7",
+      "fresh_sha256": "ad411f7e253144fbebbe55d014241034ebe3a8b602a96697d47c47de2feb5403",
+      "differences": [
+        "$.records[0].H[0][2]: -3.6671826858822225 -> -3.667182736562578",
+        "$.records[0].H[1][2]: -16.260173967969447 -> -16.26017402898976",
+        "$.records[1].H[0][2]: -3.6712484954933045 -> -3.6712485461985205",
+        "$.records[1].H[1][2]: -16.263689917709982 -> -16.263689978736767",
+        "$.records[2].H[0][2]: -3.669552464085325 -> -3.669552514780868",
+        "$.records[2].H[1][2]: -16.262548494634057 -> -16.26254855565954",
+        "$.records[2].localization.camera.camera_centre_m[0]: 0.07539063550735911 -> 0.07539067715474045",
+        "$.records[2].localization.camera.camera_centre_m[1]: 20.609272462979998 -> 20.60927233886161",
+        "$.records[2].localization.camera.camera_centre_m[2]: 6.393690995375307 -> 6.393690956555787",
+        "$.records[2].localization.camera.focal_y_px: 5068.971481880607 -> 5068.971451257409",
+        "$.records[2].localization.camera.orthogonality_residual: 0.006229855164553736 -> 0.0062298541112413165",
+        "$.records[2].localization.uncorrected_position_m[0]: 0.023925376865454137 -> 0.02392536220375004"
+      ]
+    },
+    {
+      "file": "prototype/cross-view/T16-departure.json",
+      "passed": false,
+      "original_sha256": "a40b1569bce559e21d2c3b2c330b7588b78db63073fc200fbd34a41d88cc3189",
+      "fresh_sha256": "21de8ce420b0794ad5bb4b89c04b00364c39ea413f003306f847c08e1c634e11",
+      "differences": [
+        "$.records[0].H[0][2]: -3.6681730587359964 -> -3.668173109388971",
+        "$.records[0].H[1][2]: -16.24542816989704 -> -16.245428230851775",
+        "$.records[0].localization.camera.camera_centre_m[0]: 0.07539063550735911 -> 0.07539067715474045",
+        "$.records[0].localization.camera.camera_centre_m[1]: 20.609272462979998 -> 20.60927233886161",
+        "$.records[0].localization.camera.camera_centre_m[2]: 6.393690995375307 -> 6.393690956555787",
+        "$.records[0].localization.camera.focal_y_px: 5068.971481880607 -> 5068.971451257409",
+        "$.records[0].localization.camera.orthogonality_residual: 0.006229855164553736 -> 0.0062298541112413165",
+        "$.records[0].localization.uncorrected_position_m[0]: -0.11123106395486874 -> -0.11123108396050212",
+        "$.records[0].localization.uncorrected_position_m[1]: -9.1272908834152 -> -9.127290905327401",
+        "$.records[0].position_local_m[0]: -0.10726143965722484 -> -0.10726145832733759",
+        "$.records[0].position_local_m[1]: -8.494765380065889 -> -8.494765400311707",
+        "$.records[1].H[0][2]: -3.6663633915498077 -> -3.666363442186331"
+      ]
+    }
+  ],
+  "passed": false,
+  "cleared_outputs": [
+    "feasibility/results/calibration_metrics.csv",
+    "feasibility/results/homographies.json",
+    "feasibility/results/landmark_errors.csv",
+    "feasibility/results/measured_stones.csv",
+    "feasibility/results/repeat_zoom_consistency.csv",
+    "feasibility/results/stone_comparisons.csv",
+    "feasibility/results/summary.json",
+    "prototype/body-localization/results.json",
+    "prototype/body-localization/transfer-check.json",
+    "prototype/body-localization/video-timeline.json",
+    "prototype/continuous/diagnostics.json",
+    "prototype/continuous/timeline.json",
+    "prototype/cross-view/T01-departure.json",
+    "prototype/cross-view/T02-departure.json",
+    "prototype/cross-view/T03-departure.json",
+    "prototype/cross-view/T04-departure.json",
+    "prototype/cross-view/T05-departure.json",
+    "prototype/cross-view/T06-departure.json",
+    "prototype/cross-view/T07-departure.json",
+    "prototype/cross-view/T08-departure.json",
+    "prototype/cross-view/T09-departure.json",
+    "prototype/cross-view/T10-departure.json",
+    "prototype/cross-view/T11-departure.json",
+    "prototype/cross-view/T12-departure.json",
+    "prototype/cross-view/T13-departure.json",
+    "prototype/cross-view/T14-departure.json",
+    "prototype/cross-view/T15-departure.json",
+    "prototype/cross-view/T16-departure.json",
+    "prototype/cross-view/results.json",
+    "prototype/pre-gate-audit/results.json",
+    "prototype/rectification/audit.json",
+    "prototype/rectification/calibration.json",
+    "prototype/rectification/timeline.json",
+    "prototype/stone-accuracy/results.json",
+    "prototype/throw-analysis/evaluation.json",
+    "prototype/throw-analysis/predictions.json",
+    "prototype/throw-analysis/target-analysis.json",
+    "prototype/throw-segments/T01.json",
+    "prototype/throw-segments/T02.json",
+    "prototype/throw-segments/T03.json",
+    "prototype/throw-segments/T04.json",
+    "prototype/throw-segments/T05.json",
+    "prototype/throw-segments/T06.json",
+    "prototype/throw-segments/T07.json",
+    "prototype/throw-segments/T08.json",
+    "prototype/throw-segments/T09.json",
+    "prototype/throw-segments/T10.json",
+    "prototype/throw-segments/T11.json",
+    "prototype/throw-segments/T12.json",
+    "prototype/throw-segments/T13.json",
+    "prototype/throw-segments/T14.json",
+    "prototype/throw-segments/T15.json",
+    "prototype/throw-segments/T16.json",
+    "prototype/throw-segments/manifest.json",
+    "prototype/throw-segments/results.json",
+    "prototype/trajectory-accuracy/results.json",
+    "prototype/vision/development-evaluation.json",
+    "prototype/vision/evaluation.json",
+    "prototype/vision/results.json"
+  ],
+  "input_sha256": {
+    "feasibility/annotations/manual.json": "a48f3a1bb5d97fd34dd6d09a91c32201f73c00071cc7323606e290e7a2b38799",
+    "feasibility/frames/t232.png": "3fae35e5cdc713ba1e99551bea60d4e67942ce133a46df1466f5246d7e9fbdbe",
+    "feasibility/frames/t188.png": "a5698399c2699f42e1e4001558949f1f4c2f108162d7742248577e566637f879",
+    "feasibility/frames/t469.png": "b8c9da54b966ef566fc721eacadc60ad17f0b4d0d49137af9fbf961f9fc785ef",
+    "feasibility/frames/t150.png": "940672291749fe3290e947e2a705b1d4296a88b4d605012cd3d63176d192a396",
+    "feasibility/frames/t412.png": "0fe085c29c0001fb2ec35c2b8ee34465e7aa300b87d837d8aa20c97648fda7fb",
+    "feasibility/frames/t166_960.png": "0284fa4737a08f45eed6b735b7de0b25f62db9dcfe4379c9635ffa2edb501ef9",
+    "feasibility/frames/t196_960.png": "0204964ed3478633e9896525d2a9a138d066660679e832cf8b97f928d512a923",
+    "feasibility/frames/t272.png": "9877437025d8fd27f615956af03726d3854fc973ac23ff2200e92b98a99aa1cd",
+    "feasibility/frames/contact_1.jpg": "16ba963a731759188fbf38fd7db92e291fa796e6c966e697412e0541025287f9",
+    "feasibility/frames/t452.png": "7e28868a6b8342f0ca8985967f2c04364cd8aaf0c0ca71b7f9b6e3191b8f2c0b",
+    "feasibility/frames/t398.png": "7f016dfdaf71e1da2fdf5bd5642495b7cfe259b967ee6b8835ad542fd50788bd",
+    "feasibility/frames/t174.png": "3a0dfb903e02c63053ac3c3a5d248b20d685c8425683d7ac4e17aa77344eab84",
+    "feasibility/frames/t231_960.png": "5bdbf9ea960a9a9a5614f5c247f1a3cc6085afecc2737d4b1460adf9ce730082",
+    "feasibility/frames/t396.png": "d57a64fb3db633eac92e6bb33323167797d6554a219015643abce51a1dce03b8",
+    "feasibility/frames/detail_0.jpg": "ccde9294ec76133976b3108a13b62417591a6e0ab294c703c16405f3ba0fc396",
+    "feasibility/frames/t309.png": "f30b610e460576c77e972de1682657781f0a9e3f73b5a00152d278a92a597cdd",
+    "feasibility/frames/t449_960.png": "42bb5f7b43ca25b54c1edd1adf116e3791cc445f299fa30f9088e2dc75948d71",
+    "feasibility/frames/t190.png": "d73bfcad80af9f82e662b663b6ebcea2d744028bac55fa9bb16ddf5026ce59ff",
+    "feasibility/frames/t478.png": "882c5fa958ae693ac232e480dc04c947b72173118fe2851567026fdbfeddbe3f",
+    "feasibility/frames/t373_960.png": "2fbcc2735f5690a5a53e53c19a391d478efc45115df9cc99380fdd90e73322aa",
+    "feasibility/frames/t372.png": "b4825e3748fab318e5b4789f66694f039156ef43b15e55d5c6398ef6837ee835",
+    "feasibility/frames/t476.png": "c507a7000affd91eef42f75bf281cb0164eb65de8a553271221853ce25014787",
+    "feasibility/frames/t134.png": "8a5feed91d18b8889ba880d0d4e04489dffa0676d5e0a736b87070f173ae5ba8",
+    "feasibility/frames/t148.png": "b07ddc77679ef52007c4d3ee308ae10aef4af191b9b26e609b36b6b9b84a2c06",
+    "feasibility/frames/t471.png": "7ba6ecf3de318df460b8c41850970accbb6edc90f5ecea8eda3260c61652f7a2",
+    "feasibility/frames/t454.png": "603b9d6ca6995ef1476c41006ac29f80b4821e95d9b6a31c7d887fa82ee0cbd4",
+    "feasibility/frames/selection.jpg": "2bc0036c0ab5c9e18e92332013c5a6ba97c79b188213125c797a40fd996f574c",
+    "feasibility/frames/contact_0.jpg": "99cec3530722d3a93ee6813ea608889cf9d80bee1bc77ef4340d9981a4075ab3",
+    "feasibility/frames/t230_960.png": "ae1b8f16133f6522b9e790e7d18cc4bef2b3149689c793fdd6b7c0a62de06d13",
+    "feasibility/frames/t274.png": "11fc56bf2851e6f6c51fc724ad4e4c13c141d8bdcdda7d1ffd54212c1304625c",
+    "feasibility/frames/t414.png": "3578026a6912be11e3ee8088664b6a3fab482430fd2f0776e1add830b229497b",
+    "feasibility/frames/t234.png": "aebfa3da35f4448f6fd0dd08c40d33a33b02d4d6ad226b2d08970295f7b5087e",
+    "feasibility/frames/t233.png": "81f49c43f9def6470f4d1feb1189b7e6ed7159bd67f504e500b906e85ee0abbc",
+    "feasibility/frames/t470.png": "ea30dbd757d3997b1f506807b90f5d98776dd807eb884c7cb833e7e155dbc713",
+    "feasibility/frames/t306.png": "288f3d0fc9eef20fdb6c2f80211175b5efdc8c5cb3181dc56f56b35b95aa5e11",
+    "feasibility/frames/t132.png": "424af0cf215248730d5a2fb4b55fc826e08b2743d8e066f1d05237fffe91c2c4",
+    "feasibility/frames/t451_960.png": "f8cdd43633e3d6b5b1bae921a1d37adf5dd29a89f6ea07c565c33531265fbb4e",
+    "feasibility/frames/t373.png": "cb2abf96f960c5701dc820181c002bb488f38b532087d7f7a63d2f526899ec25",
+    "feasibility/frames/t267_960.png": "d5a17babc154b6c3419b56f754b719869d724ba4ab61b79823c7054ef1524c8e",
+    "feasibility/frames/detail_1.jpg": "354edee76b85609904553d63874a05a80eaac493dfa6a98641ef108a78eb5097",
+    "feasibility/frames/t374.png": "625c03f39af1cbba84e4ce12741c30f7c1b06c52ff2a52a650af26f014f582c1",
+    "feasibility/frames/t196.png": "6a793c0cef709dc3469bbc7b009f6faeea32f72cbacdd56402c670c47d97f550",
+    "feasibility/frames/t344_960.png": "facffcd46fd9600bcedfb5144b06ccc52346fd56454b69257052b96f570d3b4e",
+    "feasibility/frames/t308.png": "68b34791fd5fede356af60cc317b536dd2b09e37e8f8638db58b950ff4540c06",
+    "feasibility/frames/t172.png": "e38ebbbb8f2b803b8e4c81fee6c73146a3138be635273830f4cba99d04821edb",
+    "feasibility/frames/t346.png": "570d93403d30c089d32c6602ac94466ccfeba248ffac14d42629f9616075c996",
+    "feasibility/frames/t148_960.png": "545b6a7860432149e5fcfc281278a558141043a695dedcb5a0498088f6e0ecf8",
+    "feasibility/frames/t348.png": "92d2c0541f9cdbcc7c1277f69d00dc8d18dd756c192fb800cb1827b5110f55e4",
+    "feasibility/frames/t100.png": "fbeacc7213bfdf4a0d7ae239e2dc3c2e890758c7aeb0cf02c38b88b3a63885c2",
+    "feasibility/frames/t474.png": "1d760486f1238c295cd6eebd6b69fe8e33978dcfe148c62274e736d5edda5347",
+    "feasibility/frames/t302.png": "bb0725801d626d0d28b327022bf25fcac2a2f68648a47406744af90b731ce900",
+    "feasibility/frames/t136.png": "1c7a4f52cd162c7a8fd16962946b30b2e43bd40ef5f8817853c2fd7d02648ffe",
+    "feasibility/frames/t232_960.png": "cdd732e5bdf26bd951473d2b1c9de883ce1ac127cf2f7bc825be211f053d92f2",
+    "feasibility/frames/detail_2.jpg": "e7e2ca1bd54f507f43ca81490d20406b5c6edad979fdabc765c8523f42491b15",
+    "feasibility/frames/t138.png": "b89b974f0a511e433478b043c99be7d7fce057f4cf626f62f3381ba4a6504c16",
+    "feasibility/frames/t195.png": "5d05e629c150bbadcb32a23ea24652dcc5c63be7f8c935ef5edd7fc454ae2926",
+    "feasibility/frames/t192.png": "0f5d6ca75c24ec2a669a224d65d9a07214014dcdd1f0d3630f447c39faf4e5d2",
+    "feasibility/frames/t370.png": "83c505f97c3aa25eee931da1450861dd2a843e3af5711740daef6b103b28b89f",
+    "feasibility/frames/t176.png": "6b67c7b5fea9bfc420c43124b03b4b6d5362587cf8e7edd64b87e0c32c90ba9e",
+    "feasibility/frames/t394.png": "69aa6515606cbb4fbc24b743ee0513f5a1c258b9ee8df0cd472c9bdeae6d245f",
+    "feasibility/frames/t469_960.png": "22db917b6f9571295fb009104735958a13cb2fda343ad16545dfb861bb58b5b6",
+    "feasibility/frames/t342.png": "963823237187fd4605b560b9ee450a5dcf6c03904c2b447992d8853d398fdd3f",
+    "feasibility/frames/t136_960.png": "37e744ef06bd14d3a54893a651f17263e9a9450a966b58a9896bd7fcc154aff1",
+    "feasibility/frames/t450.png": "e438d1b6f3c7d11f2aa114b685c34179e9cb4c6eec475608846d5dcca6826c9a",
+    "feasibility/frames/t269_960.png": "c552a7c606301918c0caaa9cc62dfdc708e6d1a594bbefc1db441562f6f59fa2",
+    "feasibility/frames/t100_960.png": "cd87a4fe9dc4be5d8ba6059a4ebb918443d3de595e520732a126f35a18e042b9",
+    "feasibility/frames/t470_960.png": "c21dc47b1ea1be6fff67112ad29300b9d38f9b8375d9add20b0a278f9f57af6c",
+    "feasibility/frames/t369_960.png": "dd0b12d50724ecb15f29f945512864aa2afe09a8e5614014f7ffdc00456026ba",
+    "feasibility/frames/t270.png": "9b279c3bd26490bf5ee167b6fab6f44e4c4563711519274d0ca0801cb6344607",
+    "feasibility/frames/t152.png": "fea2d2d70c78466d45e0ed83ac27ca86ad99e61f0ae150dabfcc025608c231b9",
+    "feasibility/frames/t230.png": "26d9d8234458404ec621680d67fae70647c8e47c23e529702ba58efada1974ca",
+    "feasibility/frames/t195_960.png": "c79b3c02186438cfa2202c0381a8a204ba3ec2936e6158340882d2e968a3c954",
+    "feasibility/frames/t471_960.png": "fdcabb87b9495a4b20860e39fb5deae746cae17bfc0e6e0d8fa73d59da70280e",
+    "feasibility/frames/t269.png": "6061e80bc34d9744e87d78512d0b83c2aee5bb801777aa2e44e2f1c8b1e19068",
+    "feasibility/frames/t170.png": "65e83b117c78029b9f25a0bb073723b75480e4b3b8e2c00ea388cccff38375c8",
+    "feasibility/frames/t267.png": "9e6a71d09a4130f440cc361dfc1421fed116d4b519ef315319327f1c17a18ba1",
+    "feasibility/frames/t449.png": "08039802387a7d189627b785e8333ea5813011e23d4740aec5887edd90e81286",
+    "feasibility/frames/t398_960.png": "7c986f8e32b938c6caf4c10e77660847f0acefc9eb5c8604a5312782fb24c5b1",
+    "feasibility/frames/t344.png": "f12ddeabe64bcd16aad79b204ad405ab0b76f65540919b8821197e5778aff885",
+    "feasibility/frames/t309_960.png": "31c4a6aa25b793bccba4a53308631d296d6629a76f9c9ee55a9d07cd774a2264",
+    "feasibility/frames/t371.png": "4e04c72868278c6b32d05896ea5a0066b42e089afa77a3d62ffe657d20bf6583",
+    "feasibility/frames/detail_3.jpg": "47275bf8ae271f962e4f06de4414c3005708be0c008b9639cf87ec076e21d844",
+    "feasibility/frames/t400.png": "54c0e6b7df96f5c32f92d0ebe9271b1f86f6c9c08de8c7017789cfcc3533a0ea",
+    "feasibility/frames/t376.png": "4361ec5ebc9cf660a748de6444e6afd2316b96c918efa697102b2e8bedd67ce8",
+    "feasibility/frames/t194.png": "d484eb0b11ef9f55fa12563c2d71b7eb2273218dfd013a465e534fd81a7314f9",
+    "feasibility/frames/t472.png": "db82e29b914a883b4ea58e5ba88fa055837667a60c993b2ee37363f116c88542",
+    "feasibility/frames/t194_960.png": "79bf0e1930e23da000ae3d3b86dc3dfbc4ebaaf30b58225985b2aa09360468a2",
+    "feasibility/frames/t304.png": "fa0df59eb1ac70dce64feb2cba7be29664590d09f607a1d58cb176fdd7191ced",
+    "feasibility/frames/t414_960.png": "34fa7ecd7ec3e298c40b826c2ad82a3d46b3558374c97e28b855795c05e8ea83",
+    "feasibility/frames/t168_960.png": "8066e40da37cbf5bf049a88018f673ae412a877e4bae15d1860b045849409127",
+    "feasibility/frames/t233_960.png": "39cb52a1e6cc206716e03f027e608de91d39597751fb77fc5d2aff33afd63008",
+    "feasibility/frames/t418.png": "b86c74460a6d87e7d1ad80eb6e57264d39337bed7dd3bafe833fcba87bea9956",
+    "feasibility/frames/t236.png": "c3df15a86ad127f3d11117a964727a6ab38dc2b9055bce2a612e1fd00841ac1d",
+    "feasibility/frames/t369.png": "b5692f9327bc0e1db7c5384110b3b83f78a48e125c4fbc70ff2b221a03a22e47",
+    "feasibility/frames/t231.png": "ce991461860aefe3ff6c363c990f7cb09046f10c9e991e9627c9f472d2694ceb",
+    "feasibility/frames/t154.png": "92f9b24948559a6b3a4c900c4ec84e37efb0c353be1bfb601e6a9a640f8d1912",
+    "feasibility/frames/t416.png": "f9e8e5a6357717f651d169df484a9610a92b34091b88e77e4e73db27a1162d0e",
+    "feasibility/frames/t271.png": "f9a987af696f5a24c2812ab010ede217fbece15a1dfa597bade3d5801a898417",
+    "feasibility/frames/t166.png": "0f5eedbf8e9c8f5dfcca2b495b837b35404b6f8996b1554c71e2aec6fffc623d",
+    "feasibility/frames/contact_2.jpg": "ba5c4fb0f350691371b36976fd51b7fcd57b08ae72c583639f7f9391a8bf6a4b",
+    "feasibility/frames/t271_960.png": "a4fdd0870693865675bd8a447e70e448b18e453c4886791dd605b78fec40f245",
+    "feasibility/frames/t276.png": "6cfb73c544cde0775af87fef4c599f54a8f5da6ca9c3e67e739eb0a6662b3eb0",
+    "feasibility/frames/t456.png": "84e15f0993999c2a0a7bf237bc7850cddffd405c5823b48ae5d47cc93aeebf03",
+    "feasibility/frames/t451.png": "8895ca74a07b4397fc95ad0f1af6b9a4eb122a6c7ee67ee0ed09aded3339ed00",
+    "feasibility/frames/t371_960.png": "8226300342f17c19a9d12f614619531bbc1e288471e09868c60c70cf78580b3a",
+    "feasibility/frames/t168.png": "11f8d52fe1ba56138c61f79d168103889f8e03134c6b2337316ea395009f814b",
+    "prototype/vision/annotations/calibration.json": "03e164c0f26c0b2e3ebca7e85577c5874dbb83128aab52569776e60cd293103b",
+    "prototype/vision/annotations/detection-reference.json": "9c549d89bc87860b770aea47a3c11c514651d3c9960c82a707931fa55bbd535b",
+    "prototype/vision/frames/04000.jpg": "54866c9e8445ae2c53bb78c6c5b5cc73c82227b73ca9fe5a141e0957a72d7d99",
+    "prototype/vision/frames/02300.jpg": "d3e5b8925893e9cada0024b725385ca7db75c3ce4973da22a3bae94fc2d6897a",
+    "prototype/vision/frames/03572.jpg": "82b24664ded76ae86c322c5f4c8cc29ca02991f7fd0e946670681e8aca18faba",
+    "prototype/vision/frames/06000.jpg": "9f285e91a32e2964eb9d3b4c9fc83d26e0e8be9f9d258b19e84f307bcda4dd05",
+    "prototype/vision/frames/01900.jpg": "e6f3f0b391b316a653b289c1b6c8f65e927dcbfd34f8a4472ae48cd29b02694a",
+    "prototype/vision/frames/06495.jpg": "c90084a676fe361e124fb03d1d60bea3f2cf7272548a0c57b9a337b802c696b8",
+    "prototype/vision/frames/07800.jpg": "97761101fe9e0994bb66f6ff00c95994bcb1d872b821a6d0bb79889a2a2b512f",
+    "prototype/vision/frames/01624.jpg": "35e021bd2d359fe87080526e1e06eb54cf90fa3246538894463afba775be5a6c",
+    "prototype/vision/frames/07469.jpg": "36f7b0395310aea52c379a774ddb938c2f5b8f06af8f466d4861532dd492addf",
+    "prototype/vision/frames/04547.jpg": "e1cf1e1bbe21bb177c512cb78cb12379244c36f197e8a96f3ef491e2121f446d",
+    "prototype/vision/frames/00750.jpg": "a08f853e4f7df45cf0066bc45cc72fb77c37e93940b5f22657c011ad20151445",
+    "prototype/vision/frames/02598.jpg": "823009aec991d12ac6001b041b4757b9d3caa3900e16bdf9f61a4171bed4cb84",
+    "prototype/vision/frames/05521.jpg": "2baa8cd6a0e6c9ee2b62d34a520152bbb010aea87e02e8a9d4d2b064172b8178",
+    "prototype/vision/frames/00650.jpg": "8541c48ecb586a1683f4fd8fc64f7a62a136d2107d922b506da50db268fd93ec",
+    "prototype/sources/canada-korea-2024-360p.mp4": "38112c0d9f135b2367904e4b41440748a8dfe8dc9d93ad9b0efe0ebafbe8d959",
+    "prototype/throw-analysis/end3.mp4": "4c1442420796ad11865e8b92b6edc2d8122d7f825974a53d8db02a433e66a7e5",
+    "prototype/continuous/clip.mp4": "b514dd3bdd2604f39e981759626bd345288d2096b19c6bc8f1dd6cada4e326f4",
+    "feasibility/sources/owg2018_final_records.csv": "d4745efc7705d834714b90e64736fb8ad61056a2e5568717193f319d256e9ac4",
+    "prototype/stone-accuracy/protocol.json": "127271beaa09fb5d7b4d578b285ae8dd8072a759a515457c039b028dbd35d346",
+    "prototype/throw-analysis/reference.json": "bcdcf246ec2c8c17174643c7f47b7efc65fb7cbc78c119d19c81f9b053df483f",
+    "prototype/trajectory-accuracy/reference.json": "cf7826ff8706e7d24295e414c0f786227ea6e4a10b64e8fa6cc8173887017b06"
+  },
+  "execution_passed": true,
+  "strict_comparison_passed": false,
+  "supplemental_runs": [
+    {
+      "command": "prototype/scripts/process_departure_geometry.py",
+      "returncode": 0,
+      "log": "process_departure_geometry-fresh.txt",
+      "note": "Ran concurrently in the same isolated workspace after all original departure caches were deleted. The driver later validated these freshly generated cache fingerprints."
+    },
+    {
+      "command": "prototype/scripts/review_segment_endpoints.py",
+      "returncode": 0,
+      "log": "review_segment_endpoints.txt"
+    }
+  ]
+}

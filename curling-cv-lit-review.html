@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Curling CV + LLM — Literature Review &amp; Feasibility Map</title>
+<style>
+  :root{
+    --ink:#14181f; --ink2:#3d4653; --muted:#6b7684; --line:#e2e6ec;
+    --bg:#fbfcfd; --card:#ffffff; --accent:#1f5fa8; --accent-soft:#eaf2fb;
+    --solved:#1d7a4c; --solved-bg:#e6f5ed;
+    --borrow:#1f5fa8; --borrow-bg:#e8f1fb;
+    --feasible:#9a6b00; --feasible-bg:#fdf3dd;
+    --open:#b8442a; --open-bg:#fdeeea;
+    --research:#6a3d9a; --research-bg:#f2ecfa;
+    --warn:#b8442a; --warnbg:#fdeeea;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font:16px/1.62 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 22px 90px}
+  a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(31,95,168,.28)}
+  a:hover{border-bottom-color:var(--accent)}
+  h1,h2,h3,h4{line-height:1.22;letter-spacing:-.01em}
+  h1{font-size:2.35rem;margin:0 0 .35rem}
+  h2{font-size:1.5rem;margin:2.9rem 0 .7rem;padding-bottom:.4rem;border-bottom:2px solid var(--line)}
+  h3{font-size:1.14rem;margin:1.9rem 0 .5rem}
+  h4{font-size:.97rem;margin:1.2rem 0 .35rem;color:var(--ink2);text-transform:uppercase;letter-spacing:.06em}
+  p{margin:.6rem 0}
+  ul,ol{margin:.5rem 0 .8rem;padding-left:1.35rem}
+  li{margin:.3rem 0}
+  code{font-family:var(--mono);font-size:.86em;background:#f1f4f8;padding:.12em .38em;border-radius:4px;border:1px solid #e4e9ef}
+  .mono{font-family:var(--mono);font-size:.9em}
+
+  header.hero{
+    background:linear-gradient(160deg,#12243b 0%,#1f3f66 55%,#2a5d8f 100%);
+    color:#fff;padding:58px 0 46px;margin-bottom:8px;
+  }
+  header.hero .wrap{padding-bottom:0}
+  header.hero h1{color:#fff}
+  .sub{font-size:1.06rem;color:#c5d6ea;max-width:70ch;margin:.5rem 0 0}
+  .meta{margin-top:1.5rem;display:flex;flex-wrap:wrap;gap:.5rem}
+  .chip{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.24);color:#e8f0f9;
+        border-radius:999px;padding:.24rem .72rem;font-size:.78rem;letter-spacing:.02em}
+  header.hero a.chip{border-bottom:1px solid rgba(255,255,255,.38);text-decoration:none}
+  header.hero a.chip:hover{border-bottom-color:#fff;background:rgba(255,255,255,.2)}
+
+  nav.toc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 22px;margin:26px 0 8px}
+  nav.toc h4{margin:0 0 .5rem}
+  nav.toc ol{columns:2;column-gap:34px;margin:0;padding-left:1.1rem}
+  @media(max-width:660px){nav.toc ol{columns:1}}
+
+  .verdict{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--accent);
+           border-radius:10px;padding:20px 24px;margin:22px 0}
+  .verdict h3{margin-top:0}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px;margin:18px 0 4px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:13px 15px}
+  .kpi .n{font-size:1.5rem;font-weight:700;letter-spacing:-.02em;color:var(--accent);line-height:1.15}
+  .kpi .l{font-size:.76rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:.3rem}
+  .kpi .s{font-size:.8rem;color:var(--ink2);margin-top:.35rem}
+
+  .tablewrap{overflow-x:auto;margin:1rem 0}
+  table{border-collapse:collapse;width:100%;font-size:.9rem;background:var(--card)}
+  th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top}
+  th{background:#f4f7fa;font-size:.79rem;text-transform:uppercase;letter-spacing:.045em;color:var(--ink2)}
+  tbody tr:nth-child(even){background:#fafbfd}
+  td.num{text-align:right;font-family:var(--mono);font-size:.85rem;white-space:nowrap}
+
+  .badge{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+         padding:.16rem .5rem;border-radius:5px;white-space:nowrap;border:1px solid transparent}
+  .b-solved{background:var(--solved-bg);color:var(--solved);border-color:#bfe3ce}
+  .b-borrow{background:var(--borrow-bg);color:var(--borrow);border-color:#c3dcf3}
+  .b-feasible{background:var(--feasible-bg);color:var(--feasible);border-color:#f0dca8}
+  .b-open{background:var(--open-bg);color:var(--open);border-color:#f3c9bf}
+  .b-research{background:var(--research-bg);color:var(--research);border-color:#d9c7ee}
+
+  .layers{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:10px;align-items:stretch;margin:1.3rem 0}
+  @media(max-width:800px){.layers{grid-template-columns:1fr}}
+  .layer{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .layer .t{font-weight:700;font-size:.95rem;margin-bottom:.3rem}
+  .layer .d{font-size:.85rem;color:var(--ink2)}
+  .arrow{align-self:center;font-size:1.5rem;color:var(--muted);text-align:center}
+  @media(max-width:800px){.arrow{transform:rotate(90deg)}}
+
+  figure{margin:1.5rem 0;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px 12px}
+  figure svg{display:block;width:100%;height:auto}
+  figcaption{font-size:.83rem;color:var(--muted);margin-top:.7rem;border-top:1px dashed var(--line);padding-top:.6rem}
+  .f-title{font-size:1rem;font-weight:700;margin:0 0 .15rem}
+  .f-note{font-size:.83rem;color:var(--ink2);margin:0 0 .9rem}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:16px 19px;margin:1rem 0}
+  .card h3{margin-top:0;display:flex;flex-wrap:wrap;gap:.55rem;align-items:center;font-size:1.05rem}
+  .card p{margin:.4rem 0;font-size:.93rem}
+  .card .ev{font-size:.88rem;color:var(--ink2);margin:.5rem 0 0}
+  .card .ev b{color:var(--ink)}
+
+  .callout{border-radius:10px;padding:15px 19px;margin:1.2rem 0;font-size:.93rem;border:1px solid}
+  .c-warn{background:var(--warnbg);border-color:#f0c8bd;color:#7d2f1c}
+  .c-info{background:var(--accent-soft);border-color:#c8dff6;color:#17436f}
+  .c-ok{background:var(--solved-bg);border-color:#bfe3ce;color:#145334}
+  .callout strong{color:inherit}
+  .callout h4{margin-top:0;color:inherit;opacity:.8}
+
+  .refs{font-size:.89rem}
+  .refs h4{margin-top:1.6rem}
+  .refs ol{padding-left:1.5rem}
+  .refs li{margin:.55rem 0}
+  .refs .why{color:var(--muted);display:block;font-size:.85rem}
+  .tag{font-size:.68rem;font-family:var(--mono);padding:.1rem .4rem;border-radius:4px;
+       background:#eef1f5;border:1px solid #dde3ea;color:var(--ink2);margin-left:.35rem;white-space:nowrap}
+
+  footer{margin-top:3.5rem;padding-top:1.3rem;border-top:2px solid var(--line);font-size:.85rem;color:var(--muted)}
+
+  @media print{
+    body{background:#fff} header.hero{background:#fff;color:#000;padding:0 0 20px}
+    header.hero h1,.sub{color:#000} .chip{color:#333;border-color:#999;background:#f2f2f2}
+    h2{page-break-after:avoid} figure,.card,table{page-break-inside:avoid}
+    nav.toc{display:none} a{border-bottom:none;color:#000}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>Curling Video&nbsp;→&nbsp;Game State: What Is Actually Hard</h1>
+    <p class="sub">A literature sweep and feasibility map for building a curling analysis system from arbitrary video, with an LLM layer on top. Written to answer one question: <em>what exactly is needed, and which parts are already solved by someone else?</em></p>
+    <div class="meta">
+      <span class="chip">Honours project · one term</span>
+      <span class="chip">~60 sources</span>
+      <span class="chip">Per-component difficulty ratings</span>
+      <span class="chip">Read time ~25 min</span>
+      <a class="chip" href="curling-cv-playbook.html">↗ Companion: the step-by-step Playbook</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<nav class="toc">
+  <h4>Contents</h4>
+  <ol>
+    <li><a href="#verdict">Verdict in one screen</a></li>
+    <li><a href="#method">Method and confidence</a></li>
+    <li><a href="#layers">The three layers</a></li>
+    <li><a href="#scorecard">Readiness scorecard</a></li>
+    <li><a href="#evidence">Evidence charts</a></li>
+    <li><a href="#components">Component-by-component</a></li>
+    <li><a href="#open">The three open problems</a></li>
+    <li><a href="#taken">What is already taken</a></li>
+    <li><a href="#ontology">The ontology you must adopt</a></li>
+    <li><a href="#scope">Recommended one-term scope</a></li>
+    <li><a href="#datapaths">The three-data-path discipline</a></li>
+    <li><a href="#questions">Questions for the supervisor</a></li>
+    <li><a href="#refs">Reference library</a></li>
+  </ol>
+</nav>
+
+<!-- ====================== VERDICT ====================== -->
+<section id="verdict">
+<h2>1. Verdict in one screen</h2>
+
+<div class="verdict">
+  <h3>The objective, as stated, is a multi-year research programme. The term-sized version of it is not hard — it is narrow.</h3>
+  <p>The literal goal ("take any curling video, from any angle, and produce accurate detailed analysis") requires solving unconstrained monocular camera geometry, occluded small-object detection, identity association, collision resolution and a century-old unresolved physics problem — all at once. Nobody has done that, and the strong published work does it only for constrained broadcast camera families.</p>
+  <p><strong>The good news is unusual for a research project:</strong> almost every individual component already has a public benchmark, a public dataset, or a published baseline with a number attached. You are never starting from nothing, and almost every target is already quantified, so you always know what "good" means.</p>
+  <p><strong>The bad news is concentrated in three places</strong> (§7), and two of them are genuinely unclaimed.</p>
+</div>
+
+<div class="kpis">
+  <div class="kpi"><div class="n">3.62 cm</div><div class="l">Best broadcast trajectory RMSE</div><div class="s">CurlObserver, uncalibrated dynamic view (<a href="https://dl.acm.org/doi/10.1016/j.eswa.2025.128745">ESWA 2025</a>)</div></div>
+  <div class="kpi"><div class="n">0.974 → 0.723</div><div class="l">Detection mAP@0.5</div><div class="s">Clean vs. occluded. A 25-point cliff (<a href="https://pubs.aip.org/aip/adv/article-split/15/1/015206/3329349/IFCD-Inverted-feature-extraction-for-enhancing">IFCD 2025</a>)</div></div>
+  <div class="kpi"><div class="n">&lt;0.5 m</div><div class="l">Stone-to-sheet scale</div><div class="s">1:146. 48.4% of stones under 32×32 px (<a href="https://www.sciengine.com/ComputerEng/doi/10.19678/j.issn.1000-3428.0069106">AI-Curling 2025</a>)</div></div>
+  <div class="kpi"><div class="n">60,536</div><div class="l">Labelled shots free</div><div class="s">Official mixed-doubles data, 1,112 games (<a href="https://arxiv.org/html/2512.16574v2">Opening the House</a>)</div></div>
+  <div class="kpi"><div class="n">1.0 cm</div><div class="l">LSTM vs 22.6 cm physics</div><div class="s">Learned trajectory models beat physical ones by 22× (<a href="https://www.nature.com/articles/s41598-025-87933-5">Sci Rep 2025</a>)</div></div>
+  <div class="kpi"><div class="n">&lt;1%</div><div class="l">VLM grounded localisation</div><div class="s">Ceiling for video-LLM spatial grounding (<a href="https://huggingface.co/papers/2604.01569">VideoZeroBench</a>)</div></div>
+</div>
+
+<div class="callout c-ok">
+  <h4>The one sentence to remember</h4>
+  <p style="margin:0">The perception layers are <em>mostly solved</em>, the reasoning layer is <em>completely solved</em>, the LLM layer is <em>feasible</em>, and the single thing nobody has published is the <strong>validated bridge between video and the sport's own official shot-by-shot records</strong>. That bridge is where the contribution is.</p>
+</div>
+</section>
+
+<!-- ====================== METHOD ====================== -->
+<section id="method">
+<h2>2. Method and confidence</h2>
+<p>This is a rapid structured sweep, not a systematic review. Broad searches across curling-specific CV, general sports-broadcast geometry, sports multi-object tracking, sports event detection, curling physics, curling analytics, LLM commentary, video-to-simulation, and wheelchair/Paralympic coverage. Nothing here was read beyond abstract/summary depth except where noted, so treat the numbers as <em>reported</em>, not reproduced.</p>
+<div class="callout c-warn">
+  <h4>Confidence caveat — read before citing</h4>
+  <p style="margin:.2rem 0">Some retrieved items carry implausible or future-dated identifiers (e.g. arXiv <span class="mono">2606.31388</span>, <span class="mono">2604.01569</span>; ACL Findings 2026; several MDPI 2026 items). These may be indexing artefacts. <strong>Entries tagged <span class="tag">verify id</span> need their identifier checked against the publisher before they enter a reference list.</strong> Entries tagged <span class="tag">solid</span> are standard, well-indexed works.</p>
+</div>
+</section>
+
+<!-- ====================== LAYERS ====================== -->
+<section id="layers">
+<h2>3. The three layers</h2>
+<p>Every design in this space decomposes the same way. Difficulty is wildly uneven across the layers, which is the single most useful fact for scoping.</p>
+
+<div class="layers">
+  <div class="layer">
+    <div class="t">A · Perception</div>
+    <div class="d">video → canonical state<br><span class="badge b-open">hard</span></div>
+    <p style="font-size:.85rem;color:var(--muted);margin:.5rem 0 0">Rink registration, stone detection, tracking, rotation, world coordinates, collisions.</p>
+  </div>
+  <div class="arrow">→</div>
+  <div class="layer">
+    <div class="t">B · State and reasoning</div>
+    <div class="d">state → judgement<br><span class="badge b-solved">solved</span></div>
+    <p style="font-size:.85rem;color:var(--muted);margin:.5rem 0 0">Win probability, expected score, shot choice, optimal strategy. Rich public baselines.</p>
+  </div>
+  <div class="arrow">→</div>
+  <div class="layer">
+    <div class="t">C · Language</div>
+    <div class="d">judgement → words<br><span class="badge b-feasible">feasible</span></div>
+    <p style="font-size:.85rem;color:var(--muted);margin:.5rem 0 0">Commentary, coaching feedback, Q&amp;A. Small, evaluable, and where the LLM belongs.</p>
+  </div>
+</div>
+
+<div class="callout c-info">
+  <h4>Why the layering matters for a one-term project</h4>
+  <p style="margin:.2rem 0">Layer B is fully deliverable and gradeable with <strong>zero video</strong> — official game records plus public simulator baselines. Layer C is deliverable on top of B. Only Layer A is risky. So the project can succeed even if perception fails, <em>provided the layers are kept genuinely separate</em>. That separation is the architecture's real value — more than the elegance of any "game world" framing.</p>
+</div>
+</section>
+
+<!-- ====================== SCORECARD ====================== -->
+<section id="scorecard">
+<h2>4. Readiness scorecard</h2>
+<p>Ratings are this document's assessment, derived from the evidence in §6. "Borrow" means a working recipe or released model exists and should be reused rather than reinvented.</p>
+
+<div class="tablewrap">
+<table>
+<thead>
+<tr><th>#</th><th>Component</th><th>Status</th><th>Best reported / available</th><th>Effort for a term</th></tr>
+</thead>
+<tbody>
+<tr><td>1</td><td>Rink registration from an arbitrary view</td><td><span class="badge b-borrow">Borrow</span></td><td>56-keypoint rink model (<a href="https://datasets.simula.no/hockeyrink/">HockeyRink</a>); hockey recipe fully published</td><td>2–3 wks, wide views only</td></tr>
+<tr><td>2</td><td>Stone detection — clean view</td><td><span class="badge b-solved">Solved</span></td><td>0.974 mAP@0.5</td><td>Days, if data found</td></tr>
+<tr><td>3</td><td>Stone detection — occluded/far</td><td><span class="badge b-open">Open</span></td><td>0.723 mAP@0.5 — a 25-point cliff</td><td>Whole-project scale</td></tr>
+<tr><td>4</td><td>Stone tracking / identity</td><td><span class="badge b-borrow">Borrow</span></td><td>MOTA 82.87 curling-specific; SportsMOT HOTA 74–87</td><td>1–2 wks</td></tr>
+<tr><td>5</td><td>Rotation / handle orientation</td><td><span class="badge b-borrow">Borrow</span></td><td>Handle-angle via Hough or keypoints; ω 0.3–3.0 rad/s measured</td><td>1–2 wks; degrades at oblique angles</td></tr>
+<tr><td>6</td><td>World-coordinate trajectory</td><td><span class="badge b-borrow">Borrow</span></td><td>2.59–3.62 cm; 0.02 m fixed-camera</td><td>2–4 wks</td></tr>
+<tr><td>7</td><td>Collisions / clustered stones</td><td><span class="badge b-open">Open</span></td><td>1.39 cm clean vs 4.98 cm collision</td><td>Measure, do not solve</td></tr>
+<tr><td>8</td><td>Shot segmentation / camera typing</td><td><span class="badge b-borrow">Borrow</span></td><td>SoccerNet 13-class camera segmentation, 47.3 mIoU; SBD models released</td><td>1–2 wks</td></tr>
+<tr><td>9</td><td><strong>video → official shot-by-shot state</strong></td><td><span class="badge b-research">Research</span></td><td><strong>Closest: 205,364 stone positions from sheet images</strong> (§8)</td><td><strong>The contribution</strong></td></tr>
+<tr><td>10</td><td>Curl physics prediction</td><td><span class="badge b-research">Research</span></td><td>Unresolved ~100 yrs; ML 1.0 cm vs physics 22.6 cm</td><td>Adjacent; high risk</td></tr>
+<tr><td>11</td><td>Strategy / decision support</td><td><span class="badge b-solved">Solved</span></td><td>Markov win-prob, ESD models, MCTS/SAC, Digital Curling cups</td><td>Reproducible in days</td></tr>
+<tr><td>12</td><td>LLM commentary + coaching</td><td><span class="badge b-feasible">Feasible</span></td><td>Structured input cuts factual errors 65–69%</td><td>3–4 wks incl. evaluation</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<!-- ====================== EVIDENCE CHARTS ====================== -->
+<section id="evidence">
+<h2>5. Evidence charts</h2>
+
+<!-- CHART 1 -->
+<figure>
+  <p class="f-title">Chart 1 — The occlusion cliff</p>
+  <p class="f-note">Curling stone detection mAP@0.5 on the standard <span class="mono">Curling</span> vs <span class="mono">Curling_hard</span> benchmark pair. This 25-point drop is the single most important number in the perception layer.</p>
+  <svg viewBox="0 0 860 158" role="img" aria-label="Bar chart: detection mAP 0.974 clean versus 0.723 occluded">
+    <line x1="230" y1="34" x2="230" y2="144" stroke="#c9d2dc"/>
+    <line x1="372.5" y1="34" x2="372.5" y2="144" stroke="#eef1f5"/>
+    <line x1="515" y1="34" x2="515" y2="144" stroke="#eef1f5"/>
+    <line x1="657.5" y1="34" x2="657.5" y2="144" stroke="#eef1f5"/>
+    <line x1="800" y1="34" x2="800" y2="144" stroke="#eef1f5"/>
+    <text x="230" y="28" font-size="11" fill="#6b7684" text-anchor="middle">0</text>
+    <text x="372.5" y="28" font-size="11" fill="#6b7684" text-anchor="middle">0.25</text>
+    <text x="515" y="28" font-size="11" fill="#6b7684" text-anchor="middle">0.50</text>
+    <text x="657.5" y="28" font-size="11" fill="#6b7684" text-anchor="middle">0.75</text>
+    <text x="800" y="28" font-size="11" fill="#6b7684" text-anchor="middle">1.00</text>
+    <rect x="230" y="48" width="555" height="22" rx="3" fill="#1d7a4c"/>
+    <text x="222" y="63" font-size="12.5" fill="#14181f" text-anchor="end">Curling (clean)</text>
+    <text x="793" y="63" font-size="12.5" fill="#1d7a4c" font-weight="700" text-anchor="end">0.974</text>
+    <rect x="230" y="90" width="412" height="22" rx="3" fill="#b8442a"/>
+    <text x="222" y="105" font-size="12.5" fill="#14181f" text-anchor="end">Curling_hard (occluded)</text>
+    <text x="650" y="105" font-size="12.5" fill="#b8442a" font-weight="700" text-anchor="end">0.723</text>
+    <text x="230" y="142" font-size="11.5" fill="#6b7684">Same architecture, same authors, same training — only the scene difficulty changes. Source: IFCD, AIP Advances 15(1):015206, 2025.</text>
+  </svg>
+</figure>
+
+<!-- CHART 2 -->
+<figure>
+  <p class="f-title">Chart 2 — Measurement error vs. what coaching actually needs</p>
+  <p class="f-note">Reported positional error of published curling CV and trajectory systems, against the shaded band of margins that typically decide curling shots. This is the chart that determines whether "how accurate was that shot?" is answerable at all.</p>
+  <svg viewBox="0 0 860 340" role="img" aria-label="Bar chart of positional error in centimetres for competing methods, with a coaching-relevance band from 10 to 30 cm">
+    <rect x="408" y="30" width="356" height="286" fill="#fdf3dd" opacity="0.85"/>
+    <text x="586" y="24" font-size="11.5" fill="#9a6b00" text-anchor="middle" font-weight="700">Coaching-decidable margins (~10–30 cm)</text>
+    <line x1="230" y1="30" x2="230" y2="316" stroke="#c9d2dc"/>
+    <line x1="319" y1="30" x2="319" y2="316" stroke="#eef1f5"/>
+    <line x1="408" y1="30" x2="408" y2="316" stroke="#eef1f5"/>
+    <line x1="497" y1="30" x2="497" y2="316" stroke="#eef1f5"/>
+    <line x1="586" y1="30" x2="586" y2="316" stroke="#eef1f5"/>
+    <line x1="675" y1="30" x2="675" y2="316" stroke="#eef1f5"/>
+    <line x1="764" y1="30" x2="764" y2="316" stroke="#eef1f5"/>
+    <text x="230" y="332" font-size="11" fill="#6b7684" text-anchor="middle">0</text>
+    <text x="319" y="332" font-size="11" fill="#6b7684" text-anchor="middle">5</text>
+    <text x="408" y="332" font-size="11" fill="#6b7684" text-anchor="middle">10</text>
+    <text x="497" y="332" font-size="11" fill="#6b7684" text-anchor="middle">15</text>
+    <text x="586" y="332" font-size="11" fill="#6b7684" text-anchor="middle">20</text>
+    <text x="675" y="332" font-size="11" fill="#6b7684" text-anchor="middle">25</text>
+    <text x="764" y="332" font-size="11" fill="#6b7684" text-anchor="middle">30 cm</text>
+    <rect x="230" y="56" width="18" height="20" rx="3" fill="#1d7a4c"/>
+    <text x="222" y="70" font-size="12" fill="#14181f" text-anchor="end">CasLSTM (learned)</text>
+    <text x="256" y="70" font-size="12" fill="#1d7a4c" font-weight="700">1.00</text>
+    <rect x="230" y="92" width="25" height="20" rx="3" fill="#2f8f5c"/>
+    <text x="222" y="106" font-size="12" fill="#14181f" text-anchor="end">RL sim — non-collision</text>
+    <text x="263" y="106" font-size="12" fill="#2f8f5c" font-weight="700">1.39</text>
+    <rect x="230" y="128" width="46" height="20" rx="3" fill="#4a9d7a"/>
+    <text x="222" y="142" font-size="12" fill="#14181f" text-anchor="end">RL sim — mean</text>
+    <text x="284" y="142" font-size="12" fill="#4a9d7a" font-weight="700">2.59</text>
+    <rect x="230" y="164" width="53" height="20" rx="3" fill="#1f5fa8"/>
+    <text x="222" y="178" font-size="12" fill="#14181f" text-anchor="end">Vision sweep system</text>
+    <text x="291" y="178" font-size="12" fill="#1f5fa8" font-weight="700">3–6</text>
+    <rect x="230" y="200" width="64" height="20" rx="3" fill="#1f5fa8"/>
+    <text x="222" y="214" font-size="12" fill="#14181f" text-anchor="end">CurlObserver (broadcast)</text>
+    <text x="302" y="214" font-size="12" fill="#1f5fa8" font-weight="700">3.62</text>
+    <rect x="230" y="236" width="89" height="20" rx="3" fill="#b8442a"/>
+    <text x="222" y="250" font-size="12" fill="#14181f" text-anchor="end">RL sim — collision shots</text>
+    <text x="327" y="250" font-size="12" fill="#b8442a" font-weight="700">4.98</text>
+    <rect x="230" y="272" width="402" height="20" rx="3" fill="#8a2f1f"/>
+    <text x="222" y="286" font-size="12" fill="#14181f" text-anchor="end">Best classical physics model</text>
+    <text x="640" y="286" font-size="12" fill="#8a2f1f" font-weight="700">22.59</text>
+  </svg>
+  <figcaption>
+    <strong>Reading this:</strong> vision-based systems measure stone position to within a few centimetres — inside the band where
+    shots are actually decided, but only just. Fixed-camera systems are better still (~2 cm). The interesting failure is collision
+    shots, which land at the boundary, and the classical physics models, which are useless for this purpose. Learned trajectory
+    models are the only approach currently well inside the useful zone.
+    Sources: <a href="https://www.nature.com/articles/s41598-025-87933-5">Sci Rep 2025 (CasLSTM)</a>,
+    <a href="https://www.mdpi.com/2227-7390/14/3/403">Mathematics 14(3):403</a>,
+    <a href="https://www.mdpi.com/2076-3417/16/15/7600/pdf">Applied Sciences 16(15):7600</a>,
+    <a href="https://dl.acm.org/doi/10.1016/j.eswa.2025.128745">ESWA 293:128745</a>.
+    <span class="tag">verify id</span> for the 2026-dated MDPI items.
+  </figcaption>
+</figure>
+
+<!-- CHART 3 -->
+<figure>
+  <p class="f-title">Chart 3 — Tracking is a solved problem, comparatively</p>
+  <p class="f-note">MOTA on curling broadcast video for the same detections across trackers. Association, not detection, is where trackers compete — and the curling-specific variant already wins.</p>
+  <svg viewBox="0 0 860 214" role="img" aria-label="Bar chart of MOTA for SORT, ByteTrack, DeepSORT and the curling-specific improved SORT">
+    <line x1="230" y1="30" x2="230" y2="192" stroke="#c9d2dc"/>
+    <line x1="372.5" y1="30" x2="372.5" y2="192" stroke="#eef1f5"/>
+    <line x1="515" y1="30" x2="515" y2="192" stroke="#eef1f5"/>
+    <line x1="657.5" y1="30" x2="657.5" y2="192" stroke="#eef1f5"/>
+    <line x1="800" y1="30" x2="800" y2="192" stroke="#eef1f5"/>
+    <text x="230" y="24" font-size="11" fill="#6b7684" text-anchor="middle">0</text>
+    <text x="372.5" y="24" font-size="11" fill="#6b7684" text-anchor="middle">25</text>
+    <text x="515" y="24" font-size="11" fill="#6b7684" text-anchor="middle">50</text>
+    <text x="657.5" y="24" font-size="11" fill="#6b7684" text-anchor="middle">75</text>
+    <text x="800" y="24" font-size="11" fill="#6b7684" text-anchor="middle">100</text>
+    <rect x="230" y="44" width="352" height="20" rx="3" fill="#b9c4d1"/>
+    <text x="222" y="58" font-size="12" fill="#14181f" text-anchor="end">SORT (baseline)</text>
+    <text x="590" y="58" font-size="12" fill="#6b7684" font-weight="700">61.73</text>
+    <rect x="230" y="82" width="414" height="20" rx="3" fill="#8fa6c0"/>
+    <text x="222" y="96" font-size="12" fill="#14181f" text-anchor="end">ByteTrack</text>
+    <text x="652" y="96" font-size="12" fill="#6b7684" font-weight="700">72.64</text>
+    <rect x="230" y="120" width="444" height="20" rx="3" fill="#5c86b5"/>
+    <text x="222" y="134" font-size="12" fill="#14181f" text-anchor="end">DeepSORT</text>
+    <text x="682" y="134" font-size="12" fill="#6b7684" font-weight="700">77.91</text>
+    <rect x="230" y="158" width="472" height="20" rx="3" fill="#1f5fa8"/>
+    <text x="222" y="172" font-size="12" fill="#14181f" text-anchor="end">YOLOX + Hough + improved SORT</text>
+    <text x="710" y="172" font-size="12" fill="#1f5fa8" font-weight="700">82.87</text>
+    <text x="230" y="206" font-size="11.5" fill="#6b7684">19 ID switches vs 36 for SORT. Source: ACM 10.1145/3761668.3761683, 2025.</text>
+  </svg>
+</figure>
+
+<!-- CHART 4 -->
+<figure>
+  <p class="f-title">Chart 4 — Why a video-LLM cannot be the measurement layer</p>
+  <p class="f-note">Reported ceilings for video-language models on tasks that require exact spatial or counting answers. The gap to human performance is the reason the LLM layer must sit <em>after</em> geometry, not instead of it.</p>
+  <svg viewBox="0 0 860 258" role="img" aria-label="Bar chart of vision-language model accuracy on grounded spatial tasks versus human performance">
+    <line x1="230" y1="30" x2="230" y2="236" stroke="#c9d2dc"/>
+    <line x1="372.5" y1="30" x2="372.5" y2="236" stroke="#eef1f5"/>
+    <line x1="515" y1="30" x2="515" y2="236" stroke="#eef1f5"/>
+    <line x1="657.5" y1="30" x2="657.5" y2="236" stroke="#eef1f5"/>
+    <line x1="800" y1="30" x2="800" y2="236" stroke="#eef1f5"/>
+    <text x="230" y="24" font-size="11" fill="#6b7684" text-anchor="middle">0%</text>
+    <text x="372.5" y="24" font-size="11" fill="#6b7684" text-anchor="middle">25%</text>
+    <text x="515" y="24" font-size="11" fill="#6b7684" text-anchor="middle">50%</text>
+    <text x="657.5" y="24" font-size="11" fill="#6b7684" text-anchor="middle">75%</text>
+    <text x="800" y="24" font-size="11" fill="#6b7684" text-anchor="middle">100%</text>
+    <rect x="230" y="44" width="6" height="20" rx="2" fill="#b8442a"/>
+    <text x="222" y="58" font-size="12" fill="#14181f" text-anchor="end">Grounded spatio-temporal</text>
+    <text x="244" y="58" font-size="12" fill="#b8442a" font-weight="700">&lt;1%</text>
+    <rect x="230" y="82" width="29" height="20" rx="3" fill="#c05a3d"/>
+    <text x="267" y="96" font-size="12" fill="#14181f" text-anchor="start">5%</text>
+    <text x="222" y="96" font-size="12" fill="#14181f" text-anchor="end">Counting across a pan</text>
+    <rect x="230" y="120" width="236" height="20" rx="3" fill="#d08a5a"/>
+    <text x="222" y="134" font-size="12" fill="#14181f" text-anchor="end">Precise spatial estimate</text>
+    <text x="474" y="134" font-size="12" fill="#a8632a" font-weight="700">41.4%</text>
+    <rect x="230" y="158" width="319" height="20" rx="3" fill="#e0b070"/>
+    <text x="222" y="172" font-size="12" fill="#14181f" text-anchor="end">Object counting (model)</text>
+    <text x="557" y="172" font-size="12" fill="#8a6a1f" font-weight="700">56%</text>
+    <rect x="230" y="196" width="536" height="20" rx="3" fill="#1d7a4c"/>
+    <text x="222" y="210" font-size="12" fill="#14181f" text-anchor="end">Object counting (human)</text>
+    <text x="774" y="210" font-size="12" fill="#1d7a4c" font-weight="700">94%</text>
+    <text x="230" y="244" font-size="11.5" fill="#6b7684">Sources: VideoZeroBench; CP-Bench (Stanford); STI-Bench (ICCV 2025); VSI-Bench (CVPR 2025).</text>
+  </svg>
+  <figcaption>
+    On <a href="https://huggingface.co/papers/2604.01569">VideoZeroBench</a>, when the task requires both the right answer <em>and</em> correct
+    spatio-temporal grounding, no model exceeds 1%. On <a href="https://ai.stanford.edu/~zywang/projects/ContinuousPerceptionBenchmark/">CP-Bench</a>,
+    an 8B model that scores 58% when all objects are visible drops to 5% when the camera pans so they must be integrated over time —
+    which is exactly what "count the stones in the house" requires from a broadcast pan.
+    <span class="tag">verify id</span> for VideoZeroBench.
+  </figcaption>
+</figure>
+
+<!-- CHART 5 -->
+<figure>
+  <p class="f-title">Chart 5 — Data: what you can actually get hold of</p>
+  <p class="f-note">The practical blocker for this project is not algorithms, it is access. Availability is far more uneven than capability.</p>
+  <svg viewBox="0 0 860 190" role="img" aria-label="Bar chart of public dataset sizes in shots or images">
+    <line x1="230" y1="30" x2="230" y2="168" stroke="#c9d2dc"/>
+    <line x1="372.5" y1="30" x2="372.5" y2="168" stroke="#eef1f5"/>
+    <line x1="515" y1="30" x2="515" y2="168" stroke="#eef1f5"/>
+    <line x1="657.5" y1="30" x2="657.5" y2="168" stroke="#eef1f5"/>
+    <line x1="800" y1="30" x2="800" y2="168" stroke="#eef1f5"/>
+    <text x="230" y="24" font-size="11" fill="#6b7684" text-anchor="middle">1e3</text>
+    <text x="372.5" y="24" font-size="11" fill="#6b7684" text-anchor="middle">1e4</text>
+    <text x="515" y="24" font-size="11" fill="#6b7684" text-anchor="middle">1e5</text>
+    <text x="657.5" y="24" font-size="11" fill="#6b7684" text-anchor="middle">1e6</text>
+    <text x="800" y="24" font-size="11" fill="#6b7684" text-anchor="middle">1e7</text>
+    <rect x="230" y="44" width="60" height="20" rx="3" fill="#9a6b00"/>
+    <text x="222" y="58" font-size="12" fill="#14181f" text-anchor="end">KCI shot clips (5 classes)</text>
+    <text x="298" y="58" font-size="12" fill="#9a6b00" font-weight="700">763 shots</text>
+    <rect x="230" y="80" width="137" height="20" rx="3" fill="#1f5fa8"/>
+    <text x="222" y="94" font-size="12" fill="#14181f" text-anchor="end">Stone positions (Japan, 2026)</text>
+    <text x="375" y="94" font-size="12" fill="#1f5fa8" font-weight="700">2.05e5</text>
+    <rect x="230" y="116" width="89" height="20" rx="3" fill="#1d7a4c"/>
+    <text x="222" y="130" font-size="12" fill="#14181f" text-anchor="end">Official mixed-doubles shots</text>
+    <text x="327" y="130" font-size="12" fill="#1d7a4c" font-weight="700">6.05e4</text>
+    <rect x="230" y="152" width="374" height="20" rx="3" fill="#8a2f1f"/>
+    <text x="222" y="166" font-size="12" fill="#14181f" text-anchor="end">Unlabelled broadcast video</text>
+    <text x="612" y="166" font-size="12" fill="#8a2f1f" font-weight="700">unbounded, rights unclear</text>
+  </svg>
+  <figcaption>
+    Labelled curling data exists in useful volume, but it is scattered, inconsistently licensed, and often not actually downloadable
+    (see §6 table 2). The large unlabelled pool — broadcast and YouTube video — is the one resource that is abundant and the one that
+    carries copyright risk. Sources: <a href="https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003337896">KCI 2025</a>,
+    <a href="https://www.mdpi.com/2076-3417/16/7/3453">Applied Sciences 16(7):3453</a> <span class="tag">verify id</span>,
+    <a href="https://arxiv.org/html/2512.16574v2">Opening the House</a>.
+  </figcaption>
+</figure>
+</section>
+
+<!-- ====================== COMPONENTS ====================== -->
+<section id="components">
+<h2>6. Component-by-component</h2>
+
+<div class="card">
+  <h3>1 · Rink registration from an arbitrary view <span class="badge b-borrow">Borrow</span></h3>
+  <p>Recovering the mapping from pixels to sheet coordinates is the foundational step and it is a mature field with its own survey literature and standard recipe: detect markings → build correspondences → RANSAC + DLT homography → refine. Soccer is most developed; ice hockey is the closest analogue because it is a rink rather than a pitch.</p>
+  <p class="ev"><b>Reusable artefacts:</b> <a href="https://datasets.simula.no/hockeyrink/">HockeyRink</a> (661 frames, 56 annotated rink keypoints, pretrained model + live demo); 4,262 hockey frames with homographies; <a href="https://export.arxiv.org/pdf/2104.10847">ice-rink localization</a> (ResNet-18 regressing four control points, Hann-window temporal smoothing to kill jitter); <a href="https://github.com/cemunds/awesome-sports-camera-calibration">curated bibliography</a>; <a href="https://ar5iv.labs.arxiv.org/html/2404.08401">PnLCalib</a> (joint point+line optimisation, code released); <a href="https://www.openaccess.thecvf.com/content/WACV2023/papers/Theiner_TVCalib_Camera_Calibration_for_Sports_Field_Registration_in_Soccer_WACV_2023_paper.pdf">TVCalib</a> (learns camera pose and focal length, not just a homography).</p>
+  <p class="ev"><b>Directly applicable precedent:</b> <a href="https://ieeexplore.ieee.org/document/11339314">Hockey2D</a> uses YOLO rink keypoints + RANSAC homography, and critically <em>filters frames with a shot-type classifier so homography is only computed on suitable scenes</em>. That is the same architecture recommended here, already published for a rink-based sport.</p>
+  <p class="ev"><b>Where it is still open:</b> central and close-up views with sparse visible markings (<a href="https://openaccess.thecvf.com/content/CVPR2025W/CVSPORTS/papers/Magera_Can_Geometry_Save_Central_Views_for_Sports_Field_Registration_CVPRW_2025_paper.pdf">Magera et al., CVPRW 2025</a>), viewpoint generalisation, and jitter under pan/zoom. Curling is favourable here: the sheet carries painted hog lines, tee lines, centre line and four concentric rings per end, so it is marking-rich compared with grass.</p>
+</div>
+
+<div class="card">
+  <h3>2–3 · Stone detection <span class="badge b-solved">Solved clean</span> <span class="badge b-open">Open occluded</span></h3>
+  <p>The hardest physical fact in the perception layer: a curling stone is roughly <strong>1:146 of sheet scale</strong>, and <strong>48.4% of stones are smaller than 32×32 pixels</strong> in full-rink views. Occlusion by brooms, player bodies and other stones is the dominant failure mode. Multiple papers identify missed detections under occlusion as the central problem.</p>
+  <p class="ev"><b>Benchmark:</b> the <span class="mono">Curling</span> / <span class="mono">Curling_hard</span> pair (9,000 clean + 2,000 hard images) is the de-facto standard — but see table 2, it does not appear to be publicly downloadable.</p>
+  <p class="ev"><b>State of the art:</b> <a href="https://pubs.aip.org/aip/adv/article-split/15/1/015206/3329349/IFCD-Inverted-feature-extraction-for-enhancing">IFCD</a> (inverted feature extraction, delayed downsampling, four-scale decoupled head) and <a href="https://www.sciengine.com/ComputerEng/doi/10.19678/j.issn.1000-3428.0069106">SR-Yolo</a> both reach <strong>0.974 mAP@0.5 clean and 0.723 occluded</strong> — the 25-point cliff in Chart 1.</p>
+  <p class="ev"><b>Transferable techniques</b> from general small-object detection: delay downsampling or add shallow P2 pyramid layers; multi-scale/adaptive feature fusion; attention for contextual reasoning; Normalised Wasserstein Distance losses to reduce small-box positional sensitivity; tracking-based gap filling.</p>
+</div>
+
+<div class="card">
+  <h3>4 · Stone tracking and identity <span class="badge b-borrow">Borrow</span></h3>
+  <p>Detection is not the bottleneck here — <em>association</em> is. Stones have coloured handles (red/yellow) so they are "similar yet distinguishable", which is precisely the property that makes the <a href="https://openaccess.thecvf.com/content/ICCV2023/html/Cui_SportsMOT_A_Large_Multi-Object_Tracking_Dataset_in_Multiple_Sports_Scenes_ICCV_2023_paper.html">SportsMOT</a> benchmark hard: 8 stones share each colour, and the interesting analysis depends on knowing <em>which</em> stone is which across a whole end.</p>
+  <p class="ev"><b>Ceiling is high:</b> SportsMOT methods now reach HOTA 74–87, with SAM-based tracking-by-segmentation leading. Curling-specific work already hits <a href="https://dl.acm.org/doi/pdf/10.1145/3761668.3761683">MOTA 82.87 with 19 ID switches</a>, and CurlObserver adds NSA Kalman filtering with multidimensional matching.</p>
+  <p class="ev"><b>Practical implication:</b> identity persistence across a full end is the part worth measuring, because it is what makes a shot-by-shot log possible at all.</p>
+</div>
+
+<div class="card">
+  <h3>5 · Rotation and handle orientation <span class="badge b-borrow">Borrow</span></h3>
+  <p>Rotation is not a nice-to-have: turn direction (in-turn vs out-turn) is a formal part of the sport's own record-keeping, and curl direction depends on it. Two established extraction routes exist.</p>
+  <p class="ev"><b>Marker / mark tracking:</b> ceiling cameras with a calibration plate, tracking a black mark on the handle to derive rotation angle over time — measurement error in linking camera fields of <strong>±6 mm</strong>. Rotation is near-linear until the stone stops, so a single angular velocity per delivery is a reasonable approximation (ω measured across 0.3–3.0 rad/s).</p>
+  <p class="ev"><b>Handle-orientation fitting:</b> in broadcast, fit the handle line with a Hough transform on top of a detector, or use keypoint detection. Since the stone is axially symmetric about the handle, centre + handle angle fully describe its instantaneous motion state. There is even a patent covering handle-keypoint → angular velocity.</p>
+  <p class="ev"><b>Known limitation:</b> angle detection degrades at steeply tilted camera angles — the same regime where projection accuracy drops.</p>
+</div>
+
+<div class="card">
+  <h3>6–7 · World coordinates, trajectories and collisions <span class="badge b-borrow">Borrow</span> <span class="badge b-open">Open collisions</span></h3>
+  <p>Trajectory extraction from broadcast is done, repeatedly and well. The <strong>collision regime is where everything degrades</strong>, and it is exactly where the stones cluster — in the house, where you need precision most.</p>
+  <p class="ev"><b>Numbers:</b> <a href="https://dl.acm.org/doi/10.1016/j.eswa.2025.128745">CurlObserver</a> — 3.62 cm RMSE, 98.7% detection, 93.4% tracking success, from <em>uncalibrated dynamic perspectives</em>. The <a href="https://www.mdpi.com/2227-7390/14/3/403">2026 unified RL framework</a> — 2.59 cm mean Hausdorff against real top-view video, but <strong>1.39 cm for non-collision shots and 4.98 cm for collision shots</strong>. A fixed-camera YOLO + ByteTrack system reports ~0.02 m average position error and validates hog-line speed against a laser velocimeter.</p>
+  <p class="ev"><b>Interpretation:</b> collision shots are 3.6× worse and land right at the edge of coaching relevance. Practical response: detect and <em>flag</em> collisions rather than claim accuracy through them.</p>
+</div>
+
+<div class="card">
+  <h3>8 · Shot segmentation and camera-shot typing <span class="badge b-borrow">Borrow</span></h3>
+  <p>The "cut the video into throws" step has a mature literature and should not be researched from scratch. Broadcast sports video has standard tasks: shot boundary detection, camera-shot-type segmentation, and replay detection.</p>
+  <p class="ev"><b>Benchmarks and numbers:</b> <a href="https://ar5iv.labs.arxiv.org/html/2011.13367">SoccerNet-v2</a> defines 13 camera classes (main camera, close-up player, behind goal, spider-cam, public, …) with transition types {abrupt, logo, smooth}; segmentation reaches 47.3 mIoU with CALF, while simple histogram differencing still achieves ~78.5% mAP on boundary detection. <a href="https://dl.acm.org/doi/epdf/10.1145/3793853.3799803">SportSBD</a> fine-tunes a single R(2+1)D 3D CNN that generalises across hockey and soccer, and is open-source.</p>
+  <p class="ev"><b>Why it matters here:</b> a camera-shot-type classifier is what stops replays being counted as new throws, and what lets you route each clip to a method that suits its geometry. <a href="https://ieeexplore.ieee.org/document/11339314">Hockey2D</a> already uses one for exactly this routing purpose.</p>
+  <p class="ev"><b>Shot-type classification itself is a published, if modest, result:</b> <a href="https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003337896">a Korean study</a> classified 763 real match shots into 5 classes using CNN + Temporal Transformer, with class AUC 0.773–0.938 (Guard best). Note the gap: that work used <em>top-view training footage</em>, and the broadcast work does tracking without semantics. Nothing combines the two across arbitrary angles.</p>
+</div>
+
+<div class="card">
+  <h3>9 · video → official shot-by-shot state <span class="badge b-research">Research — the gap</span></h3>
+  <p>This is the bridge, and it is the most valuable thing here because it is the least done. The perception literature produces trajectories; the analytics literature consumes state; <strong>almost nobody validates a reconstruction against the sport's own official records.</strong></p>
+  <p class="ev"><b>Closest existing work:</b> a 2026 paper extracts stone positions from sheet images for match-database construction using YOLO11n with pseudo-label semi-supervised learning, producing <strong>205,364 stone positions across 31 tournaments from 108,114 sheet images</strong>. Note the scope: <em>sheet images</em> (top-down diagrams), not broadcast video, and its own group also builds expected-score models. This is the group closest to your idea.</p>
+  <p class="ev"><b>What is missing:</b> a paired benchmark of (broadcast video, officially recorded shot state). That is constructible for free by selecting games whose official shot-by-shot records exist, and it would be the first of its kind — a genuine methodological contribution with rigorous ground truth.</p>
+</div>
+
+<div class="card">
+  <h3>10 · Curl physics and trajectory prediction <span class="badge b-research">Research</span></h3>
+  <p>A century-old open problem. The physical origin of curl is still contested, with competing families: forward–backward friction asymmetry, left–right velocity-dependent asymmetry, scratch-guide, pivot-slide, edge, contact-area, and slow-side selection. Classical symmetric friction models predict <em>zero or reversed</em> curl.</p>
+  <p class="ev"><b>The decisive comparison:</b> best classical mechanistic model RMSE <strong>22.59 cm</strong> against <strong>0.999 cm</strong> for a learned CasLSTM — a 22× gap, with the physics baseline error nearly equal to the stone's own diameter. Learned and hybrid models also dominate for collision dynamics, where physical models are described as useful only for coarse momentum transfer.</p>
+  <p class="ev"><b>Useful physical constants for sanity checks:</b> stone–ice friction coefficient 0.006–0.016, decreasing with sliding speed; Olympic rink quality parameter α = 0.0087; back-line to button travel time ≈ 26.8 s; rotational decay follows a power law with exponent ≈1.586, not the 2 expected from simple kinetic friction.</p>
+  <p class="ev"><b>Verdict for your project:</b> adjacent, not central. Predicted-resting-position is a clean, quantified target with a clear baseline, but it is a separate project from video understanding.</p>
+</div>
+
+<div class="card">
+  <h3>11 · Strategy and decision support <span class="badge b-solved">Solved</span></h3>
+  <p>Rich, well-baselined, and reproducible from public data. Do not present this as a contribution — present it as the layer that consumes your state.</p>
+  <p class="ev"><b>Analysis:</b> three-dimensional Markov win-probability models over (score differential, end, hammer), fitted on 10,933 ends from 1,199 matches. Teams starting with hammer win ≈58% of matches and score ≥1 in ≈68% of their hammer ends; being up one without hammer in the 10th is worth more (56%) than down one with hammer (44%). Blanking an end often beats taking a single point, with analytical thresholds derived.</p>
+  <p class="ev"><b>Modern ML:</b> expected-score-distribution models mapping a board configuration plus game context to a distribution over end scores (−8 to +8), trained on real WCF championship boards, integrated with empirical win-probability tables so decisions maximise <em>win probability</em> rather than expected score. Mixed doubles needs separate models (8 ends, no-removal rules, higher steal frequency).</p>
+  <p class="ev"><b>Simulation and agents:</b> Digital Curling (DC3/DC4) is the de-facto standard platform — a decoupled C++ physics library (FCV), open-source server and Python clients, a documented protocol, and a decade of competition agents (MCTS, DIS, UNIST-SAIL, Kura Curling with a reported 0.93 win rate over its predecessor). DC4 persists shot-by-shot state in a database explicitly <em>for sequence-model dataset construction</em>. There is also a 2026 SAC-based framework with a WCF-rules simulator.</p>
+  <p class="ev"><b>Caution:</b> all high-fidelity simulators leave <em>sweeping</em> as future work — which is a quiet argument for wheelchair curling, where no sweeping is permitted and the gap does not apply.</p>
+</div>
+
+<div class="card">
+  <h3>12 · LLM commentary and coaching <span class="badge b-feasible">Feasible</span></h3>
+  <p>A live, benchmarked area with a clear evaluation method — and the evidence supports the architecture recommended here.</p>
+  <p class="ev"><b>The key result:</b> <a href="https://aclanthology.org/2025.inlg-main.46/">"Input Matters" (INLG 2025)</a> hand-annotated <strong>3,312 factual errors</strong> across 180 LLM-generated game summaries comparing input formats. JSON input reduced error rates by <strong>69%</strong> (Llama-3.1-70B) and <strong>65%</strong> (Qwen2.5-72B) versus unstructured text; row-structured input by 54% and 51%. Over 80% of the variance in error rates was attributable to input structure.</p>
+  <p class="ev"><b>Field-level risks:</b> hallucination is the top deployment concern in sports LLMs, because invented events, actors and causal links are plausible enough to mislead real decisions. Latency is the second concern (one soccer pipeline reports ~3.1 s per sentence, with the LLM stage the bottleneck).</p>
+  <p class="ev"><b>Design implication:</b> feed the model a structured metric vector, never pixels, for anything factual. That both matches the empirical evidence and removes the class of error the LLM is worst at.</p>
+</div>
+
+<h3>Table 2 — Dataset availability and licensing reality</h3>
+<div class="tablewrap">
+<table>
+<thead><tr><th>Resource</th><th>Contents</th><th>Access</th></tr></thead>
+<tbody>
+<tr><td><a href="https://universe.roboflow.com/curling-pbs6d/curling-stone-keypoint/">Roboflow · Curling Stone Keypoint</a></td><td>Keypoint detection dataset</td><td><span class="badge b-solved">Public download</span></td></tr>
+<tr><td><a href="https://universe.roboflow.com/aaa-wdkci/curling_22_kp-5hqss">Roboflow · Curling_22_kp</a></td><td>Keypoint detection</td><td><span class="badge b-solved">Public · CC BY 4.0</span></td></tr>
+<tr><td><a href="https://universe.roboflow.com/test-akuzg/siliguide">Roboflow · siliguide</a></td><td>Instance segmentation (curling + spots)</td><td><span class="badge b-solved">Public · CC BY 4.0</span></td></tr>
+<tr><td><a href="https://arxiv.org/html/2512.16574v2">Opening the House / CurlR</a></td><td>1,112 games, 60,536 shots, zones + official grading</td><td><span class="badge b-solved">Public GitHub</span></td></tr>
+<tr><td>Curling / Curling_hard</td><td>9,000 + 2,000 detection images</td><td><span class="badge b-open">No public link — request from authors</span></td></tr>
+<tr><td>CurlObserver broadcast set</td><td>Winter Olympics detection, orientation, tracking, segmentation</td><td><span class="badge b-open">No release found; paper paywalled</span></td></tr>
+<tr><td>Beijing 2022 tracking set</td><td>3,000 detection frames, 1,200 angle images, 14 tracking clips</td><td><span class="badge b-open">Via authors</span></td></tr>
+<tr><td>NSSDC curling perception set</td><td>100 aiming + 200 scene images (~165 MB)</td><td><span class="badge b-feasible">Application · protected to 2028</span></td></tr>
+<tr><td>NBSDC Winter Olympics multimodal</td><td>204 GB, text + image + video</td><td><span class="badge b-feasible">Email application</span></td></tr>
+<tr><td>YouTube / broadcast video</td><td>Effectively unlimited unlabelled video</td><td><span class="badge b-open">Copyright + ToS risk</span></td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<!-- ====================== OPEN ====================== -->
+<section id="open">
+<h2>7. The three open problems</h2>
+<p>Everything hard in this project reduces to one of these three. Everything else has a recipe.</p>
+
+<div class="card" style="border-left:5px solid #6a3d9a">
+  <h3>(a) The bridge — video to validated official state <span class="badge b-research">Open</span></h3>
+  <p>No published work validates a video-derived shot-by-shot game state against the sport's own official records. The closest effort extracts stone positions from <em>top-down sheet diagrams</em>, not broadcast video. This is the gap, and it is constructible: pick games whose official shot-by-shot records exist, and you have paired video and true state for free.</p>
+  <p class="ev"><b>Why it is tractable:</b> the ground truth already exists and is free; the metric is obvious (position error in cm per shot); and partial success is still a result because the reasoning layer is unaffected.</p>
+</div>
+
+<div class="card" style="border-left:5px solid #b8442a">
+  <h3>(b) Occlusion and collision resolution <span class="badge b-open">Open</span></h3>
+  <p>A 25-point mAP cliff from clean to occluded scenes, and a 3.6× worse trajectory error on collision shots. Both failure modes concentrate exactly where the analysis is most valuable — the house, with stones clustered, brooms and bodies in the way. Public benchmarks exist for the detection half, so this is measurable, but it is nowhere near solved.</p>
+  <p class="ev"><b>Recommended posture:</b> flag, do not solve. Detect when the system is inside a degraded regime and report confidence, rather than publishing a single averaged number that hides it.</p>
+</div>
+
+<div class="card" style="border-left:5px solid #6a3d9a">
+  <h3>(c) Curl physics <span class="badge b-research">Open</span></h3>
+  <p>Contested for roughly a century; classical models fail to reproduce curl at all. But learned models are already 22× better than the best physical model, so the practical path is closed — only the explanatory path is open. Adjacent to your project rather than central.</p>
+</div>
+</section>
+
+<!-- ====================== TAKEN ====================== -->
+<section id="taken">
+<h2>8. What is already taken</h2>
+<p>Two findings from this sweep materially change the risk picture. Both are about competition, not capability.</p>
+
+<div class="callout c-warn">
+  <h4>Wheelchair curling CV is occupied — possibly the most competitive corner of the field</h4>
+  <p>If your client's need is <strong>wheelchair curling</strong> analysis, you are entering a space with a well-resourced incumbent:</p>
+  <ul style="margin:.5rem 0">
+    <li>A full pipeline (situation-aware detection + curling MCTS decision engine) was <a href="https://link.springer.com/article/10.1007/s40747-022-00921-4">evaluated with China's national wheelchair curling team and credited with their Beijing 2022 Paralympic gold</a>. It also released a curling detection dataset.</li>
+    <li>Dedicated Chinese patents cover wheelchair-curling track recognition, positioning, tracking and motion-state detection.</li>
+    <li>The standard <span class="mono">Curling</span> / <span class="mono">Curling_hard</span> benchmark datasets were collected at the <em>China Administration of Sports for Persons with Disabilities</em>.</li>
+    <li>A curling robot has played official matches against a national wheelchair curling reserve team.</li>
+    <li>Ice-quality measurement has already been performed on video from the World Wheelchair Curling Championships.</li>
+    <li>A 2025 study on <a href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2025.1682654/full">eye-tracking and delivery accuracy in elite wheelchair curling</a> classified expertise with 90% accuracy and describes itself as among the first ML work on para-athlete cognitive markers.</li>
+  </ul>
+  <p style="margin-bottom:0"><strong>Reading:</strong> baselines, datasets and domain expertise exist — good for feasibility, bad for novelty. The honest framing is "we extend/validate", never "we are first". And note the mismatch risk: the publicly available and widely cited datasets in this space are able-bodied or are held by Chinese institutions, so if the client wants wheelchair curling you may be building on the wrong domain's data.</p>
+</div>
+
+<div class="callout c-info">
+  <h4>The bridge is being approached from the other direction</h4>
+  <p style="margin:.2rem 0">A 2026 paper builds a curling match database by extracting <strong>205,364 stone positions across 31 tournaments</strong> from 108,114 <em>sheet images</em>. The same research group also builds expected-score models from real WCF boards. They are converging on the state representation from the diagram side; the video side of the bridge appears unclaimed. That is both the opportunity and the clock: this is an active group.</p>
+</div>
+</section>
+
+<!-- ====================== ONTOLOGY ====================== -->
+<section id="ontology">
+<h2>9. The ontology you must adopt</h2>
+<p>This is the most actionable section, and the easiest thing for a CV-first team to miss. The sport already has a formal, encoded shot taxonomy and grading scheme. Your intermediate representation should conform to it rather than inventing a schema — it is what makes your outputs comparable to official records, and what makes "did the analysis agree with the officials?" answerable.</p>
+
+<h3>Shot tasks — 11 codes in two families</h3>
+<div class="tablewrap">
+<table>
+<thead><tr><th>Family</th><th>Code</th><th>Task</th></tr></thead>
+<tbody>
+<tr><td rowspan="6">Slow stones</td><td class="num">D</td><td>Draw (includes come-around)</td></tr>
+<tr><td class="num">F</td><td>Front (centre guard / corner guard)</td></tr>
+<tr><td class="num">G</td><td>Guard</td></tr>
+<tr><td class="num">R</td><td>Raise / tap-back</td></tr>
+<tr><td class="num">W</td><td>Wick / soft-peeling</td></tr>
+<tr><td class="num">Z</td><td>Freeze</td></tr>
+<tr><td rowspan="5">Fast stones</td><td class="num">T</td><td>Take-out</td></tr>
+<tr><td class="num">H</td><td>Hit and roll</td></tr>
+<tr><td class="num">C</td><td>Clearing</td></tr>
+<tr><td class="num">S</td><td>Double take-out</td></tr>
+<tr><td class="num">P</td><td>Promotion take-out</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Grading — 0 to 4, judged on intention</h3>
+<div class="tablewrap">
+<table>
+<thead><tr><th>Score</th><th>Percent</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td class="num">4</td><td class="num">100%</td><td>Executed as intended</td></tr>
+<tr><td class="num">3</td><td class="num">75%</td><td>Close; "could the player do better?" → yes</td></tr>
+<tr><td class="num">2</td><td class="num">50%</td><td>Partial</td></tr>
+<tr><td class="num">1</td><td class="num">25%</td><td>Barely</td></tr>
+<tr><td class="num">0</td><td class="num">0%</td><td>Miss</td></tr>
+<tr><td class="num">X</td><td class="num">—</td><td>Not considered (burned stone, hog-line violation, debris)</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="callout c-info">
+  <h4>Four details that will otherwise bite you</h4>
+  <ul style="margin:.4rem 0 0">
+    <li><strong>Grade the intention, not the outcome.</strong> The official guidance is explicit: record the task the skip <em>called</em>. A flushed take-out that happens to work is still a miss. If your system grades outcomes it will systematically disagree with official data — and, worse, with coaches.</li>
+    <li><strong>Handle is recorded per shot</strong> — clockwise (in-turn) or counter-clockwise (out-turn). Player handedness is irrelevant; only stone rotation matters. This is why §6.5 rotation extraction is not optional.</li>
+    <li><strong>No bonus points.</strong> The ceiling is 100%. Some older commentary about 5- or 6-point shots is out of date.</li>
+    <li><strong>There is no degree-of-difficulty adjustment</strong> in the standard system: a simple peel and a double raise take-out can both score 4. If you want a difficulty-aware metric you are proposing a <em>new</em> one, and you should say so plainly and validate it.</li>
+  </ul>
+</div>
+<p style="font-size:.9rem;color:var(--muted)">Note also the interpretation caveat the sport itself admits: "the lead shot 78%" is really "the team shot 78% on the first two shots of each end" — stats are aggregated by position, and different statisticians disagree on individual shots. That subjectivity is a real threat to your evaluation, and quantifying it (inter-annotator agreement) is itself a contribution.</p>
+</section>
+
+<!-- ====================== SCOPE ====================== -->
+<section id="scope">
+<h2>10. Recommended one-term scope</h2>
+<p>Given one term, no guaranteed ice access, arbitrary-source video, and a supervisor who is also a founder: pick <strong>one claim</strong> and treat everything else as borrowed scaffolding.</p>
+
+<div class="verdict">
+  <h3>Claim to defend</h3>
+  <p style="margin:.2rem 0"><strong>"Can a monocular system reconstruct curling shot state that agrees with the sport's official records, and can an LLM turn that state into coaching feedback that coaches endorse?"</strong></p>
+  <p style="margin:.5rem 0 0">That is one sentence, it contains two measurable sub-claims, and it degrades gracefully — the second sub-claim survives even if the first half-fails.</p>
+</div>
+
+<h3>What to build</h3>
+<div class="tablewrap">
+<table>
+<thead><tr><th>Phase</th><th>Weeks</th><th>Output</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>Corpus and ground-truth pairing</td><td>1–2</td><td>Inventory every clip on the sheet; select games with official records; freeze the metric definitions</td><td><span class="badge b-feasible">Do first</span></td></tr>
+<tr><td>Calibration harness</td><td>2–3</td><td>Markings → homography, with a measured error against painted sheet geometry</td><td><span class="badge b-borrow">Borrow recipe</span></td></tr>
+<tr><td>State extraction</td><td>3–5</td><td>Detection (pretrained + fine-tune), tracking, rotation, world coordinates, per-shot state in the official schema</td><td><span class="badge b-borrow">Borrow mostly</span></td></tr>
+<tr><td>Bridge evaluation</td><td>5–7</td><td>Position error versus official records, split per camera tier and collision/non-collision</td><td><span class="badge b-research">The claim</span></td></tr>
+<tr><td>Reasoning + LLM layer</td><td>7–9</td><td>Structured metric vector → commentary; factuality audit; coach ratings</td><td><span class="badge b-feasible">Feasible</span></td></tr>
+<tr><td>Freeze and write</td><td>10–12</td><td>No new experiments. Figures, limitations, the difficulty taxonomy</td><td><span class="badge b-solved">Discipline</span></td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="callout c-warn">
+  <h4>Cut list — say these out loud in the scope document</h4>
+  <p style="margin:.2rem 0">Real-time processing · full-match analysis · multi-camera fusion · sweeping analysis · body-pose/form analysis · MCTS strategy search · solving curl physics · state-of-the-art detection on the occluded benchmark. Each is defensible as "future work", and each would otherwise consume a term on its own.</p>
+</div>
+
+<h3>Bail conditions — decide these before week 1</h3>
+<ol>
+  <li>No usable footage of any kind by end of week 2 → pivot to the layer-B-only project (reasoning + commentary on official records). It still satisfies the supervisor's analysis goal and cannot fail.</li>
+  <li>Calibration error worse than ~5 cm by end of week 4 → narrow the claim to relative comparisons and shift the emphasis onto the LLM study.</li>
+  <li>Fewer than ~100 usable shots by week 6 → drop per-tier reporting and run a single-tier evaluation.</li>
+</ol>
+</section>
+
+<!-- ====================== DATA PATHS ====================== -->
+<section id="datapaths">
+<h2>11. The three-data-path discipline</h2>
+<p>The one methodological trap that will silently invalidate results in this architecture: training on your own reconstruction output, then evaluating on it.</p>
+<div class="tablewrap">
+<table>
+<thead><tr><th>Path</th><th>Source</th><th>Allowed use</th><th>Never</th></tr></thead>
+<tbody>
+<tr><td><strong>Train</strong></td><td>Official game records (60,536 shots); simulator rollouts (DC3/DC4, unlimited)</td><td>Fit the reasoning layer</td><td>—</td></tr>
+<tr><td><strong>Test</strong></td><td>Held-out official records; hand-labelled video with independently verified state</td><td>Report the headline numbers</td><td>—</td></tr>
+<tr><td><strong>Error analysis</strong></td><td>Your own video → state output</td><td>Diagnose the converter; per-tier breakdowns</td><td><strong>Training or reporting metrics here</strong></td></tr>
+</tbody>
+</table>
+</div>
+<p>And alongside it: <strong>simulate the rules, not the ice.</strong> Rules and strategy are discrete and robust; physics is continuous and brittle, and every high-fidelity simulator omits sweeping. Use simulation for the game tree, and real records for anything that has to be true of real ice.</p>
+</section>
+
+<!-- ====================== QUESTIONS ====================== -->
+<section id="questions">
+<h2>12. Questions for the supervisor</h2>
+<p>Take these to the next meeting. Each one changes the project's shape, and none can be answered from the literature.</p>
+<ol>
+  <li><strong>Who is the client, and what is the actual job</strong> — broadcast overlay, coaching feedback, or automatic clipping? These are three different products. (Note: AI stone-tracking with real-time path/speed/rotation graphics and automatic highlight generation is already being deployed by the official Olympic broadcaster for the 2026 Games, so the broadcast-enhancement framing is commercially occupied.)</li>
+  <li><strong>Able-bodied or wheelchair curling?</strong> This changes the confound structure (no sweeping in wheelchair curling), the technique analysis, the available datasets, and — per §8 — the novelty risk substantially.</li>
+  <li><strong>Can the client supply footage, or ice access?</strong> The most valuable question in the meeting. A commercial partner may unlock what a university club cannot.</li>
+  <li><strong>What is the term deliverable</strong> — a working system on N videos, or a benchmark plus report? For one term, the second.</li>
+  <li><strong>Which single claim matters most</strong> — measurement accuracy, arbitrary-video robustness, or LLM reasoning? All three cannot be chased at once, and asking for "as general as possible" is how honours projects end with a demo and no evaluation.</li>
+</ol>
+<p>Then get the answer in writing: the research question, the claims, and what is explicitly <em>not</em> being attempted and why. With a supervisor who is also a founder, the client's roadmap and the dissertation's requirements will pull apart, and you will be the one caught in the middle.</p>
+</section>
+
+<!-- ====================== REFS ====================== -->
+<section id="refs">
+<h2>13. Reference library</h2>
+<p>Grouped by area. Every link goes to the source found during the sweep.</p>
+
+<div class="refs">
+
+<h4>A · Curling detection, benchmarks and datasets</h4>
+<ol>
+  <li>Xiao, Li et al. <em>IFCD: Inverted feature extraction for enhancing curling stone detection.</em> AIP Advances 15(1):015206, 2025. <a href="https://pubs.aip.org/aip/adv/article-split/15/1/015206/3329349/IFCD-Inverted-feature-extraction-for-enhancing">link</a> <span class="tag">solid</span>
+    <span class="why">0.974 / 0.723 mAP@0.5 clean vs occluded. The occlusion cliff.</span></li>
+  <li>Sun, Li, Xiao et al. <em>AI-Curling: An On-Site Curling Analysis and Decision-Making Method (SR-Yolo).</em> Computer Engineering, 2025. <a href="https://www.sciengine.com/ComputerEng/doi/10.19678/j.issn.1000-3428.0069106">link</a>
+    <span class="why">Stone size statistics (1:146; 48.4% under 32×32 px); the Curling/Curling_hard pair.</span></li>
+  <li><em>Deep Learning-based Curling Detection and Trajectory Tracking.</em> 计算机与数字工程 52(10), 2024. <a href="https://opaj.napstic.cn/periodicalArticle/0120241203017306">link</a>
+    <span class="why">Annotated real-competition dataset supplied to fill the data gap.</span></li>
+  <li><em>Combination of Algorithms for Object Detection in Videos on Basis of Background Subtraction and Color Histograms (curling case study).</em> SciTePress, 2020. <a href="https://www.scitepress.org/Papers/2020/98329/98329.pdf">link</a>
+    <span class="why">Useful baseline: 100% detection alone, 94.17% with an athlete behind, ~28.7% not-detected when the athlete occludes fully. Nine videos, three occlusion scenarios.</span></li>
+  <li>Suzumura, Tamura, Aihara, Yamamoto. <em>Extraction of Stone Positions from a Sheet Image for Curling Match Database Construction.</em> Applied Sciences 16(7):3453, 2026. <a href="https://www.mdpi.com/2076-3417/16/7/3453">link</a> <span class="tag">verify id</span>
+    <span class="why">205,364 stone positions, 31 tournaments, 108,114 sheet images. Closest work to the bridge — but from top-down diagrams, not video.</span></li>
+  <li><em>Roboflow Universe: Curling Stone Keypoint.</em> <a href="https://universe.roboflow.com/curling-pbs6d/curling-stone-keypoint/">link</a>
+    <span class="why">Publicly downloadable keypoint dataset. One of the few resources you can actually get today.</span></li>
+  <li><em>Roboflow Universe: Curling_22_kp.</em> CC BY 4.0. <a href="https://universe.roboflow.com/aaa-wdkci/curling_22_kp-5hqss">link</a></li>
+  <li><em>Roboflow Universe: siliguide.</em> CC BY 4.0, instance segmentation. <a href="https://universe.roboflow.com/test-akuzg/siliguide">link</a></li>
+</ol>
+
+<h4>B · Curling tracking, trajectory and calibration</h4>
+<ol start="9">
+  <li>Guo, Jin, Zhao, Ni, Shen. <em>CurlObserver: A framework for curling trajectory detection and real-world mapping from broadcast videos with uncalibrated dynamic perspectives.</em> Expert Systems with Applications 293:128745, 2025. <a href="https://dl.acm.org/doi/10.1016/j.eswa.2025.128745">link</a> <span class="tag">solid</span>
+    <span class="why">3.62 cm RMSE, 98.7% detection, 93.4% tracking under varied lighting. The state of the art for broadcast. Dataset not publicly released.</span></li>
+  <li><em>An Innovative Approach for Detecting and Visualizing the Trajectory of Curling Stones in Competition Broadcast Videos.</em> ACM, 2025. DOI 10.1145/3761668.3761683. <a href="https://dl.acm.org/doi/pdf/10.1145/3761668.3761683">link</a> <span class="tag">solid</span>
+    <span class="why">YOLOX + Hough + DeepLabV3 adaptive homography + improved SORT. MOTA 82.87 vs SORT 61.73 / ByteTrack 72.64 / DeepSORT 77.91. Limitations: tilt and distance from ring vertices.</span></li>
+  <li>Takahashi et al. <em>Live broadcast stone trajectory visualisation using online machine learning.</em> ACM Multimedia 2017; deployed in Japan Curling Championships 2017 and 2019. <a href="https://www.nhk.or.jp/strl/english/publica/bt/78/pdf/bt78.pdf">link</a> <span class="tag">solid</span>
+    <span class="why">Proof this works in live production, seven years ago.</span></li>
+  <li>Aihara et al. <em>Curler Support Tool Using Mobile Devices (Curl Tracer / Curl Viewer).</em> Sports Informatics and Technology, 2025. <a href="https://www.jstage.jst.go.jp/article/sit/2025/0/2025_C-2-2/_article/-char/en">link</a>
+    <span class="why">Real-time on consumer devices; multiple tracers reduce occlusion error. Notes sensor-based approaches are disallowed in competition.</span></li>
+  <li><em>Development of a Simple Tracking System to Monitor Curling Stone Dynamics.</em> icSPORTS, 2024. <a href="https://www.scitepress.org/Papers/2024/128961/128961.pdf">link</a>
+    <span class="why">~0.02 m average position error with a fixed camera; YOLOv7 + ByteTrack + calibration; validated hog-line speed against a laser velocimeter.</span></li>
+  <li><em>Vision-based Sweep Analysis System.</em> Applied Sciences 16(15):7600, 2026. <a href="https://www.mdpi.com/2076-3417/16/15/7600/pdf">link</a> <span class="tag">verify id</span>
+    <span class="why">Position MAE 0.03–0.06 m, orientation MAE 4.8–5.1°, validated against motion capture. Also the best available brush detector — reusable as an intent detector.</span></li>
+  <li>Wang et al. <em>Policy decision of curling in real competition scenes.</em> Complex &amp; Intelligent Systems 9:3301–3312, 2023. <a href="https://link.springer.com/article/10.1007/s40747-022-00921-4">link</a> <span class="tag">solid</span>
+    <span class="why">Situation-aware detection + curling MCTS, evaluated with China's national wheelchair curling team; credited with Beijing 2022 gold.</span></li>
+</ol>
+
+<h4>C · Rotation, physics and curl</h4>
+<ol start="16">
+  <li>Maeno, Hattori, Tokumoto et al. <em>Motion analysis of curling stone</em> (series: JSME Sports Engineering and Human Dynamics 2013, 2016; JSSI 2015, 2019). <a href="https://www.jstage.jst.go.jp/article/jsmeshd/2016/0/2016_C-21/_pdf">link</a> <span class="tag">solid</span>
+    <span class="why">Ceiling-camera calibration-plate method; black mark on handle → rotation angle; ±6 mm cross-field linking error; ω 0.3–3.0 rad/s; curl ratio decreases with angular velocity.</span></li>
+  <li>Murata. <em>High-precision measurement of curling stone motion.</em> Scientific Reports 12:15047, 2022. <a href="https://www.nature.com/articles/s41598-022-19303-4">link</a> <span class="tag">solid</span>
+    <span class="why">122 shots at micrometre level. Direction-dependent trajectory; "gear-on"/"ride-on" phases; ~65 mm rotation-radius threshold.</span></li>
+  <li><em>CasLSTM: High-precision prediction of curling trajectory multivariate time series.</em> Scientific Reports, 2025. <a href="https://www.nature.com/articles/s41598-025-87933-5">link</a>
+    <span class="why">RMSE 0.999 cm vs 22.593 cm for the best classical physics model. The decisive ML-over-physics result.</span></li>
+  <li><em>Curling Stone Trajectory and Collision Prediction Using a Hybrid Model Integrating Physical Models and Machine Learning.</em> Applied Sciences 16(10):5034. <a href="https://www.mdpi.com/2076-3417/16/10/5034/xml">link</a> <span class="tag">verify id</span>
+    <span class="why">Physical models adequate only for coarse momentum transfer in collisions.</span></li>
+  <li><em>Friction measurement at Beijing 2022 from video.</em> Lubricants 10:265 (2022) and 11(9):370 (2023). <a href="https://ouci.dntb.gov.ua/en/?backlinks_to=10.3390/lubricants10100265">link 1</a> <a href="https://ouci.dntb.gov.ua/en/?backlinks_to=10.1007%2Fs11249-022-01623-1">link 2</a>
+    <span class="why">Friction 0.006–0.016 decreasing with speed; Olympic rink quality parameter α = 0.0087; 26.78 s back-line to button. Measured from competition video.</span></li>
+  <li><em>The Motion of Curling Rocks.</em> arXiv:2112.09835. <a href="https://ar5iv.labs.arxiv.org/html/2112.09835">link</a>
+    <span class="why">Rotational decay power law with exponent ≈1.586, not 2. Up to 78 turns per delivery.</span></li>
+</ol>
+
+<h4>D · Event detection, shot classification, camera segmentation</h4>
+<ol start="22">
+  <li><em>Dynamic Frame Sampling-based Sequence Encoding for Video Curling Shot Classification Model.</em> KCI, 2025. <a href="https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003337896">link</a>
+    <span class="why">763 real match shots, 5 classes, CNN + Temporal Transformer, AUC 0.773–0.938. Uses top-view footage — not broadcast.</span></li>
+  <li>Giancola et al. <em>SoccerNet-v2.</em> CVPR 2021. <a href="https://ar5iv.labs.arxiv.org/html/2011.13367">link</a> <span class="tag">solid</span>
+    <span class="why">500 games, 764 hours, 300K annotations, 13 camera classes, replay grounding. The template for what a curling broadcast benchmark would look like.</span></li>
+  <li><em>SportSBD: shot boundary detection for sports.</em> ACM MMSys 2026. <a href="https://dl.acm.org/doi/epdf/10.1145/3793853.3799803">link</a> <span class="tag">verify id</span>
+    <span class="why">Single R(2+1)D model generalising across hockey and soccer, open-source. Directly reusable for throw segmentation.</span></li>
+  <li>Al Jawahari et al. <em>Action Spotting and Precise Event Detection in Sports: Datasets, Methods, and Challenges.</em> arXiv:2505.03991. <a href="https://arxiv.org/pdf/2505.03991">link</a> <span class="tag">solid</span>
+    <span class="why">The task taxonomy (TAL / Action Spotting / Precise Event Spotting) and a critique of lenient evaluation protocols.</span></li>
+  <li>Liu et al. <em>F³Set: Fast, Frequent, Fine-grained Sports Video Benchmark.</em> ICLR 2025. <a href="https://huggingface.co/papers/2504.08222">link</a>
+    <span class="why">~1 event per second; GPT-4 struggles. Sets expectations for fine-grained sports events.</span></li>
+  <li>Minhas et al. <em>Shot classification in sports video.</em> Applied Sciences, 2019. <a href="https://ouci.dntb.gov.ua/en/works/leaeW1gl/">link</a>
+    <span class="why">94.07% four-class camera-shot-type accuracy. Cheap, solved baseline for your routing layer.</span></li>
+</ol>
+
+<h4>E · Strategy, decision support and simulators</h4>
+<ol start="28">
+  <li>Brenzel, Shock, Yang. <em>An analysis of curling using a three-dimensional Markov model.</em> Journal of Sports Analytics, 2019. <a href="https://journals.sagepub.com/doi/10.3233/JSA-180279">link</a> <span class="tag">solid</span>
+    <span class="why">10,933 ends / 1,199 matches. Hammer starter wins ~58%; hammer scores ≥1 in ~68% of ends; up-1-without-hammer beats down-1-with-hammer 56/44.</span></li>
+  <li>Fry, Austin, Fanzon. <em>Elementary econometric and strategic analysis of curling matches.</em> 2024/2025. <a href="https://arxiv.org/abs/2406.18601">link</a>
+    <span class="why">Analytical conditions for when blanking an end beats taking one point.</span></li>
+  <li>Chiba, Tamura, Aihara, Yamamoto. <em>Building an All-Shot Expected-Score Distribution Model from Real-Match Curling Boards.</em> Applied Sciences 16(14):6943, 2026. <a href="https://www.mdpi.com/2076-3417/16/14/6943">link</a> <span class="tag">verify id</span>
+    <span class="why">ESD over boards −8 to +8, integrated with win-probability tables. Same group as the sheet-image database paper.</span></li>
+  <li>Elder, Hossain, Pipping. <em>Pulling the Power Play: A Win Probability Strategy for Mixed Doubles Curling.</em> Wharton Sports Analytics, 2026. <a href="https://wsb.wharton.upenn.edu/pulling-the-power-play-a-win-probability-strategy-for-mixed-doubles-curling/">link</a> <span class="tag">verify id</span>
+    <span class="why">XGBoost end-outcome model + backward induction; Power Play worth ≈+0.29 expected points.</span></li>
+  <li>Son, Park, Jeon. <em>Training Agents for Strategic Curling Through a Unified Reinforcement Learning Framework.</em> Mathematics 14(3):403, 2026. <a href="https://www.mdpi.com/2227-7390/14/3/403">link</a> <span class="tag">verify id</span>
+    <span class="why">WCF-rules simulator, SAC + self-play, two-phase curriculum. Calibrated to real video at mean 2.59 cm Hausdorff — and reports collision degradation. Sweeping left to future work.</span></li>
+  <li><em>A Resilient and Extensible Digital Curling Platform (DC4).</em> Applied Sciences 16(14):6886, 2026. <a href="https://www.mdpi.com/2076-3417/16/14/6886/pdf">link</a> <span class="tag">verify id</span> <a href="https://github.com/digitalcurling/DigitalCurling4-Server">server repo</a> <a href="https://github.com/kr-work/FCV1-Simulator">FCV simulator</a> <a href="https://github.com/kr-work/DC4-Python">Python client</a> <a href="http://minerva.cs.uec.ac.jp/cgi-bin/curling/wiki.cgi?page=DigitalCurlingProtocol">protocol spec</a>
+    <span class="why">The de-facto standard state representation and simulator family. Decoupled C++ physics, shot-by-shot persistence designed for sequence-model datasets. Adopt, do not reinvent.</span></li>
+  <li>Kanaeda, Ito. <em>Supervised-learning improvements to Digital Curling AI (Kura Curling).</em> SIT 2025. <a href="https://www.jstage.jst.go.jp/article/sit/2025/0/2025_C-2-4/_pdf/-char/ja">link</a>
+    <span class="why">10,000 teacher games; separate hammer/non-hammer policy networks; 0.93 win rate over the predecessor. Your baseline for the reasoning layer.</span></li>
+  <li>Won et al. <em>Curly: adaptive deep reinforcement learning for a curling robot.</em> Science Robotics, 2020. <a href="https://www.science.org/action/downloadSupplement?doi=10.1126%2Fscirobotics.abb9764&amp;file=abb9764_sm.pdf">supplement</a> <span class="tag">solid</span>
+    <span class="why">Nyberg curl dynamics vs constant-parameter models: cosine similarity 0.920 vs 0.539. Also played official matches against a national wheelchair curling reserve team.</span></li>
+</ol>
+
+<h4>F · Sports field and rink registration</h4>
+<ol start="36">
+  <li>Manafifard. <em>A review on camera calibration in soccer videos.</em> Multimedia Tools and Applications 83(6), 2024. <a href="https://www.semanticscholar.org/paper/A-review-on-camera-calibration-in-soccer-videos-Manafifard/a730978ae600b414478f582efe04402ca82f9530">link</a> <span class="tag">solid</span> + <a href="https://github.com/cemunds/awesome-sports-camera-calibration">curated bibliography</a>
+    <span class="why">The survey entry point for the whole calibration field.</span></li>
+  <li><em>HockeyRink dataset.</em> ACM MMSys 2025. <a href="https://datasets.simula.no/hockeyrink/">dataset</a> <a href="https://github.com/acmmmsys/2025-HockeyRink">code</a>
+    <span class="why">661 frames with 56 rink keypoints, pretrained model, live demo. Closest released artefact to a curling rink calibrator.</span></li>
+  <li>Fani et al. <em>Localization of ice-rink for broadcast hockey videos.</em> 2021. <a href="https://export.arxiv.org/pdf/2104.10847">link</a>
+    <span class="why">ResNet-18 regresses four control points; Hann-window temporal smoothing removes jitter. 72 clips from 24 NHL games.</span></li>
+  <li><em>Hockey2D.</em> IEEE, 2025. <a href="https://ieeexplore.ieee.org/document/11339314">link</a>
+    <span class="why">YOLO rink keypoints + RANSAC homography, with a shot-type classifier to filter frames. The exact architecture pattern recommended here, already published.</span></li>
+  <li>Gutiérrez-Pérez, Agudo. <em>PnLCalib: Sports field registration via points and lines optimization.</em> CVIU 2026 / arXiv:2404.08401. <a href="https://ar5iv.labs.arxiv.org/html/2404.08401">link</a> <a href="https://github.com/mguti97/PnLCalib">code</a>
+    <span class="why">Hierarchical keypoint grid from line–line, line–ellipse intersections; joint point+line refinement. Transferable to a sheet with rings.</span></li>
+  <li>Theiner, Ewerth. <em>TVCalib: Camera calibration for sports field registration in soccer.</em> WACV 2023. <a href="https://www.openaccess.thecvf.com/content/WACV2023/papers/Theiner_TVCalib_Camera_Calibration_for_Sports_Field_Registration_in_Soccer_WACV_2023_paper.pdf">link</a>
+    <span class="why">Learns camera pose and focal length, not just a homography.</span></li>
+  <li>Magera et al. <em>Can Geometry Save Central Views for Sports Field Registration?</em> CVPRW 2025. <a href="https://openaccess.thecvf.com/content/CVPR2025W/CVSPORTS/papers/Magera_Can_Geometry_Save_Central_Views_for_Sports_Field_Registration_CVPRW_2025_paper.pdf">link</a>
+    <span class="why">Explicitly frames the open case: sparse markings in central/close-up views.</span></li>
+</ol>
+
+<h4>G · Multi-object tracking in sport</h4>
+<ol start="43">
+  <li>Cui, Zeng, Zhao, Yang, Wu, Wang. <em>SportsMOT: A Large Multi-Object Tracking Dataset in Multiple Sports Scenes.</em> ICCV 2023. <a href="https://openaccess.thecvf.com/content/ICCV2023/html/Cui_SportsMOT_A_Large_Multi-Object_Tracking_Dataset_in_Multiple_Sports_Scenes_ICCV_2023_paper.html">link</a> <a href="https://deeperaction.github.io/datasets/sportsmot.html">dataset</a> <span class="tag">solid</span>
+    <span class="why">240 sequences, 150K frames, 1.6M boxes. "Similar yet distinguishable" appearance makes association the bottleneck — analytically the same as red/yellow stones.</span></li>
+  <li><em>Visual Multi-Object Tracking in Sports Based on Historical Information Mining.</em> ACM. <a href="https://dl.acm.org/doi/full/10.1145/3804601.3804722">link</a>
+    <span class="why">EKF with confidence+angle states, Transformer trajectory prediction for long occlusion recovery. Per-sport HOTA breakdown.</span></li>
+</ol>
+
+<h4>H · LLM commentary and evaluation</h4>
+<ol start="45">
+  <li>Sundararajan, Sripada, Reiter. <em>Input Matters: Evaluating Input Structure's Impact on LLM Summaries of Sports Play-by-Play.</em> INLG 2025. <a href="https://aclanthology.org/2025.inlg-main.46/">link</a> <span class="tag">solid</span>
+    <span class="why">3,312 annotated factual errors. JSON input cuts errors 69%/65% vs unstructured; rows 54%/51%. The empirical case for feeding structure, not pixels.</span></li>
+  <li><em>Survey of LLMs in sport (19 tasks, 6 stakeholder groups).</em> ACL Findings 2026. <a href="https://aclanthology.org/2026.findings-acl.1851.pdf">link</a> <span class="tag">verify id</span>
+    <span class="why">Hallucination and latency as the two deployment blockers; temporal downsampling degrades event localisation.</span></li>
+  <li><em>TimeSoccer: end-to-end soccer commentary over full-length video.</em> ACM MM 2025. <a href="https://dlnext.acm.org/doi/epdf/10.1145/3746027.3755077">link</a> <span class="tag">verify id</span>
+    <span class="why">Argues ground-truth temporal segments make prior work unrealistic for real broadcast.</span></li>
+  <li><em>An LLM-Based Automatic Sportscast Solution for Robot Soccer Matches.</em> arXiv. <a href="https://arxiv.org/pdf/2607.14809.pdf">link</a> <span class="tag">verify id</span>
+    <span class="why">Rule-aware symbolic event trigger + dual-role LLM policy from raw video — closest analogue to what you would build.</span></li>
+  <li><em>Sports Commentary Generation with OS-CNN + LLaMA 3.3.</em> Mathematics 13(17):2738. <a href="https://www.mdpi.com/2227-7390/13/17/2738/pdf">link</a>
+    <span class="why">Concrete latency figures: ~3.1 s per sentence, LLM stage the bottleneck.</span></li>
+</ol>
+
+<h4>I · Video to 3D / simulation / world models</h4>
+<ol start="50">
+  <li><em>SIMULACRON: From camera observations to physical simulations of the 3D world.</em> EU project 884679. <a href="https://cordis.europa.eu/project/id/884679/reporting/de?format=pdf">link</a>
+    <span class="why">Explicitly the concept behind your "game world" idea, as an EU research programme.</span></li>
+  <li><em>OVOW: One Video, One World — simulation-ready 4D scenes from monocular video.</em> <a href="https://arxiv.org/pdf/2606.31388v1">link</a> <a href="https://github.com/flyingGH/OVOW">repo</a> <span class="tag">verify id</span>
+    <span class="why">Introduces the first benchmark for structured Video-to-4D evaluation. Borrow their evaluation framing.</span></li>
+  <li><em>HoloScene: Simulation-ready interactive 3D worlds from a single video.</em> NeurIPS 2025. <a href="https://papers.neurips.cc/paper_files/paper/2025/file/2ea18fdc667e0ef2ad82b2b4d65147ad-Paper-Conference.pdf">link</a> <span class="tag">verify id</span></li>
+  <li><em>SoccerNet-Depth.</em> CVPRW 2024. <a href="https://openaccess.thecvf.com/content/CVPR2024W/CVsports/papers/Leduc_SoccerNet-Depth_a_Scalable_Dataset_for_Monocular_Depth_Estimation_in_Sports_CVPRW_2024_paper.pdf">link</a>
+    <span class="why">Uses sports video games as simulators to generate depth data; quantifies the sim-to-real gap.</span></li>
+  <li><em>Dynamic digital twin of an ice hockey event (radiance fields + camera feeds).</em> IEEE MetaCom 2024.
+    <span class="why">Rink-sport digital twin precedent.</span></li>
+  <li>SynthNet. <em>3D tennis ball trajectory from monocular video using synthetic physics data.</em> ACM MMSports 2024. <a href="https://pure.itu.dk/en/publications/synthnet-leveraging-synthetic-data-for-3d-trajectory-estimation-f/">link</a>
+    <span class="why">Closest analogue for monocular sports-object trajectory recovery from synthetic training data.</span></li>
+</ol>
+
+<h4>J · Official records, statistics and the sport's ontology</h4>
+<ol start="56">
+  <li><em>Opening the House: Datasets for Mixed Doubles Curling.</em> arXiv:2512.16574. <a href="https://arxiv.org/html/2512.16574v2">link</a> <span class="tag">solid</span>
+    <span class="why">1,112 games, 60,536 shots with zones and official 0–100 grading, plus a documented list of data-quality problems. Free ground truth for the reasoning layer.</span></li>
+  <li><em>CURLIT / World Curling statistics training — shot tasks and the 0–4 scoring scale.</em> <a href="https://wcc.curlit.com/powerpoint/StatsTraining_2026_2027_noSample.pdf">2026-27</a> <a href="https://wcc.curlit.com/manuals">manuals</a>
+    <span class="why">The authoritative ontology: 11 shot tasks, handle, 0/25/50/75/100%, X for not-considered, graded on intention, no bonus points.</span></li>
+  <li><em>World Curling live scores and Results Books (shot-by-shot PDFs).</em> <a href="https://livescores.worldcurling.org">livescores</a> <a href="https://wmcc.curlit.ch/PDF/OWG2022_ResultsBook.pdf">OWG 2022 results book</a>
+    <span class="why">The official per-shot record you would validate against. Also documents the position coding (1=Lead … 4=Fourth, S=Skip, V=Vice, A=Alternate).</span></li>
+  <li><em>czapi — CurlingZone scraper.</em> <a href="https://packages.ecosyste.ms/registries/pypi.org/packages/czapi">link</a>
+    <span class="why">Programmatic route to shooting-percentage data if you need more history.</span></li>
+</ol>
+
+<h4>K · Wheelchair / Paralympic curling</h4>
+<ol start="60">
+  <li>Zhao, Du, Wang. <em>Cognitive visual strategies are associated with delivery accuracy in elite wheelchair curling.</em> Frontiers in Psychology, 2025. <a href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2025.1682654/full">link</a> <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12808461/">PMC</a>
+    <span class="why">30 athletes, eye-tracking at 1000 Hz, SVM classifying expertise at 90% accuracy (AUC 0.93). Described as among the first ML work on para-athlete cognitive markers.</span></li>
+  <li>Canadian Paralympic wheelchair delivery mechanics, Vancouver 2010 (8 motion-analysis + 12 video cameras). <a href="https://www.cbc.ca/news/canada/edmonton/paralympic-curlers-powered-by-alberta-tech-1.868940">report</a>
+    <span class="why">Early precedent for multi-camera biomechanics in wheelchair curling.</span></li>
+  <li>Chinese wheelchair-curling tracking patents: CN113058246A (track recognition, positioning, tracking, motion state), CN113033384A (motion state detection and target tracking), CN115002510A (handle keypoints → angular velocity).
+    <span class="why">IP already filed on the specific technical problem you would be solving.</span></li>
+</ol>
+
+<h4>L · Video-LLM capability ceilings</h4>
+<ol start="63">
+  <li><em>VideoZeroBench.</em> <a href="https://huggingface.co/papers/2604.01569">link</a> <a href="https://huggingface.co/datasets/marinero4972/VideoZeroBench">dataset</a> <span class="tag">verify id</span>
+    <span class="why">At the level requiring correct spatio-temporal grounding, no model exceeds 1%. Small objects average 6.8% of frame area — the same regime as curling stones.</span></li>
+  <li><em>CP-Bench (Continuous Perception Benchmark).</em> Stanford. <a href="https://ai.stanford.edu/~zywang/projects/ContinuousPerceptionBenchmark/">link</a>
+    <span class="why">Counting across a panning camera: 5% for a model that scores 58% when everything is visible. Directly analogous to counting stones from a broadcast pan.</span></li>
+  <li>Li et al. <em>STI-Bench: Are MLLMs Ready for Precise Spatial-Temporal World Understanding?</em> ICCV 2025. <a href="https://openaccess.thecvf.com/content/ICCV2025/papers/Li_STI-Bench_Are_MLLMs_Ready_for_Precise_Spatial-Temporal_World_Understanding_ICCV_2025_paper.pdf">link</a> <span class="tag">solid</span>
+    <span class="why">Best model ~41.4%; "inaccurate spatial quantification" named as the first fundamental limitation.</span></li>
+  <li>Yang et al. <em>Thinking in Space (VSI-Bench).</em> CVPR 2025. <a href="https://openaccess.thecvf.com/content/CVPR2025/html/Yang_Thinking_in_Space_How_Multimodal_Large_Language_Models_See_Remember_CVPR_2025_paper.html">link</a> <span class="tag">solid</span>
+    <span class="why">Object counting: human ~94% vs model ~56%. Spatial reasoning accounts for ~71% of errors, not perception.</span></li>
+  <li>Ravi et al. <em>Out of Sight, Not Out of Context: Egocentric Spatial Reasoning Across Disjoint Frames.</em> EMNLP 2025. <a href="https://aclanthology.org/2025.emnlp-main.816/">link</a>
+    <span class="why">Accuracy falls 60% → 30% as the temporal gap widens; oracle 3D coordinates boost performance ~20%. Argues for exactly the architecture in §11.</span></li>
+</ol>
+
+</div>
+</section>
+
+<footer>
+  <p><strong>Provenance.</strong> Compiled from a rapid structured web sweep across curling CV, general sports-broadcast geometry and tracking, curling physics and analytics, sports-commentary LLMs, video-to-simulation, and wheelchair-curling literature. Numbers are <em>as reported by the sources</em> and were not independently reproduced. Difficulty ratings in §4 are this document's assessment, not published results.</p>
+  <p><strong>Before citing.</strong> Verify every item tagged <span class="tag">verify id</span>. Several identifiers retrieved during the sweep appear future-dated and may be indexing artefacts.</p>
+  <p style="margin-top:1.2rem">Prepared as a scoping artefact for a one-term honours project on curling video analysis. Share freely; treat the ratings as arguments to be tested, not conclusions.</p>
+</footer>
+
+</div>
+</body>
+</html>

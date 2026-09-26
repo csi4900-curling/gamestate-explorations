@@ -1,0 +1,78 @@
+{
+  "scope": "Current curling vision experiments; fixed saved input media and annotations; clean Python environment on the same Linux host.",
+  "completed": true,
+  "compared_output_files": 59,
+  "strict_1e_minus_9_comparisons_passed": 19,
+  "strict_1e_minus_9_comparisons_failed": 40,
+  "discrete_changes": 0,
+  "max_stone_position_shift_m": 3.42697587207374e-07,
+  "max_pixel_vector_shift_px": 1.9057386696477137e-12,
+  "cross_view_summary": {
+    "throws": 16,
+    "provisional_links": 16,
+    "departure_positions": 499,
+    "departure_samples": 513,
+    "independently_verified_links": 0,
+    "interpolated_gaps": 0
+  },
+  "trajectory_moving_labels_before": {
+    "label_count": 4,
+    "matched_count": 4,
+    "pixel_rmse": 1.1590621208546035,
+    "conditional_cm_rmse": 3.9036630536284584
+  },
+  "trajectory_moving_labels_after": {
+    "label_count": 4,
+    "matched_count": 4,
+    "pixel_rmse": 1.1590621208546035,
+    "conditional_cm_rmse": 3.9036629620974104
+  },
+  "body_benchmark_summary": {
+    "frames": 9,
+    "visible_targets": 48,
+    "detected": 46,
+    "localized": 46,
+    "missed": 2,
+    "false_proposals": 0,
+    "precision": 1.0,
+    "recall": 0.9583333333333334,
+    "reference_linked_targets": 48,
+    "automatic_position": {
+      "n": 46,
+      "median_cm": 4.223561258275236,
+      "rmse_cm": 7.296516936683625,
+      "p95_cm": 17.89588760100625,
+      "max_cm": 20.9604928448498
+    },
+    "uncorrected_same_detections": {
+      "n": 46,
+      "median_cm": 4.223561258275236,
+      "rmse_cm": 17.533201163141936,
+      "p95_cm": 53.622851367039715,
+      "max_cm": 57.14244116667331
+    },
+    "within_threshold": {
+      "5": {
+        "detected_within": 27,
+        "reference_targets": 48
+      },
+      "10": {
+        "detected_within": 40,
+        "reference_targets": 48
+      },
+      "20": {
+        "detected_within": 45,
+        "reference_targets": 48
+      },
+      "50": {
+        "detected_within": 46,
+        "reference_targets": 48
+      }
+    }
+  },
+  "software_checks_passed": true,
+  "prototype_tests": 90,
+  "feasibility_tests": 4,
+  "browser_checks": 7,
+  "interpretation": "Reported outcomes reproduced; strict numerical identity did not. This measures repeatability, not independent physical accuracy."
+}

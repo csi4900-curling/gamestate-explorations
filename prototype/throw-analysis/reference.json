@@ -1,0 +1,206 @@
+{
+  "source_video": "aWXo6XeUFQw",
+  "source_interval_s": [
+    1650,
+    2760
+  ],
+  "annotation_method": "AI visual inspection of exhaustive 5-second source-camera contact sheets, followed by 1-second sequences around all 16 visible deliveries; completed before detector implementation. Not an independent human reference. The coarse overview can miss unusual short events.",
+  "event_semantics": "Outgoing stone centre passes y=60 px in the left view of the 640x360 source, travelling up-image. Interval-valued visual labels, not exact release time.",
+  "view": "left",
+  "gate_y_normalized": 0.16666666666666666,
+  "events": [
+    {
+      "id": "E01",
+      "ordinal": 1,
+      "colour": "yellow",
+      "crossing_interval_s": [
+        1737,
+        1739
+      ],
+      "evidence": "evidence/event-reference-01.jpg",
+      "split": "development"
+    },
+    {
+      "id": "E02",
+      "ordinal": 2,
+      "colour": "red",
+      "crossing_interval_s": [
+        1790,
+        1792
+      ],
+      "evidence": "evidence/event-reference-02.jpg",
+      "split": "development"
+    },
+    {
+      "id": "E03",
+      "ordinal": 3,
+      "colour": "yellow",
+      "crossing_interval_s": [
+        1839,
+        1841
+      ],
+      "evidence": "evidence/event-reference-03.jpg",
+      "split": "development"
+    },
+    {
+      "id": "E04",
+      "ordinal": 4,
+      "colour": "red",
+      "crossing_interval_s": [
+        1895,
+        1897
+      ],
+      "evidence": "evidence/event-reference-04.jpg",
+      "split": "development"
+    },
+    {
+      "id": "E05",
+      "ordinal": 5,
+      "colour": "yellow",
+      "crossing_interval_s": [
+        1949,
+        1950
+      ],
+      "evidence": "evidence/event-reference-05.jpg",
+      "split": "development"
+    },
+    {
+      "id": "E06",
+      "ordinal": 6,
+      "colour": "red",
+      "crossing_interval_s": [
+        2006,
+        2007
+      ],
+      "evidence": "evidence/event-reference-06.jpg",
+      "split": "development"
+    },
+    {
+      "id": "E07",
+      "ordinal": 7,
+      "colour": "yellow",
+      "crossing_interval_s": [
+        2050,
+        2051
+      ],
+      "evidence": "evidence/event-reference-07.jpg",
+      "split": "development"
+    },
+    {
+      "id": "E08",
+      "ordinal": 8,
+      "colour": "red",
+      "crossing_interval_s": [
+        2102,
+        2103
+      ],
+      "evidence": "evidence/event-reference-08.jpg",
+      "split": "development"
+    },
+    {
+      "id": "E09",
+      "ordinal": 9,
+      "colour": "yellow",
+      "crossing_interval_s": [
+        2177,
+        2178
+      ],
+      "evidence": "evidence/event-reference-09.jpg",
+      "split": "same_end_check"
+    },
+    {
+      "id": "E10",
+      "ordinal": 10,
+      "colour": "red",
+      "crossing_interval_s": [
+        2247,
+        2248
+      ],
+      "evidence": "evidence/event-reference-10.jpg",
+      "split": "same_end_check"
+    },
+    {
+      "id": "E11",
+      "ordinal": 11,
+      "colour": "yellow",
+      "crossing_interval_s": [
+        2303,
+        2305
+      ],
+      "evidence": "evidence/event-reference-11.jpg",
+      "split": "same_end_check"
+    },
+    {
+      "id": "E12",
+      "ordinal": 12,
+      "colour": "red",
+      "crossing_interval_s": [
+        2360,
+        2362
+      ],
+      "evidence": "evidence/event-reference-12.jpg",
+      "split": "same_end_check"
+    },
+    {
+      "id": "E13",
+      "ordinal": 13,
+      "colour": "yellow",
+      "crossing_interval_s": [
+        2427,
+        2428
+      ],
+      "evidence": "evidence/event-reference-13.jpg",
+      "split": "same_end_check"
+    },
+    {
+      "id": "E14",
+      "ordinal": 14,
+      "colour": "red",
+      "crossing_interval_s": [
+        2478,
+        2479
+      ],
+      "evidence": "evidence/event-reference-14.jpg",
+      "split": "same_end_check"
+    },
+    {
+      "id": "E15",
+      "ordinal": 15,
+      "colour": "yellow",
+      "crossing_interval_s": [
+        2637,
+        2638
+      ],
+      "evidence": "evidence/event-reference-15.jpg",
+      "split": "same_end_check"
+    },
+    {
+      "id": "E16",
+      "ordinal": 16,
+      "colour": "red",
+      "crossing_interval_s": [
+        2689,
+        2690
+      ],
+      "evidence": "evidence/event-reference-16.jpg",
+      "split": "same_end_check"
+    }
+  ],
+  "splits": {
+    "development": [
+      1650,
+      2140
+    ],
+    "same_end_check": [
+      2140,
+      2760
+    ]
+  },
+  "matching": "One-to-one temporal matching within annotated interval expanded by 2 seconds. Report colour separately. Unmatched predictions false positives; unmatched annotations misses. Timing error is distance to annotated interval, not midpoint error.",
+  "limitations": [
+    "One fixed dual-view wheelchair recording and one end, not arbitrary-video or held-out-recording reliability.",
+    "Same AI prepares labels and algorithm; check section already visually inspected to annotate, never an independent held-out test.",
+    "No target or final position labels used in throw detection.",
+    "16 is a reference count, not an inference constraint."
+  ]
+}

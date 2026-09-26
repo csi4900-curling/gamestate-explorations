@@ -1,0 +1,5337 @@
+{
+  "schema_version": "0.2-experimental",
+  "detector_version": "colour-cap-baseline-v2",
+  "detector_sha256": "d09fb221161a516d597beab8b78bb0118a3ec190198297ac8ee8701b0a812686",
+  "coordinate_convention": "View-local metres: origin tee; +x toward image right along tee line; +y toward image foreground along centre line. Not canonical throwing orientation; cameras must not be fused using these coordinates.",
+  "limitations": [
+    "Nominal ring radii, not surveyed dimensions.",
+    "Annotations are from the same AI conducting implementation; not independent ground truth.",
+    "Ice-plane homography does not correct above-ice handle parallax.",
+    "Per-image feature registration must succeed before reference calibration is propagated."
+  ],
+  "views": {
+    "left": {
+      "check": {
+        "withheld_count": 9,
+        "same_image_landmark_rmse_m": 0.012442604237031103,
+        "max_error_m": 0.020057898702905527,
+        "errors_m": [
+          0.009808261236673462,
+          0.005096331136701994,
+          0.015874033828667193,
+          0.004332570592694518,
+          0.005697746372148066,
+          0.008336808795313053,
+          0.015129325331481399,
+          0.020057898702905527,
+          0.016347856873168375
+        ],
+        "note": "Withheld painted landmarks, same image and annotator. Not physical stone-position accuracy."
+      },
+      "bounds": [
+        -2.375,
+        -6.401,
+        2.375,
+        1.975
+      ]
+    },
+    "right": {
+      "check": {
+        "withheld_count": 9,
+        "same_image_landmark_rmse_m": 0.022585445518356118,
+        "max_error_m": 0.04737199414268432,
+        "errors_m": [
+          0.021660333503636085,
+          0.02165701529064514,
+          0.0047244965582386705,
+          0.013085748406343365,
+          0.008353305608069652,
+          0.004528219165754639,
+          0.02562563932704291,
+          0.04737199414268432,
+          0.021635743623080433
+        ],
+        "note": "Withheld painted landmarks, same image and annotator. Not physical stone-position accuracy."
+      },
+      "bounds": [
+        -2.375,
+        -1.975,
+        2.375,
+        6.401
+      ]
+    }
+  },
+  "observations": [
+    {
+      "timestamp_s": 650,
+      "panel": "left",
+      "frame": "frames/00650.jpg",
+      "registration": {
+        "status": "registered",
+        "inliers": 94,
+        "matches": 117,
+        "rmse_px": 0.5784169766068274,
+        "max_corner_displacement_px": 0.4886192919524908,
+        "reference_to_current": [
+          [
+            1.0001305664365217,
+            -0.0004669722847509083,
+            0.24817952392374576
+          ],
+          [
+            0.0004994520749466961,
+            0.9994233917266909,
+            0.0020344416568025244
+          ],
+          [
+            4.968972991880568e-07,
+            -5.1909925567059e-07,
+            0.9999999999999999
+          ]
+        ],
+        "note": "Feature consistency only; not proof of correct camera identity or metric accuracy."
+      },
+      "calibration_reference": "00750.jpg",
+      "calibration_landmark_check": {
+        "withheld_count": 9,
+        "same_image_landmark_rmse_m": 0.012442604237031103,
+        "max_error_m": 0.020057898702905527,
+        "errors_m": [
+          0.009808261236673462,
+          0.005096331136701994,
+          0.015874033828667193,
+          0.004332570592694518,
+          0.005697746372148066,
+          0.008336808795313053,
+          0.015129325331481399,
+          0.020057898702905527,
+          0.016347856873168375
+        ],
+        "note": "Withheld painted landmarks, same image and annotator. Not physical stone-position accuracy."
+      },
+      "homography": [
+        [
+          0.007457414963428496,
+          0.00023562309791627558,
+          -3.717168297104582
+        ],
+        [
+          -0.0005931497399130958,
+          0.025266927982143948,
+          -16.567683166463716
+        ],
+        [
+          -2.1248286506327554e-05,
+          0.0011404763831200909,
+          1.000002953156967
+        ]
+      ],
+      "candidates": [
+        {
+          "colour": "red",
+          "pixel_center": [
+            486.28,
+            400.7
+          ],
+          "bbox": [
+            470,
+            392,
+            34,
+            14
+          ],
+          "body_support": 0.985,
+          "expected_stone_width_px": 56.23,
+          "id": "red-1",
+          "ice_plane_projection_m": [
+            0.0025303073400916843,
+            -4.653329078389503
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.010354548532733859,
+            0.0422031495050056
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        }
+      ],
+      "diagnostic": {
+        "status": "proposals",
+        "rejected": [
+          {
+            "colour": "red",
+            "pixel_center": [
+              458.57,
+              758.47
+            ],
+            "bbox": [
+              449,
+              753,
+              21,
+              13
+            ],
+            "body_support": 0.02,
+            "expected_stone_width_px": 72.11,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              660.09,
+              731.56
+            ],
+            "bbox": [
+              581,
+              671,
+              164,
+              118
+            ],
+            "body_support": 0.267,
+            "expected_stone_width_px": 70.79,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              419.24,
+              643.17
+            ],
+            "bbox": [
+              362,
+              549,
+              126,
+              194
+            ],
+            "body_support": 0.138,
+            "expected_stone_width_px": 67.02,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              547.0,
+              467.73
+            ],
+            "bbox": [
+              464,
+              405,
+              166,
+              128
+            ],
+            "body_support": 0.268,
+            "expected_stone_width_px": 59.16,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              256.24,
+              334.3
+            ],
+            "bbox": [
+              248,
+              331,
+              17,
+              8
+            ],
+            "body_support": 0.971,
+            "expected_stone_width_px": 53.44,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              154.0,
+              318.5
+            ],
+            "bbox": [
+              145,
+              318,
+              19,
+              2
+            ],
+            "body_support": 0.0,
+            "expected_stone_width_px": 52.81,
+            "reason": "colour component shape"
+          }
+        ],
+        "note": "Heuristic visible cap proposals. False positives, merged caps, occlusions and parked stones remain possible."
+      },
+      "completeness": "unknown",
+      "metric_stone_positions": "unavailable",
+      "simulator_export": "blocked",
+      "overlay": "overlays/00650-left.jpg"
+    },
+    {
+      "timestamp_s": 650,
+      "panel": "right",
+      "frame": "frames/00650.jpg",
+      "registration": {
+        "status": "registered",
+        "inliers": 42,
+        "matches": 58,
+        "rmse_px": 0.7761603262876913,
+        "max_corner_displacement_px": 29.76660323015358,
+        "reference_to_current": [
+          [
+            0.9880366257512936,
+            0.011000523229042733,
+            10.714805117178923
+          ],
+          [
+            -0.0037699703263205306,
+            1.0001795267256623,
+            -21.57131700964933
+          ],
+          [
+            -5.019657546315295e-06,
+            6.465611100814395e-06,
+            1.0
+          ]
+        ],
+        "note": "Feature consistency only; not proof of correct camera identity or metric accuracy."
+      },
+      "calibration_reference": "06495.jpg",
+      "calibration_landmark_check": {
+        "withheld_count": 9,
+        "same_image_landmark_rmse_m": 0.022585445518356118,
+        "max_error_m": 0.04737199414268432,
+        "errors_m": [
+          0.021660333503636085,
+          0.02165701529064514,
+          0.0047244965582386705,
+          0.013085748406343365,
+          0.008353305608069652,
+          0.004528219165754639,
+          0.02562563932704291,
+          0.04737199414268432,
+          0.021635743623080433
+        ],
+        "note": "Withheld painted landmarks, same image and annotator. Not physical stone-position accuracy."
+      },
+      "homography": [
+        [
+          0.009575289209407893,
+          0.00043439591986903063,
+          -14.126444967033533
+        ],
+        [
+          -0.00019785756485064435,
+          0.08708660881579153,
+          -37.19454489800307
+        ],
+        [
+          1.0583104762121175e-05,
+          0.00222955786920194,
+          1.0479811036828526
+        ]
+      ],
+      "candidates": [
+        {
+          "colour": "yellow",
+          "pixel_center": [
+            1398.14,
+            522.95
+          ],
+          "bbox": [
+            1380,
+            512,
+            41,
+            20
+          ],
+          "body_support": 0.995,
+          "expected_stone_width_px": 67.46,
+          "id": "yellow-1",
+          "ice_plane_projection_m": [
+            -0.2295655545596895,
+            3.621207525207591
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.008597336611372618,
+            0.07076771312955915
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        },
+        {
+          "colour": "yellow",
+          "pixel_center": [
+            1038.74,
+            413.42
+          ],
+          "bbox": [
+            1022,
+            403,
+            37,
+            19
+          ],
+          "body_support": 0.967,
+          "expected_stone_width_px": 59.79,
+          "id": "yellow-2",
+          "ice_plane_projection_m": [
+            -2.0197632756955803,
+            -0.704988077973546
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.00969184811048209,
+            0.08945843870762829
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        },
+        {
+          "colour": "red",
+          "pixel_center": [
+            1264.83,
+            396.93
+          ],
+          "bbox": [
+            1248,
+            390,
+            32,
+            12
+          ],
+          "body_support": 0.915,
+          "expected_stone_width_px": 58.85,
+          "id": "red-3",
+          "ice_plane_projection_m": [
+            -0.9468690196129365,
+            -1.47852173813938
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.00985124458002347,
+            0.09269932411855498
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        },
+        {
+          "colour": "red",
+          "pixel_center": [
+            1469.46,
+            392.18
+          ],
+          "bbox": [
+            1449,
+            380,
+            39,
+            17
+          ],
+          "body_support": 0.965,
+          "expected_stone_width_px": 58.69,
+          "id": "red-4",
+          "ice_plane_projection_m": [
+            0.059041464693546875,
+            -1.7192615295739613
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.009883027419643468,
+            0.09361759334960298
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        }
+      ],
+      "diagnostic": {
+        "status": "proposals",
+        "rejected": [],
+        "note": "Heuristic visible cap proposals. False positives, merged caps, occlusions and parked stones remain possible."
+      },
+      "completeness": "unknown",
+      "metric_stone_positions": "unavailable",
+      "simulator_export": "blocked",
+      "overlay": "overlays/00650-right.jpg"
+    },
+    {
+      "timestamp_s": 750,
+      "panel": "left",
+      "frame": "frames/00750.jpg",
+      "registration": {
+        "status": "reference",
+        "inliers": null,
+        "rmse_px": 0.0
+      },
+      "calibration_reference": "00750.jpg",
+      "calibration_landmark_check": {
+        "withheld_count": 9,
+        "same_image_landmark_rmse_m": 0.012442604237031103,
+        "max_error_m": 0.020057898702905527,
+        "errors_m": [
+          0.009808261236673462,
+          0.005096331136701994,
+          0.015874033828667193,
+          0.004332570592694518,
+          0.005697746372148066,
+          0.008336808795313053,
+          0.015129325331481399,
+          0.020057898702905527,
+          0.016347856873168375
+        ],
+        "note": "Withheld painted landmarks, same image and annotator. Not physical stone-position accuracy."
+      },
+      "homography": [
+        [
+          0.0074566592830836356,
+          0.00023393440888105582,
+          -3.7153170400478106
+        ],
+        [
+          -0.0005888400027719688,
+          0.025261236118917483,
+          -16.567778969992958
+        ],
+        [
+          -2.0184548756798068e-05,
+          0.001139309596574315,
+          1.0
+        ]
+      ],
+      "candidates": [],
+      "diagnostic": {
+        "status": "proposals",
+        "rejected": [],
+        "note": "Heuristic visible cap proposals. False positives, merged caps, occlusions and parked stones remain possible."
+      },
+      "completeness": "unknown",
+      "metric_stone_positions": "unavailable",
+      "simulator_export": "blocked",
+      "overlay": "overlays/00750-left.jpg"
+    },
+    {
+      "timestamp_s": 750,
+      "panel": "right",
+      "frame": "frames/00750.jpg",
+      "registration": {
+        "status": "registered",
+        "inliers": 21,
+        "matches": 44,
+        "rmse_px": 0.8453429781769598,
+        "max_corner_displacement_px": 34.74176090717431,
+        "reference_to_current": [
+          [
+            0.9832653190188334,
+            0.015569347433469844,
+            11.15892596204437
+          ],
+          [
+            -0.00789457837235136,
+            1.001659778535107,
+            -17.548033251034646
+          ],
+          [
+            -8.385025957515077e-06,
+            1.0945958345864123e-05,
+            1.0
+          ]
+        ],
+        "note": "Feature consistency only; not proof of correct camera identity or metric accuracy."
+      },
+      "calibration_reference": "06495.jpg",
+      "calibration_landmark_check": {
+        "withheld_count": 9,
+        "same_image_landmark_rmse_m": 0.022585445518356118,
+        "max_error_m": 0.04737199414268432,
+        "errors_m": [
+          0.021660333503636085,
+          0.02165701529064514,
+          0.0047244965582386705,
+          0.013085748406343365,
+          0.008353305608069652,
+          0.004528219165754639,
+          0.02562563932704291,
+          0.04737199414268432,
+          0.021635743623080433
+        ],
+        "note": "Withheld painted landmarks, same image and annotator. Not physical stone-position accuracy."
+      },
+      "homography": [
+        [
+          0.00957532946404872,
+          0.0004533264705386634,
+          -14.13211350588221
+        ],
+        [
+          3.649781469079811e-05,
+          0.08712538942642517,
+          -37.54676579505983
+        ],
+        [
+          2.342964914996841e-05,
+          0.00222142873963434,
+          1.0387202556677262
+        ]
+      ],
+      "candidates": [],
+      "diagnostic": {
+        "status": "proposals",
+        "rejected": [
+          {
+            "colour": "yellow",
+            "pixel_center": [
+              1530.81,
+              491.45
+            ],
+            "bbox": [
+              1528,
+              487,
+              8,
+              10
+            ],
+            "body_support": 0.281,
+            "expected_stone_width_px": 65.67,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "yellow",
+            "pixel_center": [
+              1681.84,
+              484.16
+            ],
+            "bbox": [
+              1677,
+              480,
+              10,
+              9
+            ],
+            "body_support": 0.8,
+            "expected_stone_width_px": 65.39,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              1776.84,
+              551.72
+            ],
+            "bbox": [
+              1736,
+              542,
+              80,
+              18
+            ],
+            "body_support": 0.057,
+            "expected_stone_width_px": 70.09,
+            "reason": "weak grey stone-body support"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              1652.88,
+              547.68
+            ],
+            "bbox": [
+              1647,
+              534,
+              17,
+              30
+            ],
+            "body_support": 0.265,
+            "expected_stone_width_px": 69.63,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              1590.73,
+              538.38
+            ],
+            "bbox": [
+              1556,
+              528,
+              70,
+              23
+            ],
+            "body_support": 0.072,
+            "expected_stone_width_px": 68.91,
+            "reason": "weak grey stone-body support"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              1549.02,
+              506.15
+            ],
+            "bbox": [
+              1530,
+              491,
+              36,
+              36
+            ],
+            "body_support": 0.404,
+            "expected_stone_width_px": 66.68,
+            "reason": "colour component shape"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              1859.33,
+              548.61
+            ],
+            "bbox": [
+              1826,
+              481,
+              65,
+              137
+            ],
+            "body_support": 0.166,
+            "expected_stone_width_px": 70.0,
+            "reason": "colour component shape"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              1487.7,
+              464.21
+            ],
+            "bbox": [
+              1483,
+              458,
+              11,
+              13
+            ],
+            "body_support": 0.773,
+            "expected_stone_width_px": 63.77,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              1741.6,
+              452.09
+            ],
+            "bbox": [
+              1736,
+              443,
+              11,
+              16
+            ],
+            "body_support": 0.568,
+            "expected_stone_width_px": 63.31,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              1644.9,
+              435.08
+            ],
+            "bbox": [
+              1632,
+              427,
+              24,
+              17
+            ],
+            "body_support": 0.083,
+            "expected_stone_width_px": 62.03,
+            "reason": "weak grey stone-body support"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              1750.48,
+              430.24
+            ],
+            "bbox": [
+              1743,
+              426,
+              15,
+              9
+            ],
+            "body_support": 0.0,
+            "expected_stone_width_px": 61.85,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              1762.14,
+              419.09
+            ],
+            "bbox": [
+              1751,
+              415,
+              21,
+              8
+            ],
+            "body_support": 0.0,
+            "expected_stone_width_px": 61.11,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              1794.04,
+              414.95
+            ],
+            "bbox": [
+              1776,
+              395,
+              42,
+              45
+            ],
+            "body_support": 0.376,
+            "expected_stone_width_px": 60.88,
+            "reason": "colour component shape"
+          }
+        ],
+        "note": "Heuristic visible cap proposals. False positives, merged caps, occlusions and parked stones remain possible."
+      },
+      "completeness": "unknown",
+      "metric_stone_positions": "unavailable",
+      "simulator_export": "blocked",
+      "overlay": "overlays/00750-right.jpg"
+    },
+    {
+      "timestamp_s": 1624,
+      "panel": "left",
+      "frame": "frames/01624.jpg",
+      "registration": {
+        "status": "registered",
+        "inliers": 128,
+        "matches": 147,
+        "rmse_px": 0.6425635812024711,
+        "max_corner_displacement_px": 0.6833480563977271,
+        "reference_to_current": [
+          [
+            0.9994003105872938,
+            -0.00044416993317442424,
+            0.2184452158715939
+          ],
+          [
+            -0.00018258576166757306,
+            0.9984086639983801,
+            0.6474922809156599
+          ],
+          [
+            -1.2742350744767094e-07,
+            -7.526617425927271e-07,
+            0.9999999999999999
+          ]
+        ],
+        "note": "Feature consistency only; not proof of correct camera identity or metric accuracy."
+      },
+      "calibration_reference": "00750.jpg",
+      "calibration_landmark_check": {
+        "withheld_count": 9,
+        "same_image_landmark_rmse_m": 0.012442604237031103,
+        "max_error_m": 0.020057898702905527,
+        "errors_m": [
+          0.009808261236673462,
+          0.005096331136701994,
+          0.015874033828667193,
+          0.004332570592694518,
+          0.005697746372148066,
+          0.008336808795313053,
+          0.015129325331481399,
+          0.020057898702905527,
+          0.016347856873168375
+        ],
+        "note": "Withheld painted landmarks, same image and annotator. Not physical stone-position accuracy."
+      },
+      "homography": [
+        [
+          0.007460702617237063,
+          0.00023482419476759375,
+          -3.7170988416950714
+        ],
+        [
+          -0.0005866876646264113,
+          0.02528873624510882,
+          -16.58402507239223
+        ],
+        [
+          -1.9860639922380113e-05,
+          0.0011418699824134143,
+          0.9992649864623533
+        ]
+      ],
+      "candidates": [
+        {
+          "colour": "yellow",
+          "pixel_center": [
+            20.87,
+            660.27
+          ],
+          "bbox": [
+            0,
+            648,
+            40,
+            23
+          ],
+          "body_support": 0.63,
+          "expected_stone_width_px": 67.98,
+          "id": "yellow-1",
+          "ice_plane_projection_m": [
+            -1.9433780874517785,
+            0.05767833867686201
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.008495402562976179,
+            0.028878487129508912
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        }
+      ],
+      "diagnostic": {
+        "status": "proposals",
+        "rejected": [
+          {
+            "colour": "red",
+            "pixel_center": [
+              170.0,
+              717.34
+            ],
+            "bbox": [
+              137,
+              704,
+              81,
+              25
+            ],
+            "body_support": 0.004,
+            "expected_stone_width_px": 70.44,
+            "reason": "weak grey stone-body support"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              131.42,
+              688.56
+            ],
+            "bbox": [
+              126,
+              674,
+              11,
+              30
+            ],
+            "body_support": 0.318,
+            "expected_stone_width_px": 69.18,
+            "reason": "width inconsistent with nominal stone scale"
+          }
+        ],
+        "note": "Heuristic visible cap proposals. False positives, merged caps, occlusions and parked stones remain possible."
+      },
+      "completeness": "unknown",
+      "metric_stone_positions": "unavailable",
+      "simulator_export": "blocked",
+      "overlay": "overlays/01624-left.jpg"
+    },
+    {
+      "timestamp_s": 1624,
+      "panel": "right",
+      "frame": "frames/01624.jpg",
+      "registration": {
+        "status": "rejected",
+        "reason": "Insufficient spatial support",
+        "inliers": 8
+      },
+      "calibration_reference": "06495.jpg",
+      "calibration_landmark_check": {
+        "withheld_count": 9,
+        "same_image_landmark_rmse_m": 0.022585445518356118,
+        "max_error_m": 0.04737199414268432,
+        "errors_m": [
+          0.021660333503636085,
+          0.02165701529064514,
+          0.0047244965582386705,
+          0.013085748406343365,
+          0.008353305608069652,
+          0.004528219165754639,
+          0.02562563932704291,
+          0.04737199414268432,
+          0.021635743623080433
+        ],
+        "note": "Withheld painted landmarks, same image and annotator. Not physical stone-position accuracy."
+      },
+      "homography": null,
+      "candidates": [],
+      "diagnostic": {
+        "status": "abstained",
+        "reason": "No accepted calibration registration"
+      },
+      "completeness": "unknown",
+      "metric_stone_positions": "unavailable",
+      "simulator_export": "blocked",
+      "overlay": "overlays/01624-right.jpg"
+    },
+    {
+      "timestamp_s": 1900,
+      "panel": "left",
+      "frame": "frames/01900.jpg",
+      "registration": {
+        "status": "registered",
+        "inliers": 78,
+        "matches": 98,
+        "rmse_px": 0.4499798679317015,
+        "max_corner_displacement_px": 1.0178820286040384,
+        "reference_to_current": [
+          [
+            1.00074080303776,
+            0.00018822042706748723,
+            -0.2516262719030894
+          ],
+          [
+            -0.0002386636516650997,
+            1.0017291932683903,
+            -0.5929262913747034
+          ],
+          [
+            -1.5242667344517532e-07,
+            9.378604953685614e-07,
+            1.0
+          ]
+        ],
+        "note": "Feature consistency only; not proof of correct camera identity or metric accuracy."
+      },
+      "calibration_reference": "00750.jpg",
+      "calibration_landmark_check": {
+        "withheld_count": 9,
+        "same_image_landmark_rmse_m": 0.012442604237031103,
+        "max_error_m": 0.020057898702905527,
+        "errors_m": [
+          0.009808261236673462,
+          0.005096331136701994,
+          0.015874033828667193,
+          0.004332570592694518,
+          0.005697746372148066,
+          0.008336808795313053,
+          0.015129325331481399,
+          0.020057898702905527,
+          0.016347856873168375
+        ],
+        "note": "Withheld painted landmarks, same image and annotator. Not physical stone-position accuracy."
+      },
+      "homography": [
+        [
+          0.007450630058219452,
+          0.0002356071975156015,
+          -3.713302568081087
+        ],
+        [
+          -0.0005849075582303831,
+          0.02523323743782239,
+          -16.552964698207855
+        ],
+        [
+          -1.9746172408491313e-05,
+          0.0011364097533390755,
+          1.0006688385647817
+        ]
+      ],
+      "candidates": [
+        {
+          "colour": "yellow",
+          "pixel_center": [
+            900.26,
+            527.71
+          ],
+          "bbox": [
+            880,
+            517,
+            39,
+            20
+          ],
+          "body_support": 0.914,
+          "expected_stone_width_px": 61.67,
+          "id": "yellow-1",
+          "ice_plane_projection_m": [
+            1.9705426630223781,
+            -2.3781370891069797
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.00949877311108017,
+            0.035343791725077456
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        },
+        {
+          "colour": "yellow",
+          "pixel_center": [
+            487.78,
+            401.17
+          ],
+          "bbox": [
+            469,
+            393,
+            39,
+            15
+          ],
+          "body_support": 0.996,
+          "expected_stone_width_px": 56.29,
+          "id": "yellow-2",
+          "ice_plane_projection_m": [
+            0.01072693068885404,
+            -4.641188817885041
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.010341483143750498,
+            0.04210363745705012
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        }
+      ],
+      "diagnostic": {
+        "status": "proposals",
+        "rejected": [
+          {
+            "colour": "yellow",
+            "pixel_center": [
+              898.28,
+              557.33
+            ],
+            "bbox": [
+              892,
+              550,
+              15,
+              15
+            ],
+            "body_support": 0.92,
+            "expected_stone_width_px": 62.98,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              652.16,
+              673.89
+            ],
+            "bbox": [
+              644,
+              661,
+              19,
+              26
+            ],
+            "body_support": 0.684,
+            "expected_stone_width_px": 68.27,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              678.25,
+              649.78
+            ],
+            "bbox": [
+              671,
+              638,
+              16,
+              23
+            ],
+            "body_support": 0.938,
+            "expected_stone_width_px": 67.19,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              261.36,
+              628.73
+            ],
+            "bbox": [
+              257,
+              622,
+              9,
+              14
+            ],
+            "body_support": 0.556,
+            "expected_stone_width_px": 66.47,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              905.37,
+              562.85
+            ],
+            "bbox": [
+              903,
+              557,
+              6,
+              14
+            ],
+            "body_support": 0.292,
+            "expected_stone_width_px": 63.22,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              953.03,
+              539.42
+            ],
+            "bbox": [
+              949,
+              536,
+              7,
+              8
+            ],
+            "body_support": 1.0,
+            "expected_stone_width_px": 62.16,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              413.89,
+              510.07
+            ],
+            "bbox": [
+              410,
+              506,
+              8,
+              10
+            ],
+            "body_support": 0.0,
+            "expected_stone_width_px": 61.15,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              112.75,
+              443.29
+            ],
+            "bbox": [
+              108,
+              432,
+              10,
+              23
+            ],
+            "body_support": 0.95,
+            "expected_stone_width_px": 58.36,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              401.19,
+              428.06
+            ],
+            "bbox": [
+              344,
+              348,
+              104,
+              147
+            ],
+            "body_support": 0.243,
+            "expected_stone_width_px": 57.53,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              389.62,
+              345.75
+            ],
+            "bbox": [
+              387,
+              339,
+              8,
+              13
+            ],
+            "body_support": 0.969,
+            "expected_stone_width_px": 53.9,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              172.21,
+              396.86
+            ],
+            "bbox": [
+              88,
+              338,
+              160,
+              123
+            ],
+            "body_support": 0.334,
+            "expected_stone_width_px": 56.28,
+            "reason": "width inconsistent with nominal stone scale"
+          }
+        ],
+        "note": "Heuristic visible cap proposals. False positives, merged caps, occlusions and parked stones remain possible."
+      },
+      "completeness": "unknown",
+      "metric_stone_positions": "unavailable",
+      "simulator_export": "blocked",
+      "overlay": "overlays/01900-left.jpg"
+    },
+    {
+      "timestamp_s": 1900,
+      "panel": "right",
+      "frame": "frames/01900.jpg",
+      "registration": {
+        "status": "registered",
+        "inliers": 27,
+        "matches": 49,
+        "rmse_px": 1.0198643364981363,
+        "max_corner_displacement_px": 10.292344610452085,
+        "reference_to_current": [
+          [
+            0.9547195178176777,
+            -0.012767397250279101,
+            38.22121829944271
+          ],
+          [
+            -0.009207739877754525,
+            0.9696595628703991,
+            15.353237343637769
+          ],
+          [
+            -1.3662422928945058e-05,
+            -1.0007097950923293e-05,
+            0.9999999999999999
+          ]
+        ],
+        "note": "Feature consistency only; not proof of correct camera identity or metric accuracy."
+      },
+      "calibration_reference": "06495.jpg",
+      "calibration_landmark_check": {
+        "withheld_count": 9,
+        "same_image_landmark_rmse_m": 0.022585445518356118,
+        "max_error_m": 0.04737199414268432,
+        "errors_m": [
+          0.021660333503636085,
+          0.02165701529064514,
+          0.0047244965582386705,
+          0.013085748406343365,
+          0.008353305608069652,
+          0.004528219165754639,
+          0.02562563932704291,
+          0.04737199414268432,
+          0.021635743623080433
+        ],
+        "note": "Withheld painted landmarks, same image and annotator. Not physical stone-position accuracy."
+      },
+      "homography": [
+        [
+          0.009779998736866597,
+          0.0004425219708561724,
+          -14.41381571284768
+        ],
+        [
+          -7.193104672847385e-05,
+          0.08915908777349374,
+          -40.44136909300134
+        ],
+        [
+          3.277000032181762e-05,
+          0.0023172125664745547,
+          0.9631707761552832
+        ]
+      ],
+      "candidates": [
+        {
+          "colour": "yellow",
+          "pixel_center": [
+            1439.77,
+            551.33
+          ],
+          "bbox": [
+            1416,
+            540,
+            46,
+            21
+          ],
+          "body_support": 0.981,
+          "expected_stone_width_px": 67.82,
+          "id": "yellow-1",
+          "ice_plane_projection_m": [
+            -0.038840350585543915,
+            3.7638815520610085
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.008551865511179266,
+            0.07017461453273753
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        },
+        {
+          "colour": "yellow",
+          "pixel_center": [
+            1432.65,
+            445.57
+          ],
+          "bbox": [
+            1412,
+            435,
+            43,
+            21
+          ],
+          "body_support": 0.98,
+          "expected_stone_width_px": 60.54,
+          "id": "yellow-2",
+          "ice_plane_projection_m": [
+            -0.10049806493369225,
+            -0.40036777032695886
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.009579121122339652,
+            0.08801080061999597
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        },
+        {
+          "colour": "red",
+          "pixel_center": [
+            1252.96,
+            473.02
+          ],
+          "bbox": [
+            1234,
+            462,
+            40,
+            18
+          ],
+          "body_support": 0.968,
+          "expected_stone_width_px": 62.07,
+          "id": "red-3",
+          "ice_plane_projection_m": [
+            -0.9287048269565127,
+            0.7820797708478546
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.009342014994880847,
+            0.08302826801922401
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        }
+      ],
+      "diagnostic": {
+        "status": "proposals",
+        "rejected": [
+          {
+            "colour": "yellow",
+            "pixel_center": [
+              1319.96,
+              488.75
+            ],
+            "bbox": [
+              1313,
+              481,
+              14,
+              16
+            ],
+            "body_support": 0.329,
+            "expected_stone_width_px": 63.28,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "yellow",
+            "pixel_center": [
+              1321.85,
+              454.33
+            ],
+            "bbox": [
+              1312,
+              432,
+              22,
+              45
+            ],
+            "body_support": 0.688,
+            "expected_stone_width_px": 60.93,
+            "reason": "colour component shape"
+          }
+        ],
+        "note": "Heuristic visible cap proposals. False positives, merged caps, occlusions and parked stones remain possible."
+      },
+      "completeness": "unknown",
+      "metric_stone_positions": "unavailable",
+      "simulator_export": "blocked",
+      "overlay": "overlays/01900-right.jpg"
+    },
+    {
+      "timestamp_s": 2300,
+      "panel": "left",
+      "frame": "frames/02300.jpg",
+      "registration": {
+        "status": "registered",
+        "inliers": 103,
+        "matches": 142,
+        "rmse_px": 0.5824238552068212,
+        "max_corner_displacement_px": 0.4779259569040908,
+        "reference_to_current": [
+          [
+            1.000637582721416,
+            0.0005900536348802436,
+            -0.33609797131633773
+          ],
+          [
+            0.00045473158389337814,
+            1.0006358869883258,
+            -0.30963829601238546
+          ],
+          [
+            5.517262129656988e-07,
+            5.808283759863056e-07,
+            1.0
+          ]
+        ],
+        "note": "Feature consistency only; not proof of correct camera identity or metric accuracy."
+      },
+      "calibration_reference": "00750.jpg",
+      "calibration_landmark_check": {
+        "withheld_count": 9,
+        "same_image_landmark_rmse_m": 0.012442604237031103,
+        "max_error_m": 0.020057898702905527,
+        "errors_m": [
+          0.009808261236673462,
+          0.005096331136701994,
+          0.015874033828667193,
+          0.004332570592694518,
+          0.005697746372148066,
+          0.008336808795313053,
+          0.015129325331481399,
+          0.020057898702905527,
+          0.016347856873168375
+        ],
+        "note": "Withheld painted landmarks, same image and annotator. Not physical stone-position accuracy."
+      },
+      "homography": [
+        [
+          0.007453849962149993,
+          0.00023154546568305813,
+          -3.712740120853592
+        ],
+        [
+          -0.0005908109504869348,
+          0.025255143921092255,
+          -16.560157580625575
+        ],
+        [
+          -2.1240415400680288e-05,
+          0.0011380174501713503,
+          1.0003452349235773
+        ]
+      ],
+      "candidates": [
+        {
+          "colour": "red",
+          "pixel_center": [
+            933.83,
+            491.04
+          ],
+          "bbox": [
+            920,
+            486,
+            25,
+            10
+          ],
+          "body_support": 0.907,
+          "expected_stone_width_px": 59.95,
+          "id": "red-1",
+          "ice_plane_projection_m": [
+            2.1837881588459607,
+            -3.0600796344334706
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.009782268112152014,
+            0.037397153557025074
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        }
+      ],
+      "diagnostic": {
+        "status": "proposals",
+        "rejected": [
+          {
+            "colour": "red",
+            "pixel_center": [
+              289.71,
+              763.83
+            ],
+            "bbox": [
+              284,
+              760,
+              12,
+              8
+            ],
+            "body_support": 0.0,
+            "expected_stone_width_px": 72.43,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              47.98,
+              679.24
+            ],
+            "bbox": [
+              0,
+              611,
+              105,
+              124
+            ],
+            "body_support": 0.18,
+            "expected_stone_width_px": 68.83,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              948.87,
+              617.71
+            ],
+            "bbox": [
+              938,
+              610,
+              18,
+              21
+            ],
+            "body_support": 0.806,
+            "expected_stone_width_px": 65.55,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              236.7,
+              649.75
+            ],
+            "bbox": [
+              165,
+              571,
+              131,
+              180
+            ],
+            "body_support": 0.237,
+            "expected_stone_width_px": 67.41,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              895.58,
+              641.63
+            ],
+            "bbox": [
+              833,
+              566,
+              123,
+              150
+            ],
+            "body_support": 0.374,
+            "expected_stone_width_px": 66.64,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              412.7,
+              363.16
+            ],
+            "bbox": [
+              392,
+              357,
+              46,
+              14
+            ],
+            "body_support": 0.073,
+            "expected_stone_width_px": 54.62,
+            "reason": "weak grey stone-body support"
+          }
+        ],
+        "note": "Heuristic visible cap proposals. False positives, merged caps, occlusions and parked stones remain possible."
+      },
+      "completeness": "unknown",
+      "metric_stone_positions": "unavailable",
+      "simulator_export": "blocked",
+      "overlay": "overlays/02300-left.jpg"
+    },
+    {
+      "timestamp_s": 2300,
+      "panel": "right",
+      "frame": "frames/02300.jpg",
+      "registration": {
+        "status": "registered",
+        "inliers": 33,
+        "matches": 39,
+        "rmse_px": 0.6244512058743797,
+        "max_corner_displacement_px": 3.1508205066905144,
+        "reference_to_current": [
+          [
+            1.0029634223782948,
+            -0.0025390941845363363,
+            2.1242644590209583
+          ],
+          [
+            0.00046989249400103427,
+            0.9999628276089584,
+            -0.2552231860004822
+          ],
+          [
+            1.973137795232618e-06,
+            -2.2635125451069194e-06,
+            0.9999999999999999
+          ]
+        ],
+        "note": "Feature consistency only; not proof of correct camera identity or metric accuracy."
+      },
+      "calibration_reference": "06495.jpg",
+      "calibration_landmark_check": {
+        "withheld_count": 9,
+        "same_image_landmark_rmse_m": 0.022585445518356118,
+        "max_error_m": 0.04737199414268432,
+        "errors_m": [
+          0.021660333503636085,
+          0.02165701529064514,
+          0.0047244965582386705,
+          0.013085748406343365,
+          0.008353305608069652,
+          0.004528219165754639,
+          0.02562563932704291,
+          0.04737199414268432,
+          0.021635743623080433
+        ],
+        "note": "Withheld painted landmarks, same image and annotator. Not physical stone-position accuracy."
+      },
+      "homography": [
+        [
+          0.009529291411682787,
+          0.00044087322403075103,
+          -14.053348315305927
+        ],
+        [
+          -0.0002999301677120577,
+          0.08677364950400705,
+          -39.052453971029415
+        ],
+        [
+          -6.217419922106827e-06,
+          0.002239182677550529,
+          1.0005846987811688
+        ]
+      ],
+      "candidates": [
+        {
+          "colour": "yellow",
+          "pixel_center": [
+            1439.35,
+            551.13
+          ],
+          "bbox": [
+            1416,
+            540,
+            46,
+            21
+          ],
+          "body_support": 0.981,
+          "expected_stone_width_px": 67.72,
+          "id": "yellow-1",
+          "ice_plane_projection_m": [
+            -0.042415862438217926,
+            3.7469291524768833
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.00856629463548912,
+            0.07029450875080083
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        },
+        {
+          "colour": "red",
+          "pixel_center": [
+            1254.04,
+            475.81
+          ],
+          "bbox": [
+            1237,
+            466,
+            35,
+            14
+          ],
+          "body_support": 0.964,
+          "expected_stone_width_px": 62.62,
+          "id": "red-2",
+          "ice_plane_projection_m": [
+            -0.9199376125530152,
+            0.9033211888792294
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.009258682235195291,
+            0.08221082933814533
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        },
+        {
+          "colour": "red",
+          "pixel_center": [
+            1517.73,
+            451.36
+          ],
+          "bbox": [
+            1496,
+            444,
+            36,
+            11
+          ],
+          "body_support": 0.955,
+          "expected_stone_width_px": 60.91,
+          "id": "red-3",
+          "ice_plane_projection_m": [
+            0.30397486014652403,
+            -0.17070456741600298
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.009527319899757143,
+            0.08688258842582121
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        },
+        {
+          "colour": "red",
+          "pixel_center": [
+            1353.3,
+            436.12
+          ],
+          "bbox": [
+            1333,
+            425,
+            41,
+            19
+          ],
+          "body_support": 0.972,
+          "expected_stone_width_px": 59.9,
+          "id": "red-4",
+          "ice_plane_projection_m": [
+            -0.4902330309686154,
+            -0.8203518766632683
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.009682659563171287,
+            0.08982803484678561
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        }
+      ],
+      "diagnostic": {
+        "status": "proposals",
+        "rejected": [
+          {
+            "colour": "yellow",
+            "pixel_center": [
+              1305.03,
+              487.84
+            ],
+            "bbox": [
+              1300,
+              480,
+              11,
+              15
+            ],
+            "body_support": 0.5,
+            "expected_stone_width_px": 63.43,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "yellow",
+            "pixel_center": [
+              1305.0,
+              449.43
+            ],
+            "bbox": [
+              1296,
+              427,
+              18,
+              47
+            ],
+            "body_support": 0.176,
+            "expected_stone_width_px": 60.81,
+            "reason": "width inconsistent with nominal stone scale"
+          }
+        ],
+        "note": "Heuristic visible cap proposals. False positives, merged caps, occlusions and parked stones remain possible."
+      },
+      "completeness": "unknown",
+      "metric_stone_positions": "unavailable",
+      "simulator_export": "blocked",
+      "overlay": "overlays/02300-right.jpg"
+    },
+    {
+      "timestamp_s": 2598,
+      "panel": "left",
+      "frame": "frames/02598.jpg",
+      "registration": {
+        "status": "registered",
+        "inliers": 62,
+        "matches": 90,
+        "rmse_px": 0.5806865986374151,
+        "max_corner_displacement_px": 0.8659670091694055,
+        "reference_to_current": [
+          [
+            0.9993958407295852,
+            1.6116741886495666e-06,
+            0.08105272661509526
+          ],
+          [
+            0.0001891724762041156,
+            0.9986756825346029,
+            0.4773241525179402
+          ],
+          [
+            6.839044922146879e-08,
+            -5.010277255552571e-07,
+            1.0
+          ]
+        ],
+        "note": "Feature consistency only; not proof of correct camera identity or metric accuracy."
+      },
+      "calibration_reference": "00750.jpg",
+      "calibration_landmark_check": {
+        "withheld_count": 9,
+        "same_image_landmark_rmse_m": 0.012442604237031103,
+        "max_error_m": 0.020057898702905527,
+        "errors_m": [
+          0.009808261236673462,
+          0.005096331136701994,
+          0.015874033828667193,
+          0.004332570592694518,
+          0.005697746372148066,
+          0.008336808795313053,
+          0.015129325331481399,
+          0.020057898702905527,
+          0.016347856873168375
+        ],
+        "note": "Withheld painted landmarks, same image and annotator. Not physical stone-position accuracy."
+      },
+      "homography": [
+        [
+          0.007461377326830296,
+          0.00023236827751832982,
+          -3.716032720015593
+        ],
+        [
+          -0.0005928477714185538,
+          0.025286417378714062,
+          -16.579800735810128
+        ],
+        [
+          -2.048118264008969e-05,
+          0.0011413218576602072,
+          0.9994568795672395
+        ]
+      ],
+      "candidates": [
+        {
+          "colour": "yellow",
+          "pixel_center": [
+            485.52,
+            398.53
+          ],
+          "bbox": [
+            469,
+            389,
+            35,
+            17
+          ],
+          "body_support": 0.967,
+          "expected_stone_width_px": 56.11,
+          "id": "yellow-1",
+          "ice_plane_projection_m": [
+            -0.0005367797737358357,
+            -4.701240401976691
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.010375982055189165,
+            0.04237797760826659
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        }
+      ],
+      "diagnostic": {
+        "status": "proposals",
+        "rejected": [
+          {
+            "colour": "red",
+            "pixel_center": [
+              424.74,
+              762.04
+            ],
+            "bbox": [
+              423,
+              757,
+              5,
+              10
+            ],
+            "body_support": 0.25,
+            "expected_stone_width_px": 72.27,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              869.97,
+              755.42
+            ],
+            "bbox": [
+              864,
+              736,
+              13,
+              39
+            ],
+            "body_support": 0.508,
+            "expected_stone_width_px": 71.73,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              540.63,
+              729.1
+            ],
+            "bbox": [
+              464,
+              667,
+              155,
+              119
+            ],
+            "body_support": 0.203,
+            "expected_stone_width_px": 70.74,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              788.81,
+              699.99
+            ],
+            "bbox": [
+              697,
+              612,
+              185,
+              166
+            ],
+            "body_support": 0.215,
+            "expected_stone_width_px": 69.31,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              368.21,
+              661.5
+            ],
+            "bbox": [
+              304,
+              576,
+              120,
+              189
+            ],
+            "body_support": 0.126,
+            "expected_stone_width_px": 67.84,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              930.36,
+              522.11
+            ],
+            "bbox": [
+              919,
+              514,
+              20,
+              14
+            ],
+            "body_support": 0.9,
+            "expected_stone_width_px": 61.34,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              465.96,
+              459.75
+            ],
+            "bbox": [
+              461,
+              457,
+              9,
+              7
+            ],
+            "body_support": 0.833,
+            "expected_stone_width_px": 58.84,
+            "reason": "width inconsistent with nominal stone scale"
+          }
+        ],
+        "note": "Heuristic visible cap proposals. False positives, merged caps, occlusions and parked stones remain possible."
+      },
+      "completeness": "unknown",
+      "metric_stone_positions": "unavailable",
+      "simulator_export": "blocked",
+      "overlay": "overlays/02598-left.jpg"
+    },
+    {
+      "timestamp_s": 2598,
+      "panel": "right",
+      "frame": "frames/02598.jpg",
+      "registration": {
+        "status": "registered",
+        "inliers": 17,
+        "matches": 31,
+        "rmse_px": 0.6645909508453358,
+        "max_corner_displacement_px": 3.1695535448185357,
+        "reference_to_current": [
+          [
+            1.0119674872312319,
+            0.005060978055784406,
+            -6.469511105431759
+          ],
+          [
+            0.0018758942569473737,
+            1.0081839324338067,
+            -3.2139173123714513
+          ],
+          [
+            3.63692313587178e-06,
+            4.191149662484648e-06,
+            1.0
+          ]
+        ],
+        "note": "Feature consistency only; not proof of correct camera identity or metric accuracy."
+      },
+      "calibration_reference": "06495.jpg",
+      "calibration_landmark_check": {
+        "withheld_count": 9,
+        "same_image_landmark_rmse_m": 0.022585445518356118,
+        "max_error_m": 0.04737199414268432,
+        "errors_m": [
+          0.021660333503636085,
+          0.02165701529064514,
+          0.0047244965582386705,
+          0.013085748406343365,
+          0.008353305608069652,
+          0.004528219165754639,
+          0.02562563932704291,
+          0.04737199414268432,
+          0.021635743623080433
+        ],
+        "note": "Withheld painted landmarks, same image and annotator. Not physical stone-position accuracy."
+      },
+      "homography": [
+        [
+          0.009466671837313841,
+          0.000455386028000536,
+          -13.970509789687112
+        ],
+        [
+          -0.00035367756617917347,
+          0.08631757103653856,
+          -38.80010833433813
+        ],
+        [
+          -1.089581717775389e-05,
+          0.0022145610336134196,
+          1.0070469254349992
+        ]
+      ],
+      "candidates": [
+        {
+          "colour": "yellow",
+          "pixel_center": [
+            1450.52,
+            466.58
+          ],
+          "bbox": [
+            1434,
+            461,
+            34,
+            12
+          ],
+          "body_support": 0.407,
+          "expected_stone_width_px": 62.01,
+          "id": "yellow-1",
+          "ice_plane_projection_m": [
+            -0.013053885270186376,
+            0.47484260505226894
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.009358299800718442,
+            0.08405067577808392
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        },
+        {
+          "colour": "red",
+          "pixel_center": [
+            1470.41,
+            574.46
+          ],
+          "bbox": [
+            1450,
+            571,
+            41,
+            8
+          ],
+          "body_support": 0.923,
+          "expected_stone_width_px": 69.32,
+          "id": "red-2",
+          "ice_plane_projection_m": [
+            0.09320616094859417,
+            4.535809319609106
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.00837106956573715,
+            0.06727153092577504
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        },
+        {
+          "colour": "red",
+          "pixel_center": [
+            1247.95,
+            475.22
+          ],
+          "bbox": [
+            1238,
+            468,
+            31,
+            12
+          ],
+          "body_support": 0.968,
+          "expected_stone_width_px": 62.67,
+          "id": "red-3",
+          "ice_plane_projection_m": [
+            -0.9483148747161994,
+            0.8694440799194648
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.009250569846883924,
+            0.08235976625319694
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        },
+        {
+          "colour": "red",
+          "pixel_center": [
+            1513.94,
+            446.76
+          ],
+          "bbox": [
+            1493,
+            437,
+            42,
+            18
+          ],
+          "body_support": 0.956,
+          "expected_stone_width_px": 60.64,
+          "id": "red-4",
+          "ice_plane_projection_m": [
+            0.28532341029030106,
+            -0.38990554279533396
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.009572674922554713,
+            0.08786807756551895
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        }
+      ],
+      "diagnostic": {
+        "status": "proposals",
+        "rejected": [
+          {
+            "colour": "red",
+            "pixel_center": [
+              1355.54,
+              547.43
+            ],
+            "bbox": [
+              1323,
+              535,
+              69,
+              23
+            ],
+            "body_support": 0.011,
+            "expected_stone_width_px": 67.53,
+            "reason": "weak grey stone-body support"
+          }
+        ],
+        "note": "Heuristic visible cap proposals. False positives, merged caps, occlusions and parked stones remain possible."
+      },
+      "completeness": "unknown",
+      "metric_stone_positions": "unavailable",
+      "simulator_export": "blocked",
+      "overlay": "overlays/02598-right.jpg"
+    },
+    {
+      "timestamp_s": 3572,
+      "panel": "left",
+      "frame": "frames/03572.jpg",
+      "registration": {
+        "status": "registered",
+        "inliers": 69,
+        "matches": 103,
+        "rmse_px": 0.5166104334985587,
+        "max_corner_displacement_px": 1.0520093222320854,
+        "reference_to_current": [
+          [
+            1.0001265489089144,
+            0.0008210344078896548,
+            -0.19778381815801682
+          ],
+          [
+            0.00017519337472394816,
+            1.0009852172088523,
+            -0.17993585036992293
+          ],
+          [
+            2.5596250184674415e-07,
+            1.2940126130210898e-06,
+            1.0
+          ]
+        ],
+        "note": "Feature consistency only; not proof of correct camera identity or metric accuracy."
+      },
+      "calibration_reference": "00750.jpg",
+      "calibration_landmark_check": {
+        "withheld_count": 9,
+        "same_image_landmark_rmse_m": 0.012442604237031103,
+        "max_error_m": 0.020057898702905527,
+        "errors_m": [
+          0.009808261236673462,
+          0.005096331136701994,
+          0.015874033828667193,
+          0.004332570592694518,
+          0.005697746372148066,
+          0.008336808795313053,
+          0.015129325331481399,
+          0.020057898702905527,
+          0.016347856873168375
+        ],
+        "note": "Withheld painted landmarks, same image and annotator. Not physical stone-position accuracy."
+      },
+      "homography": [
+        [
+          0.007456625535890487,
+          0.0002323890136861851,
+          -3.713800425063953
+        ],
+        [
+          -0.0005889509562215674,
+          0.025258267972218584,
+          -16.563350587035334
+        ],
+        [
+          -2.0637130448696088e-05,
+          0.0011369121628916103,
+          1.0002004895663696
+        ]
+      ],
+      "candidates": [
+        {
+          "colour": "red",
+          "pixel_center": [
+            321.3,
+            786.17
+          ],
+          "bbox": [
+            303,
+            775,
+            38,
+            25
+          ],
+          "body_support": 0.287,
+          "expected_stone_width_px": 73.33,
+          "id": "red-1",
+          "ice_plane_projection_m": [
+            -0.601519000525673,
+            1.6450433466257863
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.00791047001163509,
+            0.024772713679257905
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        }
+      ],
+      "diagnostic": {
+        "status": "proposals",
+        "rejected": [
+          {
+            "colour": "yellow",
+            "pixel_center": [
+              748.34,
+              771.47
+            ],
+            "bbox": [
+              745,
+              768,
+              8,
+              8
+            ],
+            "body_support": 0.969,
+            "expected_stone_width_px": 72.44,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              430.41,
+              760.99
+            ],
+            "bbox": [
+              412,
+              756,
+              38,
+              12
+            ],
+            "body_support": 0.0,
+            "expected_stone_width_px": 72.16,
+            "reason": "weak grey stone-body support"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              278.57,
+              753.41
+            ],
+            "bbox": [
+              274,
+              752,
+              12,
+              4
+            ],
+            "body_support": 0.0,
+            "expected_stone_width_px": 71.91,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              602.69,
+              744.7
+            ],
+            "bbox": [
+              598,
+              741,
+              10,
+              9
+            ],
+            "body_support": 0.3,
+            "expected_stone_width_px": 71.34,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              325.05,
+              737.1
+            ],
+            "bbox": [
+              320,
+              729,
+              12,
+              19
+            ],
+            "body_support": 1.0,
+            "expected_stone_width_px": 71.16,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              419.72,
+              730.72
+            ],
+            "bbox": [
+              408,
+              723,
+              24,
+              18
+            ],
+            "body_support": 0.958,
+            "expected_stone_width_px": 70.83,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              601.92,
+              721.16
+            ],
+            "bbox": [
+              593,
+              715,
+              21,
+              16
+            ],
+            "body_support": 0.816,
+            "expected_stone_width_px": 70.3,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              452.02,
+              709.26
+            ],
+            "bbox": [
+              449,
+              705,
+              7,
+              11
+            ],
+            "body_support": 0.821,
+            "expected_stone_width_px": 69.86,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              407.69,
+              560.11
+            ],
+            "bbox": [
+              405,
+              550,
+              6,
+              19
+            ],
+            "body_support": 0.0,
+            "expected_stone_width_px": 63.29,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              345.6,
+              493.79
+            ],
+            "bbox": [
+              259,
+              424,
+              157,
+              123
+            ],
+            "body_support": 0.288,
+            "expected_stone_width_px": 60.4,
+            "reason": "width inconsistent with nominal stone scale"
+          }
+        ],
+        "note": "Heuristic visible cap proposals. False positives, merged caps, occlusions and parked stones remain possible."
+      },
+      "completeness": "unknown",
+      "metric_stone_positions": "unavailable",
+      "simulator_export": "blocked",
+      "overlay": "overlays/03572-left.jpg"
+    },
+    {
+      "timestamp_s": 3572,
+      "panel": "right",
+      "frame": "frames/03572.jpg",
+      "registration": {
+        "status": "registered",
+        "inliers": 32,
+        "matches": 42,
+        "rmse_px": 0.9571941701492565,
+        "max_corner_displacement_px": 3.834455489511008,
+        "reference_to_current": [
+          [
+            0.9876430201680234,
+            -0.000552157220480173,
+            9.032621686598734
+          ],
+          [
+            -0.002759652619966904,
+            0.9924045025298517,
+            4.0167570537875745
+          ],
+          [
+            -4.271909426014315e-06,
+            -1.5236023236147532e-06,
+            1.0
+          ]
+        ],
+        "note": "Feature consistency only; not proof of correct camera identity or metric accuracy."
+      },
+      "calibration_reference": "06495.jpg",
+      "calibration_landmark_check": {
+        "withheld_count": 9,
+        "same_image_landmark_rmse_m": 0.022585445518356118,
+        "max_error_m": 0.04737199414268432,
+        "errors_m": [
+          0.021660333503636085,
+          0.02165701529064514,
+          0.0047244965582386705,
+          0.013085748406343365,
+          0.008353305608069652,
+          0.004528219165754639,
+          0.02562563932704291,
+          0.04737199414268432,
+          0.021635743623080433
+        ],
+        "note": "Withheld painted landmarks, same image and annotator. Not physical stone-position accuracy."
+      },
+      "homography": [
+        [
+          0.009589380335269359,
+          0.0004355584466628617,
+          -14.121584878549662
+        ],
+        [
+          -0.0002674524226219436,
+          0.08746369708965979,
+          -39.424142374994695
+        ],
+        [
+          7.338613423631354e-06,
+          0.0022554957545683684,
+          0.9908739345992897
+        ]
+      ],
+      "candidates": [
+        {
+          "colour": "red",
+          "pixel_center": [
+            1402.48,
+            535.89
+          ],
+          "bbox": [
+            1381,
+            524,
+            46,
+            23
+          ],
+          "body_support": 0.959,
+          "expected_stone_width_px": 66.8,
+          "id": "red-1",
+          "ice_plane_projection_m": [
+            -0.19878069068843893,
+            3.1999746688403055
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.008683981628732898,
+            0.07248205062898397
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        }
+      ],
+      "diagnostic": {
+        "status": "proposals",
+        "rejected": [
+          {
+            "colour": "yellow",
+            "pixel_center": [
+              976.57,
+              460.39
+            ],
+            "bbox": [
+              964,
+              436,
+              36,
+              36
+            ],
+            "body_support": 0.981,
+            "expected_stone_width_px": 61.37,
+            "reason": "colour component shape"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              1441.57,
+              494.23
+            ],
+            "bbox": [
+              1438,
+              487,
+              8,
+              15
+            ],
+            "body_support": 0.625,
+            "expected_stone_width_px": 63.98,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              1410.85,
+              489.72
+            ],
+            "bbox": [
+              1404,
+              473,
+              12,
+              38
+            ],
+            "body_support": 0.583,
+            "expected_stone_width_px": 63.66,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              1349.89,
+              479.52
+            ],
+            "bbox": [
+              1346,
+              466,
+              8,
+              27
+            ],
+            "body_support": 0.344,
+            "expected_stone_width_px": 62.92,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              1045.66,
+              449.7
+            ],
+            "bbox": [
+              1039,
+              448,
+              15,
+              4
+            ],
+            "body_support": 0.92,
+            "expected_stone_width_px": 60.69,
+            "reason": "width inconsistent with nominal stone scale"
+          }
+        ],
+        "note": "Heuristic visible cap proposals. False positives, merged caps, occlusions and parked stones remain possible."
+      },
+      "completeness": "unknown",
+      "metric_stone_positions": "unavailable",
+      "simulator_export": "blocked",
+      "overlay": "overlays/03572-right.jpg"
+    },
+    {
+      "timestamp_s": 4000,
+      "panel": "left",
+      "frame": "frames/04000.jpg",
+      "registration": {
+        "status": "registered",
+        "inliers": 138,
+        "matches": 171,
+        "rmse_px": 0.585752038763241,
+        "max_corner_displacement_px": 1.0721649644677067,
+        "reference_to_current": [
+          [
+            1.0009263530211148,
+            0.0012469415644018487,
+            -0.6324480557453639
+          ],
+          [
+            0.00018991434811775938,
+            1.0023325521634572,
+            -0.563200404717497
+          ],
+          [
+            3.2891933145915874e-07,
+            2.0882862544465086e-06,
+            1.0
+          ]
+        ],
+        "note": "Feature consistency only; not proof of correct camera identity or metric accuracy."
+      },
+      "calibration_reference": "00750.jpg",
+      "calibration_landmark_check": {
+        "withheld_count": 9,
+        "same_image_landmark_rmse_m": 0.012442604237031103,
+        "max_error_m": 0.020057898702905527,
+        "errors_m": [
+          0.009808261236673462,
+          0.005096331136701994,
+          0.015874033828667193,
+          0.004332570592694518,
+          0.005697746372148066,
+          0.008336808795313053,
+          0.015129325331481399,
+          0.020057898702905527,
+          0.016347856873168375
+        ],
+        "note": "Withheld painted landmarks, same image and annotator. Not physical stone-position accuracy."
+      },
+      "homography": [
+        [
+          0.0074509335031137285,
+          0.00023185125718014604,
+          -3.7104741329184003
+        ],
+        [
+          -0.0005876437230783809,
+          0.025237670053007078,
+          -16.55393675813511
+        ],
+        [
+          -2.0709965911612e-05,
+          0.0011345993152728875,
+          1.0006259088158787
+        ]
+      ],
+      "candidates": [],
+      "diagnostic": {
+        "status": "proposals",
+        "rejected": [],
+        "note": "Heuristic visible cap proposals. False positives, merged caps, occlusions and parked stones remain possible."
+      },
+      "completeness": "unknown",
+      "metric_stone_positions": "unavailable",
+      "simulator_export": "blocked",
+      "overlay": "overlays/04000-left.jpg"
+    },
+    {
+      "timestamp_s": 4000,
+      "panel": "right",
+      "frame": "frames/04000.jpg",
+      "registration": {
+        "status": "registered",
+        "inliers": 63,
+        "matches": 79,
+        "rmse_px": 0.7281301703353555,
+        "max_corner_displacement_px": 2.3223195910691365,
+        "reference_to_current": [
+          [
+            0.994888013440544,
+            0.0023399392639690056,
+            3.9270704648666266
+          ],
+          [
+            -0.0012919339187501596,
+            0.9982752577822734,
+            1.5599765010858655
+          ],
+          [
+            -1.9540243051512206e-06,
+            1.1481804196451855e-06,
+            0.9999999999999999
+          ]
+        ],
+        "note": "Feature consistency only; not proof of correct camera identity or metric accuracy."
+      },
+      "calibration_reference": "06495.jpg",
+      "calibration_landmark_check": {
+        "withheld_count": 9,
+        "same_image_landmark_rmse_m": 0.022585445518356118,
+        "max_error_m": 0.04737199414268432,
+        "errors_m": [
+          0.021660333503636085,
+          0.02165701529064514,
+          0.0047244965582386705,
+          0.013085748406343365,
+          0.008353305608069652,
+          0.004528219165754639,
+          0.02562563932704291,
+          0.04737199414268432,
+          0.021635743623080433
+        ],
+        "note": "Withheld painted landmarks, same image and annotator. Not physical stone-position accuracy."
+      },
+      "homography": [
+        [
+          0.009551914437789303,
+          0.000443040758222977,
+          -14.071420275552725
+        ],
+        [
+          -0.0003027955677956465,
+          0.0870554579228096,
+          -39.20985311843185
+        ],
+        [
+          1.6395583389469746e-06,
+          0.0022395650666612392,
+          0.9964998924622276
+        ]
+      ],
+      "candidates": [],
+      "diagnostic": {
+        "status": "proposals",
+        "rejected": [],
+        "note": "Heuristic visible cap proposals. False positives, merged caps, occlusions and parked stones remain possible."
+      },
+      "completeness": "unknown",
+      "metric_stone_positions": "unavailable",
+      "simulator_export": "blocked",
+      "overlay": "overlays/04000-right.jpg"
+    },
+    {
+      "timestamp_s": 4547,
+      "panel": "left",
+      "frame": "frames/04547.jpg",
+      "registration": {
+        "status": "registered",
+        "inliers": 80,
+        "matches": 114,
+        "rmse_px": 0.6330404108622337,
+        "max_corner_displacement_px": 1.3352541142048557,
+        "reference_to_current": [
+          [
+            0.9984026620089628,
+            -0.0004281897518851266,
+            0.020548218964354686
+          ],
+          [
+            -0.0006441164448923684,
+            0.9972722926502926,
+            0.8578013503182538
+          ],
+          [
+            -1.1471246426265444e-06,
+            -1.945048697640595e-06,
+            0.9999999999999999
+          ]
+        ],
+        "note": "Feature consistency only; not proof of correct camera identity or metric accuracy."
+      },
+      "calibration_reference": "00750.jpg",
+      "calibration_landmark_check": {
+        "withheld_count": 9,
+        "same_image_landmark_rmse_m": 0.012442604237031103,
+        "max_error_m": 0.020057898702905527,
+        "errors_m": [
+          0.009808261236673462,
+          0.005096331136701994,
+          0.015874033828667193,
+          0.004332570592694518,
+          0.005697746372148066,
+          0.008336808795313053,
+          0.015129325331481399,
+          0.020057898702905527,
+          0.016347856873168375
+        ],
+        "note": "Withheld painted landmarks, same image and annotator. Not physical stone-position accuracy."
+      },
+      "homography": [
+        [
+          0.0074644687176618875,
+          0.00023053228696294826,
+          -3.715668172492523
+        ],
+        [
+          -0.0005925219698917355,
+          0.025297719861883148,
+          -16.589467212979276
+        ],
+        [
+          -1.833072490063006e-05,
+          0.0011443663842373639,
+          0.9990187376340915
+        ]
+      ],
+      "candidates": [
+        {
+          "colour": "yellow",
+          "pixel_center": [
+            769.63,
+            453.93
+          ],
+          "bbox": [
+            753,
+            443,
+            35,
+            21
+          ],
+          "body_support": 0.995,
+          "expected_stone_width_px": 58.5,
+          "id": "yellow-1",
+          "ice_plane_projection_m": [
+            1.4184148368048548,
+            -3.69720801173079
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.009997090315597564,
+            0.039240942981925785
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        }
+      ],
+      "diagnostic": {
+        "status": "proposals",
+        "rejected": [
+          {
+            "colour": "red",
+            "pixel_center": [
+              279.26,
+              408.21
+            ],
+            "bbox": [
+              275,
+              404,
+              10,
+              10
+            ],
+            "body_support": 0.35,
+            "expected_stone_width_px": 56.68,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              387.36,
+              379.12
+            ],
+            "bbox": [
+              270,
+              235,
+              214,
+              281
+            ],
+            "body_support": 0.491,
+            "expected_stone_width_px": 55.34,
+            "reason": "width inconsistent with nominal stone scale"
+          }
+        ],
+        "note": "Heuristic visible cap proposals. False positives, merged caps, occlusions and parked stones remain possible."
+      },
+      "completeness": "unknown",
+      "metric_stone_positions": "unavailable",
+      "simulator_export": "blocked",
+      "overlay": "overlays/04547-left.jpg"
+    },
+    {
+      "timestamp_s": 4547,
+      "panel": "right",
+      "frame": "frames/04547.jpg",
+      "registration": {
+        "status": "registered",
+        "inliers": 50,
+        "matches": 66,
+        "rmse_px": 0.6306742984816912,
+        "max_corner_displacement_px": 3.1237962775064085,
+        "reference_to_current": [
+          [
+            0.9917224385865496,
+            -0.000383013862604425,
+            6.994553671124955
+          ],
+          [
+            -0.001964125587853341,
+            0.9968409487737065,
+            2.309365966402586
+          ],
+          [
+            -3.156902444790157e-06,
+            1.1092665002471718e-06,
+            1.0
+          ]
+        ],
+        "note": "Feature consistency only; not proof of correct camera identity or metric accuracy."
+      },
+      "calibration_reference": "06495.jpg",
+      "calibration_landmark_check": {
+        "withheld_count": 9,
+        "same_image_landmark_rmse_m": 0.022585445518356118,
+        "max_error_m": 0.04737199414268432,
+        "errors_m": [
+          0.021660333503636085,
+          0.02165701529064514,
+          0.0047244965582386705,
+          0.013085748406343365,
+          0.008353305608069652,
+          0.004528219165754639,
+          0.02562563932704291,
+          0.04737199414268432,
+          0.021635743623080433
+        ],
+        "note": "Withheld painted landmarks, same image and annotator. Not physical stone-position accuracy."
+      },
+      "homography": [
+        [
+          0.00956559403270131,
+          0.0004692591649782769,
+          -14.10120885331224
+        ],
+        [
+          -0.00029227634096424816,
+          0.08717843630031624,
+          -39.27452032055464
+        ],
+        [
+          4.3724772174297175e-06,
+          0.0022428338068780015,
+          0.9947898924115257
+        ]
+      ],
+      "candidates": [
+        {
+          "colour": "yellow",
+          "pixel_center": [
+            1302.65,
+            546.82
+          ],
+          "bbox": [
+            1284,
+            536,
+            42,
+            20
+          ],
+          "body_support": 0.973,
+          "expected_stone_width_px": 67.44,
+          "id": "yellow-1",
+          "ice_plane_projection_m": [
+            -0.6215000445158921,
+            3.599442797688978
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.008597764185583985,
+            0.0709218612827292
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        },
+        {
+          "colour": "yellow",
+          "pixel_center": [
+            1463.01,
+            547.53
+          ],
+          "bbox": [
+            1441,
+            535,
+            45,
+            21
+          ],
+          "body_support": 0.975,
+          "expected_stone_width_px": 67.58,
+          "id": "yellow-2",
+          "ice_plane_projection_m": [
+            0.06741833064883082,
+            3.602531410221164
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.00858620477923802,
+            0.07082366036970951
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        },
+        {
+          "colour": "yellow",
+          "pixel_center": [
+            1238.44,
+            514.36
+          ],
+          "bbox": [
+            1220,
+            504,
+            43,
+            20
+          ],
+          "body_support": 0.971,
+          "expected_stone_width_px": 65.21,
+          "id": "yellow-3",
+          "ice_plane_projection_m": [
+            -0.9348328662970211,
+            2.416355801965756
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.008890638758719658,
+            0.07579934130753145
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        },
+        {
+          "colour": "yellow",
+          "pixel_center": [
+            1780.91,
+            447.5
+          ],
+          "bbox": [
+            1766,
+            440,
+            28,
+            17
+          ],
+          "body_support": 0.796,
+          "expected_stone_width_px": 60.93,
+          "id": "yellow-4",
+          "ice_plane_projection_m": [
+            1.5672124769266274,
+            -0.39012527518295115
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.009533347321913532,
+            0.08763588672444912
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        },
+        {
+          "colour": "red",
+          "pixel_center": [
+            1686.92,
+            426.67
+          ],
+          "bbox": [
+            1669,
+            417,
+            38,
+            16
+          ],
+          "body_support": 0.933,
+          "expected_stone_width_px": 59.47,
+          "id": "red-5",
+          "ice_plane_projection_m": [
+            1.1410186989924649,
+            -1.3123357269674267
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.00976444564034376,
+            0.09181687080840417
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        }
+      ],
+      "diagnostic": {
+        "status": "proposals",
+        "rejected": [
+          {
+            "colour": "red",
+            "pixel_center": [
+              1513.66,
+              438.39
+            ],
+            "bbox": [
+              1475,
+              426,
+              74,
+              20
+            ],
+            "body_support": 0.966,
+            "expected_stone_width_px": 60.18,
+            "reason": "width inconsistent with nominal stone scale"
+          }
+        ],
+        "note": "Heuristic visible cap proposals. False positives, merged caps, occlusions and parked stones remain possible."
+      },
+      "completeness": "unknown",
+      "metric_stone_positions": "unavailable",
+      "simulator_export": "blocked",
+      "overlay": "overlays/04547-right.jpg"
+    },
+    {
+      "timestamp_s": 5521,
+      "panel": "left",
+      "frame": "frames/05521.jpg",
+      "registration": {
+        "status": "registered",
+        "inliers": 109,
+        "matches": 136,
+        "rmse_px": 0.522702026330606,
+        "max_corner_displacement_px": 0.3345994876763215,
+        "reference_to_current": [
+          [
+            0.9998997319994187,
+            -0.0003190447242143665,
+            0.03044294760852132
+          ],
+          [
+            0.00032699178456869186,
+            0.9997631160159015,
+            -0.13791928319558053
+          ],
+          [
+            2.374686102532032e-07,
+            -2.8672059723427143e-07,
+            0.9999999999999999
+          ]
+        ],
+        "note": "Feature consistency only; not proof of correct camera identity or metric accuracy."
+      },
+      "calibration_reference": "00750.jpg",
+      "calibration_landmark_check": {
+        "withheld_count": 9,
+        "same_image_landmark_rmse_m": 0.012442604237031103,
+        "max_error_m": 0.020057898702905527,
+        "errors_m": [
+          0.009808261236673462,
+          0.005096331136701994,
+          0.015874033828667193,
+          0.004332570592694518,
+          0.005697746372148066,
+          0.008336808795313053,
+          0.015129325331481399,
+          0.020057898702905527,
+          0.016347856873168375
+        ],
+        "note": "Withheld painted landmarks, same image and annotator. Not physical stone-position accuracy."
+      },
+      "homography": [
+        [
+          0.007458212477936019,
+          0.0002353043383377566,
+          -3.715511637013854
+        ],
+        [
+          -0.0005932265472271824,
+          0.025262281763745092,
+          -16.56427675463552
+        ],
+        [
+          -2.0796864880707835e-05,
+          0.0011398597418149658,
+          1.0001578417564028
+        ]
+      ],
+      "candidates": [
+        {
+          "colour": "yellow",
+          "pixel_center": [
+            361.36,
+            496.44
+          ],
+          "bbox": [
+            341,
+            483,
+            43,
+            21
+          ],
+          "body_support": 0.998,
+          "expected_stone_width_px": 60.55,
+          "id": "yellow-1",
+          "ice_plane_projection_m": [
+            -0.57980271888684,
+            -2.718961567686484
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.009592044100482042,
+            0.03636064947479749
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        }
+      ],
+      "diagnostic": {
+        "status": "proposals",
+        "rejected": [
+          {
+            "colour": "red",
+            "pixel_center": [
+              10.35,
+              798.7
+            ],
+            "bbox": [
+              0,
+              790,
+              22,
+              28
+            ],
+            "body_support": 0.335,
+            "expected_stone_width_px": 74.13,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              464.95,
+              783.23
+            ],
+            "bbox": [
+              356,
+              695,
+              173,
+              159
+            ],
+            "body_support": 0.272,
+            "expected_stone_width_px": 73.19,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              14.01,
+              729.99
+            ],
+            "bbox": [
+              0,
+              669,
+              33,
+              105
+            ],
+            "body_support": 0.543,
+            "expected_stone_width_px": 71.09,
+            "reason": "colour component shape"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              539.47,
+              563.36
+            ],
+            "bbox": [
+              529,
+              561,
+              31,
+              7
+            ],
+            "body_support": 0.0,
+            "expected_stone_width_px": 63.41,
+            "reason": "thin or fragmented component"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              512.55,
+              545.26
+            ],
+            "bbox": [
+              503,
+              535,
+              23,
+              24
+            ],
+            "body_support": 0.054,
+            "expected_stone_width_px": 62.62,
+            "reason": "colour component shape"
+          }
+        ],
+        "note": "Heuristic visible cap proposals. False positives, merged caps, occlusions and parked stones remain possible."
+      },
+      "completeness": "unknown",
+      "metric_stone_positions": "unavailable",
+      "simulator_export": "blocked",
+      "overlay": "overlays/05521-left.jpg"
+    },
+    {
+      "timestamp_s": 5521,
+      "panel": "right",
+      "frame": "frames/05521.jpg",
+      "registration": {
+        "status": "registered",
+        "inliers": 40,
+        "matches": 58,
+        "rmse_px": 0.7770834796633364,
+        "max_corner_displacement_px": 2.4057225952805865,
+        "reference_to_current": [
+          [
+            1.0007195895595573,
+            -0.007397255692433145,
+            2.4048462577484013
+          ],
+          [
+            0.0007387181279065776,
+            0.9960412487745611,
+            0.5613693766310766
+          ],
+          [
+            1.4010031309608138e-06,
+            -5.051316154633305e-06,
+            1.0
+          ]
+        ],
+        "note": "Feature consistency only; not proof of correct camera identity or metric accuracy."
+      },
+      "calibration_reference": "06495.jpg",
+      "calibration_landmark_check": {
+        "withheld_count": 9,
+        "same_image_landmark_rmse_m": 0.022585445518356118,
+        "max_error_m": 0.04737199414268432,
+        "errors_m": [
+          0.021660333503636085,
+          0.02165701529064514,
+          0.0047244965582386705,
+          0.013085748406343365,
+          0.008353305608069652,
+          0.004528219165754639,
+          0.02562563932704291,
+          0.04737199414268432,
+          0.021635743623080433
+        ],
+        "note": "Withheld painted landmarks, same image and annotator. Not physical stone-position accuracy."
+      },
+      "homography": [
+        [
+          0.009542502796353913,
+          0.0004498367065139768,
+          -14.056418878000182
+        ],
+        [
+          -0.00034631088224672555,
+          0.08700382204179838,
+          -39.12324620622711
+        ],
+        [
+          -6.266799340958808e-06,
+          0.0022507592410662505,
+          0.9987515633768391
+        ]
+      ],
+      "candidates": [
+        {
+          "colour": "yellow",
+          "pixel_center": [
+            1445.87,
+            531.41
+          ],
+          "bbox": [
+            1422,
+            519,
+            44,
+            21
+          ],
+          "body_support": 0.997,
+          "expected_stone_width_px": 66.41,
+          "id": "yellow-1",
+          "ice_plane_projection_m": [
+            -0.009230157991276628,
+            3.02431029042248
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.008736660090086749,
+            0.07323168889090667
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        },
+        {
+          "colour": "red",
+          "pixel_center": [
+            1021.64,
+            458.45
+          ],
+          "bbox": [
+            985,
+            433,
+            63,
+            50
+          ],
+          "body_support": 0.969,
+          "expected_stone_width_px": 61.47,
+          "id": "red-2",
+          "ice_plane_projection_m": [
+            -2.026046032049905,
+            0.2025837862783709
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.00942202984142,
+            0.0854655815852655
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        }
+      ],
+      "diagnostic": {
+        "status": "proposals",
+        "rejected": [
+          {
+            "colour": "yellow",
+            "pixel_center": [
+              972.02,
+              461.91
+            ],
+            "bbox": [
+              964,
+              459,
+              18,
+              7
+            ],
+            "body_support": 0.954,
+            "expected_stone_width_px": 61.71,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "yellow",
+            "pixel_center": [
+              980.91,
+              434.09
+            ],
+            "bbox": [
+              964,
+              416,
+              35,
+              41
+            ],
+            "body_support": 0.655,
+            "expected_stone_width_px": 59.81,
+            "reason": "colour component shape"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              1443.67,
+              492.05
+            ],
+            "bbox": [
+              1440,
+              486,
+              10,
+              15
+            ],
+            "body_support": 0.95,
+            "expected_stone_width_px": 63.72,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              1546.08,
+              446.81
+            ],
+            "bbox": [
+              1543,
+              443,
+              7,
+              10
+            ],
+            "body_support": 0.714,
+            "expected_stone_width_px": 60.62,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              1564.66,
+              425.82
+            ],
+            "bbox": [
+              1562,
+              416,
+              7,
+              19
+            ],
+            "body_support": 0.464,
+            "expected_stone_width_px": 59.18,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              1530.33,
+              413.18
+            ],
+            "bbox": [
+              1525,
+              407,
+              11,
+              12
+            ],
+            "body_support": 0.045,
+            "expected_stone_width_px": 58.32,
+            "reason": "width inconsistent with nominal stone scale"
+          }
+        ],
+        "note": "Heuristic visible cap proposals. False positives, merged caps, occlusions and parked stones remain possible."
+      },
+      "completeness": "unknown",
+      "metric_stone_positions": "unavailable",
+      "simulator_export": "blocked",
+      "overlay": "overlays/05521-right.jpg"
+    },
+    {
+      "timestamp_s": 6000,
+      "panel": "left",
+      "frame": "frames/06000.jpg",
+      "registration": {
+        "status": "registered",
+        "inliers": 82,
+        "matches": 108,
+        "rmse_px": 0.5944697494444185,
+        "max_corner_displacement_px": 1.3637911459555871,
+        "reference_to_current": [
+          [
+            1.0013831602448697,
+            0.0018917848318909763,
+            -0.8316648811291873
+          ],
+          [
+            0.0002665308989254327,
+            1.0034012443112537,
+            -0.9069486819670404
+          ],
+          [
+            5.318651924766109e-07,
+            2.9166848051854394e-06,
+            1.0
+          ]
+        ],
+        "note": "Feature consistency only; not proof of correct camera identity or metric accuracy."
+      },
+      "calibration_reference": "00750.jpg",
+      "calibration_landmark_check": {
+        "withheld_count": 9,
+        "same_image_landmark_rmse_m": 0.012442604237031103,
+        "max_error_m": 0.020057898702905527,
+        "errors_m": [
+          0.009808261236673462,
+          0.005096331136701994,
+          0.015874033828667193,
+          0.004332570592694518,
+          0.005697746372148066,
+          0.008336808795313053,
+          0.015129325331481399,
+          0.020057898702905527,
+          0.016347856873168375
+        ],
+        "note": "Withheld painted landmarks, same image and annotator. Not physical stone-position accuracy."
+      },
+      "homography": [
+        [
+          0.007448268506442746,
+          0.0002298797436891898,
+          -3.708914087575232
+        ],
+        [
+          -0.0005859528101741698,
+          0.025224806569471712,
+          -16.545388681296124
+        ],
+        [
+          -2.098978565388424e-05,
+          0.0011325775020677956,
+          1.0010097332051353
+        ]
+      ],
+      "candidates": [
+        {
+          "colour": "yellow",
+          "pixel_center": [
+            114.7,
+            748.19
+          ],
+          "bbox": [
+            92,
+            730,
+            49,
+            28
+          ],
+          "body_support": 1.0,
+          "expected_stone_width_px": 71.76,
+          "id": "yellow-1",
+          "ice_plane_projection_m": [
+            -1.4532107243733754,
+            1.2244461514855307
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.008059728353002154,
+            0.025874995294432025
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        },
+        {
+          "colour": "yellow",
+          "pixel_center": [
+            306.86,
+            639.35
+          ],
+          "bbox": [
+            293,
+            628,
+            26,
+            21
+          ],
+          "body_support": 0.248,
+          "expected_stone_width_px": 66.85,
+          "id": "yellow-2",
+          "ice_plane_projection_m": [
+            -0.7426635077206639,
+            -0.34781407415756516
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.008677012513675043,
+            0.029798883218741974
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        },
+        {
+          "colour": "yellow",
+          "pixel_center": [
+            390.15,
+            437.66
+          ],
+          "bbox": [
+            371,
+            426,
+            37,
+            19
+          ],
+          "body_support": 1.0,
+          "expected_stone_width_px": 57.91,
+          "id": "yellow-3",
+          "ice_plane_projection_m": [
+            -0.47184168722898945,
+            -3.8522639955794755
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.010034775595012707,
+            0.039707900301571196
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        },
+        {
+          "colour": "red",
+          "pixel_center": [
+            435.82,
+            627.66
+          ],
+          "bbox": [
+            417,
+            618,
+            36,
+            20
+          ],
+          "body_support": 0.321,
+          "expected_stone_width_px": 66.26,
+          "id": "red-4",
+          "ice_plane_projection_m": [
+            -0.18704464482286245,
+            -0.5685728172823563
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.008772345229745649,
+            0.030348974752870145
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        }
+      ],
+      "diagnostic": {
+        "status": "proposals",
+        "rejected": [
+          {
+            "colour": "red",
+            "pixel_center": [
+              338.09,
+              718.43
+            ],
+            "bbox": [
+              239,
+              622,
+              202,
+              193
+            ],
+            "body_support": 0.143,
+            "expected_stone_width_px": 70.32,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              469.03,
+              580.22
+            ],
+            "bbox": [
+              458,
+              571,
+              21,
+              16
+            ],
+            "body_support": 0.061,
+            "expected_stone_width_px": 64.15,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              543.39,
+              565.81
+            ],
+            "bbox": [
+              537,
+              561,
+              14,
+              10
+            ],
+            "body_support": 0.714,
+            "expected_stone_width_px": 63.46,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              584.67,
+              548.02
+            ],
+            "bbox": [
+              579,
+              539,
+              15,
+              16
+            ],
+            "body_support": 1.0,
+            "expected_stone_width_px": 62.65,
+            "reason": "width inconsistent with nominal stone scale"
+          }
+        ],
+        "note": "Heuristic visible cap proposals. False positives, merged caps, occlusions and parked stones remain possible."
+      },
+      "completeness": "unknown",
+      "metric_stone_positions": "unavailable",
+      "simulator_export": "blocked",
+      "overlay": "overlays/06000-left.jpg"
+    },
+    {
+      "timestamp_s": 6000,
+      "panel": "right",
+      "frame": "frames/06000.jpg",
+      "registration": {
+        "status": "registered",
+        "inliers": 42,
+        "matches": 58,
+        "rmse_px": 0.6346144040222887,
+        "max_corner_displacement_px": 0.9671730138018733,
+        "reference_to_current": [
+          [
+            0.9988437509677847,
+            -0.0008738927525546762,
+            0.78135261721964
+          ],
+          [
+            7.617018996230894e-05,
+            0.9982528237944657,
+            0.2833435652703787
+          ],
+          [
+            -3.797482971946862e-07,
+            -9.015443559281167e-07,
+            1.0
+          ]
+        ],
+        "note": "Feature consistency only; not proof of correct camera identity or metric accuracy."
+      },
+      "calibration_reference": "06495.jpg",
+      "calibration_landmark_check": {
+        "withheld_count": 9,
+        "same_image_landmark_rmse_m": 0.022585445518356118,
+        "max_error_m": 0.04737199414268432,
+        "errors_m": [
+          0.021660333503636085,
+          0.02165701529064514,
+          0.0047244965582386705,
+          0.013085748406343365,
+          0.008353305608069652,
+          0.004528219165754639,
+          0.02562563932704291,
+          0.04737199414268432,
+          0.021635743623080433
+        ],
+        "note": "Withheld painted landmarks, same image and annotator. Not physical stone-position accuracy."
+      },
+      "homography": [
+        [
+          0.00953566844699583,
+          0.00044492310875763604,
+          -14.0407948869072
+        ],
+        [
+          -0.000358988638029044,
+          0.08697597981030517,
+          -39.09960133681263
+        ],
+        [
+          -3.0040917087707544e-06,
+          0.0022416653252820577,
+          0.9993671858095106
+        ]
+      ],
+      "candidates": [
+        {
+          "colour": "red",
+          "pixel_center": [
+            978.78,
+            470.3
+          ],
+          "bbox": [
+            964,
+            459,
+            35,
+            19
+          ],
+          "body_support": 0.981,
+          "expected_stone_width_px": 62.26,
+          "id": "red-1",
+          "ice_plane_projection_m": [
+            -2.1935107064536137,
+            0.7089242860828631
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.009300118452105967,
+            0.08325856504044606
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        },
+        {
+          "colour": "red",
+          "pixel_center": [
+            1027.99,
+            453.62
+          ],
+          "bbox": [
+            1009,
+            445,
+            38,
+            15
+          ],
+          "body_support": 0.964,
+          "expected_stone_width_px": 61.13,
+          "id": "red-2",
+          "ice_plane_projection_m": [
+            -2.005043761302925,
+            -0.007293781267139131
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.009474183992617709,
+            0.08637134058691721
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        }
+      ],
+      "diagnostic": {
+        "status": "proposals",
+        "rejected": [
+          {
+            "colour": "yellow",
+            "pixel_center": [
+              1489.11,
+              520.24
+            ],
+            "bbox": [
+              1484,
+              517,
+              11,
+              8
+            ],
+            "body_support": 0.386,
+            "expected_stone_width_px": 65.72,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "yellow",
+            "pixel_center": [
+              986.6,
+              448.25
+            ],
+            "bbox": [
+              984,
+              445,
+              7,
+              9
+            ],
+            "body_support": 0.929,
+            "expected_stone_width_px": 60.76,
+            "reason": "width inconsistent with nominal stone scale"
+          }
+        ],
+        "note": "Heuristic visible cap proposals. False positives, merged caps, occlusions and parked stones remain possible."
+      },
+      "completeness": "unknown",
+      "metric_stone_positions": "unavailable",
+      "simulator_export": "blocked",
+      "overlay": "overlays/06000-right.jpg"
+    },
+    {
+      "timestamp_s": 6495,
+      "panel": "left",
+      "frame": "frames/06495.jpg",
+      "registration": {
+        "status": "registered",
+        "inliers": 99,
+        "matches": 123,
+        "rmse_px": 0.5079265191087657,
+        "max_corner_displacement_px": 1.4233577128792678,
+        "reference_to_current": [
+          [
+            1.0012495513011124,
+            0.0017431141116558558,
+            -0.9974919776664849
+          ],
+          [
+            -5.816134989161334e-06,
+            1.0032284244385627,
+            -1.0153604942599967
+          ],
+          [
+            2.3588809461860754e-07,
+            2.216188885727647e-06,
+            1.0
+          ]
+        ],
+        "note": "Feature consistency only; not proof of correct camera identity or metric accuracy."
+      },
+      "calibration_reference": "00750.jpg",
+      "calibration_landmark_check": {
+        "withheld_count": 9,
+        "same_image_landmark_rmse_m": 0.012442604237031103,
+        "max_error_m": 0.020057898702905527,
+        "errors_m": [
+          0.009808261236673462,
+          0.005096331136701994,
+          0.015874033828667193,
+          0.004332570592694518,
+          0.005697746372148066,
+          0.008336808795313053,
+          0.015129325331481399,
+          0.020057898702905527,
+          0.016347856873168375
+        ],
+        "note": "Withheld painted landmarks, same image and annotator. Not physical stone-position accuracy."
+      },
+      "homography": [
+        [
+          0.007448228260157715,
+          0.00022843069089673566,
+          -3.707655552611261
+        ],
+        [
+          -0.0005840612804758642,
+          0.02521750327408761,
+          -16.542756709846316
+        ],
+        [
+          -2.0388634489818618e-05,
+          0.0011334671289349968,
+          1.0011305402449238
+        ]
+      ],
+      "candidates": [
+        {
+          "colour": "yellow",
+          "pixel_center": [
+            790.54,
+            647.77
+          ],
+          "bbox": [
+            768,
+            632,
+            44,
+            26
+          ],
+          "body_support": 1.0,
+          "expected_stone_width_px": 66.98,
+          "id": "yellow-1",
+          "ice_plane_projection_m": [
+            1.354341147621987,
+            -0.38926230078803276
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.008724097587441521,
+            0.02984817797811025
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        },
+        {
+          "colour": "yellow",
+          "pixel_center": [
+            880.17,
+            589.45
+          ],
+          "bbox": [
+            865,
+            577,
+            29,
+            22
+          ],
+          "body_support": 0.972,
+          "expected_stone_width_px": 64.35,
+          "id": "yellow-2",
+          "ice_plane_projection_m": [
+            1.8062714921912366,
+            -1.3277104474269623
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.009096023172817307,
+            0.03239565614347914
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        }
+      ],
+      "diagnostic": {
+        "status": "proposals",
+        "rejected": [
+          {
+            "colour": "yellow",
+            "pixel_center": [
+              185.92,
+              537.73
+            ],
+            "bbox": [
+              177,
+              533,
+              19,
+              10
+            ],
+            "body_support": 0.286,
+            "expected_stone_width_px": 62.47,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              16.59,
+              749.52
+            ],
+            "bbox": [
+              10,
+              746,
+              14,
+              9
+            ],
+            "body_support": 0.3,
+            "expected_stone_width_px": 71.9,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              9.92,
+              691.06
+            ],
+            "bbox": [
+              0,
+              636,
+              24,
+              100
+            ],
+            "body_support": 0.422,
+            "expected_stone_width_px": 69.33,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              796.54,
+              630.6
+            ],
+            "bbox": [
+              792,
+              628,
+              8,
+              8
+            ],
+            "body_support": 0.0,
+            "expected_stone_width_px": 66.22,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              220.4,
+              674.63
+            ],
+            "bbox": [
+              124,
+              612,
+              194,
+              123
+            ],
+            "body_support": 0.246,
+            "expected_stone_width_px": 68.49,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              188.32,
+              555.61
+            ],
+            "bbox": [
+              179,
+              543,
+              13,
+              28
+            ],
+            "body_support": 0.938,
+            "expected_stone_width_px": 63.26,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              512.61,
+              508.35
+            ],
+            "bbox": [
+              509,
+              504,
+              7,
+              8
+            ],
+            "body_support": 0.571,
+            "expected_stone_width_px": 60.99,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              498.12,
+              410.68
+            ],
+            "bbox": [
+              490,
+              406,
+              15,
+              10
+            ],
+            "body_support": 0.64,
+            "expected_stone_width_px": 56.69,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              572.16,
+              337.39
+            ],
+            "bbox": [
+              491,
+              264,
+              155,
+              141
+            ],
+            "body_support": 0.295,
+            "expected_stone_width_px": 53.41,
+            "reason": "width inconsistent with nominal stone scale"
+          }
+        ],
+        "note": "Heuristic visible cap proposals. False positives, merged caps, occlusions and parked stones remain possible."
+      },
+      "completeness": "unknown",
+      "metric_stone_positions": "unavailable",
+      "simulator_export": "blocked",
+      "overlay": "overlays/06495-left.jpg"
+    },
+    {
+      "timestamp_s": 6495,
+      "panel": "right",
+      "frame": "frames/06495.jpg",
+      "registration": {
+        "status": "reference",
+        "inliers": null,
+        "rmse_px": 0.0
+      },
+      "calibration_reference": "06495.jpg",
+      "calibration_landmark_check": {
+        "withheld_count": 9,
+        "same_image_landmark_rmse_m": 0.022585445518356118,
+        "max_error_m": 0.04737199414268432,
+        "errors_m": [
+          0.021660333503636085,
+          0.02165701529064514,
+          0.0047244965582386705,
+          0.013085748406343365,
+          0.008353305608069652,
+          0.004528219165754639,
+          0.02562563932704291,
+          0.04737199414268432,
+          0.021635743623080433
+        ],
+        "note": "Withheld painted landmarks, same image and annotator. Not physical stone-position accuracy."
+      },
+      "homography": [
+        [
+          0.00953000869740974,
+          0.0004484709975251639,
+          -14.033218101309295
+        ],
+        [
+          -0.0003371005738307921,
+          0.08685958119040081,
+          -39.07523774931217
+        ],
+        [
+          -3.2093781440645537e-06,
+          0.0022368503923730593,
+          1.0
+        ]
+      ],
+      "candidates": [],
+      "diagnostic": {
+        "status": "proposals",
+        "rejected": [],
+        "note": "Heuristic visible cap proposals. False positives, merged caps, occlusions and parked stones remain possible."
+      },
+      "completeness": "unknown",
+      "metric_stone_positions": "unavailable",
+      "simulator_export": "blocked",
+      "overlay": "overlays/06495-right.jpg"
+    },
+    {
+      "timestamp_s": 7469,
+      "panel": "left",
+      "frame": "frames/07469.jpg",
+      "registration": {
+        "status": "registered",
+        "inliers": 86,
+        "matches": 113,
+        "rmse_px": 0.42294897434612627,
+        "max_corner_displacement_px": 0.6628791696542801,
+        "reference_to_current": [
+          [
+            1.000241485769346,
+            0.00043567671779263975,
+            -0.2208879478592491
+          ],
+          [
+            0.0001289688949676504,
+            1.0006738949885177,
+            -0.12597839923699358
+          ],
+          [
+            1.136603159390267e-07,
+            8.693950261141031e-07,
+            1.0
+          ]
+        ],
+        "note": "Feature consistency only; not proof of correct camera identity or metric accuracy."
+      },
+      "calibration_reference": "00750.jpg",
+      "calibration_landmark_check": {
+        "withheld_count": 9,
+        "same_image_landmark_rmse_m": 0.012442604237031103,
+        "max_error_m": 0.020057898702905527,
+        "errors_m": [
+          0.009808261236673462,
+          0.005096331136701994,
+          0.015874033828667193,
+          0.004332570592694518,
+          0.005697746372148066,
+          0.008336808795313053,
+          0.015129325331481399,
+          0.020057898702905527,
+          0.016347856873168375
+        ],
+        "note": "Withheld painted landmarks, same image and annotator. Not physical stone-position accuracy."
+      },
+      "homography": [
+        [
+          0.007455250892238279,
+          0.0002337574225411445,
+          -3.713640816591547
+        ],
+        [
+          -0.000590072365457103,
+          0.025258872663474645,
+          -16.564727237522177
+        ],
+        [
+          -2.0440014507168406e-05,
+          0.0011376823077015776,
+          1.0001388084431058
+        ]
+      ],
+      "candidates": [
+        {
+          "colour": "yellow",
+          "pixel_center": [
+            383.64,
+            424.85
+          ],
+          "bbox": [
+            366,
+            413,
+            38,
+            21
+          ],
+          "body_support": 0.998,
+          "expected_stone_width_px": 57.35,
+          "id": "yellow-1",
+          "ice_plane_projection_m": [
+            -0.5111155606739561,
+            -4.1065790281461085
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.010131800831348663,
+            0.040519100135683765
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        },
+        {
+          "colour": "red",
+          "pixel_center": [
+            417.49,
+            734.23
+          ],
+          "bbox": [
+            404,
+            725,
+            27,
+            20
+          ],
+          "body_support": 0.848,
+          "expected_stone_width_px": 71.02,
+          "id": "red-2",
+          "ice_plane_projection_m": [
+            -0.23508749527370906,
+            0.9495781433039567
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.008180325153991277,
+            0.026441825842348426
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        }
+      ],
+      "diagnostic": {
+        "status": "proposals",
+        "rejected": [
+          {
+            "colour": "red",
+            "pixel_center": [
+              451.76,
+              781.19
+            ],
+            "bbox": [
+              442,
+              774,
+              20,
+              14
+            ],
+            "body_support": 0.0,
+            "expected_stone_width_px": 73.08,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              371.6,
+              710.35
+            ],
+            "bbox": [
+              368,
+              707,
+              8,
+              8
+            ],
+            "body_support": 0.906,
+            "expected_stone_width_px": 69.99,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              512.35,
+              658.52
+            ],
+            "bbox": [
+              506,
+              649,
+              14,
+              17
+            ],
+            "body_support": 1.0,
+            "expected_stone_width_px": 67.62,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              495.83,
+              651.19
+            ],
+            "bbox": [
+              488,
+              643,
+              18,
+              17
+            ],
+            "body_support": 0.944,
+            "expected_stone_width_px": 67.3,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              475.97,
+              643.23
+            ],
+            "bbox": [
+              470,
+              636,
+              15,
+              13
+            ],
+            "body_support": 0.92,
+            "expected_stone_width_px": 66.96,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              501.82,
+              635.93
+            ],
+            "bbox": [
+              492,
+              626,
+              22,
+              18
+            ],
+            "body_support": 0.739,
+            "expected_stone_width_px": 66.62,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              506.89,
+              568.23
+            ],
+            "bbox": [
+              441,
+              512,
+              123,
+              127
+            ],
+            "body_support": 0.617,
+            "expected_stone_width_px": 63.62,
+            "reason": "width inconsistent with nominal stone scale"
+          }
+        ],
+        "note": "Heuristic visible cap proposals. False positives, merged caps, occlusions and parked stones remain possible."
+      },
+      "completeness": "unknown",
+      "metric_stone_positions": "unavailable",
+      "simulator_export": "blocked",
+      "overlay": "overlays/07469-left.jpg"
+    },
+    {
+      "timestamp_s": 7469,
+      "panel": "right",
+      "frame": "frames/07469.jpg",
+      "registration": {
+        "status": "registered",
+        "inliers": 28,
+        "matches": 43,
+        "rmse_px": 0.9242240525313573,
+        "max_corner_displacement_px": 43.99726898507062,
+        "reference_to_current": [
+          [
+            1.067899018700951,
+            0.11163887442587753,
+            -97.56069594566581
+          ],
+          [
+            0.0026074920721943164,
+            1.0846904363337933,
+            -24.72843948895743
+          ],
+          [
+            6.409202865556191e-06,
+            6.47133318496027e-05,
+            1.0
+          ]
+        ],
+        "note": "Feature consistency only; not proof of correct camera identity or metric accuracy."
+      },
+      "calibration_reference": "06495.jpg",
+      "calibration_landmark_check": {
+        "withheld_count": 9,
+        "same_image_landmark_rmse_m": 0.022585445518356118,
+        "max_error_m": 0.04737199414268432,
+        "errors_m": [
+          0.021660333503636085,
+          0.02165701529064514,
+          0.0047244965582386705,
+          0.013085748406343365,
+          0.008353305608069652,
+          0.004528219165754639,
+          0.02562563932704291,
+          0.04737199414268432,
+          0.021635743623080433
+        ],
+        "note": "Withheld painted landmarks, same image and annotator. Not physical stone-position accuracy."
+      },
+      "homography": [
+        [
+          0.009002322036089803,
+          0.00027134747616366185,
+          -13.148235298696575
+        ],
+        [
+          -0.0002941943730932662,
+          0.08231955890064244,
+          -37.068305326062244
+        ],
+        [
+          -1.418186953604309e-05,
+          0.0020011308697644265,
+          1.0481012505607072
+        ]
+      ],
+      "candidates": [
+        {
+          "colour": "yellow",
+          "pixel_center": [
+            1099.55,
+            437.72
+          ],
+          "bbox": [
+            1079,
+            427,
+            40,
+            19
+          ],
+          "body_support": 0.964,
+          "expected_stone_width_px": 61.55,
+          "id": "yellow-1",
+          "ice_plane_projection_m": [
+            -1.640606545971593,
+            -0.7121291361798856
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.009415388741450988,
+            0.08765765520895878
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        }
+      ],
+      "diagnostic": {
+        "status": "proposals",
+        "rejected": [
+          {
+            "colour": "yellow",
+            "pixel_center": [
+              1031.42,
+              450.02
+            ],
+            "bbox": [
+              1000,
+              417,
+              63,
+              61
+            ],
+            "body_support": 0.986,
+            "expected_stone_width_px": 62.39,
+            "reason": "colour component shape"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              1461.22,
+              590.04
+            ],
+            "bbox": [
+              1454,
+              570,
+              15,
+              31
+            ],
+            "body_support": 0.48,
+            "expected_stone_width_px": 71.12,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              1440.26,
+              447.55
+            ],
+            "bbox": [
+              1438,
+              436,
+              7,
+              22
+            ],
+            "body_support": 0.643,
+            "expected_stone_width_px": 61.95,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              976.25,
+              443.55
+            ],
+            "bbox": [
+              964,
+              422,
+              35,
+              49
+            ],
+            "body_support": 0.974,
+            "expected_stone_width_px": 62.01,
+            "reason": "colour component shape"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              1579.64,
+              420.0
+            ],
+            "bbox": [
+              1571,
+              410,
+              18,
+              21
+            ],
+            "body_support": 0.176,
+            "expected_stone_width_px": 60.08,
+            "reason": "width inconsistent with nominal stone scale"
+          }
+        ],
+        "note": "Heuristic visible cap proposals. False positives, merged caps, occlusions and parked stones remain possible."
+      },
+      "completeness": "unknown",
+      "metric_stone_positions": "unavailable",
+      "simulator_export": "blocked",
+      "overlay": "overlays/07469-right.jpg"
+    },
+    {
+      "timestamp_s": 7800,
+      "panel": "left",
+      "frame": "frames/07800.jpg",
+      "registration": {
+        "status": "registered",
+        "inliers": 89,
+        "matches": 119,
+        "rmse_px": 0.4939371844098181,
+        "max_corner_displacement_px": 0.28718536694836255,
+        "reference_to_current": [
+          [
+            0.9992561866792102,
+            0.00011171305107945175,
+            -0.04024935440715482
+          ],
+          [
+            -0.0005486372766798928,
+            0.9998134176708212,
+            0.24150454361395532
+          ],
+          [
+            -7.838313986789643e-07,
+            1.3576278138502893e-07,
+            1.0
+          ]
+        ],
+        "note": "Feature consistency only; not proof of correct camera identity or metric accuracy."
+      },
+      "calibration_reference": "00750.jpg",
+      "calibration_landmark_check": {
+        "withheld_count": 9,
+        "same_image_landmark_rmse_m": 0.012442604237031103,
+        "max_error_m": 0.020057898702905527,
+        "errors_m": [
+          0.009808261236673462,
+          0.005096331136701994,
+          0.015874033828667193,
+          0.004332570592694518,
+          0.005697746372148066,
+          0.008336808795313053,
+          0.015129325331481399,
+          0.020057898702905527,
+          0.016347856873168375
+        ],
+        "note": "Withheld painted landmarks, same image and annotator. Not physical stone-position accuracy."
+      },
+      "homography": [
+        [
+          0.007459423899481656,
+          0.0002336490573380811,
+          -3.7150732303605656
+        ],
+        [
+          -0.0005884057009860269,
+          0.025268266582995535,
+          -16.573905054131593
+        ],
+        [
+          -1.8789798701731674e-05,
+          0.0011393885600902347,
+          0.9997240762085293
+        ]
+      ],
+      "candidates": [
+        {
+          "colour": "yellow",
+          "pixel_center": [
+            77.54,
+            591.97
+          ],
+          "bbox": [
+            56,
+            580,
+            45,
+            24
+          ],
+          "body_support": 0.996,
+          "expected_stone_width_px": 64.89,
+          "id": "yellow-1",
+          "ice_plane_projection_m": [
+            -1.792471288557596,
+            -0.9932788338799582
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.008908308549806222,
+            0.031638776136211126
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        },
+        {
+          "colour": "yellow",
+          "pixel_center": [
+            441.31,
+            569.29
+          ],
+          "bbox": [
+            418,
+            556,
+            48,
+            25
+          ],
+          "body_support": 1.0,
+          "expected_stone_width_px": 63.72,
+          "id": "yellow-2",
+          "ice_plane_projection_m": [
+            -0.17689670557483309,
+            -1.4929803455926454
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.009123623724713465,
+            0.03284659941222938
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        },
+        {
+          "colour": "yellow",
+          "pixel_center": [
+            383.67,
+            424.48
+          ],
+          "bbox": [
+            366,
+            414,
+            37,
+            20
+          ],
+          "body_support": 1.0,
+          "expected_stone_width_px": 57.34,
+          "id": "yellow-3",
+          "ice_plane_projection_m": [
+            -0.5107429247486849,
+            -4.114557672644545
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.010133974366964678,
+            0.04053921167927161
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        },
+        {
+          "colour": "yellow",
+          "pixel_center": [
+            477.41,
+            422.57
+          ],
+          "bbox": [
+            461,
+            411,
+            30,
+            20
+          ],
+          "body_support": 1.0,
+          "expected_stone_width_px": 57.21,
+          "id": "yellow-4",
+          "ice_plane_projection_m": [
+            -0.03745283479410287,
+            -4.195737234943516
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.010173269244880552,
+            0.04075948408060281
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        },
+        {
+          "colour": "red",
+          "pixel_center": [
+            921.53,
+            499.83
+          ],
+          "bbox": [
+            912,
+            497,
+            25,
+            8
+          ],
+          "body_support": 1.0,
+          "expected_stone_width_px": 60.42,
+          "id": "red-5",
+          "ice_plane_projection_m": [
+            2.1108267574257287,
+            -2.8909006804353603
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.009700029532610864,
+            0.03686121486250472
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        }
+      ],
+      "diagnostic": {
+        "status": "proposals",
+        "rejected": [
+          {
+            "colour": "red",
+            "pixel_center": [
+              373.19,
+              795.5
+            ],
+            "bbox": [
+              370,
+              792,
+              6,
+              8
+            ],
+            "body_support": 0.958,
+            "expected_stone_width_px": 73.76,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              341.14,
+              772.15
+            ],
+            "bbox": [
+              336,
+              768,
+              11,
+              9
+            ],
+            "body_support": 0.205,
+            "expected_stone_width_px": 72.74,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              559.99,
+              358.21
+            ],
+            "bbox": [
+              500,
+              287,
+              129,
+              131
+            ],
+            "body_support": 0.126,
+            "expected_stone_width_px": 54.32,
+            "reason": "width inconsistent with nominal stone scale"
+          }
+        ],
+        "note": "Heuristic visible cap proposals. False positives, merged caps, occlusions and parked stones remain possible."
+      },
+      "completeness": "unknown",
+      "metric_stone_positions": "unavailable",
+      "simulator_export": "blocked",
+      "overlay": "overlays/07800-left.jpg"
+    },
+    {
+      "timestamp_s": 7800,
+      "panel": "right",
+      "frame": "frames/07800.jpg",
+      "registration": {
+        "status": "registered",
+        "inliers": 44,
+        "matches": 60,
+        "rmse_px": 0.6839353391849696,
+        "max_corner_displacement_px": 1.9595785149390035,
+        "reference_to_current": [
+          [
+            0.9889571471753332,
+            0.0036113807792546187,
+            6.118874805276745
+          ],
+          [
+            -0.002531583393461073,
+            0.9958406024429584,
+            3.329071937769446
+          ],
+          [
+            -3.9864897080499125e-06,
+            1.5064199949634034e-06,
+            1.0
+          ]
+        ],
+        "note": "Feature consistency only; not proof of correct camera identity or metric accuracy."
+      },
+      "calibration_reference": "06495.jpg",
+      "calibration_landmark_check": {
+        "withheld_count": 9,
+        "same_image_landmark_rmse_m": 0.022585445518356118,
+        "max_error_m": 0.04737199414268432,
+        "errors_m": [
+          0.021660333503636085,
+          0.02165701529064514,
+          0.0047244965582386705,
+          0.013085748406343365,
+          0.008353305608069652,
+          0.004528219165754639,
+          0.02562563932704291,
+          0.04737199414268432,
+          0.021635743623080433
+        ],
+        "note": "Withheld painted landmarks, same image and annotator. Not physical stone-position accuracy."
+      },
+      "homography": [
+        [
+          0.009580730613431282,
+          0.00043691907404594247,
+          -14.093295927504444
+        ],
+        [
+          -0.00027611028099375906,
+          0.08728292159715847,
+          -39.36411939000595
+        ],
+        [
+          6.501523585936725e-06,
+          0.0022446682775469056,
+          0.9924875558187514
+        ]
+      ],
+      "candidates": [
+        {
+          "colour": "yellow",
+          "pixel_center": [
+            987.64,
+            457.11
+          ],
+          "bbox": [
+            965,
+            445,
+            44,
+            22
+          ],
+          "body_support": 0.989,
+          "expected_stone_width_px": 61.09,
+          "id": "yellow-1",
+          "ice_plane_projection_m": [
+            -2.1883285657928977,
+            0.12882361615945462
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.009480558800220985,
+            0.08589315090271045
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        },
+        {
+          "colour": "yellow",
+          "pixel_center": [
+            1034.1,
+            433.41
+          ],
+          "bbox": [
+            1013,
+            420,
+            43,
+            23
+          ],
+          "body_support": 0.977,
+          "expected_stone_width_px": 59.52,
+          "id": "yellow-2",
+          "ice_plane_projection_m": [
+            -2.026571562931385,
+            -0.9231596328816738
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.009733584978119787,
+            0.09055554505124956
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        },
+        {
+          "colour": "red",
+          "pixel_center": [
+            1447.31,
+            544.07
+          ],
+          "bbox": [
+            1427,
+            532,
+            44,
+            23
+          ],
+          "body_support": 0.97,
+          "expected_stone_width_px": 67.28,
+          "id": "red-3",
+          "ice_plane_projection_m": [
+            0.004814251133264008,
+            3.4743629863974963
+          ],
+          "position_semantics": "Uncorrected ice-plane projection of coloured-cap centroid; NOT stone footprint centre.",
+          "two_pixel_sensitivity_m": [
+            0.008623179261401649,
+            0.07136287283548963
+          ],
+          "identity": null,
+          "in_play_status": "unknown",
+          "confidence": null
+        }
+      ],
+      "diagnostic": {
+        "status": "proposals",
+        "rejected": [
+          {
+            "colour": "red",
+            "pixel_center": [
+              1384.22,
+              494.88
+            ],
+            "bbox": [
+              1381,
+              490,
+              7,
+              12
+            ],
+            "body_support": 0.75,
+            "expected_stone_width_px": 63.9,
+            "reason": "width inconsistent with nominal stone scale"
+          },
+          {
+            "colour": "red",
+            "pixel_center": [
+              993.57,
+              426.64
+            ],
+            "bbox": [
+              990,
+              425,
+              9,
+              5
+            ],
+            "body_support": 0.861,
+            "expected_stone_width_px": 59.03,
+            "reason": "width inconsistent with nominal stone scale"
+          }
+        ],
+        "note": "Heuristic visible cap proposals. False positives, merged caps, occlusions and parked stones remain possible."
+      },
+      "completeness": "unknown",
+      "metric_stone_positions": "unavailable",
+      "simulator_export": "blocked",
+      "overlay": "overlays/07800-right.jpg"
+    }
+  ]
+}

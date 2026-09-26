@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Curling CV Playbook — Step by Step</title>
+<style>
+  :root{
+    --ink:#12161d; --ink2:#3b4452; --muted:#6c7786; --line:#e3e7ed;
+    --bg:#f7f9fb; --card:#fff; --accent:#1f5fa8; --accent2:#0f766e;
+    --p0:#b8442a; --p1:#c2701c; --p2:#1f5fa8; --p3:#0f766e; --p4:#6a3d9a; --p5:#3d4653;
+    --ok:#1d7a4c; --okbg:#e8f6ee; --warn:#b8442a; --warnbg:#fdeeea; --infobg:#eaf2fb;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 22px}
+  a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(31,95,168,.3)}
+  a:hover{border-bottom-color:var(--accent)}
+  h1,h2,h3,h4{line-height:1.2;letter-spacing:-.012em}
+  h1{font-size:2.3rem;margin:0 0 .3rem}
+  h2{font-size:1.42rem;margin:0}
+  h3{font-size:1.05rem;margin:1.6rem 0 .4rem}
+  h4{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:1.4rem 0 .4rem}
+  p{margin:.55rem 0}
+  ul,ol{margin:.45rem 0 .8rem;padding-left:1.3rem}
+  li{margin:.28rem 0}
+  code{font-family:var(--mono);font-size:.85em;background:#eef2f7;border:1px solid #e0e6ee;
+       padding:.1em .36em;border-radius:4px}
+  pre{background:#10161f;color:#e6edf5;border-radius:10px;padding:14px 16px;overflow-x:auto;
+      font-family:var(--mono);font-size:.82rem;line-height:1.55;margin:.7rem 0}
+  pre code{background:none;border:none;padding:0;color:inherit;font-size:1em}
+  .cm{color:#7d8ea3}
+
+  /* ---------- hero ---------- */
+  header.hero{background:linear-gradient(150deg,#0e1c2e 0%,#17395c 45%,#1f5fa8 100%);color:#fff;
+    padding:52px 0 40px;position:relative;overflow:hidden}
+  header.hero:after{content:"";position:absolute;right:-90px;top:-90px;width:320px;height:320px;
+    border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.13),transparent 68%)}
+  header.hero h1{color:#fff}
+  .sub{color:#c3d5e9;max-width:66ch;margin:.5rem 0 0;font-size:1.03rem}
+  .meta{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1.3rem}
+  .chip{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.25);border-radius:999px;
+    padding:.22rem .7rem;font-size:.76rem;color:#e9f1fa}
+  header.hero a{color:#bfe0ff;border-bottom-color:rgba(191,224,255,.45)}
+
+  /* ---------- sticky progress ---------- */
+  .sticky{position:sticky;top:0;z-index:40;background:rgba(247,249,251,.93);
+    backdrop-filter:blur(9px);border-bottom:1px solid var(--line)}
+  .sticky .wrap{display:flex;align-items:center;gap:14px;padding-top:9px;padding-bottom:9px;flex-wrap:wrap}
+  .track{flex:1;min-width:180px;height:8px;border-radius:99px;background:#dde4ec;overflow:hidden}
+  .bar{height:100%;width:0;background:linear-gradient(90deg,#1f5fa8,#0f766e);transition:width .25s ease}
+  .plabel{font-size:.8rem;color:var(--ink2);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .reset{font:inherit;font-size:.76rem;background:#fff;border:1px solid var(--line);border-radius:7px;
+    padding:.25rem .6rem;cursor:pointer;color:var(--ink2)}
+  .reset:hover{border-color:#b9c4d1}
+
+  /* ---------- rules ---------- */
+  .rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin:1.1rem 0}
+  .rule{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent2);
+    border-radius:9px;padding:13px 16px}
+  .rule b{display:block;margin-bottom:.2rem}
+  .rule p{margin:.15rem 0 0;font-size:.88rem;color:var(--ink2)}
+
+  /* ---------- timeline ---------- */
+  .tl{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:1.1rem 0;
+      overflow-x:auto}
+  .tlrow{display:grid;grid-template-columns:160px repeat(12,minmax(30px,1fr));gap:3px;align-items:center;
+    margin-bottom:5px;min-width:620px}
+  .tlrow .lane{font-size:.8rem;color:var(--ink2);padding-right:8px}
+  .wk{font-size:.66rem;color:var(--muted);text-align:center}
+  .cell{height:22px;border-radius:5px;background:#eef2f7}
+  .cell.on{background:var(--c)}
+  .cell.part{background:var(--c);opacity:.42}
+
+  /* ---------- phases ---------- */
+  .phase{margin:2.6rem 0 0}
+  .phead{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:2px solid var(--line);
+    padding-bottom:.5rem;margin-bottom:.2rem}
+  .pnum{font:700 .74rem/1 var(--mono);letter-spacing:.09em;color:#fff;background:var(--c);
+    padding:.42rem .6rem;border-radius:6px;text-transform:uppercase}
+  .pwhen{font-size:.8rem;color:var(--muted);margin-left:auto;white-space:nowrap}
+  .pnote{color:var(--ink2);font-size:.93rem;margin:.55rem 0 1rem}
+
+  /* ---------- steps ---------- */
+  .step{position:relative;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--c);
+    border-radius:10px;padding:15px 18px 15px 18px;margin:.7rem 0;transition:opacity .2s}
+  .step h3{margin:0 0 .3rem;display:flex;align-items:baseline;gap:.5rem}
+  .sno{font:700 .78rem/1 var(--mono);color:var(--c);background:#f2f5f9;border:1px solid var(--line);
+    padding:.3rem .45rem;border-radius:5px;flex:none}
+  .step .body{font-size:.94rem}
+  .step .body>p:first-child{margin-top:0}
+  .tick{position:absolute;top:15px;right:16px;width:19px;height:19px;accent-color:var(--c);cursor:pointer;margin:0}
+  .step.done{opacity:.52}
+  .step.done h3{text-decoration:line-through;text-decoration-color:var(--muted);text-decoration-thickness:1.5px}
+  .facts{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.7rem}
+  .fact{font-size:.74rem;background:#f2f5f9;border:1px solid var(--line);border-radius:5px;
+    padding:.16rem .5rem;color:var(--ink2)}
+  .fact b{color:var(--ink);font-weight:600}
+
+  /* ---------- callouts ---------- */
+  .cp{border-radius:10px;padding:14px 18px;margin:1rem 0;border:1px solid;font-size:.92rem}
+  .cp h4{margin:0 0 .3rem;color:inherit;font-size:.75rem;opacity:.85}
+  .cp p{margin:.3rem 0 0}
+  .cp.go{background:#e8f6ee;border-color:#b9e2cb;color:#125634}
+  .cp.gate{background:#fdf3dd;border-color:#f0dca8;color:#7a5300}
+  .cp.stop{background:var(--warnbg);border-color:#f0c8bd;color:#7d2f1c}
+  .cp.info{background:var(--infobg);border-color:#c8dff6;color:#164a7a}
+
+  /* ---------- tables ---------- */
+  .tw{overflow-x:auto;margin:1rem 0}
+  table{border-collapse:collapse;width:100%;font-size:.88rem;background:var(--card)}
+  th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top}
+  th{background:#f3f6fa;font-size:.74rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2)}
+  tbody tr:nth-child(even){background:#fafbfd}
+  td.n{text-align:right;font-family:var(--mono);white-space:nowrap}
+
+  dl.gloss{margin:1rem 0}
+  dl.gloss dt{font-weight:700;font-size:.9rem;margin-top:.85rem;font-family:var(--mono);font-size:.84rem}
+  dl.gloss dd{margin:.15rem 0 0;font-size:.9rem;color:var(--ink2)}
+
+  footer{margin:3.5rem 0 0;padding:1.4rem 0 3rem;border-top:2px solid var(--line);
+    font-size:.85rem;color:var(--muted)}
+  .backlink{font-size:.84rem}
+
+  @media print{
+    body{background:#fff}
+    header.hero{background:#fff;color:#000;padding:0 0 16px}
+    header.hero h1,.sub{color:#000} .chip{color:#333;border-color:#999;background:#f3f3f3}
+    .sticky{position:static;border:none} .reset,.track{display:none}
+    .step,.cp,.tl,table{page-break-inside:avoid}
+    .tick{position:static;margin-right:.5rem;display:inline-block}
+    a{color:#000;border-bottom:none}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>The Curling CV Playbook</h1>
+    <p class="sub">Eighteen steps from an empty repo to a defensible result in one term. Written so that any of the four of you can pick it up on a Monday and know exactly what to do — and so that you can stop at any checkpoint with something submittable.</p>
+    <div class="meta">
+      <span class="chip">18 steps · 6 phases · 4 checkpoints</span>
+      <span class="chip">~12 weeks</span>
+      <span class="chip">Tick boxes · saves locally</span>
+      <span class="chip">Print-friendly</span>
+      <a class="chip" href="curling-cv-lit-review.html">↗ Companion: Literature &amp; Feasibility Map</a>
+    </div>
+  </div>
+</header>
+
+<div class="sticky">
+  <div class="wrap">
+    <span class="plabel" id="plabel">0 / 18 steps</span>
+    <div class="track"><div class="bar" id="bar"></div></div>
+    <button class="reset" id="reset">Reset</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ============ RULES ============ -->
+<h2 style="margin-top:2rem">The three rules</h2>
+<p style="color:var(--ink2)">If you remember nothing else, remember these. They prevent the three ways this project fails.</p>
+<div class="rules">
+  <div class="rule">
+    <b>1. Manual before automated</b>
+    <p>Click the points, cut the clips, label the shots by hand <em>first</em>. Automate only what you will do a thousand times. Teams burn three weeks automating a step they should have done by hand ten times to understand its failure modes.</p>
+  </div>
+  <div class="rule">
+    <b>2. Never grade your own homework</b>
+    <p>Train and test on <em>true</em> state — the official records and the simulator. Your pipeline's output is for error analysis only. Reporting a metric computed on your own reconstruction is the one mistake that silently invalidates the whole thesis.</p>
+  </div>
+  <div class="rule">
+    <b>3. Reject explicitly</b>
+    <p>A plausible-looking 30 cm error is far worse than a refusal. Every output carries its camera tier, and anything outside the contract is refused in the open, not answered wrongly.</p>
+  </div>
+</div>
+
+<!-- ============ TIMELINE ============ -->
+<h2 style="margin-top:2.4rem">The twelve weeks</h2>
+<p style="color:var(--ink2)">Lane 4 — ground truth — runs the entire term and is the one teams skip. Lane 3 needs no video and cannot fail. Protect both.</p>
+<div class="tl">
+  <div class="tlrow">
+    <div class="lane"></div>
+    <div class="wk">1</div><div class="wk">2</div><div class="wk">3</div><div class="wk">4</div><div class="wk">5</div><div class="wk">6</div>
+    <div class="wk">7</div><div class="wk">8</div><div class="wk">9</div><div class="wk">10</div><div class="wk">11</div><div class="wk">12</div>
+  </div>
+  <div class="tlrow" style="--c:var(--p0)">
+    <div class="lane">Phase 0 · Inventory</div>
+    <div class="cell on"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+  </div>
+  <div class="tlrow" style="--c:var(--p1)">
+    <div class="lane">Phase 1 · Go / no-go</div>
+    <div class="cell"></div><div class="cell on"></div><div class="cell"></div><div class="cell"></div>
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+  </div>
+  <div class="tlrow" style="--c:var(--p2)">
+    <div class="lane">Phase 2 · Benchmark</div>
+    <div class="cell"></div><div class="cell"></div><div class="cell on"></div><div class="cell on"></div>
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+  </div>
+  <div class="tlrow" style="--c:var(--p3)">
+    <div class="lane">Phase 3 · The bridge</div>
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    <div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell"></div>
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+  </div>
+  <div class="tlrow" style="--c:var(--p4)">
+    <div class="lane">Phase 4 · Reasoning + LLM</div>
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    <div class="cell"></div><div class="cell"></div><div class="cell part"></div><div class="cell on"></div>
+    <div class="cell on"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+  </div>
+  <div class="tlrow" style="--c:var(--p5)">
+    <div class="lane">Phase 5 · Freeze &amp; write</div>
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    <div class="cell"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div>
+  </div>
+  <div class="tlrow" style="--c:var(--p0)">
+    <div class="lane">Lane 3 · zero-video track</div>
+    <div class="cell part"></div><div class="cell part"></div><div class="cell part"></div><div class="cell part"></div>
+    <div class="cell part"></div><div class="cell part"></div><div class="cell part"></div><div class="cell part"></div>
+    <div class="cell part"></div><div class="cell part"></div><div class="cell part"></div><div class="cell part"></div>
+  </div>
+</div>
+
+<!-- ============ PHASE 0 ============ -->
+<section class="phase" style="--c:var(--p0)">
+  <div class="phead">
+    <span class="pnum">Phase 0</span>
+    <h2>Inventory — first 48 hours</h2>
+    <span class="pwhen">No code. No meeting needed.</span>
+  </div>
+  <p class="pnote">This phase costs nothing and answers the question the entire project hangs on: <em>do you have usable footage?</em> Do it before you write a single line of code.</p>
+
+  <article class="step" id="s1">
+    <input type="checkbox" class="tick" data-id="s1" aria-label="Mark step 1 done">
+    <h3><span class="sno">STEP 1</span> Inventory every video on the sheet</h3>
+    <div class="body">
+      <p>Open the supervisor's spreadsheet and turn every link into a row. This is the single highest-value hour of the term.</p>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Column</th><th>Values / notes</th></tr></thead>
+          <tbody>
+            <tr><td><code>url</code></td><td>The link</td></tr>
+            <tr><td><code>source</code></td><td>Tournament, channel, date if known</td></tr>
+            <tr><td><code>duration</code></td><td>Minutes</td></tr>
+            <tr><td><code>tier</code></td><td><b>A</b> fixed wide · <b>B</b> broadcast pan/zoom · <b>C</b> close-up/oblique/handheld · <b>D</b> unusable</td></tr>
+            <tr><td><code>resolution</code></td><td>720p / 1080p / lower</td></tr>
+            <tr><td><code>fps</code></td><td>25 / 30 / 50 / 60</td></tr>
+            <tr><td><code>view</code></td><td>down-sheet · oblique · overhead · behind-house</td></tr>
+            <tr><td><code>hog_lines_visible</code></td><td>yes / no</td></tr>
+            <tr><td><code>rings_visible</code></td><td>yes / no</td></tr>
+            <tr><td><code>discipline</code></td><td>able-bodied / wheelchair</td></tr>
+            <tr><td><code>official_record</code></td><td><b>Match ID if this game is in CurlR</b> — see Step 2</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><b>Done when:</b> every link has a row and a tier guess. Expect this to be depressing — most random YouTube footage is Tier C.</p>
+    </div>
+    <div class="facts"><span class="fact"><b>Time:</b> 2–3 h</span><span class="fact"><b>Owner:</b> person 4</span><span class="fact"><b>Cost:</b> £0</span></div>
+  </article>
+
+  <article class="step" id="s2">
+    <input type="checkbox" class="tick" data-id="s2" aria-label="Mark step 2 done">
+    <h3><span class="sno">STEP 2</span> Cross-match against the CurlR dataset</h3>
+    <div class="body">
+      <p>CurlR covers <b>WMDCC 2016–2025</b> (minus 2020) and <b>OWG 2018 &amp; 2022</b> — 1,112 games with per-shot official records. Any video that is one of those games just became <em>free ground truth</em>, because CurlR has the stone coordinates and grades for it. (<a href="https://github.com/ritchi12/CurlR">repo</a> · <a href="https://arxiv.org/abs/2512.16574">paper</a> · CC0 public domain)</p>
+<pre><code>git clone https://github.com/ritchi12/CurlR.git
+<span class="cm"># then in R</span>
+devtools::install_github("ritchi12/CurlR")
+data("mxd_shots"); data("mxd_games")
+names(mxd_shots)      <span class="cm"># 103 columns</span>
+head(mxd_shots)       <span class="cm"># 66,632 rows total</span></code></pre>
+      <p>Tag every inventory row whose game appears in CurlR with its <code>ID</code> + <code>Title</code> + <code>Game</code>.</p>
+      <p><b>Done when:</b> you know how many of your videos have an official answer key. Even five of them is enough to carry Phase 3.</p>
+    </div>
+    <div class="facts"><span class="fact"><b>Time:</b> 2 h</span><span class="fact"><b>Owner:</b> person 4</span><span class="fact"><b>Licence:</b> CC0 — public domain</span></div>
+  </article>
+
+  <article class="step" id="s3">
+    <input type="checkbox" class="tick" data-id="s3" aria-label="Mark step 3 done">
+    <h3><span class="sno">STEP 3</span> The calibration eyeball test</h3>
+    <div class="body">
+      <p>For every Tier A/B row, ask exactly one question:</p>
+      <div class="cp info" style="margin:.5rem 0">
+        <p><b>Can I see a hog line <em>and</em> at least one ring or the centre line in the same frame?</b></p>
+      </div>
+      <p>That's the real gate — not the camera angle. A steeply tilted view with three visible rings calibrates better than a flat, head-on view of nothing but ice. If you scope by "side angles are hard", you will mis-tier half your footage.</p>
+      <p><b>Done when:</b> every Tier A/B row is confirmed or downgraded.</p>
+    </div>
+    <div class="facts"><span class="fact"><b>Time:</b> 1 h</span><span class="fact"><b>Owner:</b> person 1</span></div>
+  </article>
+
+  <article class="step" id="s4">
+    <input type="checkbox" class="tick" data-id="s4" aria-label="Mark step 4 done">
+    <h3><span class="sno">STEP 4</span> Load the data and look at it</h3>
+    <div class="body">
+      <p>Before anything else, look at the answer key. Each row is one shot: who threw it, from where, on what board, what grade it got, and where the stones ended up.</p>
+      <p>Know these columns cold — they are what you compare against in Phase 3:</p>
+      <ul>
+        <li><code>R1X R1Y … R6X R6Y</code> and <code>Y1X … Y6Y</code> — the board state, six stones per team (mixed doubles rule)</li>
+        <li><code>Percent</code> — the official 0/25/50/75/100 grade</li>
+        <li><code>Red_Score</code>, <code>Yellow_Score</code> — the shot's actual result</li>
+        <li><code>Throw</code>, <code>Turn</code>, <code>Handedness</code>, <code>ShooterX/Y</code></li>
+        <li><code>End</code>, <code>Shot</code>, <code>Hammer_End</code>, <code>PowerPlay</code></li>
+      </ul>
+      <p><b>Done when:</b> you can print the head of the table and explain five columns out loud.</p>
+    </div>
+    <div class="facts"><span class="fact"><b>Time:</b> 2 h</span><span class="fact"><b>Owner:</b> person 3</span><span class="fact"><b>Note:</b> <code>Shot = 0</code> means pre-positioned stone</span></div>
+  </article>
+
+  <div class="cp gate">
+    <h4>⛳ Checkpoint 1 — end of week 1</h4>
+    <p><b>≥10 clips in Tier A/B with visible markings</b> → proceed. <b>0 clips</b> → stop, and run the Layer-B-only project (Phase 4 on true state, no video). You have lost two days, not a term, and you will still have a real project.</p>
+  </div>
+</section>
+
+<!-- ============ PHASE 1 ============ -->
+<section class="phase" style="--c:var(--p1)">
+  <div class="phead">
+    <span class="pnum">Phase 1</span>
+    <h2>Go / no-go — week 2</h2>
+    <span class="pwhen">Half a day of real work</span>
+  </div>
+  <p class="pnote">This is the most important week. You are not building anything yet — you are finding out whether the project is real, with the crudest possible end-to-end path.</p>
+
+  <article class="step" id="s5">
+    <input type="checkbox" class="tick" data-id="s5" aria-label="Mark step 5 done">
+    <h3><span class="sno">STEP 5</span> One clip, one homography, one number</h3>
+    <div class="body">
+      <p>Pick <em>one</em> Tier A clip. Extract three frames. Hand-click 6–8 known sheet points. Fit a homography. Measure the reprojection error in centimetres.</p>
+<pre><code>pip install opencv-python numpy
+
+<span class="cm"># grab frames</span>
+ffmpeg -i clip.mp4 -vf fps=1 frames/%04d.png</code></pre>
+<pre><code><span class="cm"># fit.py</span>
+import cv2, numpy as np
+img = cv2.imread("frames/0012.png")
+
+<span class="cm"># pixels you clicked, in order</span>
+src = np.float32([[412,880],[905,742],[1610,905],[1205,600],
+                  [700,1210],[1420,1330],[980,1010],[1500,1150]])
+
+<span class="cm"># the same points in metres on the real sheet</span>
+dst = np.float32([[0.00,31.75],[4.75,31.75],[0.00,40.30],[4.75,40.30],
+                  [0.00,36.02],[4.75,36.02],[2.375,36.02],[2.375,40.30]])
+
+H, mask = cv2.findHomography(src, dst, cv2.RANSAC, 5.0)
+
+def to_sheet(px, py):
+    q = H @ np.array([px, py, 1.0])
+    return q[0]/q[2], q[1]/q[2]
+
+for p, d in zip(src, dst):
+    ex, ey = to_sheet(*p)
+    print(f"{np.hypot(ex-d[0], ey-d[1])*100:6.2f} cm")</code></pre>
+      <p><b>Done when:</b> you have a number in cm. Don't tune anything — you want the honest number.</p>
+    </div>
+    <div class="facts"><span class="fact"><b>Time:</b> half a day</span><span class="fact"><b>Owner:</b> person 1</span><span class="fact"><b>Output:</b> one number</span></div>
+  </article>
+
+  <article class="step" id="s6">
+    <input type="checkbox" class="tick" data-id="s6" aria-label="Mark step 6 done">
+    <h3><span class="sno">STEP 6</span> Sanity-check with physics</h3>
+    <div class="body">
+      <p>A homography can be numerically fine and physically wrong. Find one stone by hand in two frames a second apart, convert both, and compute its speed.</p>
+<pre><code>x1, y1 = to_sheet(px1, py1)      <span class="cm"># frame A</span>
+x2, y2 = to_sheet(px2, py2)      <span class="cm"># frame B, 1.0 s later</span>
+v = ((x2-x1)**2 + (y2-y1)**2) ** 0.5 / 1.0
+print(v, "m/s")                  <span class="cm"># expect roughly 2–3</span></code></pre>
+      <p>Delivered stones travel at roughly 2–3 m/s and the full sheet takes 25–27 s to cross. If your number is off by an order of magnitude, the homography is wrong regardless of what Step 5 said.</p>
+      <p><b>Done when:</b> the speed is physically plausible.</p>
+    </div>
+    <div class="facts"><span class="fact"><b>Time:</b> 1 h</span><span class="fact"><b>Owner:</b> person 1</span></div>
+  </article>
+
+  <article class="step" id="s7">
+    <input type="checkbox" class="tick" data-id="s7" aria-label="Mark step 7 done">
+    <h3><span class="sno">STEP 7</span> Start the zero-video track <em>today</em></h3>
+    <div class="body">
+      <p>One person begins the workstream that needs no footage at all. It cannot fail, and it is what saves the grade if footage collapses.</p>
+      <p>First task: load CurlR, and reproduce one published baseline — a win-probability table or an expected-score model from board state. Validate on held-out games.</p>
+      <p><b>Done when:</b> you have a number you reproduced from the literature, computed entirely without video.</p>
+    </div>
+    <div class="facts"><span class="fact"><b>Time:</b> runs all term</span><span class="fact"><b>Owner:</b> person 3</span><span class="fact"><b>Risk:</b> zero</span></div>
+  </article>
+
+  <div class="cp gate">
+    <h4>⛳ Checkpoint 2 — the most important number of the term</h4>
+    <p><b>&lt; 5 cm</b> → green light, everything downstream is viable.<br>
+       <b>5–15 cm</b> → proceed, but plan on reporting relative comparisons alongside absolute ones.<br>
+       <b>&gt; 15 cm</b> → narrow the claim <em>now</em>. Re-scope to tier-relative conclusions and push weight onto the LLM study. Do not spend until week 9 discovering this.</p>
+  </div>
+</section>
+
+<!-- ============ PHASE 2 ============ -->
+<section class="phase" style="--c:var(--p2)">
+  <div class="phead">
+    <span class="pnum">Phase 2</span>
+    <h2>Build the benchmark — weeks 3–4</h2>
+    <span class="pwhen">Manual first. Always.</span>
+  </div>
+  <p class="pnote">You are building the thing that turns "we made a system" into "we measured a system". This is also the deliverable that exists even if the pipeline never works.</p>
+
+  <article class="step" id="s8">
+    <input type="checkbox" class="tick" data-id="s8" aria-label="Mark step 8 done">
+    <h3><span class="sno">STEP 8</span> Freeze the label schema — one page</h3>
+    <div class="body">
+      <p>Adopt the sport's own ontology. Do not invent one. Eleven shot tasks in two families, plus rotation, plus the 0–4 grade.</p>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Family</th><th>Codes</th></tr></thead>
+          <tbody>
+            <tr><td>Slow stones</td><td><code>D</code> Draw · <code>F</code> Front · <code>G</code> Guard · <code>R</code> Raise/tap-back · <code>W</code> Wick/soft-peel · <code>Z</code> Freeze</td></tr>
+            <tr><td>Fast stones</td><td><code>T</code> Take-out · <code>H</code> Hit and roll · <code>C</code> Clearing · <code>S</code> Double take-out · <code>P</code> Promotion take-out</td></tr>
+            <tr><td>Rotation</td><td>in-turn (clockwise) / out-turn (counter-clockwise) — record rotation, not player handedness</td></tr>
+            <tr><td>Grade</td><td>4 = 100% · 3 = 75% · 2 = 50% · 1 = 25% · 0 = miss · X = not considered</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="cp stop" style="margin-top:.6rem">
+        <h4>Two traps in the official scheme</h4>
+        <p><b>Grade the intention, not the outcome.</b> Officials record the task the skip <em>called</em>. A flushed take-out that happens to work is still a miss. Grade outcomes and you will systematically disagree with both the official data and every coach.</p>
+        <p><b>There is no degree-of-difficulty adjustment.</b> A simple peel and a double raise take-out can both score 4. If you want difficulty-aware grading you are proposing a <em>new</em> metric — say so, and validate it.</p>
+      </div>
+      <p><b>Done when:</b> it fits on one page, two people can apply it without asking you, and you stop editing it.</p>
+    </div>
+    <div class="facts"><span class="fact"><b>Time:</b> 1 day</span><span class="fact"><b>Owner:</b> person 3 + 4</span><span class="fact"><b>Then:</b> frozen</span></div>
+  </article>
+
+  <article class="step" id="s9">
+    <input type="checkbox" class="tick" data-id="s9" aria-label="Mark step 9 done">
+    <h3><span class="sno">STEP 9</span> Cut ~50 shot clips</h3>
+    <div class="body">
+      <p>Tier A/B: use the heuristic — <em>a stone blob travels most of the length of the sheet</em>. Everything else: cut by hand.</p>
+      <p>Target 50 clips to start, not 500. You are testing the schema, not building an industry dataset. Scale later, after the schema survives contact with the data.</p>
+      <p><b>Done when:</b> 50 clip files exist with a stable naming convention: <code>{source}_{game}_{end}_{shot}.mp4</code></p>
+    </div>
+    <div class="facts"><span class="fact"><b>Time:</b> 3–4 days</span><span class="fact"><b>Owner:</b> person 2</span><span class="fact"><b>Rule:</b> manual before automated</span></div>
+  </article>
+
+  <article class="step" id="s10">
+    <input type="checkbox" class="tick" data-id="s10" aria-label="Mark step 10 done">
+    <h3><span class="sno">STEP 10</span> Double-label 30 of them, independently</h3>
+    <div class="body">
+      <p>Two people label the same 30 clips. No discussion, no shared screen, no "what did you put?". Then compute Cohen's κ and the per-class agreement.</p>
+<pre><code><span class="cm"># pip install scikit-learn</span>
+from sklearn.metrics import cohen_kappa_score
+kappa = cohen_kappa_score(annotator_a, annotator_b)
+print(kappa)   <span class="cm"># 0.6+ is solid for this kind of task</span></code></pre>
+      <p>This is a <b>genuine methodological result</b>. The literature openly admits that shot grading is subjective and that different statisticians disagree on individual shots. Almost nobody quantifies it. You get a real finding for a few hours' work.</p>
+      <p><b>Done when:</b> you can report an agreement statistic and discuss the classes that disagree.</p>
+    </div>
+    <div class="facts"><span class="fact"><b>Time:</b> 2 days</span><span class="fact"><b>Owner:</b> person 4</span><span class="fact"><b>Output:</b> a real result</span></div>
+  </article>
+
+  <article class="step" id="s11">
+    <input type="checkbox" class="tick" data-id="s11" aria-label="Mark step 11 done">
+    <h3><span class="sno">STEP 11</span> Run the cheapest possible baseline</h3>
+    <div class="body">
+      <p>Classify shot type on your labelled clips with whatever is quickest — a small video classifier, or a VLM with a well-formed prompt. Report accuracy per class.</p>
+      <p>You now have <b>a floor to stand on and a number to beat</b>, and you have something to put in the results chapter even if everything else slips.</p>
+      <p><b>Done when:</b> a confusion matrix exists for your 50 clips.</p>
+    </div>
+    <div class="facts"><span class="fact"><b>Time:</b> 3 days</span><span class="fact"><b>Owner:</b> person 2</span></div>
+  </article>
+</section>
+
+<!-- ============ PHASE 3 ============ -->
+<section class="phase" style="--c:var(--p3)">
+  <div class="phead">
+    <span class="pnum">Phase 3</span>
+    <h2>The bridge — weeks 5–7</h2>
+    <span class="pwhen">This is the contribution</span>
+  </div>
+  <p class="pnote">Video → state, validated against the sport's own records. Nobody has published this. Everything else in the project is scaffolding around this phase.</p>
+
+  <article class="step" id="s12">
+    <input type="checkbox" class="tick" data-id="s12" aria-label="Mark step 12 done">
+    <h3><span class="sno">STEP 12</span> Run the pipeline on clips that have an official record</h3>
+    <div class="body">
+      <p>Use only Tier A/B clips from Step 2 — the ones with a CurlR <code>ID</code>. Detect → track → convert to sheet coordinates → extract resting positions.</p>
+      <p>Then compare against the answer key:</p>
+<pre><code>official = mxd_shots[(mxd_shots.ID==g) &amp; (mxd_shots.End==e) &amp; (mxd_shots.Shot==s)]
+truth = [ (official.R1X, official.R1Y), (official.Y1X, official.Y1Y), <span class="cm"># ...</span> ]
+
+for (tx, ty), (ex, ey) in zip(truth, estimated):
+    print(f"{((tx-ex)**2 + (ty-ey)**2) ** 0.5 * 100:6.2f} cm")</code></pre>
+      <p><b>Done when:</b> you have per-shot position error in centimetres against official data. <b>This is your headline number.</b></p>
+    </div>
+    <div class="facts"><span class="fact"><b>Time:</b> 2 weeks</span><span class="fact"><b>Owner:</b> persons 1 + 2</span><span class="fact"><b>Risk:</b> highest in the project</span></div>
+  </article>
+
+  <article class="step" id="s13">
+    <input type="checkbox" class="tick" data-id="s13" aria-label="Mark step 13 done">
+    <h3><span class="sno">STEP 13</span> Split the number three ways</h3>
+    <div class="body">
+      <p>One averaged number hides everything. Report it broken down:</p>
+      <ol>
+        <li><b>By camera tier</b> — A vs B. This <em>is</em> your answer to "how general is it".</li>
+        <li><b>By collision vs. non-collision</b> — published work shows roughly 1.4 cm clean vs 5 cm on collisions. You should expect the same shape.</li>
+        <li><b>By house-clustered vs. open</b> — stones bunch exactly where you need precision.</li>
+      </ol>
+      <p>That three-way split, with honest numbers, is a stronger contribution than a single flattering average — and it is what a real client needs to know before they run their footage through it.</p>
+      <p><b>Done when:</b> the results table has rows, not one cell.</p>
+    </div>
+    <div class="facts"><span class="fact"><b>Time:</b> 3 days</span><span class="fact"><b>Owner:</b> person 1</span><span class="fact"><b>This is the difficulty taxonomy</b></span></div>
+  </article>
+
+  <div class="cp gate">
+    <h4>⛳ Checkpoint 3 — end of week 7</h4>
+    <p>Even a mediocre headline number plus an honest three-way taxonomy is a pass. What fails is a single averaged number with no breakdown and no rejection behaviour — that's the shape of a project that can't answer questions about itself.</p>
+  </div>
+</section>
+
+<!-- ============ PHASE 4 ============ -->
+<section class="phase" style="--c:var(--p4)">
+  <div class="phead">
+    <span class="pnum">Phase 4</span>
+    <h2>Reasoning and language — weeks 7–9</h2>
+    <span class="pwhen">Overlaps Phase 3 · zero video needed</span>
+  </div>
+  <p class="pnote">The layer the supervisor actually asked about. It runs on true state, so it is immune to everything that can go wrong in Phase 3.</p>
+
+  <article class="step" id="s14">
+    <input type="checkbox" class="tick" data-id="s14" aria-label="Mark step 14 done">
+    <h3><span class="sno">STEP 14</span> The reasoning layer, on CurlR</h3>
+    <div class="body">
+      <p>Predict the end outcome from board state, and validate on held-out games. Days of work, and it produces the numbers the LLM layer will narrate.</p>
+      <p>This is also where you can compare against published baselines — win-probability tables indexed by score differential, end and hammer, and expected-score distributions over board configurations.</p>
+      <p><b>Done when:</b> you have a validated predictor and a calibration plot.</p>
+    </div>
+    <div class="facts"><span class="fact"><b>Time:</b> 4 days</span><span class="fact"><b>Owner:</b> person 3</span><span class="fact"><b>Input:</b> 66,632 real shots</span></div>
+  </article>
+
+  <article class="step" id="s15">
+    <input type="checkbox" class="tick" data-id="s15" aria-label="Mark step 15 done">
+    <h3><span class="sno">STEP 15</span> The LLM layer — and its hard boundary</h3>
+    <div class="body">
+      <p>Feed the model structured JSON. It <b>narrates metrics that were computed for it</b>. It never infers them from pixels, and it never invents causation.</p>
+<pre><code>{
+  "shot_num": 3, "end": 1, "last_end": 8, "to_move": 1,
+  "score": [0,0,0,0,0,0,0,0,0,0],
+  "stones": [ {"slot":0,"colour":"red","x":2.37,"y":40.05},
+              {"slot":1,"colour":"yellow","x":2.37,"y":32.50} ],
+  "shot_vector": {"vx":0.05, "vy":2.05, "turn":"counter"},
+  "metrics": {"line_error_cm": 41.0, "weight_error_cm": 12.0, "curl_cm": 78.0},
+  "tier": "A", "confidence": "high"
+}</code></pre>
+      <p>The evidence for this design: hand-annotating 3,312 factual errors in LLM sports summaries found that <b>JSON input cut error rates by 69%</b> versus unstructured text, and that over 80% of the variance in error rates came from input structure alone (<a href="https://aclanthology.org/2025.inlg-main.46/">Input Matters, INLG 2025</a>). Feeding structure is not a preference — it is the measured best practice.</p>
+      <p><b>Done when:</b> one clip produces a paragraph a coach would recognise as true.</p>
+    </div>
+    <div class="facts"><span class="fact"><b>Time:</b> 1 week</span><span class="fact"><b>Owner:</b> person 3</span><span class="fact"><b>Rule:</b> narrate, never infer</span></div>
+  </article>
+
+  <article class="step" id="s16">
+    <input type="checkbox" class="tick" data-id="s16" aria-label="Mark step 16 done">
+    <h3><span class="sno">STEP 16</span> Evaluate it two ways</h3>
+    <div class="body">
+      <p><b>(a) Factuality audit.</b> Go through every generated sentence and count each claim not supported by the input JSON. Report the error rate and the most common error classes. This is a real, publishable-style evaluation, and it is cheap.</p>
+      <p><b>(b) Coach ratings.</b> Get two or three coaches to rate the commentary on usefulness and correctness (1–5). Report inter-rater agreement alongside the mean.</p>
+      <p><b>Done when:</b> you can say "X% of claims were input-supported, and coaches rated usefulness M/5".</p>
+    </div>
+    <div class="facts"><span class="fact"><b>Time:</b> 4 days</span><span class="fact"><b>Owner:</b> person 4</span><span class="fact"><b>Output:</b> claim 2</span></div>
+  </article>
+</section>
+
+<!-- ============ PHASE 5 ============ -->
+<section class="phase" style="--c:var(--p5)">
+  <div class="phead">
+    <span class="pnum">Phase 5</span>
+    <h2>Freeze and write — weeks 10–12</h2>
+    <span class="pwhen">No new experiments. None.</span>
+  </div>
+  <p class="pnote">The temptation here is one more idea. Resist it. Unfinished work becomes future work with a measured partial result attached — that is a legitimate ending, and it reads as competence rather than failure.</p>
+
+  <article class="step" id="s17">
+    <input type="checkbox" class="tick" data-id="s17" aria-label="Mark step 17 done">
+    <h3><span class="sno">STEP 17</span> Write the thing</h3>
+    <div class="body">
+      <p>Structure that suits this project:</p>
+      <ol>
+        <li><b>Introduction</b> — the bridge problem, in one paragraph, with the gap stated plainly.</li>
+        <li><b>Related work</b> — use the companion literature map; every claim already has a citation.</li>
+        <li><b>Input contract</b> — the camera tiers. This is a contribution, present it as one.</li>
+        <li><b>Method</b> — perception pipeline, the state schema, the reasoning layer, the LLM boundary.</li>
+        <li><b>Results</b> — per-tier, collision vs. non-collision, clustered vs. open. The taxonomy table.</li>
+        <li><b>Discussion</b> — what the measurement floor means for coaching. Where it fails and why.</li>
+        <li><b>Limitations and future work</b> — the cut list, honestly.</li>
+      </ol>
+      <p><b>Done when:</b> someone who has never seen curling can follow the method section.</p>
+    </div>
+    <div class="facts"><span class="fact"><b>Time:</b> 2.5 weeks</span><span class="fact"><b>Owner:</b> everyone</span></div>
+  </article>
+
+  <article class="step" id="s18">
+    <input type="checkbox" class="tick" data-id="s18" aria-label="Mark step 18 done">
+    <h3><span class="sno">STEP 18</span> Ship the demo</h3>
+    <div class="body">
+      <p>Four things on screen, in this order of importance:</p>
+      <ol>
+        <li><b>Top-down rink view</b> replaying the shot, reconstructed from video.</li>
+        <li><b>Per-shot metric overlay</b> — line error, weight error, curl, release speed.</li>
+        <li><b>Generated commentary</b> beside the computed metrics, so the audience sees the LLM is narrating numbers, not guessing.</li>
+        <li><b>An explicit rejection state</b> — load a Tier C clip and have the system say "outside contract, no measurement produced". This single feature will impress an examiner more than the pipeline does.</li>
+      </ol>
+      <p><b>Done when:</b> you can demo it in five minutes without apologising.</p>
+    </div>
+    <div class="facts"><span class="fact"><b>Time:</b> 1 week</span><span class="fact"><b>Owner:</b> person 2</span><span class="fact"><b>Killer feature:</b> honest refusal</span></div>
+  </article>
+</section>
+
+<!-- ============ LANES ============ -->
+<h2 style="margin-top:3rem">Who does what</h2>
+<p style="color:var(--ink2)">Four people. The two lanes on the right are the ones teams skip, and they are the two that decide the mark.</p>
+<div class="tw">
+  <table>
+    <thead><tr><th>Person</th><th>Lane</th><th>Steps</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td class="n">1</td><td>Perception &amp; calibration</td><td class="n">3, 5, 6, 12, 13</td><td>Owns the headline number</td></tr>
+      <tr><td class="n">2</td><td>Detection, tracking, cutting</td><td class="n">9, 11, 12, 18</td><td>Feeds the pipeline and the demo</td></tr>
+      <tr><td class="n">3</td><td><b>Zero-video track</b></td><td class="n">4, 7, 8, 14, 15</td><td>Cannot fail — protects the grade</td></tr>
+      <tr><td class="n">4</td><td><b>Ground truth owner</b></td><td class="n">1, 2, 8, 10, 16</td><td>The role that decides the mark</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============ SETUP ============ -->
+<h2 style="margin-top:2.6rem">One-off setup</h2>
+<pre><code><span class="cm"># video + frames</span>
+sudo apt install ffmpeg
+
+<span class="cm"># python stack</span>
+pip install opencv-python numpy scikit-learn ultralytics
+
+<span class="cm"># R, for the ground-truth dataset</span>
+sudo apt install r-base
+R -e 'install.packages(c("devtools","readr","dplyr"))'
+R -e 'devtools::install_github("ritchi12/CurlR")'
+
+<span class="cm"># the dataset itself</span>
+git clone https://github.com/ritchi12/CurlR.git</code></pre>
+
+<!-- ============ TROUBLESHOOTING ============ -->
+<h2 style="margin-top:2.6rem">If it goes wrong</h2>
+<div class="tw">
+  <table>
+    <thead><tr><th>Symptom</th><th>What it means</th><th>Do this</th></tr></thead>
+    <tbody>
+      <tr><td>Reprojection error &gt; 15 cm</td><td>Too few markings visible; homography ill-conditioned</td><td>Narrow the claim to relative comparisons; move weight to Phase 4</td></tr>
+      <tr><td>Speed check wildly wrong</td><td>Your point correspondence is wrong, not your maths</td><td>Re-click the points; verify the real sheet dimensions you used</td></tr>
+      <tr><td>Stones merge in the house</td><td>Classic occlusion/clustering failure</td><td>Flag the shot as low-confidence. Do not report an averaged number over it</td></tr>
+      <tr><td>No clips are Tier A/B</td><td>The footage is the wrong kind — likely most of it is</td><td>Phase 4 only. Still a complete project</td></tr>
+      <tr><td>Labels disagree between annotators</td><td>Schema is ambiguous at a boundary</td><td>That's a <em>finding</em>. Document the classes and tighten the rule</td></tr>
+      <tr><td>LLM invents a cause</td><td>It was asked to reason instead of narrate</td><td>Restrict it to the metrics block; delete any sentence not traceable to JSON</td></tr>
+      <tr><td>Supervisor asks for "general"</td><td>Scope drift</td><td>Show the tier table and the per-tier results. Generality is now measured, not promised</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============ GLOSSARY ============ -->
+<h2 style="margin-top:2.6rem">Glossary you'll be expected to use correctly</h2>
+<dl class="gloss">
+  <dt>GAMESTATE</dt><dd>Digital Curling's canonical state representation: <code>{ShotNum, CurEnd, LastEnd, Score[10], WhiteToMove, body[16][2]}</code>, with stone coordinates in metres. The closest thing to a standard IR in this field — adopt it rather than inventing a schema.</dd>
+  <dt>homography</dt><dd>A 3×3 matrix mapping points on one plane to another. Your pixel→sheet mapping. Fitted from 4+ correspondences with RANSAC to reject bad clicks.</dd>
+  <dt>reprojection error</dt><dd>How far your fitted mapping places the points you already know. The honest measure of calibration quality.</dd>
+  <dt>tier (A–D)</dt><dd>Your camera contract, defined by marking visibility and homography conditioning — <em>not</em> by camera angle.</dd>
+  <dt>mAP@0.5</dt><dd>Mean average precision at 50% box overlap. The standard detection metric. Clean curling data: ~0.97. Occluded: ~0.72.</dd>
+  <dt>Hausdorff distance</dt><dd>Worst-case distance between two trajectories. Used to validate simulated or reconstructed paths against real ones.</dd>
+  <dt>Cohen's κ</dt><dd>Agreement between two annotators, corrected for chance. Report it for your label schema — it's a result, not a formality.</dd>
+  <dt>POMDP belief state</dt><dd>What you actually have. You never observe the true state, you infer a distribution over it from noisy video. Say this in the framing; it makes the difficulty formal rather than rhetorical.</dd>
+  <dt>hammer</dt><dd>Last-stone advantage in an end. The dominant strategic variable in the sport and a required field in any state representation.</dd>
+  <dt>power play</dt><dd>Mixed-doubles-only rule letting the hammer team position stones to create a multi-point end. Once per game.</dd>
+</dl>
+
+<footer>
+  <p><b>How to use this.</b> The tick boxes save to your browser's local storage, so your progress survives a refresh on your own machine. Print it for the wall — the checkboxes print as boxes.</p>
+  <p class="backlink"><a href="curling-cv-lit-review.html">↗ Companion document: the Literature &amp; Feasibility Map</a> — every claim in this playbook has a citation there.</p>
+  <p><b>Assumptions.</b> One term, four people, no confirmed ice access, video from public sources. If ice access or client footage arrives, Phase 0 shrinks to an afternoon and everything downstream gets easier.</p>
+  <p><b>One last thing.</b> Checkpoint 2 is the term. If your homography works on real footage, you will finish this comfortably. If it doesn't, you already have a different, still-good project — and you'll know in week 2 instead of week 10.</p>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  var KEY = 'curling-playbook-v1';
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('input.tick'));
+  var bar = document.getElementById('bar');
+  var label = document.getElementById('plabel');
+  var reset = document.getElementById('reset');
+  var state = {};
+  try { state = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { state = {}; }
+
+  function paint(){
+    var done = boxes.filter(function(b){ return b.checked; }).length;
+    var pct = boxes.length ? Math.round(done / boxes.length * 100) : 0;
+    bar.style.width = pct + '%';
+    label.textContent = done + ' / ' + boxes.length + ' steps · ' + pct + '%';
+  }
+  function sync(b){
+    var card = b.closest('.step');
+    if (card) card.classList.toggle('done', b.checked);
+  }
+
+  boxes.forEach(function(b){
+    b.checked = !!state[b.dataset.id];
+    sync(b);
+    b.addEventListener('change', function(){
+      state[b.dataset.id] = b.checked;
+      try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+      sync(b); paint();
+    });
+  });
+
+  reset.addEventListener('click', function(){
+    boxes.forEach(function(b){ b.checked = false; sync(b); });
+    state = {};
+    try { localStorage.removeItem(KEY); } catch (e) {}
+    paint();
+  });
+
+  paint();
+})();
+</script>
+</body>
+</html>

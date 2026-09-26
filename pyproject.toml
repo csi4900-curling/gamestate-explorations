@@ -1,0 +1,15 @@
+[tool.ruff]
+target-version = "py313"
+line-length = 100
+extend-exclude = [".venv", "validation/smoke"]
+
+[tool.ruff.lint]
+select = ["F", "E9"]
+
+[tool.ruff.lint.per-file-ignores]
+# Kept byte-for-byte to preserve published experiment fingerprints.
+"prototype/vision_core.py" = ["F401"]
+"prototype/throw_detection.py" = ["F841"]
+
+[tool.ruff.format]
+exclude = ["prototype/vision_core.py", "prototype/stone_accuracy.py", "prototype/body_localization.py", "prototype/throw_detection.py", "prototype/rectification_core.py", "prototype/continuous_tracker.py", "prototype/target_analysis.py", "feasibility/scripts/geometry.py"]

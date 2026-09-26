@@ -1,0 +1,287 @@
+{
+  "schema_version": "0.1",
+  "annotator": "AI visual review, before running this detector",
+  "target": "Centre of visible coloured stone cap, in full 1920x1080 source pixels. Not the centre of the stone's ice-contact footprint. Moving stones included when visible; no stationary/in-play/team labels are inferred.",
+  "scope": "Visible and separable stone caps within the declared geometric ROI. Fully hidden stones cannot be counted. Explicit ignore rectangles exclude ambiguous/clipped or grouped caps. Blue/green painted logos and delivery sticks are negatives, not stones.",
+  "matching_threshold_px": 20,
+  "split_note": "Development examples used to tune the baseline. Check examples are from the same match and were visually inspected during annotation; they are not an independent held-out-match evaluation. Freeze detector before measuring the check split.",
+  "frames": [
+    {
+      "timestamp_s": 750,
+      "panel": "left",
+      "split": "development",
+      "caps": [],
+      "ignore_boxes": []
+    },
+    {
+      "timestamp_s": 1900,
+      "panel": "left",
+      "split": "development",
+      "caps": [
+        [
+          488,
+          403,
+          "yellow"
+        ],
+        [
+          902,
+          530,
+          "yellow"
+        ]
+      ],
+      "ignore_boxes": [
+        [
+          935,
+          500,
+          960,
+          565
+        ]
+      ]
+    },
+    {
+      "timestamp_s": 1900,
+      "panel": "right",
+      "split": "development",
+      "caps": [
+        [
+          1252,
+          476,
+          "red"
+        ],
+        [
+          1433,
+          450,
+          "yellow"
+        ],
+        [
+          1438,
+          555,
+          "yellow"
+        ]
+      ],
+      "ignore_boxes": [],
+      "outside_roi_caps": [
+        {
+          "cap": [
+            1267,
+            932,
+            "red"
+          ],
+          "reason": "Beyond the declared target-end hog-line ROI, as verified using the frozen calibration. Retained for provenance; not a board-region detection target."
+        }
+      ]
+    },
+    {
+      "timestamp_s": 2300,
+      "panel": "left",
+      "split": "development",
+      "caps": [
+        [
+          932,
+          489,
+          "red"
+        ]
+      ],
+      "ignore_boxes": []
+    },
+    {
+      "timestamp_s": 2300,
+      "panel": "right",
+      "split": "development",
+      "caps": [
+        [
+          1252,
+          476,
+          "red"
+        ],
+        [
+          1353,
+          438,
+          "red"
+        ],
+        [
+          1514,
+          450,
+          "red"
+        ],
+        [
+          1438,
+          555,
+          "yellow"
+        ]
+      ],
+      "ignore_boxes": []
+    },
+    {
+      "timestamp_s": 6000,
+      "panel": "left",
+      "split": "development",
+      "caps": [
+        [
+          390,
+          440,
+          "yellow"
+        ],
+        [
+          114,
+          749,
+          "yellow"
+        ]
+      ],
+      "ignore_boxes": [
+        [
+          270,
+          610,
+          335,
+          670
+        ]
+      ]
+    },
+    {
+      "timestamp_s": 6000,
+      "panel": "right",
+      "split": "development",
+      "caps": [
+        [
+          1025,
+          452,
+          "red"
+        ]
+      ],
+      "ignore_boxes": [
+        [
+          960,
+          449,
+          1006,
+          505
+        ]
+      ]
+    },
+    {
+      "timestamp_s": 1624,
+      "panel": "left",
+      "split": "check",
+      "caps": [
+        [
+          14,
+          664,
+          "yellow"
+        ]
+      ],
+      "ignore_boxes": []
+    },
+    {
+      "timestamp_s": 1624,
+      "panel": "right",
+      "split": "check",
+      "caps": [],
+      "ignore_boxes": [],
+      "outside_roi_caps": [
+        {
+          "cap": [
+            1376,
+            760,
+            "yellow"
+          ],
+          "reason": "Beyond the declared target-end hog-line ROI, as verified using the frozen calibration. Retained for provenance; not a board-region detection target."
+        }
+      ]
+    },
+    {
+      "timestamp_s": 4547,
+      "panel": "left",
+      "split": "check",
+      "caps": [
+        [
+          770,
+          456,
+          "yellow"
+        ]
+      ],
+      "ignore_boxes": []
+    },
+    {
+      "timestamp_s": 4547,
+      "panel": "right",
+      "split": "check",
+      "caps": [
+        [
+          1488,
+          441,
+          "red"
+        ],
+        [
+          1528,
+          445,
+          "red"
+        ],
+        [
+          1688,
+          429,
+          "red"
+        ],
+        [
+          1240,
+          520,
+          "yellow"
+        ],
+        [
+          1304,
+          551,
+          "yellow"
+        ],
+        [
+          1464,
+          551,
+          "yellow"
+        ]
+      ],
+      "ignore_boxes": []
+    },
+    {
+      "timestamp_s": 6495,
+      "panel": "right",
+      "split": "check",
+      "caps": [],
+      "ignore_boxes": []
+    },
+    {
+      "timestamp_s": 7469,
+      "panel": "left",
+      "split": "check",
+      "caps": [
+        [
+          384,
+          429,
+          "yellow"
+        ]
+      ],
+      "ignore_boxes": []
+    },
+    {
+      "timestamp_s": 7469,
+      "panel": "right",
+      "split": "check",
+      "caps": [],
+      "ignore_boxes": [
+        [
+          960,
+          399,
+          1131,
+          502
+        ]
+      ],
+      "outside_roi_caps": [
+        {
+          "cap": [
+            1416,
+            725,
+            "red"
+          ],
+          "reason": "Beyond the declared target-end hog-line ROI, as verified using the frozen calibration. Retained for provenance; not a board-region detection target."
+        }
+      ]
+    }
+  ],
+  "scope_revision": "Three annotated deliveries well beyond the target-end hog-line ROI were moved to outside_roi_caps after explicit geometric scope checking. The original development-baseline-v1 evaluation predates this correction and is not directly comparable."
+}
