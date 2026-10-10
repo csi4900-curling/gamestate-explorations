@@ -26,6 +26,15 @@ test_stable_one_row_rise_does_not_become_a_false_throw_on_return (test_broadcast
 test_overlapping_spans_are_rejected (test_candidate_multiview_observation.CandidateMultiviewObservationTests.test_overlapping_spans_are_rejected) ... ok
 test_source_or_colour_disagreement_is_rejected (test_candidate_multiview_observation.CandidateMultiviewObservationTests.test_source_or_colour_disagreement_is_rejected) ... ok
 test_two_view_seam_is_explicit_and_unverified (test_candidate_multiview_observation.CandidateMultiviewObservationTests.test_two_view_seam_is_explicit_and_unverified) ... ok
+test_accepted_commentary_narrates_metrics (test_coach_commentary.TestCoachCommentary.test_accepted_commentary_narrates_metrics) ... ok
+test_honest_refusal_on_low_confidence (test_coach_commentary.TestCoachCommentary.test_honest_refusal_on_low_confidence) ... ok
+test_honest_refusal_on_tier_c (test_coach_commentary.TestCoachCommentary.test_honest_refusal_on_tier_c) ... ok
+test_llm_prompt_structure (test_coach_commentary.TestCoachCommentary.test_llm_prompt_structure) ... ok
+test_audit_flags_hallucinated_metric (test_commentary_audit.TestCommentaryAudit.test_audit_flags_hallucinated_metric) ... ok
+test_audit_flags_speculation (test_commentary_audit.TestCommentaryAudit.test_audit_flags_speculation) ... ok
+test_audit_passes_on_grounded_commentary (test_commentary_audit.TestCommentaryAudit.test_audit_passes_on_grounded_commentary) ... ok
+test_coach_evaluation_suite (test_commentary_audit.TestCommentaryAudit.test_coach_evaluation_suite) ... ok
+test_weighted_cohen_kappa (test_commentary_audit.TestCommentaryAudit.test_weighted_cohen_kappa) ... ok
 test_missing_not_emitted_and_expired_identity_not_reused (test_continuous_tracker.TrackingTests.test_missing_not_emitted_and_expired_identity_not_reused) ... ok
 test_one_to_one_and_colour (test_continuous_tracker.TrackingTests.test_one_to_one_and_colour) ... ok
 test_stability_requires_temporal_evidence (test_continuous_tracker.TrackingTests.test_stability_requires_temporal_evidence) ... ok
@@ -55,6 +64,9 @@ test_reverse_time_rejected (test_cross_view.CrossViewTests.test_reverse_time_rej
 test_stop_before_late_reassociation (test_cross_view.CrossViewTests.test_stop_before_late_reassociation) ... ok
 test_unique_crossing (test_cross_view.CrossViewTests.test_unique_crossing) ... ok
 test_wrong_colour (test_cross_view.CrossViewTests.test_wrong_colour) ... ok
+test_default_file_exists (test_curlr_loader.TestCurlRLoader.test_default_file_exists) ... ok
+test_feature_engineering_columns (test_curlr_loader.TestCurlRLoader.test_feature_engineering_columns) ... ok
+test_split_by_game_isolation (test_curlr_loader.TestCurlRLoader.test_split_by_game_isolation) ... ok
 test_abstained_identity_cannot_pass_board (test_end_evaluation.EndEvaluationTests.test_abstained_identity_cannot_pass_board) ... ok
 test_correct_outputs (test_end_evaluation.EndEvaluationTests.test_correct_outputs) ... ok
 test_duplicate_event_counts_extra (test_end_evaluation.EndEvaluationTests.test_duplicate_event_counts_extra) ... ok
@@ -215,8 +227,12 @@ test_motion_limit_can_be_widened_without_changing_default (test_vision.GeometryA
 test_planar_roundtrip (test_vision.GeometryAndEvidenceTests.test_planar_roundtrip) ... ok
 test_reference_paint_is_not_a_new_stone (test_vision.GeometryAndEvidenceTests.test_reference_paint_is_not_a_new_stone) ... ok
 test_resolution_mismatch_rejected (test_vision.GeometryAndEvidenceTests.test_resolution_mismatch_rejected) ... ok
+test_calibrated_ml_model_fit_and_predict (test_win_probability_model.TestWinProbabilityModel.test_calibrated_ml_model_fit_and_predict) ... ok
+test_compute_ece (test_win_probability_model.TestWinProbabilityModel.test_compute_ece) ... ok
+test_empirical_table_fit_and_predict (test_win_probability_model.TestWinProbabilityModel.test_empirical_table_fit_and_predict) ... ok
+test_expected_score_model (test_win_probability_model.TestWinProbabilityModel.test_expected_score_model) ... ok
 
 ----------------------------------------------------------------------
-Ran 204 tests in 14.539s
+Ran 220 tests in 14.113s
 
 OK
