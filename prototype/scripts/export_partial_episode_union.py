@@ -19,12 +19,15 @@ def main():
     args = parser.parse_args()
     if args.output.exists():
         parser.error("Output exists")
-    handoff, prefix, motion = (json.loads(getattr(args, key).read_text())
-                               for key in ("handoff", "prefix", "motion"))
-    if (prefix["motion_sha256"] != file_sha256(args.motion) or
-            handoff["input_sha256"]["motion"] != file_sha256(args.motion) or
-            prefix["screen_sha256"] != handoff["input_sha256"]["screen"] or
-            prefix["source_id"] != handoff["source_id"]):
+    handoff, prefix, motion = (
+        json.loads(getattr(args, key).read_text()) for key in ("handoff", "prefix", "motion")
+    )
+    if (
+        prefix["motion_sha256"] != file_sha256(args.motion)
+        or handoff["input_sha256"]["motion"] != file_sha256(args.motion)
+        or prefix["screen_sha256"] != handoff["input_sha256"]["screen"]
+        or prefix["source_id"] != handoff["source_id"]
+    ):
         parser.error("Evidence artifacts do not share motion, screen and source")
     grouped = build_partial_episode_union(handoff, prefix, motion)
     counts = Counter(row["frozen_event_status"] for row in grouped["candidate_rows"])
@@ -43,7 +46,8 @@ def main():
         "frozen_event_status_counts": dict(counts),
         "partial_episode_count": len(grouped["episodes"]),
         "partial_episode_candidate_count": sum(
-            len(row["candidate_ids"]) for row in grouped["episodes"]),
+            len(row["candidate_ids"]) for row in grouped["episodes"]
+        ),
         **grouped,
         "limitations": [
             "Designed after inspecting an exposed Latvia abstention; not an untouched transfer result.",
@@ -54,9 +58,11 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(result["frozen_event_status_counts"],
-          result["partial_episode_count"],
-          [row["candidate_ids"] for row in result["episodes"]])
+    print(
+        result["frozen_event_status_counts"],
+        result["partial_episode_count"],
+        [row["candidate_ids"] for row in result["episodes"]],
+    )
 
 
 if __name__ == "__main__":

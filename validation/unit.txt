@@ -1,6 +1,8 @@
-test_adjacent_partial_board (unittest.loader._FailedTest.test_adjacent_partial_board) ... ERROR
-test_ambiguous_counter_ice_tiebreak (unittest.loader._FailedTest.test_ambiguous_counter_ice_tiebreak) ... ERROR
-test_background_registration_audit (unittest.loader._FailedTest.test_background_registration_audit) ... ERROR
+test_crowded_nearby_observations_remain_unresolved (test_adjacent_partial_board.TestAdjacentPartialBoard.test_crowded_nearby_observations_remain_unresolved) ... ok
+test_intervening_candidate_blocks_apparent_board_transition (test_adjacent_partial_board.TestAdjacentPartialBoard.test_intervening_candidate_blocks_apparent_board_transition) ... ok
+test_view_change_blocks_coordinate_comparison (test_adjacent_partial_board.TestAdjacentPartialBoard.test_view_change_blocks_coordinate_comparison) ... ok
+test_unique_ice_supported_choice_and_ambiguity_abstention (test_ambiguous_counter_ice_tiebreak.TestAmbiguousCounterIceTiebreak.test_unique_ice_supported_choice_and_ambiguity_abstention) ... ok
+test_excluding_moving_object_removes_object_dominated_fit (test_background_registration_audit.TestBackgroundRegistrationAudit.test_excluding_moving_object_removes_object_dominated_fit) ... ok
 test_incoming_passage_is_restored_to_original_coordinates (test_bidirectional_detection.BidirectionalDetectionTests.test_incoming_passage_is_restored_to_original_coordinates) ... ok
 test_ambiguous_low_angle_affine_camera_abstains (test_body_localization.BodyLocalizationTests.test_ambiguous_low_angle_affine_camera_abstains) ... ok
 test_blank_frame_emits_no_body_detections (test_body_localization.BodyLocalizationTests.test_blank_frame_emits_no_body_detections) ... ok
@@ -129,19 +131,20 @@ test_following_only_counter_keeps_its_distinct_provenance (test_shot_event_fusio
 test_visual_candidate_survives_missing_counter (test_shot_event_fusion.ShotEventFusionTest.test_visual_candidate_survives_missing_counter) ... ok
 test_rejects_misaligned_cap_decisions (test_shot_motion_selection.ShotMotionSelectionTest.test_rejects_misaligned_cap_decisions) ... ok
 test_scans_unmatched_counter_window_and_following_shots (test_shot_motion_selection.ShotMotionSelectionTest.test_scans_unmatched_counter_window_and_following_shots) ... ok
-test_full_activity_sidecar_marks_static_left_and_resume_checks_hashes (test_source_activity_runner.SourceActivityRunnerTests.test_full_activity_sidecar_marks_static_left_and_resume_checks_hashes) ... Traceback (most recent call last):
-  File "/home/user/curling-project/prototype/scripts/audit_split_panel_freeze.py", line 12, in <module>
-    import cv2
-  File "/home/user/curling-project/.venv/lib/python3.13/site-packages/cv2/__init__.py", line 181, in <module>
-    bootstrap()
-    ~~~~~~~~~^^
-  File "/home/user/curling-project/.venv/lib/python3.13/site-packages/cv2/__init__.py", line 153, in bootstrap
-    native_module = importlib.import_module("cv2")
-  File "/home/user/.nix-profile/lib/python3.13/importlib/__init__.py", line 88, in import_module
-    return _bootstrap._gcd_import(name[level:], package, level)
-           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-ImportError: libz.so.1: cannot open shared object file: No such file or directory
-ERROR
+test_full_activity_sidecar_marks_static_left_and_resume_checks_hashes (test_source_activity_runner.SourceActivityRunnerTests.test_full_activity_sidecar_marks_static_left_and_resume_checks_hashes) ... {"static_left_runs": [{"start_s": 0.0, "stop_s": 65.0, "duration_s": 65.0, "sample_edge_count": 13, "median_left_mae": 0.0, "median_right_mae": 253.6667}]}
+{'newly_unsupported_seconds': 65.0, 'revised_supported_seconds': 5.0, 'revised_unknown_seconds': 65.0}
+{"intervals": 1, "tracks": 1}
+[(1, 1)]
+{"right_entries": 1, "statuses": {"right_only_left_static_review": 1}}
+{"candidates": 1, "statuses": {"right_only_left_static_review": 1}}
+{"rows": 1, "statuses": {"abstain_scene_or_player_motion": 1}}
+{"candidates": 1, "image_statuses": {"abstain_scene_or_player_motion": 1}}
+{"transitions": 0, "statuses": {}}
+{"left_candidates": 0, "statuses": {}}
+{"candidates": 1, "statuses": {"abstain_scene_or_player_motion": 1}}
+{"candidates": 1, "statuses": {}}
+{"rows": 0, "statuses": {}}
+ok
 test_split_frame_normalization_handles_hd (test_source_activity_runner.SourceActivityRunnerTests.test_split_frame_normalization_handles_hd) ... ok
 test_colour_and_distance_gates_keep_misses (test_stone_accuracy.StoneAccuracyTests.test_colour_and_distance_gates_keep_misses) ... ok
 test_large_errors_are_preserved (test_stone_accuracy.StoneAccuracyTests.test_large_errors_are_preserved) ... ok
@@ -213,84 +216,7 @@ test_planar_roundtrip (test_vision.GeometryAndEvidenceTests.test_planar_roundtri
 test_reference_paint_is_not_a_new_stone (test_vision.GeometryAndEvidenceTests.test_reference_paint_is_not_a_new_stone) ... ok
 test_resolution_mismatch_rejected (test_vision.GeometryAndEvidenceTests.test_resolution_mismatch_rejected) ... ok
 
-======================================================================
-ERROR: test_adjacent_partial_board (unittest.loader._FailedTest.test_adjacent_partial_board)
 ----------------------------------------------------------------------
-ImportError: Failed to import test module: test_adjacent_partial_board
-Traceback (most recent call last):
-  File "/home/user/.nix-profile/lib/python3.13/unittest/loader.py", line 403, in _find_test_path
-    module = self._get_module_from_name(name)
-  File "/home/user/.nix-profile/lib/python3.13/unittest/loader.py", line 346, in _get_module_from_name
-    __import__(name)
-    ~~~~~~~~~~^^^^^^
-  File "/home/user/curling-project/prototype/tests/test_adjacent_partial_board.py", line 3, in <module>
-    from adjacent_partial_board import compare_adjacent_rows, compare_partial_boards
-ModuleNotFoundError: No module named 'adjacent_partial_board'
+Ran 204 tests in 14.539s
 
-
-======================================================================
-ERROR: test_ambiguous_counter_ice_tiebreak (unittest.loader._FailedTest.test_ambiguous_counter_ice_tiebreak)
-----------------------------------------------------------------------
-ImportError: Failed to import test module: test_ambiguous_counter_ice_tiebreak
-Traceback (most recent call last):
-  File "/home/user/.nix-profile/lib/python3.13/unittest/loader.py", line 403, in _find_test_path
-    module = self._get_module_from_name(name)
-  File "/home/user/.nix-profile/lib/python3.13/unittest/loader.py", line 346, in _get_module_from_name
-    __import__(name)
-    ~~~~~~~~~~^^^^^^
-  File "/home/user/curling-project/prototype/tests/test_ambiguous_counter_ice_tiebreak.py", line 1, in <module>
-    from scripts.audit_2022_ambiguous_counter_ice_tiebreak import (
-        select_unique_ice_supported,
-    )
-ModuleNotFoundError: No module named 'scripts.audit_2022_ambiguous_counter_ice_tiebreak'
-
-
-======================================================================
-ERROR: test_background_registration_audit (unittest.loader._FailedTest.test_background_registration_audit)
-----------------------------------------------------------------------
-ImportError: Failed to import test module: test_background_registration_audit
-Traceback (most recent call last):
-  File "/home/user/.nix-profile/lib/python3.13/unittest/loader.py", line 403, in _find_test_path
-    module = self._get_module_from_name(name)
-  File "/home/user/.nix-profile/lib/python3.13/unittest/loader.py", line 346, in _get_module_from_name
-    __import__(name)
-    ~~~~~~~~~~^^^^^^
-  File "/home/user/curling-project/prototype/tests/test_background_registration_audit.py", line 4, in <module>
-    from background_registration_audit import registration_support
-ModuleNotFoundError: No module named 'background_registration_audit'
-
-
-======================================================================
-ERROR: test_full_activity_sidecar_marks_static_left_and_resume_checks_hashes (test_source_activity_runner.SourceActivityRunnerTests.test_full_activity_sidecar_marks_static_left_and_resume_checks_hashes)
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "/home/user/curling-project/prototype/tests/test_source_activity_runner.py", line 75, in test_full_activity_sidecar_marks_static_left_and_resume_checks_hashes
-    first = attach_source_activity(video, timeline["source_sha256"],
-                                   [0, 70], root, timeline_path)
-  File "/home/user/curling-project/prototype/scripts/run_throw_pipeline.py", line 44, in attach_source_activity
-    run_child("audit_split_panel_freeze.py", "--video", video,
-    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-              "--start", interval[0], "--end", interval[1],
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-              "--output", audit_path)
-              ^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/curling-project/prototype/scripts/run_throw_pipeline.py", line 25, in run_child
-    subprocess.run(
-    ~~~~~~~~~~~~~~^
-        [sys.executable, str(ROOT / "prototype/scripts" / script), *map(str, args)],
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        cwd=ROOT,
-        ^^^^^^^^^
-        check=True,
-        ^^^^^^^^^^^
-    )
-    ^
-  File "/home/user/.nix-profile/lib/python3.13/subprocess.py", line 577, in run
-    raise CalledProcessError(retcode, process.args,
-                             output=stdout, stderr=stderr)
-subprocess.CalledProcessError: Command '['/home/user/curling-project/.venv/bin/python', '/home/user/curling-project/prototype/scripts/audit_split_panel_freeze.py', '--video', '/tmp/tmpaj8s42af/source.avi', '--start', '0', '--end', '70', '--output', '/tmp/tmpaj8s42af/source-activity-audit.json']' returned non-zero exit status 1.
-
-----------------------------------------------------------------------
-Ran 202 tests in 7.556s
-
-FAILED (errors=4)
+OK

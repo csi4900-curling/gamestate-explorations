@@ -26,15 +26,17 @@ def main():
         parser.error("Fold does not match shot review")
     if [row["shot_id"] for row in fold["rows"]] != [row["id"] for row in manifest["shots"]]:
         parser.error("Fold shot order does not match review")
-    result = {"status": "development_exported_cross_match_shot_origin_fold",
-              "source_id": manifest["source_id"],
-              "source_sha256": manifest["source_sha256"],
-              "source_interval_s": manifest["source_interval_s"],
-              "folds_sha256": file_sha256(args.folds),
-              "review_sha256": file_sha256(args.review / "manifest.json"),
-              "runner_sha256": file_sha256(__file__),
-              "model_sha256": fold["model_sha256"],
-              "rows": fold["rows"]}
+    result = {
+        "status": "development_exported_cross_match_shot_origin_fold",
+        "source_id": manifest["source_id"],
+        "source_sha256": manifest["source_sha256"],
+        "source_interval_s": manifest["source_interval_s"],
+        "folds_sha256": file_sha256(args.folds),
+        "review_sha256": file_sha256(args.review / "manifest.json"),
+        "runner_sha256": file_sha256(__file__),
+        "model_sha256": fold["model_sha256"],
+        "rows": fold["rows"],
+    }
     args.output.write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps({"shots": len(result["rows"]), "heldout": args.heldout}))
 

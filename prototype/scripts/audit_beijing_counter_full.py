@@ -27,8 +27,9 @@ def visibility_runs(samples):
             runs[-1]["interval_s"][1] = row["time_s"] + 1
             runs[-1]["samples"] += 1
         else:
-            runs.append({"visible": visible, "interval_s": [row["time_s"], row["time_s"] + 1],
-                         "samples": 1})
+            runs.append(
+                {"visible": visible, "interval_s": [row["time_s"], row["time_s"] + 1], "samples": 1}
+            )
     return runs
 
 
@@ -89,9 +90,17 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({"samples": len(samples), "visible": tracker.visible_samples,
-                      "events": len(tracker.events), "unresolved": len(tracker.unresolved),
-                      "visibility_runs": len(runs)}))
+    print(
+        json.dumps(
+            {
+                "samples": len(samples),
+                "visible": tracker.visible_samples,
+                "events": len(tracker.events),
+                "unresolved": len(tracker.unresolved),
+                "visibility_runs": len(runs),
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

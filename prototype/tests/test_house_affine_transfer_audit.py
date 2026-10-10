@@ -3,9 +3,7 @@
 import cv2
 import numpy as np
 
-from house_affine_transfer_audit import (affine_line_residual,
-                                         summarize_residuals,
-                                         transverse_line_y)
+from house_affine_transfer_audit import affine_line_residual, summarize_residuals, transverse_line_y
 
 
 def test_detects_long_horizontal_marking_below_house():
@@ -20,8 +18,7 @@ def test_affine_transfer_rejected_by_heldout_line_residual():
     target = {"center_px": [485, 182], "axis_lengths_px": [267, 30]}
     row = affine_line_residual(reference, 208, target, 247)
     assert row["observed_minus_predicted_px"] == 9
-    assert summarize_residuals([row])["status"] == \
-        "reject_simple_house_affine_transfer"
+    assert summarize_residuals([row])["status"] == "reject_simple_house_affine_transfer"
 
 
 def test_empty_audit_abstains():

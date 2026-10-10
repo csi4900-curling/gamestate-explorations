@@ -18,21 +18,27 @@ def main():
     args = parser.parse_args()
     if args.output.exists():
         parser.error("Prefix fallback artifact already exists")
-    base, retry, patch, screen = (json.loads(getattr(args, key).read_text())
-                                  for key in ("base", "retry", "patch", "screen"))
-    if (retry["source_motion_sha256"] != file_sha256(args.base) or
-            patch["motion_sha256"] != file_sha256(args.base) or
-            screen["motion_sha256"] != file_sha256(args.retry) or
-            patch["video_sha256"] != retry["high_resolution_source_sha256"]):
+    base, retry, patch, screen = (
+        json.loads(getattr(args, key).read_text()) for key in ("base", "retry", "patch", "screen")
+    )
+    if (
+        retry["source_motion_sha256"] != file_sha256(args.base)
+        or patch["motion_sha256"] != file_sha256(args.base)
+        or screen["motion_sha256"] != file_sha256(args.retry)
+        or patch["video_sha256"] != retry["high_resolution_source_sha256"]
+    ):
         parser.error("Base, retry, patch, or screen provenance differs")
     by_retry = {row["candidate_id"]: row for row in retry["rows"]}
     by_patch = {row["candidate_id"]: row for row in patch["rows"]}
     by_decision = {row["candidate_id"]: row for row in screen["decisions"]}
     ids = [row["candidate_id"] for row in base["rows"]]
-    if (len(ids) != len(set(ids)) or set(ids) != set(by_retry) or
-            set(ids) != set(by_patch) or set(ids) != set(by_decision) or
-            any(len(rows) != len(ids) for rows in (by_retry, by_patch,
-                                                   by_decision))):
+    if (
+        len(ids) != len(set(ids))
+        or set(ids) != set(by_retry)
+        or set(ids) != set(by_patch)
+        or set(ids) != set(by_decision)
+        or any(len(rows) != len(ids) for rows in (by_retry, by_patch, by_decision))
+    ):
         parser.error("Candidate evidence IDs differ")
     proposals = []
     for row in base["rows"]:
@@ -48,12 +54,15 @@ def main():
         "retry_sha256": file_sha256(args.retry),
         "patch_sha256": file_sha256(args.patch),
         "screen_sha256": file_sha256(args.screen),
-        "model_code_sha256": file_sha256(ROOT / "prototype" /
-                                         "candidate_prefix_fallback.py"),
+        "model_code_sha256": file_sha256(ROOT / "prototype" / "candidate_prefix_fallback.py"),
         "runner_sha256": file_sha256(Path(__file__)),
-        "parameters": {"min_samples": 5, "min_fraction": 0.7,
-                       "min_travel_m": 2.0, "min_scored_patches": 3,
-                       "min_positive_patches": 2},
+        "parameters": {
+            "min_samples": 5,
+            "min_fraction": 0.7,
+            "min_travel_m": 2.0,
+            "min_scored_patches": 3,
+            "min_positive_patches": 2,
+        },
         "proposal_count": len(proposals),
         "proposals": proposals,
         "limitations": [
@@ -65,8 +74,12 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(output, indent=2) + "\n")
-    print([(row["candidate_id"], row["prefix_sample_count"],
-            row["positive_patch_count"]) for row in proposals])
+    print(
+        [
+            (row["candidate_id"], row["prefix_sample_count"], row["positive_patch_count"])
+            for row in proposals
+        ]
+    )
 
 
 if __name__ == "__main__":

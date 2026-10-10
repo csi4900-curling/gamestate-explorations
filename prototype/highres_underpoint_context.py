@@ -5,7 +5,6 @@ dimension. It is a review cue, not a calibrated ice-plane or stone classifier.
 """
 
 import cv2
-import numpy as np
 
 
 def underpoint_nonice_fraction(frame, pixel, *, min_sample_pixels=2700):

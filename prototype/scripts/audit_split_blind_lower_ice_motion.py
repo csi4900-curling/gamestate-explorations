@@ -32,8 +32,7 @@ def audit(video, activity):
     video_hash = digest(video)
     if video_hash != activity["source_sha256"]:
         raise ValueError("Source video does not match activity audit")
-    cap = cv2.VideoCapture(str(video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         raise RuntimeError("Cannot open source video")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -52,44 +51,53 @@ def audit(video, activity):
                 ok, frame = cap.read()
                 if not ok or frame.shape[:2] != (360, 640):
                     raise RuntimeError(f"Cannot decode 640×360 frame at {time_s} s")
-                crop = cv2.cvtColor(frame[y0:y1, x0:x1],
-                                    cv2.COLOR_BGR2GRAY)
+                crop = cv2.cvtColor(frame[y0:y1, x0:x1], cv2.COLOR_BGR2GRAY)
                 if prior is not None:
                     mae = float(np.mean(cv2.absdiff(crop, prior)))
-                    pairs.append({"second_frame_time_s": time_s,
-                                  "lower_ice_mae": round(mae, 5),
-                                  "within_interior": start + EDGE_EXCLUSION_S <=
-                                  time_s <= stop - EDGE_EXCLUSION_S})
+                    pairs.append(
+                        {
+                            "second_frame_time_s": time_s,
+                            "lower_ice_mae": round(mae, 5),
+                            "within_interior": start + EDGE_EXCLUSION_S
+                            <= time_s
+                            <= stop - EDGE_EXCLUSION_S,
+                        }
+                    )
                 prior = crop
-            interior = [row["lower_ice_mae"] for row in pairs
-                        if row["within_interior"]]
-            results.append({
-                "interval_s": [start, stop],
-                "source_run_id": interval["source_run_id"],
-                "frame_sample_count": len(times),
-                "pair_count": len(pairs),
-                "interior_pair_count": len(interior),
-                "interior_median_lower_ice_mae": round(float(np.median(interior)), 5)
-                if interior else None,
-                "interior_pair_count_above_threshold": sum(
-                    value > ACTIVE_MAE_THRESHOLD for value in interior),
-                "pairs": pairs,
-            })
+            interior = [row["lower_ice_mae"] for row in pairs if row["within_interior"]]
+            results.append(
+                {
+                    "interval_s": [start, stop],
+                    "source_run_id": interval["source_run_id"],
+                    "frame_sample_count": len(times),
+                    "pair_count": len(pairs),
+                    "interior_pair_count": len(interior),
+                    "interior_median_lower_ice_mae": round(float(np.median(interior)), 5)
+                    if interior
+                    else None,
+                    "interior_pair_count_above_threshold": sum(
+                        value > ACTIVE_MAE_THRESHOLD for value in interior
+                    ),
+                    "pairs": pairs,
+                }
+            )
     finally:
         cap.release()
-    return {"status": "development_lower_ice_activity_not_throw_events",
-            "source_sha256": video_hash,
-            "sample_period_s": SAMPLE_PERIOD_S,
-            "roi_xyxy": ROI_XYXY,
-            "edge_exclusion_s": EDGE_EXCLUSION_S,
-            "active_mae_threshold": ACTIVE_MAE_THRESHOLD,
-            "intervals": results,
-            "limitations": [
-                "The ROI and threshold were chosen after inspecting these two recordings.",
-                "Lower-ice pixel change may be a stone, player, camera/edit or graphic; stillness may miss small distant stones.",
-                "Five-second sampling can miss a complete short transit between frames.",
-                "This audit gives no physical throw count, recall or event identity.",
-            ]}
+    return {
+        "status": "development_lower_ice_activity_not_throw_events",
+        "source_sha256": video_hash,
+        "sample_period_s": SAMPLE_PERIOD_S,
+        "roi_xyxy": ROI_XYXY,
+        "edge_exclusion_s": EDGE_EXCLUSION_S,
+        "active_mae_threshold": ACTIVE_MAE_THRESHOLD,
+        "intervals": results,
+        "limitations": [
+            "The ROI and threshold were chosen after inspecting these two recordings.",
+            "Lower-ice pixel change may be a stone, player, camera/edit or graphic; stillness may miss small distant stones.",
+            "Five-second sampling can miss a complete short transit between frames.",
+            "This audit gives no physical throw count, recall or event identity.",
+        ],
+    }
 
 
 def main():
@@ -105,10 +113,18 @@ def main():
     result["runner_sha256"] = digest(Path(__file__))
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps([{"interval_s": r["interval_s"],
-                       "interior_pair_count": r["interior_pair_count"],
-                       "above_threshold": r["interior_pair_count_above_threshold"]}
-                      for r in result["intervals"]]))
+    print(
+        json.dumps(
+            [
+                {
+                    "interval_s": r["interval_s"],
+                    "interior_pair_count": r["interior_pair_count"],
+                    "above_threshold": r["interior_pair_count_above_threshold"],
+                }
+                for r in result["intervals"]
+            ]
+        )
+    )
 
 
 if __name__ == "__main__":

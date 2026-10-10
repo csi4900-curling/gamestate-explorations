@@ -17,7 +17,8 @@ INPUTS = {
     "rescue_proposals": BASE / "pwg2022-outside-union-release-rescue-proposals-development.json",
     "rescue_receiving": BASE / "pwg2022-outside-union-receiving-view-development.json",
     "partial_boards": BASE / "pwg2022-held-shot-release-to-board-development.json",
-    "review_segments": BASE / "pwg2022-full-match-event-review-segments-v2-source-rescues-development.json",
+    "review_segments": BASE
+    / "pwg2022-full-match-event-review-segments-v2-source-rescues-development.json",
 }
 OUTPUT = BASE / "pwg2022-event-evidence-handoff-v2-development.json"
 
@@ -47,10 +48,12 @@ def build():
     for game in union["games"]:
         code = game["official_game_code"]
         source = game["source_sha256"]
-        if (source == reserved["source_sha256"] or
-                releases[code]["source_sha256"] != source or
-                crossviews[code]["source_sha256"] != source or
-                reviews[code]["source_sha256"] != source):
+        if (
+            source == reserved["source_sha256"]
+            or releases[code]["source_sha256"] != source
+            or crossviews[code]["source_sha256"] != source
+            or reviews[code]["source_sha256"] != source
+        ):
             raise ValueError("Event handoff source mismatch or reserved-source overlap")
         local_boards = [row for row in boards if row["source_recording_code"] == code]
         if any(row["source_video_sha256"] != source for row in local_boards):
@@ -60,44 +63,62 @@ def build():
         if any(row["source_sha256"] != source for row in local_proposals):
             raise ValueError("Rescue proposal source mismatch")
         rows = join_event_evidence(
-            game["events"], releases[code]["rows"], crossviews[code]["rows"],
-            local_proposals, local_receiving, local_boards, reviews[code]["segments"])
+            game["events"],
+            releases[code]["rows"],
+            crossviews[code]["rows"],
+            local_proposals,
+            local_receiving,
+            local_boards,
+            reviews[code]["segments"],
+        )
         if len(rows) != game["provisional_event_count"]:
             raise ValueError("Event count changed in evidence handoff")
-        games.append({"recording_code": code, "source_sha256": source,
-                      "event_count": len(rows),
-                      "unique_release_cue_count": sum(
-                          row["release_cue"]["time_s"] is not None for row in rows),
-                      "two_view_source_colour_agreement_count": sum(
-                          row["receiving_view"]["status"] ==
-                          "source_colour_concordant_identity_unverified" for row in rows),
-                      "partial_board_link_count": sum(len(row["partial_board_links"])
-                                                      for row in rows),
-                      "release_cue_and_partial_board_count": sum(
-                          row["release_cue"]["time_s"] is not None and
-                          bool(row["partial_board_links"]) for row in rows),
-                      "rows": rows})
-    return {"status": "development_v2_event_evidence_handoff_not_simulation_ready",
-            "input_sha256": {**{key: digest(path) for key, path in INPUTS.items()},
-                             "join_code": digest(ROOT / "prototype/event_evidence_handoff_v2.py"),
-                             "runner": digest(Path(__file__))},
-            "event_count": sum(game["event_count"] for game in games),
-            "unique_release_cue_count": sum(game["unique_release_cue_count"]
-                                             for game in games),
-            "two_view_source_colour_agreement_count": sum(
-                game["two_view_source_colour_agreement_count"] for game in games),
-            "partial_board_link_count": sum(game["partial_board_link_count"]
-                                            for game in games),
-            "release_cue_and_partial_board_count": sum(
-                game["release_cue_and_partial_board_count"] for game in games),
-            "games": games,
-            "limitations": [
-                "Release cues are approximate visible held-to-motion times, not exact physical releases.",
-                "Same-colour receiving-view motion does not verify persistent stone identity across a cut.",
-                "Board links use delayed counter bookkeeping, not a verified physical state transition.",
-                "Every board is partial and uncalibrated; no event has a simulation-ready trajectory or state.",
-                "The 358 candidates are development outputs without independent complete-match physical throw F1.",
-            ]}
+        games.append(
+            {
+                "recording_code": code,
+                "source_sha256": source,
+                "event_count": len(rows),
+                "unique_release_cue_count": sum(
+                    row["release_cue"]["time_s"] is not None for row in rows
+                ),
+                "two_view_source_colour_agreement_count": sum(
+                    row["receiving_view"]["status"]
+                    == "source_colour_concordant_identity_unverified"
+                    for row in rows
+                ),
+                "partial_board_link_count": sum(len(row["partial_board_links"]) for row in rows),
+                "release_cue_and_partial_board_count": sum(
+                    row["release_cue"]["time_s"] is not None and bool(row["partial_board_links"])
+                    for row in rows
+                ),
+                "rows": rows,
+            }
+        )
+    return {
+        "status": "development_v2_event_evidence_handoff_not_simulation_ready",
+        "input_sha256": {
+            **{key: digest(path) for key, path in INPUTS.items()},
+            "join_code": digest(ROOT / "prototype/event_evidence_handoff_v2.py"),
+            "runner": digest(Path(__file__)),
+        },
+        "event_count": sum(game["event_count"] for game in games),
+        "unique_release_cue_count": sum(game["unique_release_cue_count"] for game in games),
+        "two_view_source_colour_agreement_count": sum(
+            game["two_view_source_colour_agreement_count"] for game in games
+        ),
+        "partial_board_link_count": sum(game["partial_board_link_count"] for game in games),
+        "release_cue_and_partial_board_count": sum(
+            game["release_cue_and_partial_board_count"] for game in games
+        ),
+        "games": games,
+        "limitations": [
+            "Release cues are approximate visible held-to-motion times, not exact physical releases.",
+            "Same-colour receiving-view motion does not verify persistent stone identity across a cut.",
+            "Board links use delayed counter bookkeeping, not a verified physical state transition.",
+            "Every board is partial and uncalibrated; no event has a simulation-ready trajectory or state.",
+            "The 358 candidates are development outputs without independent complete-match physical throw F1.",
+        ],
+    }
 
 
 def main():

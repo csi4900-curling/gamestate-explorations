@@ -26,8 +26,7 @@ def digest(path):
 
 
 def sample_alignments(video, rows):
-    cap = cv2.VideoCapture(str(video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         raise ValueError("Cannot open source video")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -46,16 +45,19 @@ def sample_alignments(video, rows):
                 raise RuntimeError(f"Could not decode source at {time_s}s")
             image = normalized_split_frame(image)
             masks[row["right_entry_id"]] = blue_house_mask(image)
-            frames.append({"right_entry_id": row["right_entry_id"],
-                           "sample_time_s": time_s,
-                           "decoded_frame_index": frame_number})
+            frames.append(
+                {
+                    "right_entry_id": row["right_entry_id"],
+                    "sample_time_s": time_s,
+                    "decoded_frame_index": frame_number,
+                }
+            )
     finally:
         cap.release()
     pairs = []
     for before, after in zip(rows, rows[1:]):
         first, second = before["right_entry_id"], after["right_entry_id"]
-        item = {"before_right_entry_id": first,
-                "after_right_entry_id": second}
+        item = {"before_right_entry_id": first, "after_right_entry_id": second}
         if first not in masks or second not in masks:
             item["status"] = "abstain_missing_usable_board_sample"
         else:
@@ -83,24 +85,36 @@ def main():
         parser.error("Source video and candidate fingerprints differ")
     frames, alignments = sample_alignments(args.video, boards["rows"])
     result = build_right_board_sequence(union, boards, alignments)
-    result.update({
-        "input_sha256": {"candidate_review_union": digest(args.union),
-                         "right_only_partial_caps": digest(args.right_boards)},
-        "model_code_sha256": digest(ROOT / "prototype/right_board_sequence.py"),
-        "alignment_code_sha256": digest(ROOT / "prototype/right_view_house_alignment.py"),
-        "cap_set_comparison_code_sha256": digest(ROOT / "prototype/right_view_cap_sequence.py"),
-        "frame_normalization_code_sha256": digest(
-            ROOT / "prototype/scripts/audit_split_panel_freeze.py"),
-        "runner_sha256": digest(Path(__file__)),
-        "alignment_sample_frames": frames,
-        "alignment_pairs": alignments,
-        "transition_status_counts": dict(Counter(
-            row["status"] for row in result["transitions"])),
-    })
+    result.update(
+        {
+            "input_sha256": {
+                "candidate_review_union": digest(args.union),
+                "right_only_partial_caps": digest(args.right_boards),
+            },
+            "model_code_sha256": digest(ROOT / "prototype/right_board_sequence.py"),
+            "alignment_code_sha256": digest(ROOT / "prototype/right_view_house_alignment.py"),
+            "cap_set_comparison_code_sha256": digest(ROOT / "prototype/right_view_cap_sequence.py"),
+            "frame_normalization_code_sha256": digest(
+                ROOT / "prototype/scripts/audit_split_panel_freeze.py"
+            ),
+            "runner_sha256": digest(Path(__file__)),
+            "alignment_sample_frames": frames,
+            "alignment_pairs": alignments,
+            "transition_status_counts": dict(
+                Counter(row["status"] for row in result["transitions"])
+            ),
+        }
+    )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"transitions": result["transition_count"],
-                      "statuses": result["transition_status_counts"]}))
+    print(
+        json.dumps(
+            {
+                "transitions": result["transition_count"],
+                "statuses": result["transition_status_counts"],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

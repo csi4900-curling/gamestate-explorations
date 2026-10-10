@@ -28,16 +28,18 @@ def main():
     if patch["source_sha256"] == reserved["source_sha256"]:
         parser.error("Reserved source cannot be used for development join")
     result = join_evidence(patch["rows"], release["rows"])
-    result.update({
-        "status": "development_visual_only_evidence_patterns_not_event_filter",
-        "source_sha256": patch["source_sha256"],
-        "source_interval_s": patch["source_interval_s"],
-        "ledger_sha256": patch["ledger_sha256"],
-        "patch_audit_sha256": file_sha256(args.patch_audit),
-        "release_audit_sha256": file_sha256(args.release_audit),
-        "join_code_sha256": file_sha256(ROOT / "prototype/visual_only_evidence_join.py"),
-        "runner_sha256": file_sha256(__file__),
-    })
+    result.update(
+        {
+            "status": "development_visual_only_evidence_patterns_not_event_filter",
+            "source_sha256": patch["source_sha256"],
+            "source_interval_s": patch["source_interval_s"],
+            "ledger_sha256": patch["ledger_sha256"],
+            "patch_audit_sha256": file_sha256(args.patch_audit),
+            "release_audit_sha256": file_sha256(args.release_audit),
+            "join_code_sha256": file_sha256(ROOT / "prototype/visual_only_evidence_join.py"),
+            "runner_sha256": file_sha256(__file__),
+        }
+    )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
     print(result["evidence_pattern_counts"])

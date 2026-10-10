@@ -7,10 +7,16 @@ change its frozen production implementation or prior artifacts.
 import numpy as np
 
 
-def short_transits_with_points(observations, *, max_gap_s=0.65,
-                               max_speed_px_s=260, min_points=3,
-                               min_duration_s=0.4, min_displacement_px=30,
-                               max_path_ratio=1.8):
+def short_transits_with_points(
+    observations,
+    *,
+    max_gap_s=0.65,
+    max_speed_px_s=260,
+    min_points=3,
+    min_duration_s=0.4,
+    min_displacement_px=30,
+    max_path_ratio=1.8,
+):
     tracks = []
     previous_time = None
     for time_s, candidates in observations:
@@ -59,9 +65,7 @@ def short_transits_with_points(observations, *, max_gap_s=0.65,
             "last_pixel": points[-1]["pixel"],
             "displacement_px": round(displacement, 2),
             "path_ratio": round(length / displacement, 3),
-            "median_patch_score": round(float(np.median(
-                [p["patch_score"] for p in points])), 3),
+            "median_patch_score": round(float(np.median([p["patch_score"] for p in points])), 3),
         }
         result.append((summary, points))
-    return sorted(result, key=lambda row: (-row[0]["point_count"],
-                                           -row[0]["displacement_px"]))
+    return sorted(result, key=lambda row: (-row[0]["point_count"], -row[0]["displacement_px"]))

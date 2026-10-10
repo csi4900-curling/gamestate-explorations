@@ -26,26 +26,34 @@ def partial_board_observation(row, source_sha256):
         last = float(stone["last_seen_s"])
         spread = float(stone["max_position_spread_house_radii"])
         count = int(stone["supporting_frame_count"])
-        if (not all(isfinite(value) for value in (x, y, first, last, spread))
-                or first > last or spread < 0 or count < 3):
+        if (
+            not all(isfinite(value) for value in (x, y, first, last, spread))
+            or first > last
+            or spread < 0
+            or count < 3
+        ):
             raise ValueError("Invalid temporal stone observation")
-        emitted.append({
-            "local_observation_id": f"V{index:02d}",
-            "colour": colour,
-            "position_house_radii": [x, y],
-            "first_seen_s": first,
-            "last_seen_s": last,
-            "supporting_frame_count": count,
-            "max_position_spread_house_radii": spread,
-            "persistent_stone_identity": None,
-        })
+        emitted.append(
+            {
+                "local_observation_id": f"V{index:02d}",
+                "colour": colour,
+                "position_house_radii": [x, y],
+                "first_seen_s": first,
+                "last_seen_s": last,
+                "supporting_frame_count": count,
+                "max_position_spread_house_radii": spread,
+                "persistent_stone_identity": None,
+            }
+        )
     return {
         "observation_id": f"{row['official_game_code']}-video-board-{row['official_shot_id']}",
         "source_video_sha256": source_sha256,
         "source_recording_code": row["official_game_code"],
         "counter_anchor_s": row["counter_time_s"],
-        "observation_interval_s": [min(stone["first_seen_s"] for stone in emitted),
-                                   max(stone["last_seen_s"] for stone in emitted)],
+        "observation_interval_s": [
+            min(stone["first_seen_s"] for stone in emitted),
+            max(stone["last_seen_s"] for stone in emitted),
+        ],
         "coordinate_frame": {
             "name": "canonical_overhead_house",
             "origin": "house_button",

@@ -31,28 +31,34 @@ def build():
         if source["source_sha256"] == reserved["source_sha256"]:
             raise ValueError("Reserved recording cannot enter development audit")
         result = audit_counter_sequence_order(source["rows"])
-        games.append({"recording_code": code,
-                      "source_sha256": source["source_sha256"],
-                      "input_sha256": digest(path),
-                      "counter_count": len(source["rows"]),
-                      "anchor_reversal_count": len(result["anchor_reversals"]),
-                      "multi_option_counter_count": len(
-                          result["multi_option_counter_proposals"]),
-                      "unique_order_proposal_count": sum(
-                          row["proposed_shot_id"] is not None for row in
-                          result["multi_option_counter_proposals"]),
-                      **result})
-    return {"status": "development_order_diagnostic_no_event_mutation",
-            "rule": "Keep origin probability >=0.2 options whose camera-shot number is strictly between nearest already linked counters' camera-shot numbers; propose only a unique survivor.",
-            "code_sha256": digest(ROOT / "prototype/counter_sequence_order.py"),
-            "runner_sha256": digest(Path(__file__)),
-            "games": games,
-            "limitations": [
-                "All four recordings are exposed development sources; no independent event labels were used.",
-                "Existing counter links are provisional and can be reversed or wrong.",
-                "Shot order alone does not prove a release, physical stone identity, or settled board transition.",
-                "No event count, event ledger, or measured physical throw F1 changes.",
-            ]}
+        games.append(
+            {
+                "recording_code": code,
+                "source_sha256": source["source_sha256"],
+                "input_sha256": digest(path),
+                "counter_count": len(source["rows"]),
+                "anchor_reversal_count": len(result["anchor_reversals"]),
+                "multi_option_counter_count": len(result["multi_option_counter_proposals"]),
+                "unique_order_proposal_count": sum(
+                    row["proposed_shot_id"] is not None
+                    for row in result["multi_option_counter_proposals"]
+                ),
+                **result,
+            }
+        )
+    return {
+        "status": "development_order_diagnostic_no_event_mutation",
+        "rule": "Keep origin probability >=0.2 options whose camera-shot number is strictly between nearest already linked counters' camera-shot numbers; propose only a unique survivor.",
+        "code_sha256": digest(ROOT / "prototype/counter_sequence_order.py"),
+        "runner_sha256": digest(Path(__file__)),
+        "games": games,
+        "limitations": [
+            "All four recordings are exposed development sources; no independent event labels were used.",
+            "Existing counter links are provisional and can be reversed or wrong.",
+            "Shot order alone does not prove a release, physical stone identity, or settled board transition.",
+            "No event count, event ledger, or measured physical throw F1 changes.",
+        ],
+    }
 
 
 def main():

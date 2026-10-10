@@ -3,9 +3,7 @@
 import cv2
 import numpy as np
 
-from split_house_ellipse_v2 import (fit_house_ellipse,
-                                    normalized_cap_image_xy,
-                                    stable_house_ellipse)
+from split_house_ellipse_v2 import fit_house_ellipse, normalized_cap_image_xy, stable_house_ellipse
 
 
 def synthetic(center):
@@ -23,18 +21,15 @@ def test_fits_both_split_house_vertical_positions():
 
 
 def test_three_sample_stability_and_image_only_coordinates():
-    samples = [fit_house_ellipse(synthetic((485 + delta, 182)))
-               for delta in (0, 1, -1)]
+    samples = [fit_house_ellipse(synthetic((485 + delta, 182))) for delta in (0, 1, -1)]
     stable, status = stable_house_ellipse(samples)
     assert status == "stable_image_paint_ellipse"
     assert abs(normalized_cap_image_xy(stable, [485, 182])[0]) < 0.01
     samples[2] = fit_house_ellipse(synthetic((500, 182)))
-    assert stable_house_ellipse(samples)[1] == \
-        "abstain_house_ellipse_changes_across_samples"
+    assert stable_house_ellipse(samples)[1] == "abstain_house_ellipse_changes_across_samples"
 
 
 def test_missing_paint_abstains():
     blank = np.full((360, 640, 3), 245, dtype=np.uint8)
     assert fit_house_ellipse(blank) is None
-    assert stable_house_ellipse([None, None, None])[1] == \
-        "abstain_missing_house_ellipse"
+    assert stable_house_ellipse([None, None, None])[1] == "abstain_missing_house_ellipse"

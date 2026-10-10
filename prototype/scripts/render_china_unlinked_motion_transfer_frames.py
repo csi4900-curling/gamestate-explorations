@@ -10,7 +10,9 @@ from PIL import Image, ImageDraw
 
 ROOT = Path(__file__).resolve().parents[2]
 VIDEO = ROOT / "validation/throw-event-benchmark/paralympics-2022-canada-china/source.mp4"
-PROPOSALS = ROOT / "validation/official-shot-sequence/china-unlinked-motion-rescue-transfer-first.json"
+PROPOSALS = (
+    ROOT / "validation/official-shot-sequence/china-unlinked-motion-rescue-transfer-first.json"
+)
 PREFIX = ROOT / "validation/official-shot-sequence/china-unlinked-motion-transfer-source-frames"
 META = PREFIX.with_suffix(".json")
 ROWS = (
@@ -44,29 +46,38 @@ def main():
         for part, image_path in enumerate(images):
             canvas = Image.new("RGB", (640 * 4, 390 * 3), "white")
             draw = ImageDraw.Draw(canvas)
-            for row, (label, times) in enumerate(ROWS[part * 3:(part + 1) * 3]):
+            for row, (label, times) in enumerate(ROWS[part * 3 : (part + 1) * 3]):
                 for col, second in enumerate(times):
                     cap.set(cv2.CAP_PROP_POS_FRAMES, round(second * fps))
                     ok, frame = cap.read()
                     if not ok:
                         raise RuntimeError(f"Frame decode failed at {second}s")
                     frame = cv2.resize(frame, (640, 360), interpolation=cv2.INTER_AREA)
-                    canvas.paste(Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)),
-                                 (col * 640, row * 390 + 30))
-                    draw.text((col * 640 + 8, row * 390 + 8),
-                              f"{label}  {second}s", fill="black")
+                    canvas.paste(
+                        Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)),
+                        (col * 640, row * 390 + 30),
+                    )
+                    draw.text((col * 640 + 8, row * 390 + 8), f"{label}  {second}s", fill="black")
             canvas.save(image_path, quality=85)
     finally:
         cap.release()
-    META.write_text(json.dumps({
-        "status": "source_frame_review_sheet_not_independent_event_labels",
-        "source_video_sha256": digest(VIDEO),
-        "proposals_sha256": digest(PROPOSALS),
-        "runner_sha256": digest(Path(__file__)),
-        "rows": [{"label": label, "sample_times_s": times} for label, times in ROWS],
-        "image_sha256": {path.name: digest(path) for path in images},
-        "limitations": ["Sparse frames do not prove which stone moved after a collision or across a camera cut."],
-    }, indent=2) + "\n")
+    META.write_text(
+        json.dumps(
+            {
+                "status": "source_frame_review_sheet_not_independent_event_labels",
+                "source_video_sha256": digest(VIDEO),
+                "proposals_sha256": digest(PROPOSALS),
+                "runner_sha256": digest(Path(__file__)),
+                "rows": [{"label": label, "sample_times_s": times} for label, times in ROWS],
+                "image_sha256": {path.name: digest(path) for path in images},
+                "limitations": [
+                    "Sparse frames do not prove which stone moved after a collision or across a camera cut."
+                ],
+            },
+            indent=2,
+        )
+        + "\n"
+    )
     print(images)
 
 

@@ -49,21 +49,31 @@ def audit(features, cap, *, threshold=0.75):
             cap.set(cv2.CAP_PROP_POS_MSEC, (t - offset) * 1000)
             ok, frame = cap.read()
             fraction = overhead_dark_fraction(frame, sample["cap_bbox_px"]) if ok else None
-            samples.append({"source_time_s": t,
-                            "cap_bbox_px": sample["cap_bbox_px"],
-                            "dark_fraction": fraction,
-                            "decoded_frame_index": int(cap.get(cv2.CAP_PROP_POS_FRAMES)) - 1 if ok else None})
+            samples.append(
+                {
+                    "source_time_s": t,
+                    "cap_bbox_px": sample["cap_bbox_px"],
+                    "dark_fraction": fraction,
+                    "decoded_frame_index": int(cap.get(cv2.CAP_PROP_POS_FRAMES)) - 1
+                    if ok
+                    else None,
+                }
+            )
         if not samples:
             raise ValueError(f"No patch-positive samples for {item['candidate_id']}")
         values = [sample["dark_fraction"] for sample in samples]
         complete = all(value is not None for value in values)
         flagged = complete and min(values) >= threshold
-        rows.append({"candidate_id": item["candidate_id"],
-                     "positive_patch_count": len(samples),
-                     "all_positive_samples_measured": complete,
-                     "minimum_overhead_dark_fraction": min(values) if complete else None,
-                     "would_abstain": flagged,
-                     "samples": samples})
+        rows.append(
+            {
+                "candidate_id": item["candidate_id"],
+                "positive_patch_count": len(samples),
+                "all_positive_samples_measured": complete,
+                "minimum_overhead_dark_fraction": min(values) if complete else None,
+                "would_abstain": flagged,
+                "samples": samples,
+            }
+        )
     return rows
 
 
@@ -79,15 +89,16 @@ def main():
     video_hash = digest(args.video)
     if video_hash != features["high_resolution_source_sha256"]:
         parser.error("Video does not match the feature audit")
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         parser.error("Cannot open video")
     try:
         rows = audit(features, cap)
     finally:
         cap.release()
-    if len(rows) != features["accepted_candidate_count"] or len({r["candidate_id"] for r in rows}) != len(rows):
+    if len(rows) != features["accepted_candidate_count"] or len(
+        {r["candidate_id"] for r in rows}
+    ) != len(rows):
         raise ValueError("Accepted candidate coverage is incomplete")
     output = {
         "status": "postscore_development_overhead_darkness_not_throw_validation",
@@ -101,7 +112,11 @@ def main():
         "development_abstention_threshold": 0.75,
         "candidate_count": len(rows),
         "would_abstain_candidate_ids": [r["candidate_id"] for r in rows if r["would_abstain"]],
-        "measurement_status_counts": dict(Counter("complete" if r["all_positive_samples_measured"] else "incomplete" for r in rows)),
+        "measurement_status_counts": dict(
+            Counter(
+                "complete" if r["all_positive_samples_measured"] else "incomplete" for r in rows
+            )
+        ),
         "rows": rows,
         "limitations": [
             "The geometry and threshold were selected after inspecting exposed Czechia S96 and S143; this is development, not independent precision or recall.",

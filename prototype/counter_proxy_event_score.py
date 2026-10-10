@@ -1,8 +1,9 @@
 """Monotone weak-reference score for counter-independent visual candidates."""
 
 
-def score_visual_against_counters(visual, counters, *, max_counter_lag_s=50,
-                                  max_window_overrun_s=20):
+def score_visual_against_counters(
+    visual, counters, *, max_counter_lag_s=50, max_window_overrun_s=20
+):
     """Match ordered visual intervals to delayed counter updates one-to-one.
 
     This measures agreement with a broadcast proxy, not physical throw F1.
@@ -33,13 +34,20 @@ def score_visual_against_counters(visual, counters, *, max_counter_lag_s=50,
             if i < n and j < m:
                 start, end = visual[i]["interval_s"]
                 counter_time = counters[j]["counter_time_s"]
-                if (start <= counter_time
-                        and end <= counter_time + max_window_overrun_s
-                        and counter_time - end <= max_counter_lag_s):
-                    colour_match = int(visual[i]["colour"] is not None
-                                       and visual[i]["colour"] == counters[j]["counter_colour"])
-                    proposal = (current[0] + 1, current[1] + colour_match,
-                                current[2] - abs(counter_time - end - 15))
+                if (
+                    start <= counter_time
+                    and end <= counter_time + max_window_overrun_s
+                    and counter_time - end <= max_counter_lag_s
+                ):
+                    colour_match = int(
+                        visual[i]["colour"] is not None
+                        and visual[i]["colour"] == counters[j]["counter_colour"]
+                    )
+                    proposal = (
+                        current[0] + 1,
+                        current[1] + colour_match,
+                        current[2] - abs(counter_time - end - 15),
+                    )
                     relax(i, j, i + 1, j + 1, proposal, "match")
     matches = []
     used_visual, used_counter = set(), set()
@@ -50,12 +58,17 @@ def score_visual_against_counters(visual, counters, *, max_counter_lag_s=50,
             vi, cj = pi, pj
             used_visual.add(vi)
             used_counter.add(cj)
-            matches.append({"visual_id": visual[vi]["shot_id"],
-                            "official_shot_id": counters[cj]["official_shot_id"],
-                            "visual_colour": visual[vi]["colour"],
-                            "counter_colour": counters[cj]["counter_colour"],
-                            "counter_minus_visual_end_s": round(
-                                counters[cj]["counter_time_s"] - visual[vi]["interval_s"][1], 3)})
+            matches.append(
+                {
+                    "visual_id": visual[vi]["shot_id"],
+                    "official_shot_id": counters[cj]["official_shot_id"],
+                    "visual_colour": visual[vi]["colour"],
+                    "counter_colour": counters[cj]["counter_colour"],
+                    "counter_minus_visual_end_s": round(
+                        counters[cj]["counter_time_s"] - visual[vi]["interval_s"][1], 3
+                    ),
+                }
+            )
         i, j = pi, pj
     matches.reverse()
     matched = len(matches)
@@ -63,18 +76,27 @@ def score_visual_against_counters(visual, counters, *, max_counter_lag_s=50,
         "visual_candidate_count": n,
         "clean_counter_count": m,
         "matched_count": matched,
-        "unmatched_visual_ids": [row["shot_id"] for index, row in enumerate(visual)
-                                 if index not in used_visual],
-        "unmatched_official_shot_ids": [row["official_shot_id"]
-                                        for index, row in enumerate(counters)
-                                        if index not in used_counter],
+        "unmatched_visual_ids": [
+            row["shot_id"] for index, row in enumerate(visual) if index not in used_visual
+        ],
+        "unmatched_official_shot_ids": [
+            row["official_shot_id"]
+            for index, row in enumerate(counters)
+            if index not in used_counter
+        ],
         "matches": matches,
         "counter_proxy_precision": round(matched / n, 4) if n else None,
         "counter_proxy_recall": round(matched / m, 4) if m else None,
         "counter_proxy_f1": round(2 * matched / (n + m), 4) if n + m else None,
-        "known_colour_match_count": sum(row["visual_colour"] == row["counter_colour"]
-                                        for row in matches if row["visual_colour"] is not None),
-        "known_colour_conflict_count": sum(row["visual_colour"] != row["counter_colour"]
-                                           for row in matches if row["visual_colour"] is not None),
+        "known_colour_match_count": sum(
+            row["visual_colour"] == row["counter_colour"]
+            for row in matches
+            if row["visual_colour"] is not None
+        ),
+        "known_colour_conflict_count": sum(
+            row["visual_colour"] != row["counter_colour"]
+            for row in matches
+            if row["visual_colour"] is not None
+        ),
         "unknown_colour_match_count": sum(row["visual_colour"] is None for row in matches),
     }

@@ -15,8 +15,11 @@ def main():
     parser.add_argument("--triage", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--count", type=int, default=5)
-    parser.add_argument("--isolated-withheld", action="store_true",
-                        help="Select all previously withheld isolated-motion cues")
+    parser.add_argument(
+        "--isolated-withheld",
+        action="store_true",
+        help="Select all previously withheld isolated-motion cues",
+    )
     args = parser.parse_args()
     if args.output.exists():
         parser.error("Output exists; preserve first selection")
@@ -25,22 +28,29 @@ def main():
     triage = json.loads(args.triage.read_text())
     if args.isolated_withheld:
         selected = sorted(
-            (row for row in triage["rows"]
-             if not row["previously_auto_accepted"] and
-             row["context_cue"] == "isolated_motion_cue"),
-            key=lambda row: (row["candidate_time_s"], row["candidate_id"]))
+            (
+                row
+                for row in triage["rows"]
+                if not row["previously_auto_accepted"]
+                and row["context_cue"] == "isolated_motion_cue"
+            ),
+            key=lambda row: (row["candidate_time_s"], row["candidate_id"]),
+        )
         if not selected:
             parser.error("No isolated-motion withheld candidates")
         rule = "all previously withheld isolated-motion cues in time order"
     else:
-        candidates = [row for row in triage["rows"]
-                      if row["previously_auto_accepted"] and
-                      row["comovement_index"] is not None]
-        candidates.sort(key=lambda row: (-row["comovement_index"],
-                                         row["candidate_time_s"], row["candidate_id"]))
+        candidates = [
+            row
+            for row in triage["rows"]
+            if row["previously_auto_accepted"] and row["comovement_index"] is not None
+        ]
+        candidates.sort(
+            key=lambda row: (-row["comovement_index"], row["candidate_time_s"], row["candidate_id"])
+        )
         if len(candidates) < args.count:
             parser.error("Fewer scored accepted candidates than requested")
-        selected = candidates[:args.count]
+        selected = candidates[: args.count]
         rule = "highest full-ring comovement index among previously accepted candidates; earlier time then ID breaks ties"
     result = {
         "status": "prediction_ranked_source_review_selection_not_event_truth",

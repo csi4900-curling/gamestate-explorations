@@ -9,12 +9,10 @@ def attach_candidate_states(union, right_boards):
     board_by_id = {row["right_entry_id"]: row for row in right_boards["rows"]}
     if len(board_by_id) != len(right_boards["rows"]):
         raise ValueError("Duplicate right-entry board observation")
-    right_rows = [row for row in union["candidates"]
-                  if row["origin"] == "right_entry_review"]
+    right_rows = [row for row in union["candidates"] if row["origin"] == "right_entry_review"]
     if any(len(row["right_entry_ids"]) != 1 for row in right_rows):
         raise ValueError("Right-only candidate must refer to one entry")
-    right_candidates = {row["right_entry_ids"][0]: row["candidate_id"]
-                        for row in right_rows}
+    right_candidates = {row["right_entry_ids"][0]: row["candidate_id"] for row in right_rows}
     if len(right_candidates) != len(right_rows):
         raise ValueError("Duplicate right-only candidate entry ID")
     if set(board_by_id) != set(right_candidates):
@@ -62,8 +60,9 @@ def attach_candidate_states(union, right_boards):
         "source_sha256": union["source_sha256"],
         "source_interval_s": union["source_interval_s"],
         "candidate_count": len(rows),
-        "image_observation_status_counts": dict(Counter(
-            row["post_candidate_image_observation"]["status"] for row in rows)),
+        "image_observation_status_counts": dict(
+            Counter(row["post_candidate_image_observation"]["status"] for row in rows)
+        ),
         "physical_throw_count_verified": None,
         "complete_game_state_count_verified": 0,
         "simulation_ready_count": 0,

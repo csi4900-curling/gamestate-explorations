@@ -9,9 +9,14 @@ from registration_hold_shards import merge_registration_hold
 def test_merge_rejects_missing_candidate_partition():
     parent = {"events": [{"id": "A"}, {"id": "B"}, {"id": "C"}]}
     shards = partition_candidates(parent, "parent", 2)
-    scan = {"rows": [{"candidate_id": "A", "selection": {"status": "x"}},
-                     {"candidate_id": "B", "selection": {"status": "x"}}],
-            "candidate_count": 2, "candidates_sha256": "shard"}
+    scan = {
+        "rows": [
+            {"candidate_id": "A", "selection": {"status": "x"}},
+            {"candidate_id": "B", "selection": {"status": "x"}},
+        ],
+        "candidate_count": 2,
+        "candidates_sha256": "shard",
+    }
     with pytest.raises(ValueError, match="Merged candidate order or coverage"):
         merge_candidate_motion(parent, "parent", shards[:1], [scan], ["shard"])
 

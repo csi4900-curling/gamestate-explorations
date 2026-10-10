@@ -25,11 +25,15 @@ def screen_order_proposals(order_proposals, postcut_rows):
             status = "visual_colour_conflict"
         else:
             status = "colour_compatible_identity_unverified"
-        output.append({"counter_id": proposal["counter_id"],
-                       "shot_id": shot_id,
-                       "counter_colour": proposal["counter_colour"],
-                       "postcut_colour": visual_colour,
-                       "postcut_status": cue["postcut_status"] if cue else None,
-                       "screen_status": status,
-                       "safe_to_auto_link": False})
+        output.append(
+            {
+                "counter_id": proposal["counter_id"],
+                "shot_id": shot_id,
+                "counter_colour": proposal["counter_colour"],
+                "postcut_colour": visual_colour,
+                "postcut_status": cue["postcut_status"] if cue else None,
+                "screen_status": status,
+                "safe_to_auto_link": False,
+            }
+        )
     return output

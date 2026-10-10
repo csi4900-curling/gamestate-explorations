@@ -13,36 +13,43 @@ from episode_state_timeline import build_episode_state_timeline  # noqa: E402
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    for key in ("base-handoff", "partial-episodes", "partial-boards",
-                "partial-comparisons", "output"):
+    for key in (
+        "base-handoff",
+        "partial-episodes",
+        "partial-boards",
+        "partial-comparisons",
+        "output",
+    ):
         parser.add_argument(f"--{key}", type=Path, required=True)
     args = parser.parse_args()
     if args.output.exists():
         parser.error("Output exists")
-    paths = {key: getattr(args, key.replace("-", "_")) for key in
-             ("base-handoff", "partial-episodes", "partial-boards",
-              "partial-comparisons")}
+    paths = {
+        key: getattr(args, key.replace("-", "_"))
+        for key in ("base-handoff", "partial-episodes", "partial-boards", "partial-comparisons")
+    }
     inputs = {key: json.loads(path.read_text()) for key, path in paths.items()}
     base = inputs["base-handoff"]
     union = inputs["partial-episodes"]
     boards = inputs["partial-boards"]
     comparisons = inputs["partial-comparisons"]
-    if (union["handoff_sha256"] != file_sha256(paths["base-handoff"]) or
-            boards["partial_episodes_sha256"] !=
-            file_sha256(paths["partial-episodes"]) or
-            comparisons["partial_episodes_sha256"] !=
-            file_sha256(paths["partial-episodes"]) or
-            comparisons["partial_boards_sha256"] !=
-            file_sha256(paths["partial-boards"]) or
-            any(doc["source_sha256"] != base["source_sha256"] for doc in
-                (union, boards, comparisons))):
+    if (
+        union["handoff_sha256"] != file_sha256(paths["base-handoff"])
+        or boards["partial_episodes_sha256"] != file_sha256(paths["partial-episodes"])
+        or comparisons["partial_episodes_sha256"] != file_sha256(paths["partial-episodes"])
+        or comparisons["partial_boards_sha256"] != file_sha256(paths["partial-boards"])
+        or any(
+            doc["source_sha256"] != base["source_sha256"] for doc in (union, boards, comparisons)
+        )
+    ):
         parser.error("Input source or evidence chain differs")
     joined = build_episode_state_timeline(base, union, boards, comparisons)
-    if (len(joined["candidate_timeline"]) != union["frozen_candidate_count"] or
-            len(joined["event_timeline"]) !=
-            base["event_status_counts"]["provisional_event"] +
-            union["partial_episode_count"] or
-            any(row["simulation_ready"] for row in joined["event_timeline"])):
+    if (
+        len(joined["candidate_timeline"]) != union["frozen_candidate_count"]
+        or len(joined["event_timeline"])
+        != base["event_status_counts"]["provisional_event"] + union["partial_episode_count"]
+        or any(row["simulation_ready"] for row in joined["event_timeline"])
+    ):
         raise ValueError("Candidate or event count differs, or simulation gate violated")
     output = {
         "status": "development_event_level_partial_state_handoff_not_validated_game_state",
@@ -70,8 +77,11 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(output, indent=2) + "\n")
-    print(output["candidate_count"], output["event_proposal_status_counts"],
-          output["simulation_ready_count"])
+    print(
+        output["candidate_count"],
+        output["event_proposal_status_counts"],
+        output["simulation_ready_count"],
+    )
 
 
 if __name__ == "__main__":

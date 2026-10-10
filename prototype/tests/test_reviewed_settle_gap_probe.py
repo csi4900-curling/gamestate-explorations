@@ -1,5 +1,4 @@
-from prototype.scripts.probe_czech_reviewed_settle_gaps import (
-    roi_for_points, sample_indices)
+from prototype.scripts.probe_czech_reviewed_settle_gaps import roi_for_points, sample_indices
 
 
 def test_sampling_includes_board_frame_after_half_second_steps():
@@ -8,5 +7,4 @@ def test_sampling_includes_board_frame_after_half_second_steps():
 
 
 def test_roi_covers_both_endpoints_and_clips_to_source():
-    assert roi_for_points([[10, 15], [100, 120]], (1080, 1920)) == (
-        0, 0, 166, 186)
+    assert roi_for_points([[10, 15], [100, 120]], (1080, 1920)) == (0, 0, 166, 186)

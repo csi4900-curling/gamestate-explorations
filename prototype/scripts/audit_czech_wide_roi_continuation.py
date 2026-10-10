@@ -15,8 +15,10 @@ from wide_roi_continuation import next_observation  # noqa: E402
 BASE = ROOT / "validation/throw-event-benchmark"
 VIDEO = BASE / "canada-czech-2024/source-360p.mp4"
 PATHS = {
-    "S96": BASE / "layout-router/camera-motion-integrated-czech24-s96-negative/raw-with-continuation-development.json",
-    "S143": BASE / "layout-router/czech24-full-camera-motion-v1/s143-raw-with-continuation-development.json",
+    "S96": BASE
+    / "layout-router/camera-motion-integrated-czech24-s96-negative/raw-with-continuation-development.json",
+    "S143": BASE
+    / "layout-router/czech24-full-camera-motion-v1/s143-raw-with-continuation-development.json",
 }
 TIMES = {"S96": 4037.326, "S143": 6374.697}
 OUT = BASE / "layout-router/czech24-full-camera-motion-v1/wide-roi-continuation-pilot.json"
@@ -34,8 +36,7 @@ def main():
     if OUT.exists():
         raise ValueError("Pilot exists")
     source_hash = digest(VIDEO)
-    cap = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         raise ValueError("Source unreadable")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -46,8 +47,7 @@ def main():
             raw = json.loads(path.read_text())
             if raw["source_sha256"] != source_hash:
                 raise ValueError("Replay source differs")
-            event = min(raw["events"], key=lambda e: abs(
-                e["crossing_time_s"] - TIMES[full_id]))
+            event = min(raw["events"], key=lambda e: abs(e["crossing_time_s"] - TIMES[full_id]))
             if abs(event["crossing_time_s"] - TIMES[full_id]) > 0.001:
                 raise ValueError("Source proposal did not replay")
             seed = event["continued_track_points"]
@@ -62,45 +62,62 @@ def main():
                 if not ok:
                     status = "source_decode_failed"
                     break
-                detections = [p for p in stone_candidates(frame, config)
-                              if p["colour"] == event["colour"]]
+                detections = [
+                    p for p in stone_candidates(frame, config) if p["colour"] == event["colour"]
+                ]
                 chosen, decision = next_observation(path_points, detections, t)
-                attempted.append({"time_s": t, "same_colour_candidates":
-                                  len(detections), "decision": decision})
+                attempted.append(
+                    {"time_s": t, "same_colour_candidates": len(detections), "decision": decision}
+                )
                 if chosen is None:
                     status = decision
                     break
                 path_points.append(chosen)
-            rows.append({"full_match_candidate_id": full_id,
-                         "short_replay_candidate_id": event["id"],
-                         "crossing_time_s": event["crossing_time_s"],
-                         "seed_point_count": len(seed),
-                         "new_point_count": len(path_points) - len(seed),
-                         "stop_reason": status,
-                         "observed_image_path": path_points,
-                         "attempted_frames": attempted})
+            rows.append(
+                {
+                    "full_match_candidate_id": full_id,
+                    "short_replay_candidate_id": event["id"],
+                    "crossing_time_s": event["crossing_time_s"],
+                    "seed_point_count": len(seed),
+                    "new_point_count": len(path_points) - len(seed),
+                    "stop_reason": status,
+                    "observed_image_path": path_points,
+                    "attempted_frames": attempted,
+                }
+            )
     finally:
         cap.release()
-    OUT.write_text(json.dumps({
-        "status": "conservative_wide_roi_continuation_development_not_identity_truth",
-        "source_sha256": source_hash,
-        "input_sha256": {id: digest(path) for id, path in PATHS.items()},
-        "code_sha256": {"candidate_detector": digest(ROOT /
-            "prototype/throw_detection.py"),
-            "continuation": digest(ROOT /
-                "prototype/wide_roi_continuation.py"),
-            "runner": digest(Path(__file__))},
-        "search_roi_640x360": list(config.roi),
-        "rows": rows,
-        "limitations": [
-            "These are selected known development cases and only same-colour image associations.",
-            "The first missing or competing candidate stops the path; no hidden interval or camera cut is bridged.",
-            "A unique image contour is not proven to be the original physical stone or person.",
-        ],
-    }, indent=2) + "\n")
-    print(json.dumps([{k: r[k] for k in (
-        "full_match_candidate_id", "new_point_count", "stop_reason")}
-        for r in rows]))
+    OUT.write_text(
+        json.dumps(
+            {
+                "status": "conservative_wide_roi_continuation_development_not_identity_truth",
+                "source_sha256": source_hash,
+                "input_sha256": {id: digest(path) for id, path in PATHS.items()},
+                "code_sha256": {
+                    "candidate_detector": digest(ROOT / "prototype/throw_detection.py"),
+                    "continuation": digest(ROOT / "prototype/wide_roi_continuation.py"),
+                    "runner": digest(Path(__file__)),
+                },
+                "search_roi_640x360": list(config.roi),
+                "rows": rows,
+                "limitations": [
+                    "These are selected known development cases and only same-colour image associations.",
+                    "The first missing or competing candidate stops the path; no hidden interval or camera cut is bridged.",
+                    "A unique image contour is not proven to be the original physical stone or person.",
+                ],
+            },
+            indent=2,
+        )
+        + "\n"
+    )
+    print(
+        json.dumps(
+            [
+                {k: r[k] for k in ("full_match_candidate_id", "new_point_count", "stop_reason")}
+                for r in rows
+            ]
+        )
+    )
 
 
 if __name__ == "__main__":

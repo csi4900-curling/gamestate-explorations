@@ -24,9 +24,15 @@ def main():
     rows = []
     for event in scan["rows"]:
         path = select_far_receiving_path(event)
-        rows.append({"throw_id": event["throw_id"], "colour": event["colour"],
-                     "departure_last": event["departure_last"],
-                     "arrival_first": event["arrival_first"], **path})
+        rows.append(
+            {
+                "throw_id": event["throw_id"],
+                "colour": event["colour"],
+                "departure_last": event["departure_last"],
+                "arrival_first": event["arrival_first"],
+                **path,
+            }
+        )
     result = {
         "status": "development_cross_view_observation_paths_not_identity_validation",
         "source_clip_sha256": scan["source_clip_sha256"],
@@ -34,15 +40,13 @@ def main():
         "path_code_sha256": file_sha256(ROOT / "prototype/far_receiving_path.py"),
         "runner_sha256": file_sha256(__file__),
         "throw_count": len(rows),
-        "unique_path_count": sum(row["status"] ==
-                                 "unique_maximum_coverage_path_provisional"
-                                 for row in rows),
-        "ambiguous_path_count": sum(row["status"] ==
-                                    "multiple_maximum_coverage_paths"
-                                    for row in rows),
-        "unresolved_path_count": sum(row["status"] ==
-                                     "no_endpoint_reaching_path"
-                                     for row in rows),
+        "unique_path_count": sum(
+            row["status"] == "unique_maximum_coverage_path_provisional" for row in rows
+        ),
+        "ambiguous_path_count": sum(
+            row["status"] == "multiple_maximum_coverage_paths" for row in rows
+        ),
+        "unresolved_path_count": sum(row["status"] == "no_endpoint_reaching_path" for row in rows),
         "rows": rows,
         "limitations": [
             "The path bounds were selected on exposed end-three development footage.",
@@ -53,9 +57,13 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print({"unique": result["unique_path_count"],
-           "ambiguous": result["ambiguous_path_count"],
-           "unresolved": result["unresolved_path_count"]})
+    print(
+        {
+            "unique": result["unique_path_count"],
+            "ambiguous": result["ambiguous_path_count"],
+            "unresolved": result["unresolved_path_count"],
+        }
+    )
 
 
 if __name__ == "__main__":

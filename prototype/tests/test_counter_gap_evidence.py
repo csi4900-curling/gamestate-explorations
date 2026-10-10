@@ -7,8 +7,14 @@ from counter_gap_evidence import classify_counter_gap_events
 
 
 def event(identifier, first, update):
-    return {"id": identifier, "colour": "yellow", "evidence_interval_s": [first, update],
-            "crossing_time_s": update, "remaining_before": [0, 1], "remaining_after": [0, 0]}
+    return {
+        "id": identifier,
+        "colour": "yellow",
+        "evidence_interval_s": [first, update],
+        "crossing_time_s": update,
+        "remaining_before": [0, 1],
+        "remaining_after": [0, 0],
+    }
 
 
 class CounterGapEvidenceTests(unittest.TestCase):

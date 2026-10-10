@@ -68,8 +68,12 @@ def main():
         "source_sha256": digest,
         "source_interval_s": [args.start, args.end],
         "scanned_gaps": [
-            {"id": args.gap_id, "interval_s": [args.start, args.end],
-             "samples": 5 * (args.end - args.start), "candidate_count": len(candidates)}
+            {
+                "id": args.gap_id,
+                "interval_s": [args.start, args.end],
+                "samples": 5 * (args.end - args.start),
+                "candidate_count": len(candidates),
+            }
         ],
         "visual_code_sha256": file_sha256(ROOT / "prototype/stone_motion_fallback.py"),
         "candidate_code_sha256": file_sha256(ROOT / "prototype/gap_motion_candidates.py"),
@@ -86,7 +90,9 @@ def main():
         ],
     }
     args.output.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({"samples": 5 * (args.end - args.start), "motion_candidates": len(candidates)}))
+    print(
+        json.dumps({"samples": 5 * (args.end - args.start), "motion_candidates": len(candidates)})
+    )
 
 
 if __name__ == "__main__":

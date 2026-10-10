@@ -53,23 +53,33 @@ def main():
             x, y = (index % columns) * width, (index // columns) * (height + 24)
             sheet.paste(Image.fromarray(cv2.cvtColor(thumb, cv2.COLOR_BGR2RGB)), (x, y + 24))
             draw.text((x + 4, y + 4), f"{source_time_s:.1f}s / frame {frame_index}", fill="black")
-            samples.append({"requested_source_time_s": source_time_s,
-                            "decoded_frame_index": frame_index,
-                            "approx_decoded_source_time_s": frame_index / fps})
+            samples.append(
+                {
+                    "requested_source_time_s": source_time_s,
+                    "decoded_frame_index": frame_index,
+                    "approx_decoded_source_time_s": frame_index / fps,
+                }
+            )
     finally:
         video.release()
     args.output.parent.mkdir(parents=True, exist_ok=True)
     sheet.save(args.output, quality=88)
     manifest = args.output.with_suffix(".json")
-    manifest.write_text(json.dumps({
-        "status": "source_only_sparse_gap_sheet_not_exhaustive_throw_labels",
-        "source_sha256": digest(args.video),
-        "source_interval_s": [args.start, args.end],
-        "step_s": args.step,
-        "source_fps": fps,
-        "samples": samples,
-        "image_sha256": digest(args.output),
-    }, indent=2) + "\n")
+    manifest.write_text(
+        json.dumps(
+            {
+                "status": "source_only_sparse_gap_sheet_not_exhaustive_throw_labels",
+                "source_sha256": digest(args.video),
+                "source_interval_s": [args.start, args.end],
+                "step_s": args.step,
+                "source_fps": fps,
+                "samples": samples,
+                "image_sha256": digest(args.output),
+            },
+            indent=2,
+        )
+        + "\n"
+    )
     print(len(samples), "source frames", args.output)
 
 

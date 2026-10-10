@@ -33,21 +33,30 @@ def main():
     packet = json.loads(PACKET.read_text())
     old = json.loads(OLD.read_text())
     new = json.loads(NEW.read_text())
-    if not packet["source_video_sha256"] == old["source_sha256"] == new[
-            "source_sha256"] == digest(VIDEO):
+    if (
+        not packet["source_video_sha256"]
+        == old["source_sha256"]
+        == new["source_sha256"]
+        == digest(VIDEO)
+    ):
         raise ValueError("Novel packet/source video differs")
-    if (packet["one_second_gap_scan_sha256"] != digest(OLD) or
-            packet["two_second_gap_scan_sha256"] != digest(NEW) or
-            packet["runner_sha256"] != digest(
-                ROOT / "prototype/scripts/build_latvia_gap2_novel_source_packet.py") or
-            any(page["sha256"] != digest(PACKET.parent / page["image"])
-                for page in packet["pages"])):
+    if (
+        packet["one_second_gap_scan_sha256"] != digest(OLD)
+        or packet["two_second_gap_scan_sha256"] != digest(NEW)
+        or packet["runner_sha256"]
+        != digest(ROOT / "prototype/scripts/build_latvia_gap2_novel_source_packet.py")
+        or any(page["sha256"] != digest(PACKET.parent / page["image"]) for page in packet["pages"])
+    ):
         raise ValueError("Novel source packet lineage differs")
     ids = {row["raw_track_id"] for row in packet["rows"]}
-    if (len(packet["rows"]) != 15 or len(ids) != 15 or
-            ids != STONE_IDS | PERSON_IDS | MIXED_IDS or
-            STONE_IDS & PERSON_IDS or STONE_IDS & MIXED_IDS or
-            PERSON_IDS & MIXED_IDS):
+    if (
+        len(packet["rows"]) != 15
+        or len(ids) != 15
+        or ids != STONE_IDS | PERSON_IDS | MIXED_IDS
+        or STONE_IDS & PERSON_IDS
+        or STONE_IDS & MIXED_IDS
+        or PERSON_IDS & MIXED_IDS
+    ):
         raise ValueError("Novel source class inventory differs")
     rows = []
     for row in packet["rows"]:
@@ -58,30 +67,37 @@ def main():
             pixel_class = "person_or_equipment_pixels_in_prefix_samples"
         else:
             pixel_class = "mixed_object_pixels_or_identity_uncertain"
-        rows.append({
-            "raw_track_id": track_id,
-            "source_time_s": row["passage_time_s"],
-            "colour_claim": row["colour_claim"],
-            "direction": row["direction"],
-            "source_pixel_class": pixel_class,
-            "class_origin": "same_agent_postscore_three_source_frame_review",
-            "source_page": "full-right-gap2-novel-source-packet/" + row[
-                "review_page"],
-            "sampling_policy": row["sampling_policy"],
-            "physical_throw_verified": False,
-        })
+        rows.append(
+            {
+                "raw_track_id": track_id,
+                "source_time_s": row["passage_time_s"],
+                "colour_claim": row["colour_claim"],
+                "direction": row["direction"],
+                "source_pixel_class": pixel_class,
+                "class_origin": "same_agent_postscore_three_source_frame_review",
+                "source_page": "full-right-gap2-novel-source-packet/" + row["review_page"],
+                "sampling_policy": row["sampling_policy"],
+                "physical_throw_verified": False,
+            }
+        )
     counts = Counter(row["source_pixel_class"] for row in rows)
-    if counts != {"moving_stone_body_pixels_in_prefix_samples": 3,
-                  "person_or_equipment_pixels_in_prefix_samples": 6,
-                  "mixed_object_pixels_or_identity_uncertain": 6}:
+    if counts != {
+        "moving_stone_body_pixels_in_prefix_samples": 3,
+        "person_or_equipment_pixels_in_prefix_samples": 6,
+        "mixed_object_pixels_or_identity_uncertain": 6,
+    }:
         raise ValueError("Novel source review counts differ")
-    old_without_counterpart = [row for row in old["directional_review_proposals"]
-        if not any(other["colour_claim"] == row["colour_claim"] and
-                   other["direction"] == row["direction"] and
-                   abs(other["passage"]["time_s"] - row["passage"]["time_s"]) <= 8
-                   for other in new["directional_review_proposals"])]
-    if len(old_without_counterpart) != 1 or old_without_counterpart[0][
-            "raw_track_id"] != "A046":
+    old_without_counterpart = [
+        row
+        for row in old["directional_review_proposals"]
+        if not any(
+            other["colour_claim"] == row["colour_claim"]
+            and other["direction"] == row["direction"]
+            and abs(other["passage"]["time_s"] - row["passage"]["time_s"]) <= 8
+            for other in new["directional_review_proposals"]
+        )
+    ]
+    if len(old_without_counterpart) != 1 or old_without_counterpart[0]["raw_track_id"] != "A046":
         raise ValueError("Old proposal disappearance inventory differs")
     output = {
         "status": "postscore_novel_gap2_source_pixel_review_not_throw_truth",
@@ -97,13 +113,16 @@ def main():
         "two_second_gap_proposal_count": new["directional_proposal_count"],
         "new_without_temporal_counterpart_count": len(rows),
         "source_class_counts": dict(counts),
-        "old_without_temporal_counterpart": [{
-            "raw_track_id": row["raw_track_id"],
-            "source_time_s": row["passage"]["time_s"],
-            "colour_claim": row["colour_claim"],
-            "direction": row["direction"],
-            "prior_source_review": "person_or_clothing_pixels_in_withheld_cross_view_audit",
-        } for row in old_without_counterpart],
+        "old_without_temporal_counterpart": [
+            {
+                "raw_track_id": row["raw_track_id"],
+                "source_time_s": row["passage"]["time_s"],
+                "colour_claim": row["colour_claim"],
+                "direction": row["direction"],
+                "prior_source_review": "person_or_clothing_pixels_in_withheld_cross_view_audit",
+            }
+            for row in old_without_counterpart
+        ],
         "rows": rows,
         "limitations": [
             "Same-agent source classes were assigned after the full gap-two scan and do not supply independent physical throw labels.",
@@ -114,9 +133,15 @@ def main():
         ],
     }
     OUT.write_text(json.dumps(output, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({"new_without_temporal_counterpart": len(rows),
-                      "source_classes": dict(counts),
-                      "old_without_counterpart": "A046"}))
+    print(
+        json.dumps(
+            {
+                "new_without_temporal_counterpart": len(rows),
+                "source_classes": dict(counts),
+                "old_without_counterpart": "A046",
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

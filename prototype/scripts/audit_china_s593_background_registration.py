@@ -28,8 +28,7 @@ def digest(path):
 
 def build():
     handoff = json.loads(HANDOFF.read_text())
-    game = next(row for row in handoff["games"]
-                if row["recording_code"] == "PREL000102")
+    game = next(row for row in handoff["games"] if row["recording_code"] == "PREL000102")
     source_hash = digest(VIDEO)
     reserved = json.loads((ROOT / "validation/unseen-end/reservation.json").read_text())
     if source_hash != game["source_sha256"] or source_hash == reserved["source_sha256"]:
@@ -37,8 +36,7 @@ def build():
     row = next(row for row in game["rows"] if row["event_id"] == "VISUAL-S593")
     time_s = row["first_receiving_motion_s"]
     times = [time_s, round(time_s + 1, 3)]
-    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not capture.isOpened():
         raise RuntimeError("Cannot open video")
     fps = capture.get(cv2.CAP_PROP_FPS)
@@ -54,24 +52,25 @@ def build():
     if len(caps) != 1:
         raise ValueError("Expected one yellow source cap in the selected frame")
     bbox = caps[0]["bbox"]
-    return {"status": "postscore_selected_background_registration_diagnostic",
-            "source_sha256": source_hash,
-            "temporal_handoff_sha256": digest(HANDOFF),
-            "audit_code_sha256": digest(ROOT / "prototype/background_registration_audit.py"),
-            "original_camera_code_sha256": digest(ROOT / "prototype/camera_relative_motion.py"),
-            "runner_sha256": digest(Path(__file__)),
-            "event_id": row["event_id"],
-            "source_colour": row["source_colour"],
-            "frame_times_s": times,
-            "target_cap_bbox_px": bbox,
-            "unmasked": registration_support(*frames),
-            "target_excluded": registration_support(*frames, exclude_bbox=bbox,
-                                                     margin_px=30),
-            "limitations": [
-                "This pair was selected after S593 was identified as a source/ledger colour conflict; it is a diagnostic, not transfer validation.",
-                "Feature support outside one stone does not by itself calibrate the camera or establish a full trajectory.",
-                "No detector threshold, source colour, event identity, or physical F1 is changed.",
-            ]}
+    return {
+        "status": "postscore_selected_background_registration_diagnostic",
+        "source_sha256": source_hash,
+        "temporal_handoff_sha256": digest(HANDOFF),
+        "audit_code_sha256": digest(ROOT / "prototype/background_registration_audit.py"),
+        "original_camera_code_sha256": digest(ROOT / "prototype/camera_relative_motion.py"),
+        "runner_sha256": digest(Path(__file__)),
+        "event_id": row["event_id"],
+        "source_colour": row["source_colour"],
+        "frame_times_s": times,
+        "target_cap_bbox_px": bbox,
+        "unmasked": registration_support(*frames),
+        "target_excluded": registration_support(*frames, exclude_bbox=bbox, margin_px=30),
+        "limitations": [
+            "This pair was selected after S593 was identified as a source/ledger colour conflict; it is a diagnostic, not transfer validation.",
+            "Feature support outside one stone does not by itself calibrate the camera or establish a full trajectory.",
+            "No detector threshold, source colour, event identity, or physical F1 is changed.",
+        ],
+    }
 
 
 def main():

@@ -15,7 +15,9 @@ def main():
     p.add_argument("--end", type=float, default=2760)
     p.add_argument("--step", type=float, default=5)
     p.add_argument("--panel", choices=("full", "left", "right"), default="full")
-    p.add_argument("--purpose", default="Source contact sheet; selection protocol recorded separately")
+    p.add_argument(
+        "--purpose", default="Source contact sheet; selection protocol recorded separately"
+    )
     a = p.parse_args()
     if a.output.exists() or a.step <= 0 or a.start < 0 or a.end <= a.start:
         p.error("Use a new output directory and valid interval")

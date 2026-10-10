@@ -13,12 +13,22 @@ BASE = ROOT / "validation/official-shot-sequence"
 UNION = BASE / "pwg2022-provisional-event-evidence-union-development.json"
 REFERENCE = BASE / "pwg2022-official-shot-ledger.json"
 INPUTS = {
-    "PREL000101": (ROOT / "validation/curlobserver-learned-probe/swiss-full-transfer/shot-review/manifest.json",
-                   ROOT / "validation/curlobserver-learned-probe/swiss-full-transfer/possible-edits-v1.json"),
-    "PREL000102": (ROOT / "validation/curlobserver-learned-probe/china-full-transfer/shot-review/manifest.json",
-                   ROOT / "validation/curlobserver-learned-probe/china-full-transfer/possible-edits-v1.json"),
-    "PREL000103": (ROOT / "validation/curlobserver-learned-probe/slovakia-full-transfer/shot-review/manifest.json",
-                   ROOT / "validation/curlobserver-learned-probe/slovakia-full-transfer/possible-edits-v1.json"),
+    "PREL000101": (
+        ROOT
+        / "validation/curlobserver-learned-probe/swiss-full-transfer/shot-review/manifest.json",
+        ROOT / "validation/curlobserver-learned-probe/swiss-full-transfer/possible-edits-v1.json",
+    ),
+    "PREL000102": (
+        ROOT
+        / "validation/curlobserver-learned-probe/china-full-transfer/shot-review/manifest.json",
+        ROOT / "validation/curlobserver-learned-probe/china-full-transfer/possible-edits-v1.json",
+    ),
+    "PREL000103": (
+        ROOT
+        / "validation/curlobserver-learned-probe/slovakia-full-transfer/shot-review/manifest.json",
+        ROOT
+        / "validation/curlobserver-learned-probe/slovakia-full-transfer/possible-edits-v1.json",
+    ),
 }
 OUTPUT = BASE / "pwg2022-full-match-event-review-segments-development.json"
 
@@ -36,38 +46,47 @@ def build():
     for source in union["games"]:
         code = source["official_game_code"]
         manifest_path, edits_path = INPUTS[code]
-        manifest, edits = (json.loads(path.read_text()) for path in
-                           (manifest_path, edits_path))
+        manifest, edits = (json.loads(path.read_text()) for path in (manifest_path, edits_path))
         video = reference_by_code[code]
-        if (source["source_sha256"] == reserved["source_sha256"] or
-                any(row["source_sha256"] != source["source_sha256"]
-                    for row in (manifest, edits)) or
-                video["source_video_sha256"] != source["source_sha256"]):
+        if (
+            source["source_sha256"] == reserved["source_sha256"]
+            or any(row["source_sha256"] != source["source_sha256"] for row in (manifest, edits))
+            or video["source_video_sha256"] != source["source_sha256"]
+        ):
             raise ValueError(f"Source mismatch or reserved source selected: {code}")
-        rows = build_review_segments(source["events"], manifest["shots"],
-                                     edits["possible_edits_outside_hard_cuts"])
+        rows = build_review_segments(
+            source["events"], manifest["shots"], edits["possible_edits_outside_hard_cuts"]
+        )
         if len(rows) != source["provisional_event_count"]:
             raise ValueError(f"Event review coverage changed: {code}")
-        games.append({
-            "official_game_code": code,
-            "source_sha256": source["source_sha256"],
-            "source_video_path": video["source_video_path"],
-            "source_interval_s": manifest["source_interval_s"],
-            "input_sha256": {"shot_manifest": digest(manifest_path),
-                             "possible_edits": digest(edits_path)},
-            "review_segment_count": len(rows),
-            "segments_with_possible_internal_edit": sum(
-                bool(row["possible_internal_edit_times_s"]) for row in rows),
-            "travel_only_segments_with_previous_shot": sum(
-                row["unoccupied_previous_shot_added"] is not None for row in rows),
-            "segments": rows,
-        })
+        games.append(
+            {
+                "official_game_code": code,
+                "source_sha256": source["source_sha256"],
+                "source_video_path": video["source_video_path"],
+                "source_interval_s": manifest["source_interval_s"],
+                "input_sha256": {
+                    "shot_manifest": digest(manifest_path),
+                    "possible_edits": digest(edits_path),
+                },
+                "review_segment_count": len(rows),
+                "segments_with_possible_internal_edit": sum(
+                    bool(row["possible_internal_edit_times_s"]) for row in rows
+                ),
+                "travel_only_segments_with_previous_shot": sum(
+                    row["unoccupied_previous_shot_added"] is not None for row in rows
+                ),
+                "segments": rows,
+            }
+        )
     return {
         "status": "full_source_provisional_event_review_windows_not_physical_throw_boundaries",
-        "input_sha256": {"provisional_union": digest(UNION),
-                         "reference_metadata": digest(REFERENCE),
-                         "segment_code": digest(ROOT / "prototype/event_review_segments.py"),
-                         "runner": digest(Path(__file__))},
+        "input_sha256": {
+            "provisional_union": digest(UNION),
+            "reference_metadata": digest(REFERENCE),
+            "segment_code": digest(ROOT / "prototype/event_review_segments.py"),
+            "runner": digest(Path(__file__)),
+        },
         "games": games,
         "limitations": [
             "Each evidence core spans selected broadcast camera shots, not a measured physical throw.",

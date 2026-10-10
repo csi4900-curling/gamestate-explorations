@@ -32,23 +32,32 @@ def classify_travel_predecessors(shots, fused_events, travel_rows):
             status = "adjacent_visual_same_colour"
         else:
             status = "adjacent_visual_colour_conflict"
-        rows.append({
-            "counter_id": travel["counter_id"],
-            "counter_colour": travel["colour"],
-            "travel_shot_id": shot_id,
-            "travel_window_s": travel["observed_travel_window_s"],
-            "preceding_shot_id": preceding_shot["shot_id"] if preceding_shot else None,
-            "preceding_fused_event": ({
-                "shot_id": prior["shot_id"],
-                "colour": prior["colour"],
-                "colour_status": prior["colour_status"],
-                "counter_id": prior["counter_id"],
-            } if prior else None),
-            "relation_status": status,
-            "possible_same_physical_throw": status in (
-                "adjacent_visual_same_colour", "adjacent_visual_colour_conflict",
-                "adjacent_visual_colour_unknown"),
-            "physical_identity_verified": False,
-            "merge_applied": False,
-        })
+        rows.append(
+            {
+                "counter_id": travel["counter_id"],
+                "counter_colour": travel["colour"],
+                "travel_shot_id": shot_id,
+                "travel_window_s": travel["observed_travel_window_s"],
+                "preceding_shot_id": preceding_shot["shot_id"] if preceding_shot else None,
+                "preceding_fused_event": (
+                    {
+                        "shot_id": prior["shot_id"],
+                        "colour": prior["colour"],
+                        "colour_status": prior["colour_status"],
+                        "counter_id": prior["counter_id"],
+                    }
+                    if prior
+                    else None
+                ),
+                "relation_status": status,
+                "possible_same_physical_throw": status
+                in (
+                    "adjacent_visual_same_colour",
+                    "adjacent_visual_colour_conflict",
+                    "adjacent_visual_colour_unknown",
+                ),
+                "physical_identity_verified": False,
+                "merge_applied": False,
+            }
+        )
     return rows

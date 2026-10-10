@@ -27,7 +27,7 @@ YELLOW_PIXEL_THRESHOLD = 50
 def digest(path):
     h = sha256()
     with path.open("rb") as stream:
-        for chunk in iter(lambda: stream.read(1024*1024), b""):
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
             h.update(chunk)
     return h.hexdigest()
 
@@ -35,16 +35,15 @@ def digest(path):
 def main():
     if OUT.exists():
         raise SystemExit("Output exists; preserve first timing audit")
-    cap = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened() or cap.get(cv2.CAP_PROP_FPS) != FPS:
         raise RuntimeError("Cannot open expected 30-fps source")
-    first = round((START_S-OFFSET_S)*FPS)
-    last = round((STOP_S-OFFSET_S)*FPS)
+    first = round((START_S - OFFSET_S) * FPS)
+    last = round((STOP_S - OFFSET_S) * FPS)
     cap.set(cv2.CAP_PROP_POS_FRAMES, first)
     rows = []
     try:
-        for index in range(first, last+1):
+        for index in range(first, last + 1):
             ok, frame = cap.read()
             if not ok or frame.shape[:2] != (1080, 1920):
                 raise RuntimeError(f"Could not decode frame {index}")
@@ -52,29 +51,37 @@ def main():
             for name, (x1, y1, x2, y2) in ROIS.items():
                 hsv = cv2.cvtColor(frame[y1:y2, x1:x2], cv2.COLOR_BGR2HSV)
                 hue, saturation, value = cv2.split(hsv)
-                yellow = ((hue > 16) & (hue < 43) &
-                          (saturation > 60) & (value > 65))
+                yellow = (hue > 16) & (hue < 43) & (saturation > 60) & (value > 65)
                 counts[name] = int(yellow.sum())
-            rows.append({"source_time_s": round(OFFSET_S+index/FPS, 5),
-                         "frame_index": index,
-                         "yellow_pixels": counts,
-                         "yellow_visible_by_threshold": {
-                             name: count >= YELLOW_PIXEL_THRESHOLD
-                             for name, count in counts.items()}})
+            rows.append(
+                {
+                    "source_time_s": round(OFFSET_S + index / FPS, 5),
+                    "frame_index": index,
+                    "yellow_pixels": counts,
+                    "yellow_visible_by_threshold": {
+                        name: count >= YELLOW_PIXEL_THRESHOLD for name, count in counts.items()
+                    },
+                }
+            )
     finally:
         cap.release()
-    right_times = [r["source_time_s"] for r in rows
-                   if r["yellow_visible_by_threshold"]["right_exit"]]
-    left_times = [r["source_time_s"] for r in rows
-                  if r["yellow_visible_by_threshold"]["left_entry"]]
+    right_times = [
+        r["source_time_s"] for r in rows if r["yellow_visible_by_threshold"]["right_exit"]
+    ]
+    left_times = [
+        r["source_time_s"] for r in rows if r["yellow_visible_by_threshold"]["left_entry"]
+    ]
     summary = {
         "right_last_visible_s": max(right_times) if right_times else None,
         "left_first_visible_s": min(left_times) if left_times else None,
-        "edge_visibility_gap_s": round(min(left_times)-max(right_times), 5)
-        if left_times and right_times else None,
+        "edge_visibility_gap_s": round(min(left_times) - max(right_times), 5)
+        if left_times and right_times
+        else None,
         "simultaneous_threshold_frames": sum(
-            r["yellow_visible_by_threshold"]["right_exit"] and
-            r["yellow_visible_by_threshold"]["left_entry"] for r in rows),
+            r["yellow_visible_by_threshold"]["right_exit"]
+            and r["yellow_visible_by_threshold"]["left_entry"]
+            for r in rows
+        ),
     }
     result = {
         "status": "postreview_selected_roi_edge_visibility_not_identity_validation",

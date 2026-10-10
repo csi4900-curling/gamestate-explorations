@@ -29,51 +29,67 @@ def main():
         scan = json.loads(scan_path.read_text())
         if scan["video_sha256"] != digest(video):
             raise ValueError(f"Source differs for {name}")
-        cap = cv2.VideoCapture(str(video), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+        cap = cv2.VideoCapture(str(video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
         fps = cap.get(cv2.CAP_PROP_FPS)
         panels, examples = [], []
         for end in sorted(int(value) for value in scan["recognized_end_counts"]):
-            hits = [row for row in scan["samples"]
-                    if row["marker"] and row["marker"]["end"] == end]
-            chosen = hits[len(hits)//2]
+            hits = [row for row in scan["samples"] if row["marker"] and row["marker"]["end"] == end]
+            chosen = hits[len(hits) // 2]
             time_s = chosen["time_s"]
-            cap.set(cv2.CAP_PROP_POS_FRAMES, round(time_s*fps))
+            cap.set(cv2.CAP_PROP_POS_FRAMES, round(time_s * fps))
             ok, frame = cap.read()
             if not ok:
                 raise RuntimeError(f"Could not decode {name} at {time_s}")
             crop = frame[34:110, 375:580]
-            enlarged = cv2.resize(crop, None, fx=3, fy=3,
-                                   interpolation=cv2.INTER_NEAREST)
+            enlarged = cv2.resize(crop, None, fx=3, fy=3, interpolation=cv2.INTER_NEAREST)
             panel = np.full((258, 615, 3), 255, dtype=np.uint8)
             panel[30:] = enlarged
-            cv2.putText(panel, f"{name} {time_s}s reader end {end}",
-                        (5, 20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1)
+            cv2.putText(
+                panel,
+                f"{name} {time_s}s reader end {end}",
+                (5, 20),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                0.5,
+                (0, 0, 0),
+                1,
+            )
             panels.append(panel)
-            examples.append({"source_time_s": time_s, "reader_end": end,
-                             "reader_colour": chosen["marker"]["colour"],
-                             "source_crop_xyxy_px": [375, 34, 580, 110]})
+            examples.append(
+                {
+                    "source_time_s": time_s,
+                    "reader_end": end,
+                    "reader_colour": chosen["marker"]["colour"],
+                    "source_crop_xyxy_px": [375, 34, 580, 110],
+                }
+            )
         cap.release()
         blank = np.full_like(panels[0], 255)
         while len(panels) < 8:
             panels.append(blank)
-        sheet = np.vstack([np.hstack(panels[index:index+2])
-                           for index in (0, 2, 4, 6)])
+        sheet = np.vstack([np.hstack(panels[index : index + 2]) for index in (0, 2, 4, 6)])
         image_path = OUT / f"{name}-2d-marker-source-review.jpg"
         if not cv2.imwrite(str(image_path), sheet):
             raise RuntimeError(f"Could not write {image_path}")
-        outputs.append({"match": name, "video_sha256": scan["video_sha256"],
-                        "scan_sha256": digest(scan_path),
-                        "image_path": str(image_path.relative_to(ROOT)),
-                        "image_sha256": digest(image_path), "examples": examples})
-    result = {"status": "prediction_exposed_source_crop_review_not_independent_validation",
-              "runner_sha256": digest(Path(__file__)), "games": outputs,
-              "limitations": [
-                  "One selected positive marker per recognized end cannot establish full-scan accuracy.",
-                  "Visible displayed-end markers are not physical end or throw timestamps.",
-              ]}
-    (OUT / "2d-marker-source-review.json").write_text(
-        json.dumps(result, indent=2) + "\n")
+        outputs.append(
+            {
+                "match": name,
+                "video_sha256": scan["video_sha256"],
+                "scan_sha256": digest(scan_path),
+                "image_path": str(image_path.relative_to(ROOT)),
+                "image_sha256": digest(image_path),
+                "examples": examples,
+            }
+        )
+    result = {
+        "status": "prediction_exposed_source_crop_review_not_independent_validation",
+        "runner_sha256": digest(Path(__file__)),
+        "games": outputs,
+        "limitations": [
+            "One selected positive marker per recognized end cannot establish full-scan accuracy.",
+            "Visible displayed-end markers are not physical end or throw timestamps.",
+        ],
+    }
+    (OUT / "2d-marker-source-review.json").write_text(json.dumps(result, indent=2) + "\n")
     print([row["image_path"] for row in outputs])
 
 

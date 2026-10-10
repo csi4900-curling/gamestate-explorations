@@ -8,8 +8,9 @@ def blue_ring_mask(frame):
     if frame.shape != (360, 640, 3):
         raise ValueError("Expected 640×360 BGR broadcast frame")
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-    return ((hsv[:, :, 0] >= 96) & (hsv[:, :, 0] <= 115)
-            & (hsv[:, :, 1] > 140) & (hsv[:, :, 2] > 170))
+    return (
+        (hsv[:, :, 0] >= 96) & (hsv[:, :, 0] <= 115) & (hsv[:, :, 1] > 140) & (hsv[:, :, 2] > 170)
+    )
 
 
 def annulus_support(mask, cx, cy, radius):
@@ -28,13 +29,18 @@ def annulus_support(mask, cx, cy, radius):
     }
 
 
-def detect_overhead_house(frame, *, min_mean_blue_fraction=0.4,
-                          min_supported_angle_bins=30):
+def detect_overhead_house(frame, *, min_mean_blue_fraction=0.4, min_supported_angle_bins=30):
     mask = blue_ring_mask(frame)
-    circles = cv2.HoughCircles((mask.astype(np.uint8) * 255),
-                               cv2.HOUGH_GRADIENT, dp=1.5, minDist=120,
-                               param1=100, param2=25,
-                               minRadius=65, maxRadius=180)
+    circles = cv2.HoughCircles(
+        (mask.astype(np.uint8) * 255),
+        cv2.HOUGH_GRADIENT,
+        dp=1.5,
+        minDist=120,
+        param1=100,
+        param2=25,
+        minRadius=65,
+        maxRadius=180,
+    )
     options = []
     if circles is not None:
         for x, y, r in circles[0]:
@@ -44,15 +50,22 @@ def detect_overhead_house(frame, *, min_mean_blue_fraction=0.4,
             if not 180 <= cx <= 460:
                 continue
             support = annulus_support(mask, cx, cy, radius)
-            if (support["mean_blue_fraction"] >= min_mean_blue_fraction
-                    and support["supported_angle_bins"] >= min_supported_angle_bins):
-                options.append({"center_px": [cx, cy], "outer_radius_px": radius,
-                                "annulus_support": support})
+            if (
+                support["mean_blue_fraction"] >= min_mean_blue_fraction
+                and support["supported_angle_bins"] >= min_supported_angle_bins
+            ):
+                options.append(
+                    {"center_px": [cx, cy], "outer_radius_px": radius, "annulus_support": support}
+                )
     if not options:
         return None
-    options.sort(key=lambda row: (-row["annulus_support"]["mean_blue_fraction"],
-                                  -row["annulus_support"]["supported_angle_bins"],
-                                  abs(row["center_px"][0] - 320)))
+    options.sort(
+        key=lambda row: (
+            -row["annulus_support"]["mean_blue_fraction"],
+            -row["annulus_support"]["supported_angle_bins"],
+            abs(row["center_px"][0] - 320),
+        )
+    )
     house = options[0]
     cy = house["center_px"][1]
     house["delivery_side"] = "top" if cy > 200 else "bottom" if cy < 160 else "uncertain"
@@ -64,8 +77,9 @@ def detect_board_stones(frame, house, *, min_cap_pixels=30):
         raise ValueError("Accepted overhead house required")
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, dp=1, minDist=12,
-                               param1=80, param2=15, minRadius=5, maxRadius=12)
+    circles = cv2.HoughCircles(
+        gray, cv2.HOUGH_GRADIENT, dp=1, minDist=12, param1=80, param2=15, minRadius=5, maxRadius=12
+    )
     if circles is None:
         return []
     cx, cy = house["center_px"]
@@ -80,22 +94,32 @@ def detect_board_stones(frame, house, *, min_cap_pixels=30):
         patch = hsv[y0:y1, x0:x1]
         yy, xx = np.mgrid[y0:y1, x0:x1]
         disc = (xx - x) ** 2 + (yy - y) ** 2 < 25
-        red = (((patch[:, :, 0] < 12) | (patch[:, :, 0] > 170))
-               & (patch[:, :, 1] > 90) & (patch[:, :, 2] > 60) & disc)
-        yellow = ((patch[:, :, 0] > 16) & (patch[:, :, 0] < 43)
-                  & (patch[:, :, 1] > 90) & (patch[:, :, 2] > 70) & disc)
-        counts = {"red": int(np.count_nonzero(red)),
-                  "yellow": int(np.count_nonzero(yellow))}
+        red = (
+            ((patch[:, :, 0] < 12) | (patch[:, :, 0] > 170))
+            & (patch[:, :, 1] > 90)
+            & (patch[:, :, 2] > 60)
+            & disc
+        )
+        yellow = (
+            (patch[:, :, 0] > 16)
+            & (patch[:, :, 0] < 43)
+            & (patch[:, :, 1] > 90)
+            & (patch[:, :, 2] > 70)
+            & disc
+        )
+        counts = {"red": int(np.count_nonzero(red)), "yellow": int(np.count_nonzero(yellow))}
         colour = max(counts, key=counts.get)
         if counts[colour] < min_cap_pixels:
             continue
-        stone = {"colour": colour, "pixel": [x, y],
-                 "cap_colour_pixels": counts[colour],
-                 "hough_radius_px": round(float(r_raw), 2)}
+        stone = {
+            "colour": colour,
+            "pixel": [x, y],
+            "cap_colour_pixels": counts[colour],
+            "hough_radius_px": round(float(r_raw), 2),
+        }
         if house["delivery_side"] != "uncertain":
             sign = 1 if house["delivery_side"] == "top" else -1
             stone["canonical_lateral_house_radii"] = round(sign * (x - cx) / radius, 4)
             stone["longitudinal_house_radii"] = round(sign * (y - cy) / radius, 4)
         stones.append(stone)
-    return sorted(stones, key=lambda row: (row["colour"], row["pixel"][1],
-                                           row["pixel"][0]))
+    return sorted(stones, key=lambda row: (row["colour"], row["pixel"][1], row["pixel"][0]))

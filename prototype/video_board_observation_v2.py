@@ -9,7 +9,9 @@ import cv2
 import numpy as np
 
 from prototype.video_board_observation import (
-    annulus_support, blue_ring_mask, detect_board_stones,
+    annulus_support,
+    blue_ring_mask,
+    detect_board_stones as detect_board_stones,  # re-exported
 )
 
 
@@ -35,15 +37,24 @@ def detect_overhead_house(frame, *, min_supported_angle_bins=60):
         support = annulus_support(mask, cx, cy, radius)
         if support["supported_angle_bins"] < min_supported_angle_bins:
             continue
-        options.append({"center_px": [cx, cy], "outer_radius_px": radius,
-                        "annulus_support": support,
-                        "component_fill_fraction": round(fill_fraction, 3),
-                        "component_bbox_px": [x, y, width, height]})
+        options.append(
+            {
+                "center_px": [cx, cy],
+                "outer_radius_px": radius,
+                "annulus_support": support,
+                "component_fill_fraction": round(fill_fraction, 3),
+                "component_bbox_px": [x, y, width, height],
+            }
+        )
     if not options:
         return None
-    options.sort(key=lambda row: (-row["annulus_support"]["supported_angle_bins"],
-                                  -row["annulus_support"]["mean_blue_fraction"],
-                                  abs(row["center_px"][0] - 320)))
+    options.sort(
+        key=lambda row: (
+            -row["annulus_support"]["supported_angle_bins"],
+            -row["annulus_support"]["mean_blue_fraction"],
+            abs(row["center_px"][0] - 320),
+        )
+    )
     house = options[0]
     cy = house["center_px"][1]
     house["delivery_side"] = "top" if cy > 200 else "bottom" if cy < 160 else "uncertain"

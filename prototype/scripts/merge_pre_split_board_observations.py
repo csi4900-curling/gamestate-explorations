@@ -19,35 +19,42 @@ def main():
     if args.output.exists():
         parser.error("Merged pre-split board output already exists")
     proposals, base, dedup, manifest = (
-        json.loads(getattr(args, key).read_text()) for key in
-        ("proposals", "base", "dedup", "dedup_manifest"))
+        json.loads(getattr(args, key).read_text())
+        for key in ("proposals", "base", "dedup", "dedup_manifest")
+    )
     proposal_ids = [row["candidate_id"] for row in proposals["proposals"]]
     base_ids = [row["candidate_id"] for row in base["rows"]]
     if proposal_ids != base_ids or len(dedup["rows"]) != 1:
         parser.error("Board target coverage differs")
     target = dedup["rows"][0]
     pid = target["candidate_id"]
-    proposal = next((row for row in proposals["proposals"]
-                     if row["candidate_id"] == pid), None)
-    if (proposal is None or
-            manifest["target_candidate_id"] != pid or
-            sorted(proposal["duplicate_candidate_ids"]) !=
-            manifest["excluded_exact_duplicate_ids"] or
-            manifest["output_sha256"]["candidates"] != dedup["candidates_sha256"] or
-            manifest["output_sha256"]["motion"] != dedup["motion_sha256"] or
-            manifest["output_sha256"]["screen"] != dedup["screen_sha256"] or
-            base["source_sha256"] != dedup["source_sha256"]):
+    proposal = next((row for row in proposals["proposals"] if row["candidate_id"] == pid), None)
+    if (
+        proposal is None
+        or manifest["target_candidate_id"] != pid
+        or sorted(proposal["duplicate_candidate_ids"]) != manifest["excluded_exact_duplicate_ids"]
+        or manifest["output_sha256"]["candidates"] != dedup["candidates_sha256"]
+        or manifest["output_sha256"]["motion"] != dedup["motion_sha256"]
+        or manifest["output_sha256"]["screen"] != dedup["screen_sha256"]
+        or base["source_sha256"] != dedup["source_sha256"]
+    ):
         parser.error("Deduplicated tail provenance differs")
     original = next(row for row in base["rows"] if row["candidate_id"] == pid)
-    if (original["crossing_time_s"] != target["crossing_time_s"] or
-            original["receiving_path_last_observed_s"] !=
-            target["receiving_path_last_observed_s"] or
-            original["receiving_view"] != target["receiving_view"]):
+    if (
+        original["crossing_time_s"] != target["crossing_time_s"]
+        or original["receiving_path_last_observed_s"] != target["receiving_path_last_observed_s"]
+        or original["receiving_view"] != target["receiving_view"]
+    ):
         parser.error("Deduplicated tail changed the target motion")
-    rows = [{**(target if row["candidate_id"] == pid else row),
-             "tail_clock_excluded_exact_duplicate_ids":
-                 proposal["duplicate_candidate_ids"] if row["candidate_id"] == pid else []}
-            for row in base["rows"]]
+    rows = [
+        {
+            **(target if row["candidate_id"] == pid else row),
+            "tail_clock_excluded_exact_duplicate_ids": proposal["duplicate_candidate_ids"]
+            if row["candidate_id"] == pid
+            else [],
+        }
+        for row in base["rows"]
+    ]
     result = {
         "status": "partial_board_observations_after_pre_split_review_targets_not_game_states",
         "source_id": base["source_id"],

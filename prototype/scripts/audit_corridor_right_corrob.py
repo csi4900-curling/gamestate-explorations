@@ -25,8 +25,7 @@ def main():
         parser.error("Output already exists")
     left = json.loads(args.left.read_text())
     right = json.loads(args.right_sequence.read_text())
-    if (left["source_sha256"] != right["source_sha256"] or
-            left["source_id"] != right["source_id"]):
+    if left["source_sha256"] != right["source_sha256"] or left["source_id"] != right["source_id"]:
         raise ValueError("Left and right sources differ")
     rows = corroborate_left_proposals(left["events"], right["right_proposals"])
     output = {
@@ -34,8 +33,7 @@ def main():
         "source_id": left["source_id"],
         "source_sha256": left["source_sha256"],
         "source_interval_s": left["source_interval_s"],
-        "input_sha256": {"left": digest(args.left),
-                         "right_sequence": digest(args.right_sequence)},
+        "input_sha256": {"left": digest(args.left), "right_sequence": digest(args.right_sequence)},
         "model_code_sha256": digest(ROOT / "prototype/corridor_right_corrob.py"),
         "runner_sha256": digest(Path(__file__)),
         "maximum_direction_aware_view_order_lag_s": 20,
@@ -50,8 +48,7 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(output, indent=2) + "\n")
-    print(json.dumps({"source": output["source_id"],
-                      "tiers": output["tier_counts"]}))
+    print(json.dumps({"source": output["source_id"], "tiers": output["tier_counts"]}))
 
 
 if __name__ == "__main__":

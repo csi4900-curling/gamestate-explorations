@@ -53,8 +53,7 @@ def main():
     if source_hash != boards["high_resolution_source_sha256"]:
         raise ValueError("Board and high-resolution source differ")
     board_by_id = {r["candidate_id"]: r for r in boards["rows"]}
-    cap = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     fps = cap.get(cv2.CAP_PROP_FPS)
     if not cap.isOpened() or abs(fps - 30) > 0.01:
         raise ValueError("High-resolution source unreadable or FPS changed")
@@ -69,10 +68,12 @@ def main():
             if not 0 < board_time - start_time <= 6:
                 raise ValueError(f"Unexpected gap duration: {gap['episode_id']}")
             board = board_by_id[gap["left_motion_candidate_id"]]
-            first_frame = next(f for f in board["frames"]
-                               if f["source_time_s"] == board_time)
-            board_centers = [s["pixel_center"] for s in first_frame["stones"]
-                             if s["colour"] == gap["colour_claim"]]
+            first_frame = next(f for f in board["frames"] if f["source_time_s"] == board_time)
+            board_centers = [
+                s["pixel_center"]
+                for s in first_frame["stones"]
+                if s["colour"] == gap["colour_claim"]
+            ]
             if not board_centers:
                 raise ValueError("Missing first same-colour board center")
             endpoint = path[-1]["pixel_center_1080"]
@@ -83,29 +84,36 @@ def main():
                 ok, frame = cap.read()
                 if not ok or frame.shape[:2] != (1080, 1920):
                     raise ValueError(f"Unreadable source frame {index}")
-                samples.append({
-                    "source_time_s": round(index / fps, 6),
-                    "decoded_frame_index": index,
-                    "same_colour_components": local_cap_components(
-                        frame, roi, gap["colour_claim"]),
-                })
-            rows.append({
-                "episode_id": gap["episode_id"],
-                "left_motion_candidate_id": gap["left_motion_candidate_id"],
-                "colour_claim": gap["colour_claim"],
-                "last_motion_time_s": start_time,
-                "first_same_colour_board_time_s": board_time,
-                "last_motion_center_px_1080": endpoint,
-                "first_same_colour_board_centers_px_1080": board_centers,
-                "roi_xyxy_px_1080": list(roi),
-                "single_component_sample_count": sum(
-                    len(s["same_colour_components"]) == 1 for s in samples),
-                "ambiguous_sample_count": sum(
-                    len(s["same_colour_components"]) != 1 for s in samples),
-                "samples": samples,
-                "persistent_stone_identity_verified": False,
-                "simulation_ready": False,
-            })
+                samples.append(
+                    {
+                        "source_time_s": round(index / fps, 6),
+                        "decoded_frame_index": index,
+                        "same_colour_components": local_cap_components(
+                            frame, roi, gap["colour_claim"]
+                        ),
+                    }
+                )
+            rows.append(
+                {
+                    "episode_id": gap["episode_id"],
+                    "left_motion_candidate_id": gap["left_motion_candidate_id"],
+                    "colour_claim": gap["colour_claim"],
+                    "last_motion_time_s": start_time,
+                    "first_same_colour_board_time_s": board_time,
+                    "last_motion_center_px_1080": endpoint,
+                    "first_same_colour_board_centers_px_1080": board_centers,
+                    "roi_xyxy_px_1080": list(roi),
+                    "single_component_sample_count": sum(
+                        len(s["same_colour_components"]) == 1 for s in samples
+                    ),
+                    "ambiguous_sample_count": sum(
+                        len(s["same_colour_components"]) != 1 for s in samples
+                    ),
+                    "samples": samples,
+                    "persistent_stone_identity_verified": False,
+                    "simulation_ready": False,
+                }
+            )
     finally:
         cap.release()
     result = {
@@ -115,15 +123,15 @@ def main():
         "runner_sha256": digest(Path(__file__)),
         "component_code_sha256": digest(ROOT / "prototype/local_colour_cap_probe.py"),
         "method": {
-            "source_resolution_px": [1920, 1080], "fps": fps,
+            "source_resolution_px": [1920, 1080],
+            "fps": fps,
             "sampling": "last moving-path frame, every 0.5 s, exact first same-colour board frame",
             "roi": "bounding rectangle of last path center and all same-colour first-board centers, expanded by 65 px",
             "colour_component_policy": "same HSV masks and 20 px² minimum as E019 10 Hz probe; preserve all components",
             "unique_component_is_identity": False,
         },
         "eligible_gap_count": len(rows),
-        "any_ambiguous_sample_gap_count": sum(
-            r["ambiguous_sample_count"] > 0 for r in rows),
+        "any_ambiguous_sample_gap_count": sum(r["ambiguous_sample_count"] > 0 for r in rows),
         "rows": rows,
         "limitations": [
             "The source-reviewed prefixes, moving paths and first partial boards are same-agent development evidence, not independent physical identity ground truth.",
@@ -133,10 +141,15 @@ def main():
         ],
     }
     OUT.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"eligible_gaps": len(rows),
-                      "gaps_with_ambiguous_samples": result[
-                          "any_ambiguous_sample_gap_count"],
-                      "samples": sum(len(r["samples"]) for r in rows)}))
+    print(
+        json.dumps(
+            {
+                "eligible_gaps": len(rows),
+                "gaps_with_ambiguous_samples": result["any_ambiguous_sample_gap_count"],
+                "samples": sum(len(r["samples"]) for r in rows),
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

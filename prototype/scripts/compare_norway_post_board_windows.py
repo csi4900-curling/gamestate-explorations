@@ -27,7 +27,10 @@ def earliest_by_candidate(score):
     for row in score["groups"]:
         candidate = row["video_candidate_shot_id"]
         current = selected.get(candidate)
-        if current is None or row["source_observation_interval_s"][0] < current["source_observation_interval_s"][0]:
+        if (
+            current is None
+            or row["source_observation_interval_s"][0] < current["source_observation_interval_s"][0]
+        ):
             selected[candidate] = row
     return selected
 
@@ -35,9 +38,15 @@ def earliest_by_candidate(score):
 def summarize_earliest(rows):
     return {
         "candidate_count": len(rows),
-        "observed_stone_count": sum(row["current_comparison"]["video_stone_count"] for row in rows.values()),
-        "matched_observed_stone_count": sum(row["current_comparison"]["matched_count"] for row in rows.values()),
-        "complete_diagram_symbol_match_count": sum(row["complete_diagram_symbol_match"] for row in rows.values()),
+        "observed_stone_count": sum(
+            row["current_comparison"]["video_stone_count"] for row in rows.values()
+        ),
+        "matched_observed_stone_count": sum(
+            row["current_comparison"]["matched_count"] for row in rows.values()
+        ),
+        "complete_diagram_symbol_match_count": sum(
+            row["complete_diagram_symbol_match"] for row in rows.values()
+        ),
     }
 
 
@@ -50,17 +59,24 @@ def main():
     long_score = json.loads(LONG_SCORE.read_text())
     if len({short["source_video_sha256"], long["source_video_sha256"]}) != 1:
         raise SystemExit("Source videos differ")
-    if short_score["input_sha256"]["source_scan"] != digest(SHORT) or \
-            long_score["input_sha256"]["source_scan"] != digest(LONG):
+    if short_score["input_sha256"]["source_scan"] != digest(SHORT) or long_score["input_sha256"][
+        "source_scan"
+    ] != digest(LONG):
         raise SystemExit("Postscore inputs differ from frozen source scans")
     by_short = {row["shot_id"]: row for row in short["rows"]}
     by_long = {row["shot_id"]: row for row in long["rows"]}
     if set(by_short) != set(by_long):
         raise SystemExit("Candidate sets differ")
-    gained = [shot_id for shot_id in by_long if not has_stable(by_short[shot_id])
-              and has_stable(by_long[shot_id])]
-    lost = [shot_id for shot_id in by_short if has_stable(by_short[shot_id])
-            and not has_stable(by_long[shot_id])]
+    gained = [
+        shot_id
+        for shot_id in by_long
+        if not has_stable(by_short[shot_id]) and has_stable(by_long[shot_id])
+    ]
+    lost = [
+        shot_id
+        for shot_id in by_short
+        if has_stable(by_short[shot_id]) and not has_stable(by_long[shot_id])
+    ]
     early_short = earliest_by_candidate(short_score)
     early_long = earliest_by_candidate(long_score)
     if not set(early_short).issubset(early_long):
@@ -71,17 +87,25 @@ def main():
             continue
         row = early_long[shot_id]
         comparison = row["current_comparison"]
-        new_scored.append({"candidate_id": shot_id,
-                           "official_shot_id": row["official_shot_id"],
-                           "post_camera_shot_id": row["post_camera_shot_id"],
-                           "observed_stones": comparison["video_stone_count"],
-                           "matched_observed_stones": comparison["matched_count"],
-                           "official_symbols": comparison["official_symbol_count"],
-                           "complete_diagram_symbol_match": row["complete_diagram_symbol_match"]})
+        new_scored.append(
+            {
+                "candidate_id": shot_id,
+                "official_shot_id": row["official_shot_id"],
+                "post_camera_shot_id": row["post_camera_shot_id"],
+                "observed_stones": comparison["video_stone_count"],
+                "matched_observed_stones": comparison["matched_count"],
+                "official_symbols": comparison["official_symbol_count"],
+                "complete_diagram_symbol_match": row["complete_diagram_symbol_match"],
+            }
+        )
     result = {
         "status": "source_gate_horizon_sensitivity_with_retrospective_postscore_not_validation",
-        "input_sha256": {"short_source_scan": digest(SHORT), "long_source_scan": digest(LONG),
-                         "short_postscore": digest(SHORT_SCORE), "long_postscore": digest(LONG_SCORE)},
+        "input_sha256": {
+            "short_source_scan": digest(SHORT),
+            "long_source_scan": digest(LONG),
+            "short_postscore": digest(SHORT_SCORE),
+            "long_postscore": digest(LONG_SCORE),
+        },
         "runner_sha256": digest(Path(__file__)),
         "short_horizon_s": 32,
         "long_horizon_s": 90,
@@ -100,10 +124,19 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(result, indent=2) + "\n")
-    print({key: result[key] for key in
-           ("short_stable_candidate_count", "long_stable_candidate_count",
-            "gained_stable_candidate_ids", "lost_stable_candidate_ids",
-            "short_earliest_group_postscore", "long_earliest_group_postscore")})
+    print(
+        {
+            key: result[key]
+            for key in (
+                "short_stable_candidate_count",
+                "long_stable_candidate_count",
+                "gained_stable_candidate_ids",
+                "lost_stable_candidate_ids",
+                "short_earliest_group_postscore",
+                "long_earliest_group_postscore",
+            )
+        }
+    )
 
 
 if __name__ == "__main__":

@@ -40,15 +40,17 @@ def main():
     for event in source["events"]:
         t = event["crossing_time_s"]
         before, after = frame_at(t - 0.25), frame_at(t + 0.25)
-        rows.append({
-            "id": event["id"],
-            "time_s": t,
-            "x_px": event["crossing_x_px"],
-            "y_px": event["passage_y_px"],
-            **motion_context_features(
-                before, after, x=event["crossing_x_px"], y=event["passage_y_px"]
-            ),
-        })
+        rows.append(
+            {
+                "id": event["id"],
+                "time_s": t,
+                "x_px": event["crossing_x_px"],
+                "y_px": event["passage_y_px"],
+                **motion_context_features(
+                    before, after, x=event["crossing_x_px"], y=event["passage_y_px"]
+                ),
+            }
+        )
     cap.release()
     result = {
         "source_id": source["source_id"],

@@ -23,8 +23,9 @@ def main():
     raw = json.loads(args.primary_raw.read_text())
     primary = json.loads(args.primary_screen.read_text())
     fused = json.loads(args.fused_screen.read_text())
-    if (primary["input_sha256"] != file_sha256(args.primary_raw)
-            or fused["input_sha256"] != file_sha256(args.primary_raw)):
+    if primary["input_sha256"] != file_sha256(args.primary_raw) or fused[
+        "input_sha256"
+    ] != file_sha256(args.primary_raw):
         parser.error("Primary raw/screen/fusion mismatch")
     if any(row["source_sha256"] != raw["source_sha256"] for row in (primary, fused)):
         parser.error("Source fingerprint mismatch")
@@ -39,23 +40,31 @@ def main():
             updated["colour_support"] = row
         confirmed.append(updated)
     result = dict(fused)
-    result.update({
-        "status": "development_colour_refined_gap_motion_candidates",
-        "input_sha256": file_sha256(args.primary_raw),
-        "primary_screen_sha256": file_sha256(args.primary_screen),
-        "fused_screen_sha256": file_sha256(args.fused_screen),
-        "colour_model_sha256": file_sha256(ROOT / "prototype/episode_colour_support.py"),
-        "colour_runner_sha256": file_sha256(__file__),
-        "colour_decisions": support,
-        "corroborated_candidates": confirmed,
-    })
+    result.update(
+        {
+            "status": "development_colour_refined_gap_motion_candidates",
+            "input_sha256": file_sha256(args.primary_raw),
+            "primary_screen_sha256": file_sha256(args.primary_screen),
+            "fused_screen_sha256": file_sha256(args.fused_screen),
+            "colour_model_sha256": file_sha256(ROOT / "prototype/episode_colour_support.py"),
+            "colour_runner_sha256": file_sha256(__file__),
+            "colour_decisions": support,
+            "corroborated_candidates": confirmed,
+        }
+    )
     result["limitations"] = fused["limitations"] + [
         "Colour refinement was fitted to exposed China 600–885 s errors.",
         "It does not validate delivered-stone identity across camera cuts.",
     ]
     args.output.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({"events": len(confirmed), "colour_changes": sum(
-        row["colour_changed"] for row in support)}))
+    print(
+        json.dumps(
+            {
+                "events": len(confirmed),
+                "colour_changes": sum(row["colour_changed"] for row in support),
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

@@ -31,10 +31,18 @@ def main():
     if not paths:
         raise RuntimeError("No sequential shards")
     shards = [json.loads(path.read_text()) for path in paths]
-    fingerprints = {key: {item[key] for item in shards} for key in (
-        "video_sha256", "candidate_ledger_sha256", "body_probe_sha256",
-        "handle_screen_sha256", "body_code_sha256", "handle_code_sha256",
-        "runner_sha256")}
+    fingerprints = {
+        key: {item[key] for item in shards}
+        for key in (
+            "video_sha256",
+            "candidate_ledger_sha256",
+            "body_probe_sha256",
+            "handle_screen_sha256",
+            "body_code_sha256",
+            "handle_code_sha256",
+            "runner_sha256",
+        )
+    }
     if any(len(values) != 1 for values in fingerprints.values()):
         raise ValueError("Shard provenance mismatch")
     if next(iter(fingerprints["candidate_ledger_sha256"])) != digest(CANDIDATES):
@@ -55,36 +63,46 @@ def main():
                 raise ValueError(f"Duplicate/out-of-range source time: {t}")
             rows_by_time[t] = row
         if shard["body_proposal_count"] != sum(
-                len(row["body_proposals"])
-                for row in shard["samples_with_body_proposals"]):
+            len(row["body_proposals"]) for row in shard["samples_with_body_proposals"]
+        ):
             raise ValueError(f"Shard count mismatch: {path}")
     if covered != set(range(START_S, STOP_S)):
         raise ValueError("Shards do not cover full excerpt")
-    samples = [rows_by_time.get(t, {"time_s": t, "body_proposals": []})
-               for t in range(START_S, STOP_S)]
+    samples = [
+        rows_by_time.get(t, {"time_s": t, "body_proposals": []}) for t in range(START_S, STOP_S)
+    ]
     screened = [
-        {"time_s": row["time_s"],
-         "body_proposals": [p for p in row["body_proposals"]
-                            if p["handle_supported"]]}
-        for row in samples]
+        {
+            "time_s": row["time_s"],
+            "body_proposals": [p for p in row["body_proposals"] if p["handle_supported"]],
+        }
+        for row in samples
+    ]
     linked = link_paths(screened)
     ledger = json.loads(CANDIDATES.read_text())
-    candidate_rows = [row for row in ledger["candidates"]
-                      if START_S <= row["crossing_time_s"] < STOP_S and
-                      row["observation_kind"] == "left_provisional_passage"]
+    candidate_rows = [
+        row
+        for row in ledger["candidates"]
+        if START_S <= row["crossing_time_s"] < STOP_S
+        and row["observation_kind"] == "left_provisional_passage"
+    ]
     context = []
     for row in candidate_rows:
         t = row["crossing_time_s"]
-        matched = [p["diagnostic_path_id"] for p in linked
-                   if p["direction"] == "upward" and
-                   t <= p["first_observed_s"] <= t+25]
-        context.append({
-            "candidate_id": row["candidate_id"],
-            "crossing_time_s": t,
-            "colour_claim": row["colour_claim"],
-            "upward_body_handle_paths_started_within_25s": matched,
-            "physical_throw_verified": False,
-        })
+        matched = [
+            p["diagnostic_path_id"]
+            for p in linked
+            if p["direction"] == "upward" and t <= p["first_observed_s"] <= t + 25
+        ]
+        context.append(
+            {
+                "candidate_id": row["candidate_id"],
+                "crossing_time_s": t,
+                "colour_claim": row["colour_claim"],
+                "upward_body_handle_paths_started_within_25s": matched,
+                "physical_throw_verified": False,
+            }
+        )
     result = {
         "status": "full_early_excerpt_body_handle_development_transfer_not_event_validation",
         "source_interval_s": [START_S, STOP_S],
@@ -92,12 +110,15 @@ def main():
         "source_video_sha256": next(iter(fingerprints["video_sha256"])),
         "candidate_ledger_sha256": digest(CANDIDATES),
         "joiner_sha256": digest(Path(__file__)),
-        "linker_sha256": digest(
-            ROOT / "prototype/scripts/probe_latvia_1080p_body_paths.py"),
-        "shards": [{"path": str(path.relative_to(ROOT)),
-                    "sha256": digest(path),
-                    "interval_s": item["source_interval_s"]}
-                   for path, item in zip(paths, shards)],
+        "linker_sha256": digest(ROOT / "prototype/scripts/probe_latvia_1080p_body_paths.py"),
+        "shards": [
+            {
+                "path": str(path.relative_to(ROOT)),
+                "sha256": digest(path),
+                "interval_s": item["source_interval_s"],
+            }
+            for path, item in zip(paths, shards)
+        ],
         "body_proposal_count": sum(len(row["body_proposals"]) for row in samples),
         "handle_supported_count": sum(len(row["body_proposals"]) for row in screened),
         "supported_path_direction_counts": dict(Counter(p["direction"] for p in linked)),
@@ -105,8 +126,8 @@ def main():
         "candidate_context": context,
         "candidate_count": len(context),
         "candidate_with_associated_upward_path_count": sum(
-            bool(row["upward_body_handle_paths_started_within_25s"])
-            for row in context),
+            bool(row["upward_body_handle_paths_started_within_25s"]) for row in context
+        ),
         "limitations": [
             "The 2310 s moving yellow stone used to choose the template is inside this excerpt.",
             "Left candidate times are unverified model outputs, not independent throw labels.",
@@ -115,13 +136,18 @@ def main():
         ],
     }
     OUT.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({"seconds": len(covered),
-                      "body_proposals": result["body_proposal_count"],
-                      "handle_supported": result["handle_supported_count"],
-                      "paths": result["supported_path_direction_counts"],
-                      "candidate_associations": result[
-                          "candidate_with_associated_upward_path_count"],
-                      "candidates": len(context)}))
+    print(
+        json.dumps(
+            {
+                "seconds": len(covered),
+                "body_proposals": result["body_proposal_count"],
+                "handle_supported": result["handle_supported_count"],
+                "paths": result["supported_path_direction_counts"],
+                "candidate_associations": result["candidate_with_associated_upward_path_count"],
+                "candidates": len(context),
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

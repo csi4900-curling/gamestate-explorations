@@ -37,42 +37,59 @@ def build():
         if any(row["source_sha256"] != source for row in local):
             raise ValueError("Proposal source mismatch")
         events = append_preorigin_travel_rescues(game["events"], local)
-        events.sort(key=lambda event: (
-            min(int(shot[1:]) for shot in event["source_shot_ids"]),
-            event["event_id"]))
+        events.sort(
+            key=lambda event: (
+                min(int(shot[1:]) for shot in event["source_shot_ids"]),
+                event["event_id"],
+            )
+        )
         consumed = {row["counter_id"] for row in local}
         unassigned = sorted(set(game["remaining_unassigned_counter_ids"]) - consumed)
         if not consumed <= set(game["remaining_unassigned_counter_ids"]):
             raise ValueError("Rescue counter was not unassigned in v2")
-        games.append({**{key: value for key, value in game.items()
-                         if key not in ("events", "provisional_event_count",
-                                        "counter_linked_event_count",
-                                        "remaining_unassigned_counter_count",
-                                        "remaining_unassigned_counter_ids",
-                                        "candidate_class_counts")},
-                      "provisional_event_count": len(events),
-                      "counter_linked_event_count": game[
-                          "counter_linked_event_count"] + len(local),
-                      "remaining_unassigned_counter_count": len(unassigned),
-                      "remaining_unassigned_counter_ids": unassigned,
-                      "candidate_class_counts": dict(sorted(Counter(
-                          event["candidate_class"] for event in events).items())),
-                      "events": events})
-    return {"status": "development_provisional_event_union_v3_preorigin_travel_not_physical_f1",
-            "input_sha256": {"v2_union": digest(UNION),
-                             "preorigin_travel_proposal": digest(PROPOSALS),
-                             "merge_code": digest(ROOT / "prototype/preorigin_travel_union.py"),
-                             "runner": digest(Path(__file__))},
-            "total_provisional_event_count": sum(g["provisional_event_count"]
-                                                 for g in games),
-            "preorigin_travel_rescue_count": len(proposals),
-            "games": games,
-            "limitations": [
-                "The China B02 row is an additive provisional candidate; the v2 358-event baseline remains frozen separately.",
-                "The receiving-view cap passage is travel evidence, not a measured physical release time.",
-                "Origin-view and receiving-view physical stone identity is not verified.",
-                "No independent physical event F1, complete settled board, or simulation-ready trajectory is established.",
-            ]}
+        games.append(
+            {
+                **{
+                    key: value
+                    for key, value in game.items()
+                    if key
+                    not in (
+                        "events",
+                        "provisional_event_count",
+                        "counter_linked_event_count",
+                        "remaining_unassigned_counter_count",
+                        "remaining_unassigned_counter_ids",
+                        "candidate_class_counts",
+                    )
+                },
+                "provisional_event_count": len(events),
+                "counter_linked_event_count": game["counter_linked_event_count"] + len(local),
+                "remaining_unassigned_counter_count": len(unassigned),
+                "remaining_unassigned_counter_ids": unassigned,
+                "candidate_class_counts": dict(
+                    sorted(Counter(event["candidate_class"] for event in events).items())
+                ),
+                "events": events,
+            }
+        )
+    return {
+        "status": "development_provisional_event_union_v3_preorigin_travel_not_physical_f1",
+        "input_sha256": {
+            "v2_union": digest(UNION),
+            "preorigin_travel_proposal": digest(PROPOSALS),
+            "merge_code": digest(ROOT / "prototype/preorigin_travel_union.py"),
+            "runner": digest(Path(__file__)),
+        },
+        "total_provisional_event_count": sum(g["provisional_event_count"] for g in games),
+        "preorigin_travel_rescue_count": len(proposals),
+        "games": games,
+        "limitations": [
+            "The China B02 row is an additive provisional candidate; the v2 358-event baseline remains frozen separately.",
+            "The receiving-view cap passage is travel evidence, not a measured physical release time.",
+            "Origin-view and receiving-view physical stone identity is not verified.",
+            "No independent physical event F1, complete settled board, or simulation-ready trajectory is established.",
+        ],
+    }
 
 
 def main():

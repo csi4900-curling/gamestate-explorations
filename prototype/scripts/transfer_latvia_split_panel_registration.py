@@ -12,7 +12,11 @@ import cv2
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "prototype"))
 from split_panel_camera_registration import (  # noqa: E402
-    camera_relative_pair, panel_for_pixel, panel_pixel, resize_panel)
+    camera_relative_pair,
+    panel_for_pixel,
+    panel_pixel,
+    resize_panel,
+)
 
 CZECH = ROOT / "validation/throw-event-benchmark/canada-czech-2024"
 BASE = ROOT / "validation/throw-event-benchmark/canada-latvia-2024"
@@ -40,30 +44,36 @@ def main():
     frozen_control = json.loads(FROZEN_CONTROL.read_text())
     code_hash = digest(ROOT / "prototype/split_panel_camera_registration.py")
     source_hash = digest(VIDEO)
-    if (source_hash != join["highres_source_sha256"] or
-            join["source_interval_s"] != [5670, 6670] or
-            code_hash != frozen_positive["registration_code_sha256"] or
-            code_hash != frozen_control["registration_code_sha256"] or
-            len(join["rows"]) != 20):
+    if (
+        source_hash != join["highres_source_sha256"]
+        or join["source_interval_s"] != [5670, 6670]
+        or code_hash != frozen_positive["registration_code_sha256"]
+        or code_hash != frozen_control["registration_code_sha256"]
+        or len(join["rows"]) != 20
+    ):
         raise ValueError("Latvia source or Czech-frozen rule lineage differs")
-    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not capture.isOpened():
         raise ValueError("Latvia source unreadable")
     fps = capture.get(cv2.CAP_PROP_FPS)
     rows = []
     try:
         for item in join["rows"]:
-            original = item["observed_motion_onset"].get(
-                "observed_moving_points", [])
-            points = [{"time_s": p["time_s"],
-                       "full_pixel": [3 * value for value in p["pixel"]]}
-                      for p in original]
+            original = item["observed_motion_onset"].get("observed_moving_points", [])
+            points = [
+                {"time_s": p["time_s"], "full_pixel": [3 * value for value in p["pixel"]]}
+                for p in original
+            ]
             if len(points) < 2:
-                rows.append({"right_proposal_id": item["right_proposal_id"],
-                             "source_prefix_class": item["source_prefix_class"],
-                             "status": "no_usable_reviewed_motion_path",
-                             "pair_count": 0, "pairs": []})
+                rows.append(
+                    {
+                        "right_proposal_id": item["right_proposal_id"],
+                        "source_prefix_class": item["source_prefix_class"],
+                        "status": "no_usable_reviewed_motion_path",
+                        "pair_count": 0,
+                        "pairs": [],
+                    }
+                )
                 continue
             panels = {panel_for_pixel(p["full_pixel"]) for p in points}
             if panels != {1}:
@@ -84,25 +94,33 @@ def main():
             for first, second in zip(points, points[1:]):
                 p0 = panel_pixel(first["full_pixel"], 1)
                 p1 = panel_pixel(second["full_pixel"], 1)
-                result = camera_relative_pair(
-                    p0, p1, first["time_s"], second["time_s"], frame_at)
-                pairs.append({"interval_s": [first["time_s"],
-                                             second["time_s"]],
-                              "raw_displacement_analysis_px": round(
-                                  math.dist(p0, p1), 3),
-                              **result})
-            row = {"right_proposal_id": item["right_proposal_id"],
-                   "source_prefix_class": item["source_prefix_class"],
-                   "status": "audited", "source_interval_s": [
-                       points[0]["time_s"], points[-1]["time_s"]],
-                   "point_count": len(points), "pair_count": len(pairs),
-                   "registered_pair_count": sum(
-                       p["camera_residual_px"] is not None for p in pairs),
-                   "pairs": pairs}
+                result = camera_relative_pair(p0, p1, first["time_s"], second["time_s"], frame_at)
+                pairs.append(
+                    {
+                        "interval_s": [first["time_s"], second["time_s"]],
+                        "raw_displacement_analysis_px": round(math.dist(p0, p1), 3),
+                        **result,
+                    }
+                )
+            row = {
+                "right_proposal_id": item["right_proposal_id"],
+                "source_prefix_class": item["source_prefix_class"],
+                "status": "audited",
+                "source_interval_s": [points[0]["time_s"], points[-1]["time_s"]],
+                "point_count": len(points),
+                "pair_count": len(pairs),
+                "registered_pair_count": sum(p["camera_residual_px"] is not None for p in pairs),
+                "pairs": pairs,
+            }
             rows.append(row)
-            print(row["right_proposal_id"], row["source_prefix_class"],
-                  row["registered_pair_count"], "/", row["pair_count"],
-                  flush=True)
+            print(
+                row["right_proposal_id"],
+                row["source_prefix_class"],
+                row["registered_pair_count"],
+                "/",
+                row["pair_count"],
+                flush=True,
+            )
     finally:
         capture.release()
     payload = {
@@ -118,10 +136,8 @@ def main():
         "reviewed_proposal_count": len(rows),
         "usable_path_count": sum(r["status"] == "audited" for r in rows),
         "pair_count": sum(r["pair_count"] for r in rows),
-        "registered_pair_count": sum(r.get("registered_pair_count", 0)
-                                     for r in rows),
-        "source_class_counts": dict(Counter(r["source_prefix_class"]
-                                            for r in rows)),
+        "registered_pair_count": sum(r.get("registered_pair_count", 0) for r in rows),
+        "source_class_counts": dict(Counter(r["source_prefix_class"] for r in rows)),
         "rows": rows,
         "limitations": [
             "Latvia and Czechia use a similar 2024 broadcast style and both recordings were previously exposed to development.",
@@ -130,10 +146,16 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(payload, indent=2) + "\n")
-    print(json.dumps({"usable_paths": payload["usable_path_count"],
-                      "pairs": payload["pair_count"],
-                      "registered": payload["registered_pair_count"],
-                      "classes": payload["source_class_counts"]}))
+    print(
+        json.dumps(
+            {
+                "usable_paths": payload["usable_path_count"],
+                "pairs": payload["pair_count"],
+                "registered": payload["registered_pair_count"],
+                "classes": payload["source_class_counts"],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

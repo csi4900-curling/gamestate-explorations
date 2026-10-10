@@ -7,21 +7,33 @@ from layout_gap_bridge import bridge_split_gaps
 
 def example():
     chunks = [
-        {"interval_s": [0, 90], "samples": 9, "split_signature_count": 9,
-         "layout": "split_2024"},
-        {"interval_s": [90, 180], "samples": 9, "split_signature_count": 4,
-         "layout": "unknown"},
-        {"interval_s": [180, 270], "samples": 9, "split_signature_count": 9,
-         "layout": "split_2024"},
+        {"interval_s": [0, 90], "samples": 9, "split_signature_count": 9, "layout": "split_2024"},
+        {"interval_s": [90, 180], "samples": 9, "split_signature_count": 4, "layout": "unknown"},
+        {
+            "interval_s": [180, 270],
+            "samples": 9,
+            "split_signature_count": 9,
+            "layout": "split_2024",
+        },
     ]
     samples = []
     for chunk in chunks:
         for n in range(9):
-            samples.append({"time_s": chunk["interval_s"][0] + 10 * n,
-                            "split_2024_signature": n < chunk["split_signature_count"],
-                            "beijing_2022_counter": False})
-    return {"layout_chunk_s": 90, "chunks": chunks, "samples": samples,
-            "layout": "unknown", "runs": [], "coverage_gaps_s": [[90, 180]]}
+            samples.append(
+                {
+                    "time_s": chunk["interval_s"][0] + 10 * n,
+                    "split_2024_signature": n < chunk["split_signature_count"],
+                    "beijing_2022_counter": False,
+                }
+            )
+    return {
+        "layout_chunk_s": 90,
+        "chunks": chunks,
+        "samples": samples,
+        "layout": "unknown",
+        "runs": [],
+        "coverage_gaps_s": [[90, 180]],
+    }
 
 
 def test_bridges_only_supported_isolated_gap_without_changing_source():
@@ -30,8 +42,7 @@ def test_bridges_only_supported_isolated_gap_without_changing_source():
     result = bridge_split_gaps(source)
     assert source == frozen
     assert result["bridge_promoted_intervals_s"] == [[90, 180]]
-    assert result["runs"] == [{"layout": "split_2024", "interval_s": [0, 270],
-                               "samples": 27}]
+    assert result["runs"] == [{"layout": "split_2024", "interval_s": [0, 270], "samples": 27}]
     assert result["coverage_gaps_s"] == []
 
 

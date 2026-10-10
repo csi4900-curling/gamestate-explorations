@@ -23,7 +23,10 @@ def main():
     video = cv2.VideoCapture(str(ROOT / "continuous/clip.mp4"))
     if not video.isOpened():
         raise RuntimeError("Could not open the T11 clip")
-    times = sorted(set(np.round(np.arange(46.5, 52.501, 0.5), 2)) | set(np.round(np.arange(46.5, 47.101, 0.1), 2)))
+    times = sorted(
+        set(np.round(np.arange(46.5, 52.501, 0.5), 2))
+        | set(np.round(np.arange(46.5, 47.101, 0.1), 2))
+    )
     rows = []
     for t in times:
         video.set(cv2.CAP_PROP_POS_MSEC, float(t) * 1000)

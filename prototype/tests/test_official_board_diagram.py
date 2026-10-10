@@ -11,7 +11,8 @@ def test_fill_score_distinguishes_coloured_disc_from_thin_outline():
     yy, xx = np.mgrid[0:600, 0:300]
     filled = (xx - 100) ** 2 + (yy - 200) ** 2 <= 7**2
     outline = ((xx - 200) ** 2 + (yy - 200) ** 2 <= 7**2) & (
-        (xx - 200) ** 2 + (yy - 200) ** 2 >= 6**2)
+        (xx - 200) ** 2 + (yy - 200) ** 2 >= 6**2
+    )
     image[filled] = (41, 46, 238)
     image[outline] = (41, 46, 238)
     assert disc_fill_score(image, 100, 200, "red") > 100

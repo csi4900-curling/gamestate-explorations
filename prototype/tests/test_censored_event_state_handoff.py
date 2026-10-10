@@ -9,15 +9,18 @@ from prototype.censored_event_state_handoff import (
 )
 
 
-BASE = (Path(__file__).resolve().parents[2] /
-        "validation/throw-event-benchmark/canada-latvia-2024")
+BASE = Path(__file__).resolve().parents[2] / "validation/throw-event-benchmark/canada-latvia-2024"
 
 
 def inputs():
-    return [json.loads((BASE / name).read_text()) for name in (
-        "end6-cross-resolution-body-cap-development.json",
-        "full-right-area-end6-partial-state-development.json",
-        "end6-field-of-view-censoring-development.json")]
+    return [
+        json.loads((BASE / name).read_text())
+        for name in (
+            "end6-cross-resolution-body-cap-development.json",
+            "full-right-area-end6-partial-state-development.json",
+            "end6-field-of-view-censoring-development.json",
+        )
+    ]
 
 
 def test_observed_tail_and_partial_board_do_not_become_physical_settle():
@@ -25,16 +28,27 @@ def test_observed_tail_and_partial_board_do_not_become_physical_settle():
     assert len(rows) == 20
     assert sum(row["observed_moving_pixels"] is not None for row in rows) == 16
     assert sum(row["following_partial_image_board"] is not None for row in rows) == 13
-    assert sum(row["terminal_visibility"] is not None and
-               row["terminal_visibility"]["next_second_colour_screen"][
-                   "status"] == "unique_colour_component_provisional"
-               for row in rows) == 15
-    assert all(row["physical_settle_time_s"] is None and
-               row["same_stone_to_board_verified"] is False and
-               row["simulation_ready"] is False for row in rows)
-    witnessed = [row for row in rows if row["terminal_visibility"] is not None
-                 and row["terminal_visibility"][
-                     "selected_source_frame_boundary_contact_then_absence"]]
+    assert (
+        sum(
+            row["terminal_visibility"] is not None
+            and row["terminal_visibility"]["next_second_colour_screen"]["status"]
+            == "unique_colour_component_provisional"
+            for row in rows
+        )
+        == 15
+    )
+    assert all(
+        row["physical_settle_time_s"] is None
+        and row["same_stone_to_board_verified"] is False
+        and row["simulation_ready"] is False
+        for row in rows
+    )
+    witnessed = [
+        row
+        for row in rows
+        if row["terminal_visibility"] is not None
+        and row["terminal_visibility"]["selected_source_frame_boundary_contact_then_absence"]
+    ]
     assert [row["right_proposal_id"] for row in witnessed] == ["R01:A401"]
 
 

@@ -26,16 +26,17 @@ def main():
         parser.error("Output directory exists")
     tail = json.loads(args.right_tail.read_text())
     patches = json.loads(args.patches.read_text())
-    if (digest(args.video) != tail["source_sha256"] or
-            patches["source_sha256"] != tail["source_sha256"] or
-            patches["input_sha256"]["right_tail"] != digest(args.right_tail)):
+    if (
+        digest(args.video) != tail["source_sha256"]
+        or patches["source_sha256"] != tail["source_sha256"]
+        or patches["input_sha256"]["right_tail"] != digest(args.right_tail)
+    ):
         raise ValueError("Source or tail hash differs")
-    selected = [row for row in patches["rows"]
-                if row["positive_patch_count"] == row["scored_count"] == 3]
-    by_raw = {row["raw_track_id"]: row
-              for row in tail["directional_review_proposals"]}
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    selected = [
+        row for row in patches["rows"] if row["positive_patch_count"] == row["scored_count"] == 3
+    ]
+    by_raw = {row["raw_track_id"]: row for row in tail["directional_review_proposals"]}
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         raise RuntimeError("Cannot open source video")
     sheet = np.zeros((380 * len(selected), 1920, 3), dtype=np.uint8)
@@ -46,22 +47,33 @@ def main():
             track = by_raw[raw_id]
             points = track["observed_prefix_points"]
             nodes = [points[i] for i in (0, len(points) // 2, len(points) - 1)]
-            records.append({"right_proposal_id": row["right_proposal_id"],
-                            "source_times_s": [node["time_s"] for node in nodes],
-                            "boxes": [node["bbox"] for node in nodes]})
+            records.append(
+                {
+                    "right_proposal_id": row["right_proposal_id"],
+                    "source_times_s": [node["time_s"] for node in nodes],
+                    "boxes": [node["bbox"] for node in nodes],
+                }
+            )
             for column, node in enumerate(nodes):
-                cap.set(cv2.CAP_PROP_POS_MSEC,
-                        (node["time_s"] - tail["source_time_offset_s"]) * 1000)
+                cap.set(
+                    cv2.CAP_PROP_POS_MSEC, (node["time_s"] - tail["source_time_offset_s"]) * 1000
+                )
                 ok, frame = cap.read()
                 if not ok or frame.shape[:2] != (360, 640):
                     raise RuntimeError(f"Cannot decode {node['time_s']}")
                 x, y, w, h = node["bbox"]
                 cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 255), 2)
-                cv2.putText(frame, f"{raw_id} {node['time_s']:.1f}s",
-                            (10, 30), cv2.FONT_HERSHEY_SIMPLEX, .8,
-                            (255, 255, 255), 2, cv2.LINE_AA)
-                sheet[index * 380:index * 380 + 360,
-                      column * 640:(column + 1) * 640] = frame
+                cv2.putText(
+                    frame,
+                    f"{raw_id} {node['time_s']:.1f}s",
+                    (10, 30),
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    0.8,
+                    (255, 255, 255),
+                    2,
+                    cv2.LINE_AA,
+                )
+                sheet[index * 380 : index * 380 + 360, column * 640 : (column + 1) * 640] = frame
     finally:
         cap.release()
     args.output_dir.mkdir(parents=True)

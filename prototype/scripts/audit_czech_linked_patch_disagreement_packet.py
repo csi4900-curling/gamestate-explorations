@@ -12,9 +12,21 @@ OUT = BASE / "full-linked-right-patch-disagreement-pixel-audit.json"
 
 STONE_ID = "R01:A029"
 PERSON_EQUIPMENT_IDS = {
-    "R01:A030", "R01:A034", "R01:A036", "R01:A114", "R01:A115",
-    "R01:A118", "R01:A120", "R01:A184", "R01:A185", "R01:A247",
-    "R01:A249", "R01:A250", "R01:A258", "R01:A259", "R01:A376",
+    "R01:A030",
+    "R01:A034",
+    "R01:A036",
+    "R01:A114",
+    "R01:A115",
+    "R01:A118",
+    "R01:A120",
+    "R01:A184",
+    "R01:A185",
+    "R01:A247",
+    "R01:A249",
+    "R01:A250",
+    "R01:A258",
+    "R01:A259",
+    "R01:A376",
 }
 
 
@@ -29,26 +41,34 @@ def main():
         if digest(PACKET / name) != expected:
             raise ValueError(f"Source page changed: {name}")
     for name, path in {
-            "scores": BASE / "full-right-source-diverse-patch-transfer-development.json",
-            "episodes": BASE / "full-corridor-right-episodes-first-transfer.json",
+        "scores": BASE / "full-right-source-diverse-patch-transfer-development.json",
+        "episodes": BASE / "full-corridor-right-episodes-first-transfer.json",
     }.items():
         if digest(path) != manifest["input_sha256"][name]:
             raise ValueError(f"Packet input changed: {name}")
     rows = manifest["rows"]
     ids = [row["right_proposal_id"] for row in rows]
-    if (len(ids) != 16 or len(set(ids)) != 16 or
-            set(ids) != PERSON_EQUIPMENT_IDS | {STONE_ID}):
+    if len(ids) != 16 or len(set(ids)) != 16 or set(ids) != PERSON_EQUIPMENT_IDS | {STONE_ID}:
         raise ValueError("Linked disagreement inventory changed")
-    reviewed = [{**row,
-                 "sampled_source_pixel_class": (
-                     "moving_stone_pixels" if row["right_proposal_id"] == STONE_ID
-                     else "person_or_equipment_pixels"),
-                 "physical_throw_verified": False}
-                for row in rows]
-    counts = Counter((row["sampled_source_pixel_class"],
-                      row["positive_patch_count"] > 0) for row in reviewed)
-    if (counts["moving_stone_pixels", True] != 1 or
-            counts["person_or_equipment_pixels", False] != 15):
+    reviewed = [
+        {
+            **row,
+            "sampled_source_pixel_class": (
+                "moving_stone_pixels"
+                if row["right_proposal_id"] == STONE_ID
+                else "person_or_equipment_pixels"
+            ),
+            "physical_throw_verified": False,
+        }
+        for row in rows
+    ]
+    counts = Counter(
+        (row["sampled_source_pixel_class"], row["positive_patch_count"] > 0) for row in reviewed
+    )
+    if (
+        counts["moving_stone_pixels", True] != 1
+        or counts["person_or_equipment_pixels", False] != 15
+    ):
         raise ValueError("Source class/patch score disagreement changed")
     result = {
         "status": "same_agent_postscore_linked_prefix_pixel_audit_not_event_truth",
@@ -66,8 +86,7 @@ def main():
         ],
     }
     OUT.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"reviewed": len(reviewed), "stone_positive": 1,
-                      "person_negative": 15}))
+    print(json.dumps({"reviewed": len(reviewed), "stone_positive": 1, "person_negative": 15}))
 
 
 if __name__ == "__main__":

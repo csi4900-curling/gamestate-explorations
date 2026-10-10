@@ -6,9 +6,14 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[2]
-SEQUENCE = ROOT / "validation/official-shot-sequence/norway-end1-16-shot-sequence-hypothesis-first.json"
+SEQUENCE = (
+    ROOT / "validation/official-shot-sequence/norway-end1-16-shot-sequence-hypothesis-first.json"
+)
 BOARDS = ROOT / "validation/official-shot-sequence/pwg2022-canada-norway-official-boards.json"
-OUTPUT = ROOT / "validation/official-shot-sequence/norway-end1-sequence-official-board-reference-first.json"
+OUTPUT = (
+    ROOT
+    / "validation/official-shot-sequence/norway-end1-sequence-official-board-reference-first.json"
+)
 
 
 def digest(path):
@@ -29,20 +34,22 @@ def main():
     for hypothesis, board in zip(sequence["rows"], reference):
         if hypothesis["official_shot_id"] != board["official_shot_id"]:
             raise SystemExit("Official shot IDs differ between sequence and board")
-        rows.append({
-            "shot_number": hypothesis["shot_number"],
-            "official_shot_id": hypothesis["official_shot_id"],
-            "video_candidate_shot_id": hypothesis["video_candidate_shot_id"],
-            "provisional_delivery_window_s": hypothesis["provisional_delivery_window_s"],
-            "official_post_shot_board_source": "independent_official_pdf_diagram",
-            "official_post_shot_stones": board["stones"],
-            "official_post_shot_stone_counts": board["stone_counts"],
-            "official_diagram_review_flags": board["review_flags"],
-            "video_post_shot_board_observed": False,
-            "video_to_official_board_transition_verified": False,
-            "physical_stone_identity_verified": False,
-            "simulation_ready": False,
-        })
+        rows.append(
+            {
+                "shot_number": hypothesis["shot_number"],
+                "official_shot_id": hypothesis["official_shot_id"],
+                "video_candidate_shot_id": hypothesis["video_candidate_shot_id"],
+                "provisional_delivery_window_s": hypothesis["provisional_delivery_window_s"],
+                "official_post_shot_board_source": "independent_official_pdf_diagram",
+                "official_post_shot_stones": board["stones"],
+                "official_post_shot_stone_counts": board["stone_counts"],
+                "official_diagram_review_flags": board["review_flags"],
+                "video_post_shot_board_observed": False,
+                "video_to_official_board_transition_verified": False,
+                "physical_stone_identity_verified": False,
+                "simulation_ready": False,
+            }
+        )
     output = {
         "status": "official_post_shot_board_reference_join_not_video_game_state",
         "sequence_hypothesis_sha256": digest(SEQUENCE),
@@ -61,9 +68,13 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(output, indent=2) + "\n")
-    print({"shot_count": output["shot_count"],
-           "official_symbol_count": output["official_symbol_count"],
-           "boards_with_review_flags": output["boards_with_review_flags"]})
+    print(
+        {
+            "shot_count": output["shot_count"],
+            "official_symbol_count": output["official_symbol_count"],
+            "boards_with_review_flags": output["boards_with_review_flags"],
+        }
+    )
 
 
 if __name__ == "__main__":

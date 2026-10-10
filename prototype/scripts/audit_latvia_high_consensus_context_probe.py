@@ -50,63 +50,81 @@ def main():
     packet = json.loads(PACKET.read_text())
     queue = json.loads(QUEUE.read_text())
     scores = json.loads(SCORES.read_text())
-    if (packet["review_queue_sha256"] != digest(QUEUE) or
-            packet["full_context_score_sha256"] != digest(SCORES) or
-            len({packet["source_video_sha256"], queue["source_video_sha256"],
-                 scores["source_video_sha256"]}) != 1):
+    if (
+        packet["review_queue_sha256"] != digest(QUEUE)
+        or packet["full_context_score_sha256"] != digest(SCORES)
+        or len(
+            {
+                packet["source_video_sha256"],
+                queue["source_video_sha256"],
+                scores["source_video_sha256"],
+            }
+        )
+        != 1
+    ):
         raise ValueError("Probe lineage mismatch")
     for page, expected in packet["page_sha256"].items():
         if digest(PACKET.parent / page) != expected:
             raise ValueError("Source page changed")
     score_rows = {row["proposal_id"]: row for row in scores["proposals"]}
-    if ({row["review_group_id"] for row in packet["rows"]} != set(CLASSES) or
-            len(packet["rows"]) != len(CLASSES)):
+    if {row["review_group_id"] for row in packet["rows"]} != set(CLASSES) or len(
+        packet["rows"]
+    ) != len(CLASSES):
         raise ValueError("High-consensus probe inventory changed")
     rows = []
     for item in packet["rows"]:
         gid, pid = item["review_group_id"], item["proposal_id"]
         score = score_rows[pid]
-        if (score["review_group_id"] != gid or
-                score["sample_times_s"] != item["sample_times_s"]):
+        if score["review_group_id"] != gid or score["sample_times_s"] != item["sample_times_s"]:
             raise ValueError("Source packet and score sample differ")
-        rows.append({
-            "review_group_id": gid,
-            "proposal_id": pid,
-            "group_context_priority": item["context_review_priority"],
-            "proposal_context_tier": score["frozen_paired_context_tier"],
-            "source_pixel_class": CLASSES[gid],
-            "median_nonice_ring_fraction": score["median_nonice_ring_fraction"],
-            "median_underpoint_nonice_fraction": score[
-                "median_underpoint_nonice_fraction"],
-            "source_page": "full-right-high-consensus-context-source-probe/" + item["page"],
-            "physical_throw_verified": False,
-        })
-    counts = Counter((row["group_context_priority"], row["source_pixel_class"])
-                     for row in rows)
+        rows.append(
+            {
+                "review_group_id": gid,
+                "proposal_id": pid,
+                "group_context_priority": item["context_review_priority"],
+                "proposal_context_tier": score["frozen_paired_context_tier"],
+                "source_pixel_class": CLASSES[gid],
+                "median_nonice_ring_fraction": score["median_nonice_ring_fraction"],
+                "median_underpoint_nonice_fraction": score["median_underpoint_nonice_fraction"],
+                "source_page": "full-right-high-consensus-context-source-probe/" + item["page"],
+                "physical_throw_verified": False,
+            }
+        )
+    counts = Counter((row["group_context_priority"], row["source_pixel_class"]) for row in rows)
     expected = {
         ("has_clear_context_proposal", "moving_stone_body_pixels"): 9,
         ("has_clear_context_proposal", "person_or_equipment_pixels"): 1,
         ("all_proposals_context_cluttered_review", "moving_stone_body_pixels"): 2,
         ("all_proposals_context_cluttered_review", "person_or_equipment_pixels"): 7,
-        ("all_proposals_context_cluttered_review",
-         "mixed_stone_person_or_equipment_pixels_identity_uncertain"): 1,
+        (
+            "all_proposals_context_cluttered_review",
+            "mixed_stone_person_or_equipment_pixels_identity_uncertain",
+        ): 1,
     }
     if counts != expected:
         raise ValueError(f"Source-class counts changed: {counts}")
     result = {
         "status": "postscore_selected_high_consensus_source_pixel_audit_not_throw_truth",
         "source_video_sha256": queue["source_video_sha256"],
-        "input_sha256": {"queue": digest(QUEUE), "full_context_scores": digest(SCORES),
-                         "source_packet_manifest": digest(PACKET)},
+        "input_sha256": {
+            "queue": digest(QUEUE),
+            "full_context_scores": digest(SCORES),
+            "source_packet_manifest": digest(PACKET),
+        },
         "runner_sha256": digest(Path(__file__)),
         "selection_rule": packet["selection"],
         "reviewed_group_count": len(rows),
         "source_class_counts_by_group_priority": {
-            priority: {cls: counts[priority, cls] for cls in (
-                "moving_stone_body_pixels", "person_or_equipment_pixels",
-                "mixed_stone_person_or_equipment_pixels_identity_uncertain")}
-            for priority in ("has_clear_context_proposal",
-                             "all_proposals_context_cluttered_review")},
+            priority: {
+                cls: counts[priority, cls]
+                for cls in (
+                    "moving_stone_body_pixels",
+                    "person_or_equipment_pixels",
+                    "mixed_stone_person_or_equipment_pixels_identity_uncertain",
+                )
+            }
+            for priority in ("has_clear_context_proposal", "all_proposals_context_cluttered_review")
+        },
         "stone_pixels_in_all_cluttered_groups": ["R0067", "R0109"],
         "person_pixels_in_selected_clear_group": ["R0117"],
         "rows": rows,
@@ -119,11 +137,15 @@ def main():
         ],
     }
     OUT.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"reviewed": len(rows),
-                      "stone_in_all_cluttered": result[
-                          "stone_pixels_in_all_cluttered_groups"],
-                      "person_in_clear": result[
-                          "person_pixels_in_selected_clear_group"]}))
+    print(
+        json.dumps(
+            {
+                "reviewed": len(rows),
+                "stone_in_all_cluttered": result["stone_pixels_in_all_cluttered_groups"],
+                "person_in_clear": result["person_pixels_in_selected_clear_group"],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

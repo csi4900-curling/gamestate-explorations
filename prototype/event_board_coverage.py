@@ -30,25 +30,33 @@ def audit_board_event_coverage(board_windows, legacy_events, grounded_events):
         new = newer[0] if newer else None
         if new is not None and new["colour"] != old["colour"]:
             raise ValueError(f"Grounded event changed resolved colour: {old['counter_id']}")
-        output.append({
-            **board,
-            "legacy_event": {
-                "candidate_id": old["candidate_id"],
-                "shot_id": old["shot_id"],
-                "counter_id": old["counter_id"],
-                "colour": old["colour"],
-                "colour_status": old["colour_status"],
-                "release_window_s": old["release_window_s"],
-            },
-            "grounded_event": ({
-                "shot_id": new["shot_id"],
-                "counter_id": new["counter_id"],
-                "colour": new["colour"],
-                "colour_basis": new["colour_provenance"]["basis"],
-                "camera_continuity_status": new["camera_boundary_evidence"]["continuity_status"],
-            } if new is not None else None),
-            "grounded_event_coverage": "present" if new is not None else "absent",
-            "physical_transition_verified": False,
-            "simulation_ready": False,
-        })
+        output.append(
+            {
+                **board,
+                "legacy_event": {
+                    "candidate_id": old["candidate_id"],
+                    "shot_id": old["shot_id"],
+                    "counter_id": old["counter_id"],
+                    "colour": old["colour"],
+                    "colour_status": old["colour_status"],
+                    "release_window_s": old["release_window_s"],
+                },
+                "grounded_event": (
+                    {
+                        "shot_id": new["shot_id"],
+                        "counter_id": new["counter_id"],
+                        "colour": new["colour"],
+                        "colour_basis": new["colour_provenance"]["basis"],
+                        "camera_continuity_status": new["camera_boundary_evidence"][
+                            "continuity_status"
+                        ],
+                    }
+                    if new is not None
+                    else None
+                ),
+                "grounded_event_coverage": "present" if new is not None else "absent",
+                "physical_transition_verified": False,
+                "simulation_ready": False,
+            }
+        )
     return output

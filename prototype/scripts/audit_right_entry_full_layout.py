@@ -37,8 +37,7 @@ def main():
         parser.error("Source fingerprints differ")
     start, stop = right["source_interval_s"]
     route, samples, duration = sample_layout(args.video, start, stop, chunk_s=90)
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         parser.error("Unreadable video")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -46,8 +45,9 @@ def main():
     try:
         for entry in right["entry_review_proposals"]:
             t = entry["entry_crossing"]["time_s"]
-            run = next((r for r in route["runs"]
-                        if r["interval_s"][0] <= t < r["interval_s"][1]), None)
+            run = next(
+                (r for r in route["runs"] if r["interval_s"][0] <= t < r["interval_s"][1]), None
+            )
             if run is None:
                 raise ValueError(f"No layout run covers entry {t}")
             cap.set(cv2.CAP_PROP_POS_FRAMES, round(t * fps))
@@ -55,12 +55,17 @@ def main():
             if not ok:
                 raise RuntimeError(f"Cannot decode entry frame {t}")
             evidence = frame_evidence(frame)
-            rows.append({"right_raw_track_id": entry["raw_track_id"],
-                         "entry_time_s": t, "colour_claim": entry["colour_claim"],
-                         "preflight_run_layout": run["layout"],
-                         "preflight_run_interval_s": run["interval_s"],
-                         "entry_frame_split_2024_signature": evidence["split_2024_signature"],
-                         "entry_frame_evidence": evidence})
+            rows.append(
+                {
+                    "right_raw_track_id": entry["raw_track_id"],
+                    "entry_time_s": t,
+                    "colour_claim": entry["colour_claim"],
+                    "preflight_run_layout": run["layout"],
+                    "preflight_run_interval_s": run["interval_s"],
+                    "entry_frame_split_2024_signature": evidence["split_2024_signature"],
+                    "entry_frame_evidence": evidence,
+                }
+            )
     finally:
         cap.release()
     result = {
@@ -84,11 +89,19 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"entries": len(rows), "route": route["layout"],
-                      "supported_entry_count": sum(r["preflight_run_layout"] ==
-                                                   "split_2024" and
-                                                   r["entry_frame_split_2024_signature"]
-                                                   for r in rows)}))
+    print(
+        json.dumps(
+            {
+                "entries": len(rows),
+                "route": route["layout"],
+                "supported_entry_count": sum(
+                    r["preflight_run_layout"] == "split_2024"
+                    and r["entry_frame_split_2024_signature"]
+                    for r in rows
+                ),
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

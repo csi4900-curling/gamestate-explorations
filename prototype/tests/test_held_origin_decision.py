@@ -5,14 +5,18 @@ from held_origin_decision import combine_with_gate, held_motion_override
 
 def evidence(red_hold=0, yellow_hold=0, red_motion=0, yellow_motion=0):
     return {
-        "red": {"best_hold": {"duration_s": red_hold, "interval_s": [1, 2]}
-                if red_hold else None,
-                "best_motion": {"displacement_px": red_motion, "interval_s": [2, 3]}
-                if red_motion else None},
-        "yellow": {"best_hold": {"duration_s": yellow_hold, "interval_s": [1, 2]}
-                   if yellow_hold else None,
-                   "best_motion": {"displacement_px": yellow_motion,
-                                   "interval_s": [2, 3]} if yellow_motion else None},
+        "red": {
+            "best_hold": {"duration_s": red_hold, "interval_s": [1, 2]} if red_hold else None,
+            "best_motion": {"displacement_px": red_motion, "interval_s": [2, 3]}
+            if red_motion
+            else None,
+        },
+        "yellow": {
+            "best_hold": {"duration_s": yellow_hold, "interval_s": [1, 2]} if yellow_hold else None,
+            "best_motion": {"displacement_px": yellow_motion, "interval_s": [2, 3]}
+            if yellow_motion
+            else None,
+        },
     }
 
 

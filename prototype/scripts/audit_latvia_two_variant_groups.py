@@ -55,10 +55,19 @@ def main():
     gap = json.loads(GAP.read_text())
     later = json.loads(LATER.read_text())
     older = json.loads(OLDER.read_text())
-    if (packet["review_queue_sha256"] != digest(QUEUE) or
-            len({queue["source_video_sha256"], packet["source_video_sha256"],
-                 gap["source_video_sha256"], later["source_video_sha256"],
-                 older["source_video_sha256"]}) != 1):
+    if (
+        packet["review_queue_sha256"] != digest(QUEUE)
+        or len(
+            {
+                queue["source_video_sha256"],
+                packet["source_video_sha256"],
+                gap["source_video_sha256"],
+                later["source_video_sha256"],
+                older["source_video_sha256"],
+            }
+        )
+        != 1
+    ):
         raise ValueError("Source/queue lineage mismatch")
     for page, expected in packet["page_sha256"].items():
         if digest(PACKET.parent / page) != expected:
@@ -69,20 +78,19 @@ def main():
     old_classes = {}
     for row in gap["rows"]:
         pid = f"two_second_greedy:{row['raw_track_id']}:1"
-        old_classes[pid] = (normalized_class(row["source_pixel_class"]),
-                            row["source_page"])
+        old_classes[pid] = (normalized_class(row["source_pixel_class"]), row["source_page"])
     for row in later["rows"]:
-        pid = (f"two_second_global_later:{row['raw_track_id']}:"
-               f"{row['episode_index_within_raw_track']}")
-        old_classes[pid] = (normalized_class(row["source_pixel_class"]),
-                            row["review_page"])
+        pid = (
+            f"two_second_global_later:{row['raw_track_id']}:{row['episode_index_within_raw_track']}"
+        )
+        old_classes[pid] = (normalized_class(row["source_pixel_class"]), row["review_page"])
     old_a374 = next(row for row in older["rows"] if row["raw_track_id"] == "A374")
-    if old_a374["source_sheet_sha256"] != digest(
-            OLDER.parent / old_a374["source_sheet"]):
+    if old_a374["source_sheet_sha256"] != digest(OLDER.parent / old_a374["source_sheet"]):
         raise ValueError("A374 source page changed")
     old_classes["one_second_greedy:A374:1"] = (
         normalized_class(old_a374["source_pixel_class"]),
-        "remaining-right-only-source-audit/" + old_a374["source_sheet"])
+        "remaining-right-only-source-audit/" + old_a374["source_sheet"],
+    )
 
     rows = []
     for group in queue["review_groups"]:
@@ -93,23 +101,36 @@ def main():
         for pid in group["proposal_ids"]:
             if pid in NEW_CLASSES:
                 source_class = NEW_CLASSES[pid]
-                evidence = "full-right-two-variant-counterpart-source-packet/" + new_rows[
-                    pid]["page"]
+                evidence = (
+                    "full-right-two-variant-counterpart-source-packet/" + new_rows[pid]["page"]
+                )
             else:
                 source_class, evidence = old_classes[pid]
-            members.append({"proposal_id": pid, "source_pixel_class": source_class,
-                            "source_evidence": evidence,
-                            "physical_throw_verified": False})
+            members.append(
+                {
+                    "proposal_id": pid,
+                    "source_pixel_class": source_class,
+                    "source_evidence": evidence,
+                    "physical_throw_verified": False,
+                }
+            )
         if len(members) != 2:
             raise ValueError("Unexpected two-variant group size")
         classes = sorted(member["source_pixel_class"] for member in members)
-        rows.append({"review_group_id": group["group_id"],
-                     "source_class_pair": classes,
-                     "members": members,
-                     "physical_throw_verified": False})
-    if len(rows) != 11 or {member["proposal_id"] for row in rows
-                               for member in row["members"] if member[
-                                   "proposal_id"] in NEW_CLASSES} != set(NEW_CLASSES):
+        rows.append(
+            {
+                "review_group_id": group["group_id"],
+                "source_class_pair": classes,
+                "members": members,
+                "physical_throw_verified": False,
+            }
+        )
+    if len(rows) != 11 or {
+        member["proposal_id"]
+        for row in rows
+        for member in row["members"]
+        if member["proposal_id"] in NEW_CLASSES
+    } != set(NEW_CLASSES):
         raise ValueError("Two-variant audit inventory changed")
     counts = Counter(" + ".join(row["source_class_pair"]) for row in rows)
     expected = {
@@ -124,9 +145,13 @@ def main():
     result = {
         "status": "postproposal_two_variant_source_pixel_review_not_throw_truth",
         "source_video_sha256": queue["source_video_sha256"],
-        "input_sha256": {"queue": digest(QUEUE), "counterpart_source_packet": digest(PACKET),
-                         "gap_source_audit": digest(GAP), "later_source_audit": digest(LATER),
-                         "older_right_source_audit": digest(OLDER)},
+        "input_sha256": {
+            "queue": digest(QUEUE),
+            "counterpart_source_packet": digest(PACKET),
+            "gap_source_audit": digest(GAP),
+            "later_source_audit": digest(LATER),
+            "older_right_source_audit": digest(OLDER),
+        },
         "runner_sha256": digest(Path(__file__)),
         "reviewed_group_count": len(rows),
         "source_class_pair_counts": dict(counts),

@@ -25,8 +25,7 @@ def digest(path):
 
 
 def sample_alignments(video, rows):
-    cap = cv2.VideoCapture(str(video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         raise ValueError("Cannot open source video")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -47,9 +46,13 @@ def sample_alignments(video, rows):
             if not ok:
                 raise RuntimeError(f"Could not decode source at {t}s")
             masks[row["candidate_id"]] = blue_house_mask(normalized_split_frame(frame))
-            frames.append({"candidate_id": row["candidate_id"],
-                           "sample_time_s": t,
-                           "decoded_frame_index": frame_number})
+            frames.append(
+                {
+                    "candidate_id": row["candidate_id"],
+                    "sample_time_s": t,
+                    "decoded_frame_index": frame_number,
+                }
+            )
     finally:
         cap.release()
     pairs = []
@@ -81,21 +84,30 @@ def main():
         parser.error("Source video and handoff differ")
     frames, alignment = sample_alignments(args.video, handoff["ordered_candidates"])
     result = compare_candidate_boards(handoff, alignment)
-    result.update({
-        "handoff_sha256": digest(args.handoff),
-        "model_code_sha256": digest(ROOT / "prototype/candidate_image_board_sequence.py"),
-        "alignment_code_sha256": digest(ROOT / "prototype/right_view_house_alignment.py"),
-        "cap_set_comparison_code_sha256": digest(ROOT / "prototype/right_view_cap_sequence.py"),
-        "frame_normalization_code_sha256": digest(
-            ROOT / "prototype/scripts/audit_split_panel_freeze.py"),
-        "runner_sha256": digest(Path(__file__)),
-        "alignment_sample_frames": frames,
-        "alignment_pairs": alignment,
-    })
+    result.update(
+        {
+            "handoff_sha256": digest(args.handoff),
+            "model_code_sha256": digest(ROOT / "prototype/candidate_image_board_sequence.py"),
+            "alignment_code_sha256": digest(ROOT / "prototype/right_view_house_alignment.py"),
+            "cap_set_comparison_code_sha256": digest(ROOT / "prototype/right_view_cap_sequence.py"),
+            "frame_normalization_code_sha256": digest(
+                ROOT / "prototype/scripts/audit_split_panel_freeze.py"
+            ),
+            "runner_sha256": digest(Path(__file__)),
+            "alignment_sample_frames": frames,
+            "alignment_pairs": alignment,
+        }
+    )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"candidates": result["candidate_count"],
-                      "statuses": result["transition_status_counts"]}))
+    print(
+        json.dumps(
+            {
+                "candidates": result["candidate_count"],
+                "statuses": result["transition_status_counts"],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

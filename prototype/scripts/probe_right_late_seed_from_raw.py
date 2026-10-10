@@ -24,8 +24,7 @@ def main():
         parser.error("Output already exists")
     source = json.loads(args.probe.read_text())
     tracks = source["raw_tracks"]
-    old = {row["raw_track_id"]: row for row in source[
-        "directional_review_proposals"]}
+    old = {row["raw_track_id"]: row for row in source["directional_review_proposals"]}
     if len(old) != len(source["directional_review_proposals"]):
         parser.error("Duplicate original proposal")
     proposals = late_seed_bidirectional_spans(tracks)
@@ -59,8 +58,7 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"original": len(old), "all": len(proposals),
-                      "new": len(new)}))
+    print(json.dumps({"original": len(old), "all": len(proposals), "new": len(new)}))
 
 
 if __name__ == "__main__":

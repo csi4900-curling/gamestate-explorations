@@ -6,26 +6,49 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-INPUT = ROOT / "validation/official-shot-sequence/pwg2022-full-match-event-review-segments-development.json"
+INPUT = (
+    ROOT
+    / "validation/official-shot-sequence/pwg2022-full-match-event-review-segments-development.json"
+)
 OUTPUT = ROOT / "prototype/full-match-event-review/index.html"
 
 
-def main(input_path=INPUT, output_path=OUTPUT, *, method_link="FULL-MATCH-EVENT-REVIEW-SEGMENTS.md"):
+def main(
+    input_path=INPUT, output_path=OUTPUT, *, method_link="FULL-MATCH-EVENT-REVIEW-SEGMENTS.md"
+):
     source = json.loads(input_path.read_text())
     viewer_data = {
         "evidence_sha256": sha256(input_path.read_bytes()).hexdigest(),
-        "games": [{
-            "code": game["official_game_code"],
-            "video": "../../" + game["source_video_path"],
-            "source_interval_s": game["source_interval_s"],
-            "segments": [{key: row[key] for key in (
-                "event_id", "candidate_class", "counter_id", "colour", "colour_status",
-                "review_shot_ids", "evidence_core_s", "review_window_s",
-                "possible_internal_edit_times_s", "delivery_window_s",
-                "observed_travel_window_s", "physical_release_time_s",
-                "physical_settle_time_s", "simulation_ready")}
-                for row in game["segments"]],
-        } for game in source["games"]],
+        "games": [
+            {
+                "code": game["official_game_code"],
+                "video": "../../" + game["source_video_path"],
+                "source_interval_s": game["source_interval_s"],
+                "segments": [
+                    {
+                        key: row[key]
+                        for key in (
+                            "event_id",
+                            "candidate_class",
+                            "counter_id",
+                            "colour",
+                            "colour_status",
+                            "review_shot_ids",
+                            "evidence_core_s",
+                            "review_window_s",
+                            "possible_internal_edit_times_s",
+                            "delivery_window_s",
+                            "observed_travel_window_s",
+                            "physical_release_time_s",
+                            "physical_settle_time_s",
+                            "simulation_ready",
+                        )
+                    }
+                    for row in game["segments"]
+                ],
+            }
+            for game in source["games"]
+        ],
     }
     data = json.dumps(viewer_data, separators=(",", ":")).replace("</", "<\\/")
     html = """<!doctype html>

@@ -23,9 +23,11 @@ def main():
     raw = json.loads(args.raw.read_text())
     screen = json.loads(args.screen.read_text())
     reference = json.loads(args.reference.read_text())
-    if any(row["source_sha256"] != raw["source_sha256"]
-           or row["source_interval_s"] != raw["source_interval_s"]
-           for row in (screen, reference)):
+    if any(
+        row["source_sha256"] != raw["source_sha256"]
+        or row["source_interval_s"] != raw["source_interval_s"]
+        for row in (screen, reference)
+    ):
         parser.error("Source or interval mismatch")
     if screen["input_sha256"] != file_sha256(args.raw):
         parser.error("Screen does not derive from raw candidates")
@@ -51,10 +53,23 @@ def main():
         ],
     }
     args.output.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({name: {key: result[name][key] for key in
-                              ("counter_count", "candidate_count", "temporal_match_count",
-                               "colour_match_count")}
-                      for name in ("raw", "screen")}, indent=2))
+    print(
+        json.dumps(
+            {
+                name: {
+                    key: result[name][key]
+                    for key in (
+                        "counter_count",
+                        "candidate_count",
+                        "temporal_match_count",
+                        "colour_match_count",
+                    )
+                }
+                for name in ("raw", "screen")
+            },
+            indent=2,
+        )
+    )
 
 
 if __name__ == "__main__":

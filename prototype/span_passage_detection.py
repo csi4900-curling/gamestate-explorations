@@ -22,8 +22,7 @@ class SpanPassageDetector:
         self.tracker.update(candidates, t)
         for track in self.tracker.tracks:
             event = self._event_by_track.get(track.id)
-            if event and track.points[-1]["time_s"] > event[
-                    "continued_track_points"][-1]["time_s"]:
+            if event and track.points[-1]["time_s"] > event["continued_track_points"][-1]["time_s"]:
                 event["continued_track_points"].append(dict(track.points[-1]))
         new = []
         for track in self.tracker.tracks:

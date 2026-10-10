@@ -4,7 +4,6 @@ import argparse
 from hashlib import sha256
 import json
 from pathlib import Path
-import sys
 
 import cv2
 import numpy as np
@@ -24,9 +23,11 @@ def ice_fractions(frame):
     image = cv2.resize(frame, (640, 360), interpolation=cv2.INTER_AREA)
     hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
     ice = (hsv[:, :, 1] < 75) & (hsv[:, :, 2] > 165)
-    return {"whole": round(float(np.mean(ice)), 4),
-            "lower_half": round(float(np.mean(ice[180:])), 4),
-            "center_lower": round(float(np.mean(ice[180:, 160:480])), 4)}
+    return {
+        "whole": round(float(np.mean(ice)), 4),
+        "lower_half": round(float(np.mean(ice[180:])), 4),
+        "center_lower": round(float(np.mean(ice[180:, 160:480])), 4),
+    }
 
 
 def main():
@@ -44,8 +45,7 @@ def main():
     ledger = json.loads(args.candidates.read_text())
     if ledger["source_sha256"] != source_hash:
         parser.error("Source video and candidate ledger differ")
-    capture = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not capture.isOpened():
         parser.error("Cannot open source video")
     fps = capture.get(cv2.CAP_PROP_FPS)
@@ -59,15 +59,19 @@ def main():
             ok, frame = capture.read()
             if not ok:
                 raise RuntimeError(f"Frame decode failed at {time_s}")
-            samples.append({"time_s": round(time_s, 3),
-                            "ice_fraction": ice_fractions(frame)})
-        rows.append({"candidate_id": event["candidate_id"],
-                     "shot_id": event["shot_id"],
-                     "counter_backed": event["counter_id"] is not None,
-                     "samples": samples,
-                     "median_ice_fraction": {key: round(float(np.median([
-                         row["ice_fraction"][key] for row in samples])), 4)
-                         for key in ("whole", "lower_half", "center_lower")}})
+            samples.append({"time_s": round(time_s, 3), "ice_fraction": ice_fractions(frame)})
+        rows.append(
+            {
+                "candidate_id": event["candidate_id"],
+                "shot_id": event["shot_id"],
+                "counter_backed": event["counter_id"] is not None,
+                "samples": samples,
+                "median_ice_fraction": {
+                    key: round(float(np.median([row["ice_fraction"][key] for row in samples])), 4)
+                    for key in ("whole", "lower_half", "center_lower")
+                },
+            }
+        )
     capture.release()
     output = {
         "status": "source_only_candidate_ice_coverage_diagnostic_not_throw_decision",

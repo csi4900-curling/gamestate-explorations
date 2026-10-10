@@ -4,17 +4,26 @@ from candidate_prefix_fallback import propose_original_prefix
 
 
 def evidence(positive=(True, True, False)):
-    prefix = [{"source_time_s": i, "ground_position_m": [i, 0]}
-              for i in range(5)]
-    base = {"candidate_id": "S02", "receiving_view": "left",
-            "colour": "red", "selection": {
-                "status": "ambiguous_far_entry_motion_paths",
-                "shared_prefix": prefix, "best_path_sample_count": 7,
-                "first_ambiguity_time_s": 5}}
+    prefix = [{"source_time_s": i, "ground_position_m": [i, 0]} for i in range(5)]
+    base = {
+        "candidate_id": "S02",
+        "receiving_view": "left",
+        "colour": "red",
+        "selection": {
+            "status": "ambiguous_far_entry_motion_paths",
+            "shared_prefix": prefix,
+            "best_path_sample_count": 7,
+            "first_ambiguity_time_s": 5,
+        },
+    }
     retry = {"candidate_id": "S02", "rescue_status": "rescue_abstained"}
-    patch = {"candidate_id": "S02", "samples": [
-        {"source_time_s": i, "status": "scored", "patch_accepted": good}
-        for i, good in enumerate(positive)]}
+    patch = {
+        "candidate_id": "S02",
+        "samples": [
+            {"source_time_s": i, "status": "scored", "patch_accepted": good}
+            for i, good in enumerate(positive)
+        ],
+    }
     return base, retry, patch
 
 

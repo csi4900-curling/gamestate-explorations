@@ -30,17 +30,25 @@ def main():
     if OUTPUT.exists():
         raise SystemExit("Output exists; preserve first provenance export")
     plan = json.loads(PLAN.read_text())
-    hashes = {name: digest(path) for name, path in
-              (("fused", FUSED), ("cap", CAP), ("counter", COUNTER),
-               ("provenance_code", ROOT / "prototype/event_colour_provenance.py"),
-               ("runner", __file__))}
+    hashes = {
+        name: digest(path)
+        for name, path in (
+            ("fused", FUSED),
+            ("cap", CAP),
+            ("counter", COUNTER),
+            ("provenance_code", ROOT / "prototype/event_colour_provenance.py"),
+            ("runner", __file__),
+        )
+    }
     if hashes != plan["sha256"]:
         raise ValueError("Frozen provenance plan changed")
     fused = json.loads(FUSED.read_text())
     cap = json.loads(CAP.read_text())
     counter = json.loads(COUNTER.read_text())
-    if (hashes["cap"] != fused["two_shot_sha256"] or
-            hashes["counter"] != fused["counter_alignment_sha256"]):
+    if (
+        hashes["cap"] != fused["two_shot_sha256"]
+        or hashes["counter"] != fused["counter_alignment_sha256"]
+    ):
         raise ValueError("Fusion artifact dependency fingerprint mismatch")
     source_hash = fused["source_sha256"]
     if source_hash != cap["source_sha256"] or source_hash != counter["source_sha256"]:
@@ -48,13 +56,12 @@ def main():
     reserved = json.loads((ROOT / "validation/unseen-end/reservation.json").read_text())
     if source_hash == reserved["source_sha256"]:
         raise ValueError("Reserved independent source selected")
-    events = annotate_event_colours(fused["events"], cap["decisions"],
-                                    counter["rows"])
-    if [{key: value for key, value in row.items() if key != "colour_provenance"}
-            for row in events] != fused["events"]:
+    events = annotate_event_colours(fused["events"], cap["decisions"], counter["rows"])
+    if [
+        {key: value for key, value in row.items() if key != "colour_provenance"} for row in events
+    ] != fused["events"]:
         raise ValueError("Colour enrichment modified frozen event fields")
-    counts = dict(sorted(Counter(row["colour_provenance"]["basis"]
-                                 for row in events).items()))
+    counts = dict(sorted(Counter(row["colour_provenance"]["basis"] for row in events).items()))
     output = {
         "status": "source_linked_full_china_event_colour_provenance_not_physical_event_score",
         "source_sha256": source_hash,

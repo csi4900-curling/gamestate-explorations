@@ -3,9 +3,15 @@
 from math import ceil, hypot
 
 
-def choose_backward_point(anchor, proposals, *, max_step_px=35,
-                          min_upward_forward_px=5, min_area_ratio=.4,
-                          max_area_ratio=3):
+def choose_backward_point(
+    anchor,
+    proposals,
+    *,
+    max_step_px=35,
+    min_upward_forward_px=5,
+    min_area_ratio=0.4,
+    max_area_ratio=3,
+):
     """Return one plausible earlier colour blob, or an explicit abstention."""
     choices = []
     for proposal in proposals:
@@ -13,16 +19,18 @@ def choose_backward_point(anchor, proposals, *, max_step_px=35,
         dy = proposal["pixel"][1] - anchor["pixel"][1]
         area_ratio = proposal["cap_area_px2"] / anchor["cap_area_px2"]
         distance = hypot(dx, dy)
-        if (dy >= min_upward_forward_px and distance <= max_step_px and
-                min_area_ratio <= area_ratio <= max_area_ratio):
+        if (
+            dy >= min_upward_forward_px
+            and distance <= max_step_px
+            and min_area_ratio <= area_ratio <= max_area_ratio
+        ):
             choices.append((distance, proposal))
     if len(choices) != 1:
         return None, "no_directional_colour_blob" if not choices else "ambiguous_directional_blobs"
     return choices[0][1], "unique_directional_colour_blob"
 
 
-def backward_extension(first_point, left_end_s, colour, sample_proposals,
-                       *, max_lookback_s=8):
+def backward_extension(first_point, left_end_s, colour, sample_proposals, *, max_lookback_s=8):
     """Follow unique image blobs backward; never infer unseen positions."""
     anchor = first_point
     trace = []
@@ -38,7 +46,9 @@ def backward_extension(first_point, left_end_s, colour, sample_proposals,
     else:
         if trace and trace[-1]["time_s"] > left_end_s:
             status = "lookback_limit_or_last_integer_before_left_end"
-    return {"new_first_observed_s": anchor["time_s"],
-            "added_observations": list(reversed(trace)),
-            "stop_reason": status,
-            "physical_identity_verified": False}
+    return {
+        "new_first_observed_s": anchor["time_s"],
+        "added_observations": list(reversed(trace)),
+        "stop_reason": status,
+        "physical_identity_verified": False,
+    }

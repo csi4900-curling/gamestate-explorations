@@ -34,22 +34,25 @@ def main():
     video = ROOT / plan["video_relative_path"]
     proposals_path = ROOT / plan["possible_edits_relative_path"]
     proposal_plan_path = ROOT / plan["possible_scan_plan_relative_path"]
-    hashes = {"video": digest(video),
-              "possible_scan_plan": digest(proposal_plan_path),
-              "scene_code": digest(ROOT / "prototype/scene_cuts.py"),
-              "isolation_code": digest(ROOT / "prototype/temporal_edit_isolation.py"),
-              "runner": digest(__file__)}
+    hashes = {
+        "video": digest(video),
+        "possible_scan_plan": digest(proposal_plan_path),
+        "scene_code": digest(ROOT / "prototype/scene_cuts.py"),
+        "isolation_code": digest(ROOT / "prototype/temporal_edit_isolation.py"),
+        "runner": digest(__file__),
+    }
     if hashes != plan["sha256"]:
         raise ValueError("Frozen temporal-isolation plan changed")
     proposals = json.loads(proposals_path.read_text())
-    if (proposals["source_sha256"] != hashes["video"] or
-            proposals["plan_sha256"] != hashes["possible_scan_plan"]):
+    if (
+        proposals["source_sha256"] != hashes["video"]
+        or proposals["plan_sha256"] != hashes["possible_scan_plan"]
+    ):
         raise ValueError("Possible-edit artifact does not match planned source")
     reserved = json.loads((ROOT / "validation/unseen-end/reservation.json").read_text())
     if hashes["video"] == reserved["source_sha256"]:
         raise ValueError("Reserved independent source selected")
-    capture = cv2.VideoCapture(str(video), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     fps = capture.get(cv2.CAP_PROP_FPS)
     spacing = 1 / proposals["sample_rate_hz"]
     rows = []
@@ -65,20 +68,29 @@ def main():
             if not ok:
                 raise RuntimeError(f"Frame decode failed at {instant}")
             frames.append(frame)
-        metrics = [scene_cut_evidence(a, b)
-                   for a, b in zip(frames, frames[1:])]
-        if (metrics[1]["gray_change"] != item["gray_change"] or
-                metrics[1]["hist_distance"] != item["hist_distance"]):
+        metrics = [scene_cut_evidence(a, b) for a, b in zip(frames, frames[1:])]
+        if (
+            metrics[1]["gray_change"] != item["gray_change"]
+            or metrics[1]["hist_distance"] != item["hist_distance"]
+        ):
             raise ValueError(f"Central pair mismatch at {time_s}")
         isolation = edit_isolation(
-            *metrics, min_gray_ratio=plan["minimum_gray_isolation_ratio"],
-            min_hist_ratio=plan["minimum_hist_isolation_ratio"])
-        rows.append({"time_s": time_s, "shot_id": item["shot_id"],
-                     "adjacent_pair_metrics": metrics,
-                     **isolation})
+            *metrics,
+            min_gray_ratio=plan["minimum_gray_isolation_ratio"],
+            min_hist_ratio=plan["minimum_hist_isolation_ratio"],
+        )
+        rows.append(
+            {
+                "time_s": time_s,
+                "shot_id": item["shot_id"],
+                "adjacent_pair_metrics": metrics,
+                **isolation,
+            }
+        )
     capture.release()
-    counts = Counter("isolated_spike" if row["isolated_spike"]
-                     else "nonisolated_change" for row in rows)
+    counts = Counter(
+        "isolated_spike" if row["isolated_spike"] else "nonisolated_change" for row in rows
+    )
     output = {
         "status": "first_source_only_temporal_isolation_of_possible_edits_not_verified_cut_score",
         "source_id": plan["source_id"],
@@ -97,9 +109,14 @@ def main():
         ],
     }
     args.output.write_text(json.dumps(output, indent=2) + "\n")
-    print({"source": plan["source_id"], "proposals": len(rows),
-           "isolated": counts["isolated_spike"],
-           "nonisolated": counts["nonisolated_change"]})
+    print(
+        {
+            "source": plan["source_id"],
+            "proposals": len(rows),
+            "isolated": counts["isolated_spike"],
+            "nonisolated": counts["nonisolated_change"],
+        }
+    )
 
 
 if __name__ == "__main__":

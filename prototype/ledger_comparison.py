@@ -8,6 +8,7 @@ def compare_ledgers(baseline, augmented):
     windows can contain multiple physical deliveries when a camera shot was
     undersegmented.
     """
+
     def index_counter(events):
         indexed = {}
         for event in events:
@@ -24,22 +25,34 @@ def compare_ledgers(baseline, augmented):
     for key in sorted(set(old) | set(new)):
         before, after = old.get(key), new.get(key)
         if before is None or after is None:
-            counter_changes.append({"counter_id": key, "change": "missing_in_one_run",
-                                    "baseline": before, "augmented": after})
+            counter_changes.append(
+                {
+                    "counter_id": key,
+                    "change": "missing_in_one_run",
+                    "baseline": before,
+                    "augmented": after,
+                }
+            )
             continue
         colour_changed = before.get("colour") != after.get("colour")
         window_changed = before["release_window_s"] != after["release_window_s"]
         if colour_changed or window_changed:
-            counter_changes.append({
-                "counter_id": key,
-                "change": "colour_changed" if colour_changed else "window_changed",
-                "baseline": {"shot_id": before["shot_id"],
-                             "release_window_s": before["release_window_s"],
-                             "colour": before.get("colour")},
-                "augmented": {"shot_id": after["shot_id"],
-                              "release_window_s": after["release_window_s"],
-                              "colour": after.get("colour")},
-            })
+            counter_changes.append(
+                {
+                    "counter_id": key,
+                    "change": "colour_changed" if colour_changed else "window_changed",
+                    "baseline": {
+                        "shot_id": before["shot_id"],
+                        "release_window_s": before["release_window_s"],
+                        "colour": before.get("colour"),
+                    },
+                    "augmented": {
+                        "shot_id": after["shot_id"],
+                        "release_window_s": after["release_window_s"],
+                        "colour": after.get("colour"),
+                    },
+                }
+            )
 
     def visual_only(events, other_events):
         rows = []
@@ -51,15 +64,23 @@ def compare_ledgers(baseline, augmented):
             for other in other_events:
                 other_start, other_end = other["release_window_s"]
                 if max(start, other_start) < min(end, other_end):
-                    overlaps.append({"candidate_id": other["candidate_id"],
-                                     "counter_id": other.get("counter_id"),
-                                     "colour": other.get("colour"),
-                                     "release_window_s": other["release_window_s"]})
-            rows.append({"candidate_id": event["candidate_id"],
-                         "shot_id": event["shot_id"],
-                         "release_window_s": event["release_window_s"],
-                         "colour": event.get("colour"),
-                         "opposite_run_overlaps": overlaps})
+                    overlaps.append(
+                        {
+                            "candidate_id": other["candidate_id"],
+                            "counter_id": other.get("counter_id"),
+                            "colour": other.get("colour"),
+                            "release_window_s": other["release_window_s"],
+                        }
+                    )
+            rows.append(
+                {
+                    "candidate_id": event["candidate_id"],
+                    "shot_id": event["shot_id"],
+                    "release_window_s": event["release_window_s"],
+                    "colour": event.get("colour"),
+                    "opposite_run_overlaps": overlaps,
+                }
+            )
         return rows
 
     return {

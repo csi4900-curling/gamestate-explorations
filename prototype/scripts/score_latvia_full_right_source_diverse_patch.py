@@ -48,27 +48,31 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--shard-index", type=int, choices=range(SHARD_COUNT))
     args = parser.parse_args()
-    target = (SHARD_DIR / f"part-{args.shard_index}.json" if
-              args.shard_index is not None else OUT)
+    target = SHARD_DIR / f"part-{args.shard_index}.json" if args.shard_index is not None else OUT
     if target.exists():
         raise ValueError("Target score artifact already exists")
-    queue, context, old = (json.loads(p.read_text()) for p in (
-        QUEUE, CONTEXT, OLD))
-    training, selection, reviewed = (json.loads(p.read_text()) for p in (
-        TRAINING, SELECTION, REVIEWED))
+    queue, context, old = (json.loads(p.read_text()) for p in (QUEUE, CONTEXT, OLD))
+    training, selection, reviewed = (
+        json.loads(p.read_text()) for p in (TRAINING, SELECTION, REVIEWED)
+    )
     scans = {name: json.loads(path.read_text()) for name, path in SCANS.items()}
     source_hash = digest(VIDEO)
-    if (queue["source_video_sha256"] != source_hash or
-            context["input_sha256"]["queue"] != digest(QUEUE) or
-            old["input_sha256"]["queue"] != digest(QUEUE) or
-            training["selection_sha256"] != digest(SELECTION) or
-            training["model_sha256"] != digest(MODEL) or
-            reviewed["input_sha256"]["new_model"] != digest(MODEL) or
-            any(src["video_sha256"] == source_hash or "latvia" in src["video"]
-                for src in selection["sources"]) or
-            any(queue["input_sha256"][name] != digest(path) or
-                scan["source_sha256"] != source_hash for (name, path), scan in
-                zip(SCANS.items(), scans.values()))):
+    if (
+        queue["source_video_sha256"] != source_hash
+        or context["input_sha256"]["queue"] != digest(QUEUE)
+        or old["input_sha256"]["queue"] != digest(QUEUE)
+        or training["selection_sha256"] != digest(SELECTION)
+        or training["model_sha256"] != digest(MODEL)
+        or reviewed["input_sha256"]["new_model"] != digest(MODEL)
+        or any(
+            src["video_sha256"] == source_hash or "latvia" in src["video"]
+            for src in selection["sources"]
+        )
+        or any(
+            queue["input_sha256"][name] != digest(path) or scan["source_sha256"] != source_hash
+            for (name, path), scan in zip(SCANS.items(), scans.values())
+        )
+    ):
         raise ValueError("Source, model or reviewed-result lineage differs")
     model = load_model(MODEL)
     if float(model["threshold"]) != 0:
@@ -76,33 +80,37 @@ def main():
     proposal_rows = {}
     raw_tracks = {}
     for name, scan in scans.items():
-        entries = (scan["later_review_proposals"] if name.endswith("_later")
-                   else scan["directional_review_proposals"])
+        entries = (
+            scan["later_review_proposals"]
+            if name.endswith("_later")
+            else scan["directional_review_proposals"]
+        )
         for row in entries:
-            pid = (f"{name}:{row['raw_track_id']}:"
-                   f"{row.get('episode_index_within_raw_track', 1)}")
+            pid = f"{name}:{row['raw_track_id']}:{row.get('episode_index_within_raw_track', 1)}"
             if pid in proposal_rows:
                 raise ValueError("Duplicate source proposal")
             proposal_rows[pid] = row
         if "raw_tracks" in scan:
             raw_tracks[name] = {r["track_id"]: r for r in scan["raw_tracks"]}
     raw_tracks["two_second_global_later"] = raw_tracks["two_second_global"]
-    if (len(proposal_rows) != queue["proposal_count"] or
-            set(proposal_rows) != {r["proposal_id"] for r in context[
-                "proposals"]}):
+    if len(proposal_rows) != queue["proposal_count"] or set(proposal_rows) != {
+        r["proposal_id"] for r in context["proposals"]
+    }:
         raise ValueError("Queue and context proposal identities differ")
     old_rows = {r["proposal_id"]: r for r in old["proposals"]}
     reviewed_rows = {r["proposal_id"]: r for r in reviewed["rows"]}
     if len(old_rows) != len(proposal_rows) or len(reviewed_rows) != 53:
         raise ValueError("Old or reviewed score coverage changed")
-    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     fps = capture.get(cv2.CAP_PROP_FPS)
     if not capture.isOpened() or fps <= 0:
         raise ValueError("Latvia source unreadable")
-    start = (args.shard_index * 84 if args.shard_index is not None else 0)
-    stop = (min(start + 84, len(context["proposals"])) if
-            args.shard_index is not None else len(context["proposals"]))
+    start = args.shard_index * 84 if args.shard_index is not None else 0
+    stop = (
+        min(start + 84, len(context["proposals"]))
+        if args.shard_index is not None
+        else len(context["proposals"])
+    )
     rows = []
     try:
         for item in context["proposals"][start:stop]:
@@ -121,30 +129,37 @@ def main():
                 ok, frame = capture.read()
                 if not ok or frame.shape[:2] != (360, 640):
                     raise ValueError(f"Source decode failed: {pid}")
-                scored = score_candidates(frame, [{"bbox": point_by_time[
-                    time]["bbox"]}], model)[0]
-                samples.append({"time_s": time,
-                                "patch_score": round(scored["patch_score"], 6),
-                                "patch_accepted": scored["patch_accepted"]})
+                scored = score_candidates(frame, [{"bbox": point_by_time[time]["bbox"]}], model)[0]
+                samples.append(
+                    {
+                        "time_s": time,
+                        "patch_score": round(scored["patch_score"], 6),
+                        "patch_accepted": scored["patch_accepted"],
+                    }
+                )
             patch_positive = any(sample["patch_accepted"] for sample in samples)
             previous = reviewed_rows.get(pid)
-            if previous is not None and (samples != previous[
-                    "new_model_samples"] or patch_positive != previous[
-                        "new_model_any_positive"]):
+            if previous is not None and (
+                samples != previous["new_model_samples"]
+                or patch_positive != previous["new_model_any_positive"]
+            ):
                 raise ValueError(f"Reviewed new-model score changed: {pid}")
             old_positive = old_rows[pid]["any_positive_patch"]
-            rows.append({
-                "proposal_id": pid,
-                "review_group_id": item["review_group_id"],
-                "context_tier": item["frozen_paired_context_tier"],
-                "sample_patch_scores": samples,
-                "old_model_any_positive_patch": old_positive,
-                "new_model_any_positive_patch": patch_positive,
-                "new_visual_cue_pair_review_tier": visual_cue_pair(
-                    item["frozen_paired_context_tier"], patch_positive),
-                "physical_throw_verified": False,
-                "simulation_ready": False,
-            })
+            rows.append(
+                {
+                    "proposal_id": pid,
+                    "review_group_id": item["review_group_id"],
+                    "context_tier": item["frozen_paired_context_tier"],
+                    "sample_patch_scores": samples,
+                    "old_model_any_positive_patch": old_positive,
+                    "new_model_any_positive_patch": patch_positive,
+                    "new_visual_cue_pair_review_tier": visual_cue_pair(
+                        item["frozen_paired_context_tier"], patch_positive
+                    ),
+                    "physical_throw_verified": False,
+                    "simulation_ready": False,
+                }
+            )
     finally:
         capture.release()
     if args.shard_index is not None:
@@ -171,26 +186,33 @@ def main():
     by_id = {r["proposal_id"]: r for r in rows}
     groups = []
     for group in queue["review_groups"]:
-        tiers = [by_id[pid]["new_visual_cue_pair_review_tier"]
-                 for pid in group["proposal_ids"]]
-        groups.append({"review_group_id": group["group_id"],
-                       "proposal_ids": group["proposal_ids"],
-                       "new_visual_cue_group_priority": group_visual_priority(tiers),
-                       "physical_event_verified": False})
-    patch_counts = Counter((r["old_model_any_positive_patch"],
-                            r["new_model_any_positive_patch"]) for r in rows)
+        tiers = [by_id[pid]["new_visual_cue_pair_review_tier"] for pid in group["proposal_ids"]]
+        groups.append(
+            {
+                "review_group_id": group["group_id"],
+                "proposal_ids": group["proposal_ids"],
+                "new_visual_cue_group_priority": group_visual_priority(tiers),
+                "physical_event_verified": False,
+            }
+        )
+    patch_counts = Counter(
+        (r["old_model_any_positive_patch"], r["new_model_any_positive_patch"]) for r in rows
+    )
     tier_counts = Counter(r["new_visual_cue_pair_review_tier"] for r in rows)
     group_counts = Counter(g["new_visual_cue_group_priority"] for g in groups)
     result = {
         "status": "full_match_new_patch_visual_review_not_event_filter",
         "source_video_sha256": source_hash,
-        "input_sha256": {"queue": digest(QUEUE), "full_context": digest(CONTEXT),
-                         "old_full_model_scores": digest(OLD),
-                         "training_selection": digest(SELECTION),
-                         "training_results": digest(TRAINING),
-                         "new_model": digest(MODEL),
-                         "reviewed_new_model_transfer": digest(REVIEWED),
-                         **{name: digest(path) for name, path in SCANS.items()}},
+        "input_sha256": {
+            "queue": digest(QUEUE),
+            "full_context": digest(CONTEXT),
+            "old_full_model_scores": digest(OLD),
+            "training_selection": digest(SELECTION),
+            "training_results": digest(TRAINING),
+            "new_model": digest(MODEL),
+            "reviewed_new_model_transfer": digest(REVIEWED),
+            **{name: digest(path) for name, path in SCANS.items()},
+        },
         "feature_code_sha256": digest(ROOT / "prototype/stone_patch_detector.py"),
         "patch_scorer_code_sha256": digest(ROOT / "prototype/cap_patch_verifier.py"),
         "cue_pair_code_sha256": digest(ROOT / "prototype/right_visual_cue_pair.py"),
@@ -198,10 +220,12 @@ def main():
         "proposal_count": len(rows),
         "reviewed_score_reproduction_count": len(reviewed_rows),
         "group_count": len(groups),
-        "new_patch_positive_proposal_count": sum(r[
-            "new_model_any_positive_patch"] for r in rows),
-        "old_to_new_patch_counts": {f"old_{int(old)}_new_{int(new)}": patch_counts[
-            old, new] for old in (False, True) for new in (False, True)},
+        "new_patch_positive_proposal_count": sum(r["new_model_any_positive_patch"] for r in rows),
+        "old_to_new_patch_counts": {
+            f"old_{int(old)}_new_{int(new)}": patch_counts[old, new]
+            for old in (False, True)
+            for new in (False, True)
+        },
         "new_proposal_visual_tier_counts": dict(tier_counts),
         "new_group_visual_priority_counts": dict(group_counts),
         "proposals": rows,
@@ -214,9 +238,16 @@ def main():
         ],
     }
     OUT.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"proposals": len(rows), "new_patch_positive": result[
-        "new_patch_positive_proposal_count"], "old_to_new": result[
-            "old_to_new_patch_counts"], "group_priorities": dict(group_counts)}))
+    print(
+        json.dumps(
+            {
+                "proposals": len(rows),
+                "new_patch_positive": result["new_patch_positive_proposal_count"],
+                "old_to_new": result["old_to_new_patch_counts"],
+                "group_priorities": dict(group_counts),
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

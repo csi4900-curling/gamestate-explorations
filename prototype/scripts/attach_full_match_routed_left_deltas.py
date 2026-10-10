@@ -26,11 +26,13 @@ def main():
     pre = json.loads(args.pre.read_text())
     delta = json.loads(args.delta.read_text())
     provenance = sequence["conditional_board_view_provenance"]
-    if (pre["sequence_sha256"] != provenance["sequence_sha256"] or
-            pre["routes_sha256"] != provenance["routes_sha256"] or
-            delta["routes_sha256"] != provenance["routes_sha256"] or
-            delta["pre_sha256"] != digest(args.pre) or
-            delta["post_sha256"] != provenance["left_scan_sha256"]):
+    if (
+        pre["sequence_sha256"] != provenance["sequence_sha256"]
+        or pre["routes_sha256"] != provenance["routes_sha256"]
+        or delta["routes_sha256"] != provenance["routes_sha256"]
+        or delta["pre_sha256"] != digest(args.pre)
+        or delta["post_sha256"] != provenance["left_scan_sha256"]
+    ):
         raise ValueError("Pre/delta lineage differs from routed sequence")
     result = attach_routed_left_cap_deltas(sequence, pre, delta)
     result["receiving_view_delta_provenance"] = {
@@ -40,16 +42,24 @@ def main():
         "model_code_sha256": digest(ROOT / "prototype/attach_routed_left_cap_deltas.py"),
         "runner_sha256": digest(Path(__file__)),
     }
-    result["limitations"].extend([
-        "Cap changes describe partial camera-local image observations only.",
-        "Retained static markings and newly visible coloured objects are not physical stone IDs.",
-        "Unobserved shots and occlusion may alter the apparent pre/post delta.",
-    ])
+    result["limitations"].extend(
+        [
+            "Cap changes describe partial camera-local image observations only.",
+            "Retained static markings and newly visible coloured objects are not physical stone IDs.",
+            "Unobserved shots and occlusion may alter the apparent pre/post delta.",
+        ]
+    )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"source": result["source_id"],
-                      "rows": len(result["rows"]),
-                      "left_delta_statuses": result["left_receiving_transition_status_counts"]}))
+    print(
+        json.dumps(
+            {
+                "source": result["source_id"],
+                "rows": len(result["rows"]),
+                "left_delta_statuses": result["left_receiving_transition_status_counts"],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

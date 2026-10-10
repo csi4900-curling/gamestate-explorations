@@ -28,13 +28,18 @@ def main():
         if scan["status"] != "development_broadcast_graphic_evidence_not_physical_end_boundaries":
             parser.error(f"Unsupported marker scan: {path}")
         summary = stable_marker_evidence(scan["samples"])
-        games.append({"video_path": scan["video_path"],
-                      "video_sha256": scan["video_sha256"],
-                      "scan_path": str(path), "scan_sha256": digest(path),
-                      "calibrated_header_geometry": scan["calibrated_header_geometry"],
-                      "sample_count": scan["sample_count"],
-                      "recognized_count": scan["recognized_count"],
-                      **summary})
+        games.append(
+            {
+                "video_path": scan["video_path"],
+                "video_sha256": scan["video_sha256"],
+                "scan_path": str(path),
+                "scan_sha256": digest(path),
+                "calibrated_header_geometry": scan["calibrated_header_geometry"],
+                "sample_count": scan["sample_count"],
+                "recognized_count": scan["recognized_count"],
+                **summary,
+            }
+        )
     result = {
         "status": "development_repeated_graphic_evidence_not_end_truth",
         "summarizer_sha256": digest(ROOT / "prototype/end_marker_temporal.py"),
@@ -50,8 +55,11 @@ def main():
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
     for game in games:
-        print(game["video_path"], [run["end"] for run in game["stable_runs"]],
-              len(game["discarded_short_runs"]))
+        print(
+            game["video_path"],
+            [run["end"] for run in game["stable_runs"]],
+            len(game["discarded_short_runs"]),
+        )
 
 
 if __name__ == "__main__":

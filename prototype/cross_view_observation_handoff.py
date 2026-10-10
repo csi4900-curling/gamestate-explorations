@@ -24,32 +24,34 @@ def build_observation_handoff(throws, path_rows):
             raise ValueError(f"Negative observed gap: {event['id']}")
         simultaneous_disagreement = (
             round(dist(first["world_m"], departure[-1]["world_m"]), 4)
-            if first and gap == 0 else None)
-        rows.append({
-            "throw_id": event["id"],
-            "colour": event["colour"],
-            "origin_gate_time_s": event["gate_time_s"],
-            "bounded_receiving_track_id": event["receiving_track_id"],
-            "far_receiving_path_status": far["status"],
-            "departure_observations": departure,
-            "far_receiving_observations": path,
-            "bounded_receiving_observations": near,
-            "old_bounded_processing_gap_s": event["gap"]["duration_s"],
-            "last_departure_to_first_far_observation_s": gap,
-            "same_time_camera_position_disagreement_m": simultaneous_disagreement,
-            "observed_points_only": True,
-            "physical_stone_identity_verified": False,
-            "far_metric_accuracy_verified": False,
-            "exact_physical_release_time_s": None,
-            "exact_physical_settle_time_s": None,
-            "physics_simulation_ready": False,
-        })
+            if first and gap == 0
+            else None
+        )
+        rows.append(
+            {
+                "throw_id": event["id"],
+                "colour": event["colour"],
+                "origin_gate_time_s": event["gate_time_s"],
+                "bounded_receiving_track_id": event["receiving_track_id"],
+                "far_receiving_path_status": far["status"],
+                "departure_observations": departure,
+                "far_receiving_observations": path,
+                "bounded_receiving_observations": near,
+                "old_bounded_processing_gap_s": event["gap"]["duration_s"],
+                "last_departure_to_first_far_observation_s": gap,
+                "same_time_camera_position_disagreement_m": simultaneous_disagreement,
+                "observed_points_only": True,
+                "physical_stone_identity_verified": False,
+                "far_metric_accuracy_verified": False,
+                "exact_physical_release_time_s": None,
+                "exact_physical_settle_time_s": None,
+                "physics_simulation_ready": False,
+            }
+        )
     return {
         "throw_count": len(rows),
-        "far_path_selected_count": sum(bool(row["far_receiving_observations"])
-                                       for row in rows),
-        "ambiguous_or_unresolved_count": sum(not row["far_receiving_observations"]
-                                             for row in rows),
+        "far_path_selected_count": sum(bool(row["far_receiving_observations"]) for row in rows),
+        "ambiguous_or_unresolved_count": sum(not row["far_receiving_observations"] for row in rows),
         "physics_simulation_ready_count": 0,
         "rows": rows,
         "limitations": [

@@ -40,8 +40,9 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({"confirmed": len(result["events"]),
-                      "withheld": len(result["withheld_events"]) }))
+    print(
+        json.dumps({"confirmed": len(result["events"]), "withheld": len(result["withheld_events"])})
+    )
 
 
 if __name__ == "__main__":

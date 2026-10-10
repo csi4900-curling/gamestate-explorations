@@ -31,16 +31,23 @@ def main():
     if scan["source_sha256"] != digest(VIDEO):
         raise ValueError("Global scan and source video differ")
     proposals = multi_episode_spans(scan["raw_tracks"])
-    first = {row["raw_track_id"]: row for row in proposals if row[
-        "episode_index_within_raw_track"] == 1}
-    baseline = {row["raw_track_id"]: row for row in scan[
-        "directional_review_proposals"]}
+    first = {
+        row["raw_track_id"]: row for row in proposals if row["episode_index_within_raw_track"] == 1
+    }
+    baseline = {row["raw_track_id"]: row for row in scan["directional_review_proposals"]}
     if len(first) != len(baseline) or set(first) != set(baseline):
         raise ValueError("Multi-episode extraction lost baseline proposals")
     for track_id, row in first.items():
-        clean = {key: value for key, value in row.items() if key not in (
-            "episode_index_within_raw_track", "preceding_quiet_end_time_s",
-            "raw_track_not_physical_identity")}
+        clean = {
+            key: value
+            for key, value in row.items()
+            if key
+            not in (
+                "episode_index_within_raw_track",
+                "preceding_quiet_end_time_s",
+                "raw_track_not_physical_identity",
+            )
+        }
         if clean != baseline[track_id]:
             raise ValueError(f"First proposal changed: {track_id}")
     later = [row for row in proposals if row["episode_index_within_raw_track"] > 1]
@@ -50,8 +57,7 @@ def main():
         "status": "postinspection_global_raw_track_multi_episode_development_not_throw_truth",
         "source_sha256": digest(VIDEO),
         "global_scan_sha256": digest(SCAN),
-        "multi_episode_code_sha256": digest(
-            ROOT / "prototype/right_multi_episode_span.py"),
+        "multi_episode_code_sha256": digest(ROOT / "prototype/right_multi_episode_span.py"),
         "late_seed_code_sha256": digest(ROOT / "prototype/right_late_seed_span.py"),
         "runner_sha256": digest(Path(__file__)),
         "source_interval_s": scan["source_interval_s"],
@@ -71,8 +77,15 @@ def main():
         ],
     }
     OUT.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({"first_episodes": len(first), "later_episodes": len(later),
-                      "all_review_proposals": len(proposals)}))
+    print(
+        json.dumps(
+            {
+                "first_episodes": len(first),
+                "later_episodes": len(later),
+                "all_review_proposals": len(proposals),
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

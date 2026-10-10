@@ -11,13 +11,15 @@ from math import hypot
 from pathlib import Path
 
 import cv2
-import numpy as np
 
 ROOT = Path(__file__).resolve().parents[2]
 BASE = ROOT / "validation/throw-event-benchmark/canada-latvia-2024"
 POSITIVE = BASE / "source-1080p-1650-2760.mp4"
 BLIND = BASE / "source-1080p-5670-6670.mp4"
-OUT = ROOT / "validation/throw-event-benchmark/layout-router/full-2024-coverage/latvia24-full-v1/end6-highres-body-template-development.json"
+OUT = (
+    ROOT
+    / "validation/throw-event-benchmark/layout-router/full-2024-coverage/latvia24-full-v1/end6-highres-body-template-development.json"
+)
 POSITIVE_TIME_S = 2310
 POSITIVE_CLIP_START_S = 1650
 BLIND_START_S, BLIND_STOP_S = 5670, 6670
@@ -53,8 +55,7 @@ def body_template(frame):
 def matches(frame, template):
     x1, y1, x2, y2 = SEARCH_XYXY
     gray = cv2.cvtColor(frame[y1:y2, x1:x2], cv2.COLOR_BGR2GRAY)
-    gray = cv2.resize(gray, ((x2-x1)//2, (y2-y1)//2),
-                      interpolation=cv2.INTER_AREA)
+    gray = cv2.resize(gray, ((x2 - x1) // 2, (y2 - y1) // 2), interpolation=cv2.INTER_AREA)
     corr = cv2.matchTemplate(gray, template, cv2.TM_CCOEFF_NORMED)
     peaks = []
     for _ in range(MAX_PEAKS):
@@ -62,13 +63,22 @@ def matches(frame, template):
         if score < SCORE_FLOOR:
             break
         px, py = point
-        peaks.append({"center_1080p_px": [x1 + 2*px + 40, y1 + 2*py + 19],
-                      "score": round(float(score), 5)})
-        cv2.rectangle(corr,
-                      (max(0, px-NMS_SIDE_HALFRES), max(0, py-NMS_SIDE_HALFRES)),
-                      (min(corr.shape[1]-1, px+NMS_SIDE_HALFRES),
-                       min(corr.shape[0]-1, py+NMS_SIDE_HALFRES)),
-                      -1, thickness=-1)
+        peaks.append(
+            {
+                "center_1080p_px": [x1 + 2 * px + 40, y1 + 2 * py + 19],
+                "score": round(float(score), 5),
+            }
+        )
+        cv2.rectangle(
+            corr,
+            (max(0, px - NMS_SIDE_HALFRES), max(0, py - NMS_SIDE_HALFRES)),
+            (
+                min(corr.shape[1] - 1, px + NMS_SIDE_HALFRES),
+                min(corr.shape[0] - 1, py + NMS_SIDE_HALFRES),
+            ),
+            -1,
+            thickness=-1,
+        )
     return peaks
 
 
@@ -77,25 +87,26 @@ def link_paths(samples):
     for sample in samples:
         t = sample["time_s"]
         claimed = set()
-        for path in sorted(paths, key=lambda p: p["points"][-1]["time_s"],
-                           reverse=True):
+        for path in sorted(paths, key=lambda p: p["points"][-1]["time_s"], reverse=True):
             last = path["points"][-1]
-            gap = t-last["time_s"]
+            gap = t - last["time_s"]
             if gap <= 0 or gap > 2:
                 continue
             choices = []
             for index, point in enumerate(sample["body_proposals"]):
                 if index in claimed:
                     continue
-                distance = hypot(*(point["center_1080p_px"][axis] -
-                                   last["center_1080p_px"][axis]
-                                   for axis in (0, 1)))
-                if distance <= 130*gap:
+                distance = hypot(
+                    *(
+                        point["center_1080p_px"][axis] - last["center_1080p_px"][axis]
+                        for axis in (0, 1)
+                    )
+                )
+                if distance <= 130 * gap:
                     choices.append((distance, index))
             if choices:
                 _, index = min(choices)
-                path["points"].append({"time_s": t,
-                                       **sample["body_proposals"][index]})
+                path["points"].append({"time_s": t, **sample["body_proposals"][index]})
                 claimed.add(index)
         for index, point in enumerate(sample["body_proposals"]):
             if index not in claimed:
@@ -122,23 +133,23 @@ def link_paths(samples):
 def main():
     if OUT.exists():
         raise SystemExit("Output exists; preserve first diagnostic")
-    positive = cv2.VideoCapture(str(POSITIVE), cv2.CAP_FFMPEG,
-                                [cv2.CAP_PROP_N_THREADS, 1])
-    blind = cv2.VideoCapture(str(BLIND), cv2.CAP_FFMPEG,
-                             [cv2.CAP_PROP_N_THREADS, 1])
+    positive = cv2.VideoCapture(str(POSITIVE), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
+    blind = cv2.VideoCapture(str(BLIND), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not positive.isOpened() or not blind.isOpened():
         raise RuntimeError("Cannot open both 1080p clips")
     try:
-        template = body_template(frame_at(
-            positive, POSITIVE_TIME_S-POSITIVE_CLIP_START_S))
+        template = body_template(frame_at(positive, POSITIVE_TIME_S - POSITIVE_CLIP_START_S))
         positive_control = [
-            {"time_s": t, "body_proposals": matches(
-                frame_at(positive, t-POSITIVE_CLIP_START_S), template)}
-            for t in range(2309, 2316)]
+            {
+                "time_s": t,
+                "body_proposals": matches(frame_at(positive, t - POSITIVE_CLIP_START_S), template),
+            }
+            for t in range(2309, 2316)
+        ]
         samples = [
-            {"time_s": t, "body_proposals": matches(
-                frame_at(blind, t-BLIND_START_S), template)}
-            for t in range(BLIND_START_S, BLIND_STOP_S)]
+            {"time_s": t, "body_proposals": matches(frame_at(blind, t - BLIND_START_S), template)}
+            for t in range(BLIND_START_S, BLIND_STOP_S)
+        ]
     finally:
         positive.release()
         blind.release()
@@ -174,11 +185,18 @@ def main():
         ],
     }
     OUT.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({"positive_control_peak_scores": [
-        max((p["score"] for p in row["body_proposals"]), default=None)
-        for row in positive_control],
-        "blind_proposal_count": sum(len(row["body_proposals"]) for row in samples),
-        "supported_path_direction_counts": result["supported_path_direction_counts"]}))
+    print(
+        json.dumps(
+            {
+                "positive_control_peak_scores": [
+                    max((p["score"] for p in row["body_proposals"]), default=None)
+                    for row in positive_control
+                ],
+                "blind_proposal_count": sum(len(row["body_proposals"]) for row in samples),
+                "supported_path_direction_counts": result["supported_path_direction_counts"],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

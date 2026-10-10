@@ -18,8 +18,7 @@ def digest(path):
 
 
 def main():
-    old, bridged, layout = (json.loads(path.read_text())
-                            for path in (OLD, BRIDGED, LAYOUT))
+    old, bridged, layout = (json.loads(path.read_text()) for path in (OLD, BRIDGED, LAYOUT))
     assert old["source_sha256"] == bridged["source_sha256"] == layout["source_sha256"]
     assert layout["timeline_sha256"] == digest(BRIDGED)
     assert old["observed_event_count"] == len(old["observed_events"])
@@ -30,21 +29,27 @@ def main():
     available = bridged["observed_events"][:]
     matched = []
     for original in old["observed_events"]:
-        candidates = [row for row in available
-                      if row["colour"] == original["colour"] and
-                      abs(row["crossing_time_s"] - original["crossing_time_s"]) <= 0.25]
+        candidates = [
+            row
+            for row in available
+            if row["colour"] == original["colour"]
+            and abs(row["crossing_time_s"] - original["crossing_time_s"]) <= 0.25
+        ]
         if len(candidates) != 1:
             raise ValueError(f"Old candidate did not match uniquely: {original['id']}")
         chosen = candidates[0]
         available.remove(chosen)
         if chosen["crossing_time_s"] != original["crossing_time_s"]:
             raise ValueError("Old candidate timestamp changed")
-        matched.append({"original_id": original["id"],
-                        "bridged_id": chosen["id"],
-                        "time_s": chosen["crossing_time_s"],
-                        "colour": chosen["colour"]})
-    gaps = [row for row in old["coverage_gaps_s"]
-            if row not in bridged["coverage_gaps_s"]]
+        matched.append(
+            {
+                "original_id": original["id"],
+                "bridged_id": chosen["id"],
+                "time_s": chosen["crossing_time_s"],
+                "colour": chosen["colour"],
+            }
+        )
+    gaps = [row for row in old["coverage_gaps_s"] if row not in bridged["coverage_gaps_s"]]
     recovered = []
     for row in available:
         time_s = row["crossing_time_s"]
@@ -52,18 +57,20 @@ def main():
         if len(containing) != 1:
             raise ValueError(f"New event is outside exactly one recovered gap: {row['id']}")
         check = layout_by_id[row["id"]]
-        recovered.append({
-            "id": row["id"],
-            "candidate_time_s": time_s,
-            "colour_claim": row["colour"],
-            "original_unknown_gap_s": containing[0],
-            "event_time_split_signature_count": check["matching_samples"],
-            "event_time_sample_count": check["sample_count"],
-            "layout_review_required": check["layout_review_required"],
-            "review_state": "new_from_bridged_layout_needs_physical_stone_verification",
-            "physical_throw_verified": False,
-            "candidate_evidence": row,
-        })
+        recovered.append(
+            {
+                "id": row["id"],
+                "candidate_time_s": time_s,
+                "colour_claim": row["colour"],
+                "original_unknown_gap_s": containing[0],
+                "event_time_split_signature_count": check["matching_samples"],
+                "event_time_sample_count": check["sample_count"],
+                "layout_review_required": check["layout_review_required"],
+                "review_state": "new_from_bridged_layout_needs_physical_stone_verification",
+                "physical_throw_verified": False,
+                "candidate_evidence": row,
+            }
+        )
     result = {
         "status": "additive_bridged_gap_review_not_revised_accepted_timeline",
         "source_id": old["source_id"],
@@ -85,9 +92,15 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"preserved": len(matched), "new_review": len(recovered),
-                      "new_layout_review": sum(row["layout_review_required"]
-                                               for row in recovered)}))
+    print(
+        json.dumps(
+            {
+                "preserved": len(matched),
+                "new_review": len(recovered),
+                "new_layout_review": sum(row["layout_review_required"] for row in recovered),
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

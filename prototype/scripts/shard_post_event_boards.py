@@ -31,12 +31,12 @@ def partition(args):
         raise ValueError("Board partition directory exists")
     screen = read(args.screen)
     accepted_ids = unique_ids(screen["events"], "id")
-    decision_ids = {row["candidate_id"] for row in screen["decisions"]
-                    if row["accepted"]}
+    decision_ids = {row["candidate_id"] for row in screen["decisions"] if row["accepted"]}
     if set(accepted_ids) != decision_ids:
         raise ValueError("Screen accepted IDs differ from event rows")
-    if screen["candidates_sha256"] != file_sha256(args.candidates) or \
-            screen["motion_sha256"] != file_sha256(args.motion):
+    if screen["candidates_sha256"] != file_sha256(args.candidates) or screen[
+        "motion_sha256"
+    ] != file_sha256(args.motion):
         raise ValueError("Screen input chain differs")
     args.output_dir.mkdir(parents=True)
     manifest = {
@@ -50,14 +50,16 @@ def partition(args):
         "shards": [],
     }
     for index, start in enumerate(range(0, len(accepted_ids), args.shard_size), 1):
-        part = {**screen, "events": screen["events"][start:start + args.shard_size]}
+        part = {**screen, "events": screen["events"][start : start + args.shard_size]}
         path = args.output_dir / f"board-input-screen-{index:03d}.json"
         write(path, part)
-        manifest["shards"].append({
-            "index": index,
-            "accepted_ids": accepted_ids[start:start + args.shard_size],
-            "screen_sha256": file_sha256(path),
-        })
+        manifest["shards"].append(
+            {
+                "index": index,
+                "accepted_ids": accepted_ids[start : start + args.shard_size],
+                "screen_sha256": file_sha256(path),
+            }
+        )
     write(args.output_dir / "manifest.json", manifest)
     print(len(accepted_ids), "accepted candidates in", len(manifest["shards"]), "shards")
 
@@ -66,9 +68,11 @@ def merge(args):
     if args.output.exists():
         raise ValueError("Merged boards already exist")
     manifest = read(args.partition_dir / "manifest.json")
-    if manifest["screen_sha256"] != file_sha256(args.screen) or \
-            manifest["candidates_sha256"] != file_sha256(args.candidates) or \
-            manifest["motion_sha256"] != file_sha256(args.motion):
+    if (
+        manifest["screen_sha256"] != file_sha256(args.screen)
+        or manifest["candidates_sha256"] != file_sha256(args.candidates)
+        or manifest["motion_sha256"] != file_sha256(args.motion)
+    ):
         raise ValueError("Full board inputs differ from partition manifest")
     if unique_ids(read(args.screen)["events"], "id") != manifest["accepted_ids"]:
         raise ValueError("Full accepted candidate order changed")
@@ -77,17 +81,24 @@ def merge(args):
         index = shard["index"]
         screen_path = args.partition_dir / f"board-input-screen-{index:03d}.json"
         result_path = args.partition_dir / f"board-result-{index:03d}.json"
-        if file_sha256(screen_path) != shard["screen_sha256"] or \
-                unique_ids(read(screen_path)["events"], "id") != shard["accepted_ids"]:
+        if (
+            file_sha256(screen_path) != shard["screen_sha256"]
+            or unique_ids(read(screen_path)["events"], "id") != shard["accepted_ids"]
+        ):
             raise ValueError(f"Board input differs in shard {index}")
         result = read(result_path)
-        if (result["screen_sha256"] != shard["screen_sha256"] or
-                result["candidates_sha256"] != manifest["candidates_sha256"] or
-                result["motion_sha256"] != manifest["motion_sha256"] or
-                unique_ids(result["rows"], "candidate_id") != shard["accepted_ids"]):
+        if (
+            result["screen_sha256"] != shard["screen_sha256"]
+            or result["candidates_sha256"] != manifest["candidates_sha256"]
+            or result["motion_sha256"] != manifest["motion_sha256"]
+            or unique_ids(result["rows"], "candidate_id") != shard["accepted_ids"]
+        ):
             raise ValueError(f"Board output differs in shard {index}")
-        common = {key: value for key, value in result.items()
-                  if key not in ("rows", "screen_sha256", "board_status_counts")}
+        common = {
+            key: value
+            for key, value in result.items()
+            if key not in ("rows", "screen_sha256", "board_status_counts")
+        }
         if shared is None:
             shared = common
         elif shared != common:

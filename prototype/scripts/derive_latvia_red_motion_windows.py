@@ -30,27 +30,31 @@ def main():
     for path in transfer["supported_image_paths"]:
         if path["direction"] != "upward":
             continue
-        derived.append({
-            "diagnostic_path_id": path["diagnostic_path_id"],
-            "raw_image_path_interval_s": [path["first_observed_s"],
-                                          path["last_observed_s"]],
-            "raw_path_observation_count": len(path["points"]),
-            **split_moving_prefix(path["points"]),
-            "physical_release_verified": False,
-            "physical_stop_verified": False,
-            "same_stone_identity_through_stop_verified": False,
-            "simulation_ready": False,
-        })
+        derived.append(
+            {
+                "diagnostic_path_id": path["diagnostic_path_id"],
+                "raw_image_path_interval_s": [path["first_observed_s"], path["last_observed_s"]],
+                "raw_path_observation_count": len(path["points"]),
+                **split_moving_prefix(path["points"]),
+                "physical_release_verified": False,
+                "physical_stop_verified": False,
+                "same_stone_identity_through_stop_verified": False,
+                "simulation_ready": False,
+            }
+        )
     by_id = {r["diagnostic_path_id"]: r for r in derived}
     context = []
     for candidate in transfer["candidate_context"]:
-        context.append({
-            "candidate_id": candidate["candidate_id"],
-            "crossing_time_s": candidate["crossing_time_s"],
-            "associated_motion_windows": [by_id[x] for x in candidate[
-                "upward_path_ids_started_within_25s"]],
-            "physical_throw_verified": False,
-        })
+        context.append(
+            {
+                "candidate_id": candidate["candidate_id"],
+                "crossing_time_s": candidate["crossing_time_s"],
+                "associated_motion_windows": [
+                    by_id[x] for x in candidate["upward_path_ids_started_within_25s"]
+                ],
+                "physical_throw_verified": False,
+            }
+        )
     result = {
         "status": "visual_motion_prefixes_not_physical_throw_or_settle_times",
         "transfer_sha256": digest(TRANSFER),
@@ -68,11 +72,17 @@ def main():
         ],
     }
     OUT.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({"visual_stop_candidates": sum(
-        r["visual_stop_bracket_s"] is not None for r in derived),
-        "right_censored": sum(r["visual_stop_bracket_s"] is None
-                              for r in derived),
-        "paths": len(derived)}))
+    print(
+        json.dumps(
+            {
+                "visual_stop_candidates": sum(
+                    r["visual_stop_bracket_s"] is not None for r in derived
+                ),
+                "right_censored": sum(r["visual_stop_bracket_s"] is None for r in derived),
+                "paths": len(derived),
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

@@ -43,17 +43,20 @@ def verify(directory):
     frozen = json.loads((directory / "frozen-components.json").read_text())
     full = file_sha256(directory / "source-360p.mp4")
     interval = file_sha256(directory / "source-1080p-1650-2760.mp4")
-    for key, field in (("raw", "source_sha256"),
-                       ("corridor", "source_sha256"),
-                       ("screen", "source_sha256")):
+    for key, field in (
+        ("raw", "source_sha256"),
+        ("corridor", "source_sha256"),
+        ("screen", "source_sha256"),
+    ):
         require(data[key][field], full, f"{key} full source")
         require(data[key]["source_id"], frozen["source_id"], f"{key} source ID")
-        require(data[key]["source_interval_s"], frozen["source_interval_s"],
-                f"{key} interval")
-    for key, field in (("anchor", "video_sha256"),
-                       ("motion", "high_resolution_source_sha256"),
-                       ("rescue", "high_resolution_source_sha256"),
-                       ("patch", "video_sha256")):
+        require(data[key]["source_interval_s"], frozen["source_interval_s"], f"{key} interval")
+    for key, field in (
+        ("anchor", "video_sha256"),
+        ("motion", "high_resolution_source_sha256"),
+        ("rescue", "high_resolution_source_sha256"),
+        ("patch", "video_sha256"),
+    ):
         require(data[key][field], interval, f"{key} interval source")
     for key, field, upstream in (
         ("corridor", "input_sha256", "raw"),
@@ -77,9 +80,11 @@ def verify(directory):
     if anchor_time is None:
         raise ValueError("Right anchor was not selected")
     for key in ("motion", "patch"):
-        require(data[key]["right_reference_anchor_time_s"], anchor_time,
-                f"{key} anchor time")
-    model_path = ROOT / "validation/curlobserver-learned-probe/cap-patch-crossmatch-v1/model-excluding-china-dev.npz"
+        require(data[key]["right_reference_anchor_time_s"], anchor_time, f"{key} anchor time")
+    model_path = (
+        ROOT
+        / "validation/curlobserver-learned-probe/cap-patch-crossmatch-v1/model-excluding-china-dev.npz"
+    )
     require(data["patch"]["model_sha256"], file_sha256(model_path), "patch model")
     for relpath, expected in frozen["files_sha256"].items():
         require(file_sha256(ROOT / relpath), expected, f"frozen {relpath}")
@@ -91,17 +96,13 @@ def verify(directory):
         raise ValueError("Corridor and withheld IDs overlap")
     require(set(candidates) | set(withheld), set(raw_ids), "corridor partition")
     for key in ("motion", "hold", "gaps", "rescue", "patch"):
-        require(unique_ids(data[key]["rows"], "candidate_id"), candidates,
-                f"{key} candidate order")
+        require(unique_ids(data[key]["rows"], "candidate_id"), candidates, f"{key} candidate order")
     decisions = data["screen"]["decisions"]
-    require(unique_ids(decisions, "candidate_id"), candidates,
-            "screen candidate order")
+    require(unique_ids(decisions, "candidate_id"), candidates, "screen candidate order")
     statuses = dict(Counter(row["status"] for row in decisions))
-    require(data["screen"]["decision_status_counts"], statuses,
-            "screen status totals")
+    require(data["screen"]["decision_status_counts"], statuses, "screen status totals")
     accepted = [row["candidate_id"] for row in decisions if row["accepted"]]
-    require(unique_ids(data["screen"]["events"], "id"), accepted,
-            "accepted event order")
+    require(unique_ids(data["screen"]["events"], "id"), accepted, "accepted event order")
     for row in data["rescue"]["rows"]:
         selection = row["selection"]
         if selection.get("path") and selection.get("simulation_ready") is not False:
@@ -118,7 +119,9 @@ def verify(directory):
         "corridor_candidate_count": len(candidates),
         "withheld_candidate_count": len(withheld),
         "anchor_grid_sample_count": data["anchor"]["sample_count"],
-        "anchor_grid_registered_count": data["anchor"]["registration_status_counts"].get("registered", 0),
+        "anchor_grid_registered_count": data["anchor"]["registration_status_counts"].get(
+            "registered", 0
+        ),
         "anchor_time_s": anchor_time,
         "motion_status_counts": data["motion"]["selection_status_counts"],
         "hold_borrowed_sample_count": data["hold"]["borrowed_sample_count"],
@@ -144,8 +147,11 @@ def main():
         parser.error("Verification output already exists")
     result = verify(args.directory)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(result["raw_candidate_count"], result["corridor_candidate_count"],
-          len(result["accepted_candidate_ids"]))
+    print(
+        result["raw_candidate_count"],
+        result["corridor_candidate_count"],
+        len(result["accepted_candidate_ids"]),
+    )
 
 
 if __name__ == "__main__":

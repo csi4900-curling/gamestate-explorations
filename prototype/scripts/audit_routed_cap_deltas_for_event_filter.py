@@ -16,13 +16,19 @@ from prototype.throw_event_benchmark import evaluate_events
 BASE = ROOT / "validation/throw-event-benchmark"
 SOURCES = {
     "estonia": (
-        BASE / "canada-estonia-2024/full-match-conditional-receiving-view-state-transitions-postreview.json",
-        BASE / "canada-estonia-2024/blind-reference.json"),
+        BASE
+        / "canada-estonia-2024/full-match-conditional-receiving-view-state-transitions-postreview.json",
+        BASE / "canada-estonia-2024/blind-reference.json",
+    ),
     "italy": (
         BASE / "canada-italy/full-match-conditional-receiving-view-state-transitions-transfer.json",
-        BASE / "canada-italy/blind-reference.json"),
+        BASE / "canada-italy/blind-reference.json",
+    ),
 }
-OUTPUT = BASE / "layout-router/full-2024-coverage/routed-cap-delta-event-filter-diagnostic-postreview.json"
+OUTPUT = (
+    BASE
+    / "layout-router/full-2024-coverage/routed-cap-delta-event-filter-diagnostic-postreview.json"
+)
 
 
 def digest(path):
@@ -39,13 +45,20 @@ def main():
         if sequence["source_sha256"] != reference["source_sha256"]:
             raise ValueError(f"Source differs: {name}")
         lo, hi = reference["source_interval_s"]
-        candidates = [row for row in sequence["rows"]
-                      if row["observation_kind"] == "left_tracked_passage"
-                      and lo <= row["observation_time_s"] <= hi]
-        predictions = [{"id": row["candidate_id"],
-                        "colour": row["colour_claim"],
-                        "crossing_time_s": row["observation_time_s"]}
-                       for row in candidates]
+        candidates = [
+            row
+            for row in sequence["rows"]
+            if row["observation_kind"] == "left_tracked_passage"
+            and lo <= row["observation_time_s"] <= hi
+        ]
+        predictions = [
+            {
+                "id": row["candidate_id"],
+                "colour": row["colour_claim"],
+                "crossing_time_s": row["observation_time_s"],
+            }
+            for row in candidates
+        ]
         score = evaluate_events(predictions, reference["events"], [lo, hi])
         matched = {item["prediction_id"] for item in score["matches"]}
         comparison = []
@@ -53,16 +66,20 @@ def main():
             observation = row.get("post_candidate_receiving_view_observation")
             delta = row.get("receiving_view_partial_cap_transition")
             change = delta.get("image_cap_delta") if delta else None
-            comparison.append({
-                "candidate_id": row["candidate_id"],
-                "matches_coarse_window": row["candidate_id"] in matched,
-                "conditional_receiving_view": observation["view"] if observation else None,
-                "comparison_status": delta["comparison_status"] if delta else None,
-                "new_image_cap_observation_count":
-                    len(change["newly_observed"]) if change else None,
-                "no_longer_observed_image_cap_count":
-                    len(change["no_longer_observed"]) if change else None,
-            })
+            comparison.append(
+                {
+                    "candidate_id": row["candidate_id"],
+                    "matches_coarse_window": row["candidate_id"] in matched,
+                    "conditional_receiving_view": observation["view"] if observation else None,
+                    "comparison_status": delta["comparison_status"] if delta else None,
+                    "new_image_cap_observation_count": len(change["newly_observed"])
+                    if change
+                    else None,
+                    "no_longer_observed_image_cap_count": len(change["no_longer_observed"])
+                    if change
+                    else None,
+                }
+            )
         result = {
             "recording": name,
             "source_sha256": sequence["source_sha256"],
@@ -71,16 +88,27 @@ def main():
             "reference_method": reference["reference_method"],
             "source_interval_s": reference["source_interval_s"],
             "score_against_coarse_reference": {
-                key: score[key] for key in (
-                    "prediction_count", "reference_count", "true_positives",
-                    "false_positives", "false_negatives", "f1")},
-            "matched_comparison_status_counts": dict(Counter(
-                row["comparison_status"] for row in comparison
-                if row["matches_coarse_window"])),
+                key: score[key]
+                for key in (
+                    "prediction_count",
+                    "reference_count",
+                    "true_positives",
+                    "false_positives",
+                    "false_negatives",
+                    "f1",
+                )
+            },
+            "matched_comparison_status_counts": dict(
+                Counter(
+                    row["comparison_status"] for row in comparison if row["matches_coarse_window"]
+                )
+            ),
             "unmatched_candidate_count": sum(
-                not row["matches_coarse_window"] for row in comparison),
+                not row["matches_coarse_window"] for row in comparison
+            ),
             "can_estimate_cap_delta_false_positive_rejection": any(
-                not row["matches_coarse_window"] for row in comparison),
+                not row["matches_coarse_window"] for row in comparison
+            ),
             "candidate_comparisons": comparison,
         }
         rows.append(result)
@@ -99,8 +127,18 @@ def main():
     }
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT.write_text(json.dumps(output, indent=2) + "\n")
-    print(json.dumps([(row["recording"], row["score_against_coarse_reference"],
-                       row["unmatched_candidate_count"]) for row in rows]))
+    print(
+        json.dumps(
+            [
+                (
+                    row["recording"],
+                    row["score_against_coarse_reference"],
+                    row["unmatched_candidate_count"],
+                )
+                for row in rows
+            ]
+        )
+    )
 
 
 if __name__ == "__main__":

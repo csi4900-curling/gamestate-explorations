@@ -20,6 +20,9 @@ def test_two_agreeing_views_fill_missing_colour():
 
 
 def test_single_or_disagreeing_cues_do_not_override():
-    assert reconcile_event_colour("red", RELEASE, {"status": "not_scanned", "colour": None})["colour"] == "red"
+    assert (
+        reconcile_event_colour("red", RELEASE, {"status": "not_scanned", "colour": None})["colour"]
+        == "red"
+    )
     assert reconcile_event_colour("red", RELEASE, {**RECEIVING, "colour": "red"})["colour"] == "red"
     assert reconcile_event_colour("red", {**RELEASE, "time_s": None}, RECEIVING)["colour"] == "red"

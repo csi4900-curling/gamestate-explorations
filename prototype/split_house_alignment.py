@@ -16,5 +16,4 @@ def paint_reference_overlap(frame, reference_mask):
 def sample_status(overlap, *, threshold=0.25):
     if overlap < 0 or overlap > 1 or not 0 < threshold < 1:
         raise ValueError("Invalid paint overlap or threshold")
-    return ("house_paint_unresolved_review" if overlap < threshold
-            else "house_paint_aligned_sample")
+    return "house_paint_unresolved_review" if overlap < threshold else "house_paint_aligned_sample"

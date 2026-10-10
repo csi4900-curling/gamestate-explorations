@@ -30,7 +30,8 @@ def main():
         counts["unresolved_previous_symbols"] += len(row["unresolved_previous_symbol_indices"])
         counts["unresolved_current_symbols"] += len(row["unresolved_current_symbol_indices"])
         counts["shots_with_any_unresolved_symbol"] += bool(
-            row["unresolved_previous_symbol_indices"] or row["unresolved_current_symbol_indices"])
+            row["unresolved_previous_symbol_indices"] or row["unresolved_current_symbol_indices"]
+        )
         counts["shots_with_review_flags"] += bool(row["diagram_review_flags"])
         counts["shots_with_ambiguous_close_pair"] += row["ambiguous_close_pair_count"] > 0
     result = {
@@ -50,7 +51,11 @@ def main():
         ],
     }
     TARGET.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"output": str(TARGET), "shot_count": len(rows), "summary": result["summary"]}, indent=2))
+    print(
+        json.dumps(
+            {"output": str(TARGET), "shot_count": len(rows), "summary": result["summary"]}, indent=2
+        )
+    )
 
 
 if __name__ == "__main__":

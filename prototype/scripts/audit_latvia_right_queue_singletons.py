@@ -36,8 +36,17 @@ def main():
     gap = json.loads(GAP_AUDIT.read_text())
     later = json.loads(LATER_AUDIT.read_text())
     packet = json.loads(GLOBAL_PACKET.read_text())
-    if len({queue["source_video_sha256"], gap["source_video_sha256"],
-            later["source_video_sha256"], packet["source_video_sha256"]}) != 1:
+    if (
+        len(
+            {
+                queue["source_video_sha256"],
+                gap["source_video_sha256"],
+                later["source_video_sha256"],
+                packet["source_video_sha256"],
+            }
+        )
+        != 1
+    ):
         raise ValueError("Source bytes differ")
     if packet["review_queue_sha256"] != digest(QUEUE):
         raise ValueError("Global packet does not match review queue")
@@ -74,8 +83,10 @@ def main():
             evidence = source["source_page"]
         elif proposal["variant"] == "two_second_global_later":
             source = later_rows[track]
-            if source["episode_index_within_raw_track"] != proposal[
-                    "episode_index_within_raw_track"]:
+            if (
+                source["episode_index_within_raw_track"]
+                != proposal["episode_index_within_raw_track"]
+            ):
                 raise ValueError("Later episode identity changed")
             pixel_class = source["source_pixel_class"]
             evidence = source["review_page"]
@@ -87,24 +98,33 @@ def main():
             evidence = "full-right-global-singleton-source-packet/" + source["page"]
         else:
             raise ValueError(f"Unaudited singleton: {pid}")
-        rows.append({"review_group_id": group["group_id"],
-                     "proposal_id": pid,
-                     "time_s": proposal["time_s"],
-                     "source_pixel_class": pixel_class,
-                     "source_evidence": evidence,
-                     "physical_throw_verified": False})
+        rows.append(
+            {
+                "review_group_id": group["group_id"],
+                "proposal_id": pid,
+                "time_s": proposal["time_s"],
+                "source_pixel_class": pixel_class,
+                "source_evidence": evidence,
+                "physical_throw_verified": False,
+            }
+        )
     if len(rows) != 11:
         raise ValueError("Singleton inventory changed")
     counts = Counter(row["source_pixel_class"] for row in rows)
-    if counts != {"person_or_equipment_pixels_in_sampled_prefix": 5,
-                  "mixed_stone_person_or_equipment_pixels_identity_uncertain": 6}:
+    if counts != {
+        "person_or_equipment_pixels_in_sampled_prefix": 5,
+        "mixed_stone_person_or_equipment_pixels_identity_uncertain": 6,
+    }:
         raise ValueError("Source class inventory changed")
     result = {
         "status": "postproposal_singleton_source_pixel_review_not_throw_truth",
         "source_video_sha256": queue["source_video_sha256"],
-        "input_sha256": {"queue": digest(QUEUE), "gap_source_audit": digest(GAP_AUDIT),
-                         "later_source_audit": digest(LATER_AUDIT),
-                         "global_source_packet_manifest": digest(GLOBAL_PACKET)},
+        "input_sha256": {
+            "queue": digest(QUEUE),
+            "gap_source_audit": digest(GAP_AUDIT),
+            "later_source_audit": digest(LATER_AUDIT),
+            "global_source_packet_manifest": digest(GLOBAL_PACKET),
+        },
         "runner_sha256": digest(Path(__file__)),
         "reviewed_singleton_group_count": len(rows),
         "source_class_counts": dict(counts),

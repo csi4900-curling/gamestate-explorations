@@ -28,8 +28,7 @@ def selected_points(proposal):
     if len(points) < 2:
         raise ValueError("Proposal has fewer than two observed points")
     passage_time = proposal["passage"]["time_s"]
-    return [points[0], min(points, key=lambda row: abs(row["time_s"] - passage_time)),
-            points[-1]]
+    return [points[0], min(points, key=lambda row: abs(row["time_s"] - passage_time)), points[-1]]
 
 
 def main():
@@ -39,24 +38,29 @@ def main():
     args = parser.parse_args()
     if args.output.exists():
         parser.error("Output exists")
-    plan, tail, episodes = (json.loads(path.read_text()) for path in
-                            (args.plan, args.tail, args.episodes))
+    plan, tail, episodes = (
+        json.loads(path.read_text()) for path in (args.plan, args.tail, args.episodes)
+    )
     expected = {
         "source_sha256": digest(args.video),
         "right_tail_sha256": digest(args.tail),
         "episodes_sha256": digest(args.episodes),
         "ring_feature_code_sha256": digest(ROOT / "prototype/right_track_ice_context.py"),
         "underpoint_feature_code_sha256": digest(
-            ROOT / "prototype/right_track_underpoint_context.py"),
+            ROOT / "prototype/right_track_underpoint_context.py"
+        ),
     }
     if any(plan[key] != value for key, value in expected.items()):
         raise ValueError("Frozen input or feature code changed")
-    if (tail["source_sha256"] != expected["source_sha256"] or
-            episodes["source_sha256"] != expected["source_sha256"] or
-            episodes["right_tail_sha256"] != expected["right_tail_sha256"]):
+    if (
+        tail["source_sha256"] != expected["source_sha256"]
+        or episodes["source_sha256"] != expected["source_sha256"]
+        or episodes["right_tail_sha256"] != expected["right_tail_sha256"]
+    ):
         raise ValueError("Input source lineage differs")
-    proposal_by_id = {"R01:" + row["raw_track_id"]: row for row in
-                      tail["directional_review_proposals"]}
+    proposal_by_id = {
+        "R01:" + row["raw_track_id"]: row for row in tail["directional_review_proposals"]
+    }
     if len(proposal_by_id) != len(tail["directional_review_proposals"]):
         raise ValueError("Duplicate right proposal")
     episode_by_right = {}
@@ -67,8 +71,7 @@ def main():
             episode_by_right[right_id] = episode
     if set(episode_by_right) != set(proposal_by_id):
         raise ValueError("Episode inventory does not preserve every right proposal")
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         raise RuntimeError("Cannot open source video")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -93,8 +96,7 @@ def main():
                 continue
             frames = []
             for point in points:
-                frame_index = round((point["time_s"] -
-                                     tail["source_time_offset_s"]) * fps)
+                frame_index = round((point["time_s"] - tail["source_time_offset_s"]) * fps)
                 cap.set(cv2.CAP_PROP_POS_FRAMES, frame_index)
                 ok, frame = cap.read()
                 if not ok or frame.shape[:2] != (360, 640):
@@ -104,19 +106,24 @@ def main():
             under = three_sample_underpoint(frames, points)
             ring_fraction = ring["median_nonice_ring_fraction"]
             under_fraction = under["median_underpoint_nonice_fraction"]
-            result.update({
-                "sample_nonice_ring_fractions": ring["sample_nonice_ring_fractions"],
-                "median_nonice_ring_fraction": ring_fraction,
-                "sample_underpoint_nonice_fractions": under[
-                    "sample_underpoint_nonice_fractions"],
-                "median_underpoint_nonice_fraction": under_fraction,
-                "underpoint_available_sample_count": under["available_sample_count"],
-                "review_tier": (
-                    "underpoint_unavailable" if under_fraction is None else
-                    "cluttered_context_review" if max(ring_fraction,
-                                                       under_fraction) > 0.25 else
-                    "clear_context_review"),
-            })
+            result.update(
+                {
+                    "sample_nonice_ring_fractions": ring["sample_nonice_ring_fractions"],
+                    "median_nonice_ring_fraction": ring_fraction,
+                    "sample_underpoint_nonice_fractions": under[
+                        "sample_underpoint_nonice_fractions"
+                    ],
+                    "median_underpoint_nonice_fraction": under_fraction,
+                    "underpoint_available_sample_count": under["available_sample_count"],
+                    "review_tier": (
+                        "underpoint_unavailable"
+                        if under_fraction is None
+                        else "cluttered_context_review"
+                        if max(ring_fraction, under_fraction) > 0.25
+                        else "clear_context_review"
+                    ),
+                }
+            )
             rows.append(result)
     finally:
         cap.release()
@@ -124,18 +131,20 @@ def main():
     output = {
         "status": "same_source_full_right_context_diagnostic_not_event_decision",
         "source_sha256": expected["source_sha256"],
-        "input_sha256": {"plan": digest(args.plan), "right_tail": digest(args.tail),
-                         "episodes": digest(args.episodes)},
+        "input_sha256": {
+            "plan": digest(args.plan),
+            "right_tail": digest(args.tail),
+            "episodes": digest(args.episodes),
+        },
         "ring_feature_code_sha256": expected["ring_feature_code_sha256"],
-        "underpoint_feature_code_sha256": expected[
-            "underpoint_feature_code_sha256"],
+        "underpoint_feature_code_sha256": expected["underpoint_feature_code_sha256"],
         "runner_sha256": digest(Path(__file__)),
         "review_threshold": 0.25,
         "proposal_count": len(rows),
         "counts_by_episode_kind_and_tier": {
-            kind: {tier: count for (group, tier), count in sorted(counts.items())
-                   if group == kind}
-            for kind in sorted({row["episode_kind"] for row in rows})},
+            kind: {tier: count for (group, tier), count in sorted(counts.items()) if group == kind}
+            for kind in sorted({row["episode_kind"] for row in rows})
+        },
         "rows": rows,
         "limitations": [
             "The Czechia source contributed to feature development; this is not independent transfer.",
@@ -146,8 +155,11 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(output, indent=2) + "\n")
-    print(json.dumps({"right_proposals": len(rows),
-                      "counts": output["counts_by_episode_kind_and_tier"]}))
+    print(
+        json.dumps(
+            {"right_proposals": len(rows), "counts": output["counts_by_episode_kind_and_tier"]}
+        )
+    )
 
 
 if __name__ == "__main__":

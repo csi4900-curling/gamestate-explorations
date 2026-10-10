@@ -33,20 +33,23 @@ def main():
     scores = json.loads(SCORES.read_text())
     episodes = json.loads(EPISODES.read_text())
     video_hash = digest(VIDEO)
-    if (scores["source_video_sha256"] != video_hash or
-            episodes["source_sha256"] != video_hash or
-            episodes["right_tail_sha256"] != scores["input_sha256"]["scan"]):
+    if (
+        scores["source_video_sha256"] != video_hash
+        or episodes["source_sha256"] != video_hash
+        or episodes["right_tail_sha256"] != scores["input_sha256"]["scan"]
+    ):
         raise ValueError("Source or episode lineage differs")
-    right_only = [(ep["episode_id"], ep["right_proposal_ids"][0])
-                  for ep in episodes["episodes"]
-                  if ep["episode_kind"] == "right_only_candidate"]
+    right_only = [
+        (ep["episode_id"], ep["right_proposal_ids"][0])
+        for ep in episodes["episodes"]
+        if ep["episode_kind"] == "right_only_candidate"
+    ]
     if len(right_only) != 23 or len({pid for _, pid in right_only}) != 23:
         raise ValueError("Right-only inventory changed")
     by_id = {row["right_proposal_id"]: row for row in scores["rows"]}
     if len(by_id) != scores["proposal_count"]:
         raise ValueError("Duplicate scored proposal ID")
-    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     fps = capture.get(cv2.CAP_PROP_FPS)
     if not capture.isOpened() or fps <= 0:
         raise ValueError("Czech source unreadable")
@@ -54,9 +57,8 @@ def main():
     rows = []
     try:
         for page_index, start in enumerate(range(0, 23, 3), 1):
-            page = Image.new("RGB", (960, 504 * len(right_only[start:start + 3])),
-                             "white")
-            for row_index, (episode_id, pid) in enumerate(right_only[start:start + 3]):
+            page = Image.new("RGB", (960, 504 * len(right_only[start : start + 3])), "white")
+            for row_index, (episode_id, pid) in enumerate(right_only[start : start + 3]):
                 score = by_id[pid]
                 for sample_index, sample in enumerate(score["samples"]):
                     time = sample["time_s"]
@@ -64,33 +66,37 @@ def main():
                     ok, frame = capture.read()
                     if not ok or frame.shape[:2] != (360, 640):
                         raise ValueError(f"Unreadable source frame: {pid} {time}")
-                    panel = Image.fromarray(cv2.cvtColor(frame[:, 320:],
-                                                         cv2.COLOR_BGR2RGB))
+                    panel = Image.fromarray(cv2.cvtColor(frame[:, 320:], cv2.COLOR_BGR2RGB))
                     draw = ImageDraw.Draw(panel)
                     x, y, w, h = sample["cap_bbox_px"]
-                    draw.rectangle((x - 325, y - 5, x + w - 315, y + h + 5),
-                                   outline="magenta", width=3)
+                    draw.rectangle(
+                        (x - 325, y - 5, x + w - 315, y + h + 5), outline="magenta", width=3
+                    )
                     bx, by, side, _ = context_bbox(sample["cap_bbox_px"])
-                    draw.rectangle((bx - 320, by, bx + side - 320, by + side),
-                                   outline="cyan", width=2)
+                    draw.rectangle(
+                        (bx - 320, by, bx + side - 320, by + side), outline="cyan", width=2
+                    )
                     draw.rectangle((0, 0, 260, 22), fill="white")
-                    draw.text((3, 4),
-                              f"{episode_id} {pid} {time:.0f}s score {sample['patch_score']:.2f}",
-                              fill="black")
-                    source = Image.fromarray(cv2.cvtColor(frame,
-                                                           cv2.COLOR_BGR2RGB))
+                    draw.text(
+                        (3, 4),
+                        f"{episode_id} {pid} {time:.0f}s score {sample['patch_score']:.2f}",
+                        fill="black",
+                    )
+                    source = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
                     crop = source.crop((bx, by, bx + side, by + side))
                     crop = crop.resize((144, 144), Image.Resampling.NEAREST)
                     left, top = sample_index * 320, row_index * 504
                     page.paste(panel, (left, top))
                     page.paste(crop, (left + 88, top + 360))
-                rows.append({
-                    "episode_id": episode_id,
-                    "right_proposal_id": pid,
-                    "source_sample_times_s": [s["time_s"] for s in score["samples"]],
-                    "positive_patch_count": score["positive_patch_count"],
-                    "page": f"page-{page_index}.jpg",
-                })
+                rows.append(
+                    {
+                        "episode_id": episode_id,
+                        "right_proposal_id": pid,
+                        "source_sample_times_s": [s["time_s"] for s in score["samples"]],
+                        "positive_patch_count": score["positive_patch_count"],
+                        "page": f"page-{page_index}.jpg",
+                    }
+                )
             page.save(OUT / f"page-{page_index}.jpg", quality=93)
     finally:
         capture.release()

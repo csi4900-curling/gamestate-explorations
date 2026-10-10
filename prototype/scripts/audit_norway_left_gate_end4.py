@@ -22,7 +22,9 @@ ORIGINS = BASE / "canada-norway-full-transfer/shot-origin.json"
 SHOTS = BASE / "canada-norway-full-transfer/cap-motion.json"
 MODEL = BASE / "cap-patch-crossmatch-v1/model-excluding-swiss-transfer.npz"
 FROZEN_GATE = BASE / "cap-patch-crossmatch-v1/norway-end4-departure-gate-development.json"
-FROZEN_DECISION = BASE / "cap-patch-crossmatch-v1/norway-end4-departure-gate-events-development.json"
+FROZEN_DECISION = (
+    BASE / "cap-patch-crossmatch-v1/norway-end4-departure-gate-events-development.json"
+)
 OUTPUT = BASE / "cap-patch-crossmatch-v1/norway-end4-left-gate-development.json"
 X_LINE, Y_MIN, MIN_SCORE = 320, 280, -0.6
 INTERVAL = (3207.5, 4187.0)
@@ -43,25 +45,30 @@ def main():
     origin, shots = (json.loads(path.read_text()) for path in (ORIGINS, SHOTS))
     frozen_gate = json.loads(FROZEN_GATE.read_text())
     frozen_decision = json.loads(FROZEN_DECISION.read_text())
-    if (origin["source_sha256"] != source_hash or shots["source_sha256"] != source_hash
-            or frozen_gate["source_sha256"] != source_hash):
+    if (
+        origin["source_sha256"] != source_hash
+        or shots["source_sha256"] != source_hash
+        or frozen_gate["source_sha256"] != source_hash
+    ):
         raise ValueError("Source mismatch")
-    if (frozen_gate["model_sha256"] != digest(MODEL) or
-            frozen_decision["decision_code_sha256"] != digest(
-                ROOT / "prototype/departure_gate_decision.py")):
+    if frozen_gate["model_sha256"] != digest(MODEL) or frozen_decision[
+        "decision_code_sha256"
+    ] != digest(ROOT / "prototype/departure_gate_decision.py"):
         raise ValueError("Frozen cap model or decision rule changed")
     reserved = json.loads((ROOT / "validation/unseen-end/reservation.json").read_text())
     if source_hash == reserved["source_sha256"]:
         raise ValueError("Reserved source is not development data")
     by_id = {row["shot_id"]: row for row in origin["rows"]}
-    selected = [row for row in shots["shots"]
-                if INTERVAL[0] <= sum(row["interval_s"]) / 2 < INTERVAL[1]
-                and by_id[row["shot_id"]]["predicted"]]
+    selected = [
+        row
+        for row in shots["shots"]
+        if INTERVAL[0] <= sum(row["interval_s"]) / 2 < INTERVAL[1]
+        and by_id[row["shot_id"]]["predicted"]
+    ]
     if len(selected) != 17 or selected[0]["shot_id"] != "S234" or selected[-1]["shot_id"] != "S297":
         raise ValueError("Predeclared end-4 origin selection changed")
     model = load_model(MODEL)
-    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     fps = capture.get(cv2.CAP_PROP_FPS)
     step = round(fps / 5)
     if fps <= 0 or step < 1:
@@ -84,24 +91,37 @@ def main():
             t = round(frame_index / fps, 3)
             per_colour = {}
             for colour in observations:
-                raw = stone_cap_candidates(frame, colour,
-                                           allow_bright_body=True,
-                                           allow_large_caps=True)
+                raw = stone_cap_candidates(
+                    frame, colour, allow_bright_body=True, allow_large_caps=True
+                )
                 scored = score_candidates(frame, raw, model)
-                gated = [row for row in scored if row["pixel"][0] <= X_LINE
-                         and row["pixel"][1] >= Y_MIN
-                         and row["patch_score"] >= MIN_SCORE]
+                gated = [
+                    row
+                    for row in scored
+                    if row["pixel"][0] <= X_LINE
+                    and row["pixel"][1] >= Y_MIN
+                    and row["patch_score"] >= MIN_SCORE
+                ]
                 observations[colour].append((t, gated))
                 per_colour[colour] = gated
             samples.append({"time_s": t, "gate_candidates": per_colour})
-        transits = {colour: short_transits(observations[colour])
-                    for colour in observations}
-        counts = Counter(colour for sample in samples for colour in observations
-                         for _ in sample["gate_candidates"][colour])
-        rows.append({"shot_id": shot["shot_id"], "interval_s": shot["interval_s"],
-                     "sampled_frames": len(samples),
-                     "gate_counts": {colour: counts[colour] for colour in observations},
-                     "transits": transits, "samples": samples})
+        transits = {colour: short_transits(observations[colour]) for colour in observations}
+        counts = Counter(
+            colour
+            for sample in samples
+            for colour in observations
+            for _ in sample["gate_candidates"][colour]
+        )
+        rows.append(
+            {
+                "shot_id": shot["shot_id"],
+                "interval_s": shot["interval_s"],
+                "sampled_frames": len(samples),
+                "gate_counts": {colour: counts[colour] for colour in observations},
+                "transits": transits,
+                "samples": samples,
+            }
+        )
     capture.release()
     result = {
         "status": "postscore_end4_left_side_orientation_diagnostic",
@@ -114,8 +134,12 @@ def main():
         "gate_code_sha256": digest(Path(__file__)),
         "selection": "All 17 frozen origin-positive end-four shots, rescanned for left/right orientation development.",
         "selection_interval_s": list(INTERVAL),
-        "gate": {"image_size": [640, 360], "x_max": X_LINE,
-                 "y_min": Y_MIN, "minimum_patch_score": MIN_SCORE},
+        "gate": {
+            "image_size": [640, 360],
+            "x_max": X_LINE,
+            "y_min": Y_MIN,
+            "minimum_patch_score": MIN_SCORE,
+        },
         "sample_rate_hz": fps / step,
         "rows": rows,
         "limitations": [
@@ -126,10 +150,14 @@ def main():
     }
     OUTPUT.write_text(json.dumps(result, indent=2) + "\n")
     for row in rows:
-        print(row["shot_id"], row["gate_counts"],
-              {colour: [(t["point_count"], t["displacement_px"])
-                        for t in row["transits"][colour]]
-               for colour in ("red", "yellow")})
+        print(
+            row["shot_id"],
+            row["gate_counts"],
+            {
+                colour: [(t["point_count"], t["displacement_px"]) for t in row["transits"][colour]]
+                for colour in ("red", "yellow")
+            },
+        )
 
 
 if __name__ == "__main__":

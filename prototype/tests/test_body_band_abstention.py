@@ -14,10 +14,12 @@ def test_only_low_supported_acceptance_becomes_abstention():
         ],
         "events": [{"id": "S1"}, {"id": "S2"}],
     }
-    features = {"rows": [
-        {"candidate_id": "S1", "max_neutral_gray_fraction": 0.49},
-        {"candidate_id": "S2", "max_neutral_gray_fraction": 0.50},
-    ]}
+    features = {
+        "rows": [
+            {"candidate_id": "S1", "max_neutral_gray_fraction": 0.49},
+            {"candidate_id": "S2", "max_neutral_gray_fraction": 0.50},
+        ]
+    }
     result = apply_body_band_abstention(screen, features)
     assert result["flagged_candidate_ids"] == ["S1"]
     assert [row["id"] for row in result["events"]] == ["S2"]
@@ -27,8 +29,7 @@ def test_only_low_supported_acceptance_becomes_abstention():
 
 
 def test_missing_or_duplicate_feature_coverage_is_rejected():
-    screen = {"decisions": [{"candidate_id": "S1", "accepted": True}],
-              "events": [{"id": "S1"}]}
+    screen = {"decisions": [{"candidate_id": "S1", "accepted": True}], "events": [{"id": "S1"}]}
     for rows in ([], [{"candidate_id": "S1"}, {"candidate_id": "S1"}]):
         with pytest.raises(ValueError):
             apply_body_band_abstention(screen, {"rows": rows})

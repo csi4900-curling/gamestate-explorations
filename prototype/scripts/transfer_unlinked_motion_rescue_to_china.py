@@ -19,8 +19,12 @@ CATALOG = ROOT / "validation/official-shot-sequence/china-global-shot-scoped-cap
 LEDGER = BASE / "fused-shot-candidates-replay-following-rescue-v2.json"
 ORIGINS = BASE / "unlabelled-shot-origin-inference.json"
 MANIFEST = BASE / "shot-review/manifest.json"
-GRAPH = ROOT / "validation/official-shot-sequence/china-global-cap-motion-candidate-links-first.json"
-PROPOSALS = ROOT / "validation/official-shot-sequence/china-unlinked-motion-rescue-transfer-first.json"
+GRAPH = (
+    ROOT / "validation/official-shot-sequence/china-global-cap-motion-candidate-links-first.json"
+)
+PROPOSALS = (
+    ROOT / "validation/official-shot-sequence/china-unlinked-motion-rescue-transfer-first.json"
+)
 
 
 def digest(path):
@@ -34,8 +38,12 @@ def main():
     ledger = json.loads(LEDGER.read_text())
     origins = json.loads(ORIGINS.read_text())
     manifest = json.loads(MANIFEST.read_text())
-    source_hashes = {catalog["source_video_sha256"], ledger["source_sha256"],
-                     origins["source_sha256"], manifest["source_sha256"]}
+    source_hashes = {
+        catalog["source_video_sha256"],
+        ledger["source_sha256"],
+        origins["source_sha256"],
+        manifest["source_sha256"],
+    }
     if len(source_hashes) != 1:
         raise SystemExit("China transfer inputs have different video sources")
     if catalog["shot_manifest_sha256"] != digest(MANIFEST):
@@ -44,33 +52,45 @@ def main():
     normalized = []
     for row in ledger["events"]:
         start, end = row["delivery_window_s"]
-        normalized.append({
-            "shot_id": row["shot_id"],
-            "counter_id": row["counter_id"],
-            "candidate_colour": row["colour"],
-            "delivery_window_s": row["delivery_window_s"],
-            "search_interval_s": [max(0, floor(start) - 5), min(source_end, ceil(end) + 15)],
-        })
+        normalized.append(
+            {
+                "shot_id": row["shot_id"],
+                "counter_id": row["counter_id"],
+                "candidate_colour": row["colour"],
+                "delivery_window_s": row["delivery_window_s"],
+                "search_interval_s": [max(0, floor(start) - 5), min(source_end, ceil(end) + 15)],
+            }
+        )
     if len(normalized) != ledger["candidate_count"]:
         raise SystemExit("China candidate count disagrees")
     graph = link_candidate_windows(normalized, catalog["shots"])
     graph_result = {
         "status": "source_only_china_global_motion_candidate_links_not_physical_events",
-        "input_sha256": {"catalog": digest(CATALOG), "candidate_ledger": digest(LEDGER),
-                         "shot_manifest": digest(MANIFEST)},
+        "input_sha256": {
+            "catalog": digest(CATALOG),
+            "candidate_ledger": digest(LEDGER),
+            "shot_manifest": digest(MANIFEST),
+        },
         "link_code_sha256": digest(ROOT / "prototype/global_motion_links.py"),
         "runner_sha256": digest(Path(__file__)),
         "candidate_search_rule": "Frozen Norway rule: floor(start)-5 through ceil(end)+15 seconds, capped at video end.",
         **graph,
-        "limitations": ["Temporal overlap and colour are not physical throw assignment or independent ground truth."],
+        "limitations": [
+            "Temporal overlap and colour are not physical throw assignment or independent ground truth."
+        ],
     }
     episodes = [track for shot in catalog["shots"] for track in shot["tracks"]]
     proposals = find_adjacent_origin_proposals(
-        graph["episodes"], episodes, origins["rows"], manifest["shots"], normalized)
+        graph["episodes"], episodes, origins["rows"], manifest["shots"], normalized
+    )
     proposal_result = {
         "status": "frozen_norway_unlinked_motion_rule_china_transfer_not_event_f1",
-        "input_sha256": {"catalog": digest(CATALOG), "candidate_ledger": digest(LEDGER),
-                         "shot_origin": digest(ORIGINS), "shot_manifest": digest(MANIFEST)},
+        "input_sha256": {
+            "catalog": digest(CATALOG),
+            "candidate_ledger": digest(LEDGER),
+            "shot_origin": digest(ORIGINS),
+            "shot_manifest": digest(MANIFEST),
+        },
         "link_code_sha256": digest(ROOT / "prototype/global_motion_links.py"),
         "selection_code_sha256": digest(ROOT / "prototype/unlinked_motion_rescue.py"),
         "runner_sha256": digest(Path(__file__)),
@@ -94,10 +114,14 @@ def main():
     }
     GRAPH.write_text(json.dumps(graph_result, indent=2) + "\n")
     PROPOSALS.write_text(json.dumps(proposal_result, indent=2) + "\n")
-    print({"catalogue_episodes": graph["catalogue_episode_count"],
-           "candidate_links": graph["candidate_episode_edge_count"],
-           "unlinked_episodes": graph["unlinked_catalogue_episode_count"],
-           "proposal_count": len(proposals)})
+    print(
+        {
+            "catalogue_episodes": graph["catalogue_episode_count"],
+            "candidate_links": graph["candidate_episode_edge_count"],
+            "unlinked_episodes": graph["unlinked_catalogue_episode_count"],
+            "proposal_count": len(proposals),
+        }
+    )
 
 
 if __name__ == "__main__":

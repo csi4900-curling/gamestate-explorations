@@ -20,8 +20,12 @@ def test_small_colour_blobs_only_inside_right_rink_roi():
 
 def test_review_rule_is_upward_motion_not_generic_track():
     def track(first, last, duration):
-        return {"points": [{"pixel": first}, {"pixel": last}],
-                "first_observed_s": 0, "last_observed_s": duration}
+        return {
+            "points": [{"pixel": first}, {"pixel": last}],
+            "first_observed_s": 0,
+            "last_observed_s": duration,
+        }
+
     assert selected(track([500, 300], [510, 190], 12))
     assert not selected(track([500, 300], [510, 190], 90))
     assert not selected(track([500, 150], [510, 100], 12))

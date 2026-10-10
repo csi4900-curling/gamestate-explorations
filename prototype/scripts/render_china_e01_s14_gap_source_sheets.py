@@ -11,17 +11,36 @@ BASE = ROOT / "validation/official-shot-sequence"
 AUDIT = BASE / "china-e01-s14-receiving-gap-development.json"
 VIDEO = ROOT / "validation/throw-event-benchmark/paralympics-2022-canada-china/source.mp4"
 SHEETS = {
-    "china-s63-e01-s14-gap-source-review.jpg":
-        (905.6, 906.8, 908.0, 909.2, 910.4, 911.6, 912.8, 914.0, 915.2),
-    "china-s64-s65-e01-s14-gap-source-review.jpg":
-        (915.4, 917.0, 919.0, 921.0, 923.0, 925.0, 927.0, 929.0, 931.0),
+    "china-s63-e01-s14-gap-source-review.jpg": (
+        905.6,
+        906.8,
+        908.0,
+        909.2,
+        910.4,
+        911.6,
+        912.8,
+        914.0,
+        915.2,
+    ),
+    "china-s64-s65-e01-s14-gap-source-review.jpg": (
+        915.4,
+        917.0,
+        919.0,
+        921.0,
+        923.0,
+        925.0,
+        927.0,
+        929.0,
+        931.0,
+    ),
 }
 
 
 def main():
     audit = json.loads(AUDIT.read_text())
-    if (audit["official_gap_id_for_selection_only"] != "PREL000102-E01-S14" or
-            audit["camera_shots"][1]["interval_s"] != [915.4, 928.4]):
+    if audit["official_gap_id_for_selection_only"] != "PREL000102-E01-S14" or audit["camera_shots"][
+        1
+    ]["interval_s"] != [915.4, 928.4]:
         raise ValueError("Selected gap changed")
     capture = cv2.VideoCapture(str(VIDEO))
     if not capture.isOpened():

@@ -18,17 +18,19 @@ def right_large_cap_proposals(frame, *, max_contour_area_px2=180):
         mask[325:] = False
         mask[:, :330] = False
         mask[:, 630:] = False
-        contours, _ = cv2.findContours(mask.astype(np.uint8) * 255,
-                                       cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        contours, _ = cv2.findContours(
+            mask.astype(np.uint8) * 255, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
+        )
         for contour in contours:
             x, y, width, height = cv2.boundingRect(contour)
             area = cv2.contourArea(contour)
-            if not (4 <= area <= max_contour_area_px2 and
-                    4 <= width <= 24 and 3 <= height <= 16):
+            if not (4 <= area <= max_contour_area_px2 and 4 <= width <= 24 and 3 <= height <= 16):
                 continue
-            result[colour].append({
-                "pixel": [x + width / 2, y + height / 2],
-                "bbox": [x, y, width, height],
-                "cap_area_px2": round(float(area), 2),
-            })
+            result[colour].append(
+                {
+                    "pixel": [x + width / 2, y + height / 2],
+                    "bbox": [x, y, width, height],
+                    "cap_area_px2": round(float(area), 2),
+                }
+            )
     return result

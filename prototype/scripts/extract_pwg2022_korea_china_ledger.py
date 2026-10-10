@@ -51,7 +51,9 @@ def main():
     ends.sort(key=lambda row: row["end"])
     if pages != [393] or [row["pdf_page"] for row in ends] != list(range(394, 400)):
         raise ValueError("Unexpected official Korea–China PDF pages")
-    if [row["end"] for row in ends] != list(range(1, 7)) or any(row["shot_count"] != 16 for row in ends):
+    if [row["end"] for row in ends] != list(range(1, 7)) or any(
+        row["shot_count"] != 16 for row in ends
+    ):
         raise ValueError("Unexpected official shot sequence")
     result = {
         "status": "independent_official_shot_order_without_video_timestamps",

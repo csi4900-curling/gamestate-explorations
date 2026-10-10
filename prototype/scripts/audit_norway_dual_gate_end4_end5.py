@@ -11,10 +11,14 @@ from dual_departure_gate import route_gate_sides
 
 BASE = ROOT / "validation/curlobserver-learned-probe/cap-patch-crossmatch-v1"
 INPUTS = {
-    4: (BASE / "norway-end4-left-gate-development.json",
-        BASE / "norway-end4-departure-gate-development.json"),
-    5: (BASE / "norway-end5-left-gate-development.json",
-        BASE / "norway-end5-departure-gate-first.json"),
+    4: (
+        BASE / "norway-end4-left-gate-development.json",
+        BASE / "norway-end4-departure-gate-development.json",
+    ),
+    5: (
+        BASE / "norway-end5-left-gate-development.json",
+        BASE / "norway-end5-departure-gate-first.json",
+    ),
 }
 OUTPUT = BASE / "norway-end4-end5-dual-gate-development.json"
 
@@ -43,9 +47,14 @@ def main():
         for lrow, rrow in zip(left["rows"], right["rows"]):
             if lrow["interval_s"] != rrow["interval_s"]:
                 raise ValueError("Left/right camera interval differs")
-            paired.append({"shot_id": lrow["shot_id"],
-                           "interval_s": lrow["interval_s"],
-                           "left": lrow, "right": rrow})
+            paired.append(
+                {
+                    "shot_id": lrow["shot_id"],
+                    "interval_s": lrow["interval_s"],
+                    "left": lrow,
+                    "right": rrow,
+                }
+            )
     decisions = route_gate_sides(paired)
     result = {
         "status": "postscore_exposed_end4_end5_dual_gate_orientation_development",

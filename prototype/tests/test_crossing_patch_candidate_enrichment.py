@@ -12,12 +12,24 @@ BASE = ROOT / "validation"
 
 
 def inputs():
-    union = json.loads((BASE / "throw-event-benchmark/canada-latvia-2024/"
-        "full-match-area-censored-candidate-handoff-development.json").read_text())
-    score = json.loads((BASE / "official-shot-sequence/"
-        "latvia-italy-frozen-crossing-patch-source-class-score.json").read_text())
-    packet = json.loads((BASE / "official-shot-sequence/"
-        "latvia-italy-crossing-patch-source-class-packet/manifest.json").read_text())
+    union = json.loads(
+        (
+            BASE / "throw-event-benchmark/canada-latvia-2024/"
+            "full-match-area-censored-candidate-handoff-development.json"
+        ).read_text()
+    )
+    score = json.loads(
+        (
+            BASE / "official-shot-sequence/"
+            "latvia-italy-frozen-crossing-patch-source-class-score.json"
+        ).read_text()
+    )
+    packet = json.loads(
+        (
+            BASE / "official-shot-sequence/"
+            "latvia-italy-crossing-patch-source-class-packet/manifest.json"
+        ).read_text()
+    )
     return union, score, packet
 
 
@@ -26,20 +38,21 @@ def test_graded_scores_preserve_event_and_game_state_claims():
     enriched = enrich_full_match_candidates(union, score, packet)
     assert enriched["candidate_count"] == 147
     assert enriched["crossing_patch_scored_left_count"] == 13
-    assert enriched["development_possible_event_review_count"] == union[
-        "development_possible_event_review_count"]
+    assert (
+        enriched["development_possible_event_review_count"]
+        == union["development_possible_event_review_count"]
+    )
     assert enriched["physical_throw_count_verified"] is None
     assert enriched["complete_throw_sequence_verified"] is False
-    assert all(row["physical_throw_verified"] is False and
-               row["game_state_after"]["simulation_ready"] is False
-               for row in enriched["ordered_candidates"])
+    assert all(
+        row["physical_throw_verified"] is False
+        and row["game_state_after"]["simulation_ready"] is False
+        for row in enriched["ordered_candidates"]
+    )
     by_id = {row["candidate_id"]: row for row in enriched["ordered_candidates"]}
-    assert by_id["left:R01-S45"]["crossing_patch_appearance"][
-        "model_positive"] is False
-    assert by_id["left:R01-S35"]["crossing_patch_appearance"][
-        "model_positive"] is False
-    assert by_id["left:R01-S49"]["crossing_patch_appearance"][
-        "model_positive"] is False
+    assert by_id["left:R01-S45"]["crossing_patch_appearance"]["model_positive"] is False
+    assert by_id["left:R01-S35"]["crossing_patch_appearance"]["model_positive"] is False
+    assert by_id["left:R01-S49"]["crossing_patch_appearance"]["model_positive"] is False
     assert "crossing_patch_appearance" not in by_id["left:R01-S76"]
     assert "crossing_patch_appearance" not in union["ordered_candidates"][0]
 
@@ -61,8 +74,12 @@ def test_score_cannot_join_wrong_source_or_reviewed_class():
 def test_all_accepted_scores_keep_unknown_reviews_unknown():
     union, _, _ = inputs()
     base = BASE / "throw-event-benchmark/canada-latvia-2024"
-    score = json.loads((base / "all-accepted-left-crossing-patch-score-development.json").read_text())
-    packet = json.loads((base / "all-accepted-left-crossing-patch-packet/manifest.json").read_text())
+    score = json.loads(
+        (base / "all-accepted-left-crossing-patch-score-development.json").read_text()
+    )
+    packet = json.loads(
+        (base / "all-accepted-left-crossing-patch-packet/manifest.json").read_text()
+    )
     enriched = enrich_full_match_candidates(union, score, packet)
     assert enriched["crossing_patch_scored_left_count"] == 72
     assert enriched["candidate_count"] == 147
@@ -70,19 +87,30 @@ def test_all_accepted_scores_keep_unknown_reviews_unknown():
     assert enriched["physical_throw_count_verified"] is None
     by_id = {row["candidate_id"]: row for row in enriched["ordered_candidates"]}
     assert by_id["left:R01-S05"]["source_pixel_review"] is None
-    assert by_id["left:R01-S05"]["crossing_patch_appearance"]["source_review_status"] == "unreviewed"
+    assert (
+        by_id["left:R01-S05"]["crossing_patch_appearance"]["source_review_status"] == "unreviewed"
+    )
     assert by_id["left:R01-S35"]["crossing_patch_appearance"]["model_positive"] is False
-    assert by_id["left:R01-S119"]["crossing_patch_appearance"]["source_review_status"] == "ambiguous_pixels"
+    assert (
+        by_id["left:R01-S119"]["crossing_patch_appearance"]["source_review_status"]
+        == "ambiguous_pixels"
+    )
     assert "crossing_patch_appearance" not in by_id["left:R01-S76"]
-    assert all(row["game_state_after"]["simulation_ready"] is False for row in
-               enriched["ordered_candidates"])
+    assert all(
+        row["game_state_after"]["simulation_ready"] is False
+        for row in enriched["ordered_candidates"]
+    )
 
 
 def test_postscore_source_reviews_attach_without_rewriting_score_origin():
     union, _, _ = inputs()
     base = BASE / "throw-event-benchmark/canada-latvia-2024"
-    score = json.loads((base / "all-accepted-left-crossing-patch-score-development.json").read_text())
-    packet = json.loads((base / "all-accepted-left-crossing-patch-packet/manifest.json").read_text())
+    score = json.loads(
+        (base / "all-accepted-left-crossing-patch-score-development.json").read_text()
+    )
+    packet = json.loads(
+        (base / "all-accepted-left-crossing-patch-packet/manifest.json").read_text()
+    )
     audit = json.loads((base / "lowest-five-patch-source-audit/manifest.json").read_text())
     enriched = enrich_full_match_candidates(union, score, packet, audit)
     assert enriched["postscore_source_reviewed_left_count"] == 5
@@ -102,16 +130,29 @@ def test_postscore_source_reviews_attach_without_rewriting_score_origin():
 def test_all_negative_review_keeps_prior_classes_and_marks_new_reviews():
     union, _, _ = inputs()
     base = BASE / "throw-event-benchmark/canada-latvia-2024"
-    score = json.loads((base / "all-accepted-left-crossing-patch-score-development.json").read_text())
-    packet = json.loads((base / "all-accepted-left-crossing-patch-packet/manifest.json").read_text())
+    score = json.loads(
+        (base / "all-accepted-left-crossing-patch-score-development.json").read_text()
+    )
+    packet = json.loads(
+        (base / "all-accepted-left-crossing-patch-packet/manifest.json").read_text()
+    )
     audit = json.loads((base / "all-negative-patch-source-audit/manifest.json").read_text())
     enriched = enrich_full_match_candidates(union, score, packet, audit)
     assert enriched["postscore_source_reviewed_left_count"] == 34
     by_id = {row["candidate_id"]: row for row in enriched["ordered_candidates"]}
-    assert by_id["left:R01-S45"]["source_pixel_review"]["source_pixel_class"] == "person_at_crossing"
-    assert by_id["left:R01-S119"]["source_pixel_review"]["source_pixel_class"].startswith("ambiguous")
-    assert by_id["left:R01-S15"]["source_pixel_review"]["source_pixel_class"] == "stone_body_pixels_in_crossing_crops"
-    assert by_id["left:R01-S15"]["crossing_patch_appearance"]["source_review_status"] == "unreviewed"
+    assert (
+        by_id["left:R01-S45"]["source_pixel_review"]["source_pixel_class"] == "person_at_crossing"
+    )
+    assert by_id["left:R01-S119"]["source_pixel_review"]["source_pixel_class"].startswith(
+        "ambiguous"
+    )
+    assert (
+        by_id["left:R01-S15"]["source_pixel_review"]["source_pixel_class"]
+        == "stone_body_pixels_in_crossing_crops"
+    )
+    assert (
+        by_id["left:R01-S15"]["crossing_patch_appearance"]["source_review_status"] == "unreviewed"
+    )
     assert sum("postscore_source_review" in row for row in enriched["ordered_candidates"]) == 34
     assert enriched["development_possible_event_review_count"] == 96
     assert enriched["physical_throw_count_verified"] is None

@@ -19,19 +19,21 @@ def main():
     if args.output_dir.exists():
         parser.error("Board input directory already exists")
     proposals, candidates, motion, screen = (
-        json.loads(getattr(args, key).read_text()) for key in
-        ("proposals", "candidates", "motion", "screen"))
-    if (proposals["screen_sha256"] != file_sha256(args.screen) or
-            screen["candidates_sha256"] != file_sha256(args.candidates) or
-            proposals["source_id"] != candidates["source_id"] or
-            screen["source_sha256"] != candidates["source_sha256"] or
-            motion["candidates_sha256"] != file_sha256(args.candidates)):
+        json.loads(getattr(args, key).read_text())
+        for key in ("proposals", "candidates", "motion", "screen")
+    )
+    if (
+        proposals["screen_sha256"] != file_sha256(args.screen)
+        or screen["candidates_sha256"] != file_sha256(args.candidates)
+        or proposals["source_id"] != candidates["source_id"]
+        or screen["source_sha256"] != candidates["source_sha256"]
+        or motion["candidates_sha256"] != file_sha256(args.candidates)
+    ):
         parser.error("Input provenance differs")
     by_candidate = {row["id"]: row for row in candidates["events"]}
     by_decision = {row["candidate_id"]: row for row in screen["decisions"]}
     by_motion = {row["candidate_id"]: row for row in motion["rows"]}
-    if (len(by_candidate) != len(candidates["events"]) or
-            len(by_motion) != len(motion["rows"])):
+    if len(by_candidate) != len(candidates["events"]) or len(by_motion) != len(motion["rows"]):
         parser.error("Duplicate input candidate ID")
     ids = [row["candidate_id"] for row in proposals["proposals"]]
     if len(ids) != len(set(ids)) or not set(ids).issubset(by_candidate):
@@ -43,14 +45,14 @@ def main():
         candidate = by_candidate[pid]
         original = by_motion[pid]
         target = target_by[pid]
-        if (by_decision[pid]["accepted"] or
-                original["selection"]["status"] !=
-                "ambiguous_far_entry_motion_paths" or
-                original["selection"]["shared_prefix"] !=
-                proposal["prefix_samples"] or
-                candidate["colour"] != proposal["colour"] or
-                candidate["crossing_time_s"] != proposal["crossing_time_s"] or
-                original["receiving_view"] != proposal["receiving_view"]):
+        if (
+            by_decision[pid]["accepted"]
+            or original["selection"]["status"] != "ambiguous_far_entry_motion_paths"
+            or original["selection"]["shared_prefix"] != proposal["prefix_samples"]
+            or candidate["colour"] != proposal["colour"]
+            or candidate["crossing_time_s"] != proposal["crossing_time_s"]
+            or original["receiving_view"] != proposal["receiving_view"]
+        ):
             parser.error(f"Pre-split target differs: {pid}")
         target["base_selection"] = target["selection"]
         target["selection"] = {
@@ -81,8 +83,10 @@ def main():
     screen_path.write_text(json.dumps(target_screen, indent=2) + "\n")
     manifest = {
         "status": "pre_split_board_observation_targets_not_accepted_throws",
-        "input_sha256": {key: file_sha256(getattr(args, key)) for key in
-                         ("proposals", "candidates", "motion", "screen")},
+        "input_sha256": {
+            key: file_sha256(getattr(args, key))
+            for key in ("proposals", "candidates", "motion", "screen")
+        },
         "runner_sha256": file_sha256(Path(__file__)),
         "target_motion_sha256": file_sha256(motion_path),
         "target_screen_sha256": file_sha256(screen_path),
@@ -91,8 +95,7 @@ def main():
         "next_passage_bound_source": "all corridor candidates, not only board targets",
     }
     (args.output_dir / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
-    print(len(ids), "quiet-tail targets from", len(candidates["events"]),
-          "corridor candidates")
+    print(len(ids), "quiet-tail targets from", len(candidates["events"]), "corridor candidates")
 
 
 if __name__ == "__main__":

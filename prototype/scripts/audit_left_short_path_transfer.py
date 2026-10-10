@@ -31,8 +31,10 @@ def main():
             raise ValueError(f"Candidate count differs for {item['recording']}")
         changed = []
         for old, new in zip(original, current):
-            if (old["candidate_id"] != new["candidate_id"] or
-                    old["receiving_view"] != new["receiving_view"]):
+            if (
+                old["candidate_id"] != new["candidate_id"]
+                or old["receiving_view"] != new["receiving_view"]
+            ):
                 raise ValueError(f"Candidate order differs for {item['recording']}")
             if old["selection"] != new["selection"]:
                 changed.append(old["candidate_id"])
@@ -43,19 +45,23 @@ def main():
             "candidate_count": len(current),
             "left_candidate_count": sum(x["receiving_view"] == "left" for x in current),
             "changed_selection_ids": changed,
-            "new_unique_short_path_ids": [d["candidate_id"]
-                                          for d in trial["short_path_decisions"]
-                                          if d["status"] == "unique_short_path_proposal"],
+            "new_unique_short_path_ids": [
+                d["candidate_id"]
+                for d in trial["short_path_decisions"]
+                if d["status"] == "unique_short_path_proposal"
+            ],
         }
         if "original_screen" in item:
             original_screen_path = ROOT / item["original_screen"]
             trial_screen_path = ROOT / item["short_path_screen"]
             old_screen = json.loads(original_screen_path.read_text())
             new_screen = json.loads(trial_screen_path.read_text())
-            old_decisions = [(x["candidate_id"], x["status"], x["accepted"])
-                             for x in old_screen["decisions"]]
-            new_decisions = [(x["candidate_id"], x["status"], x["accepted"])
-                             for x in new_screen["decisions"]]
+            old_decisions = [
+                (x["candidate_id"], x["status"], x["accepted"]) for x in old_screen["decisions"]
+            ]
+            new_decisions = [
+                (x["candidate_id"], x["status"], x["accepted"]) for x in new_screen["decisions"]
+            ]
             row["screen_decisions_identical"] = old_decisions == new_decisions
             row["accepted_count"] = len(new_screen["events"])
             row["original_screen_sha256"] = file_sha256(original_screen_path)
@@ -69,8 +75,7 @@ def main():
         "runner_sha256": file_sha256(Path(__file__)),
         "recording_count": len(rows),
         "left_candidate_count": sum(row["left_candidate_count"] for row in rows),
-        "new_unique_short_path_count": sum(len(row["new_unique_short_path_ids"])
-                                            for row in rows),
+        "new_unique_short_path_count": sum(len(row["new_unique_short_path_ids"]) for row in rows),
         "rows": rows,
         "limitations": [
             "These are existing 18.5-minute intervals, not full-match exhaustive labels.",
@@ -79,9 +84,14 @@ def main():
     }
     a.output.parent.mkdir(parents=True, exist_ok=True)
     a.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(result["recording_count"], "recordings;",
-          result["left_candidate_count"], "left candidates;",
-          result["new_unique_short_path_count"], "new paths")
+    print(
+        result["recording_count"],
+        "recordings;",
+        result["left_candidate_count"],
+        "left candidates;",
+        result["new_unique_short_path_count"],
+        "new paths",
+    )
 
 
 if __name__ == "__main__":

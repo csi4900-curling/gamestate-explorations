@@ -45,79 +45,97 @@ def main():
         cal = ViewCalibrator(view, ROOT / "prototype/vision/frames")
         cal.H = np.array(refined[name]["refined_H"])
         calibrators[name] = cal
-    camera_prior_reference_H = {name: cal.H.copy()
-                                for name, cal in calibrators.items()}
-    clean_reference_images = {name: cal.reference.copy()
-                              for name, cal in calibrators.items()}
-    capture = cv2.VideoCapture(str(a.video), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    camera_prior_reference_H = {name: cal.H.copy() for name, cal in calibrators.items()}
+    clean_reference_images = {name: cal.reference.copy() for name, cal in calibrators.items()}
+    capture = cv2.VideoCapture(str(a.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not capture.isOpened():
         p.error("Cannot open video")
     fps = capture.get(cv2.CAP_PROP_FPS)
     try:
-        capture.set(cv2.CAP_PROP_POS_FRAMES,
-                    round((a.right_anchor_time - a.source_offset) * fps))
+        capture.set(cv2.CAP_PROP_POS_FRAMES, round((a.right_anchor_time - a.source_offset) * fps))
         ok, anchor_frame = capture.read()
         if not ok:
             raise RuntimeError("Cannot decode right-camera anchor")
         calibrators["right"], anchor_registration = rebase_view_calibrator(
-            calibrators["right"], anchor_frame,
-            max_corner_displacement_px=a.max_corner_displacement_px)
+            calibrators["right"],
+            anchor_frame,
+            max_corner_displacement_px=a.max_corner_displacement_px,
+        )
         rows = []
         for candidate in candidates["events"]:
-            view_name = {"positive_y": "left", "negative_y": "right"}.get(
-                candidate["view_motion"])
+            view_name = {"positive_y": "left", "negative_y": "right"}.get(candidate["view_motion"])
             if view_name is None:
                 raise ValueError(f"Unknown view direction for {candidate['id']}")
             cal = calibrators[view_name]
             samples = []
-            for t in sample_times(candidate["crossing_time_s"],
-                                  candidates["source_interval_s"][1],
-                                  a.lookahead_s, a.sample_period_s):
-                capture.set(cv2.CAP_PROP_POS_FRAMES,
-                            round((t - a.source_offset) * fps))
+            for t in sample_times(
+                candidate["crossing_time_s"],
+                candidates["source_interval_s"][1],
+                a.lookahead_s,
+                a.sample_period_s,
+            ):
+                capture.set(cv2.CAP_PROP_POS_FRAMES, round((t - a.source_offset) * fps))
                 ok, frame = capture.read()
                 if not ok:
                     raise RuntimeError(f"Cannot decode source time {t}")
                 H, registration = cal.register(
-                    frame, max_corner_displacement_px=a.max_corner_displacement_px)
+                    frame, max_corner_displacement_px=a.max_corner_displacement_px
+                )
                 proposals = []
                 if H is not None:
                     A = np.linalg.inv(H) @ camera_prior_reference_H[view_name]
                     background = cv2.warpPerspective(
-                        clean_reference_images[view_name], A,
-                        (frame.shape[1], frame.shape[0]))
+                        clean_reference_images[view_name], A, (frame.shape[1], frame.shape[0])
+                    )
                     prior = transported_reference_camera(
-                        camera_prior_reference_H[view_name], H,
-                        cal.view["region"])
-                    found, _ = detect_and_localize(
-                        frame, H, cal.view, background, prior)
-                    proposals = [{"colour": row["colour"],
-                                  "pixel_center": row["pixel_center"],
-                                  "ground_position_m": row["ground_position_m"]}
-                                 for row in found]
-                samples.append({"source_time_s": t,
-                                "registration_status": registration["status"],
-                                "registration_reason": registration.get("reason"),
-                                "views": {view_name: {"proposals": proposals}}})
-            kwargs = ({"view": "left", "entry_y_threshold_m": -4.5,
-                       "forward_direction": 1, "min_samples": 4,
-                       "max_forward_speed_change_m_s": 2.0}
-                      if view_name == "left" else {"view": "right"})
+                        camera_prior_reference_H[view_name], H, cal.view["region"]
+                    )
+                    found, _ = detect_and_localize(frame, H, cal.view, background, prior)
+                    proposals = [
+                        {
+                            "colour": row["colour"],
+                            "pixel_center": row["pixel_center"],
+                            "ground_position_m": row["ground_position_m"],
+                        }
+                        for row in found
+                    ]
+                samples.append(
+                    {
+                        "source_time_s": t,
+                        "registration_status": registration["status"],
+                        "registration_reason": registration.get("reason"),
+                        "views": {view_name: {"proposals": proposals}},
+                    }
+                )
+            kwargs = (
+                {
+                    "view": "left",
+                    "entry_y_threshold_m": -4.5,
+                    "forward_direction": 1,
+                    "min_samples": 4,
+                    "max_forward_speed_change_m_s": 2.0,
+                }
+                if view_name == "left"
+                else {"view": "right"}
+            )
             selection = select_far_entry_motion_path(
-                samples, candidate["colour"],
-                max_gap_s=a.sample_period_s + 0.1, **kwargs)
-            rows.append({"candidate_id": candidate["id"],
-                         "crossing_time_s": candidate["crossing_time_s"],
-                         "colour": candidate["colour"],
-                         "view_motion": candidate["view_motion"],
-                         "receiving_view": view_name,
-                         "sample_count": len(samples),
-                         "registration_abstentions": sum(
-                             sample["registration_status"] != "registered"
-                             for sample in samples),
-                         "selection": selection,
-                         "samples": samples})
+                samples, candidate["colour"], max_gap_s=a.sample_period_s + 0.1, **kwargs
+            )
+            rows.append(
+                {
+                    "candidate_id": candidate["id"],
+                    "crossing_time_s": candidate["crossing_time_s"],
+                    "colour": candidate["colour"],
+                    "view_motion": candidate["view_motion"],
+                    "receiving_view": view_name,
+                    "sample_count": len(samples),
+                    "registration_abstentions": sum(
+                        sample["registration_status"] != "registered" for sample in samples
+                    ),
+                    "selection": selection,
+                    "samples": samples,
+                }
+            )
             print(candidate["id"], selection["status"], flush=True)
     finally:
         capture.release()
@@ -143,8 +161,7 @@ def main():
         "conditional_camera_prior": "original_calibration_transported_to_current_frame",
         "detection_background": "original_clean_reference_transported_to_current_frame",
         "candidate_count": len(rows),
-        "selection_status_counts": dict(Counter(
-            row["selection"]["status"] for row in rows)),
+        "selection_status_counts": dict(Counter(row["selection"]["status"] for row in rows)),
         "rows": rows,
         "limitations": [
             "Anchor 2044.5 s was chosen after seeing this recording's frozen registration failures.",

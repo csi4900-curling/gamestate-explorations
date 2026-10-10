@@ -13,12 +13,22 @@ BASE = ROOT / "validation/official-shot-sequence"
 UNION = BASE / "pwg2022-provisional-event-evidence-union-v3-preorigin-travel-development.json"
 REFERENCE = BASE / "pwg2022-official-shot-ledger.json"
 INPUTS = {
-    "PREL000101": (ROOT / "validation/curlobserver-learned-probe/swiss-full-transfer/shot-review/manifest.json",
-                   ROOT / "validation/curlobserver-learned-probe/swiss-full-transfer/possible-edits-v1.json"),
-    "PREL000102": (ROOT / "validation/curlobserver-learned-probe/china-full-transfer/shot-review/manifest.json",
-                   ROOT / "validation/curlobserver-learned-probe/china-full-transfer/possible-edits-v1.json"),
-    "PREL000103": (ROOT / "validation/curlobserver-learned-probe/slovakia-full-transfer/shot-review/manifest.json",
-                   ROOT / "validation/curlobserver-learned-probe/slovakia-full-transfer/possible-edits-v1.json"),
+    "PREL000101": (
+        ROOT
+        / "validation/curlobserver-learned-probe/swiss-full-transfer/shot-review/manifest.json",
+        ROOT / "validation/curlobserver-learned-probe/swiss-full-transfer/possible-edits-v1.json",
+    ),
+    "PREL000102": (
+        ROOT
+        / "validation/curlobserver-learned-probe/china-full-transfer/shot-review/manifest.json",
+        ROOT / "validation/curlobserver-learned-probe/china-full-transfer/possible-edits-v1.json",
+    ),
+    "PREL000103": (
+        ROOT
+        / "validation/curlobserver-learned-probe/slovakia-full-transfer/shot-review/manifest.json",
+        ROOT
+        / "validation/curlobserver-learned-probe/slovakia-full-transfer/possible-edits-v1.json",
+    ),
 }
 OUTPUT = BASE / "pwg2022-full-match-event-review-segments-v3-preorigin-travel-development.json"
 
@@ -36,43 +46,54 @@ def build():
     for source in union["games"]:
         code = source["official_game_code"]
         manifest_path, edits_path = INPUTS[code]
-        manifest, edits = (json.loads(path.read_text()) for path in
-                           (manifest_path, edits_path))
+        manifest, edits = (json.loads(path.read_text()) for path in (manifest_path, edits_path))
         video = reference_by_code[code]
-        if (source["source_sha256"] == reserved["source_sha256"] or
-                any(row["source_sha256"] != source["source_sha256"]
-                    for row in (manifest, edits)) or
-                video["source_video_sha256"] != source["source_sha256"]):
+        if (
+            source["source_sha256"] == reserved["source_sha256"]
+            or any(row["source_sha256"] != source["source_sha256"] for row in (manifest, edits))
+            or video["source_video_sha256"] != source["source_sha256"]
+        ):
             raise ValueError(f"Source mismatch or reserved source selected: {code}")
-        rows = build_review_segments(source["events"], manifest["shots"],
-                                     edits["possible_edits_outside_hard_cuts"])
+        rows = build_review_segments(
+            source["events"], manifest["shots"], edits["possible_edits_outside_hard_cuts"]
+        )
         if len(rows) != source["provisional_event_count"]:
             raise ValueError(f"Event review coverage changed: {code}")
-        games.append({"official_game_code": code,
-                      "source_sha256": source["source_sha256"],
-                      "source_video_path": video["source_video_path"],
-                      "source_interval_s": manifest["source_interval_s"],
-                      "input_sha256": {"shot_manifest": digest(manifest_path),
-                                       "possible_edits": digest(edits_path)},
-                      "review_segment_count": len(rows),
-                      "preorigin_travel_review_count": sum(
-                          row["candidate_class"] ==
-                          "counter_linked_preorigin_travel_provisional" for row in rows),
-                      "segments": rows})
-    return {"status": "development_v3_preorigin_travel_review_windows_not_physical_segments",
-            "input_sha256": {"provisional_union_v3": digest(UNION),
-                             "reference_metadata": digest(REFERENCE),
-                             "segment_code": digest(ROOT / "prototype/event_review_segments.py"),
-                             "runner": digest(Path(__file__))},
-            "total_review_segment_count": sum(g["review_segment_count"] for g in games),
-            "preorigin_travel_review_count": sum(
-                g["preorigin_travel_review_count"] for g in games),
-            "games": games,
-            "limitations": [
-                "Review windows include broadcast camera shots, not measured physical throw boundaries.",
-                "The B02 receiving motion is not an exact physical release or a verified persistent stone identity.",
-                "No independent complete-match throw F1 or simulation-ready state is established.",
-            ]}
+        games.append(
+            {
+                "official_game_code": code,
+                "source_sha256": source["source_sha256"],
+                "source_video_path": video["source_video_path"],
+                "source_interval_s": manifest["source_interval_s"],
+                "input_sha256": {
+                    "shot_manifest": digest(manifest_path),
+                    "possible_edits": digest(edits_path),
+                },
+                "review_segment_count": len(rows),
+                "preorigin_travel_review_count": sum(
+                    row["candidate_class"] == "counter_linked_preorigin_travel_provisional"
+                    for row in rows
+                ),
+                "segments": rows,
+            }
+        )
+    return {
+        "status": "development_v3_preorigin_travel_review_windows_not_physical_segments",
+        "input_sha256": {
+            "provisional_union_v3": digest(UNION),
+            "reference_metadata": digest(REFERENCE),
+            "segment_code": digest(ROOT / "prototype/event_review_segments.py"),
+            "runner": digest(Path(__file__)),
+        },
+        "total_review_segment_count": sum(g["review_segment_count"] for g in games),
+        "preorigin_travel_review_count": sum(g["preorigin_travel_review_count"] for g in games),
+        "games": games,
+        "limitations": [
+            "Review windows include broadcast camera shots, not measured physical throw boundaries.",
+            "The B02 receiving motion is not an exact physical release or a verified persistent stone identity.",
+            "No independent complete-match throw F1 or simulation-ready state is established.",
+        ],
+    }
 
 
 def main():

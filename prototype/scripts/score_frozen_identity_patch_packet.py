@@ -40,14 +40,16 @@ def main():
             score += model["intercept"].item()
             scores.append(float(score))
         mean_score = float(np.mean(scores))
-        rows.append({
-            "source_id": event["source_id"],
-            "event_id": event["event_id"],
-            "source_review": event["source_review"],
-            "sample_scores": [round(value, 6) for value in scores],
-            "mean_score": round(mean_score, 6),
-            "predicted_stone_like": bool(mean_score >= float(model["threshold"])),
-        })
+        rows.append(
+            {
+                "source_id": event["source_id"],
+                "event_id": event["event_id"],
+                "source_review": event["source_review"],
+                "sample_scores": [round(value, 6) for value in scores],
+                "mean_score": round(mean_score, 6),
+                "predicted_stone_like": bool(mean_score >= float(model["threshold"])),
+            }
+        )
     result = {
         "status": "development_frozen_patch_transfer",
         "packet_manifest_sha256": file_sha256(manifest_path),
@@ -58,7 +60,8 @@ def main():
         "threshold": float(model["threshold"]),
         "rows": rows,
         "stone_like_count": sum(row["predicted_stone_like"] for row in rows),
-        "limitations": manifest["limitations"] + [
+        "limitations": manifest["limitations"]
+        + [
             "Scores are patch appearance evidence, not proof of a newly delivered stone.",
             "No independent full-video throw precision or recall follows from this selected packet.",
         ],

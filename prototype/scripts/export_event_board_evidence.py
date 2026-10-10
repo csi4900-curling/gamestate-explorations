@@ -12,8 +12,10 @@ from event_board_evidence import link_event_boards
 BOARD = ROOT / "validation/official-shot-sequence/pwg2022-video-partial-board-observations.json"
 LEDGERS = (
     ROOT / "validation/curlobserver-learned-probe/swiss-full-transfer/candidate-event-ledger.json",
-    ROOT / "validation/curlobserver-learned-probe/china-full-transfer/candidate-throw-event-ledger-after-link.json",
-    ROOT / "validation/curlobserver-learned-probe/slovakia-full-transfer/candidate-event-ledger.json",
+    ROOT
+    / "validation/curlobserver-learned-probe/china-full-transfer/candidate-throw-event-ledger-after-link.json",
+    ROOT
+    / "validation/curlobserver-learned-probe/slovakia-full-transfer/candidate-event-ledger.json",
 )
 OUTPUT = ROOT / "validation/official-shot-sequence/pwg2022-provisional-event-board-evidence.json"
 
@@ -35,13 +37,14 @@ def main():
         "status": "provisional_video_event_to_partial_board_evidence_not_simulation_ready",
         "board_input_sha256": digest(BOARD),
         "event_ledger_sha256_by_source": {
-            row["source_sha256"]: digest(path)
-            for row, path in zip(ledgers, LEDGERS, strict=True)},
+            row["source_sha256"]: digest(path) for row, path in zip(ledgers, LEDGERS, strict=True)
+        },
         "join_code_sha256": digest(ROOT / "prototype/event_board_evidence.py"),
         "runner_sha256": digest(Path(__file__)),
         "link_count": len(links),
         "unique_shared_counter_count": sum(
-            row["link_status"] == "unique_shared_delayed_counter" for row in links),
+            row["link_status"] == "unique_shared_delayed_counter" for row in links
+        ),
         "stone_observation_count": sum(row["board_stone_count"] for row in links),
         "links": links,
         "limitations": [
@@ -53,9 +56,13 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(output, indent=2) + "\n")
-    print({"links": output["link_count"],
-           "unique_counter_links": output["unique_shared_counter_count"],
-           "stones": output["stone_observation_count"]})
+    print(
+        {
+            "links": output["link_count"],
+            "unique_counter_links": output["unique_shared_counter_count"],
+            "stones": output["stone_observation_count"],
+        }
+    )
 
 
 if __name__ == "__main__":

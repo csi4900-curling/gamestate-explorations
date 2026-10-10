@@ -78,10 +78,14 @@ def identity_correspondence(pred):
     if not isinstance(record, dict) or record.get("method") != "reviewed_source_link":
         raise ValueError("Identity correspondence requires reviewed_source_link method")
     mapping = record.get("prediction_to_reference")
-    if not isinstance(mapping, dict) or any(
-        not isinstance(key, str) or not key or not isinstance(value, str) or not value
-        for key, value in mapping.items()
-    ) or len(set(mapping.values())) != len(mapping):
+    if (
+        not isinstance(mapping, dict)
+        or any(
+            not isinstance(key, str) or not key or not isinstance(value, str) or not value
+            for key, value in mapping.items()
+        )
+        or len(set(mapping.values())) != len(mapping)
+    ):
         raise ValueError("Identity correspondence must be a one-to-one string mapping")
     return mapping, record["method"]
 
@@ -112,20 +116,32 @@ def score_board(ref, pred, identity_mapping=None):
         visible = len(ref["stones"])
         if not ref["complete"]:
             return dict(
-                base, status="reference_incomplete", correct=None,
-                visible_reference_count=visible, visible_reference_matches=0,
+                base,
+                status="reference_incomplete",
+                correct=None,
+                visible_reference_count=visible,
+                visible_reference_matches=0,
                 visible_reference_misses=visible,
                 visible_reference_recall=0.0 if visible else None,
-                visible_identity_errors=0, visible_identity_abstentions=0,
-                matched_position_errors=[], matched_position_rmse=None,
+                visible_identity_errors=0,
+                visible_identity_abstentions=0,
+                matched_position_errors=[],
+                matched_position_rmse=None,
             )
         return dict(
-            base, status="prediction_missing", correct=False, misses=visible, extras=0,
-            visible_reference_count=visible, visible_reference_matches=0,
+            base,
+            status="prediction_missing",
+            correct=False,
+            misses=visible,
+            extras=0,
+            visible_reference_count=visible,
+            visible_reference_matches=0,
             visible_reference_misses=visible,
             visible_reference_recall=0.0 if visible else None,
-            visible_identity_errors=0, visible_identity_abstentions=0,
-            matched_position_errors=[], matched_position_rmse=None,
+            visible_identity_errors=0,
+            visible_identity_abstentions=0,
+            matched_position_errors=[],
+            matched_position_rmse=None,
         )
     validate_board(pred)
     if pred["coordinate_frame"] != ref["coordinate_frame"] or pred["units"] != ref["units"]:
@@ -149,8 +165,8 @@ def score_board(ref, pred, identity_mapping=None):
         for i, j in pairs
     )
     unknown = sum(
-        a[i].get("identity") is not None
-        and b[j].get("identity") not in identity_mapping for i, j in pairs
+        a[i].get("identity") is not None and b[j].get("identity") not in identity_mapping
+        for i, j in pairs
     )
     positions = [float(cost[i, j]) for i, j in pairs]
     visible = len(a)
@@ -163,7 +179,8 @@ def score_board(ref, pred, identity_mapping=None):
         visible_identity_abstentions=unknown,
         matched_position_errors=positions,
         matched_position_rmse=math.sqrt(sum(x * x for x in positions) / len(positions))
-        if positions else None,
+        if positions
+        else None,
     )
     if not ref["complete"]:
         # Unobserved stones make false-positive and complete-board claims impossible.
@@ -214,26 +231,30 @@ def evaluate_end(ref, pred):
     pairs = assign(np.zeros(valid.shape), valid)
     mi, mj = {i for i, j in pairs}, {j for i, j in pairs}
     known = [(i, j) for i, j in pairs if rr[i].get("arrival_identity") is not None]
-    identity_checked = [(i, j) for i, j in known
-                        if pp[j].get("arrival_identity") in identity_mapping]
+    identity_checked = [
+        (i, j) for i, j in known if pp[j].get("arrival_identity") in identity_mapping
+    ]
     known_total = sum(r.get("arrival_identity") is not None for r in rr)
     matches, misses, extras = len(pairs), len(rr) - len(pairs), len(pp) - len(pairs)
     colour_errors = sum(rr[i]["colour"] != pp[j]["colour"] for i, j in pairs)
     event_precision = matches / len(pp) if pp else 0.0
     event_recall = matches / len(rr)
-    event_f1 = (2 * matches / (2 * matches + misses + extras)
-                if matches or misses or extras else None)
+    event_f1 = (
+        2 * matches / (2 * matches + misses + extras) if matches or misses or extras else None
+    )
     colour_tp = matches - colour_errors
     colour_precision = colour_tp / len(pp) if pp else 0.0
     colour_recall = colour_tp / len(rr)
-    colour_f1 = (2 * colour_tp / (2 * colour_tp + misses + extras + 2 * colour_errors)
-                 if colour_tp or misses or extras or colour_errors else None)
+    colour_f1 = (
+        2 * colour_tp / (2 * colour_tp + misses + extras + 2 * colour_errors)
+        if colour_tp or misses or extras or colour_errors
+        else None
+    )
     boards = {b["id"]: b for b in pred["boards"]}
     unexpected = sorted(set(boards) - {b["id"] for b in ref["boards"]})
     if unexpected:
         raise ValueError(f"Unexpected board IDs: {unexpected}")
-    scored = [score_board(b, boards.get(b["id"]), identity_mapping)
-              for b in ref["boards"]]
+    scored = [score_board(b, boards.get(b["id"]), identity_mapping) for b in ref["boards"]]
     eligible = [b for b in scored if b["correct"] is not None]
     complete = sum(b["correct"] for b in eligible)
     visible_total = sum(b["visible_reference_count"] for b in scored)

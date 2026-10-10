@@ -4,15 +4,25 @@ from prototype.candidate_cross_view_colour import reconcile_visual_only_colours
 
 
 def candidate(colour="red"):
-    return {"candidate_id": "T1", "shot_id": "S1", "counter_id": None,
-            "evidence_class": "origin_view_candidate", "release_window_s": [1, 2],
-            "colour": colour}
+    return {
+        "candidate_id": "T1",
+        "shot_id": "S1",
+        "counter_id": None,
+        "evidence_class": "origin_view_candidate",
+        "release_window_s": [1, 2],
+        "colour": colour,
+    }
 
 
 def postcut(colour="yellow"):
-    return {"candidate_id": "T1", "shot_id": "S1", "release_window_s": [1, 2],
-            "original_colour": "red", "postcut_colour": colour,
-            "postcut_status": "unique_strict_postcut_motion"}
+    return {
+        "candidate_id": "T1",
+        "shot_id": "S1",
+        "release_window_s": [1, 2],
+        "original_colour": "red",
+        "postcut_colour": colour,
+        "postcut_status": "unique_strict_postcut_motion",
+    }
 
 
 def test_conflict_abstains_and_preserves_observations():

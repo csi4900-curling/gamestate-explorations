@@ -28,8 +28,10 @@ def main():
     games = {game["official_game_code"]: game for game in reference["games"]}
     rows = []
     for code, game in games.items():
-        if (transfer["input_hashes_by_game"][code]["source_video_sha256"]
-                != game["source_video_sha256"]):
+        if (
+            transfer["input_hashes_by_game"][code]["source_video_sha256"]
+            != game["source_video_sha256"]
+        ):
             raise ValueError(f"Source video provenance mismatch: {code}")
         cap = cv2.VideoCapture(str(ROOT / game["source_video_path"]))
         if not cap.isOpened():
@@ -46,15 +48,22 @@ def main():
                 if not ok:
                     raise RuntimeError(f"Frame decode failed at {time_s}")
                 supported, ice_fraction = passage_has_ice(frame, passage)
-                audited = {**passage, "held_frame_time_s": time_s,
-                           "below_ice_fraction": ice_fraction}
+                audited = {
+                    **passage,
+                    "held_frame_time_s": time_s,
+                    "below_ice_fraction": ice_fraction,
+                }
                 (accepted if supported else rejected).append(audited)
-            rows.append({"official_game_code": code, "shot_id": source["shot_id"],
-                         "origin_interval_s": source["origin_interval_s"],
-                         "accepted_passages": accepted,
-                         "rejected_passages": rejected,
-                         "unique_passage_colour": accepted[0]["colour"]
-                         if len(accepted) == 1 else None})
+            rows.append(
+                {
+                    "official_game_code": code,
+                    "shot_id": source["shot_id"],
+                    "origin_interval_s": source["origin_interval_s"],
+                    "accepted_passages": accepted,
+                    "rejected_passages": rejected,
+                    "unique_passage_colour": accepted[0]["colour"] if len(accepted) == 1 else None,
+                }
+            )
         cap.release()
     output = {
         "status": "postscore_ice_context_gate_on_frozen_held_cap_transfer_not_f1",
@@ -74,8 +83,12 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(output, indent=2) + "\n")
-    print({key: output[key] for key in
-           ("scanned_window_count", "accepted_passage_count", "rejected_passage_count")})
+    print(
+        {
+            key: output[key]
+            for key in ("scanned_window_count", "accepted_passage_count", "rejected_passage_count")
+        }
+    )
 
 
 if __name__ == "__main__":

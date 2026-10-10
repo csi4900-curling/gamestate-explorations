@@ -24,15 +24,23 @@ def build_overlay(left_events, right_proposals, source_classes, *, max_lag_s=20)
         cls = source_classes[raw_id]
         t = right["passage"]["time_s"]
         direction = right["direction"]
-        candidates = sorted((left for left in left_events
-                             if left["colour"] == right["colour_claim"]
-                             and ((direction == "negative_y" and
-                                   0 <= t - left["crossing_time_s"] <= max_lag_s)
-                                  or (direction == "positive_y" and
-                                      0 <= left["crossing_time_s"] - t <= max_lag_s))),
-                            key=lambda left: abs(t - left["crossing_time_s"]))
-        if cls in ("person_or_wheelchair", "person_wheelchair_or_clothing",
-                   "moving_person_wheelchair"):
+        candidates = sorted(
+            (
+                left
+                for left in left_events
+                if left["colour"] == right["colour_claim"]
+                and (
+                    (direction == "negative_y" and 0 <= t - left["crossing_time_s"] <= max_lag_s)
+                    or (direction == "positive_y" and 0 <= left["crossing_time_s"] - t <= max_lag_s)
+                )
+            ),
+            key=lambda left: abs(t - left["crossing_time_s"]),
+        )
+        if cls in (
+            "person_or_wheelchair",
+            "person_wheelchair_or_clothing",
+            "moving_person_wheelchair",
+        ):
             status = "source_reviewed_person_candidate"
         elif cls == "stone_pixels_identity_uncertain":
             status = "stone_pixels_long_track_identity_review"
@@ -46,37 +54,40 @@ def build_overlay(left_events, right_proposals, source_classes, *, max_lag_s=20)
             status = "multiple_directional_left_events_review"
         else:
             status = "unique_time_colour_corrob"
-        rows.append({
-            "right_raw_track_id": raw_id,
-            "right_source_prefix_class": cls,
-            "right_colour_claim": right["colour_claim"],
-            "right_direction": direction,
-            "right_passage_time_s": t,
-            "right_observed_prefix_interval_s": right["observed_prefix_interval_s"],
-            "right_observed_prefix_points": right["observed_prefix_points"],
-            "direction_aware_same_colour_left_ids_within_lag": [
-                left["id"] for left in candidates],
-            "left_minus_right_time_s_if_unique_candidate": (
-                round(candidates[0]["crossing_time_s"] - t, 3)
-                if len(candidates) == 1 else None),
-            "conditional_left_event_id": (candidates[0]["id"]
-                                          if status == "unique_time_colour_corrob"
-                                          else None),
-            "fusion_status": status,
-            "physical_cross_view_identity_verified": False,
-            "simulation_ready": False,
-        })
-    links = Counter(row["conditional_left_event_id"] for row in rows
-                    if row["conditional_left_event_id"])
+        rows.append(
+            {
+                "right_raw_track_id": raw_id,
+                "right_source_prefix_class": cls,
+                "right_colour_claim": right["colour_claim"],
+                "right_direction": direction,
+                "right_passage_time_s": t,
+                "right_observed_prefix_interval_s": right["observed_prefix_interval_s"],
+                "right_observed_prefix_points": right["observed_prefix_points"],
+                "direction_aware_same_colour_left_ids_within_lag": [
+                    left["id"] for left in candidates
+                ],
+                "left_minus_right_time_s_if_unique_candidate": (
+                    round(candidates[0]["crossing_time_s"] - t, 3) if len(candidates) == 1 else None
+                ),
+                "conditional_left_event_id": (
+                    candidates[0]["id"] if status == "unique_time_colour_corrob" else None
+                ),
+                "fusion_status": status,
+                "physical_cross_view_identity_verified": False,
+                "simulation_ready": False,
+            }
+        )
+    links = Counter(
+        row["conditional_left_event_id"] for row in rows if row["conditional_left_event_id"]
+    )
     for row in rows:
-        if row["conditional_left_event_id"] and links[
-                row["conditional_left_event_id"]] > 1:
+        if row["conditional_left_event_id"] and links[row["conditional_left_event_id"]] > 1:
             row["fusion_status"] = "multiple_right_stone_paths_review"
             row["conditional_left_event_id"] = None
-    linked = {row["conditional_left_event_id"] for row in rows
-              if row["conditional_left_event_id"]}
+    linked = {row["conditional_left_event_id"] for row in rows if row["conditional_left_event_id"]}
     return {
         "rows": rows,
-        "left_events_without_short_right_link": [row["id"] for row in left_events
-                                                 if row["id"] not in linked],
+        "left_events_without_short_right_link": [
+            row["id"] for row in left_events if row["id"] not in linked
+        ],
     }

@@ -1,6 +1,5 @@
 """Conservative colour evidence for visual-only candidates across a camera cut."""
 
-
 COLOURS = {"red", "yellow"}
 
 
@@ -14,17 +13,22 @@ def reconcile_visual_only_colours(candidates, postcut_rows):
     by_id = {row["candidate_id"]: row for row in postcut_rows}
     if len(by_id) != len(postcut_rows):
         raise ValueError("Duplicate post-cut candidate ID")
-    selected = [row for row in candidates if row["counter_id"] is None and
-                row["evidence_class"] == "origin_view_candidate"]
+    selected = [
+        row
+        for row in candidates
+        if row["counter_id"] is None and row["evidence_class"] == "origin_view_candidate"
+    ]
     ids = {row["candidate_id"] for row in selected}
     if len(ids) != len(selected) or ids != set(by_id):
         raise ValueError("Visual-only candidate and post-cut IDs differ")
     result = []
     for candidate in selected:
         sidecar = by_id[candidate["candidate_id"]]
-        if (candidate["shot_id"] != sidecar["shot_id"] or
-                candidate["release_window_s"] != sidecar["release_window_s"] or
-                candidate["colour"] != sidecar["original_colour"]):
+        if (
+            candidate["shot_id"] != sidecar["shot_id"]
+            or candidate["release_window_s"] != sidecar["release_window_s"]
+            or candidate["colour"] != sidecar["original_colour"]
+        ):
             raise ValueError("Post-cut row differs from candidate source")
         origin, receiving = candidate["colour"], sidecar["postcut_colour"]
         if origin not in COLOURS | {None} or receiving not in COLOURS | {None}:
@@ -44,17 +48,19 @@ def reconcile_visual_only_colours(candidates, postcut_rows):
         else:
             relation = "neither_view_resolved"
             two_view = None
-        result.append({
-            "candidate_id": candidate["candidate_id"],
-            "shot_id": candidate["shot_id"],
-            "release_window_s": candidate["release_window_s"],
-            "origin_colour": origin,
-            "receiving_colour": receiving,
-            "receiving_status": sidecar["postcut_status"],
-            "relation": relation,
-            "two_view_colour": two_view,
-            "physical_throw_identity_verified": False,
-            "camera_handoff_identity_verified": False,
-            "game_state_colour_ready": False,
-        })
+        result.append(
+            {
+                "candidate_id": candidate["candidate_id"],
+                "shot_id": candidate["shot_id"],
+                "release_window_s": candidate["release_window_s"],
+                "origin_colour": origin,
+                "receiving_colour": receiving,
+                "receiving_status": sidecar["postcut_status"],
+                "relation": relation,
+                "two_view_colour": two_view,
+                "physical_throw_identity_verified": False,
+                "camera_handoff_identity_verified": False,
+                "game_state_colour_ready": False,
+            }
+        )
     return result

@@ -10,8 +10,12 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 def test_b02_is_travel_only_and_all_v2_records_are_preserved():
-    v2 = json.loads((ROOT / "validation/official-shot-sequence/"
-                     "pwg2022-event-evidence-handoff-v2-development.json").read_text())
+    v2 = json.loads(
+        (
+            ROOT / "validation/official-shot-sequence/"
+            "pwg2022-event-evidence-handoff-v2-development.json"
+        ).read_text()
+    )
     v3 = build()
     old = {row["event_id"]: row for game in v2["games"] for row in game["rows"]}
     new = {row["event_id"]: row for game in v3["games"] for row in game["rows"]}

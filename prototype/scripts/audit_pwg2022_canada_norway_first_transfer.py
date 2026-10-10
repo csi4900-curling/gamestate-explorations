@@ -12,12 +12,16 @@ from prototype.official_counter_alignment import align_counter_events
 
 OFFICIAL = ROOT / "validation/official-shot-sequence/pwg2022-canada-norway-official-ledger.json"
 PIPELINE = ROOT / "validation/curlobserver-learned-probe/canada-norway-full-transfer"
-OUTPUT = ROOT / "validation/throw-event-benchmark/paralympics-2022-canada-norway/FIRST-TRANSFER.json"
-INPUTS = {"counter_replay": PIPELINE / "counter-replay.json",
-          "candidate_ledger": PIPELINE / "candidate-event-ledger.json",
-          "origin": PIPELINE / "shot-origin.json",
-          "cap_decisions": PIPELINE / "two-shot-cap.json",
-          "frozen_release": PIPELINE / "frozen-origin-release.json"}
+OUTPUT = (
+    ROOT / "validation/throw-event-benchmark/paralympics-2022-canada-norway/FIRST-TRANSFER.json"
+)
+INPUTS = {
+    "counter_replay": PIPELINE / "counter-replay.json",
+    "candidate_ledger": PIPELINE / "candidate-event-ledger.json",
+    "origin": PIPELINE / "shot-origin.json",
+    "cap_decisions": PIPELINE / "two-shot-cap.json",
+    "frozen_release": PIPELINE / "frozen-origin-release.json",
+}
 CLEAN = {"unique_colour_concordant", "unique_colour_concordant_amid_duplicate"}
 
 
@@ -47,41 +51,60 @@ def main():
         counter_rows = []
         counter_alignment_error = str(error)
     origin_by_id = {row["shot_id"]: row for row in inputs["origin"]["rows"]}
-    cap_visual = [{"shot_id": row["shot_id"],
-                   "interval_s": origin_by_id[row["shot_id"]]["interval_s"],
-                   "colour": row["colour"]}
-                  for row in inputs["cap_decisions"]["decisions"]
-                  if row["status"] == "corroborated_candidate"]
-    release_visual = [{"shot_id": row["shot_id"],
-                       "interval_s": row["origin_interval_s"],
-                       "colour": row["unique_passage_colour"]}
-                      for row in inputs["frozen_release"]["rows"]
-                      if row["unique_passage_colour"] is not None]
+    cap_visual = [
+        {
+            "shot_id": row["shot_id"],
+            "interval_s": origin_by_id[row["shot_id"]]["interval_s"],
+            "colour": row["colour"],
+        }
+        for row in inputs["cap_decisions"]["decisions"]
+        if row["status"] == "corroborated_candidate"
+    ]
+    release_visual = [
+        {
+            "shot_id": row["shot_id"],
+            "interval_s": row["origin_interval_s"],
+            "colour": row["unique_passage_colour"],
+        }
+        for row in inputs["frozen_release"]["rows"]
+        if row["unique_passage_colour"] is not None
+    ]
     cap_ids = {row["shot_id"] for row in cap_visual}
-    combined_visual = cap_visual + [row for row in release_visual
-                                    if row["shot_id"] not in cap_ids]
+    combined_visual = cap_visual + [row for row in release_visual if row["shot_id"] not in cap_ids]
     complete_ends = []
     counter_coverage_by_end = []
     if counter_rows:
         for end in official["ends"]:
-            clean = [row for row in counter_rows if row["official_end"] == end["end"]
-                     and row["status"] in CLEAN]
-            counter_coverage_by_end.append({"end": end["end"],
-                                            "official_shots": len(end["shots"]),
-                                            "clean_counter_anchors": len(clean),
-                                            "complete": len(clean) == len(end["shots"])})
+            clean = [
+                row
+                for row in counter_rows
+                if row["official_end"] == end["end"] and row["status"] in CLEAN
+            ]
+            counter_coverage_by_end.append(
+                {
+                    "end": end["end"],
+                    "official_shots": len(end["shots"]),
+                    "clean_counter_anchors": len(clean),
+                    "complete": len(clean) == len(end["shots"]),
+                }
+            )
             if len(clean) != len(end["shots"]):
                 continue
             times = [row["counter_time_s"] for row in clean]
             first, last = min(times), max(times)
-            search = lambda items: [row for row in items
-                                    if first - 70 <= row["interval_s"][0] <= last]
-            complete_ends.append({"end": end["end"],
-                                  "counter_span_s": [first, last],
-                                  "cap_only_score": score_visual_against_counters(
-                                      search(cap_visual), clean),
-                                  "cap_plus_release_score": score_visual_against_counters(
-                                      search(combined_visual), clean)})
+            search = lambda items: [
+                row for row in items if first - 70 <= row["interval_s"][0] <= last
+            ]
+            complete_ends.append(
+                {
+                    "end": end["end"],
+                    "counter_span_s": [first, last],
+                    "cap_only_score": score_visual_against_counters(search(cap_visual), clean),
+                    "cap_plus_release_score": score_visual_against_counters(
+                        search(combined_visual), clean
+                    ),
+                }
+            )
     result = {
         "status": "first_frozen_same_family_full_recording_transfer_not_event_f1",
         "source_video_sha256": source_hash,
@@ -95,8 +118,10 @@ def main():
         "counter_event_count": len(counter_events),
         "counter_alignment_error": counter_alignment_error,
         "clean_counter_anchor_count": sum(row["status"] in CLEAN for row in counter_rows),
-        "counter_status_counts": {status: sum(row["status"] == status for row in counter_rows)
-                                  for status in sorted({row["status"] for row in counter_rows})},
+        "counter_status_counts": {
+            status: sum(row["status"] == status for row in counter_rows)
+            for status in sorted({row["status"] for row in counter_rows})
+        },
         "counter_alignment_rows": counter_rows,
         "counter_coverage_by_end": counter_coverage_by_end,
         "cap_visual_candidate_count": len(cap_visual),
@@ -111,10 +136,20 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(result, indent=2) + "\n")
-    print({key: result[key] for key in
-           ("official_shot_count", "candidate_count", "counter_event_count",
-            "counter_alignment_error", "clean_counter_anchor_count",
-            "cap_visual_candidate_count", "frozen_release_candidate_count")})
+    print(
+        {
+            key: result[key]
+            for key in (
+                "official_shot_count",
+                "candidate_count",
+                "counter_event_count",
+                "counter_alignment_error",
+                "clean_counter_anchor_count",
+                "cap_visual_candidate_count",
+                "frozen_release_candidate_count",
+            )
+        }
+    )
 
 
 if __name__ == "__main__":

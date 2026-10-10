@@ -29,8 +29,7 @@ def main():
     reserved = json.loads((ROOT / "validation/unseen-end/reservation.json").read_text())
     if source_hash == reserved["source_sha256"]:
         parser.error("Reserved source cannot be used for development audit")
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         parser.error("Cannot open source video")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -44,20 +43,27 @@ def main():
                 parser.error("Invalid candidate window")
             result = scan_origin_release(cap, fps, start, end)
             cues = result["passages"]
-            matching = [cue for cue in cues if event["colour"] is None or
-                        cue["colour"] == event["colour"]]
-            rows.append({"candidate_id": event["candidate_id"],
-                         "camera_shot_id": event["shot_id"],
-                         "release_window_s": event["release_window_s"],
-                         "candidate_colour": event["colour"],
-                         "filtered_cap_observation_count": result[
-                             "filtered_cap_observation_count"],
-                         "passages": cues,
-                         "colour_compatible_passage_count": len(matching),
-                         "status": ("unique_colour_compatible_passage"
-                                    if len(matching) == 1 and len(cues) == 1 else
-                                    "no_colour_compatible_passage" if not matching else
-                                    "ambiguous_passages")})
+            matching = [
+                cue for cue in cues if event["colour"] is None or cue["colour"] == event["colour"]
+            ]
+            rows.append(
+                {
+                    "candidate_id": event["candidate_id"],
+                    "camera_shot_id": event["shot_id"],
+                    "release_window_s": event["release_window_s"],
+                    "candidate_colour": event["colour"],
+                    "filtered_cap_observation_count": result["filtered_cap_observation_count"],
+                    "passages": cues,
+                    "colour_compatible_passage_count": len(matching),
+                    "status": (
+                        "unique_colour_compatible_passage"
+                        if len(matching) == 1 and len(cues) == 1
+                        else "no_colour_compatible_passage"
+                        if not matching
+                        else "ambiguous_passages"
+                    ),
+                }
+            )
     finally:
         cap.release()
     counts = Counter(row["status"] for row in rows)

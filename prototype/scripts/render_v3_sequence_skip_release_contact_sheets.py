@@ -30,25 +30,26 @@ def render(row):
             image.thumbnail((480, 270))
             tile = Image.new("RGB", (480, 292), "white")
             tile.paste(image, ((480 - image.width) // 2, 22))
-            ImageDraw.Draw(tile).text(
-                (6, 3), f"{row['event_id']}  {t:.1f}s", fill="black")
+            ImageDraw.Draw(tile).text((6, 3), f"{row['event_id']}  {t:.1f}s", fill="black")
             tiles.append(tile)
     finally:
         video.release()
     sheet = Image.new("RGB", (1920, 584), "#ddd")
     for index, tile in enumerate(tiles):
         sheet.paste(tile, ((index % 4) * 480, (index // 4) * 292))
-    output = BASE / (f"{row['recording_code']}-{row['event_id']}"
-                     "-sequence-skip-source-review.jpg")
+    output = BASE / (f"{row['recording_code']}-{row['event_id']}-sequence-skip-source-review.jpg")
     sheet.save(output, quality=85)
     return output
 
 
 def main():
     queue = json.loads(QUEUE.read_text())
-    rows = [row for row in queue["rows"]
-            if row["kind"] == "candidate_skipped_in_every_optimum"
-            and row["release_cue_status"] == "unique_passage"]
+    rows = [
+        row
+        for row in queue["rows"]
+        if row["kind"] == "candidate_skipped_in_every_optimum"
+        and row["release_cue_status"] == "unique_passage"
+    ]
     if {row["event_id"] for row in rows} != EXPECTED:
         raise ValueError("Source release-cue skip set changed")
     for row in rows:

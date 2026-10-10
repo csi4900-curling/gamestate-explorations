@@ -12,14 +12,8 @@ from cache_contract import file_sha256
 
 def compare_route(audit, timeline, route):
     start, end = audit["source_interval_s"]
-    unknown = {
-        second for lo, hi in route["coverage_gaps_s"]
-        for second in range(int(lo), int(hi))
-    }
-    visible = {
-        row["time_s"] for row in audit["counter_samples"]
-        if row["counts"] is not None
-    }
+    unknown = {second for lo, hi in route["coverage_gaps_s"] for second in range(int(lo), int(hi))}
+    visible = {row["time_s"] for row in audit["counter_samples"] if row["counts"] is not None}
     total = set(range(start, end))
     return {
         "layout_chunk_s": route["layout_chunk_s"],
@@ -33,9 +27,12 @@ def compare_route(audit, timeline, route):
             if int(row["crossing_time_s"]) in unknown
         ],
         "counter_events_in_declared_unknown": [
-            {"id": row["id"], "colour": row["colour"],
-             "crossing_time_s": row["crossing_time_s"],
-             "evidence_interval_s": row["evidence_interval_s"]}
+            {
+                "id": row["id"],
+                "colour": row["colour"],
+                "crossing_time_s": row["crossing_time_s"],
+                "evidence_interval_s": row["evidence_interval_s"],
+            }
             for row in audit["counter_events"]
             if int(row["crossing_time_s"]) in unknown
         ],
@@ -55,13 +52,14 @@ def main():
     timeline = json.loads(args.timeline.read_text())
     routes = [json.loads(path.read_text()) for path in args.preflight]
     sources = [timeline, *routes]
-    if any(row["source_sha256"] != audit["source_sha256"]
-           or row["source_interval_s"] != audit["source_interval_s"]
-           for row in sources):
+    if any(
+        row["source_sha256"] != audit["source_sha256"]
+        or row["source_interval_s"] != audit["source_interval_s"]
+        for row in sources
+    ):
         parser.error("Audit, timeline and preflights must cover one source interval")
     audit_keys = {(row["colour"], row["crossing_time_s"]) for row in audit["counter_events"]}
-    timeline_keys = {(row["colour"], row["crossing_time_s"])
-                     for row in timeline["observed_events"]}
+    timeline_keys = {(row["colour"], row["crossing_time_s"]) for row in timeline["observed_events"]}
     result = {
         "status": "development_counter_vs_routed_coverage_reconciliation",
         "source_id": audit["source_id"],
@@ -77,10 +75,16 @@ def main():
         "counter_event_count": len(audit["counter_events"]),
         "routed_observed_event_count": len(timeline["observed_events"]),
         "exact_colour_time_matches": len(audit_keys & timeline_keys),
-        "counter_only": [row for row in audit["counter_events"]
-                         if (row["colour"], row["crossing_time_s"]) not in timeline_keys],
-        "timeline_only": [row for row in timeline["observed_events"]
-                          if (row["colour"], row["crossing_time_s"]) not in audit_keys],
+        "counter_only": [
+            row
+            for row in audit["counter_events"]
+            if (row["colour"], row["crossing_time_s"]) not in timeline_keys
+        ],
+        "timeline_only": [
+            row
+            for row in timeline["observed_events"]
+            if (row["colour"], row["crossing_time_s"]) not in audit_keys
+        ],
         "routes": [compare_route(audit, timeline, route) for route in routes],
         "limitations": [
             "Exact timestamp disagreement can be one delayed broadcast update, not a different physical throw.",
@@ -90,9 +94,15 @@ def main():
         ],
     }
     args.output.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({"exact_matches": result["exact_colour_time_matches"],
-                      "counter_only": len(result["counter_only"]),
-                      "timeline_only": len(result["timeline_only"])}))
+    print(
+        json.dumps(
+            {
+                "exact_matches": result["exact_colour_time_matches"],
+                "counter_only": len(result["counter_only"]),
+                "timeline_only": len(result["timeline_only"]),
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

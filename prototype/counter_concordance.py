@@ -8,7 +8,8 @@ def maximum_matches(candidates, counter_events, *, require_colour=False):
     options = []
     for candidate in candidates:
         neighbours = [
-            index for index, reference in enumerate(counter_events)
+            index
+            for index, reference in enumerate(counter_events)
             if reference["delivery_interval_s"][0]
             <= candidate["crossing_time_s"]
             <= reference["delivery_interval_s"][1]
@@ -55,12 +56,16 @@ def concordance(candidates, counter_events):
         "colour_match_count": len(colour),
         "temporal_matches": temporal,
         "colour_matches": colour,
-        "counter_unmatched_temporally": [row["id"] for row in counter_events
-                                         if row["id"] not in temporal_refs],
-        "candidate_unmatched_temporally": [row["id"] for row in candidates
-                                           if row["id"] not in temporal_candidates],
-        "counter_unmatched_with_colour": [row["id"] for row in counter_events
-                                          if row["id"] not in colour_refs],
-        "candidate_unmatched_with_colour": [row["id"] for row in candidates
-                                            if row["id"] not in colour_candidates],
+        "counter_unmatched_temporally": [
+            row["id"] for row in counter_events if row["id"] not in temporal_refs
+        ],
+        "candidate_unmatched_temporally": [
+            row["id"] for row in candidates if row["id"] not in temporal_candidates
+        ],
+        "counter_unmatched_with_colour": [
+            row["id"] for row in counter_events if row["id"] not in colour_refs
+        ],
+        "candidate_unmatched_with_colour": [
+            row["id"] for row in candidates if row["id"] not in colour_candidates
+        ],
     }

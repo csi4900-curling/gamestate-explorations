@@ -8,9 +8,16 @@ import cv2
 import numpy as np
 
 
-def logo_colour_signature(frame, center_px, outer_axes_px, *, inner_ratio=8,
-                          min_red_pixels=8, min_blue_pixels=20,
-                          min_axis_separation_px=3):
+def logo_colour_signature(
+    frame,
+    center_px,
+    outer_axes_px,
+    *,
+    inner_ratio=8,
+    min_red_pixels=8,
+    min_blue_pixels=20,
+    min_axis_separation_px=3,
+):
     """Return red/blue ordering inside the painted button, or ``None``.
 
     ``outer_axes_px`` are the house's horizontal and vertical *radii* in the
@@ -28,20 +35,19 @@ def logo_colour_signature(frame, center_px, outer_axes_px, *, inner_ratio=8,
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
     hue, saturation, value = cv2.split(hsv)
     ys, xs = np.ogrid[:360, :640]
-    inner = (((xs - cx) / (rx / inner_ratio)) ** 2
-             + ((ys - cy) / (ry / inner_ratio)) ** 2) < 1
-    red = (inner & (((hue < 10) | (hue > 170))
-                    & (saturation > 55) & (value > 60)))
-    blue = (inner & (hue > 95) & (hue < 135)
-            & (saturation > 45) & (value > 60))
+    inner = (((xs - cx) / (rx / inner_ratio)) ** 2 + ((ys - cy) / (ry / inner_ratio)) ** 2) < 1
+    red = inner & (((hue < 10) | (hue > 170)) & (saturation > 55) & (value > 60))
+    blue = inner & (hue > 95) & (hue < 135) & (saturation > 45) & (value > 60)
     red_y, red_x = np.where(red)
     blue_y, blue_x = np.where(blue)
     if len(red_x) < min_red_pixels or len(blue_x) < min_blue_pixels:
         return None
     red_lateral_px = float(red_x.mean() - cx)
     red_minus_blue_vertical_px = float(red_y.mean() - blue_y.mean())
-    if (abs(red_lateral_px) < min_axis_separation_px or
-            abs(red_minus_blue_vertical_px) < min_axis_separation_px):
+    if (
+        abs(red_lateral_px) < min_axis_separation_px
+        or abs(red_minus_blue_vertical_px) < min_axis_separation_px
+    ):
         return None
     return {
         "red_lateral_sign": 1 if red_lateral_px > 0 else -1,
@@ -59,8 +65,7 @@ def relative_view_rotation(first, second):
     if first is None or second is None:
         return None
     lateral = first["red_lateral_sign"] * second["red_lateral_sign"]
-    vertical = (first["red_minus_blue_vertical_sign"]
-                * second["red_minus_blue_vertical_sign"])
+    vertical = first["red_minus_blue_vertical_sign"] * second["red_minus_blue_vertical_sign"]
     if lateral == vertical == 1:
         return 0
     if lateral == vertical == -1:

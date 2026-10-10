@@ -35,56 +35,58 @@ def digest(path):
 def main():
     if OUT.exists():
         raise ValueError("Episode evidence handoff already exists")
-    episodes, states, scores = (json.loads(path.read_text()) for path in (
-        EPISODES, STATES, SCORES))
+    episodes, states, scores = (json.loads(path.read_text()) for path in (EPISODES, STATES, SCORES))
     overlap = json.loads(OVERLAP.read_text())
     audits = {name: json.loads(path.read_text()) for name, path in AUDITS.items()}
     source_hash = digest(VIDEO)
-    if (episodes["source_sha256"] != source_hash or
-            states["source_sha256"] != source_hash or
-            scores["source_video_sha256"] != source_hash or
-            overlap["source_video_sha256"] != source_hash or
-            overlap["temporal_pair_count"] != len(overlap["rows"]) or
-            overlap["pairs_with_at_least_two_shared_samples"] != 42 or
-            any(audit["source_video_sha256"] != source_hash
-                for audit in audits.values()) or
-            states["input_sha256"]["episodes"] != digest(EPISODES)):
+    if (
+        episodes["source_sha256"] != source_hash
+        or states["source_sha256"] != source_hash
+        or scores["source_video_sha256"] != source_hash
+        or overlap["source_video_sha256"] != source_hash
+        or overlap["temporal_pair_count"] != len(overlap["rows"])
+        or overlap["pairs_with_at_least_two_shared_samples"] != 42
+        or any(audit["source_video_sha256"] != source_hash for audit in audits.values())
+        or states["input_sha256"]["episodes"] != digest(EPISODES)
+    ):
         raise ValueError("Czech source or episode/state lineage differs")
-    rows, priorities = build_episode_handoff(episodes, states, scores, audits,
-                                              overlap["rows"])
-    pixel_counts = Counter(right["sampled_source_pixel_class"]
-                           for row in rows for right in row[
-                               "right_proposal_evidence"])
-    if pixel_counts != {None: 72, "person_or_equipment_pixels": 38,
-                        "moving_stone_pixels": 21}:
+    rows, priorities = build_episode_handoff(episodes, states, scores, audits, overlap["rows"])
+    pixel_counts = Counter(
+        right["sampled_source_pixel_class"]
+        for row in rows
+        for right in row["right_proposal_evidence"]
+    )
+    if pixel_counts != {None: 72, "person_or_equipment_pixels": 38, "moving_stone_pixels": 21}:
         raise ValueError("Source-pixel review coverage changed")
-    if sum(row["state_status"] == "partial_board_observed"
-           for row in rows) != 66:
+    if sum(row["state_status"] == "partial_board_observed" for row in rows) != 66:
         raise ValueError("Partial-board conservation failed")
     result = {
         "status": "lossless_czech_source_diverse_episode_state_handoff_not_event_truth",
         "source_video_sha256": source_hash,
-        "input_sha256": {"episodes": digest(EPISODES), "partial_states": digest(STATES),
-                         "patch_scores": digest(SCORES),
-                         "cross_resolution_overlap": digest(OVERLAP),
-                         **{name + "_pixel_audit": digest(path)
-                            for name, path in AUDITS.items()}},
+        "input_sha256": {
+            "episodes": digest(EPISODES),
+            "partial_states": digest(STATES),
+            "patch_scores": digest(SCORES),
+            "cross_resolution_overlap": digest(OVERLAP),
+            **{name + "_pixel_audit": digest(path) for name, path in AUDITS.items()},
+        },
         "join_code_sha256": digest(ROOT / "prototype/source_diverse_episode_handoff.py"),
         "runner_sha256": digest(Path(__file__)),
         "episode_count": len(rows),
         "left_candidate_count": episodes["original_left_candidate_count"],
         "right_proposal_count": episodes["right_proposal_count"],
-        "partial_board_count": sum(row["state_status"] ==
-                                   "partial_board_observed" for row in rows),
-        "temporal_cross_resolution_pair_count": sum(len(row[
-            "cross_resolution_candidate_pair_evidence"]) for row in rows),
+        "partial_board_count": sum(row["state_status"] == "partial_board_observed" for row in rows),
+        "temporal_cross_resolution_pair_count": sum(
+            len(row["cross_resolution_candidate_pair_evidence"]) for row in rows
+        ),
         "pairs_with_at_least_two_exact_shared_samples": sum(
-            pair["sampled_time_overlap_count"] >= 2 for row in rows for pair
-            in row["cross_resolution_candidate_pair_evidence"]),
+            pair["sampled_time_overlap_count"] >= 2
+            for row in rows
+            for pair in row["cross_resolution_candidate_pair_evidence"]
+        ),
         "reviewed_right_prefix_pixel_counts": {
             "moving_stone_pixels": pixel_counts["moving_stone_pixels"],
-            "person_or_equipment_pixels": pixel_counts[
-                "person_or_equipment_pixels"],
+            "person_or_equipment_pixels": pixel_counts["person_or_equipment_pixels"],
             "unreviewed": pixel_counts[None],
         },
         "evidence_review_priority_counts": priorities,
@@ -97,10 +99,17 @@ def main():
         ],
     }
     OUT.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"episodes": len(rows), "left": result["left_candidate_count"],
-                      "right": result["right_proposal_count"],
-                      "partial_boards": result["partial_board_count"],
-                      "priorities": priorities}))
+    print(
+        json.dumps(
+            {
+                "episodes": len(rows),
+                "left": result["left_candidate_count"],
+                "right": result["right_proposal_count"],
+                "partial_boards": result["partial_board_count"],
+                "priorities": priorities,
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

@@ -31,16 +31,18 @@ def resize_panel(frame, panel):
         raise ValueError("Expected 640x360 split-screen source frame")
     if panel not in (0, 1):
         raise ValueError("Unknown panel")
-    crop = frame[:, panel * 320:(panel + 1) * 320]
+    crop = frame[:, panel * 320 : (panel + 1) * 320]
     return cv2.resize(crop, (640, 720), interpolation=cv2.INTER_LINEAR)
 
 
-def source_pair(before_pixel, after_pixel, before_time_s, after_time_s,
-                frame_at):
+def source_pair(before_pixel, after_pixel, before_time_s, after_time_s, frame_at):
     before_panel = panel_for_pixel(before_pixel)
     if panel_for_pixel(after_pixel) != before_panel:
-        return {"status": "crosses_split_panel_boundary",
-                "camera_residual_px": None, "subpairs": []}
+        return {
+            "status": "crosses_split_panel_boundary",
+            "camera_residual_px": None,
+            "subpairs": [],
+        }
 
     def panel_frame(time_s):
         return resize_panel(frame_at(time_s), before_panel)
@@ -48,6 +50,12 @@ def source_pair(before_pixel, after_pixel, before_time_s, after_time_s,
     result = camera_relative_pair(
         panel_pixel(before_pixel, before_panel),
         panel_pixel(after_pixel, before_panel),
-        before_time_s, after_time_s, panel_frame)
-    return {**result, "panel": "left" if before_panel == 0 else "right",
-            "coordinate_frame": "640x720_upsampled_360p_split_panel_pixels"}
+        before_time_s,
+        after_time_s,
+        panel_frame,
+    )
+    return {
+        **result,
+        "panel": "left" if before_panel == 0 else "right",
+        "coordinate_frame": "640x720_upsampled_360p_split_panel_pixels",
+    }

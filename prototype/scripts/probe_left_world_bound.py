@@ -38,8 +38,7 @@ def main():
     if args.sample_period_s <= 0 or args.lookahead_s <= 0:
         parser.error("Sampling and lookahead must be positive")
     candidates = json.loads(args.candidates.read_text())
-    candidate = next((row for row in candidates["events"]
-                      if row["id"] == args.candidate_id), None)
+    candidate = next((row for row in candidates["events"] if row["id"] == args.candidate_id), None)
     if candidate is None or candidate["view_motion"] != "positive_y":
         parser.error("Candidate must exist and use the left receiving view")
     cfg_path = ROOT / "prototype/vision/annotations/calibration.json"
@@ -52,19 +51,22 @@ def main():
     wide_view["world_bounds"][1] = args.extended_min_y_m
     cal = ViewCalibrator(base_view, ROOT / "prototype/vision/frames")
     cal.H = np.array(json.loads(rect_path.read_text())["left"]["refined_H"])
-    capture = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not capture.isOpened():
         parser.error("Cannot open video")
     fps = capture.get(cv2.CAP_PROP_FPS)
-    times = sample_times(candidate["crossing_time_s"],
-                         candidates["source_interval_s"][1],
-                         args.lookahead_s, args.sample_period_s)
+    times = sample_times(
+        candidate["crossing_time_s"],
+        candidates["source_interval_s"][1],
+        args.lookahead_s,
+        args.sample_period_s,
+    )
     samples = {name: [] for name in ("base", "extended")}
     try:
         for source_time_s in times:
-            capture.set(cv2.CAP_PROP_POS_FRAMES,
-                        round((source_time_s - args.source_offset_s) * fps))
+            capture.set(
+                cv2.CAP_PROP_POS_FRAMES, round((source_time_s - args.source_offset_s) * fps)
+            )
             ok, frame = capture.read()
             if not ok:
                 raise RuntimeError(f"Cannot decode source time {source_time_s}")
@@ -73,39 +75,56 @@ def main():
             if H is not None:
                 transform = np.linalg.inv(H) @ cal.H
                 background = cv2.warpPerspective(
-                    cal.reference, transform, (frame.shape[1], frame.shape[0]))
-                prior = transported_reference_camera(
-                    cal.H, H, cal.view["region"])
+                    cal.reference, transform, (frame.shape[1], frame.shape[0])
+                )
+                prior = transported_reference_camera(cal.H, H, cal.view["region"])
             for name, view in (("base", base_view), ("extended", wide_view)):
-                found, detail = detect_and_localize(
-                    frame, H, view, background, prior)
+                found, detail = detect_and_localize(frame, H, view, background, prior)
                 colour = candidate["colour"]
-                proposals = [{"colour": item["colour"],
-                              "pixel_center": item["pixel_center"],
-                              "ground_position_m": item["ground_position_m"]}
-                             for item in found]
-                samples[name].append({
-                    "source_time_s": source_time_s,
-                    "registration_status": registration["status"],
-                    "views": {"left": {"proposals": proposals}},
-                    "same_colour_proposal_count": sum(
-                        item["colour"] == colour for item in found),
-                    "same_colour_rejection_reasons": dict(Counter(
-                        item["reason"] for item in detail.get("rejected", [])
-                        if item["colour"] == colour)),
-                })
+                proposals = [
+                    {
+                        "colour": item["colour"],
+                        "pixel_center": item["pixel_center"],
+                        "ground_position_m": item["ground_position_m"],
+                    }
+                    for item in found
+                ]
+                samples[name].append(
+                    {
+                        "source_time_s": source_time_s,
+                        "registration_status": registration["status"],
+                        "views": {"left": {"proposals": proposals}},
+                        "same_colour_proposal_count": sum(
+                            item["colour"] == colour for item in found
+                        ),
+                        "same_colour_rejection_reasons": dict(
+                            Counter(
+                                item["reason"]
+                                for item in detail.get("rejected", [])
+                                if item["colour"] == colour
+                            )
+                        ),
+                    }
+                )
     finally:
         capture.release()
     cases = {}
     for name, rows in samples.items():
         selection = select_far_entry_motion_path(
-            rows, candidate["colour"], view="left",
+            rows,
+            candidate["colour"],
+            view="left",
             max_gap_s=args.sample_period_s + 0.1,
-            entry_y_threshold_m=-4.5, forward_direction=1,
-            min_samples=4, max_forward_speed_change_m_s=2.0)
-        cases[name] = {"world_bounds_m": (base_view if name == "base" else
-                                           wide_view)["world_bounds"],
-                       "selection": selection, "samples": rows}
+            entry_y_threshold_m=-4.5,
+            forward_direction=1,
+            min_samples=4,
+            max_forward_speed_change_m_s=2.0,
+        )
+        cases[name] = {
+            "world_bounds_m": (base_view if name == "base" else wide_view)["world_bounds"],
+            "selection": selection,
+            "samples": rows,
+        }
     output = {
         "status": "postscore_exposed_candidate_world_bound_diagnostic_not_validation",
         "candidate_id": args.candidate_id,
@@ -131,8 +150,11 @@ def main():
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(output, indent=2) + "\n")
     for name, case in cases.items():
-        print(name, case["selection"]["status"],
-              sum(row["same_colour_proposal_count"] for row in case["samples"]))
+        print(
+            name,
+            case["selection"]["status"],
+            sum(row["same_colour_proposal_count"] for row in case["samples"]),
+        )
 
 
 if __name__ == "__main__":

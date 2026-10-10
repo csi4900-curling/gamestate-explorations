@@ -32,10 +32,10 @@ def main():
     args = parser.parse_args()
     if args.output.exists():
         parser.error("Alignment audit already exists")
-    full = cv2.VideoCapture(str(args.full_video), cv2.CAP_FFMPEG,
-                            [cv2.CAP_PROP_N_THREADS, 1])
-    interval = cv2.VideoCapture(str(args.interval_video), cv2.CAP_FFMPEG,
-                                [cv2.CAP_PROP_N_THREADS, 1])
+    full = cv2.VideoCapture(str(args.full_video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
+    interval = cv2.VideoCapture(
+        str(args.interval_video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1]
+    )
     if not full.isOpened() or not interval.isOpened():
         parser.error("Cannot open source videos")
     rows = []
@@ -45,37 +45,43 @@ def main():
             target = cv2.cvtColor(frame_at(full, source_time), cv2.COLOR_BGR2GRAY)
             differences = []
             for delta in offsets:
-                comparison = frame_at(interval,
-                                      source_time - args.source_offset + delta)
-                comparison = cv2.resize(comparison,
-                                        (target.shape[1], target.shape[0]),
-                                        interpolation=cv2.INTER_AREA)
+                comparison = frame_at(interval, source_time - args.source_offset + delta)
+                comparison = cv2.resize(
+                    comparison, (target.shape[1], target.shape[0]), interpolation=cv2.INTER_AREA
+                )
                 comparison = cv2.cvtColor(comparison, cv2.COLOR_BGR2GRAY)
                 differences.append(float(np.mean(cv2.absdiff(target, comparison))))
             best = offsets[int(np.argmin(differences))]
-            rows.append({"source_time_s": source_time,
-                         "best_interval_time_adjustment_s": best,
-                         "mean_absolute_grayscale_difference_by_adjustment":
-                             dict(zip(map(str, offsets), differences))})
+            rows.append(
+                {
+                    "source_time_s": source_time,
+                    "best_interval_time_adjustment_s": best,
+                    "mean_absolute_grayscale_difference_by_adjustment": dict(
+                        zip(map(str, offsets), differences)
+                    ),
+                }
+            )
     finally:
         full.release()
         interval.release()
-    result = {"status": "source_time_alignment_diagnostic",
-              "full_video_sha256": file_sha256(args.full_video),
-              "interval_video_sha256": file_sha256(args.interval_video),
-              "source_offset_s": args.source_offset,
-              "rows": rows,
-              "all_best_at_zero_adjustment": all(
-                  row["best_interval_time_adjustment_s"] == 0 for row in rows),
-              "runner_sha256": file_sha256(__file__),
-              "limitations": [
-                  "This compares only sampled frames, not every frame or all time-code metadata.",
-                  "Compression and resizing differences remain in the mean absolute image error.",
-              ]}
+    result = {
+        "status": "source_time_alignment_diagnostic",
+        "full_video_sha256": file_sha256(args.full_video),
+        "interval_video_sha256": file_sha256(args.interval_video),
+        "source_offset_s": args.source_offset,
+        "rows": rows,
+        "all_best_at_zero_adjustment": all(
+            row["best_interval_time_adjustment_s"] == 0 for row in rows
+        ),
+        "runner_sha256": file_sha256(__file__),
+        "limitations": [
+            "This compares only sampled frames, not every frame or all time-code metadata.",
+            "Compression and resizing differences remain in the mean absolute image error.",
+        ],
+    }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print([(row["source_time_s"], row["best_interval_time_adjustment_s"])
-           for row in rows])
+    print([(row["source_time_s"], row["best_interval_time_adjustment_s"]) for row in rows])
     if not result["all_best_at_zero_adjustment"]:
         raise SystemExit("Proposed source offset did not align at all samples")
 

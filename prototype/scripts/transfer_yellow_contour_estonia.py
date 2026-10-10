@@ -15,7 +15,10 @@ from scripts.probe_latvia_1080p_body_paths import body_template, frame_at, link_
 
 VIDEO = ROOT / "validation/throw-event-benchmark/canada-estonia-2024/source-1080p-1650-2760.mp4"
 LATVIA = ROOT / "validation/throw-event-benchmark/canada-latvia-2024/source-1080p-1650-2760.mp4"
-OUT = ROOT / "validation/throw-event-benchmark/canada-estonia-2024/yellow-contour-1720-1800-first-transfer.json"
+OUT = (
+    ROOT
+    / "validation/throw-event-benchmark/canada-estonia-2024/yellow-contour-1720-1800-first-transfer.json"
+)
 SOURCE_SHA256 = "eaa88f73b56ea982808468a642ad5481428e758881f41cfaf812be58f949a533"
 START_S, STOP_S, OFFSET_S = 1720, 1800, 1650
 
@@ -23,7 +26,7 @@ START_S, STOP_S, OFFSET_S = 1720, 1800, 1650
 def digest(path):
     h = sha256()
     with path.open("rb") as stream:
-        for chunk in iter(lambda: stream.read(1024*1024), b""):
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
             h.update(chunk)
     return h.hexdigest()
 
@@ -36,29 +39,35 @@ def main():
     reserved = json.loads((ROOT / "validation/unseen-end/reservation.json").read_text())
     if SOURCE_SHA256 == reserved["source_sha256"]:
         raise ValueError("Reserved source cannot be used for development")
-    source = cv2.VideoCapture(str(LATVIA), cv2.CAP_FFMPEG,
-                              [cv2.CAP_PROP_N_THREADS, 1])
-    cap = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
-    if not source.isOpened() or not cap.isOpened() or \
-            source.get(cv2.CAP_PROP_FPS) != 30 or cap.get(cv2.CAP_PROP_FPS) != 30:
+    source = cv2.VideoCapture(str(LATVIA), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
+    if (
+        not source.isOpened()
+        or not cap.isOpened()
+        or source.get(cv2.CAP_PROP_FPS) != 30
+        or cap.get(cv2.CAP_PROP_FPS) != 30
+    ):
         raise RuntimeError("Cannot open expected 30-fps clips")
     body_rows, contour_rows = [], []
     try:
-        template = body_template(frame_at(source, 2310-1650))
-        cap.set(cv2.CAP_PROP_POS_FRAMES, (START_S-OFFSET_S)*30)
+        template = body_template(frame_at(source, 2310 - 1650))
+        cap.set(cv2.CAP_PROP_POS_FRAMES, (START_S - OFFSET_S) * 30)
         for t in range(START_S, STOP_S):
             ok, frame = cap.read()
             if not ok or frame.shape[:2] != (1080, 1920):
                 raise RuntimeError(f"Could not decode {t}")
             body = match_low_floor(frame, template, ROIS["frozen"])
-            body_rows.append({"time_s": t,
-                              "raw_body_count": len(body),
-                              "body_proposals": [p for p in body
-                                                 if p["matching_colour_handle_supported"]]})
-            contour_rows.append({"source_time_s": t,
-                                 "raw_yellow_handle_contours": yellow_contours(frame)})
-            if t+1 < STOP_S:
+            body_rows.append(
+                {
+                    "time_s": t,
+                    "raw_body_count": len(body),
+                    "body_proposals": [p for p in body if p["matching_colour_handle_supported"]],
+                }
+            )
+            contour_rows.append(
+                {"source_time_s": t, "raw_yellow_handle_contours": yellow_contours(frame)}
+            )
+            if t + 1 < STOP_S:
                 for _ in range(29):
                     if not cap.grab():
                         raise RuntimeError(f"Could not advance from {t}")
@@ -96,13 +105,24 @@ def main():
         ],
     }
     OUT.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({"body": result["body_raw_proposal_count"],
-                      "handle": result["body_handle_supported_count"],
-                      "contours": result["raw_contour_count"],
-                      "upward_seeds": len(seeds),
-                      "joined": [(p["seed_interval_s"],p["points"][-1]["time_s"],
-                                  p["image_motion_interpretation"]["visual_stop_bracket_s"])
-                                 for p in joined]}))
+    print(
+        json.dumps(
+            {
+                "body": result["body_raw_proposal_count"],
+                "handle": result["body_handle_supported_count"],
+                "contours": result["raw_contour_count"],
+                "upward_seeds": len(seeds),
+                "joined": [
+                    (
+                        p["seed_interval_s"],
+                        p["points"][-1]["time_s"],
+                        p["image_motion_interpretation"]["visual_stop_bracket_s"],
+                    )
+                    for p in joined
+                ],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

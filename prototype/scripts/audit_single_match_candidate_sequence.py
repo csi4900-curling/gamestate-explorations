@@ -49,8 +49,9 @@ def main():
     by_counter = {row["counter_id"]: row for row in candidates if row["counter_id"]}
     if len(by_counter) != sum(bool(row["counter_id"]) for row in candidates):
         parser.error("Several candidates link to one counter")
-    shot_to_end = {shot["official_shot_id"]: end["end"]
-                   for end in official["ends"] for shot in end["shots"]}
+    shot_to_end = {
+        shot["official_shot_id"]: end["end"] for end in official["ends"] for shot in end["shots"]
+    }
     fixed_by_end = defaultdict(dict)
     anchor_times = defaultdict(list)
     for row in transfer["counter_alignment_rows"]:
@@ -66,8 +67,10 @@ def main():
     ends = [end["end"] for end in official["ends"]]
     if set(anchor_times) != set(ends):
         parser.error("Every end needs a clean candidate anchor")
-    boundaries = [(max(anchor_times[left]) + min(anchor_times[right])) / 2
-                  for left, right in zip(ends, ends[1:])]
+    boundaries = [
+        (max(anchor_times[left]) + min(anchor_times[right])) / 2
+        for left, right in zip(ends, ends[1:])
+    ]
     if any(right <= left for left, right in zip(boundaries, boundaries[1:])):
         parser.error("Inferred end partitions overlap or reverse")
     grouped = defaultdict(list)
@@ -77,24 +80,32 @@ def main():
     end_rows = []
     for end in official["ends"]:
         number = end["end"]
-        ordered = sorted(grouped[number],
-                         key=lambda row: (row["observation_anchor_s"], row["candidate_id"]))
+        ordered = sorted(
+            grouped[number], key=lambda row: (row["observation_anchor_s"], row["candidate_id"])
+        )
         if not set(fixed_by_end[number]).issubset({row["candidate_id"] for row in ordered}):
             parser.error("Fixed counter link fell in a different inferred end")
         result = align_official_sequence(
-            ordered, end["shots"], official["team_handle_colours"], fixed_by_end[number])
-        end_rows.append({"end": number,
-                         "candidate_count": len(ordered),
-                         "official_shot_count": len(end["shots"]),
-                         "clean_fixed_link_count": len(fixed_by_end[number]),
-                         "minimum_edit_cost": result["minimum_cost"],
-                         "equally_optimal_alignment_count": result["optimal_path_count"],
-                         "candidate_status_counts": dict(Counter(
-                             row["status"] for row in result["candidate_rows"])),
-                         "official_status_counts": dict(Counter(
-                             row["status"] for row in result["official_rows"])),
-                         "candidate_rows": result["candidate_rows"],
-                         "official_rows": result["official_rows"]})
+            ordered, end["shots"], official["team_handle_colours"], fixed_by_end[number]
+        )
+        end_rows.append(
+            {
+                "end": number,
+                "candidate_count": len(ordered),
+                "official_shot_count": len(end["shots"]),
+                "clean_fixed_link_count": len(fixed_by_end[number]),
+                "minimum_edit_cost": result["minimum_cost"],
+                "equally_optimal_alignment_count": result["optimal_path_count"],
+                "candidate_status_counts": dict(
+                    Counter(row["status"] for row in result["candidate_rows"])
+                ),
+                "official_status_counts": dict(
+                    Counter(row["status"] for row in result["official_rows"])
+                ),
+                "candidate_rows": result["candidate_rows"],
+                "official_rows": result["official_rows"],
+            }
+        )
     output = {
         "status": "post_transfer_official_sequence_diagnostic_not_video_event_f1",
         "source_sha256": source_hash,
@@ -107,12 +118,22 @@ def main():
         "candidate_count": len(candidates),
         "official_shot_count": official["official_shot_count"],
         "clean_fixed_link_count": sum(len(rows) for rows in fixed_by_end.values()),
-        "candidate_status_counts": dict(Counter(
-            status for end in end_rows for row in end["candidate_rows"]
-            for status in [row["status"]])),
-        "official_status_counts": dict(Counter(
-            status for end in end_rows for row in end["official_rows"]
-            for status in [row["status"]])),
+        "candidate_status_counts": dict(
+            Counter(
+                status
+                for end in end_rows
+                for row in end["candidate_rows"]
+                for status in [row["status"]]
+            )
+        ),
+        "official_status_counts": dict(
+            Counter(
+                status
+                for end in end_rows
+                for row in end["official_rows"]
+                for status in [row["status"]]
+            )
+        ),
         "ends": end_rows,
         "limitations": [
             "Official shot order and colour are used only for diagnosis; this is not a deployable detector.",

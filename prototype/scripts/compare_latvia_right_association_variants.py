@@ -40,8 +40,10 @@ def compare(left, right):
     for index, first in enumerate(left):
         costs[index, n_right + index] = 1000
         for other, second in enumerate(right):
-            if (first["colour_claim"] != second["colour_claim"] or
-                    first["direction"] != second["direction"]):
+            if (
+                first["colour_claim"] != second["colour_claim"]
+                or first["direction"] != second["direction"]
+            ):
                 continue
             delta = abs(proposal_time(first) - proposal_time(second))
             if delta <= WINDOW_S:
@@ -53,15 +55,17 @@ def compare(left, right):
         if other >= n_right or costs[index, other] >= 1000:
             continue
         first, second = left[index], right[other]
-        pairs.append({
-            "left_raw_track_id": first["raw_track_id"],
-            "right_raw_track_id": second["raw_track_id"],
-            "left_time_s": proposal_time(first),
-            "right_time_s": proposal_time(second),
-            "absolute_time_delta_s": abs(proposal_time(first) - proposal_time(second)),
-            "colour_claim": first["colour_claim"],
-            "direction": first["direction"],
-        })
+        pairs.append(
+            {
+                "left_raw_track_id": first["raw_track_id"],
+                "right_raw_track_id": second["raw_track_id"],
+                "left_time_s": proposal_time(first),
+                "right_time_s": proposal_time(second),
+                "absolute_time_delta_s": abs(proposal_time(first) - proposal_time(second)),
+                "colour_claim": first["colour_claim"],
+                "direction": first["direction"],
+            }
+        )
         paired_left.add(index)
         paired_right.add(other)
     pairs.sort(key=lambda row: row["left_time_s"])
@@ -69,16 +73,26 @@ def compare(left, right):
         "left_proposal_count": n_left,
         "right_proposal_count": n_right,
         "temporal_pair_count": len(pairs),
-        "left_unpaired": [{"raw_track_id": row["raw_track_id"],
-                           "time_s": proposal_time(row),
-                           "colour_claim": row["colour_claim"],
-                           "direction": row["direction"]}
-                          for index, row in enumerate(left) if index not in paired_left],
-        "right_unpaired": [{"raw_track_id": row["raw_track_id"],
-                            "time_s": proposal_time(row),
-                            "colour_claim": row["colour_claim"],
-                            "direction": row["direction"]}
-                           for index, row in enumerate(right) if index not in paired_right],
+        "left_unpaired": [
+            {
+                "raw_track_id": row["raw_track_id"],
+                "time_s": proposal_time(row),
+                "colour_claim": row["colour_claim"],
+                "direction": row["direction"],
+            }
+            for index, row in enumerate(left)
+            if index not in paired_left
+        ],
+        "right_unpaired": [
+            {
+                "raw_track_id": row["raw_track_id"],
+                "time_s": proposal_time(row),
+                "colour_claim": row["colour_claim"],
+                "direction": row["direction"],
+            }
+            for index, row in enumerate(right)
+            if index not in paired_right
+        ],
         "pairs": pairs,
     }
 
@@ -88,15 +102,16 @@ def main():
         raise ValueError("Variant comparison already exists")
     scans = {name: json.loads(path.read_text()) for name, path in SCANS.items()}
     source_hash = digest(VIDEO)
-    if any(scan["source_sha256"] != source_hash or scan[
-            "source_interval_s"] != [0, 7058] for scan in scans.values()):
+    if any(
+        scan["source_sha256"] != source_hash or scan["source_interval_s"] != [0, 7058]
+        for scan in scans.values()
+    ):
         raise ValueError("Variant scans use different source bytes or intervals")
-    proposals = {name: scan["directional_review_proposals"]
-                 for name, scan in scans.items()}
+    proposals = {name: scan["directional_review_proposals"] for name, scan in scans.items()}
     for name, scan in scans.items():
-        if (len(proposals[name]) != scan["directional_proposal_count"] or
-                len({row["raw_track_id"] for row in proposals[name]}) !=
-                len(proposals[name])):
+        if len(proposals[name]) != scan["directional_proposal_count"] or len(
+            {row["raw_track_id"] for row in proposals[name]}
+        ) != len(proposals[name]):
             raise ValueError(f"Duplicate or missing right proposals in {name}")
     result = {
         "status": "development_temporal_proposal_inventory_comparison_not_throw_truth",
@@ -105,17 +120,23 @@ def main():
         "runner_sha256": digest(Path(__file__)),
         "comparison_rule": "global one-to-one maximum-cardinality match, then minimum passage-time difference, with identical colour/direction and <=8 s difference",
         "window_s": WINDOW_S,
-        "scan_counts": {name: {
-            "raw_tracks": scan["raw_track_count"],
-            "review_proposals": scan["directional_proposal_count"],
-        } for name, scan in scans.items()},
+        "scan_counts": {
+            name: {
+                "raw_tracks": scan["raw_track_count"],
+                "review_proposals": scan["directional_proposal_count"],
+            }
+            for name, scan in scans.items()
+        },
         "comparisons": {
-            "one_vs_greedy_two": compare(proposals["one_second_greedy"],
-                                         proposals["two_second_greedy"]),
-            "one_vs_global_two": compare(proposals["one_second_greedy"],
-                                         proposals["two_second_global"]),
-            "greedy_two_vs_global_two": compare(proposals["two_second_greedy"],
-                                                 proposals["two_second_global"]),
+            "one_vs_greedy_two": compare(
+                proposals["one_second_greedy"], proposals["two_second_greedy"]
+            ),
+            "one_vs_global_two": compare(
+                proposals["one_second_greedy"], proposals["two_second_global"]
+            ),
+            "greedy_two_vs_global_two": compare(
+                proposals["two_second_greedy"], proposals["two_second_global"]
+            ),
         },
         "limitations": [
             "A temporal pair is not proof of same-stone identity or a physical delivery.",
@@ -125,11 +146,18 @@ def main():
         ],
     }
     OUT.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({key: {
-        "paired": value["temporal_pair_count"],
-        "left_unpaired": len(value["left_unpaired"]),
-        "right_unpaired": len(value["right_unpaired"])}
-        for key, value in result["comparisons"].items()}))
+    print(
+        json.dumps(
+            {
+                key: {
+                    "paired": value["temporal_pair_count"],
+                    "left_unpaired": len(value["left_unpaired"]),
+                    "right_unpaired": len(value["right_unpaired"]),
+                }
+                for key, value in result["comparisons"].items()
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

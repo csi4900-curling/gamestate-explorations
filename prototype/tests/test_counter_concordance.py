@@ -9,10 +9,8 @@ from counter_concordance import concordance
 
 def test_overlapping_proxy_windows_cannot_both_claim_one_visual_track():
     refs = [
-        {"id": "C1", "colour": "red", "counter_update_s": 20,
-         "delivery_interval_s": [10, 30]},
-        {"id": "C2", "colour": "yellow", "counter_update_s": 25,
-         "delivery_interval_s": [15, 35]},
+        {"id": "C1", "colour": "red", "counter_update_s": 20, "delivery_interval_s": [10, 30]},
+        {"id": "C2", "colour": "yellow", "counter_update_s": 25, "delivery_interval_s": [15, 35]},
     ]
     candidates = [
         {"id": "Y", "colour": "yellow", "crossing_time_s": 22},

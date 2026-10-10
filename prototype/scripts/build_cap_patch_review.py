@@ -23,11 +23,11 @@ def crop_with_context(frame, bbox):
     cx, cy = x + w / 2, y + h / 2 + side * 0.13
     x0, y0 = round(cx - side / 2), round(cy - side / 2)
     pad = side + 1
-    padded = cv2.copyMakeBorder(image, pad, pad, pad, pad, cv2.BORDER_CONSTANT,
-                                value=(70, 70, 70))
-    crop = padded[y0 + pad:y0 + pad + side, x0 + pad:x0 + pad + side].copy()
-    cv2.rectangle(crop, (round(x - x0), round(y - y0)),
-                  (round(x + w - x0), round(y + h - y0)), (0, 255, 0), 2)
+    padded = cv2.copyMakeBorder(image, pad, pad, pad, pad, cv2.BORDER_CONSTANT, value=(70, 70, 70))
+    crop = padded[y0 + pad : y0 + pad + side, x0 + pad : x0 + pad + side].copy()
+    cv2.rectangle(
+        crop, (round(x - x0), round(y - y0)), (round(x + w - x0), round(y + h - y0)), (0, 255, 0), 2
+    )
     return cv2.resize(crop, (180, 180), interpolation=cv2.INTER_AREA), [x0, y0, side, side]
 
 
@@ -40,8 +40,11 @@ def main():
         parser.error("Output exists; keep review packets immutable")
     selection = json.loads(args.selection.read_text())
     args.output.mkdir(parents=True)
-    manifest = {"status": "unlabelled_development_cap_patch_review",
-                "selection_sha256": file_sha256(args.selection), "samples": []}
+    manifest = {
+        "status": "unlabelled_development_cap_patch_review",
+        "selection_sha256": file_sha256(args.selection),
+        "samples": [],
+    }
     for source in selection["sources"]:
         video = ROOT / source["video"]
         raw = ROOT / source["raw"]
@@ -53,8 +56,7 @@ def main():
         if digest == reserved["source_sha256"]:
             raise ValueError("Reserved independent source cannot be used for development")
         candidates = {row["id"]: row for row in data["motion_candidates"]}
-        capture = cv2.VideoCapture(str(video), cv2.CAP_FFMPEG,
-                                   [cv2.CAP_PROP_N_THREADS, 1])
+        capture = cv2.VideoCapture(str(video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
         fps = capture.get(cv2.CAP_PROP_FPS)
         if fps <= 0:
             raise ValueError(f"Unreadable video: {video}")
@@ -70,26 +72,36 @@ def main():
                     raise RuntimeError(f"Decode failed at {video}:{t}")
                 tile, crop_bbox = crop_with_context(frame, point["bbox"])
                 sample_id = f"{source['id']}-{track_id}-{len(tiles) % 3 + 1}"
-                cv2.putText(tile, sample_id, (4, 16), cv2.FONT_HERSHEY_SIMPLEX,
-                            0.35, (0, 0, 0), 2)
-                cv2.putText(tile, sample_id, (4, 16), cv2.FONT_HERSHEY_SIMPLEX,
-                            0.35, (255, 255, 255), 1)
+                cv2.putText(tile, sample_id, (4, 16), cv2.FONT_HERSHEY_SIMPLEX, 0.35, (0, 0, 0), 2)
+                cv2.putText(
+                    tile, sample_id, (4, 16), cv2.FONT_HERSHEY_SIMPLEX, 0.35, (255, 255, 255), 1
+                )
                 tiles.append(tile)
-                manifest["samples"].append({"id": sample_id, "source_id": source["id"],
-                                            "video": source["video"], "video_sha256": digest,
-                                            "raw": source["raw"], "raw_sha256": file_sha256(raw),
-                                            "track_id": track_id, "time_s": t,
-                                            "cap_bbox": point["bbox"], "crop_bbox": crop_bbox,
-                                            "review_label": None})
+                manifest["samples"].append(
+                    {
+                        "id": sample_id,
+                        "source_id": source["id"],
+                        "video": source["video"],
+                        "video_sha256": digest,
+                        "raw": source["raw"],
+                        "raw_sha256": file_sha256(raw),
+                        "track_id": track_id,
+                        "time_s": t,
+                        "cap_bbox": point["bbox"],
+                        "crop_bbox": crop_bbox,
+                        "review_label": None,
+                    }
+                )
         capture.release()
         rows = (len(tiles) + 5) // 6
         sheet = cv2.UMat(rows * 180, 6 * 180, cv2.CV_8UC3).get()
         sheet[:] = (60, 60, 60)
         for i, tile in enumerate(tiles):
             r, c = divmod(i, 6)
-            sheet[r * 180:(r + 1) * 180, c * 180:(c + 1) * 180] = tile
-        cv2.imwrite(str(args.output / f"{source['id']}-sheet.jpg"), sheet,
-                    [cv2.IMWRITE_JPEG_QUALITY, 95])
+            sheet[r * 180 : (r + 1) * 180, c * 180 : (c + 1) * 180] = tile
+        cv2.imwrite(
+            str(args.output / f"{source['id']}-sheet.jpg"), sheet, [cv2.IMWRITE_JPEG_QUALITY, 95]
+        )
     (args.output / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
     print(json.dumps({"samples": len(manifest["samples"]), "output": str(args.output)}))
 

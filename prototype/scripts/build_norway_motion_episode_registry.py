@@ -52,8 +52,17 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(result, indent=2) + "\n")
-    print({key: result[key] for key in
-           ("candidate_count", "episode_count", "shared_episode_count", "candidate_motion_status_counts")})
+    print(
+        {
+            key: result[key]
+            for key in (
+                "candidate_count",
+                "episode_count",
+                "shared_episode_count",
+                "candidate_motion_status_counts",
+            )
+        }
+    )
 
 
 if __name__ == "__main__":

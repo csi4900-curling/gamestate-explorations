@@ -44,8 +44,7 @@ def export_observations(cap, fps, duration, union, timeline):
         raise ValueError("Candidate and timeline sources differ")
     runs = {row["id"]: row for row in timeline["supported_runs"]}
     candidates = union["candidates"]
-    if any(a["source_time_s"] > b["source_time_s"] for a, b in
-           zip(candidates, candidates[1:])):
+    if any(a["source_time_s"] > b["source_time_s"] for a, b in zip(candidates, candidates[1:])):
         raise ValueError("Candidate ledger is out of source order")
     rows = []
     for index, candidate in enumerate(candidates):
@@ -57,39 +56,49 @@ def export_observations(cap, fps, duration, union, timeline):
         t = candidate["source_time_s"]
         if not run["interval_s"][0] <= t < run["interval_s"][1]:
             raise ValueError("Left candidate outside its routed interval")
-        next_time = (candidates[index + 1]["source_time_s"]
-                     if index + 1 < len(candidates) else duration)
+        next_time = (
+            candidates[index + 1]["source_time_s"] if index + 1 < len(candidates) else duration
+        )
         status = guard_tail(candidate, next_time, run["interval_s"][1], duration)
         observed = candidate.get("observed_motion_interval_s")
-        base = {"candidate_id": candidate["candidate_id"],
-                "source_time_s": t,
-                "observed_motion_interval_s": observed,
-                "next_candidate_time_s": next_time,
-                "routed_run_end_s": run["interval_s"][1],
-                "coordinate_frame": "normalized_640x360_source_right_camera_pixels_not_metric",
-                "complete_board_verified": False,
-                "physical_settle_verified": False,
-                "persistent_stone_identity_verified": False,
-                "simulation_ready": False}
+        base = {
+            "candidate_id": candidate["candidate_id"],
+            "source_time_s": t,
+            "observed_motion_interval_s": observed,
+            "next_candidate_time_s": next_time,
+            "routed_run_end_s": run["interval_s"][1],
+            "coordinate_frame": "normalized_640x360_source_right_camera_pixels_not_metric",
+            "complete_board_verified": False,
+            "physical_settle_verified": False,
+            "persistent_stone_identity_verified": False,
+            "simulation_ready": False,
+        }
         if status is not None:
-            rows.append({**base, "observation_status": status,
-                         "anchor_stability_agreement": None,
-                         "sample_frames": [], "stable_cap_proposals": []})
+            rows.append(
+                {
+                    **base,
+                    "observation_status": status,
+                    "anchor_stability_agreement": None,
+                    "sample_frames": [],
+                    "stable_cap_proposals": [],
+                }
+            )
             continue
         anchors = sorted({round(x, 3) for x in (observed[0], t, observed[1])})
-        samples = [observe_anchor(cap, fps, duration, anchor)
-                   for anchor in anchors]
+        samples = [observe_anchor(cap, fps, duration, anchor) for anchor in anchors]
         central = next(item for item in samples if item["anchor_time_s"] == t)
         agreement = anchors_agree(samples, central)
-        status = (central["observation_status"] if agreement else
-                  "abstain_motion_time_sensitive")
-        rows.append({**base,
-                     "observation_status": status,
-                     "anchor_stability_agreement": agreement,
-                     "anchor_observations": samples,
-                     "sample_frames": central["sample_frames"],
-                     "stable_cap_proposals": (central["stable_cap_proposals"]
-                                              if agreement else [])})
+        status = central["observation_status"] if agreement else "abstain_motion_time_sensitive"
+        rows.append(
+            {
+                **base,
+                "observation_status": status,
+                "anchor_stability_agreement": agreement,
+                "anchor_observations": samples,
+                "sample_frames": central["sample_frames"],
+                "stable_cap_proposals": (central["stable_cap_proposals"] if agreement else []),
+            }
+        )
     return rows
 
 
@@ -107,8 +116,7 @@ def main():
     video_hash = digest(args.video)
     if video_hash != union["source_sha256"]:
         parser.error("Source video and candidates differ")
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         parser.error("Cannot open source video")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -120,24 +128,29 @@ def main():
     result = {
         "status": "post_left_candidate_partial_right_image_caps_not_game_state",
         "source_sha256": video_hash,
-        "input_sha256": {"candidate_review_union": digest(args.union),
-                         "timeline": digest(args.timeline)},
+        "input_sha256": {
+            "candidate_review_union": digest(args.union),
+            "timeline": digest(args.timeline),
+        },
         "runner_sha256": digest(Path(__file__)),
         "right_sampler_code_sha256": digest(
-            ROOT / "prototype/scripts/export_right_only_partial_caps.py"),
+            ROOT / "prototype/scripts/export_right_only_partial_caps.py"
+        ),
         "proposal_code_sha256": digest(
-            ROOT / "prototype/scripts/probe_static_left_right_cap_motion.py"),
+            ROOT / "prototype/scripts/probe_static_left_right_cap_motion.py"
+        ),
         "frame_normalization_code_sha256": digest(
-            ROOT / "prototype/scripts/audit_split_panel_freeze.py"),
+            ROOT / "prototype/scripts/audit_split_panel_freeze.py"
+        ),
         "stable_cap_code_sha256": digest(ROOT / "prototype/right_view_partial_board.py"),
         "cap_set_comparison_code_sha256": digest(ROOT / "prototype/right_view_cap_sequence.py"),
         "sample_offsets_after_candidate_s": TAIL_OFFSETS_S,
         "next_candidate_guard_s": NEXT_CANDIDATE_GUARD_S,
-        "split_run_ids": [run["id"] for run in timeline["supported_runs"]
-                          if run["layout"] == "split_2024"],
+        "split_run_ids": [
+            run["id"] for run in timeline["supported_runs"] if run["layout"] == "split_2024"
+        ],
         "left_candidate_count": len(rows),
-        "observation_status_counts": dict(Counter(row["observation_status"]
-                                                  for row in rows)),
+        "observation_status_counts": dict(Counter(row["observation_status"] for row in rows)),
         "rows": rows,
         "limitations": [
             "All routed left proposals are sampled, including nonstones and withheld rows.",
@@ -149,8 +162,9 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"left_candidates": len(rows),
-                      "statuses": result["observation_status_counts"]}))
+    print(
+        json.dumps({"left_candidates": len(rows), "statuses": result["observation_status_counts"]})
+    )
 
 
 if __name__ == "__main__":

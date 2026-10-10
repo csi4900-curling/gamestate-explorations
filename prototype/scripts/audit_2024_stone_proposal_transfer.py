@@ -32,7 +32,8 @@ def main():
     vision_path = ROOT / "prototype/vision/annotations/calibration.json"
     rectification_path = ROOT / "prototype/rectification/calibration.json"
     if file_sha256(vision_path) != registration["vision_calibration_sha256"] or (
-            file_sha256(rectification_path) != registration["rectification_sha256"]):
+        file_sha256(rectification_path) != registration["rectification_sha256"]
+    ):
         parser.error("Calibration files differ from registration audit")
     cfg = json.loads(vision_path.read_text())["views"]
     refined = json.loads(rectification_path.read_text())
@@ -44,8 +45,7 @@ def main():
         calibrator = ViewCalibrator(view, ROOT / "prototype/vision/frames")
         calibrator.H = np.array(refined[name]["refined_H"])
         calibrators[name] = calibrator
-    capture = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not capture.isOpened():
         parser.error("Cannot open video")
     fps = capture.get(cv2.CAP_PROP_FPS)
@@ -57,35 +57,46 @@ def main():
             ok, frame = capture.read()
             if not ok:
                 raise RuntimeError(f"Cannot decode source time {sample['source_time_s']}")
-            row = {"reference_event_id": sample["reference_event_id"],
-                   "source_time_s": sample["source_time_s"], "views": {}}
+            row = {
+                "reference_event_id": sample["reference_event_id"],
+                "source_time_s": sample["source_time_s"],
+                "views": {},
+            }
             for name, calibrator in calibrators.items():
                 audit = sample["views"][name]
                 if audit["status"] != "registered":
-                    row["views"][name] = {"status": "abstained",
-                                          "reason": "Registration rejected",
-                                          "proposals": []}
+                    row["views"][name] = {
+                        "status": "abstained",
+                        "reason": "Registration rejected",
+                        "proposals": [],
+                    }
                     continue
                 A = np.array(audit["reference_to_current"])
                 H = calibrator.H @ np.linalg.inv(A)
                 background = cv2.warpPerspective(
-                    calibrator.reference, A, (frame.shape[1], frame.shape[0]))
-                prior = transported_reference_camera(
-                    calibrator.H, H, calibrator.view["region"])
+                    calibrator.reference, A, (frame.shape[1], frame.shape[0])
+                )
+                prior = transported_reference_camera(calibrator.H, H, calibrator.view["region"])
                 proposals, diagnostic = detect_and_localize(
-                    frame, H, calibrator.view, background, prior)
+                    frame, H, calibrator.view, background, prior
+                )
                 row["views"][name] = {
                     "status": diagnostic["status"],
                     "branch": diagnostic.get("branch"),
                     "proposal_count": len(proposals),
-                    "proposals": [{"colour": p["colour"],
-                                   "pixel_center": p["pixel_center"],
-                                   "proposal_kind": p["proposal_kind"],
-                                   "ground_position_m": p["ground_position_m"],
-                                   "localization_status": p["localization"]["status"],
-                                   "height_intrinsics_sensitivity_m": p["localization"].get(
-                                       "height_intrinsics_sensitivity_m")}
-                                  for p in proposals],
+                    "proposals": [
+                        {
+                            "colour": p["colour"],
+                            "pixel_center": p["pixel_center"],
+                            "proposal_kind": p["proposal_kind"],
+                            "ground_position_m": p["ground_position_m"],
+                            "localization_status": p["localization"]["status"],
+                            "height_intrinsics_sensitivity_m": p["localization"].get(
+                                "height_intrinsics_sensitivity_m"
+                            ),
+                        }
+                        for p in proposals
+                    ],
                 }
             rows.append(row)
     finally:
@@ -95,12 +106,12 @@ def main():
         view_rows = [row["views"][name] for row in rows]
         summary[name] = {
             "status_counts": dict(Counter(v["status"] for v in view_rows)),
-            "branch_counts": dict(Counter(v.get("branch") for v in view_rows
-                                          if v["status"] == "proposals")),
+            "branch_counts": dict(
+                Counter(v.get("branch") for v in view_rows if v["status"] == "proposals")
+            ),
             "frames_with_proposals": sum(bool(v["proposals"]) for v in view_rows),
             "total_proposals": sum(len(v["proposals"]) for v in view_rows),
-            "colour_counts": dict(Counter(p["colour"] for v in view_rows
-                                          for p in v["proposals"])),
+            "colour_counts": dict(Counter(p["colour"] for v in view_rows for p in v["proposals"])),
         }
     result = {
         "status": "development_stone_proposal_transfer_not_tracking_or_game_state",

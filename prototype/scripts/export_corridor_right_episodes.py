@@ -33,17 +33,21 @@ def main():
         tail = json.loads(args.right_tail.read_text())
         if corrob["source_sha256"] != tail["source_sha256"]:
             raise ValueError("Right tail source differs")
-        right_proposals = [{
-            "proposal_id": f"{args.right_run_id}:{row['raw_track_id']}",
-            "colour_claim": row["colour_claim"],
-            "direction": row["direction"],
-            "passage_time_s": row["passage"]["time_s"],
-        } for row in tail["directional_review_proposals"]]
+        right_proposals = [
+            {
+                "proposal_id": f"{args.right_run_id}:{row['raw_track_id']}",
+                "colour_claim": row["colour_claim"],
+                "direction": row["direction"],
+                "passage_time_s": row["passage"]["time_s"],
+            }
+            for row in tail["directional_review_proposals"]
+        ]
     episodes = build_corrob_episodes(
-        corrob["rows"], right_proposals=right_proposals,
-        interval_s=corrob["source_interval_s"] if right_proposals is not None else None)
-    left_ids = [left_id for row in episodes
-                for left_id in row["member_left_candidate_ids"]]
+        corrob["rows"],
+        right_proposals=right_proposals,
+        interval_s=corrob["source_interval_s"] if right_proposals is not None else None,
+    )
+    left_ids = [left_id for row in episodes for left_id in row["member_left_candidate_ids"]]
     if len(left_ids) != len(corrob["rows"]) or len(set(left_ids)) != len(left_ids):
         raise ValueError("Episode output lost or duplicated left proposals")
     output = {
@@ -68,8 +72,15 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(output, indent=2) + "\n")
-    print(json.dumps({"left": len(corrob["rows"]), "episodes": len(episodes),
-                      "kinds": output["episode_kind_counts"]}))
+    print(
+        json.dumps(
+            {
+                "left": len(corrob["rows"]),
+                "episodes": len(episodes),
+                "kinds": output["episode_kind_counts"],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

@@ -32,12 +32,13 @@ def main():
         parser.error("Output exists; preserve earlier result")
     timeline = json.loads(args.timeline.read_text())
     scan = json.loads(args.marker_scan.read_text())
-    if (scan["status"] != "development_2d_registered_broadcast_marker_not_physical_end" or
-            scan["video_sha256"] != timeline["source_sha256"]):
+    if (
+        scan["status"] != "development_2d_registered_broadcast_marker_not_physical_end"
+        or scan["video_sha256"] != timeline["source_sha256"]
+    ):
         parser.error("Marker scan is not the matching source/version")
     temporal = stable_marker_evidence(scan["samples"])
-    rows, counts = attach_stable_display_runs(
-        timeline["observed_events"], temporal["stable_runs"])
+    rows, counts = attach_stable_display_runs(timeline["observed_events"], temporal["stable_runs"])
     result = {
         "status": "routed_candidate_broadcast_display_context_not_physical_end_or_throw_truth",
         "source_sha256": timeline["source_sha256"],
@@ -47,8 +48,7 @@ def main():
         "joiner_sha256": digest(ROOT / "prototype/stable_display_run_context.py"),
         "runner_sha256": digest(Path(__file__)),
         "candidate_count": len(rows),
-        "context_status_counts": dict(Counter(row["display_context_status"]
-                                              for row in rows)),
+        "context_status_counts": dict(Counter(row["display_context_status"] for row in rows)),
         "candidate_colour_claims_by_displayed_run": counts,
         "display_runs": temporal["stable_runs"],
         "discarded_short_marker_runs": temporal["discarded_short_runs"],
@@ -62,9 +62,15 @@ def main():
         ],
     }
     args.output.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({"candidate_count": len(rows),
-                      "context_status_counts": result["context_status_counts"],
-                      "by_displayed_run": counts}))
+    print(
+        json.dumps(
+            {
+                "candidate_count": len(rows),
+                "context_status_counts": result["context_status_counts"],
+                "by_displayed_run": counts,
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

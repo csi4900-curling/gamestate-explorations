@@ -6,22 +6,47 @@ from prototype.source_release_rescue_union import append_source_release_rescues
 
 
 def evidence():
-    existing = [{"event_id": "VISUAL-S1", "source_shot_ids": ["S1"],
-                 "delivery_window_s": [0, 10], "observed_travel_window_s": None}]
-    proposal = {"proposal_id": "p", "candidate_class":
-                "source_only_held_release_provisional", "origin_shot_id": "S3",
-                "origin_shot_interval_s": [20, 30], "release_cue_s": 24,
-                "observed_colour": "red", "held_interval_s": [21, 23],
-                "below_ice_fraction": .8}
-    receiving = {"proposal_id": "p", "origin_shot_id": "S3", "receiving_shot_id": "S4",
-                 "origin_colour": "red", "release_cue_s": 24,
-                 "hard_cut_verified": True, "cut_time_s": 30,
-                 "receiving_window_s": [30.2, 42],
-                 "decision": {"colour": "red", "status": "unique_strict_postcut_motion"},
-                 "tracks": {"red": {"strict": [{"time_interval_s": [30.4, 35],
-                                                 "span_px": 60,
-                                                 "camera_motion_status": "camera_motion_unresolved"}]}},
-                 "physical_stone_identity_verified": False}
+    existing = [
+        {
+            "event_id": "VISUAL-S1",
+            "source_shot_ids": ["S1"],
+            "delivery_window_s": [0, 10],
+            "observed_travel_window_s": None,
+        }
+    ]
+    proposal = {
+        "proposal_id": "p",
+        "candidate_class": "source_only_held_release_provisional",
+        "origin_shot_id": "S3",
+        "origin_shot_interval_s": [20, 30],
+        "release_cue_s": 24,
+        "observed_colour": "red",
+        "held_interval_s": [21, 23],
+        "below_ice_fraction": 0.8,
+    }
+    receiving = {
+        "proposal_id": "p",
+        "origin_shot_id": "S3",
+        "receiving_shot_id": "S4",
+        "origin_colour": "red",
+        "release_cue_s": 24,
+        "hard_cut_verified": True,
+        "cut_time_s": 30,
+        "receiving_window_s": [30.2, 42],
+        "decision": {"colour": "red", "status": "unique_strict_postcut_motion"},
+        "tracks": {
+            "red": {
+                "strict": [
+                    {
+                        "time_interval_s": [30.4, 35],
+                        "span_px": 60,
+                        "camera_motion_status": "camera_motion_unresolved",
+                    }
+                ]
+            }
+        },
+        "physical_stone_identity_verified": False,
+    }
     return existing, proposal, receiving
 
 

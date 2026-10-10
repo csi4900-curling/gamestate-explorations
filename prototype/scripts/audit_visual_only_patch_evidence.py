@@ -14,8 +14,10 @@ from cache_contract import file_sha256  # noqa: E402
 from cap_patch_verifier import score_candidates  # noqa: E402
 from stone_motion_fallback import moving_cap_tracks, stone_cap_candidates  # noqa: E402
 from stone_patch_detector import load_model  # noqa: E402
-from visual_only_patch_evidence import (patch_evidence_status,  # noqa: E402
-                                        summarize_tracks)
+from visual_only_patch_evidence import (
+    patch_evidence_status,  # noqa: E402
+    summarize_tracks,
+)
 
 
 def main():
@@ -35,8 +37,7 @@ def main():
     if source_hash == reserved["source_sha256"]:
         parser.error("Reserved source cannot be used for development audit")
     model = load_model(args.model)
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         parser.error("Cannot open source video")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -59,24 +60,27 @@ def main():
                 if not ok:
                     raise RuntimeError(f"Frame decode failed at {time_s}")
                 for colour in colours:
-                    proposals = stone_cap_candidates(frame, colour,
-                                                     allow_bright_body=True,
-                                                     allow_large_caps=True)
-                    observations[colour].append((time_s, score_candidates(
-                        frame, proposals, model)))
-            tracks = [(colour, track) for colour, samples in observations.items()
-                      for track in moving_cap_tracks(samples, max_gap_s=1.6,
-                                                     max_step_px=130)]
+                    proposals = stone_cap_candidates(
+                        frame, colour, allow_bright_body=True, allow_large_caps=True
+                    )
+                    observations[colour].append((time_s, score_candidates(frame, proposals, model)))
+            tracks = [
+                (colour, track)
+                for colour, samples in observations.items()
+                for track in moving_cap_tracks(samples, max_gap_s=1.6, max_step_px=130)
+            ]
             summary = summarize_tracks(tracks, float(model["threshold"]))
-            rows.append({
-                "candidate_id": event["candidate_id"],
-                "camera_shot_id": event["shot_id"],
-                "release_window_s": event["release_window_s"],
-                "candidate_colour": event["colour"],
-                "evidence_sources": event["evidence_sources"],
-                "patch_evidence_status": patch_evidence_status(summary),
-                "tracks": summary,
-            })
+            rows.append(
+                {
+                    "candidate_id": event["candidate_id"],
+                    "camera_shot_id": event["shot_id"],
+                    "release_window_s": event["release_window_s"],
+                    "candidate_colour": event["colour"],
+                    "evidence_sources": event["evidence_sources"],
+                    "patch_evidence_status": patch_evidence_status(summary),
+                    "tracks": summary,
+                }
+            )
     finally:
         cap.release()
     counts = Counter(row["patch_evidence_status"] for row in rows)

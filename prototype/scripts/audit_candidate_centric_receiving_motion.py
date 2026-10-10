@@ -22,9 +22,10 @@ def sample_times(crossing_s, source_end_s, lookahead_s, period_s=1.0):
     if period_s <= 0:
         raise ValueError("Sample period must be positive")
     end = min(source_end_s, crossing_s + lookahead_s)
-    return [round(tick * period_s, 6)
-            for tick in range(ceil(crossing_s / period_s),
-                              floor(end / period_s) + 1)]
+    return [
+        round(tick * period_s, 6)
+        for tick in range(ceil(crossing_s / period_s), floor(end / period_s) + 1)
+    ]
 
 
 def main():
@@ -60,64 +61,83 @@ def main():
         calibrator = ViewCalibrator(view, ROOT / "prototype/vision/frames")
         calibrator.H = np.array(refined[name]["refined_H"])
         calibrators[name] = calibrator
-    capture = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not capture.isOpened():
         parser.error("Cannot open video")
     fps = capture.get(cv2.CAP_PROP_FPS)
     records = []
     try:
         for candidate in candidates["events"]:
-            view_name = {"positive_y": "left", "negative_y": "right"}.get(
-                candidate["view_motion"])
+            view_name = {"positive_y": "left", "negative_y": "right"}.get(candidate["view_motion"])
             if view_name is None:
                 raise ValueError(f"Unknown view direction for {candidate['id']}")
             calibrator = calibrators[view_name]
             samples = []
-            for t in sample_times(candidate["crossing_time_s"],
-                                  candidates["source_interval_s"][1], args.lookahead_s,
-                                  args.sample_period_s):
-                capture.set(cv2.CAP_PROP_POS_FRAMES,
-                            round((t - args.source_offset) * fps))
+            for t in sample_times(
+                candidate["crossing_time_s"],
+                candidates["source_interval_s"][1],
+                args.lookahead_s,
+                args.sample_period_s,
+            ):
+                capture.set(cv2.CAP_PROP_POS_FRAMES, round((t - args.source_offset) * fps))
                 ok, frame = capture.read()
                 if not ok:
                     raise RuntimeError(f"Cannot decode source time {t}")
                 H, registration = calibrator.register(
-                    frame, max_corner_displacement_px=args.max_corner_displacement_px)
+                    frame, max_corner_displacement_px=args.max_corner_displacement_px
+                )
                 proposals = []
                 if H is not None:
                     A = np.array(registration["reference_to_current"])
                     background = cv2.warpPerspective(
-                        calibrator.reference, A, (frame.shape[1], frame.shape[0]))
-                    prior = transported_reference_camera(
-                        calibrator.H, H, calibrator.view["region"])
-                    found, _ = detect_and_localize(
-                        frame, H, calibrator.view, background, prior)
-                    proposals = [{"colour": p["colour"],
-                                  "pixel_center": p["pixel_center"],
-                                  "ground_position_m": p["ground_position_m"]}
-                                 for p in found]
-                samples.append({"source_time_s": t,
-                                "registration_status": registration["status"],
-                                "views": {view_name: {"proposals": proposals}}})
-            kwargs = ({"view": "left", "entry_y_threshold_m": -4.5,
-                       "forward_direction": 1, "min_samples": 4,
-                       "max_forward_speed_change_m_s": 2.0}
-                      if view_name == "left" else {"view": "right"})
+                        calibrator.reference, A, (frame.shape[1], frame.shape[0])
+                    )
+                    prior = transported_reference_camera(calibrator.H, H, calibrator.view["region"])
+                    found, _ = detect_and_localize(frame, H, calibrator.view, background, prior)
+                    proposals = [
+                        {
+                            "colour": p["colour"],
+                            "pixel_center": p["pixel_center"],
+                            "ground_position_m": p["ground_position_m"],
+                        }
+                        for p in found
+                    ]
+                samples.append(
+                    {
+                        "source_time_s": t,
+                        "registration_status": registration["status"],
+                        "views": {view_name: {"proposals": proposals}},
+                    }
+                )
+            kwargs = (
+                {
+                    "view": "left",
+                    "entry_y_threshold_m": -4.5,
+                    "forward_direction": 1,
+                    "min_samples": 4,
+                    "max_forward_speed_change_m_s": 2.0,
+                }
+                if view_name == "left"
+                else {"view": "right"}
+            )
             selection = select_far_entry_motion_path(
-                samples, candidate["colour"],
-                max_gap_s=args.sample_period_s + 0.1, **kwargs)
-            records.append({"candidate_id": candidate["id"],
-                            "crossing_time_s": candidate["crossing_time_s"],
-                            "colour": candidate["colour"],
-                            "view_motion": candidate["view_motion"],
-                            "receiving_view": view_name,
-                            "sample_count": len(samples),
-                            "registration_abstentions": sum(
-                                s["registration_status"] != "registered"
-                                for s in samples),
-                            "selection": selection,
-                            "samples": samples})
+                samples, candidate["colour"], max_gap_s=args.sample_period_s + 0.1, **kwargs
+            )
+            records.append(
+                {
+                    "candidate_id": candidate["id"],
+                    "crossing_time_s": candidate["crossing_time_s"],
+                    "colour": candidate["colour"],
+                    "view_motion": candidate["view_motion"],
+                    "receiving_view": view_name,
+                    "sample_count": len(samples),
+                    "registration_abstentions": sum(
+                        s["registration_status"] != "registered" for s in samples
+                    ),
+                    "selection": selection,
+                    "samples": samples,
+                }
+            )
             print(candidate["id"], selection["status"], flush=True)
     finally:
         capture.release()
@@ -138,8 +158,7 @@ def main():
         "selector_sha256": file_sha256(ROOT / "prototype/stone_proposal_path.py"),
         "runner_sha256": file_sha256(__file__),
         "candidate_count": len(records),
-        "selection_status_counts": dict(Counter(
-            r["selection"]["status"] for r in records)),
+        "selection_status_counts": dict(Counter(r["selection"]["status"] for r in records)),
         "rows": records,
         "limitations": [
             "This scan uses candidate time, colour, and view direction only; it does not read reference delivery windows or labels.",

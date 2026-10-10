@@ -2,17 +2,25 @@ from prototype.candidate_shared_prefix_proposal import propose_shared_prefix
 
 
 def evidence():
-    prefix = [{"source_time_s": float(i),
-               "ground_position_m": [0.0, float(i)]}
-              for i in range(5)]
-    motion = {"candidate_id": "S1", "colour": "red", "receiving_view": "right",
-              "selection": {"status": "ambiguous_far_entry_motion_paths",
-                            "shared_prefix": prefix,
-                            "best_path_sample_count": 6,
-                            "first_ambiguity_time_s": 5.0}}
-    patch = {"candidate_id": "S1", "samples": [
-        {"source_time_s": float(i), "status": "scored",
-         "patch_accepted": i > 0} for i in range(3)]}
+    prefix = [{"source_time_s": float(i), "ground_position_m": [0.0, float(i)]} for i in range(5)]
+    motion = {
+        "candidate_id": "S1",
+        "colour": "red",
+        "receiving_view": "right",
+        "selection": {
+            "status": "ambiguous_far_entry_motion_paths",
+            "shared_prefix": prefix,
+            "best_path_sample_count": 6,
+            "first_ambiguity_time_s": 5.0,
+        },
+    }
+    patch = {
+        "candidate_id": "S1",
+        "samples": [
+            {"source_time_s": float(i), "status": "scored", "patch_accepted": i > 0}
+            for i in range(3)
+        ],
+    }
     return motion, patch
 
 

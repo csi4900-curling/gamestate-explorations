@@ -2,15 +2,19 @@ from prototype.far_receiving_path import select_far_receiving_path
 
 
 def sample(t, ys):
-    return {"source_time_s": t, "corridor_candidate_count": len(ys),
-            "corridor_candidates": [{"world_m": [0, y], "pixel": [0, 0]}
-                                    for y in ys]}
+    return {
+        "source_time_s": t,
+        "corridor_candidate_count": len(ys),
+        "corridor_candidates": [{"world_m": [0, y], "pixel": [0, 0]} for y in ys],
+    }
 
 
 def row(samples):
-    return {"departure_last": {"time_s": 0, "world_m": [0, 0]},
-            "arrival_first": {"time_s": 2, "world_m": [0, 4]},
-            "samples": samples}
+    return {
+        "departure_last": {"time_s": 0, "world_m": [0, 0]},
+        "arrival_first": {"time_s": 2, "world_m": [0, 4]},
+        "samples": samples,
+    }
 
 
 def test_backward_outlier_is_not_selected():

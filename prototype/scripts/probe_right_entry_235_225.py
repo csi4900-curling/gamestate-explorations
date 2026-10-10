@@ -27,30 +27,35 @@ def variant(tracks):
         width, height = first["bbox"][2:4]
         if first["pixel"][1] < 235 or first["cap_area_px2"] < 12 or width < height:
             continue
-        early = [point for point in points
-                 if point["time_s"] <= first["time_s"] + 20]
-        reached = next((i for i, point in enumerate(early[1:], 1)
-                        if point["pixel"][1] <= 225 and
-                        first["pixel"][1] - point["pixel"][1] >= 60), None)
+        early = [point for point in points if point["time_s"] <= first["time_s"] + 20]
+        reached = next(
+            (
+                i
+                for i, point in enumerate(early[1:], 1)
+                if point["pixel"][1] <= 225 and first["pixel"][1] - point["pixel"][1] >= 60
+            ),
+            None,
+        )
         if reached is None:
             continue
-        prefix = early[:reached + 1]
+        prefix = early[: reached + 1]
         entry = crossing(prefix, 235)
         if entry is None:
             continue
-        proposals.append({
-            "raw_track_id": track["track_id"],
-            "colour_claim": track["colour"],
-            "entry_line_y_px": 235,
-            "entry_crossing": entry,
-            "confirmation_time_s": prefix[-1]["time_s"],
-            "observed_prefix_interval_s": [prefix[0]["time_s"], prefix[-1]["time_s"]],
-            "observed_prefix_points": prefix,
-            "physical_throw_identity_verified": False,
-            "simulation_ready": False,
-        })
-    return sorted(proposals, key=lambda row: (row["entry_crossing"]["time_s"],
-                                              row["raw_track_id"]))
+        proposals.append(
+            {
+                "raw_track_id": track["track_id"],
+                "colour_claim": track["colour"],
+                "entry_line_y_px": 235,
+                "entry_crossing": entry,
+                "confirmation_time_s": prefix[-1]["time_s"],
+                "observed_prefix_interval_s": [prefix[0]["time_s"], prefix[-1]["time_s"]],
+                "observed_prefix_points": prefix,
+                "physical_throw_identity_verified": False,
+                "simulation_ready": False,
+            }
+        )
+    return sorted(proposals, key=lambda row: (row["entry_crossing"]["time_s"], row["raw_track_id"]))
 
 
 def main():
@@ -67,8 +72,7 @@ def main():
         parser.error("Frozen baseline no longer reproduces")
     proposals = variant(tracks)
     ids = {row["raw_track_id"] for row in proposals}
-    added = [row["raw_track_id"] for row in proposals
-             if row["raw_track_id"] not in frozen_ids]
+    added = [row["raw_track_id"] for row in proposals if row["raw_track_id"] not in frozen_ids]
     result = {
         "status": "postreview_threshold_probe_not_accepted_event_rule",
         "source_id": transfer["source_id"],
@@ -77,12 +81,14 @@ def main():
         "source_transfer_sha256": digest(args.transfer),
         "baseline_code_sha256": digest(ROOT / "prototype/right_view_entry_triage.py"),
         "runner_sha256": digest(Path(__file__)),
-        "rule": {"first_and_crossing_line_y_px": 235,
-                 "confirmation_y_at_most_px": 225,
-                 "minimum_upward_displacement_px": 60,
-                 "maximum_confirmation_delay_s": 20,
-                 "minimum_first_cap_area_px2": 12,
-                 "first_bbox_width_at_least_height": True},
+        "rule": {
+            "first_and_crossing_line_y_px": 235,
+            "confirmation_y_at_most_px": 225,
+            "minimum_upward_displacement_px": 60,
+            "maximum_confirmation_delay_s": 20,
+            "minimum_first_cap_area_px2": 12,
+            "first_bbox_width_at_least_height": True,
+        },
         "baseline_ids": frozen_ids,
         "baseline_ids_lost": [id for id in frozen_ids if id not in ids],
         "new_ids": added,
@@ -94,8 +100,16 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"baseline": len(frozen_ids), "variant": len(proposals),
-                      "new_ids": added, "lost": result["baseline_ids_lost"]}))
+    print(
+        json.dumps(
+            {
+                "baseline": len(frozen_ids),
+                "variant": len(proposals),
+                "new_ids": added,
+                "lost": result["baseline_ids_lost"],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

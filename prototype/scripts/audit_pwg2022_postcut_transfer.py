@@ -27,8 +27,7 @@ def digest(path):
 def spread_sample(rows, count=24):
     if len(rows) <= count:
         return rows
-    return [rows[round(index * (len(rows) - 1) / (count - 1))]
-            for index in range(count)]
+    return [rows[round(index * (len(rows) - 1) / (count - 1))] for index in range(count)]
 
 
 def verified_cut(cap, fps, time_s):
@@ -57,14 +56,22 @@ def main():
         candidate_path = ROOT / info["candidate_ledger_path"]
         if digest(candidate_path) != info["candidate_ledger_sha256"]:
             raise ValueError("Candidate ledger differs from alignment")
-        candidates = {event["candidate_id"]: event
-                      for event in json.loads(candidate_path.read_text())["events"]}
-        links = [link for link in info["candidate_links"]
-                 if link["official_shot_id"] and
-                 candidates[link["candidate_id"]]["evidence_class"] == "origin_view_candidate"
-                 and link["counter_alignment_status"] in
-                 ("unique_colour_concordant", "unique_colour_concordant_amid_duplicate",
-                  "candidate_colour_unknown")]
+        candidates = {
+            event["candidate_id"]: event
+            for event in json.loads(candidate_path.read_text())["events"]
+        }
+        links = [
+            link
+            for link in info["candidate_links"]
+            if link["official_shot_id"]
+            and candidates[link["candidate_id"]]["evidence_class"] == "origin_view_candidate"
+            and link["counter_alignment_status"]
+            in (
+                "unique_colour_concordant",
+                "unique_colour_concordant_amid_duplicate",
+                "candidate_colour_unknown",
+            )
+        ]
         links = spread_sample(links)
         video = ROOT / game["source_video_path"]
         if digest(video) != game["source_video_sha256"]:
@@ -88,21 +95,36 @@ def main():
             }
             if cut_is_verified:
                 tracks, further_cuts = scan_receiving_view(cap, fps, cut_s)
-                counts = {colour: {mode: sum(item["camera_motion_status"] !=
-                                              "camera_explained_static" for item in items)
-                                   for mode, items in modes.items()}
-                          for colour, modes in tracks.items()}
+                counts = {
+                    colour: {
+                        mode: sum(
+                            item["camera_motion_status"] != "camera_explained_static"
+                            for item in items
+                        )
+                        for mode, items in modes.items()
+                    }
+                    for colour, modes in tracks.items()
+                }
                 decision = resolve_postcut_colour(counts)
-                result.update({
-                    "track_counts_after_camera_filter": counts,
-                    "further_cut_times_s": further_cuts,
-                    "decision": decision,
-                    "decision_matches_official_colour": (decision["colour"] == link["official_colour"]
-                                                         if decision["colour"] else None),
-                })
+                result.update(
+                    {
+                        "track_counts_after_camera_filter": counts,
+                        "further_cut_times_s": further_cuts,
+                        "decision": decision,
+                        "decision_matches_official_colour": (
+                            decision["colour"] == link["official_colour"]
+                            if decision["colour"]
+                            else None
+                        ),
+                    }
+                )
             else:
-                result.update({"decision": {"colour": None, "status": "unverified_cut"},
-                               "decision_matches_official_colour": None})
+                result.update(
+                    {
+                        "decision": {"colour": None, "status": "unverified_cut"},
+                        "decision_matches_official_colour": None,
+                    }
+                )
             rows.append(result)
         cap.release()
     output = {
@@ -115,10 +137,12 @@ def main():
         "sample_rule": "Up to 24 evenly spaced eligible origin-view candidate links per game, ordered by video time; no selection by official colour.",
         "sample_count": len(rows),
         "decision_status_counts": dict(Counter(row["decision"]["status"] for row in rows)),
-        "resolved_correct_colour_count": sum(row["decision_matches_official_colour"] is True
-                                             for row in rows),
-        "resolved_wrong_colour_count": sum(row["decision_matches_official_colour"] is False
-                                           for row in rows),
+        "resolved_correct_colour_count": sum(
+            row["decision_matches_official_colour"] is True for row in rows
+        ),
+        "resolved_wrong_colour_count": sum(
+            row["decision_matches_official_colour"] is False for row in rows
+        ),
         "rows": rows,
         "limitations": [
             "These are development candidates from the same three recordings; this is a transfer stress check, not a held-out benchmark.",
@@ -127,8 +151,12 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(output, indent=2) + "\n")
-    print(output["sample_count"], output["decision_status_counts"],
-          output["resolved_correct_colour_count"], output["resolved_wrong_colour_count"])
+    print(
+        output["sample_count"],
+        output["decision_status_counts"],
+        output["resolved_correct_colour_count"],
+        output["resolved_wrong_colour_count"],
+    )
 
 
 if __name__ == "__main__":

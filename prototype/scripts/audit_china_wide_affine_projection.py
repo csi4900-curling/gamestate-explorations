@@ -24,8 +24,13 @@ def main():
     if OUTPUT.exists():
         raise SystemExit("Output exists; preserve first projection diagnostic")
     wide, diagrams = (json.loads(path.read_text()) for path in (INPUT, DIAGRAMS))
-    official = next(shot for game in diagrams["games"] for end in game["ends"]
-                    for shot in end["shots"] if shot["official_shot_id"] == SHOT_ID)
+    official = next(
+        shot
+        for game in diagrams["games"]
+        for end in game["ends"]
+        for shot in end["shots"]
+        if shot["official_shot_id"] == SHOT_ID
+    )
     if len(wide["stable_image_caps"]) != 3:
         raise ValueError("Wide source-only evidence changed")
     ellipse = wide["frames"][0]["ellipse"]
@@ -35,28 +40,39 @@ def main():
     alternatives = []
     for lateral_sign in (-1, 1):
         for longitudinal_sign in (-1, 1):
-            transformed = [{
-                "colour": stone["colour"],
-                "canonical_lateral_house_radii": round(
-                    lateral_sign * (stone["pixel_center"][0] - cx) / rx, 4),
-                "longitudinal_house_radii": round(
-                    longitudinal_sign * (stone["pixel_center"][1] - cy) / ry, 4),
-            } for stone in wide["stable_image_caps"]]
+            transformed = [
+                {
+                    "colour": stone["colour"],
+                    "canonical_lateral_house_radii": round(
+                        lateral_sign * (stone["pixel_center"][0] - cx) / rx, 4
+                    ),
+                    "longitudinal_house_radii": round(
+                        longitudinal_sign * (stone["pixel_center"][1] - cy) / ry, 4
+                    ),
+                }
+                for stone in wide["stable_image_caps"]
+            ]
             strict = compare_board_observations(
-                transformed, official["stones"],
-                official_house_center_y=official["house_center_px"][1])
-            forced = compare_board_observations(
-                transformed, official["stones"],
+                transformed,
+                official["stones"],
                 official_house_center_y=official["house_center_px"][1],
-                max_match_distance=10)
-            alternatives.append({
-                "lateral_sign": lateral_sign,
-                "longitudinal_sign": longitudinal_sign,
-                "naive_ellipse_coordinates": transformed,
-                "matched_within_0_25_house_radii": strict["matched_count"],
-                "forced_mean_error_house_radii": forced["mean_matched_distance_house_radii"],
-                "forced_max_error_house_radii": forced["max_matched_distance_house_radii"],
-            })
+            )
+            forced = compare_board_observations(
+                transformed,
+                official["stones"],
+                official_house_center_y=official["house_center_px"][1],
+                max_match_distance=10,
+            )
+            alternatives.append(
+                {
+                    "lateral_sign": lateral_sign,
+                    "longitudinal_sign": longitudinal_sign,
+                    "naive_ellipse_coordinates": transformed,
+                    "matched_within_0_25_house_radii": strict["matched_count"],
+                    "forced_mean_error_house_radii": forced["mean_matched_distance_house_radii"],
+                    "forced_max_error_house_radii": forced["max_matched_distance_house_radii"],
+                }
+            )
     output = {
         "status": "postscore_naive_wide_ellipse_projection_failure_not_calibration",
         "source_sha256": wide["source_sha256"],
@@ -77,10 +93,17 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(output, indent=2) + "\n")
-    print([(row["lateral_sign"], row["longitudinal_sign"],
-            row["matched_within_0_25_house_radii"],
-            row["forced_mean_error_house_radii"])
-           for row in alternatives])
+    print(
+        [
+            (
+                row["lateral_sign"],
+                row["longitudinal_sign"],
+                row["matched_within_0_25_house_radii"],
+                row["forced_mean_error_house_radii"],
+            )
+            for row in alternatives
+        ]
+    )
 
 
 if __name__ == "__main__":

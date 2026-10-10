@@ -51,27 +51,34 @@ def align_counter_slots(counter_events, official_ends, team_colours):
         for shot in official_end["shots"]:
             number = shot["shot_number"]
             counter = assignments.get((end, number))
-            rows.append({
-                "end": end,
-                "shot_number": number,
-                "official_shot_id": shot["official_shot_id"],
-                "official_team": shot["team"],
-                "official_colour": team_colours[shot["team"]],
-                "counter_id": counter["id"] if counter else None,
-                "counter_crossing_time_s": counter["crossing_time_s"] if counter else None,
-                "counter_status": "observed_decrement" if counter else "missing_decrement",
-                "physical_video_throw_verified": False,
-            })
+            rows.append(
+                {
+                    "end": end,
+                    "shot_number": number,
+                    "official_shot_id": shot["official_shot_id"],
+                    "official_team": shot["team"],
+                    "official_colour": team_colours[shot["team"]],
+                    "counter_id": counter["id"] if counter else None,
+                    "counter_crossing_time_s": counter["crossing_time_s"] if counter else None,
+                    "counter_status": "observed_decrement" if counter else "missing_decrement",
+                    "physical_video_throw_verified": False,
+                }
+            )
         slots.extend(rows)
-        summaries.append({
-            "end": end,
-            "official_shot_count": len(rows),
-            "observed_counter_count": sum(row["counter_id"] is not None for row in rows),
-            "missing_counter_shot_numbers": [row["shot_number"] for row in rows
-                                             if row["counter_id"] is None],
-        })
-    return {"official_slot_count": len(slots),
-            "aligned_counter_count": len(assignments),
-            "missing_counter_slot_count": len(slots) - len(assignments),
-            "end_summaries": summaries,
-            "slots": slots}
+        summaries.append(
+            {
+                "end": end,
+                "official_shot_count": len(rows),
+                "observed_counter_count": sum(row["counter_id"] is not None for row in rows),
+                "missing_counter_shot_numbers": [
+                    row["shot_number"] for row in rows if row["counter_id"] is None
+                ],
+            }
+        )
+    return {
+        "official_slot_count": len(slots),
+        "aligned_counter_count": len(assignments),
+        "missing_counter_slot_count": len(slots) - len(assignments),
+        "end_summaries": summaries,
+        "slots": slots,
+    }

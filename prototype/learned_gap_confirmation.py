@@ -46,9 +46,7 @@ def local_ice_fraction(frame, bbox):
         return 0.0
     hsv = cv2.cvtColor(image[top:bottom, left:right], cv2.COLOR_BGR2HSV)
     yy, xx = np.mgrid[top:bottom, left:right]
-    outside = (np.abs(xx - center_x) > width * 0.6) | (
-        np.abs(yy - center_y) > height * 0.6
-    )
+    outside = (np.abs(xx - center_x) > width * 0.6) | (np.abs(yy - center_y) > height * 0.6)
     ice = (hsv[:, :, 1] < 95) & (hsv[:, :, 2] > 150)
     return float(ice[outside].mean()) if outside.any() else 0.0
 
@@ -99,8 +97,10 @@ def confirm_dense_gap_candidates(
             reason = "stone_not_locally_surrounded_by_ice"
         elif row["moving_steps_gt4px"] < min_moving_steps:
             reason = "insufficient_sustained_motion"
-        elif (row["smooth_run_duration_s"] < min_smooth_run_s
-              or row["smooth_run_moving_steps"] < min_smooth_run_moving_steps):
+        elif (
+            row["smooth_run_duration_s"] < min_smooth_run_s
+            or row["smooth_run_moving_steps"] < min_smooth_run_moving_steps
+        ):
             reason = "insufficient_smooth_motion"
         else:
             eligible.append(item)

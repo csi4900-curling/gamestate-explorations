@@ -26,7 +26,7 @@ RADIUS_1080P_PX = 55
 def digest(path):
     h = sha256()
     with path.open("rb") as stream:
-        for chunk in iter(lambda: stream.read(1024*1024), b""):
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
             h.update(chunk)
     return h.hexdigest()
 
@@ -40,15 +40,14 @@ def main():
     paths = [p for p in transfer["body_image_paths"] if p["direction"] == "upward"]
     if len(paths) != 1:
         raise ValueError("Expected one upward body path")
-    cap = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     rows = []
     try:
         with np.load(MODEL, allow_pickle=False) as model:
             threshold = float(model["threshold"])
             for p in paths[0]["points"]:
                 t = p["time_s"]
-                cap.set(cv2.CAP_PROP_POS_MSEC, (t-1650)*1000)
+                cap.set(cv2.CAP_PROP_POS_MSEC, (t - 1650) * 1000)
                 ok, frame = cap.read()
                 if not ok or frame.shape[:2] != (1080, 1920):
                     raise RuntimeError(f"Could not decode {t}")
@@ -58,23 +57,34 @@ def main():
                     if proposal["colour"] != "yellow":
                         continue
                     xy = point(proposal)
-                    distance = hypot(xy[0]-p["center_1080p_px"][0],
-                                     xy[1]-p["center_1080p_px"][1])
+                    distance = hypot(
+                        xy[0] - p["center_1080p_px"][0], xy[1] - p["center_1080p_px"][1]
+                    )
                     if distance > RADIUS_1080P_PX:
                         continue
                     feature = patch_features(image, context_box(proposal["bbox"]))
-                    score = ((feature-model["mean"])/model["scale"]) @ \
-                        model["weights"].ravel() + model["intercept"].item()
-                    nearby.append({"score": round(float(score), 5),
-                                   "center_1080p_px": xy,
-                                   "center_distance_1080p_px": round(distance, 2)})
+                    score = ((feature - model["mean"]) / model["scale"]) @ model[
+                        "weights"
+                    ].ravel() + model["intercept"].item()
+                    nearby.append(
+                        {
+                            "score": round(float(score), 5),
+                            "center_1080p_px": xy,
+                            "center_distance_1080p_px": round(distance, 2),
+                        }
+                    )
                 nearby.sort(key=lambda x: -x["score"])
-                rows.append({"source_time_s": t,
-                             "body_center_1080p_px": p["center_1080p_px"],
-                             "nearby_raw_yellow_proposal_count": len(nearby),
-                             "best_nearby": nearby[0] if nearby else None,
-                             "nearby_above_frozen_threshold": bool(
-                                 nearby and nearby[0]["score"] >= threshold)})
+                rows.append(
+                    {
+                        "source_time_s": t,
+                        "body_center_1080p_px": p["center_1080p_px"],
+                        "nearby_raw_yellow_proposal_count": len(nearby),
+                        "best_nearby": nearby[0] if nearby else None,
+                        "nearby_above_frozen_threshold": bool(
+                            nearby and nearby[0]["score"] >= threshold
+                        ),
+                    }
+                )
     finally:
         cap.release()
     result = {
@@ -94,9 +104,17 @@ def main():
         ],
     }
     OUT.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({"near_proposal_frames": sum(r["nearby_raw_yellow_proposal_count"]>0 for r in rows),
-                      "above_threshold_frames": sum(r["nearby_above_frozen_threshold"] for r in rows),
-                      "total_frames": len(rows)}))
+    print(
+        json.dumps(
+            {
+                "near_proposal_frames": sum(
+                    r["nearby_raw_yellow_proposal_count"] > 0 for r in rows
+                ),
+                "above_threshold_frames": sum(r["nearby_above_frozen_threshold"] for r in rows),
+                "total_frames": len(rows),
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

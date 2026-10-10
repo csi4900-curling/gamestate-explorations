@@ -36,37 +36,42 @@ def main():
     source_hash = digest(VIDEO)
     if source_hash != prior["source_video_sha256_by_game"]["PREL000102"]:
         raise ValueError("China source mismatch")
-    if (prior["house_detector_sha256"] != digest(ROOT / "prototype/video_board_observation_v2.py")
-            or prior["stone_detector_sha256"] != digest(ROOT / "prototype/video_board_observation.py")
-            or prior["temporal_cluster_sha256"] != digest(ROOT / "prototype/temporal_board_state.py")):
+    if (
+        prior["house_detector_sha256"] != digest(ROOT / "prototype/video_board_observation_v2.py")
+        or prior["stone_detector_sha256"] != digest(ROOT / "prototype/video_board_observation.py")
+        or prior["temporal_cluster_sha256"] != digest(ROOT / "prototype/temporal_board_state.py")
+    ):
         raise ValueError("Board detector changed after prior source-only scan")
     reserved = json.loads((ROOT / "validation/unseen-end/reservation.json").read_text())
     if source_hash == reserved["source_sha256"]:
         raise ValueError("Reserved independent source is not development data")
-    previous = [row for row in prior["rows"]
-                if row["official_game_code"] == "PREL000102"]
-    if len(previous) != 5 or {row["inferred_recording_delivery_side"]
-                              for row in previous} != {"top"}:
+    previous = [row for row in prior["rows"] if row["official_game_code"] == "PREL000102"]
+    if len(previous) != 5 or {row["inferred_recording_delivery_side"] for row in previous} != {
+        "top"
+    }:
         raise ValueError("Frozen recording orientation changed")
-    game = next(row for row in alignment["games"]
-                if row["official_game_code"] == "PREL000102")
+    game = next(row for row in alignment["games"] if row["official_game_code"] == "PREL000102")
     counters = sorted(game["counter_rows"], key=lambda row: row["counter_time_s"])
-    chosen = [row for row in counters
-              if row["official_shot_id"] in {
-                  f"PREL000102-E02-S{number:02d}" for number in SHOT_NUMBERS}
-              and row["status"] == "unique_colour_concordant"]
+    chosen = [
+        row
+        for row in counters
+        if row["official_shot_id"] in {f"PREL000102-E02-S{number:02d}" for number in SHOT_NUMBERS}
+        and row["status"] == "unique_colour_concordant"
+    ]
     if len(chosen) != len(SHOT_NUMBERS):
         raise ValueError("Predeclared adjacent counter anchors changed")
-    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     fps = capture.get(cv2.CAP_PROP_FPS)
     rows = []
     for counter in chosen:
         anchor = counter["counter_time_s"]
-        following = min((row["counter_time_s"] for row in counters
-                         if row["counter_time_s"] > anchor), default=None)
-        offsets = [offset for offset in OFFSETS_S
-                   if following is None or anchor + offset <= following - 12]
+        following = min(
+            (row["counter_time_s"] for row in counters if row["counter_time_s"] > anchor),
+            default=None,
+        )
+        offsets = [
+            offset for offset in OFFSETS_S if following is None or anchor + offset <= following - 12
+        ]
         observations = []
         for offset in offsets:
             t = anchor + offset
@@ -83,20 +88,27 @@ def main():
                 house["delivery_side"] = "top"
             if house["delivery_side"] != "top":
                 continue
-            observations.append({"time_s": t, "offset_s": offset,
-                                 "house": house,
-                                 "stones": detect_board_stones(frame, house)})
+            observations.append(
+                {
+                    "time_s": t,
+                    "offset_s": offset,
+                    "house": house,
+                    "stones": detect_board_stones(frame, house),
+                }
+            )
         stable = stable_board_stones(observations)
-        rows.append({
-            "shot_id": counter["official_shot_id"],
-            "counter_id": counter["counter_id"],
-            "counter_anchor_s": anchor,
-            "following_counter_s": following,
-            "sampled_offsets_s": offsets,
-            "accepted_frame_count": len(observations),
-            "frame_observations": observations,
-            "stable_partial_board": stable,
-        })
+        rows.append(
+            {
+                "shot_id": counter["official_shot_id"],
+                "counter_id": counter["counter_id"],
+                "counter_anchor_s": anchor,
+                "following_counter_s": following,
+                "sampled_offsets_s": offsets,
+                "accepted_frame_count": len(observations),
+                "frame_observations": observations,
+                "stable_partial_board": stable,
+            }
+        )
         print(rows[-1]["shot_id"], len(observations), len(stable), flush=True)
     capture.release()
     output = {

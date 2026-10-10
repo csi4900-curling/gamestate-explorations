@@ -20,7 +20,9 @@ for row in data["throws"]:
     labels = [
         "Depart : debut visible",
         "Depart : derniere observation",
-        "Reception : premiere position affichee" if row["id"] == "T11" else "Reception : premiere observation",
+        "Reception : premiere position affichee"
+        if row["id"] == "T11"
+        else "Reception : premiere observation",
         "Reception : proche hog line",
     ]
     sheet = Image.new("RGB", (1440, 700), "#f5f2e9")

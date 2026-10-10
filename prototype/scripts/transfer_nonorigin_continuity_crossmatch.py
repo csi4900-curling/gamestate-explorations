@@ -14,8 +14,7 @@ BASE = ROOT / "validation/curlobserver-learned-probe"
 STUDY = BASE / "cap-patch-crossmatch-v1"
 CODE = ROOT / "prototype/nonorigin_continuity_rescue.py"
 FROZEN = STUDY / "norway-end7-nonorigin-continuity-development.json"
-SOURCES = {"slovakia": "slovakia-full-transfer",
-           "swiss": "swiss-full-transfer"}
+SOURCES = {"slovakia": "slovakia-full-transfer", "swiss": "swiss-full-transfer"}
 
 
 def digest(path):
@@ -31,8 +30,7 @@ def main():
     output_path = STUDY / f"{args.source}-nonorigin-continuity-first.json"
     if output_path.exists():
         raise SystemExit("Output exists; preserve first transfer")
-    cap, origin, frozen = (json.loads(path.read_text()) for path in
-                           (cap_path, origin_path, FROZEN))
+    cap, origin, frozen = (json.loads(path.read_text()) for path in (cap_path, origin_path, FROZEN))
     if cap["source_sha256"] != origin["source_sha256"]:
         raise ValueError("Source mismatch")
     if frozen["rescue_code_sha256"] != digest(CODE):
@@ -43,8 +41,7 @@ def main():
     if cap["source_interval_s"] != origin["source_interval_s"]:
         raise ValueError("Source intervals differ")
     by_id = {row["shot_id"]: row for row in origin["rows"]}
-    candidates = rescue_nonorigin_shots(cap["shots"], by_id,
-                                        cap["source_interval_s"])
+    candidates = rescue_nonorigin_shots(cap["shots"], by_id, cap["source_interval_s"])
     output = {
         "status": "first_crossmatch_source_only_nonorigin_continuity_transfer",
         "source": args.source,
@@ -64,9 +61,11 @@ def main():
         ],
     }
     output_path.write_text(json.dumps(output, indent=2) + "\n")
-    print(args.source, output["candidate_count"],
-          [(row["shot_id"], row["colour"], row["interval_s"])
-           for row in candidates])
+    print(
+        args.source,
+        output["candidate_count"],
+        [(row["shot_id"], row["colour"], row["interval_s"]) for row in candidates],
+    )
 
 
 if __name__ == "__main__":

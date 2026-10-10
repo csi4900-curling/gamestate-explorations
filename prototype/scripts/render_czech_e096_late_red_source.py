@@ -28,8 +28,11 @@ def main():
     track = json.loads(TRACK.read_text())
     if track["source_video_sha256"] != digest(VIDEO):
         raise ValueError("Track and source video differ")
-    centers = [s["decision"]["selected"]["centroid_px_1080"]
-               for s in track["steps"] if s["decision"]["selected"]]
+    centers = [
+        s["decision"]["selected"]["centroid_px_1080"]
+        for s in track["steps"]
+        if s["decision"]["selected"]
+    ]
     if not centers:
         raise ValueError("No E096 cap centers to render")
     x0 = max(0, int(min(p[0] for p in centers) - 95))
@@ -37,39 +40,35 @@ def main():
     y0 = max(0, int(min(p[1] for p in centers) - 95))
     y1 = min(1080, int(max(p[1] for p in centers) + 95))
     roi = (x0, y0, x1, y1)
-    cap = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         raise ValueError("Source unreadable")
     pane_w, pane_h = 680, 500
     steps = track["steps"]
-    sheet = Image.new("RGB", (2 * pane_w, ((len(steps) + 1) // 2) * pane_h),
-                      "#eef1f5")
+    sheet = Image.new("RGB", (2 * pane_w, ((len(steps) + 1) // 2) * pane_h), "#eef1f5")
     try:
         for index, step in enumerate(steps):
             cap.set(cv2.CAP_PROP_POS_FRAMES, step["decoded_frame_index"])
             ok, frame = cap.read()
             if not ok or frame.shape[:2] != (1080, 1920):
                 raise ValueError("Source frame unreadable")
-            crop = Image.fromarray(cv2.cvtColor(frame[y0:y1, x0:x1],
-                                                cv2.COLOR_BGR2RGB))
-            scale = min((pane_w - 20) / crop.width,
-                        (pane_h - 45) / crop.height)
-            crop = crop.resize((round(crop.width * scale),
-                                round(crop.height * scale)),
-                               Image.Resampling.NEAREST)
+            crop = Image.fromarray(cv2.cvtColor(frame[y0:y1, x0:x1], cv2.COLOR_BGR2RGB))
+            scale = min((pane_w - 20) / crop.width, (pane_h - 45) / crop.height)
+            crop = crop.resize(
+                (round(crop.width * scale), round(crop.height * scale)), Image.Resampling.NEAREST
+            )
             center = step["decision"]["selected"]["centroid_px_1080"]
             cx, cy = (center[0] - x0) * scale, (center[1] - y0) * scale
             draw = ImageDraw.Draw(crop)
-            draw.ellipse((cx - 12, cy - 12, cx + 12, cy + 12),
-                         outline="#00e8ff", width=4)
+            draw.ellipse((cx - 12, cy - 12, cx + 12, cy + 12), outline="#00e8ff", width=4)
             pane = Image.new("RGB", (pane_w, pane_h), "white")
             pane.paste(crop, ((pane_w - crop.width) // 2, 38))
-            ImageDraw.Draw(pane).text((10, 11),
-                                      f"E096 source {step['source_time_s']:.1f} s"
-                                      " | selected red cap", fill="black")
-            sheet.paste(pane, ((index % 2) * pane_w,
-                               (index // 2) * pane_h))
+            ImageDraw.Draw(pane).text(
+                (10, 11),
+                f"E096 source {step['source_time_s']:.1f} s | selected red cap",
+                fill="black",
+            )
+            sheet.paste(pane, ((index % 2) * pane_w, (index // 2) * pane_h))
     finally:
         cap.release()
     OUT.mkdir(parents=True)

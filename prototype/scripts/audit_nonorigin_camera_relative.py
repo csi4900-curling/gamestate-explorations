@@ -18,7 +18,8 @@ INPUT = BASE / "nonorigin-cap-object-audit-development.json"
 OUTPUT = BASE / "nonorigin-camera-relative-audit-development.json"
 VIDEOS = {
     "norway": ROOT / "validation/throw-event-benchmark/paralympics-2022-canada-norway/source.mp4",
-    "swiss": ROOT / "validation/throw-event-benchmark/paralympics-2022-sweden-switzerland/source.mp4",
+    "swiss": ROOT
+    / "validation/throw-event-benchmark/paralympics-2022-sweden-switzerland/source.mp4",
 }
 
 
@@ -39,9 +40,11 @@ def selected_track(row):
     by_time = defaultdict(list)
     for sample in evidence["accepted_samples"]:
         by_time[sample["time_s"]].append(sample)
-    matches = [track for track in _tracks(sorted(by_time.items()))
-               if track[0]["time_s"] == top["interval_s"][0]
-               and track[0]["pixel"] == top["first_pixel"]]
+    matches = [
+        track
+        for track in _tracks(sorted(by_time.items()))
+        if track[0]["time_s"] == top["interval_s"][0] and track[0]["pixel"] == top["first_pixel"]
+    ]
     if len(matches) != 1 or matches[0][-1]["time_s"] != top["interval_s"][1]:
         raise ValueError(f"Cannot recover frozen top track: {row['shot_id']}")
     return matches[0]
@@ -58,8 +61,9 @@ def main():
     output_rows = []
     for row in data["rows"]:
         points = selected_track(row)
-        capture = cv2.VideoCapture(str(VIDEOS[row["source"]]), cv2.CAP_FFMPEG,
-                                   [cv2.CAP_PROP_N_THREADS, 1])
+        capture = cv2.VideoCapture(
+            str(VIDEOS[row["source"]]), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1]
+        )
         fps = capture.get(cv2.CAP_PROP_FPS)
         cache = {}
 
@@ -69,16 +73,17 @@ def main():
                 ok, frame = capture.read()
                 if not ok:
                     raise RuntimeError(f"Frame decode failed: {row['shot_id']} {time_s}")
-                cache[time_s] = cv2.resize(frame, (640, 360),
-                                           interpolation=cv2.INTER_AREA)
+                cache[time_s] = cv2.resize(frame, (640, 360), interpolation=cv2.INTER_AREA)
             return cache[time_s]
 
         pairs = sample_track_camera_motion(points, frame_at, step_s=0.4) if points else []
         capture.release()
-        residuals = [pair["camera_residual_px"] for pair in pairs
-                     if pair["camera_residual_px"] is not None]
+        residuals = [
+            pair["camera_residual_px"] for pair in pairs if pair["camera_residual_px"] is not None
+        ]
         out = {
-            "source": row["source"], "shot_id": row["shot_id"],
+            "source": row["source"],
+            "shot_id": row["shot_id"],
             "candidate_colour": row["candidate_colour"],
             "top_transit": row["evidence"][row["candidate_colour"]]["transits"][:1],
             "pair_count": len(pairs),
@@ -88,9 +93,19 @@ def main():
             "pairs": pairs,
         }
         output_rows.append(out)
-        print(row["shot_id"], {key: out[key] for key in
-              ("pair_count", "reliable_pair_count", "reliable_over_10px_count",
-               "max_reliable_residual_px")}, flush=True)
+        print(
+            row["shot_id"],
+            {
+                key: out[key]
+                for key in (
+                    "pair_count",
+                    "reliable_pair_count",
+                    "reliable_over_10px_count",
+                    "max_reliable_residual_px",
+                )
+            },
+            flush=True,
+        )
     output = {
         "status": "postscore_camera_relative_object_motion_diagnostic_not_event_score",
         "source_sha256": sources,

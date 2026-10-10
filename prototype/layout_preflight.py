@@ -44,13 +44,17 @@ def classify_chunk(samples):
         return "unknown"
     split = sum(row["split_2024_signature"] for row in samples) / len(samples)
     beijing = sum(row["beijing_2022_counter"] for row in samples) / len(samples)
-    beijing_only = sum(row["beijing_2022_counter"] and
-                       not row["split_2024_signature"] for row in samples)
+    beijing_only = sum(
+        row["beijing_2022_counter"] and not row["split_2024_signature"] for row in samples
+    )
     # The Beijing digit reader occasionally matches a 2024 scoreboard frame.
     # A single dual-positive sample cannot overrule a sustained split signature;
     # a Beijing-only sample or repeated conflict still fails closed.
-    if split >= 0.75 and beijing_only == 0 and sum(
-            row["beijing_2022_counter"] for row in samples) <= 1:
+    if (
+        split >= 0.75
+        and beijing_only == 0
+        and sum(row["beijing_2022_counter"] for row in samples) <= 1
+    ):
         return "split_2024"
     if beijing >= 0.25 and split <= 0.10:
         return "beijing_2022"

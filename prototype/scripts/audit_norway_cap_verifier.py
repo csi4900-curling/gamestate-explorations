@@ -24,8 +24,14 @@ BASE = ROOT / "validation/throw-event-benchmark/paralympics-2022-canada-norway"
 VIDEO = BASE / "source.mp4"
 FIRST = BASE / "FIRST-TRANSFER.json"
 CAP = ROOT / "validation/curlobserver-learned-probe/canada-norway-full-transfer/cap-motion.json"
-MODEL = ROOT / "validation/curlobserver-learned-probe/cap-patch-crossmatch-v1/model-excluding-swiss-transfer.npz"
-OUTPUT = ROOT / "validation/curlobserver-learned-probe/cap-patch-crossmatch-v1/norway-end2-targeted-transfer.json"
+MODEL = (
+    ROOT
+    / "validation/curlobserver-learned-probe/cap-patch-crossmatch-v1/model-excluding-swiss-transfer.npz"
+)
+OUTPUT = (
+    ROOT
+    / "validation/curlobserver-learned-probe/cap-patch-crossmatch-v1/norway-end2-targeted-transfer.json"
+)
 IDS = ("S93", "S95", "S97", "S99", "S115", "S129", "S139", "S156")
 
 
@@ -58,8 +64,7 @@ def main():
     if not all(key in shots and key in matches for key in IDS):
         raise ValueError("Declared windows changed")
     model = load_model(MODEL)
-    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not capture.isOpened():
         raise ValueError("Cannot open source")
     fps = capture.get(cv2.CAP_PROP_FPS)
@@ -86,13 +91,12 @@ def main():
             t = round(frame_index / fps, 3)
             scores = {}
             for colour in ("red", "yellow"):
-                proposals = stone_cap_candidates(frame, colour,
-                                                 allow_bright_body=True,
-                                                 allow_large_caps=True)
+                proposals = stone_cap_candidates(
+                    frame, colour, allow_bright_body=True, allow_large_caps=True
+                )
                 scored = score_candidates(frame, proposals, model)
                 raw[colour].append((t, scored))
-                filtered[colour].append((t, [row for row in scored
-                                             if row["patch_accepted"]]))
+                filtered[colour].append((t, [row for row in scored if row["patch_accepted"]]))
                 totals[f"{colour}_raw"] += len(scored)
                 totals[f"{colour}_accepted"] += sum(row["patch_accepted"] for row in scored)
                 scores[colour] = scored
@@ -101,18 +105,21 @@ def main():
         filtered_tracks = tracks_for_shot(filtered, shot_id)
         old_tracks = shots[shot_id]["same_shot_candidates"]
         match = matches[shot_id]
-        rows.append({
-            "shot_id": shot_id, "interval_s": interval,
-            "frozen_visual_colour": match["visual_colour"],
-            "counter_proxy_colour": match["counter_colour"],
-            "counter_pair_official_shot_id": match["official_shot_id"],
-            "sampled_frame_count": len(samples),
-            "candidate_counts": dict(totals),
-            "original_frozen_cap_tracks": old_tracks,
-            "rerun_raw_tracks": raw_tracks,
-            "patch_filtered_tracks": filtered_tracks,
-            "samples": samples,
-        })
+        rows.append(
+            {
+                "shot_id": shot_id,
+                "interval_s": interval,
+                "frozen_visual_colour": match["visual_colour"],
+                "counter_proxy_colour": match["counter_colour"],
+                "counter_pair_official_shot_id": match["official_shot_id"],
+                "sampled_frame_count": len(samples),
+                "candidate_counts": dict(totals),
+                "original_frozen_cap_tracks": old_tracks,
+                "rerun_raw_tracks": raw_tracks,
+                "patch_filtered_tracks": filtered_tracks,
+                "samples": samples,
+            }
+        )
     capture.release()
     result = {
         "status": "exposed_development_targeted_cap_verifier_not_event_score",
@@ -135,9 +142,14 @@ def main():
     }
     OUTPUT.write_text(json.dumps(result, indent=2) + "\n")
     for row in rows:
-        print(row["shot_id"], row["counter_proxy_colour"],
-              "raw", dict(Counter(t["colour"] for t in row["rerun_raw_tracks"])),
-              "filtered", dict(Counter(t["colour"] for t in row["patch_filtered_tracks"])))
+        print(
+            row["shot_id"],
+            row["counter_proxy_colour"],
+            "raw",
+            dict(Counter(t["colour"] for t in row["rerun_raw_tracks"])),
+            "filtered",
+            dict(Counter(t["colour"] for t in row["patch_filtered_tracks"])),
+        )
 
 
 if __name__ == "__main__":

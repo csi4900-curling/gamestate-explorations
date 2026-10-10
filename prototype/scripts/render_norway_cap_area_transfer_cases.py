@@ -30,8 +30,7 @@ def main():
     if transfer["source_video_sha256"] != digest(VIDEO):
         raise ValueError("Norway source/transfer lineage differs")
     by_id = {r["episode_id"]: r for r in transfer["rows"]}
-    cap = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         raise ValueError("Norway source unreadable")
     OUT.mkdir(parents=True)
@@ -40,8 +39,7 @@ def main():
         for eid in IDS:
             row = by_id[eid]
             points = row["last_two_reconstructed_points_360"]
-            times = [points[0]["time_s"], points[1]["time_s"],
-                     row["next_sample_time_s"]]
+            times = [points[0]["time_s"], points[1]["time_s"], row["next_sample_time_s"]]
             sheet = Image.new("RGB", (1280, 2280), "white")
             for index, time in enumerate(times):
                 cap.set(cv2.CAP_PROP_POS_FRAMES, round(time * 30))
@@ -53,37 +51,41 @@ def main():
                 draw = ImageDraw.Draw(image)
                 if index < 2:
                     x, y = (2 * v for v in points[index]["pixel"])
-                    draw.ellipse((x - 16, y - 16, x + 16, y + 16),
-                                 outline="#00ecff", width=4)
+                    draw.ellipse((x - 16, y - 16, x + 16, y + 16), outline="#00ecff", width=4)
                 else:
                     x0, y0, x1, y1 = row["search_roi_xyxy_px_360"]
-                    draw.rectangle((2 * x0, 2 * y0, 2 * x1, 2 * y1),
-                                   outline="#00ecff", width=3)
-                    for ordinal, component in enumerate(
-                            row["raw_colour_components"], start=1):
+                    draw.rectangle((2 * x0, 2 * y0, 2 * x1, 2 * y1), outline="#00ecff", width=3)
+                    for ordinal, component in enumerate(row["raw_colour_components"], start=1):
                         x, y = (2 * v for v in component["centroid_px_1080"])
-                        draw.ellipse((x - 14, y - 14, x + 14, y + 14),
-                                     outline="#ff00dd", width=4)
-                        draw.text((x + 16, y - 10),
-                                  f"{ordinal}: {component['area_px2']:.0f}px2",
-                                  fill="#ff00dd", stroke_width=2,
-                                  stroke_fill="white")
+                        draw.ellipse((x - 14, y - 14, x + 14, y + 14), outline="#ff00dd", width=4)
+                        draw.text(
+                            (x + 16, y - 10),
+                            f"{ordinal}: {component['area_px2']:.0f}px2",
+                            fill="#ff00dd",
+                            stroke_width=2,
+                            stroke_fill="white",
+                        )
                 pane = Image.new("RGB", (1280, 760), "white")
                 pane.paste(image, (0, 40))
                 ImageDraw.Draw(pane).text(
-                    (12, 12), f"{eid} source {time:.1f}s | " + (
-                        "stored cap" if index < 2 else "next-frame raw components"),
-                    fill="black")
+                    (12, 12),
+                    f"{eid} source {time:.1f}s | "
+                    + ("stored cap" if index < 2 else "next-frame raw components"),
+                    fill="black",
+                )
                 sheet.paste(pane, (0, index * 760))
             filename = eid.lower() + "-source.jpg"
             sheet.save(OUT / filename, quality=93)
-            sheets.append({"episode_id": eid, "sheet": filename,
-                           "sheet_sha256": digest(OUT / filename),
-                           "sample_times_s": times,
-                           "absolute_status": row[
-                               "absolute_area_decision"]["status"],
-                           "past_area_status": row[
-                               "past_cap_area_0p5_to_2_decision"]["status"]})
+            sheets.append(
+                {
+                    "episode_id": eid,
+                    "sheet": filename,
+                    "sheet_sha256": digest(OUT / filename),
+                    "sample_times_s": times,
+                    "absolute_status": row["absolute_area_decision"]["status"],
+                    "past_area_status": row["past_cap_area_0p5_to_2_decision"]["status"],
+                }
+            )
     finally:
         cap.release()
     manifest = {

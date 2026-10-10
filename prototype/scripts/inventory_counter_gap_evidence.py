@@ -21,14 +21,17 @@ def main():
         parser.error("Output exists; preserve previous inventory")
     preflight = json.loads(args.preflight.read_text())
     replay = json.loads(args.counter_replay.read_text())
-    if (preflight["source_id"] != replay["source_id"]
-            or preflight["source_sha256"] != replay["source_sha256"]
-            or preflight["source_interval_s"] != replay["source_interval_s"]):
+    if (
+        preflight["source_id"] != replay["source_id"]
+        or preflight["source_sha256"] != replay["source_sha256"]
+        or preflight["source_interval_s"] != replay["source_interval_s"]
+    ):
         parser.error("Preflight and counter replay refer to different video intervals")
     rows = classify_counter_gap_events(replay["counter_events"], preflight["coverage_gaps_s"])
     interior = [row for row in rows if row["classification"] == "counter_evidence_inside_gap"]
-    boundary = [row for row in rows
-                if row["classification"] == "boundary_ambiguous_counter_evidence"]
+    boundary = [
+        row for row in rows if row["classification"] == "boundary_ambiguous_counter_evidence"
+    ]
     result = {
         "status": "counter_gap_evidence_inventory_not_confirmed_throws",
         "source_id": preflight["source_id"],

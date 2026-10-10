@@ -18,17 +18,19 @@ def main():
     args = parser.parse_args()
     if args.output.exists():
         parser.error("Prefix proposal output already exists")
-    motion, patch, screen = (json.loads(getattr(args, key).read_text())
-                             for key in ("motion", "patch", "screen"))
-    if patch["motion_sha256"] != file_sha256(args.motion) or \
-            screen["motion_sha256"] != file_sha256(args.motion) or \
-            screen["patch_sha256"] != file_sha256(args.patch):
+    motion, patch, screen = (
+        json.loads(getattr(args, key).read_text()) for key in ("motion", "patch", "screen")
+    )
+    if (
+        patch["motion_sha256"] != file_sha256(args.motion)
+        or screen["motion_sha256"] != file_sha256(args.motion)
+        or screen["patch_sha256"] != file_sha256(args.patch)
+    ):
         parser.error("Motion, patch, and screen artifacts do not chain")
     by_patch = {row["candidate_id"]: row for row in patch["rows"]}
     by_decision = {row["candidate_id"]: row for row in screen["decisions"]}
     ids = [row["candidate_id"] for row in motion["rows"]]
-    if (len(ids) != len(set(ids)) or set(ids) != set(by_patch) or
-            set(ids) != set(by_decision)):
+    if len(ids) != len(set(ids)) or set(ids) != set(by_patch) or set(ids) != set(by_decision):
         parser.error("Candidate IDs differ")
     proposals = []
     for row in motion["rows"]:
@@ -44,12 +46,15 @@ def main():
         "motion_sha256": file_sha256(args.motion),
         "patch_sha256": file_sha256(args.patch),
         "screen_sha256": file_sha256(args.screen),
-        "model_code_sha256": file_sha256(
-            ROOT / "prototype/candidate_shared_prefix_proposal.py"),
+        "model_code_sha256": file_sha256(ROOT / "prototype/candidate_shared_prefix_proposal.py"),
         "runner_sha256": file_sha256(Path(__file__)),
-        "parameters": {"min_samples": 5, "min_fraction": 0.7,
-                       "min_travel_m": 2.0, "min_scored_patches": 3,
-                       "min_positive_patches": 2},
+        "parameters": {
+            "min_samples": 5,
+            "min_fraction": 0.7,
+            "min_travel_m": 2.0,
+            "min_scored_patches": 3,
+            "min_positive_patches": 2,
+        },
         "proposal_count": len(proposals),
         "proposals": proposals,
         "limitations": [
@@ -60,8 +65,12 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(output, indent=2) + "\n")
-    print([(r["candidate_id"], r["prefix_sample_count"],
-            r["positive_patch_count"]) for r in proposals])
+    print(
+        [
+            (r["candidate_id"], r["prefix_sample_count"], r["positive_patch_count"])
+            for r in proposals
+        ]
+    )
 
 
 if __name__ == "__main__":

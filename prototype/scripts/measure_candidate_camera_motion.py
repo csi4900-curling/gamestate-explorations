@@ -30,14 +30,16 @@ def main():
     preflight = json.loads(args.preflight.read_text())
     if raw["source_sha256"] != digest or preflight["source_sha256"] != digest:
         raise ValueError("Source hash mismatch")
-    if (raw["source_interval_s"][0] < preflight["source_interval_s"][0]
-            or raw["source_interval_s"][1] > preflight["source_interval_s"][1]):
+    if (
+        raw["source_interval_s"][0] < preflight["source_interval_s"][0]
+        or raw["source_interval_s"][1] > preflight["source_interval_s"][1]
+    ):
         raise ValueError("Raw interval outside preflight")
-    if (raw["model_sha256"] != file_sha256(ROOT / "prototype/span_passage_detection.py")
-            or raw["baseline_sha256"] != file_sha256(ROOT / "prototype/throw_detection.py")):
+    if raw["model_sha256"] != file_sha256(ROOT / "prototype/span_passage_detection.py") or raw[
+        "baseline_sha256"
+    ] != file_sha256(ROOT / "prototype/throw_detection.py"):
         raise ValueError("Raw proposal model lineage differs")
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         raise ValueError("Source unreadable")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -50,24 +52,28 @@ def main():
         return frame
 
     try:
-        rows = [measure_candidate(event, preflight, digest, frame_at)
-                for event in raw["events"]]
+        rows = [measure_candidate(event, preflight, digest, frame_at) for event in raw["events"]]
     finally:
         cap.release()
     if len(rows) != len({row["id"] for row in rows}):
         raise ValueError("Duplicate candidate IDs")
     payload = {
         "status": "candidate_camera_motion_evidence_not_throw_truth",
-        "source_id": raw["source_id"], "source_sha256": digest,
+        "source_id": raw["source_id"],
+        "source_sha256": digest,
         "source_interval_s": raw["source_interval_s"],
-        "input_sha256": {"raw": file_sha256(args.raw),
-                         "preflight": file_sha256(args.preflight)},
+        "input_sha256": {"raw": file_sha256(args.raw), "preflight": file_sha256(args.preflight)},
         "code_sha256": {
             "candidate": file_sha256(ROOT / "prototype/candidate_camera_motion.py"),
             "router": file_sha256(ROOT / "prototype/layout_camera_motion.py"),
-            "lowres_adapter": file_sha256(ROOT / "prototype/lowres_split_panel_camera_registration.py"),
-            "split_registration": file_sha256(ROOT / "prototype/split_panel_camera_registration.py"),
-            "runner": file_sha256(__file__)},
+            "lowres_adapter": file_sha256(
+                ROOT / "prototype/lowres_split_panel_camera_registration.py"
+            ),
+            "split_registration": file_sha256(
+                ROOT / "prototype/split_panel_camera_registration.py"
+            ),
+            "runner": file_sha256(__file__),
+        },
         "rows": rows,
         "limitations": [
             "Path pixels come from unverified raw cap tracks, not physical stone identities.",
@@ -77,9 +83,14 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(payload, indent=2) + "\n")
-    print(json.dumps({"candidates": len(rows),
-                      "registered": sum(row.get("camera_residual_px") is not None
-                                        for row in rows)}))
+    print(
+        json.dumps(
+            {
+                "candidates": len(rows),
+                "registered": sum(row.get("camera_residual_px") is not None for row in rows),
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

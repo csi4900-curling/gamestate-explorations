@@ -32,8 +32,7 @@ def read(path):
 
 
 def measure(video, cases):
-    capture = cv2.VideoCapture(str(video), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     fps = capture.get(cv2.CAP_PROP_FPS)
     if not capture.isOpened() or fps <= 0:
         raise RuntimeError(f"Unreadable video: {video}")
@@ -50,10 +49,16 @@ def measure(video, cases):
         patch = gray[y0:y1, x0:x1]
         if patch.size == 0:
             raise ValueError(f"Empty patch at {case['id']}")
-        rows.append({**case, "patch_xyxy_px": [x0, y0, x1, y1],
-                     "dark_fraction": round(float((patch < DARK_GRAY_BELOW).mean()), 6),
-                     "latvia_exploratory_cut_says_nonstone": bool(
-                         (patch < DARK_GRAY_BELOW).mean() >= LATVIA_EXPLORATORY_CUT)})
+        rows.append(
+            {
+                **case,
+                "patch_xyxy_px": [x0, y0, x1, y1],
+                "dark_fraction": round(float((patch < DARK_GRAY_BELOW).mean()), 6),
+                "latvia_exploratory_cut_says_nonstone": bool(
+                    (patch < DARK_GRAY_BELOW).mean() >= LATVIA_EXPLORATORY_CUT
+                ),
+            }
+        )
     capture.release()
     return rows, fps
 
@@ -84,38 +89,52 @@ def main():
     if data["scotland_probe"]["source_sha256"] != source_hashes["scotland"]:
         raise ValueError("Scotland probe source hash mismatch")
 
-    latvia_probes = {row["event_id"]: row for key in
-                     ("latvia_accepted_probe", "latvia_withheld_probe")
-                     for row in data[key]["cases"]}
+    latvia_probes = {
+        row["event_id"]: row
+        for key in ("latvia_accepted_probe", "latvia_withheld_probe")
+        for row in data[key]["cases"]
+    }
     latvia_cases = []
     for review in data["latvia_ledger"]["reviews"]:
         short_id = review["candidate_id"].split("-")[-1]
         probe = latvia_probes[short_id]
         if review["source_time_s"] != probe["crossing_time_s"]:
             raise ValueError(f"Latvia crossing time mismatch: {short_id}")
-        latvia_cases.append({"id": review["candidate_id"],
-                             "source_class": review["source_pixel_class"],
-                             "time_s": probe["crossing_time_s"],
-                             "point_px": probe["crossing_point_px"]})
+        latvia_cases.append(
+            {
+                "id": review["candidate_id"],
+                "source_class": review["source_pixel_class"],
+                "time_s": probe["crossing_time_s"],
+                "point_px": probe["crossing_point_px"],
+            }
+        )
 
-    scotland_classes = {row["candidate_id"]: row["crossing_source_class"]
-                        for row in data["scotland_classes"]["rows"]}
-    scotland_cases = [{"id": row["event_id"],
-                       "source_class": scotland_classes[row["event_id"]],
-                       "time_s": row["crossing_time_s"],
-                       "point_px": row["crossing_point_px"]}
-                      for row in data["scotland_probe"]["cases"]]
+    scotland_classes = {
+        row["candidate_id"]: row["crossing_source_class"]
+        for row in data["scotland_classes"]["rows"]
+    }
+    scotland_cases = [
+        {
+            "id": row["event_id"],
+            "source_class": scotland_classes[row["event_id"]],
+            "time_s": row["crossing_time_s"],
+            "point_px": row["crossing_point_px"],
+        }
+        for row in data["scotland_probe"]["cases"]
+    ]
     rows = {}
     fps = {}
     for name, cases in (("latvia", latvia_cases), ("scotland", scotland_cases)):
         rows[name], fps[name] = measure(sources[name], cases)
     output = {
         "status": "selected_same_agent_negative_transfer_diagnostic_not_throw_validation",
-        "configuration": {"patch_width_px": PATCH_WIDTH,
-                          "patch_height_px": PATCH_HEIGHT,
-                          "patch_anchor": "top_centered_on_tracked_crossing_pixel",
-                          "grayscale_below": DARK_GRAY_BELOW,
-                          "exploratory_cut_from_latvia": LATVIA_EXPLORATORY_CUT},
+        "configuration": {
+            "patch_width_px": PATCH_WIDTH,
+            "patch_height_px": PATCH_HEIGHT,
+            "patch_anchor": "top_centered_on_tracked_crossing_pixel",
+            "grayscale_below": DARK_GRAY_BELOW,
+            "exploratory_cut_from_latvia": LATVIA_EXPLORATORY_CUT,
+        },
         "source_sha256": source_hashes,
         "input_sha256": {key: digest(path) for key, path in inputs.items()},
         "runner_sha256": digest(Path(__file__)),

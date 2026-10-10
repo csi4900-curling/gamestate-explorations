@@ -31,8 +31,9 @@ def confirm_shot_transitions(predictions, motion_audits):
             row = rows[shot_id]
             same = {item["colour"] for item in row["same_shot_candidates"]}
             following = {item["colour"] for item in row["following_shot_candidates"]}
-            support.extend({"channel": channel, "colour": colour}
-                           for colour in sorted(same & following))
+            support.extend(
+                {"channel": channel, "colour": colour} for colour in sorted(same & following)
+            )
         colours = sorted({row["colour"] for row in support})
         if not prediction["predicted"]:
             status, reason = "unconfirmed", "shot_origin_not_predicted"
@@ -40,10 +41,19 @@ def confirm_shot_transitions(predictions, motion_audits):
             status, reason = "unconfirmed", "no_same_colour_two_shot_motion"
         else:
             status, reason = "corroborated_candidate", "two_shot_colour_motion"
-        decisions.append({"shot_id": shot_id, "status": status, "reason": reason,
-                          "supported_colours": colours,
-                          "colour": colours[0] if len(colours) == 1 else None,
-                          "colour_status": "unique" if len(colours) == 1 else
-                          "ambiguous" if colours else "unsupported",
-                          "channel_support": support})
+        decisions.append(
+            {
+                "shot_id": shot_id,
+                "status": status,
+                "reason": reason,
+                "supported_colours": colours,
+                "colour": colours[0] if len(colours) == 1 else None,
+                "colour_status": "unique"
+                if len(colours) == 1
+                else "ambiguous"
+                if colours
+                else "unsupported",
+                "channel_support": support,
+            }
+        )
     return decisions

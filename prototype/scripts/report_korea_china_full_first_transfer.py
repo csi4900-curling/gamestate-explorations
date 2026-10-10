@@ -23,15 +23,25 @@ def digest(path):
 def main():
     if OUTPUT.exists():
         raise SystemExit("First transfer result already exists")
-    paths = {name: BASE / f"{name}.json" for name in
-             ("hard-cuts", "counter-audit", "shot-origin", "cap-motion",
-              "selected-learned-motion", "fused-linked", "travel-only",
-              "candidate-event-ledger")}
+    paths = {
+        name: BASE / f"{name}.json"
+        for name in (
+            "hard-cuts",
+            "counter-audit",
+            "shot-origin",
+            "cap-motion",
+            "selected-learned-motion",
+            "fused-linked",
+            "travel-only",
+            "candidate-event-ledger",
+        )
+    }
     data = {name: json.loads(path.read_text()) for name, path in paths.items()}
     official = json.loads(OFFICIAL.read_text())
     source_hash = digest(VIDEO)
     if source_hash != official["source_video_sha256"] or any(
-            row["source_sha256"] != source_hash for row in data.values()):
+        row["source_sha256"] != source_hash for row in data.values()
+    ):
         raise ValueError("Source-video hash conflict")
     intervals = {tuple(row["source_interval_s"]) for row in data.values()}
     if intervals != {(0, 6829)}:
@@ -44,7 +54,10 @@ def main():
         raise ValueError("Official shot count changed")
     counter_ids = {row["id"] for row in counters}
     used_counter_ids = [row["counter_id"] for row in candidates if row["counter_id"]]
-    if len(used_counter_ids) != len(set(used_counter_ids)) or not set(used_counter_ids) <= counter_ids:
+    if (
+        len(used_counter_ids) != len(set(used_counter_ids))
+        or not set(used_counter_ids) <= counter_ids
+    ):
         raise ValueError("Counter-to-candidate association is not one-to-one")
     result = {
         "status": "frozen_first_full_match_transfer_count_and_coverage_not_event_f1",
@@ -56,7 +69,9 @@ def main():
         "official_end_shot_counts": [end["shot_count"] for end in official["ends"]],
         "candidate_count": len(candidates),
         "candidate_minus_official_count": len(candidates) - official["official_shot_count"],
-        "candidate_evidence_class_counts": dict(Counter(row["evidence_class"] for row in candidates)),
+        "candidate_evidence_class_counts": dict(
+            Counter(row["evidence_class"] for row in candidates)
+        ),
         "candidate_colour_counts": dict(Counter(row["colour"] for row in candidates)),
         "candidate_colour_status_counts": dict(Counter(row["colour_status"] for row in candidates)),
         "readable_counter_update_count": len(counters),
@@ -76,10 +91,22 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({key: result[key] for key in
-                      ("official_shot_count", "candidate_count", "candidate_minus_official_count",
-                       "readable_counter_update_count", "counter_linked_candidate_count",
-                       "fused_colour_conflict_count")}, indent=2))
+    print(
+        json.dumps(
+            {
+                key: result[key]
+                for key in (
+                    "official_shot_count",
+                    "candidate_count",
+                    "candidate_minus_official_count",
+                    "readable_counter_update_count",
+                    "counter_linked_candidate_count",
+                    "fused_colour_conflict_count",
+                )
+            },
+            indent=2,
+        )
+    )
 
 
 if __name__ == "__main__":

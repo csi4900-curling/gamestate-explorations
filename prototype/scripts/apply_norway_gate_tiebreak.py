@@ -30,23 +30,27 @@ def main():
     frozen_path = BASE / "norway-end7-gate-tiebreak-events-development.json"
     if output_path.exists():
         raise SystemExit("Output exists; preserve first result")
-    visual, routed = (json.loads(path.read_text()) for path in
-                      (visual_path, routed_path))
+    visual, routed = (json.loads(path.read_text()) for path in (visual_path, routed_path))
     if routed["visual_scan_sha256"] != digest(visual_path):
         raise ValueError("Visual scan changed after routing")
     if visual["source_sha256"] != routed["source_sha256"]:
         raise ValueError("Source mismatch")
     if end == 8:
         frozen = json.loads(frozen_path.read_text())
-        if (frozen["tiebreak_code_sha256"] != digest(CODE)
-                or frozen["source_sha256"] != routed["source_sha256"]):
+        if (
+            frozen["tiebreak_code_sha256"] != digest(CODE)
+            or frozen["source_sha256"] != routed["source_sha256"]
+        ):
             raise ValueError("Tie-break code or source changed after end seven")
     by_shot = {row["shot_id"]: row for row in visual["rows"]}
-    decisions = [tiebreak_competing_transits(row, by_shot[row["shot_id"]])
-                 for row in routed["decisions"]]
-    changes = [row["shot_id"] for original, row in
-               zip(routed["decisions"], decisions, strict=True)
-               if row["colour"] != original["colour"]]
+    decisions = [
+        tiebreak_competing_transits(row, by_shot[row["shot_id"]]) for row in routed["decisions"]
+    ]
+    changes = [
+        row["shot_id"]
+        for original, row in zip(routed["decisions"], decisions, strict=True)
+        if row["colour"] != original["colour"]
+    ]
     output = {
         "status": f"source_only_end{end}_gate_tiebreak_{tag}",
         "source_sha256": routed["source_sha256"],
@@ -66,8 +70,7 @@ def main():
         ],
     }
     output_path.write_text(json.dumps(output, indent=2) + "\n")
-    print({"end": end, "resolved": output["colour_resolved_count"],
-           "changed_shot_ids": changes})
+    print({"end": end, "resolved": output["colour_resolved_count"], "changed_shot_ids": changes})
 
 
 if __name__ == "__main__":

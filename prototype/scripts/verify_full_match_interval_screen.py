@@ -34,16 +34,18 @@ def main():
         frozen = interval_decisions.get(interval_id)
         if (current is None) != (frozen is None):
             raise ValueError(f"Corridor coverage differs at {full_id}")
-        rows.append({
-            "full_id": full_id,
-            "interval_id": interval_id,
-            "full_status": current["status"] if current else None,
-            "interval_status": frozen["status"] if frozen else None,
-            "full_accepted": current["accepted"] if current else None,
-            "interval_accepted": frozen["accepted"] if frozen else None,
-            "same_status": current["status"] == frozen["status"] if current else True,
-            "same_acceptance": current["accepted"] == frozen["accepted"] if current else True,
-        })
+        rows.append(
+            {
+                "full_id": full_id,
+                "interval_id": interval_id,
+                "full_status": current["status"] if current else None,
+                "interval_status": frozen["status"] if frozen else None,
+                "full_accepted": current["accepted"] if current else None,
+                "interval_accepted": frozen["accepted"] if frozen else None,
+                "same_status": current["status"] == frozen["status"] if current else True,
+                "same_acceptance": current["accepted"] == frozen["accepted"] if current else True,
+            }
+        )
     result = {
         "status": "postscore_full_vs_frozen_interval_decision_reconciliation",
         "input_sha256": {
@@ -65,9 +67,14 @@ def main():
     }
     a.output.parent.mkdir(parents=True, exist_ok=True)
     a.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(result["matched_raw_candidates"], "raw;",
-          result["matched_corridor_candidates"], "corridor;",
-          result["all_statuses_match"], "same statuses")
+    print(
+        result["matched_raw_candidates"],
+        "raw;",
+        result["matched_corridor_candidates"],
+        "corridor;",
+        result["all_statuses_match"],
+        "same statuses",
+    )
 
 
 if __name__ == "__main__":

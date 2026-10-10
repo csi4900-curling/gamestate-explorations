@@ -16,10 +16,17 @@ STEPS = (0.3, 0.2, 0.15)
 
 def select(row, step):
     return select_far_entry_motion_path(
-        row["samples"], row["colour"], view="left", max_gap_s=0.6,
-        entry_y_threshold_m=-4.5, forward_direction=1,
-        min_samples=4, max_forward_speed_change_m_s=2.0,
-        min_forward_step_m=step, min_travel_m=2.0)
+        row["samples"],
+        row["colour"],
+        view="left",
+        max_gap_s=0.6,
+        entry_y_threshold_m=-4.5,
+        forward_direction=1,
+        min_samples=4,
+        max_forward_speed_change_m_s=2.0,
+        min_forward_step_m=step,
+        min_travel_m=2.0,
+    )
 
 
 def compact(selection):
@@ -53,31 +60,35 @@ def main():
         motion_path = a.extended_dir / f"motion-20s-{pid}.json"
         extended = json.loads(motion_path.read_text())
         candidate = json.loads(candidate_path.read_text())
-        if (len(extended["rows"]) != 1 or
-                extended["rows"][0]["candidate_id"] != pid or
-                extended["candidates_sha256"] != file_sha256(candidate_path) or
-                candidate["events"][0]["id"] != pid or
-                held[pid]["colour"] != extended["rows"][0]["colour"] or
-                held[pid]["receiving_view"] != "left" or
-                extended["lookahead_s"] != 20 or
-                extended["sample_period_s"] != 0.5 or
-                extended["right_reference_anchor_time_s"] != 6525):
+        if (
+            len(extended["rows"]) != 1
+            or extended["rows"][0]["candidate_id"] != pid
+            or extended["candidates_sha256"] != file_sha256(candidate_path)
+            or candidate["events"][0]["id"] != pid
+            or held[pid]["colour"] != extended["rows"][0]["colour"]
+            or held[pid]["receiving_view"] != "left"
+            or extended["lookahead_s"] != 20
+            or extended["sample_period_s"] != 0.5
+            or extended["right_reference_anchor_time_s"] != 6525
+        ):
             raise ValueError(f"Extended source/proposal mismatch for {pid}")
         old = compact(select(held[pid], 0.3))
         if old["status"] != held[pid]["selection"]["status"]:
             raise ValueError(f"Frozen 12 s selection does not reproduce for {pid}")
         new = extended["rows"][0]
         variants = {str(step): compact(select(new, step)) for step in STEPS}
-        rows.append({
-            "candidate_id": pid,
-            "candidate_colour": new["colour"],
-            "candidate_crossing_time_s": new["crossing_time_s"],
-            "sample_count_12s": len(held[pid]["samples"]),
-            "sample_count_20s": len(new["samples"]),
-            "direct_registered_20s": new["sample_count"] - new["registration_abstentions"],
-            "original_12s_step_0.3": old,
-            "extended_20s_by_minimum_step_m": variants,
-        })
+        rows.append(
+            {
+                "candidate_id": pid,
+                "candidate_colour": new["colour"],
+                "candidate_crossing_time_s": new["crossing_time_s"],
+                "sample_count_12s": len(held[pid]["samples"]),
+                "sample_count_20s": len(new["samples"]),
+                "direct_registered_20s": new["sample_count"] - new["registration_abstentions"],
+                "original_12s_step_0.3": old,
+                "extended_20s_by_minimum_step_m": variants,
+            }
+        )
         files[pid] = {
             "candidate_input_sha256": file_sha256(candidate_path),
             "extended_motion_sha256": file_sha256(motion_path),
@@ -106,9 +117,11 @@ def main():
     a.output.parent.mkdir(parents=True, exist_ok=True)
     a.output.write_text(json.dumps(result, indent=2) + "\n")
     for row in rows:
-        print(row["candidate_id"], row["original_12s_step_0.3"]["status"],
-              [(step, row["extended_20s_by_minimum_step_m"][str(step)]["status"])
-               for step in STEPS])
+        print(
+            row["candidate_id"],
+            row["original_12s_step_0.3"]["status"],
+            [(step, row["extended_20s_by_minimum_step_m"][str(step)]["status"]) for step in STEPS],
+        )
 
 
 if __name__ == "__main__":

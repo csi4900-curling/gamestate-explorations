@@ -24,20 +24,32 @@ def stable_symbol_pairs(previous, current, tolerance=0.05):
     for i, j, _ in candidates:
         old_degree[i] += 1
         new_degree[j] += 1
-    pairs = [(i, j, distance) for i, j, distance in candidates
-             if old_degree[i] == 1 and new_degree[j] == 1]
+    pairs = [
+        (i, j, distance)
+        for i, j, distance in candidates
+        if old_degree[i] == 1 and new_degree[j] == 1
+    ]
     matched_old = {i for i, _, _ in pairs}
     matched_new = {j for _, j, _ in pairs}
     return {
         "coordinate_stable_pairs": [
-            {"previous_symbol_index": i, "current_symbol_index": j,
-             "colour": previous[i]["colour"], "distance_house_radii": distance}
+            {
+                "previous_symbol_index": i,
+                "current_symbol_index": j,
+                "colour": previous[i]["colour"],
+                "distance_house_radii": distance,
+            }
             for i, j, distance in pairs
         ],
-        "unresolved_previous_symbol_indices": [i for i in range(len(previous)) if i not in matched_old],
-        "unresolved_current_symbol_indices": [j for j in range(len(current)) if j not in matched_new],
+        "unresolved_previous_symbol_indices": [
+            i for i in range(len(previous)) if i not in matched_old
+        ],
+        "unresolved_current_symbol_indices": [
+            j for j in range(len(current)) if j not in matched_new
+        ],
         "ambiguous_close_pair_count": sum(
-            old_degree[i] != 1 or new_degree[j] != 1 for i, j, _ in candidates),
+            old_degree[i] != 1 or new_degree[j] != 1 for i, j, _ in candidates
+        ),
     }
 
 
@@ -48,14 +60,16 @@ def build_transitions(ends, tolerance=0.05):
         for shot_number, shot in enumerate(end["shots"], start=1):
             current = shot["stones"]
             pairs = stable_symbol_pairs(previous, current, tolerance)
-            rows.append({
-                "official_shot_id": shot["official_shot_id"],
-                "end": end["end"],
-                "shot_number": shot_number,
-                "previous_diagram_symbol_count": len(previous),
-                "current_diagram_symbol_count": len(current),
-                "diagram_review_flags": shot["review_flags"],
-                **pairs,
-            })
+            rows.append(
+                {
+                    "official_shot_id": shot["official_shot_id"],
+                    "end": end["end"],
+                    "shot_number": shot_number,
+                    "previous_diagram_symbol_count": len(previous),
+                    "current_diagram_symbol_count": len(current),
+                    "diagram_review_flags": shot["review_flags"],
+                    **pairs,
+                }
+            )
             previous = current
     return rows

@@ -33,16 +33,20 @@ def main():
         parser.error("Output already exists")
     pre, post = [json.loads(path.read_text()) for path in (args.pre, args.post)]
     source_hash = digest(args.video)
-    if (len({source_hash, pre["source_sha256"], post["source_sha256"]}) != 1
-            or pre["candidate_sequence_sha256"] != post["candidate_sequence_sha256"]):
+    if (
+        len({source_hash, pre["source_sha256"], post["source_sha256"]}) != 1
+        or pre["candidate_sequence_sha256"] != post["candidate_sequence_sha256"]
+    ):
         parser.error("Source or candidate sequence fingerprints differ")
     pre_ids = {row["candidate_id"] for row in pre["rows"]}
     post_ids = {row["candidate_id"] for row in post["rows"]}
-    if (len(pre_ids) != len(pre["rows"]) or len(post_ids) != len(post["rows"])
-            or pre_ids != post_ids):
+    if (
+        len(pre_ids) != len(pre["rows"])
+        or len(post_ids) != len(post["rows"])
+        or pre_ids != post_ids
+    ):
         parser.error("Pre and post candidate sets differ")
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         parser.error("Unreadable source video")
     rows = []
@@ -64,27 +68,31 @@ def main():
                     under = three_sample_underpoint(frames, points)
                     ring_value = ring["median_nonice_ring_fraction"]
                     under_value = under["median_underpoint_nonice_fraction"]
-                    rows.append({
-                        "candidate_id": event["candidate_id"],
-                        "phase": phase,
-                        "local_observation_id": item["local_observation_id"],
-                        "colour": item["colour"],
-                        "pixel_center": item["pixel_center"],
-                        "sample_source_times_s": event["sample_times_s"],
-                        "median_nonice_ring_fraction": ring_value,
-                        "median_underpoint_nonice_fraction": under_value,
-                        "context_tier": context_tier(ring_value, under_value),
-                        "physical_stone_identity_verified": False,
-                    })
+                    rows.append(
+                        {
+                            "candidate_id": event["candidate_id"],
+                            "phase": phase,
+                            "local_observation_id": item["local_observation_id"],
+                            "colour": item["colour"],
+                            "pixel_center": item["pixel_center"],
+                            "sample_source_times_s": event["sample_times_s"],
+                            "median_nonice_ring_fraction": ring_value,
+                            "median_underpoint_nonice_fraction": under_value,
+                            "context_tier": context_tier(ring_value, under_value),
+                            "physical_stone_identity_verified": False,
+                        }
+                    )
     finally:
         cap.release()
     counts = Counter(row["context_tier"] for row in rows)
     result = {
         "status": "fixed_context_review_cue_on_partial_board_caps_not_stone_classifier",
         "source_sha256": source_hash,
-        "input_sha256": {"pre_cap_scan": digest(args.pre),
-                         "post_cap_scan": digest(args.post),
-                         "candidate_sequence": pre["candidate_sequence_sha256"]},
+        "input_sha256": {
+            "pre_cap_scan": digest(args.pre),
+            "post_cap_scan": digest(args.post),
+            "candidate_sequence": pre["candidate_sequence_sha256"],
+        },
         "ring_feature_sha256": digest(ROOT / "prototype/right_track_ice_context.py"),
         "underpoint_feature_sha256": digest(ROOT / "prototype/right_track_underpoint_context.py"),
         "tier_code_sha256": digest(ROOT / "prototype/right_context_tier.py"),

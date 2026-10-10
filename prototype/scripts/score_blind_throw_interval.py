@@ -12,16 +12,21 @@ from cache_contract import file_sha256  # noqa: E402
 
 
 def validate_labels(draft, packet):
-    if (draft.get("schema") != "blind_throw_interval_v1" or
-            draft.get("source_sha256") != packet["video_sha256"] or
-            draft.get("source_offset_s") != packet["source_offset_s"] or
-            draft.get("interval_local_s") != packet["interval_local_s"]):
+    if (
+        draft.get("schema") != "blind_throw_interval_v1"
+        or draft.get("source_sha256") != packet["video_sha256"]
+        or draft.get("source_offset_s") != packet["source_offset_s"]
+        or draft.get("interval_local_s") != packet["interval_local_s"]
+    ):
         raise ValueError("Draft does not match the blind packet")
     if not draft.get("reviewer", "").strip() or draft.get("independent_confirmed") is not True:
         raise ValueError("Reviewer and independence declaration required")
     chunks = draft.get("reviewed_minutes")
-    if (not isinstance(chunks, list) or len(chunks) != packet["chunk_count"] or
-            any(value is not True for value in chunks)):
+    if (
+        not isinstance(chunks, list)
+        or len(chunks) != packet["chunk_count"]
+        or any(value is not True for value in chunks)
+    ):
         raise ValueError("Every minute must be marked reviewed")
     offset = packet["source_offset_s"]
     local_start, local_end = packet["interval_local_s"]
@@ -36,12 +41,14 @@ def validate_labels(draft, packet):
             raise ValueError("Duplicate reference ID")
         ids.add(event_id)
         start, end = event["delivery_local_interval_s"]
-        if (not local_start <= start < end <= local_end or
-                (previous_end is not None and start <= previous_end) or
-                event["delivery_source_interval_s"] != [start + offset, end + offset] or
-                event["colour"] not in ("red", "yellow", "unknown") or
-                type(event.get("uncertain")) is not bool or
-                (event["uncertain"] and not event.get("notes", "").strip())):
+        if (
+            not local_start <= start < end <= local_end
+            or (previous_end is not None and start <= previous_end)
+            or event["delivery_source_interval_s"] != [start + offset, end + offset]
+            or event["colour"] not in ("red", "yellow", "unknown")
+            or type(event.get("uncertain")) is not bool
+            or (event["uncertain"] and not event.get("notes", "").strip())
+        ):
             raise ValueError(f"Invalid delivery interval: {event_id}")
         previous_end = end
 
@@ -77,19 +84,21 @@ def score(args):
     screen = json.loads(args.screen.read_text())
     alignment = json.loads(args.alignment.read_text())
     verification = json.loads(args.verification.read_text())
-    if (sealed["status"] != "sealed_human_throw_interval_reference_independence_declared" or
-            sealed["packet_sha256"] != file_sha256(args.packet) or
-            sealed["draft_sha256"] != file_sha256(args.draft) or
-            sealed["reference"] != draft or
-            sealed["video_sha256"] != packet["video_sha256"] or
-            alignment["interval_video_sha256"] != sealed["video_sha256"] or
-            alignment["full_video_sha256"] != screen["source_sha256"] or
-            alignment["source_offset_s"] != sealed["source_offset_s"] or
-            alignment["all_best_at_zero_adjustment"] is not True or
-            screen["source_interval_s"] != sealed["interval_source_s"] or
-            verification["artifact_sha256"]["screen"] != file_sha256(args.screen) or
-            verification["full_video_sha256"] != screen["source_sha256"] or
-            verification["interval_video_sha256"] != sealed["video_sha256"]):
+    if (
+        sealed["status"] != "sealed_human_throw_interval_reference_independence_declared"
+        or sealed["packet_sha256"] != file_sha256(args.packet)
+        or sealed["draft_sha256"] != file_sha256(args.draft)
+        or sealed["reference"] != draft
+        or sealed["video_sha256"] != packet["video_sha256"]
+        or alignment["interval_video_sha256"] != sealed["video_sha256"]
+        or alignment["full_video_sha256"] != screen["source_sha256"]
+        or alignment["source_offset_s"] != sealed["source_offset_s"]
+        or alignment["all_best_at_zero_adjustment"] is not True
+        or screen["source_interval_s"] != sealed["interval_source_s"]
+        or verification["artifact_sha256"]["screen"] != file_sha256(args.screen)
+        or verification["full_video_sha256"] != screen["source_sha256"]
+        or verification["interval_video_sha256"] != sealed["video_sha256"]
+    ):
         raise ValueError("Sealed labels, alignment, or frozen screen differ")
     validate_labels(draft, packet)
     metrics = score_throw_intervals(draft["events"], screen["events"])

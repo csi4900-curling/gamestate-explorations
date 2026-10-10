@@ -41,20 +41,21 @@ def classify(bracket, reference):
 def main():
     if OUTPUT.exists():
         raise ValueError("High-resolution onset cross-check already exists")
-    join, yellow, red, moving, quiet = (json.loads(p.read_text()) for p in
-                                        (JOIN, YELLOW, RED, MOVING, QUIET))
+    join, yellow, red, moving, quiet = (
+        json.loads(p.read_text()) for p in (JOIN, YELLOW, RED, MOVING, QUIET)
+    )
     source_hash = join["highres_source_sha256"]
-    if (source_hash != yellow["blind_video_sha256"] or
-            source_hash != red["source_video_sha256"] or
-            source_hash != moving["source_video_sha256"] or
-            source_hash != quiet["source_video_sha256"] or
-            moving["join_sha256"] != digest(JOIN) or
-            quiet["join_sha256"] != digest(JOIN)):
+    if (
+        source_hash != yellow["blind_video_sha256"]
+        or source_hash != red["source_video_sha256"]
+        or source_hash != moving["source_video_sha256"]
+        or source_hash != quiet["source_video_sha256"]
+        or moving["join_sha256"] != digest(JOIN)
+        or quiet["join_sha256"] != digest(JOIN)
+    ):
         raise ValueError("Path, source or registration lineage differs")
-    paths = {("yellow", p["diagnostic_path_id"]): p
-             for p in yellow["supported_image_paths"]}
-    paths.update({("red", p["diagnostic_path_id"]): p
-                  for p in red["red_supported_image_paths"]})
+    paths = {("yellow", p["diagnostic_path_id"]): p for p in yellow["supported_image_paths"]}
+    paths.update({("red", p["diagnostic_path_id"]): p for p in red["red_supported_image_paths"]})
     rows = []
     for item in join["rows"]:
         if item["source_prefix_class"] != "moving_stone_pixels":
@@ -67,28 +68,35 @@ def main():
         # Full-source 1080p -> 640x720 analysis scale: 2/3. The 360p
         # source used by the reference onset rule is another factor of 2
         # smaller, so its 3/12 px/s thresholds become 6/24 px/s here.
-        normalized = [{"time_s": p["time_s"],
-                       "pixel": [value * 2 / 3
-                                 for value in p["center_1080p_px"]]}
-                      for p in points]
+        normalized = [
+            {"time_s": p["time_s"], "pixel": [value * 2 / 3 for value in p["center_1080p_px"]]}
+            for p in points
+        ]
         onset = observed_quiet_to_motion(
-            normalized, "positive_y", quiet_rate_px_s=6,
-            strong_rate_px_s=24, quiet_steps=3, strong_steps=2)
+            normalized,
+            "positive_y",
+            quiet_rate_px_s=6,
+            strong_rate_px_s=24,
+            quiet_steps=3,
+            strong_steps=2,
+        )
         bracket = onset.get("onset_bracket_s")
         reference = item["observed_motion_onset"]["onset_bracket_s"]
-        rows.append({
-            "right_proposal_id": item["right_proposal_id"],
-            "colour": key[0], "highres_path_id": key[1],
-            "highres_path_interval_s": [points[0]["time_s"],
-                                        points[-1]["time_s"]],
-            "highres_point_count": len(points),
-            "reference_360p_bracket_s": reference,
-            "highres_onset_status": onset["status"],
-            "highres_bracket_s": bracket,
-            "comparison": classify(bracket, reference),
-            "physical_release_time_s": None,
-            "physical_stone_identity_verified": False,
-        })
+        rows.append(
+            {
+                "right_proposal_id": item["right_proposal_id"],
+                "colour": key[0],
+                "highres_path_id": key[1],
+                "highres_path_interval_s": [points[0]["time_s"], points[-1]["time_s"]],
+                "highres_point_count": len(points),
+                "reference_360p_bracket_s": reference,
+                "highres_onset_status": onset["status"],
+                "highres_bracket_s": bracket,
+                "comparison": classify(bracket, reference),
+                "physical_release_time_s": None,
+                "physical_stone_identity_verified": False,
+            }
+        )
     counts = Counter(r["comparison"] for r in rows)
     payload = {
         "status": "same_match_cross_resolution_onset_check_not_event_accuracy",

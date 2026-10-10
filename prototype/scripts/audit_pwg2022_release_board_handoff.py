@@ -29,29 +29,33 @@ def build():
     union = json.loads(UNION.read_text())
     releases = [json.loads(path.read_text()) for path in PASSAGES.values()]
     reserved = json.loads((ROOT / "validation/unseen-end/reservation.json").read_text())
-    if any(row["source_video_sha256"] == reserved["source_sha256"]
-           for row in boards["links"]):
+    if any(row["source_video_sha256"] == reserved["source_sha256"] for row in boards["links"]):
         raise ValueError("Reserved board source cannot enter development audit")
     rows = join_release_boards(boards["links"], union["games"], releases)
-    return {"status": "development_release_to_partial_board_overlap_not_state_transition",
-            "input_sha256": {"board_handoff": digest(BOARDS),
-                             "provisional_union": digest(UNION),
-                             "release_sidecars": {code: digest(path)
-                                                  for code, path in PASSAGES.items()}},
-            "join_code_sha256": digest(ROOT / "prototype/release_board_handoff.py"),
-            "runner_sha256": digest(Path(__file__)),
-            "partial_board_count": len(rows),
-            "unique_counter_linked_event_count": sum(
-                row["event_join_status"] == "unique_shared_counter" for row in rows),
-            "boards_with_unique_within_view_release_cue": sum(
-                row["release_cue_status"] == "cue_precedes_board" for row in rows),
-            "rows": rows,
-            "limitations": [
-                "A shared delayed counter is provisional bookkeeping, not delivered-stone identity.",
-                "A missing release cue in the event's camera shot does not prove that the physical throw was absent.",
-                "The nine video boards are partial and have no verified delivered-stone identity or metric calibration.",
-                "No physical state transition or simulation-ready output is established.",
-            ]}
+    return {
+        "status": "development_release_to_partial_board_overlap_not_state_transition",
+        "input_sha256": {
+            "board_handoff": digest(BOARDS),
+            "provisional_union": digest(UNION),
+            "release_sidecars": {code: digest(path) for code, path in PASSAGES.items()},
+        },
+        "join_code_sha256": digest(ROOT / "prototype/release_board_handoff.py"),
+        "runner_sha256": digest(Path(__file__)),
+        "partial_board_count": len(rows),
+        "unique_counter_linked_event_count": sum(
+            row["event_join_status"] == "unique_shared_counter" for row in rows
+        ),
+        "boards_with_unique_within_view_release_cue": sum(
+            row["release_cue_status"] == "cue_precedes_board" for row in rows
+        ),
+        "rows": rows,
+        "limitations": [
+            "A shared delayed counter is provisional bookkeeping, not delivered-stone identity.",
+            "A missing release cue in the event's camera shot does not prove that the physical throw was absent.",
+            "The nine video boards are partial and have no verified delivered-stone identity or metric calibration.",
+            "No physical state transition or simulation-ready output is established.",
+        ],
+    }
 
 
 def main():

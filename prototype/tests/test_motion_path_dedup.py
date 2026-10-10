@@ -10,17 +10,22 @@ def candidate(cid, time, colour="red"):
 
 
 def row(cid, start, end, colour="red", view="right"):
-    return {"candidate_id": cid, "colour": colour,
-            "receiving_view": view,
-            "selection": {"path": [
-                {"source_time_s": t, "ground_position_m": [0, 20 - t]}
-                for t in range(start, end)]}}
+    return {
+        "candidate_id": cid,
+        "colour": colour,
+        "receiving_view": view,
+        "selection": {
+            "path": [
+                {"source_time_s": t, "ground_position_m": [0, 20 - t]} for t in range(start, end)
+            ]
+        },
+    }
 
 
 def test_suppresses_later_candidate_on_same_timed_path():
     result = deduplicate_motion_paths(
-        [candidate("D1", 1), candidate("D2", 3)],
-        [row("D1", 5, 12), row("D2", 6, 14)])
+        [candidate("D1", 1), candidate("D2", 3)], [row("D1", 5, 12), row("D2", 6, 14)]
+    )
     assert result["retained_candidate_ids"] == ["D1"]
     assert result["pairs"][0]["shared_timed_observation_count"] == 6
 
@@ -28,5 +33,6 @@ def test_suppresses_later_candidate_on_same_timed_path():
 def test_colour_or_time_difference_keeps_distinct_events():
     result = deduplicate_motion_paths(
         [candidate("D1", 1), candidate("D2", 3, "yellow")],
-        [row("D1", 5, 12), row("D2", 5, 12, "yellow")])
+        [row("D1", 5, 12), row("D2", 5, 12, "yellow")],
+    )
     assert len(result["retained_candidate_ids"]) == 2

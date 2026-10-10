@@ -12,6 +12,13 @@ def test_static_run_keeps_pairwise_bounds_and_right_activity():
         {"previous_time_s": 20, "time_s": 25, "left_mae": 1.7, "right_mae": 16},
     ]
     runs = static_runs(rows, max_left_mae=3, min_duration_s=10)
-    assert runs == [{"start_s": 10, "stop_s": 25, "duration_s": 15,
-                     "sample_edge_count": 3, "median_left_mae": 1.6,
-                     "median_right_mae": 14.0}]
+    assert runs == [
+        {
+            "start_s": 10,
+            "stop_s": 25,
+            "duration_s": 15,
+            "sample_edge_count": 3,
+            "median_left_mae": 1.6,
+            "median_right_mae": 14.0,
+        }
+    ]

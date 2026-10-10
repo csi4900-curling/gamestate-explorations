@@ -22,16 +22,17 @@ def digest(path):
 def main():
     if OUTPUT.exists():
         raise SystemExit("Output exists; preserve first extended export")
-    original, adjacent = (json.loads(path.read_text()) for path in
-                          (ORIGINAL, ADJACENT))
+    original, adjacent = (json.loads(path.read_text()) for path in (ORIGINAL, ADJACENT))
     source_hash = adjacent["source_sha256"]
     old_by_id = {row["observation_id"]: row for row in original["observations"]}
     added = []
     for row in adjacent["rows"]:
-        adapted = {"official_game_code": "PREL000101",
-                   "official_shot_id": row["shot_id"],
-                   "counter_time_s": row["counter_anchor_s"],
-                   "stable_partial_board": row["stable_partial_board"]}
+        adapted = {
+            "official_game_code": "PREL000101",
+            "official_shot_id": row["shot_id"],
+            "counter_time_s": row["counter_anchor_s"],
+            "stable_partial_board": row["stable_partial_board"],
+        }
         observation = partial_board_observation(adapted, source_hash)
         if observation is None:
             continue
@@ -41,8 +42,7 @@ def main():
                 raise ValueError("Previously exported board changed")
         else:
             added.append(observation)
-    if sorted(row["observation_id"].split("-")[-1]
-              for row in added) != ["S13", "S14"]:
+    if sorted(row["observation_id"].split("-")[-1] for row in added) != ["S13", "S14"]:
         raise ValueError("Expected exactly Swiss end-two shots 13 and 14")
     observations = original["observations"] + added
     output = {
@@ -64,9 +64,13 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(output, indent=2) + "\n")
-    print({"observations": output["observation_count"],
-           "new": output["added_observation_count"],
-           "stones": output["stone_observation_count"]})
+    print(
+        {
+            "observations": output["observation_count"],
+            "new": output["added_observation_count"],
+            "stones": output["stone_observation_count"],
+        }
+    )
 
 
 if __name__ == "__main__":

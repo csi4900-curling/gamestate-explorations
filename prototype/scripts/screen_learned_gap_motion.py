@@ -59,11 +59,17 @@ def main():
     for gap in source["scanned_gaps"]:
         start, end = gap["interval_s"]
         selected = next(
-            (float(t) for t in range(int(start), int(end)) if compact_overlay_visible(frame_at(float(t)))),
+            (
+                float(t)
+                for t in range(int(start), int(end))
+                if compact_overlay_visible(frame_at(float(t)))
+            ),
             None,
         )
         template_times[gap["id"]] = selected
-        templates[gap["id"]] = compact_overlay_patch(frame_at(selected)) if selected is not None else None
+        templates[gap["id"]] = (
+            compact_overlay_patch(frame_at(selected)) if selected is not None else None
+        )
     context = []
     for candidate in source["motion_candidates"]:
         points = candidate["visual_track_points"]
@@ -96,7 +102,8 @@ def main():
         )
     capture.release()
     decisions = confirm_dense_gap_candidates(
-        source["motion_candidates"], context,
+        source["motion_candidates"],
+        context,
         min_smooth_run_s=2.0 if args.large_cap_fallback else 0,
         min_smooth_run_moving_steps=8 if args.large_cap_fallback else 0,
     )
@@ -128,8 +135,14 @@ def main():
         ],
     }
     args.output.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({"corroborated": len(result["corroborated_candidates"]),
-                      "withheld": len(result["withheld_candidates"])}))
+    print(
+        json.dumps(
+            {
+                "corroborated": len(result["corroborated_candidates"]),
+                "withheld": len(result["withheld_candidates"]),
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

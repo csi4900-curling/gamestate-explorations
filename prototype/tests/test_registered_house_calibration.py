@@ -1,6 +1,6 @@
 """Calibration donors must remain in the same routed camera context."""
 
-from registered_house_calibration import (alignment_supported, nearest_donor)
+from registered_house_calibration import alignment_supported, nearest_donor
 
 
 def test_nearest_donor_cannot_cross_origin_or_run():
@@ -21,12 +21,14 @@ def test_nearest_donor_cannot_cross_origin_or_run():
 
 
 def test_alignment_requires_zero_shift_and_paint_overlap():
-    alignment = {"zero_translation_is_best": True,
-                 "best_translation_second_to_first_px": [0, 0],
-                 "best_mask_iou": .8}
+    alignment = {
+        "zero_translation_is_best": True,
+        "best_translation_second_to_first_px": [0, 0],
+        "best_mask_iou": 0.8,
+    }
     assert alignment_supported(alignment)
     alignment["best_translation_second_to_first_px"] = [1, 0]
     assert not alignment_supported(alignment)
     alignment["best_translation_second_to_first_px"] = [0, 0]
-    alignment["best_mask_iou"] = .6
+    alignment["best_mask_iou"] = 0.6
     assert not alignment_supported(alignment)

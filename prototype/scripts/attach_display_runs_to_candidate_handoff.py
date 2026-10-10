@@ -33,8 +33,10 @@ def main():
         parser.error("Output exists; preserve earlier result")
     handoff = json.loads(args.handoff.read_text())
     scan = json.loads(args.marker_scan.read_text())
-    if (scan["status"] != "development_2d_registered_broadcast_marker_not_physical_end" or
-            scan["video_sha256"] != handoff["source_sha256"]):
+    if (
+        scan["status"] != "development_2d_registered_broadcast_marker_not_physical_end"
+        or scan["video_sha256"] != handoff["source_sha256"]
+    ):
         parser.error("Handoff and marker scan source/version differ")
     if args.profile == "latvia":
         source_rows = handoff["ordered_candidates"]
@@ -42,19 +44,27 @@ def main():
     else:
         source_rows = handoff["rows"]
         time_key = "observation_time_s"
-    if len(source_rows) != handoff["candidate_count" if args.profile == "latvia"
-                                        else "candidate_sequence_count"]:
+    if (
+        len(source_rows)
+        != handoff["candidate_count" if args.profile == "latvia" else "candidate_sequence_count"]
+    ):
         parser.error("Handoff candidate inventory differs")
     normalized = []
     by_id = {}
     for row in source_rows:
-        if (row["game_state_after"]["end_identity"] is not None or
-                row["game_state_after"]["simulation_ready"] or
-                row["game_state_after"]["spin_revolution_count"] is not None):
+        if (
+            row["game_state_after"]["end_identity"] is not None
+            or row["game_state_after"]["simulation_ready"]
+            or row["game_state_after"]["spin_revolution_count"] is not None
+        ):
             parser.error("Handoff promoted physical state unexpectedly")
-        normalized.append({"id": row["candidate_id"],
-                           "crossing_time_s": row[time_key],
-                           "colour": row["colour_claim"]})
+        normalized.append(
+            {
+                "id": row["candidate_id"],
+                "crossing_time_s": row[time_key],
+                "colour": row["colour_claim"],
+            }
+        )
         by_id[row["candidate_id"]] = row
     temporal = stable_marker_evidence(scan["samples"])
     context, _ = attach_stable_display_runs(normalized, temporal["stable_runs"])
@@ -63,8 +73,9 @@ def main():
         original = by_id[row["candidate_id"]]
         row["observation_kind"] = original["observation_kind"]
         row["evidence_tier"] = original["evidence_tier"]
-        tier_counts[str(row["displayed_end"]) if row["displayed_end"] is not None
-                    else "unobserved"][row["observation_kind"]] += 1
+        tier_counts[
+            str(row["displayed_end"]) if row["displayed_end"] is not None else "unobserved"
+        ][row["observation_kind"]] += 1
     result = {
         "status": "candidate_handoff_with_broadcast_display_context_not_physical_state",
         "source_sha256": handoff["source_sha256"],
@@ -75,10 +86,10 @@ def main():
         "runner_sha256": digest(Path(__file__)),
         "profile": args.profile,
         "candidate_count": len(context),
-        "context_status_counts": dict(Counter(row["display_context_status"]
-                                              for row in context)),
+        "context_status_counts": dict(Counter(row["display_context_status"] for row in context)),
         "observation_kinds_by_displayed_run": {
-            end: dict(counts) for end, counts in tier_counts.items()},
+            end: dict(counts) for end, counts in tier_counts.items()
+        },
         "display_runs": temporal["stable_runs"],
         "candidates": context,
         "limitations": [
@@ -89,10 +100,15 @@ def main():
         ],
     }
     args.output.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({"candidate_count": len(context),
-                      "context_status_counts": result["context_status_counts"],
-                      "observation_kinds_by_displayed_run": result[
-                          "observation_kinds_by_displayed_run"]}))
+    print(
+        json.dumps(
+            {
+                "candidate_count": len(context),
+                "context_status_counts": result["context_status_counts"],
+                "observation_kinds_by_displayed_run": result["observation_kinds_by_displayed_run"],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

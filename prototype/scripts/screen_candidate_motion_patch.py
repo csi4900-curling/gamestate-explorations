@@ -25,7 +25,8 @@ def main():
     motion = json.loads(args.motion.read_text())
     patch = json.loads(args.patch.read_text())
     if motion["candidates_sha256"] != file_sha256(args.candidates) or (
-            patch["motion_sha256"] != file_sha256(args.motion)):
+        patch["motion_sha256"] != file_sha256(args.motion)
+    ):
         parser.error("Candidate, motion, and patch artifacts do not chain")
     by_motion = {row["candidate_id"]: row for row in motion["rows"]}
     by_patch = {row["candidate_id"]: row for row in patch["rows"]}
@@ -33,8 +34,7 @@ def main():
     if len(set(ids)) != len(ids) or set(ids) != set(by_motion) or set(ids) != set(by_patch):
         parser.error("Candidate IDs differ across inputs")
     decisions = [screen_candidate(by_motion[pid], by_patch[pid]) for pid in ids]
-    accepted_ids = {decision["candidate_id"] for decision in decisions
-                    if decision["accepted"]}
+    accepted_ids = {decision["candidate_id"] for decision in decisions if decision["accepted"]}
     result = {
         "status": "development_candidate_motion_patch_screen_not_independent_validation",
         "source_id": candidates["source_id"],

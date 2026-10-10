@@ -30,10 +30,12 @@ def main():
     source_hash = digest(args.video)
     if fusion["source_sha256"] != source_hash:
         parser.error("Source fingerprints differ")
-    selected = [row for row in fusion["right_entries"] if row["fusion_status"] ==
-                "right_only_prior_left_coverage_gap_review"]
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    selected = [
+        row
+        for row in fusion["right_entries"]
+        if row["fusion_status"] == "right_only_prior_left_coverage_gap_review"
+    ]
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         parser.error("Cannot open video")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -52,27 +54,30 @@ def main():
                 if not ok or frame.shape[:2] != (360, 640):
                     raise RuntimeError(f"Cannot decode source second {second}")
                 cv2.rectangle(frame, (0, 0), (100, 27), (0, 0, 0), -1)
-                cv2.putText(frame, str(second), (8, 19),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 1)
+                cv2.putText(
+                    frame, str(second), (8, 19), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 1
+                )
                 tiles.append(frame)
-                frames.append({"source_time_s": second,
-                               "decoded_frame_index": frame_index})
+                frames.append({"source_time_s": second, "decoded_frame_index": frame_index})
             while len(tiles) % 2:
                 tiles.append(np.zeros_like(tiles[0]))
-            sheet = np.vstack([np.hstack(tiles[i:i + 2])
-                               for i in range(0, len(tiles), 2)])
+            sheet = np.vstack([np.hstack(tiles[i : i + 2]) for i in range(0, len(tiles), 2)])
             name = entry["right_raw_track_id"].lower() + "-lookback-gap.jpg"
             path = args.output_dir / name
             if not cv2.imwrite(str(path), sheet):
                 raise RuntimeError(f"Cannot write {path}")
-            rows.append({"right_raw_track_id": entry["right_raw_track_id"],
-                         "right_entry_time_s": t,
-                         "colour_claim": entry["right_colour_claim"],
-                         "left_coverage_status_at_right_entry":
-                         entry["left_coverage_status"],
-                         "frames": frames,
-                         "sheet": name, "sheet_sha256": digest(path),
-                         "physical_cross_view_identity_verified": False})
+            rows.append(
+                {
+                    "right_raw_track_id": entry["right_raw_track_id"],
+                    "right_entry_time_s": t,
+                    "colour_claim": entry["right_colour_claim"],
+                    "left_coverage_status_at_right_entry": entry["left_coverage_status"],
+                    "frames": frames,
+                    "sheet": name,
+                    "sheet_sha256": digest(path),
+                    "physical_cross_view_identity_verified": False,
+                }
+            )
     finally:
         cap.release()
     manifest = {
@@ -88,8 +93,11 @@ def main():
         ],
     }
     (args.output_dir / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
-    print(json.dumps({"entries": len(rows),
-                      "sampled_frames": sum(len(row["frames"]) for row in rows)}))
+    print(
+        json.dumps(
+            {"entries": len(rows), "sampled_frames": sum(len(row["frames"]) for row in rows)}
+        )
+    )
 
 
 if __name__ == "__main__":

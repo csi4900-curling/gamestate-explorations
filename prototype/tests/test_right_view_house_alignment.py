@@ -18,8 +18,7 @@ def test_alignment_probe_recovers_known_translation():
 
 def test_alignment_probe_rejects_empty_mask():
     with pytest.raises(ValueError, match="Empty"):
-        alignment_probe(np.zeros((5, 5), np.uint8),
-                        np.zeros((5, 5), np.uint8))
+        alignment_probe(np.zeros((5, 5), np.uint8), np.zeros((5, 5), np.uint8))
 
 
 def test_blue_house_mask_requires_source_shape():

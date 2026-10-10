@@ -31,23 +31,33 @@ def main():
         ok, frame = cap.read()
         if not ok:
             raise RuntimeError(f"Cannot read video at {time_s}")
-        crop = frame[y-40:y+40, x-40:x+40]
+        crop = frame[y - 40 : y + 40, x - 40 : x + 40]
         if crop.shape[:2] != (80, 80):
             raise ValueError("Stone crop reached the source frame boundary")
         crop = cv2.resize(crop, (180, 180), interpolation=cv2.INTER_NEAREST)
-        sheet.paste(Image.fromarray(cv2.cvtColor(crop, cv2.COLOR_BGR2RGB)), (180*index, 24))
-        draw.text((180*index+4, 4), f"{time_s:.1f} s", fill="black")
+        sheet.paste(Image.fromarray(cv2.cvtColor(crop, cv2.COLOR_BGR2RGB)), (180 * index, 24))
+        draw.text((180 * index + 4, 4), f"{time_s:.1f} s", fill="black")
     cap.release()
     OUTPUT.mkdir(parents=True, exist_ok=True)
     sheet.save(OUTPUT / "t11-handle-contact-sheet.png")
-    (OUTPUT / "provenance.json").write_text(json.dumps({
-        "status": "handle_visibility_feasibility_not_spin_measurement",
-        "clip_sha256": digest(VIDEO), "trajectory_predictions_sha256": digest(PREDICTIONS),
-        "sampled_clip_times_s": TIMES, "source_offset_s": 2260,
-        "crop_source_size_px": [80, 80], "display_size_px": [180, 180],
-        "interpolation": "nearest_neighbour_display_only",
-        "spin_direction": None, "revolutions": None,
-    }, indent=2) + "\n")
+    (OUTPUT / "provenance.json").write_text(
+        json.dumps(
+            {
+                "status": "handle_visibility_feasibility_not_spin_measurement",
+                "clip_sha256": digest(VIDEO),
+                "trajectory_predictions_sha256": digest(PREDICTIONS),
+                "sampled_clip_times_s": TIMES,
+                "source_offset_s": 2260,
+                "crop_source_size_px": [80, 80],
+                "display_size_px": [180, 180],
+                "interpolation": "nearest_neighbour_display_only",
+                "spin_direction": None,
+                "revolutions": None,
+            },
+            indent=2,
+        )
+        + "\n"
+    )
     print(OUTPUT / "t11-handle-contact-sheet.png")
 
 

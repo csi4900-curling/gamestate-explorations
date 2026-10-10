@@ -47,22 +47,27 @@ def main():
     pre = json.loads(args.pre.read_text())
     post = json.loads(args.post.read_text())
     source_hash = digest(args.video)
-    if (len({source_hash, routes["source_sha256"], pre["source_sha256"],
-             post["source_sha256"]}) != 1 or
-            pre["routes_sha256"] != digest(args.routes) or
-            post["routes_sha256"] != digest(args.routes) or
-            pre["sequence_sha256"] != post["sequence_sha256"]):
+    if (
+        len({source_hash, routes["source_sha256"], pre["source_sha256"], post["source_sha256"]})
+        != 1
+        or pre["routes_sha256"] != digest(args.routes)
+        or post["routes_sha256"] != digest(args.routes)
+        or pre["sequence_sha256"] != post["sequence_sha256"]
+    ):
         raise ValueError("Pre/post/route provenance differs")
     pre_by_id = {row["candidate_id"]: row for row in pre["rows"]}
     post_by_id = {row["candidate_id"]: row for row in post["rows"]}
-    left_ids = {row["candidate_id"] for row in routes["rows"]
-                if row["conditional_receiving_view"] == "left"}
-    if (len(pre_by_id) != len(pre["rows"]) or
-            len(post_by_id) != len(post["rows"]) or
-            set(pre_by_id) != left_ids or set(post_by_id) != left_ids):
+    left_ids = {
+        row["candidate_id"] for row in routes["rows"] if row["conditional_receiving_view"] == "left"
+    }
+    if (
+        len(pre_by_id) != len(pre["rows"])
+        or len(post_by_id) != len(post["rows"])
+        or set(pre_by_id) != left_ids
+        or set(post_by_id) != left_ids
+    ):
         raise ValueError("Pre/post scans do not cover exactly the left routes")
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened() or cap.get(cv2.CAP_PROP_FPS) != 30:
         raise RuntimeError("Cannot open expected 30-fps source")
     rows = []
@@ -78,17 +83,27 @@ def main():
                 a = scene_patch(cap, before["sample_times_s"][1])
                 b = scene_patch(cap, after["sample_times_s"][1])
                 mae = float(np.mean(np.abs(a - b)))
-            before_view = {"candidate_id": cid,
-                           "coordinate_frame": "full_source_left_camera_pixels_not_metric",
-                           "observation_status": before["status"],
-                           "stable_cap_proposals": before["stable_cap_proposals"]}
-            after_view = {"candidate_id": cid,
-                          "coordinate_frame": "full_source_left_camera_pixels_not_metric",
-                          "observation_status": after["status"],
-                          "stable_cap_proposals": after["stable_cap_proposals"]}
-            rows.append(compare_observation_rows(
-                before_view, after_view, mae, max_scene_mae=MAX_CROSS_SCENE_MAE,
-                max_distance_px=MAX_CAP_MATCH_DISTANCE_PX))
+            before_view = {
+                "candidate_id": cid,
+                "coordinate_frame": "full_source_left_camera_pixels_not_metric",
+                "observation_status": before["status"],
+                "stable_cap_proposals": before["stable_cap_proposals"],
+            }
+            after_view = {
+                "candidate_id": cid,
+                "coordinate_frame": "full_source_left_camera_pixels_not_metric",
+                "observation_status": after["status"],
+                "stable_cap_proposals": after["stable_cap_proposals"],
+            }
+            rows.append(
+                compare_observation_rows(
+                    before_view,
+                    after_view,
+                    mae,
+                    max_scene_mae=MAX_CROSS_SCENE_MAE,
+                    max_distance_px=MAX_CAP_MATCH_DISTANCE_PX,
+                )
+            )
     finally:
         cap.release()
     output = {
@@ -113,8 +128,7 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(output, indent=2) + "\n")
-    print(json.dumps({"source": routes["source_id"],
-                      "statuses": output["status_counts"]}))
+    print(json.dumps({"source": routes["source_id"], "statuses": output["status_counts"]}))
 
 
 if __name__ == "__main__":

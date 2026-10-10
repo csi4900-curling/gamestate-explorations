@@ -12,7 +12,11 @@ import cv2
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "prototype"))
 from split_panel_camera_registration import (  # noqa: E402
-    camera_relative_pair, panel_for_pixel, panel_pixel, resize_panel)
+    camera_relative_pair,
+    panel_for_pixel,
+    panel_pixel,
+    resize_panel,
+)
 
 BASE = ROOT / "validation/throw-event-benchmark/canada-latvia-2024"
 LANE = ROOT / "validation/throw-event-benchmark/layout-router/full-2024-coverage/latvia24-full-v1"
@@ -37,23 +41,23 @@ def digest(path):
 def main():
     if OUTPUT.exists():
         raise ValueError("Latvia quiet-control transfer already exists")
-    join, yellow, red, frozen = (json.loads(p.read_text()) for p in
-                                 (JOIN, YELLOW, RED, FROZEN))
+    join, yellow, red, frozen = (json.loads(p.read_text()) for p in (JOIN, YELLOW, RED, FROZEN))
     source_hash = digest(VIDEO)
     code_hash = digest(ROOT / "prototype/split_panel_camera_registration.py")
-    if (source_hash != join["highres_source_sha256"] or
-            source_hash != yellow["blind_video_sha256"] or
-            source_hash != red["source_video_sha256"] or
-            source_hash != frozen["source_video_sha256"] or
-            code_hash != frozen["registration_code_sha256"] or
-            frozen["join_sha256"] != digest(JOIN)):
+    if (
+        source_hash != join["highres_source_sha256"]
+        or source_hash != yellow["blind_video_sha256"]
+        or source_hash != red["source_video_sha256"]
+        or source_hash != frozen["source_video_sha256"]
+        or code_hash != frozen["registration_code_sha256"]
+        or frozen["join_sha256"] != digest(JOIN)
+    ):
         raise ValueError("Latvia quiet source or Czech rule lineage differs")
-    path_by_key = {("yellow", p["diagnostic_path_id"]): p
-                   for p in yellow["supported_image_paths"]}
-    path_by_key.update({("red", p["diagnostic_path_id"]): p
-                        for p in red["red_supported_image_paths"]})
-    cap = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    path_by_key = {("yellow", p["diagnostic_path_id"]): p for p in yellow["supported_image_paths"]}
+    path_by_key.update(
+        {("red", p["diagnostic_path_id"]): p for p in red["red_supported_image_paths"]}
+    )
+    cap = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         raise ValueError("Latvia high-resolution video unreadable")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -69,15 +73,18 @@ def main():
             path = path_by_key[key]
             quiet_end = item["observed_motion_onset"]["quiet_end_time_s"]
             # Exclude the boundary second to avoid a release transition.
-            points = [p for p in path["points"]
-                      if p["time_s"] <= quiet_end - 1][-4:]
+            points = [p for p in path["points"] if p["time_s"] <= quiet_end - 1][-4:]
             if len(points) < 2:
-                rows.append({"right_proposal_id": item["right_proposal_id"],
-                             "status": "no_preboundary_held_pair",
-                             "pair_count": 0, "pairs": []})
+                rows.append(
+                    {
+                        "right_proposal_id": item["right_proposal_id"],
+                        "status": "no_preboundary_held_pair",
+                        "pair_count": 0,
+                        "pairs": [],
+                    }
+                )
                 continue
-            if any(panel_for_pixel(p["center_1080p_px"]) != 1
-                   for p in points):
+            if any(panel_for_pixel(p["center_1080p_px"]) != 1 for p in points):
                 raise ValueError("Held body path outside right panel")
             cache = {}
 
@@ -95,24 +102,32 @@ def main():
             for first, second in zip(points, points[1:]):
                 p0 = panel_pixel(first["center_1080p_px"], 1)
                 p1 = panel_pixel(second["center_1080p_px"], 1)
-                result = camera_relative_pair(
-                    p0, p1, first["time_s"], second["time_s"], frame_at)
-                pairs.append({"interval_s": [first["time_s"],
-                                             second["time_s"]],
-                              "raw_displacement_analysis_px": round(
-                                  math.dist(p0, p1), 3),
-                              **result})
-            row = {"right_proposal_id": item["right_proposal_id"],
-                   "highres_path_id": key[1], "colour": key[0],
-                   "quiet_end_time_s": quiet_end,
-                   "status": "audited", "pair_count": len(pairs),
-                   "registered_pair_count": sum(
-                       p["camera_residual_px"] is not None for p in pairs),
-                   "pairs": pairs}
+                result = camera_relative_pair(p0, p1, first["time_s"], second["time_s"], frame_at)
+                pairs.append(
+                    {
+                        "interval_s": [first["time_s"], second["time_s"]],
+                        "raw_displacement_analysis_px": round(math.dist(p0, p1), 3),
+                        **result,
+                    }
+                )
+            row = {
+                "right_proposal_id": item["right_proposal_id"],
+                "highres_path_id": key[1],
+                "colour": key[0],
+                "quiet_end_time_s": quiet_end,
+                "status": "audited",
+                "pair_count": len(pairs),
+                "registered_pair_count": sum(p["camera_residual_px"] is not None for p in pairs),
+                "pairs": pairs,
+            }
             rows.append(row)
-            print(row["right_proposal_id"],
-                  row["registered_pair_count"], "/", row["pair_count"],
-                  flush=True)
+            print(
+                row["right_proposal_id"],
+                row["registered_pair_count"],
+                "/",
+                row["pair_count"],
+                flush=True,
+            )
     finally:
         cap.release()
     payload = {
@@ -129,8 +144,7 @@ def main():
         "reviewed_proposal_count": len(rows),
         "usable_path_count": sum(r["status"] == "audited" for r in rows),
         "pair_count": sum(r["pair_count"] for r in rows),
-        "registered_pair_count": sum(r.get("registered_pair_count", 0)
-                                     for r in rows),
+        "registered_pair_count": sum(r.get("registered_pair_count", 0) for r in rows),
         "status_counts": dict(Counter(r["status"] for r in rows)),
         "rows": rows,
         "limitations": [
@@ -140,9 +154,15 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(payload, indent=2) + "\n")
-    print(json.dumps({"usable": payload["usable_path_count"],
-                      "pairs": payload["pair_count"],
-                      "registered": payload["registered_pair_count"]}))
+    print(
+        json.dumps(
+            {
+                "usable": payload["usable_path_count"],
+                "pairs": payload["pair_count"],
+                "registered": payload["registered_pair_count"],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

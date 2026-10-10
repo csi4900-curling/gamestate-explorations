@@ -26,21 +26,26 @@ def main():
     first = json.loads(FIRST.read_text())
     if visual["source_sha256"] != first["source_video_sha256"]:
         raise ValueError("Video and counter references differ")
-    counters = [row for row in first["counter_alignment_rows"]
-                if row["official_end"] == 3 and
-                row["status"] in ("unique_colour_concordant",
-                                  "unique_colour_concordant_amid_duplicate")]
+    counters = [
+        row
+        for row in first["counter_alignment_rows"]
+        if row["official_end"] == 3
+        and row["status"] in ("unique_colour_concordant", "unique_colour_concordant_amid_duplicate")
+    ]
     if len(counters) != 14:
         raise ValueError("Clean counter reference changed")
     all_cues = []
     best_per_camera_shot = []
     for shot in visual["rows"]:
         for index, track in enumerate(shot["transits"], 1):
-            row = {"shot_id": f"{shot['shot_id']}-T{index}",
-                   "camera_shot_id": shot["shot_id"],
-                   "interval_s": track["interval_s"], "colour": track["colour"],
-                   "point_count": track["point_count"],
-                   "displacement_px": track["displacement_px"]}
+            row = {
+                "shot_id": f"{shot['shot_id']}-T{index}",
+                "camera_shot_id": shot["shot_id"],
+                "interval_s": track["interval_s"],
+                "colour": track["colour"],
+                "point_count": track["point_count"],
+                "displacement_px": track["displacement_px"],
+            }
             all_cues.append(row)
             if index == 1:
                 best_per_camera_shot.append(row)
@@ -57,8 +62,7 @@ def main():
         "all_visual_cues": all_cues,
         "all_cue_score": score_visual_against_counters(all_cues, counters),
         "best_per_camera_shot_cues": best_per_camera_shot,
-        "best_per_camera_shot_score": score_visual_against_counters(
-            best_per_camera_shot, counters),
+        "best_per_camera_shot_score": score_visual_against_counters(best_per_camera_shot, counters),
         "limitations": [
             "Counter updates are delayed proxies, not independently labelled physical release times.",
             "The visual rule was chosen on exposed end-2 windows in the same match.",
@@ -70,10 +74,21 @@ def main():
     OUTPUT.write_text(json.dumps(result, indent=2) + "\n")
     for key in ("all_cue_score", "best_per_camera_shot_score"):
         score = result[key]
-        print(key, {name: score[name] for name in (
-            "visual_candidate_count", "matched_count", "clean_counter_count",
-            "known_colour_match_count", "known_colour_conflict_count",
-            "counter_proxy_precision", "counter_proxy_recall")})
+        print(
+            key,
+            {
+                name: score[name]
+                for name in (
+                    "visual_candidate_count",
+                    "matched_count",
+                    "clean_counter_count",
+                    "known_colour_match_count",
+                    "known_colour_conflict_count",
+                    "counter_proxy_precision",
+                    "counter_proxy_recall",
+                )
+            },
+        )
 
 
 if __name__ == "__main__":

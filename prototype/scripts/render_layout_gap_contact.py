@@ -31,13 +31,11 @@ def main():
     gaps = preflight["coverage_gaps_s"]
     if not gaps:
         parser.error("Preflight has no gaps")
-    capture = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     fps = capture.get(cv2.CAP_PROP_FPS)
     width, height = 640, 360
     banner = 30
-    sheet = np.full((len(gaps) * (height + banner), 3 * width, 3),
-                    (25, 28, 30), dtype=np.uint8)
+    sheet = np.full((len(gaps) * (height + banner), 3 * width, 3), (25, 28, 30), dtype=np.uint8)
     rows = []
     for index, (start, end) in enumerate(gaps):
         times = [start + (end - start) * fraction for fraction in (0.25, 0.5, 0.75)]
@@ -50,10 +48,17 @@ def main():
                 raise RuntimeError(f"Could not decode frame {frame_number}")
             frame = cv2.resize(frame, (width, height), interpolation=cv2.INTER_AREA)
             y, x = index * (height + banner), col * width
-            sheet[y + banner:y + banner + height, x:x + width] = frame
-            cv2.putText(sheet, f"gap {index + 1}: {start:.0f}-{end:.0f}s  frame {seconds:.1f}s",
-                        (x + 8, y + 21), cv2.FONT_HERSHEY_SIMPLEX, 0.55,
-                        (255, 255, 255), 1, cv2.LINE_AA)
+            sheet[y + banner : y + banner + height, x : x + width] = frame
+            cv2.putText(
+                sheet,
+                f"gap {index + 1}: {start:.0f}-{end:.0f}s  frame {seconds:.1f}s",
+                (x + 8, y + 21),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                0.55,
+                (255, 255, 255),
+                1,
+                cv2.LINE_AA,
+            )
             entries.append({"time_s": round(seconds, 3), "frame_number": frame_number})
         rows.append({"gap_s": [start, end], "samples": entries})
     capture.release()

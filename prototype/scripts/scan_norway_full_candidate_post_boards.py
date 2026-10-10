@@ -19,7 +19,10 @@ from prototype.video_board_observation_v2 import detect_overhead_house, detect_b
 BASE = ROOT / "validation/curlobserver-learned-probe/canada-norway-full-transfer"
 EVENTS = BASE / "fused-linked.json"
 VIDEO = ROOT / "validation/throw-event-benchmark/paralympics-2022-canada-norway/source.mp4"
-OUTPUT = ROOT / "validation/official-shot-sequence/norway-full-candidate-post-window-source-boards-first.json"
+OUTPUT = (
+    ROOT
+    / "validation/official-shot-sequence/norway-full-candidate-post-window-source-boards-first.json"
+)
 
 
 def digest(path):
@@ -55,17 +58,25 @@ def main():
                     continue
                 stones = detect_board_stones(frame, house)
                 observations.append({"time_s": time_s, "house": house, "stones": stones})
-            raw_rows.append({"shot_id": event["shot_id"], "counter_id": event["counter_id"],
-                             "candidate_colour": event["colour"],
-                             "delivery_window_s": event["delivery_window_s"],
-                             "next_candidate_start_s": next_start,
-                             "sampled_times_s": times,
-                             "overhead_observations": observations})
+            raw_rows.append(
+                {
+                    "shot_id": event["shot_id"],
+                    "counter_id": event["counter_id"],
+                    "candidate_colour": event["colour"],
+                    "delivery_window_s": event["delivery_window_s"],
+                    "next_candidate_start_s": next_start,
+                    "sampled_times_s": times,
+                    "overhead_observations": observations,
+                }
+            )
     finally:
         cap.release()
-    known = [observation["house"]["delivery_side"] for row in raw_rows
-             for observation in row["overhead_observations"]
-             if observation["house"]["delivery_side"] != "uncertain"]
+    known = [
+        observation["house"]["delivery_side"]
+        for row in raw_rows
+        for observation in row["overhead_observations"]
+        if observation["house"]["delivery_side"] != "uncertain"
+    ]
     global_side = known[0] if len(known) >= 3 and len(set(known)) == 1 else None
     rows = []
     for raw in raw_rows:
@@ -82,20 +93,33 @@ def main():
             cx, cy = house["center_px"]
             radius = house["outer_radius_px"]
             sign = 1 if side == "top" else -1
-            stones = [{**stone,
-                       "canonical_lateral_house_radii": round(sign * (stone["pixel"][0] - cx) / radius, 4),
-                       "longitudinal_house_radii": round(sign * (stone["pixel"][1] - cy) / radius, 4)}
-                      for stone in observation["stones"]]
+            stones = [
+                {
+                    **stone,
+                    "canonical_lateral_house_radii": round(
+                        sign * (stone["pixel"][0] - cx) / radius, 4
+                    ),
+                    "longitudinal_house_radii": round(sign * (stone["pixel"][1] - cy) / radius, 4),
+                }
+                for stone in observation["stones"]
+            ]
             observations.append({"time_s": observation["time_s"], "stones": stones})
         stable = stable_board_stones(observations)
-        rows.append({key: value for key, value in raw.items() if key != "overhead_observations"} | {
-            "accepted_overhead_frame_count": len(observations),
-            "accepted_overhead_interval_s": [observations[0]["time_s"], observations[-1]["time_s"]]
-                if observations else None,
-            "stable_partial_board": stable,
-            "completeness": "unknown_from_video",
-            "simulation_ready": False,
-        })
+        rows.append(
+            {key: value for key, value in raw.items() if key != "overhead_observations"}
+            | {
+                "accepted_overhead_frame_count": len(observations),
+                "accepted_overhead_interval_s": [
+                    observations[0]["time_s"],
+                    observations[-1]["time_s"],
+                ]
+                if observations
+                else None,
+                "stable_partial_board": stable,
+                "completeness": "unknown_from_video",
+                "simulation_ready": False,
+            }
+        )
     result = {
         "status": "source_only_full_match_candidate_post_window_partial_boards",
         "source_video_sha256": digest(VIDEO),
@@ -103,7 +127,8 @@ def main():
         "gate_code_sha256": digest(ROOT / "prototype/candidate_post_window_board_gate.py"),
         "house_detector_sha256": {
             "v1": digest(ROOT / "prototype/video_board_observation.py"),
-            "v2": digest(ROOT / "prototype/video_board_observation_v2.py")},
+            "v2": digest(ROOT / "prototype/video_board_observation_v2.py"),
+        },
         "stability_code_sha256": digest(ROOT / "prototype/temporal_board_state.py"),
         "runner_sha256": digest(Path(__file__)),
         "sampling_rule": "Every 2 s from candidate window end +4 s to the earlier of end +32 s or next candidate start -2 s; official diagrams are not used.",
@@ -111,8 +136,12 @@ def main():
         "known_delivery_side_counts": dict(Counter(known)),
         "candidate_count": len(rows),
         "candidates_with_sample_times": sum(bool(row["sampled_times_s"]) for row in rows),
-        "candidates_with_overhead_frames": sum(row["accepted_overhead_frame_count"] > 0 for row in rows),
-        "candidates_with_stable_partial_board": sum(bool(row["stable_partial_board"]) for row in rows),
+        "candidates_with_overhead_frames": sum(
+            row["accepted_overhead_frame_count"] > 0 for row in rows
+        ),
+        "candidates_with_stable_partial_board": sum(
+            bool(row["stable_partial_board"]) for row in rows
+        ),
         "stable_stone_count": sum(len(row["stable_partial_board"]) for row in rows),
         "rows": rows,
         "limitations": [
@@ -124,9 +153,18 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(result, indent=2) + "\n")
-    print({key: result[key] for key in
-           ("candidate_count", "candidates_with_sample_times", "candidates_with_overhead_frames",
-            "candidates_with_stable_partial_board", "stable_stone_count")})
+    print(
+        {
+            key: result[key]
+            for key in (
+                "candidate_count",
+                "candidates_with_sample_times",
+                "candidates_with_overhead_frames",
+                "candidates_with_stable_partial_board",
+                "stable_stone_count",
+            )
+        }
+    )
 
 
 if __name__ == "__main__":

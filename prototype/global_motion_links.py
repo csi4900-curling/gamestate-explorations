@@ -23,8 +23,13 @@ def link_candidate_windows(candidates, shot_rows):
         start, end = shot["interval_s"]
         for episode in shot["tracks"]:
             first, last = episode["interval_s"]
-            if episode["camera_shot_id"] != shot["camera_shot_id"] or not start <= first <= last < end:
-                raise ValueError(f"Episode crosses or misidentifies camera shot: {episode['episode_id']}")
+            if (
+                episode["camera_shot_id"] != shot["camera_shot_id"]
+                or not start <= first <= last < end
+            ):
+                raise ValueError(
+                    f"Episode crosses or misidentifies camera shot: {episode['episode_id']}"
+                )
     candidate_ids = [row["shot_id"] for row in candidates]
     if len(candidate_ids) != len(set(candidate_ids)):
         raise ValueError("Duplicate candidate ID")
@@ -45,7 +50,8 @@ def link_candidate_windows(candidates, shot_rows):
                 "episode_id": episode["episode_id"],
                 "same_origin_camera_shot": candidate["shot_id"] == episode["camera_shot_id"],
                 "overlaps_delivery_window": overlaps_interval(
-                    episode["interval_s"], candidate["delivery_window_s"]),
+                    episode["interval_s"], candidate["delivery_window_s"]
+                ),
                 "link_basis": "compatible_colour_and_search_time_overlap_only",
                 "physical_throw_assignment_verified": False,
             }
@@ -53,38 +59,46 @@ def link_candidate_windows(candidates, shot_rows):
             by_candidate[candidate["shot_id"]].append(episode["episode_id"])
             by_episode[episode["episode_id"]].append(candidate["shot_id"])
     episode_links = [
-        {"episode_id": episode["episode_id"],
-         "camera_shot_id": episode["camera_shot_id"],
-         "colour": episode["colour"],
-         "interval_s": episode["interval_s"],
-         "candidate_ids": sorted(by_episode[episode["episode_id"]]),
-         "physical_stone_identity_verified": False}
-        for episode in episode_rows]
+        {
+            "episode_id": episode["episode_id"],
+            "camera_shot_id": episode["camera_shot_id"],
+            "colour": episode["colour"],
+            "interval_s": episode["interval_s"],
+            "candidate_ids": sorted(by_episode[episode["episode_id"]]),
+            "physical_stone_identity_verified": False,
+        }
+        for episode in episode_rows
+    ]
     candidate_links = []
     for candidate in candidates:
         linked = sorted(by_candidate[candidate["shot_id"]])
-        exclusive = [episode_id for episode_id in linked
-                     if len(by_episode[episode_id]) == 1]
-        status = "exclusive_catalogue_track_available" if exclusive else (
-            "shared_catalogue_tracks_only" if linked else "no_catalogue_track")
-        candidate_links.append({
-            "candidate_id": candidate["shot_id"],
-            "counter_id": candidate["counter_id"],
-            "catalogue_motion_status": status,
-            "linked_episode_ids": linked,
-            "exclusive_episode_ids": exclusive,
-            "distinct_throw_verified": False,
-        })
+        exclusive = [episode_id for episode_id in linked if len(by_episode[episode_id]) == 1]
+        status = (
+            "exclusive_catalogue_track_available"
+            if exclusive
+            else ("shared_catalogue_tracks_only" if linked else "no_catalogue_track")
+        )
+        candidate_links.append(
+            {
+                "candidate_id": candidate["shot_id"],
+                "counter_id": candidate["counter_id"],
+                "catalogue_motion_status": status,
+                "linked_episode_ids": linked,
+                "exclusive_episode_ids": exclusive,
+                "distinct_throw_verified": False,
+            }
+        )
     return {
         "catalogue_episode_count": len(episode_rows),
         "candidate_count": len(candidates),
         "candidate_episode_edge_count": len(edges),
         "shared_by_multiple_candidates_episode_count": sum(
-            len(row["candidate_ids"]) > 1 for row in episode_links),
-        "unlinked_catalogue_episode_count": sum(
-            not row["candidate_ids"] for row in episode_links),
-        "candidate_motion_status_counts": dict(Counter(
-            row["catalogue_motion_status"] for row in candidate_links)),
+            len(row["candidate_ids"]) > 1 for row in episode_links
+        ),
+        "unlinked_catalogue_episode_count": sum(not row["candidate_ids"] for row in episode_links),
+        "candidate_motion_status_counts": dict(
+            Counter(row["catalogue_motion_status"] for row in candidate_links)
+        ),
         "episodes": episode_links,
         "candidates": candidate_links,
         "edges": edges,

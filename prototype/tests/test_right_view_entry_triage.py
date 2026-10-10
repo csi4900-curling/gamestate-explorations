@@ -4,8 +4,12 @@ from right_view_entry_triage import crossing, triage_tracks
 
 
 def point(t, x, y, area=25, width=10, height=6):
-    return {"time_s": t, "pixel": [x, y], "bbox": [x - 5, y - 3, width, height],
-            "cap_area_px2": area}
+    return {
+        "time_s": t,
+        "pixel": [x, y],
+        "bbox": [x - 5, y - 3, width, height],
+        "cap_area_px2": area,
+    }
 
 
 def test_crossing_is_interpolated_only_between_observed_points():
@@ -14,10 +18,19 @@ def test_crossing_is_interpolated_only_between_observed_points():
 
 
 def test_entry_prefix_stops_at_first_confirming_point():
-    tracks = [{"track_id": "R1", "colour": "red",
-               "points": [point(10, 500, 300), point(11, 498, 260),
-                          point(12, 496, 240), point(14, 492, 210),
-                          point(100, 300, 150)]}]
+    tracks = [
+        {
+            "track_id": "R1",
+            "colour": "red",
+            "points": [
+                point(10, 500, 300),
+                point(11, 498, 260),
+                point(12, 496, 240),
+                point(14, 492, 210),
+                point(100, 300, 150),
+            ],
+        }
+    ]
     proposal = triage_tracks(tracks)[0]
     assert proposal["entry_crossing"]["bracket_s"] == [11, 12]
     assert proposal["confirmation_time_s"] == 14
@@ -26,7 +39,11 @@ def test_entry_prefix_stops_at_first_confirming_point():
 
 
 def test_small_vertical_player_patch_does_not_enter_review_tier():
-    tracks = [{"track_id": "P", "colour": "red",
-               "points": [point(10, 500, 300, area=5, width=4, height=6),
-                          point(14, 490, 210)]}]
+    tracks = [
+        {
+            "track_id": "P",
+            "colour": "red",
+            "points": [point(10, 500, 300, area=5, width=4, height=6), point(14, 490, 210)],
+        }
+    ]
     assert triage_tracks(tracks) == []

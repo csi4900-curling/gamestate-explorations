@@ -4,13 +4,24 @@ from travel_origin_reconciliation import classify_travel_predecessors
 
 
 def fixtures():
-    shots = [{"shot_id": "S1", "interval_s": [0.0, 10.0]},
-             {"shot_id": "S2", "interval_s": [10.0, 20.0]}]
-    event = {"shot_id": "S1", "delivery_window_s": [0.0, 10.0],
-             "colour": "red", "colour_status": "resolved", "counter_id": None}
-    travel = {"status": "unlocalized_travel_candidate", "counter_id": "B1",
-              "colour": "yellow", "travel_shot_id": "S2",
-              "observed_travel_window_s": [10.0, 18.0]}
+    shots = [
+        {"shot_id": "S1", "interval_s": [0.0, 10.0]},
+        {"shot_id": "S2", "interval_s": [10.0, 20.0]},
+    ]
+    event = {
+        "shot_id": "S1",
+        "delivery_window_s": [0.0, 10.0],
+        "colour": "red",
+        "colour_status": "resolved",
+        "counter_id": None,
+    }
+    travel = {
+        "status": "unlocalized_travel_candidate",
+        "counter_id": "B1",
+        "colour": "yellow",
+        "travel_shot_id": "S2",
+        "observed_travel_window_s": [10.0, 18.0],
+    }
     return shots, event, travel
 
 

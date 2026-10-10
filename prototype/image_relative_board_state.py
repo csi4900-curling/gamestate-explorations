@@ -22,32 +22,52 @@ def stable_image_boards_by_camera_shot(observations, camera_shots):
         radius = house["outer_radius_px"]
         if radius <= 0:
             raise ValueError("Invalid house radius")
-        stones = [{"colour": stone["colour"],
-                   "canonical_lateral_house_radii": (stone["pixel"][0] - cx) / radius,
-                   "longitudinal_house_radii": (stone["pixel"][1] - cy) / radius}
-                  for stone in row["stones"]]
-        grouped[camera_shots[index]["id"]].append({"time_s": t, "stones": stones,
-                                                    "detected_delivery_side": house["delivery_side"]})
+        stones = [
+            {
+                "colour": stone["colour"],
+                "canonical_lateral_house_radii": (stone["pixel"][0] - cx) / radius,
+                "longitudinal_house_radii": (stone["pixel"][1] - cy) / radius,
+            }
+            for stone in row["stones"]
+        ]
+        grouped[camera_shots[index]["id"]].append(
+            {"time_s": t, "stones": stones, "detected_delivery_side": house["delivery_side"]}
+        )
     result = []
     for shot in camera_shots:
         frames = grouped.get(shot["id"])
         if not frames:
             continue
         stable = stable_board_stones(frames)
-        stones = [{"colour": stone["colour"],
-                   "image_house_radius_coordinates": [stone["canonical_lateral_house_radii"],
-                                                      stone["longitudinal_house_radii"]],
-                   "supporting_frame_count": stone["supporting_frame_count"],
-                   "first_seen_s": stone["first_seen_s"],
-                   "last_seen_s": stone["last_seen_s"],
-                   "max_position_spread_house_radii": stone["max_position_spread_house_radii"]}
-                  for stone in stable]
-        sides = sorted({frame["detected_delivery_side"] for frame in frames
-                        if frame["detected_delivery_side"] != "uncertain"})
-        result.append({"camera_shot_id": shot["id"],
-                       "accepted_frame_count": len(frames),
-                       "observation_interval_s": [frames[0]["time_s"], frames[-1]["time_s"]],
-                       "detected_delivery_side": sides[0] if len(sides) == 1 else None,
-                       "stable_image_relative_stones": stones,
-                       "coordinate_semantics": "Image house radii: +x right, +y down; no physical direction inferred."})
+        stones = [
+            {
+                "colour": stone["colour"],
+                "image_house_radius_coordinates": [
+                    stone["canonical_lateral_house_radii"],
+                    stone["longitudinal_house_radii"],
+                ],
+                "supporting_frame_count": stone["supporting_frame_count"],
+                "first_seen_s": stone["first_seen_s"],
+                "last_seen_s": stone["last_seen_s"],
+                "max_position_spread_house_radii": stone["max_position_spread_house_radii"],
+            }
+            for stone in stable
+        ]
+        sides = sorted(
+            {
+                frame["detected_delivery_side"]
+                for frame in frames
+                if frame["detected_delivery_side"] != "uncertain"
+            }
+        )
+        result.append(
+            {
+                "camera_shot_id": shot["id"],
+                "accepted_frame_count": len(frames),
+                "observation_interval_s": [frames[0]["time_s"], frames[-1]["time_s"]],
+                "detected_delivery_side": sides[0] if len(sides) == 1 else None,
+                "stable_image_relative_stones": stones,
+                "coordinate_semantics": "Image house radii: +x right, +y down; no physical direction inferred.",
+            }
+        )
     return result

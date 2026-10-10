@@ -7,9 +7,16 @@ identity link across a cut.
 import numpy as np
 
 
-def short_transits(observations, *, max_gap_s=0.65, max_speed_px_s=260,
-                   min_points=3, min_duration_s=0.4, min_displacement_px=30,
-                   max_path_ratio=1.8):
+def short_transits(
+    observations,
+    *,
+    max_gap_s=0.65,
+    max_speed_px_s=260,
+    min_points=3,
+    min_duration_s=0.4,
+    min_displacement_px=30,
+    max_path_ratio=1.8,
+):
     """Link accepted patches and retain smooth displacement over short runs.
 
     `observations` contains ascending `(time_s, [candidate, ...])` pairs.
@@ -56,14 +63,17 @@ def short_transits(observations, *, max_gap_s=0.65, max_speed_px_s=260,
         length = float(steps.sum())
         if displacement < min_displacement_px or length > max_path_ratio * displacement:
             continue
-        result.append({
-            "interval_s": [points[0]["time_s"], points[-1]["time_s"]],
-            "point_count": len(points),
-            "first_pixel": points[0]["pixel"],
-            "last_pixel": points[-1]["pixel"],
-            "displacement_px": round(displacement, 2),
-            "path_ratio": round(length / displacement, 3),
-            "median_patch_score": round(float(np.median([p["patch_score"] for p in points])), 3),
-        })
-    return sorted(result, key=lambda row: (-row["point_count"],
-                                           -row["displacement_px"]))
+        result.append(
+            {
+                "interval_s": [points[0]["time_s"], points[-1]["time_s"]],
+                "point_count": len(points),
+                "first_pixel": points[0]["pixel"],
+                "last_pixel": points[-1]["pixel"],
+                "displacement_px": round(displacement, 2),
+                "path_ratio": round(length / displacement, 3),
+                "median_patch_score": round(
+                    float(np.median([p["patch_score"] for p in points])), 3
+                ),
+            }
+        )
+    return sorted(result, key=lambda row: (-row["point_count"], -row["displacement_px"]))

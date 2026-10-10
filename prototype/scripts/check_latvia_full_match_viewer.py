@@ -18,16 +18,16 @@ def main():
     errors = []
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(
-            executable_path="/run/current-system/sw/bin/chromium", headless=True,
-            args=["--allow-file-access-from-files", "--no-sandbox"])
-        page = browser.new_page(viewport={"width": 1440, "height": 1050},
-                                device_scale_factor=1)
+            executable_path="/run/current-system/sw/bin/chromium",
+            headless=True,
+            args=["--allow-file-access-from-files", "--no-sandbox"],
+        )
+        page = browser.new_page(viewport={"width": 1440, "height": 1050}, device_scale_factor=1)
         page.on("pageerror", lambda error: errors.append(str(error)))
         page.goto((VIEWER / "index.html").as_uri())
         page.wait_for_selector(".candidate")
         assert page.locator(".candidate").count() == 127
-        assert page.locator(".stat strong").all_text_contents() == [
-            "127", "72", "47", "8"]
+        assert page.locator(".stat strong").all_text_contents() == ["127", "72", "47", "8"]
         page.locator("#filter").select_option("right_only_review_entry")
         assert page.locator(".candidate").count() == 8
         page.locator(".candidate").first.click()
@@ -51,18 +51,22 @@ def main():
         assert page.locator("#motion-details a").count() == 1
         assert not errors, errors
         browser.close()
-    result = {"status": "local_browser_smoke_pass",
-              "candidate_count": 127,
-              "tier_counts": {"left_provisional_passage": 72,
-                              "left_unconfirmed_raw_motion": 47,
-                              "right_only_review_entry": 8},
-              "right_r005_cap_proposal_count": 4,
-              "source_reviewed_person_rows": 3,
-              "page_errors": errors,
-              "source_video_sha256": digest(VIEWER.parent / "source-360p.mp4"),
-              "viewer_provenance_sha256": digest(VIEWER / "provenance.json"),
-              "screenshot_sha256": digest(VIEWER / "browser-r005.png"),
-              "runner_sha256": digest(Path(__file__))}
+    result = {
+        "status": "local_browser_smoke_pass",
+        "candidate_count": 127,
+        "tier_counts": {
+            "left_provisional_passage": 72,
+            "left_unconfirmed_raw_motion": 47,
+            "right_only_review_entry": 8,
+        },
+        "right_r005_cap_proposal_count": 4,
+        "source_reviewed_person_rows": 3,
+        "page_errors": errors,
+        "source_video_sha256": digest(VIEWER.parent / "source-360p.mp4"),
+        "viewer_provenance_sha256": digest(VIEWER / "provenance.json"),
+        "screenshot_sha256": digest(VIEWER / "browser-r005.png"),
+        "runner_sha256": digest(Path(__file__)),
+    }
     (VIEWER / "browser-check.json").write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps({"tiers": result["tier_counts"], "errors": errors}))
 

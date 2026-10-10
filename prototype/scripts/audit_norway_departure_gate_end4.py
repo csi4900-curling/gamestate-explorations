@@ -48,8 +48,7 @@ def main():
     if len(selected) != 17:
         raise ValueError("End-4 origin selection changed")
     model = load_model(MODEL)
-    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     fps = capture.get(cv2.CAP_PROP_FPS)
     step = round(fps / 5)
     if fps <= 0 or step < 1:
@@ -72,24 +71,37 @@ def main():
             t = round(frame_index / fps, 3)
             per_colour = {}
             for colour in observations:
-                raw = stone_cap_candidates(frame, colour,
-                                           allow_bright_body=True,
-                                           allow_large_caps=True)
+                raw = stone_cap_candidates(
+                    frame, colour, allow_bright_body=True, allow_large_caps=True
+                )
                 scored = score_candidates(frame, raw, model)
-                gated = [row for row in scored if row["pixel"][0] >= X_LINE
-                         and row["pixel"][1] >= Y_MIN
-                         and row["patch_score"] >= MIN_SCORE]
+                gated = [
+                    row
+                    for row in scored
+                    if row["pixel"][0] >= X_LINE
+                    and row["pixel"][1] >= Y_MIN
+                    and row["patch_score"] >= MIN_SCORE
+                ]
                 observations[colour].append((t, gated))
                 per_colour[colour] = gated
             samples.append({"time_s": t, "gate_candidates": per_colour})
-        transits = {colour: short_transits(observations[colour])
-                    for colour in observations}
-        counts = Counter(colour for sample in samples for colour in observations
-                         for _ in sample["gate_candidates"][colour])
-        rows.append({"shot_id": shot["shot_id"], "interval_s": shot["interval_s"],
-                     "sampled_frames": len(samples),
-                     "gate_counts": {colour: counts[colour] for colour in observations},
-                     "transits": transits, "samples": samples})
+        transits = {colour: short_transits(observations[colour]) for colour in observations}
+        counts = Counter(
+            colour
+            for sample in samples
+            for colour in observations
+            for _ in sample["gate_candidates"][colour]
+        )
+        rows.append(
+            {
+                "shot_id": shot["shot_id"],
+                "interval_s": shot["interval_s"],
+                "sampled_frames": len(samples),
+                "gate_counts": {colour: counts[colour] for colour in observations},
+                "transits": transits,
+                "samples": samples,
+            }
+        )
     capture.release()
     result = {
         "status": "postscore_exposed_end4_sideview_early_ice_gate_diagnostic",
@@ -99,8 +111,12 @@ def main():
         "model_sha256": digest(MODEL),
         "gate_code_sha256": digest(Path(__file__)),
         "selection": "All 17 frozen origin-positive camera shots in exposed end four; inspect cap candidates beyond a layout-specific early-ice line.",
-        "gate": {"image_size": [640, 360], "x_min": X_LINE,
-                 "y_min": Y_MIN, "minimum_patch_score": MIN_SCORE},
+        "gate": {
+            "image_size": [640, 360],
+            "x_min": X_LINE,
+            "y_min": Y_MIN,
+            "minimum_patch_score": MIN_SCORE,
+        },
         "sample_rate_hz": fps / step,
         "rows": rows,
         "limitations": [
@@ -111,10 +127,14 @@ def main():
     }
     OUTPUT.write_text(json.dumps(result, indent=2) + "\n")
     for row in rows:
-        print(row["shot_id"], row["gate_counts"],
-              {colour: [(t["point_count"], t["displacement_px"])
-                        for t in row["transits"][colour]]
-               for colour in ("red", "yellow")})
+        print(
+            row["shot_id"],
+            row["gate_counts"],
+            {
+                colour: [(t["point_count"], t["displacement_px"]) for t in row["transits"][colour]]
+                for colour in ("red", "yellow")
+            },
+        )
 
 
 if __name__ == "__main__":

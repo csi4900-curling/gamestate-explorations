@@ -10,12 +10,19 @@ def board(candidate_id, time_s, view="left"):
         "candidate_id": candidate_id,
         "crossing_time_s": time_s,
         "receiving_view": view,
-        "board": {"status": "partial_stable_view_local_board", "stones": [{
-            "local_observation_id": "V01", "colour": "red",
-            "view_local_ground_position_m": [0.0, 0.0],
-            "first_seen_s": time_s + 1, "last_seen_s": time_s + 2,
-            "supporting_frame_count": 2,
-        }]},
+        "board": {
+            "status": "partial_stable_view_local_board",
+            "stones": [
+                {
+                    "local_observation_id": "V01",
+                    "colour": "red",
+                    "view_local_ground_position_m": [0.0, 0.0],
+                    "first_seen_s": time_s + 1,
+                    "last_seen_s": time_s + 2,
+                    "supporting_frame_count": 2,
+                }
+            ],
+        },
     }
 
 
@@ -30,22 +37,31 @@ def state(candidate_id, view="left"):
 
 
 def comparison(before, after, status, matched=False):
-    row = {"before_candidate_id": before, "after_candidate_id": after,
-           "status": status, "intervening_passage_candidate_ids": []}
+    row = {
+        "before_candidate_id": before,
+        "after_candidate_id": after,
+        "status": status,
+        "intervening_passage_candidate_ids": [],
+    }
     if matched:
-        row["matched_observations"] = [{
-            "before_local_observation_id": "V01",
-            "after_local_observation_id": "V01",
-            "colour": "red", "distance_m_conditional": 0.0,
-        }]
+        row["matched_observations"] = [
+            {
+                "before_local_observation_id": "V01",
+                "after_local_observation_id": "V01",
+                "colour": "red",
+                "distance_m_conditional": 0.0,
+            }
+        ]
     return row
 
 
 def test_abstention_ends_observation_tracklet():
     boards = {"rows": [board("S01", 1), board("S02", 2), board("S03", 3)]}
     comparisons = {
-        "comparisons": [comparison("S01", "S02", "view_local_partial_comparison", True),
-                        comparison("S02", "S03", "abstain_intervening_passage_candidate")],
+        "comparisons": [
+            comparison("S01", "S02", "view_local_partial_comparison", True),
+            comparison("S02", "S03", "abstain_intervening_passage_candidate"),
+        ],
         "associated_observation_pair_count": 1,
         "max_association_distance_m_conditional": 0.25,
     }

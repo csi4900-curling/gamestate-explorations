@@ -8,10 +8,13 @@ import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_SOURCE = ROOT / "validation/throw-event-benchmark/canada-czech-2024/full-match-partial-state-sequence-postscore.json"
+DEFAULT_SOURCE = (
+    ROOT
+    / "validation/throw-event-benchmark/canada-czech-2024/full-match-partial-state-sequence-postscore.json"
+)
 DEFAULT_DIR = ROOT / "prototype/full-match-canada-czech-state"
 
-TEMPLATE = r'''<!doctype html>
+TEMPLATE = r"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Canada–Czechia · __BRANCH__ · video state evidence</title>
 <style>
@@ -36,7 +39,7 @@ function render(){const row=events[index],before=events[index-1],current=row.pos
 const baseRender=render;render=function(){baseRender();const review=events[index].agent_source_review,flag=$('reviewFlag');flag.hidden=!review;flag.textContent=review?`Agent source review (not independent validation): ${review.conclusion.replaceAll('_',' ')}. ${review.basis}`:''};
 function move(delta){const visible=shown(),at=visible.indexOf(index);index=visible[Math.max(0,Math.min(visible.length-1,at+delta))]??index;render();seekFrame()}
 $('eventsCount').textContent=DATA.event_count;$('boardsCount').textContent=DATA.observed_board_count;$('compCount').textContent=DATA.comparable_transition_count;$('readyCount').textContent=DATA.simulation_ready_count;$('eventSelect').onchange=e=>{index=Number(e.target.value);render();seekFrame()};$('previous').onclick=()=>move(-1);$('next').onclick=()=>move(1);$('seek').onclick=()=>{seekFrame();$('video').play()};$('video').addEventListener('loadedmetadata',seekFrame);$('onlyBoards').onchange=options;$('onlyComparisons').onchange=options;window.onkeydown=e=>{if(['INPUT','SELECT','VIDEO'].includes(e.target.tagName))return;if(e.key==='ArrowLeft')move(-1);if(e.key==='ArrowRight')move(1)};options();
-</script></body></html>'''
+</script></body></html>"""
 
 
 def digest(path):
@@ -56,27 +59,36 @@ def main():
     if html.exists() or provenance.exists():
         raise SystemExit("Viewer already exists; preserve first render")
     data = json.loads(source.read_text())
-    if (data["event_count"] != len(data["events"]) or
-            any(row["simulation_ready"] for row in data["events"])):
+    if data["event_count"] != len(data["events"]) or any(
+        row["simulation_ready"] for row in data["events"]
+    ):
         raise ValueError("Input event accounting or simulation gate differs")
     directory.mkdir(parents=True, exist_ok=True)
     embedded = json.dumps(data, separators=(",", ":")).replace("</", "<\\/")
     source_link = Path(os.path.relpath(source, directory)).as_posix()
-    rendered = (TEMPLATE.replace("__DATA__", embedded)
-                .replace("__BRANCH__", escape(args.branch))
-                .replace("__SOURCE_LINK__", escape(source_link, quote=True)))
+    rendered = (
+        TEMPLATE.replace("__DATA__", embedded)
+        .replace("__BRANCH__", escape(args.branch))
+        .replace("__SOURCE_LINK__", escape(source_link, quote=True))
+    )
     html.write_text(rendered + "\n")
-    provenance.write_text(json.dumps({
-        "status": "offline_provisional_event_partial_state_viewer_not_physics_simulation",
-        "branch": args.branch,
-        "source_sequence_sha256": digest(source),
-        "runner_sha256": digest(Path(__file__)),
-        "html_sha256": digest(html),
-        "event_count": data["event_count"],
-        "observed_board_count": data["observed_board_count"],
-        "comparable_transition_count": data["comparable_transition_count"],
-        "simulation_ready_count": data["simulation_ready_count"],
-    }, indent=2) + "\n")
+    provenance.write_text(
+        json.dumps(
+            {
+                "status": "offline_provisional_event_partial_state_viewer_not_physics_simulation",
+                "branch": args.branch,
+                "source_sequence_sha256": digest(source),
+                "runner_sha256": digest(Path(__file__)),
+                "html_sha256": digest(html),
+                "event_count": data["event_count"],
+                "observed_board_count": data["observed_board_count"],
+                "comparable_transition_count": data["comparable_transition_count"],
+                "simulation_ready_count": data["simulation_ready_count"],
+            },
+            indent=2,
+        )
+        + "\n"
+    )
     print(html)
 
 

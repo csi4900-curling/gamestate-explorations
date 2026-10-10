@@ -32,10 +32,13 @@ def observe_anchor(cap, fps, duration, anchor_s):
     for offset in (15, 20, 25):
         t = anchor_s + offset
         if t >= duration:
-            return {"anchor_time_s": anchor_s,
-                    "observation_status": "abstain_insufficient_tail_video",
-                    "scene_mae_between_samples": [], "sample_frames": [],
-                    "stable_cap_proposals": []}
+            return {
+                "anchor_time_s": anchor_s,
+                "observation_status": "abstain_insufficient_tail_video",
+                "scene_mae_between_samples": [],
+                "sample_frames": [],
+                "stable_cap_proposals": [],
+            }
         cap.set(cv2.CAP_PROP_POS_FRAMES, round(t * fps))
         ok, image = cap.read()
         if not ok:
@@ -43,23 +46,32 @@ def observe_anchor(cap, fps, duration, anchor_s):
         image = normalized_split_frame(image)
         image_patches.append(image[155:245, 330:630].astype(np.int16))
         proposals = right_colour_proposals(image)
-        coloured = [{"colour": colour, **row}
-                    for colour, items in proposals.items() for row in items
-                    if 360 <= row["pixel"][0] <= 615 and
-                    155 <= row["pixel"][1] <= 235 and
-                    row["cap_area_px2"] >= 6]
+        coloured = [
+            {"colour": colour, **row}
+            for colour, items in proposals.items()
+            for row in items
+            if 360 <= row["pixel"][0] <= 615
+            and 155 <= row["pixel"][1] <= 235
+            and row["cap_area_px2"] >= 6
+        ]
         frames.append({"time_s": round(t, 3), "cap_candidates": coloured})
-    maes = [round(float(np.mean(np.abs(a - b))), 3)
-            for a, b in zip(image_patches, image_patches[1:])]
+    maes = [
+        round(float(np.mean(np.abs(a - b))), 3) for a, b in zip(image_patches, image_patches[1:])
+    ]
     if max(maes) >= 20:
         status, stable = "abstain_scene_or_player_motion", []
     else:
         stable = stable_cap_candidates(frames)
-        status = ("partial_stable_colour_cap_proposals" if stable
-                  else "no_stable_colour_cap_proposals")
-    return {"anchor_time_s": anchor_s, "observation_status": status,
-            "scene_mae_between_samples": maes,
-            "sample_frames": frames, "stable_cap_proposals": stable}
+        status = (
+            "partial_stable_colour_cap_proposals" if stable else "no_stable_colour_cap_proposals"
+        )
+    return {
+        "anchor_time_s": anchor_s,
+        "observation_status": status,
+        "scene_mae_between_samples": maes,
+        "sample_frames": frames,
+        "stable_cap_proposals": stable,
+    }
 
 
 def anchors_agree(observations, central):
@@ -90,10 +102,10 @@ def main():
     video_hash = digest(args.video)
     if fusion["source_sha256"] != video_hash:
         parser.error("Source fingerprints differ")
-    entries = [row for row in fusion["right_entries"]
-               if row["fusion_status"].startswith("right_only_")]
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    entries = [
+        row for row in fusion["right_entries"] if row["fusion_status"].startswith("right_only_")
+    ]
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         parser.error("Unreadable video")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -103,45 +115,51 @@ def main():
         for entry in entries:
             bracket = entry.get("right_entry_bracket_s")
             current = entry["right_entry_time_s"]
-            if bracket is not None and not (len(bracket) == 2 and
-                                             bracket[0] <= current <= bracket[1]):
-                raise ValueError(f"Invalid entry crossing bracket for {entry['right_raw_track_id']}")
+            if bracket is not None and not (
+                len(bracket) == 2 and bracket[0] <= current <= bracket[1]
+            ):
+                raise ValueError(
+                    f"Invalid entry crossing bracket for {entry['right_raw_track_id']}"
+                )
             anchors = sorted(set([current] + (bracket or [])))
-            observations = [observe_anchor(cap, fps, duration, anchor)
-                            for anchor in anchors]
+            observations = [observe_anchor(cap, fps, duration, anchor) for anchor in anchors]
             central = next(row for row in observations if row["anchor_time_s"] == current)
             robust = anchors_agree(observations, central)
-            status = (central["observation_status"] if robust else
-                      "abstain_entry_time_sensitive")
+            status = central["observation_status"] if robust else "abstain_entry_time_sensitive"
             stable = central["stable_cap_proposals"] if robust else []
-            rows.append({
-                "right_entry_id": entry.get("right_entry_id", entry["right_raw_track_id"]),
-                "right_raw_track_id": entry["right_raw_track_id"],
-                "entry_time_s": current,
-                "entry_time_bracket_s": bracket,
-                "entry_fusion_status": entry["fusion_status"],
-                "observation_status": status,
-                "scene_mae_between_samples": central["scene_mae_between_samples"],
-                "sample_frames": central["sample_frames"],
-                "stable_cap_proposals": stable,
-                "anchor_observations": observations,
-                "anchor_stability_agreement": robust if len(observations) > 1 else None,
-                "stable_cap_colour_counts": dict(Counter(x["colour"] for x in stable)),
-                "coordinate_frame": "full_source_right_camera_pixels_not_metric",
-                "complete_board_verified": False,
-                "physical_settle_verified": False,
-                "persistent_stone_identity_verified": False,
-                "simulation_ready": False,
-            })
+            rows.append(
+                {
+                    "right_entry_id": entry.get("right_entry_id", entry["right_raw_track_id"]),
+                    "right_raw_track_id": entry["right_raw_track_id"],
+                    "entry_time_s": current,
+                    "entry_time_bracket_s": bracket,
+                    "entry_fusion_status": entry["fusion_status"],
+                    "observation_status": status,
+                    "scene_mae_between_samples": central["scene_mae_between_samples"],
+                    "sample_frames": central["sample_frames"],
+                    "stable_cap_proposals": stable,
+                    "anchor_observations": observations,
+                    "anchor_stability_agreement": robust if len(observations) > 1 else None,
+                    "stable_cap_colour_counts": dict(Counter(x["colour"] for x in stable)),
+                    "coordinate_frame": "full_source_right_camera_pixels_not_metric",
+                    "complete_board_verified": False,
+                    "physical_settle_verified": False,
+                    "persistent_stone_identity_verified": False,
+                    "simulation_ready": False,
+                }
+            )
     finally:
         cap.release()
     result = {
         "status": "right_only_postentry_partial_colour_cap_observations_not_game_state",
         "source_sha256": video_hash,
         "fusion_sha256": digest(args.fusion),
-        "proposal_code_sha256": digest(ROOT / "prototype/scripts/probe_static_left_right_cap_motion.py"),
+        "proposal_code_sha256": digest(
+            ROOT / "prototype/scripts/probe_static_left_right_cap_motion.py"
+        ),
         "frame_normalization_code_sha256": digest(
-            ROOT / "prototype/scripts/audit_split_panel_freeze.py"),
+            ROOT / "prototype/scripts/audit_split_panel_freeze.py"
+        ),
         "stable_cap_code_sha256": digest(ROOT / "prototype/right_view_partial_board.py"),
         "cap_set_comparison_code_sha256": digest(ROOT / "prototype/right_view_cap_sequence.py"),
         "runner_sha256": digest(Path(__file__)),

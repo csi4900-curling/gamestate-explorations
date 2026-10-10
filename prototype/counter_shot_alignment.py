@@ -5,8 +5,9 @@ can be absent around edits or graphics. Ambiguous associations are abstentions.
 """
 
 
-def align_counter_events(shots, counter_events, motion_channels, *, max_lag_s=45.0,
-                         min_probability_ratio=2.0):
+def align_counter_events(
+    shots, counter_events, motion_channels, *, max_lag_s=45.0, min_probability_ratio=2.0
+):
     """Return evidence-preserving, one-to-one counter/shot associations.
 
     The shot origin probability ranks plausible shots but cannot itself create
@@ -33,8 +34,12 @@ def align_counter_events(shots, counter_events, motion_channels, *, max_lag_s=45
         options = []
         for shot in shots:
             start, end = shot["interval_s"]
-            if (shot["shot_id"] in used_shots or not shot["phase_supported"]
-                    or start > update or end < earliest_end):
+            if (
+                shot["shot_id"] in used_shots
+                or not shot["phase_supported"]
+                or start > update
+                or end < earliest_end
+            ):
                 continue
             support = []
             for channel, indexed in indexed_channels:
@@ -44,32 +49,58 @@ def align_counter_events(shots, counter_events, motion_channels, *, max_lag_s=45
                 if event["colour"] in same & following:
                     support.append(channel)
             if support:
-                options.append({"shot_id": shot["shot_id"],
-                                "interval_s": shot["interval_s"],
-                                "origin_probability": shot["probability"],
-                                "motion_channels": support})
-        options.sort(key=lambda row: (-row["origin_probability"],
-                                      -len(row["motion_channels"]), row["shot_id"]))
+                options.append(
+                    {
+                        "shot_id": shot["shot_id"],
+                        "interval_s": shot["interval_s"],
+                        "origin_probability": shot["probability"],
+                        "motion_channels": support,
+                    }
+                )
+        options.sort(
+            key=lambda row: (
+                -row["origin_probability"],
+                -len(row["motion_channels"]),
+                row["shot_id"],
+            )
+        )
         chosen = None
-        if options and options[0]["origin_probability"] > 0 and (
-                        len(options) == 1 or
-                        options[0]["origin_probability"] >=
-                        min_probability_ratio * options[1]["origin_probability"]):
+        if (
+            options
+            and options[0]["origin_probability"] > 0
+            and (
+                len(options) == 1
+                or options[0]["origin_probability"]
+                >= min_probability_ratio * options[1]["origin_probability"]
+            )
+        ):
             chosen = options[0]["shot_id"]
             used_shots.add(chosen)
-        output.append({"counter_id": event["id"], "colour": event["colour"],
-                       "counter_evidence_interval_s": event["evidence_interval_s"],
-                       "counter_update_s": update, "shot_id": chosen,
-                       "status": "associated" if chosen else "abstained",
-                       "association_route": "same_and_following_motion" if chosen else None,
-                       "candidate_shots": options})
+        output.append(
+            {
+                "counter_id": event["id"],
+                "colour": event["colour"],
+                "counter_evidence_interval_s": event["evidence_interval_s"],
+                "counter_update_s": update,
+                "shot_id": chosen,
+                "status": "associated" if chosen else "abstained",
+                "association_route": "same_and_following_motion" if chosen else None,
+                "candidate_shots": options,
+            }
+        )
     return output
 
 
-def rescue_following_only(alignments, shots, motion_channels, *, max_lag_s=45.0,
-                          min_origin_probability=0.8,
-                          max_motion_start_after_cut_s=1.5,
-                          min_probability_ratio=2.0):
+def rescue_following_only(
+    alignments,
+    shots,
+    motion_channels,
+    *,
+    max_lag_s=45.0,
+    min_origin_probability=0.8,
+    max_motion_start_after_cut_s=1.5,
+    min_probability_ratio=2.0,
+):
     """Rescue counter changes when the delivery shot cuts before track onset.
 
     Only a strong origin shot with two proposal channels observing the counter
@@ -97,26 +128,39 @@ def rescue_following_only(alignments, shots, motion_channels, *, max_lag_s=45.0,
         colour = row["colour"]
         for shot in shots:
             start, end = shot["interval_s"]
-            if (shot["shot_id"] in used or not shot["phase_supported"]
-                    or shot["probability"] < min_origin_probability
-                    or start > update or end < update - max_lag_s):
+            if (
+                shot["shot_id"] in used
+                or not shot["phase_supported"]
+                or shot["probability"] < min_origin_probability
+                or start > update
+                or end < update - max_lag_s
+            ):
                 continue
             channels = []
             for channel, by_id in indexed:
                 following = by_id[shot["shot_id"]]["following_shot_candidates"]
-                if any(candidate["colour"] == colour and
-                       0 <= candidate["interval_s"][0] - end <=
-                       max_motion_start_after_cut_s for candidate in following):
+                if any(
+                    candidate["colour"] == colour
+                    and 0 <= candidate["interval_s"][0] - end <= max_motion_start_after_cut_s
+                    for candidate in following
+                ):
                     channels.append(channel)
             if len(channels) >= 2:
-                row["following_only_candidates"].append({
-                    "shot_id": shot["shot_id"], "interval_s": shot["interval_s"],
-                    "origin_probability": shot["probability"],
-                    "motion_channels": channels})
+                row["following_only_candidates"].append(
+                    {
+                        "shot_id": shot["shot_id"],
+                        "interval_s": shot["interval_s"],
+                        "origin_probability": shot["probability"],
+                        "motion_channels": channels,
+                    }
+                )
         options = row["following_only_candidates"]
         options.sort(key=lambda item: (-item["origin_probability"], item["shot_id"]))
-        if options and (len(options) == 1 or options[0]["origin_probability"] >=
-                        min_probability_ratio * options[1]["origin_probability"]):
+        if options and (
+            len(options) == 1
+            or options[0]["origin_probability"]
+            >= min_probability_ratio * options[1]["origin_probability"]
+        ):
             row["shot_id"] = options[0]["shot_id"]
             row["status"] = "associated"
             row["association_route"] = "strong_origin_and_immediate_following_motion"
@@ -125,9 +169,15 @@ def rescue_following_only(alignments, shots, motion_channels, *, max_lag_s=45.0,
     return result
 
 
-def link_existing_visual_candidates(alignments, origins, origin_events,
-                                    motion_channels, *, max_lag_s=45.0,
-                                    max_motion_start_after_cut_s=1.5):
+def link_existing_visual_candidates(
+    alignments,
+    origins,
+    origin_events,
+    motion_channels,
+    *,
+    max_lag_s=45.0,
+    max_motion_start_after_cut_s=1.5,
+):
     """Attach a counter to an existing visual candidate across a colour conflict.
 
     This does not create a new event. It prevents the same likely throw from
@@ -142,8 +192,7 @@ def link_existing_visual_candidates(alignments, origins, origin_events,
         if len(by_id) != len(rows) or set(by_id) != set(indexed_shots):
             raise ValueError(f"Shot ID mismatch in {channel} motion audit")
         indexed_motion[channel] = by_id
-    visual_only = {row["shot_id"] for row in origin_events
-                   if row["counter_id"] is None}
+    visual_only = {row["shot_id"] for row in origin_events if row["counter_id"] is None}
     used = {row["shot_id"] for row in alignments if row["shot_id"] is not None}
     result = []
     for alignment in alignments:
@@ -162,15 +211,21 @@ def link_existing_visual_candidates(alignments, origins, origin_events,
             channels = []
             for channel, by_id in indexed_motion.items():
                 tracks = by_id[shot_id]["following_shot_candidates"]
-                if any(track["colour"] == colour and
-                       0 <= track["interval_s"][0] - end <=
-                       max_motion_start_after_cut_s for track in tracks):
+                if any(
+                    track["colour"] == colour
+                    and 0 <= track["interval_s"][0] - end <= max_motion_start_after_cut_s
+                    for track in tracks
+                ):
                     channels.append(channel)
             if len(channels) >= 2:
-                row["existing_visual_candidates"].append({
-                    "shot_id": shot_id, "interval_s": shot["interval_s"],
-                    "visual_probability": shot["probability"],
-                    "motion_channels": channels})
+                row["existing_visual_candidates"].append(
+                    {
+                        "shot_id": shot_id,
+                        "interval_s": shot["interval_s"],
+                        "visual_probability": shot["probability"],
+                        "motion_channels": channels,
+                    }
+                )
         if len(row["existing_visual_candidates"]) == 1:
             row["shot_id"] = row["existing_visual_candidates"][0]["shot_id"]
             row["status"] = "associated"

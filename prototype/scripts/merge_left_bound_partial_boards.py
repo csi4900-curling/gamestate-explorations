@@ -17,8 +17,14 @@ def digest(path):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    for name in ("frozen_boards", "added_boards", "frozen_screen",
-                 "integrated_screen", "added_screen", "output"):
+    for name in (
+        "frozen_boards",
+        "added_boards",
+        "frozen_screen",
+        "integrated_screen",
+        "added_screen",
+        "output",
+    ):
         parser.add_argument(f"--{name.replace('_', '-')}", type=Path, required=True)
     args = parser.parse_args()
     if args.output.exists():
@@ -28,33 +34,48 @@ def main():
     frozen = json.loads(args.frozen_screen.read_text())
     integrated = json.loads(args.integrated_screen.read_text())
     added_screen = json.loads(args.added_screen.read_text())
-    if (old["screen_sha256"] != digest(args.frozen_screen) or
-            new["screen_sha256"] != digest(args.added_screen) or
-            added_screen["integrated_screen_sha256"] != digest(args.integrated_screen) or
-            integrated["frozen_screen_sha256"] != digest(args.frozen_screen) or
-            any(old[key] != new[key] for key in
-                ("source_id", "source_sha256", "high_resolution_source_sha256",
-                 "source_interval_s", "candidates_sha256",
-                 "vision_calibration_sha256", "rectification_sha256",
-                 "board_code_sha256"))):
+    if (
+        old["screen_sha256"] != digest(args.frozen_screen)
+        or new["screen_sha256"] != digest(args.added_screen)
+        or added_screen["integrated_screen_sha256"] != digest(args.integrated_screen)
+        or integrated["frozen_screen_sha256"] != digest(args.frozen_screen)
+        or any(
+            old[key] != new[key]
+            for key in (
+                "source_id",
+                "source_sha256",
+                "high_resolution_source_sha256",
+                "source_interval_s",
+                "candidates_sha256",
+                "vision_calibration_sha256",
+                "rectification_sha256",
+                "board_code_sha256",
+            )
+        )
+    ):
         parser.error("Input board provenance differs")
     frozen_ids = [event["id"] for event in frozen["events"]]
     added_ids = [event["id"] for event in added_screen["events"]]
     integrated_ids = [event["id"] for event in integrated["events"]]
-    if ([row["candidate_id"] for row in old["rows"]] != frozen_ids or
-            [row["candidate_id"] for row in new["rows"]] != added_ids or
-            set(frozen_ids).intersection(added_ids) or
-            set(frozen_ids).union(added_ids) != set(integrated_ids) or
-            set(added_ids) != set(integrated["added_candidate_ids"])):
+    if (
+        [row["candidate_id"] for row in old["rows"]] != frozen_ids
+        or [row["candidate_id"] for row in new["rows"]] != added_ids
+        or set(frozen_ids).intersection(added_ids)
+        or set(frozen_ids).union(added_ids) != set(integrated_ids)
+        or set(added_ids) != set(integrated["added_candidate_ids"])
+    ):
         parser.error("Board rows do not partition integrated accepted events")
     by_id = {row["candidate_id"]: row for row in old["rows"] + new["rows"]}
     rows = [by_id[pid] for pid in integrated_ids]
     for event, row in zip(integrated["events"], rows):
-        if (event["crossing_time_s"] != row["crossing_time_s"] or
-                event["colour"] != row["colour"] or
-                row["completeness"] != "unknown_from_video" or
-                row["simulation_ready"] or row["post_throw_settle_verified"] or
-                row["persistent_stone_ids_verified"]):
+        if (
+            event["crossing_time_s"] != row["crossing_time_s"]
+            or event["colour"] != row["colour"]
+            or row["completeness"] != "unknown_from_video"
+            or row["simulation_ready"]
+            or row["post_throw_settle_verified"]
+            or row["persistent_stone_ids_verified"]
+        ):
             raise ValueError(f"Incomplete or mismatched board for {event['id']}")
     output = {
         "status": "postscore_91_candidate_partial_boards_not_game_states",

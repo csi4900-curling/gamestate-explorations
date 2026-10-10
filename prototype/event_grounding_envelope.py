@@ -20,21 +20,23 @@ def ground_event_candidates(events, possible_edit_rows, temporal_rows):
         shot_id = event["shot_id"]
         window = event["delivery_window_s"]
         edits = []
-        for row in sorted(edits_by_shot.get(shot_id, []),
-                          key=lambda item: item["time_s"]):
+        for row in sorted(edits_by_shot.get(shot_id, []), key=lambda item: item["time_s"]):
             time_s = row["time_s"]
             if not window[0] < time_s < window[1]:
                 raise ValueError(f"Internal edit lies outside event window: {shot_id}")
             crossing_ids = row["crossing_same_shot_cap_track_ids"]
             if len(crossing_ids) != row["crossing_same_shot_cap_track_count"]:
                 raise ValueError(f"Crossing track count mismatch: {shot_id}")
-            edits.append({
-                "time_s": time_s,
-                "evidence_tier": "isolated_spike" if temporal[(shot_id, time_s)][
-                    "isolated_spike"] else "nonisolated_change",
-                "crossing_same_shot_cap_track_ids": list(crossing_ids),
-                "boundary_status": "possible_unverified",
-            })
+            edits.append(
+                {
+                    "time_s": time_s,
+                    "evidence_tier": "isolated_spike"
+                    if temporal[(shot_id, time_s)]["isolated_spike"]
+                    else "nonisolated_change",
+                    "crossing_same_shot_cap_track_ids": list(crossing_ids),
+                    "boundary_status": "possible_unverified",
+                }
+            )
         crossing = any(row["crossing_same_shot_cap_track_ids"] for row in edits)
         if crossing:
             continuity = "possible_edit_crosses_cap_track"

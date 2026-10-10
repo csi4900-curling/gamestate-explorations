@@ -52,11 +52,7 @@ def main():
         "sample_indices"
     ]
     # Guard nearby frames too; this still does not prove match-level separation.
-    pool = [
-        index
-        for index in range(5000)
-        if all(abs(index - fixed) > 20 for fixed in excluded)
-    ]
+    pool = [index for index in range(5000) if all(abs(index - fixed) > 20 for fixed in excluded)]
     chosen = sorted(random.Random(args.seed).sample(pool, args.count))
     selection = {
         "status": "published_label_development_sample",

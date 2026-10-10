@@ -32,17 +32,21 @@ def main():
     observations = json.loads(args.observations.read_text())
     fusion = json.loads(args.fusion.read_text())
     alignment = json.loads(args.alignment.read_text())
-    if (observations["source_sha256"] != fusion["source_sha256"] or
-            observations["fusion_sha256"] != digest(args.fusion)):
+    if observations["source_sha256"] != fusion["source_sha256"] or observations[
+        "fusion_sha256"
+    ] != digest(args.fusion):
         parser.error("Source or fusion fingerprint differs")
-    if (alignment["source_sha256"] != fusion["source_sha256"] or
-            alignment["observations_sha256"] != digest(args.observations)):
+    if alignment["source_sha256"] != fusion["source_sha256"] or alignment[
+        "observations_sha256"
+    ] != digest(args.observations):
         parser.error("Alignment source or observations fingerprint differs")
     rows = observations["rows"]
-    eligible = [row for row in fusion["right_entries"]
-                if row["fusion_status"].startswith("right_only_")]
+    eligible = [
+        row for row in fusion["right_entries"] if row["fusion_status"].startswith("right_only_")
+    ]
     if [row["right_raw_track_id"] for row in rows] != [
-            row["right_raw_track_id"] for row in eligible]:
+        row["right_raw_track_id"] for row in eligible
+    ]:
         parser.error("Observation rows do not cover right-only entries in order")
     transitions = adjacent_cap_sequence(rows, alignment["adjacent_pairs"])
     output = {
@@ -58,14 +62,18 @@ def main():
         "observation_status_counts": observations["observation_status_counts"],
         "transition_status_counts": dict(Counter(row["status"] for row in transitions)),
         "conditional_local_cap_match_count": sum(
-            len(row.get("matched_local_caps", [])) for row in transitions),
-        "entries": [{
-            "right_raw_track_id": row["right_raw_track_id"],
-            "entry_time_s": row["entry_time_s"],
-            "observation_status": row["observation_status"],
-            "stable_cap_proposals": row["stable_cap_proposals"],
-            "simulation_ready": False,
-        } for row in rows],
+            len(row.get("matched_local_caps", [])) for row in transitions
+        ),
+        "entries": [
+            {
+                "right_raw_track_id": row["right_raw_track_id"],
+                "entry_time_s": row["entry_time_s"],
+                "observation_status": row["observation_status"],
+                "stable_cap_proposals": row["stable_cap_proposals"],
+                "simulation_ready": False,
+            }
+            for row in rows
+        ],
         "adjacent_transitions": transitions,
         "simulation_ready_count": 0,
         "limitations": [
@@ -77,10 +85,15 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(output, indent=2) + "\n")
-    print(json.dumps({"entries": len(rows),
-                      "transitions": output["transition_status_counts"],
-                      "conditional_local_cap_matches":
-                      output["conditional_local_cap_match_count"]}))
+    print(
+        json.dumps(
+            {
+                "entries": len(rows),
+                "transitions": output["transition_status_counts"],
+                "conditional_local_cap_matches": output["conditional_local_cap_match_count"],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

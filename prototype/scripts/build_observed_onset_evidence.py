@@ -44,12 +44,14 @@ def build_contact_sheet():
         panel = panel.resize((tile_w, 405), Image.Resampling.LANCZOS)
         x, y = index % 3 * tile_w, index // 3 * tile_h
         canvas.paste(panel, (x, y + 35))
-        draw.text((x + 10, y + 7), f"{source_s:.3f} s · {caption}",
-                  fill="#14313c", font=font)
+        draw.text((x + 10, y + 7), f"{source_s:.3f} s · {caption}", fill="#14313c", font=font)
     cap.release()
-    draw.text((15, tile_h * 2 + 18),
-              "La séparation entre la pierre et le dispositif de lancer reste cachée ; ces temps ne mesurent pas le lâcher physique.",
-              fill="#53676c", font=small)
+    draw.text(
+        (15, tile_h * 2 + 18),
+        "La séparation entre la pierre et le dispositif de lancer reste cachée ; ces temps ne mesurent pas le lâcher physique.",
+        fill="#53676c",
+        font=small,
+    )
     canvas.save(IMAGE, quality=91)
 
 
@@ -63,15 +65,17 @@ def main():
         crossing = event["crossing_time_s"]
         assert first < crossing and event["release_time_s"] is None
         assert event["trajectory"][0]["time_s"] == first
-        rows.append({
-            "id": event["id"],
-            "colour": event["colour"],
-            "first_observed_track_s": first,
-            "virtual_line_crossing_s": crossing,
-            "pre_line_lead_s": round(crossing - first, 3),
-            "physical_release_s": None,
-            "time_semantics": "first observation of a track later confirmed as moving; not separation from the delivery device",
-        })
+        rows.append(
+            {
+                "id": event["id"],
+                "colour": event["colour"],
+                "first_observed_track_s": first,
+                "virtual_line_crossing_s": crossing,
+                "pre_line_lead_s": round(crossing - first, 3),
+                "physical_release_s": None,
+                "time_semantics": "first observation of a track later confirmed as moving; not separation from the delivery device",
+            }
+        )
     t11 = next(row for row in rows if row["id"] == "T11")
     assert t11["first_observed_track_s"] == 2303.5
     assert abs(t11["virtual_line_crossing_s"] - 2303.956) < 0.001

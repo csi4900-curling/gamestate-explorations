@@ -18,13 +18,16 @@ OUTPUT = ROOT / "validation/official-shot-sequence/pwg2022-official-counter-alig
 INPUTS = {
     "PREL000101": (
         "validation/curlobserver-learned-probe/swiss-full-transfer/counter-replay.json",
-        "validation/curlobserver-learned-probe/swiss-full-transfer/candidate-event-ledger.json"),
+        "validation/curlobserver-learned-probe/swiss-full-transfer/candidate-event-ledger.json",
+    ),
     "PREL000102": (
         "validation/throw-event-benchmark/layout-router/full-china22-counter-postscore-replay.json",
-        "validation/curlobserver-learned-probe/china-full-transfer/candidate-throw-event-ledger-v1.json"),
+        "validation/curlobserver-learned-probe/china-full-transfer/candidate-throw-event-ledger-v1.json",
+    ),
     "PREL000103": (
         "validation/curlobserver-learned-probe/slovakia-full-transfer/counter-replay.json",
-        "validation/curlobserver-learned-probe/slovakia-full-transfer/candidate-event-ledger.json"),
+        "validation/curlobserver-learned-probe/slovakia-full-transfer/candidate-event-ledger.json",
+    ),
 }
 
 
@@ -42,7 +45,10 @@ def main():
         counter_path, candidate_path = ROOT / counter_name, ROOT / candidate_name
         counter = json.loads(counter_path.read_text())
         candidates = json.loads(candidate_path.read_text())
-        if counter["source_sha256"] != game["source_video_sha256"] or candidates["source_sha256"] != game["source_video_sha256"]:
+        if (
+            counter["source_sha256"] != game["source_video_sha256"]
+            or candidates["source_sha256"] != game["source_video_sha256"]
+        ):
             raise ValueError("Input ledgers do not refer to the official game video")
         if digest(counter_path) != candidates["counter_audit_sha256"]:
             raise ValueError("Candidate ledger was built from a different counter replay")
@@ -54,23 +60,32 @@ def main():
             if counter_id is None:
                 continue
             row = by_counter[counter_id]
-            candidate_links.append({
-                "candidate_id": candidate["candidate_id"],
-                "counter_id": counter_id,
-                "official_shot_id": row["official_shot_id"] if row["status"] in CLEAN_STATUSES else None,
-                "candidate_colour": candidate.get("colour"),
-                "official_colour": row["official_colour"],
-                "counter_alignment_status": row["status"],
-                "release_window_s": candidate.get("release_window_s"),
-                "counter_time_s": row["counter_time_s"],
-            })
-        candidate_link_counts = Counter(link["official_shot_id"] for link in candidate_links if link["official_shot_id"])
+            candidate_links.append(
+                {
+                    "candidate_id": candidate["candidate_id"],
+                    "counter_id": counter_id,
+                    "official_shot_id": row["official_shot_id"]
+                    if row["status"] in CLEAN_STATUSES
+                    else None,
+                    "candidate_colour": candidate.get("colour"),
+                    "official_colour": row["official_colour"],
+                    "counter_alignment_status": row["status"],
+                    "release_window_s": candidate.get("release_window_s"),
+                    "counter_time_s": row["counter_time_s"],
+                }
+            )
+        candidate_link_counts = Counter(
+            link["official_shot_id"] for link in candidate_links if link["official_shot_id"]
+        )
         for link in candidate_links:
             if link["official_shot_id"] and candidate_link_counts[link["official_shot_id"]] > 1:
                 link["counter_alignment_status"] = "multiple_candidates_for_official_shot"
                 link["official_shot_id"] = None
-            elif (link["official_shot_id"] and link["release_window_s"]
-                  and link["release_window_s"][0] > link["counter_time_s"] + 1):
+            elif (
+                link["official_shot_id"]
+                and link["release_window_s"]
+                and link["release_window_s"][0] > link["counter_time_s"] + 1
+            ):
                 link["counter_alignment_status"] = "candidate_after_counter"
                 link["official_shot_id"] = None
             elif link["official_shot_id"] and link["candidate_colour"] is None:
@@ -79,22 +94,24 @@ def main():
                 link["counter_alignment_status"] = "candidate_colour_conflict"
         status_counts = Counter(row["status"] for row in rows)
         link_status_counts = Counter(link["counter_alignment_status"] for link in candidate_links)
-        results.append({
-            "official_game_code": game["official_game_code"],
-            "counter_audit_path": counter_name,
-            "counter_audit_sha256": digest(counter_path),
-            "candidate_ledger_path": candidate_name,
-            "candidate_ledger_sha256": digest(candidate_path),
-            "official_shot_count": game["official_shot_count"],
-            "candidate_count": len(candidates["events"]),
-            "counter_event_count": len(rows),
-            "counter_status_counts": dict(status_counts),
-            "candidate_with_counter_count": len(candidate_links),
-            "candidate_without_counter_count": len(candidates["events"]) - len(candidate_links),
-            "candidate_link_status_counts": dict(link_status_counts),
-            "counter_rows": rows,
-            "candidate_links": candidate_links,
-        })
+        results.append(
+            {
+                "official_game_code": game["official_game_code"],
+                "counter_audit_path": counter_name,
+                "counter_audit_sha256": digest(counter_path),
+                "candidate_ledger_path": candidate_name,
+                "candidate_ledger_sha256": digest(candidate_path),
+                "official_shot_count": game["official_shot_count"],
+                "candidate_count": len(candidates["events"]),
+                "counter_event_count": len(rows),
+                "counter_status_counts": dict(status_counts),
+                "candidate_with_counter_count": len(candidate_links),
+                "candidate_without_counter_count": len(candidates["events"]) - len(candidate_links),
+                "candidate_link_status_counts": dict(link_status_counts),
+                "counter_rows": rows,
+                "candidate_links": candidate_links,
+            }
+        )
     result = {
         "status": "official_shot_order_to_broadcast_counter_diagnostic_not_f1",
         "official_reference_path": str(REFERENCE.relative_to(ROOT)),
@@ -112,7 +129,11 @@ def main():
     }
     OUTPUT.write_text(json.dumps(result, indent=2) + "\n")
     for row in results:
-        print(row["official_game_code"], row["counter_status_counts"], row["candidate_link_status_counts"])
+        print(
+            row["official_game_code"],
+            row["counter_status_counts"],
+            row["candidate_link_status_counts"],
+        )
 
 
 if __name__ == "__main__":

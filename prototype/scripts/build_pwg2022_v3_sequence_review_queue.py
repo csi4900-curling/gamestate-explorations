@@ -35,8 +35,10 @@ def build():
         code = game["recording_code"]
         evidence_game = handoff_games[code]
         segment_game = segment_games[code]
-        if (game["source_sha256"] != evidence_game["source_sha256"] or
-                game["source_sha256"] != segment_game["source_sha256"]):
+        if (
+            game["source_sha256"] != evidence_game["source_sha256"]
+            or game["source_sha256"] != segment_game["source_sha256"]
+        ):
             raise ValueError("Source hashes differ")
         evidence = indexed(evidence_game["rows"], "event_id")
         windows = indexed(segment_game["segments"], "event_id")
@@ -50,66 +52,97 @@ def build():
                 event = evidence[event_id]
                 window = windows[event_id]
                 release = event["release_cue"]
-                rows.append({
-                    "kind": "candidate_skipped_in_every_optimum",
-                    "recording_code": code, "end": end["end"],
-                    "event_id": event_id, "ledger_colour": event["event_colour"],
-                    "counter_id": event["counter_id"],
-                    "release_cue_status": release["status"],
-                    "source_release_cue_colour": release["colour"],
-                    "source_release_cue_time_s": release["time_s"],
-                    "receiving_view_status": event["receiving_view"]["status"],
-                    "receiving_view_colour": event["receiving_view"]["colour"],
-                    "previous_candidate_id": candidates[index - 1]["candidate_id"]
-                    if index else None,
-                    "next_candidate_id": candidates[index + 1]["candidate_id"]
-                    if index + 1 < len(candidates) else None,
-                    "source_video_path": segment_game["source_video_path"],
-                    "review_window_s": window["review_window_s"],
-                    "priority": "protect_source_release_cue"
-                    if release["status"] == "unique_passage" else
-                    "inspect_duplicate_or_sequence_assumption",
-                })
+                rows.append(
+                    {
+                        "kind": "candidate_skipped_in_every_optimum",
+                        "recording_code": code,
+                        "end": end["end"],
+                        "event_id": event_id,
+                        "ledger_colour": event["event_colour"],
+                        "counter_id": event["counter_id"],
+                        "release_cue_status": release["status"],
+                        "source_release_cue_colour": release["colour"],
+                        "source_release_cue_time_s": release["time_s"],
+                        "receiving_view_status": event["receiving_view"]["status"],
+                        "receiving_view_colour": event["receiving_view"]["colour"],
+                        "previous_candidate_id": candidates[index - 1]["candidate_id"]
+                        if index
+                        else None,
+                        "next_candidate_id": candidates[index + 1]["candidate_id"]
+                        if index + 1 < len(candidates)
+                        else None,
+                        "source_video_path": segment_game["source_video_path"],
+                        "review_window_s": window["review_window_s"],
+                        "priority": "protect_source_release_cue"
+                        if release["status"] == "unique_passage"
+                        else "inspect_duplicate_or_sequence_assumption",
+                    }
+                )
             for index, shot in enumerate(official):
                 if shot["status"] != "unmatched_in_every_optimum":
                     continue
-                before = next((prior["unique_candidate_id"]
-                               for prior in reversed(official[:index])
-                               if prior["unique_candidate_id"] is not None), None)
-                after = next((later["unique_candidate_id"]
-                              for later in official[index + 1:]
-                              if later["unique_candidate_id"] is not None), None)
-                rows.append({
-                    "kind": "official_slot_unmatched_in_every_optimum",
-                    "recording_code": code, "end": end["end"],
-                    "official_shot_id": shot["official_shot_id"],
-                    "previous_official_shot_id": official[index - 1]["official_shot_id"]
-                    if index else None,
-                    "next_official_shot_id": official[index + 1]["official_shot_id"]
-                    if index + 1 < len(official) else None,
-                    "source_video_path": segment_game["source_video_path"],
-                    "preceding_matched_candidate_id": before,
-                    "preceding_candidate_review_window_s":
-                        windows[before]["review_window_s"] if before else None,
-                    "following_matched_candidate_id": after,
-                    "following_candidate_review_window_s":
-                        windows[after]["review_window_s"] if after else None,
-                    "priority": "inspect_neighbouring_video_not_a_labeled_miss",
-                })
+                before = next(
+                    (
+                        prior["unique_candidate_id"]
+                        for prior in reversed(official[:index])
+                        if prior["unique_candidate_id"] is not None
+                    ),
+                    None,
+                )
+                after = next(
+                    (
+                        later["unique_candidate_id"]
+                        for later in official[index + 1 :]
+                        if later["unique_candidate_id"] is not None
+                    ),
+                    None,
+                )
+                rows.append(
+                    {
+                        "kind": "official_slot_unmatched_in_every_optimum",
+                        "recording_code": code,
+                        "end": end["end"],
+                        "official_shot_id": shot["official_shot_id"],
+                        "previous_official_shot_id": official[index - 1]["official_shot_id"]
+                        if index
+                        else None,
+                        "next_official_shot_id": official[index + 1]["official_shot_id"]
+                        if index + 1 < len(official)
+                        else None,
+                        "source_video_path": segment_game["source_video_path"],
+                        "preceding_matched_candidate_id": before,
+                        "preceding_candidate_review_window_s": windows[before]["review_window_s"]
+                        if before
+                        else None,
+                        "following_matched_candidate_id": after,
+                        "following_candidate_review_window_s": windows[after]["review_window_s"]
+                        if after
+                        else None,
+                        "priority": "inspect_neighbouring_video_not_a_labeled_miss",
+                    }
+                )
     counts = Counter(row["kind"] for row in rows)
-    protected = [row["event_id"] for row in rows
-                 if row["kind"] == "candidate_skipped_in_every_optimum"
-                 and row["priority"] == "protect_source_release_cue"]
-    if (counts != {"candidate_skipped_in_every_optimum": 15,
-                   "official_slot_unmatched_in_every_optimum": 10} or
-            sorted(protected) != sorted(["VISUAL-S243", "VISUAL-S593",
-                                         "VISUAL-S60", "VISUAL-S282"])):
+    protected = [
+        row["event_id"]
+        for row in rows
+        if row["kind"] == "candidate_skipped_in_every_optimum"
+        and row["priority"] == "protect_source_release_cue"
+    ]
+    if counts != {
+        "candidate_skipped_in_every_optimum": 15,
+        "official_slot_unmatched_in_every_optimum": 10,
+    } or sorted(protected) != sorted(["VISUAL-S243", "VISUAL-S593", "VISUAL-S60", "VISUAL-S282"]):
         raise ValueError("Review queue counts or release-cue safeguards changed")
     return {
         "status": "development_postscore_review_queue_not_physical_labels",
-        "input_sha256": {"sequence": digest(SEQUENCE), "handoff": digest(HANDOFF),
-                         "review_segments": digest(SEGMENTS), "runner": digest(Path(__file__))},
-        "row_count": len(rows), "kind_counts": dict(counts),
+        "input_sha256": {
+            "sequence": digest(SEQUENCE),
+            "handoff": digest(HANDOFF),
+            "review_segments": digest(SEGMENTS),
+            "runner": digest(Path(__file__)),
+        },
+        "row_count": len(rows),
+        "kind_counts": dict(counts),
         "source_release_cue_present_in_skipped_candidates": len(protected),
         "source_release_cue_event_ids": protected,
         "rows": rows,

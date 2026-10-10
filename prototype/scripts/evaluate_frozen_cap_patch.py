@@ -43,7 +43,9 @@ def main():
         "labels_sha256": file_sha256(args.review / "labels.json"),
         "model_sha256": file_sha256(args.model),
         "runner_sha256": file_sha256(__file__),
-        "threshold": threshold, "score": counts(rows), "rows": rows,
+        "threshold": threshold,
+        "score": counts(rows),
+        "rows": rows,
         "limitations": [
             "Selected tracks and three frames per track are not an unbiased sample.",
             "Labels are developer-authored visual review, not independent ground truth.",

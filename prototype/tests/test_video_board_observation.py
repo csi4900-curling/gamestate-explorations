@@ -31,13 +31,20 @@ def test_clear_video_board_matches_its_official_diagram():
     frame = cv2.imread(str(FIXTURES / "pwg2022-overhead-board.jpg"))
     house = detect_overhead_house(frame)
     stones = detect_board_stones(frame, house)
-    path = Path(__file__).resolve().parents[2] / "validation/official-shot-sequence/pwg2022-official-board-diagrams.json"
+    path = (
+        Path(__file__).resolve().parents[2]
+        / "validation/official-shot-sequence/pwg2022-official-board-diagrams.json"
+    )
     diagrams = json.loads(path.read_text())
-    official = next(shot for game in diagrams["games"] for end in game["ends"]
-                    for shot in end["shots"]
-                    if shot["official_shot_id"] == "PREL000102-E07-S15")
+    official = next(
+        shot
+        for game in diagrams["games"]
+        for end in game["ends"]
+        for shot in end["shots"]
+        if shot["official_shot_id"] == "PREL000102-E07-S15"
+    )
     comparison = compare_board_observations(
-        stones, official["stones"],
-        official_house_center_y=official["house_center_px"][1])
+        stones, official["stones"], official_house_center_y=official["house_center_px"][1]
+    )
     assert comparison["matched_count"] == 10
     assert comparison["max_matched_distance_house_radii"] < 0.08

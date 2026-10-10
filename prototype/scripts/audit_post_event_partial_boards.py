@@ -31,16 +31,19 @@ def main():
     candidates = json.loads(args.candidates.read_text())
     screen = json.loads(args.screen.read_text())
     motion = json.loads(args.motion.read_text())
-    if (screen["candidates_sha256"] != file_sha256(args.candidates) or
-            screen["motion_sha256"] != file_sha256(args.motion) or
-            file_sha256(args.video) != motion["high_resolution_source_sha256"] or
-            screen["source_id"] != candidates["source_id"] or
-            screen["source_sha256"] != candidates["source_sha256"]):
+    if (
+        screen["candidates_sha256"] != file_sha256(args.candidates)
+        or screen["motion_sha256"] != file_sha256(args.motion)
+        or file_sha256(args.video) != motion["high_resolution_source_sha256"]
+        or screen["source_id"] != candidates["source_id"]
+        or screen["source_sha256"] != candidates["source_sha256"]
+    ):
         parser.error("Candidate, screen, motion, or source-video chain differs")
     events = sorted(candidates["events"], key=lambda row: row["crossing_time_s"])
     by_motion = {row["candidate_id"]: row for row in motion["rows"]}
     if len(by_motion) != len(motion["rows"]) or (
-            set(by_motion) != {event["id"] for event in events}):
+        set(by_motion) != {event["id"] for event in events}
+    ):
         parser.error("Motion and candidate IDs differ")
     vision_path = ROOT / "prototype/vision/annotations/calibration.json"
     rectification_path = ROOT / "prototype/rectification/calibration.json"
@@ -54,8 +57,7 @@ def main():
         cal = ViewCalibrator(view, ROOT / "prototype/vision/frames")
         cal.H = np.array(refined[name]["refined_H"])
         calibrators[name] = cal
-    capture = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not capture.isOpened():
         parser.error("Cannot open video")
     fps = capture.get(cv2.CAP_PROP_FPS)
@@ -68,73 +70,101 @@ def main():
             if not path:
                 raise ValueError(f"Screened event {pid} has no motion path")
             view = motion_row["receiving_view"]
-            if view != {"positive_y": "left", "negative_y": "right"}[
-                    event["view_motion"]]:
+            if view != {"positive_y": "left", "negative_y": "right"}[event["view_motion"]]:
                 raise ValueError(f"Receiving view differs for {pid}")
-            next_candidate = next((candidate["crossing_time_s"] for candidate in events
-                                   if candidate["crossing_time_s"] >
-                                   event["crossing_time_s"]), None)
-            bounds = tail_bounds(path[-1]["source_time_s"],
-                                 event["crossing_time_s"], next_candidate,
-                                 candidates["source_interval_s"][1])
+            next_candidate = next(
+                (
+                    candidate["crossing_time_s"]
+                    for candidate in events
+                    if candidate["crossing_time_s"] > event["crossing_time_s"]
+                ),
+                None,
+            )
+            bounds = tail_bounds(
+                path[-1]["source_time_s"],
+                event["crossing_time_s"],
+                next_candidate,
+                candidates["source_interval_s"][1],
+            )
             frames = []
             if bounds["eligible"]:
                 cal = calibrators[view]
                 for t in range(ceil(bounds["start_s"]), floor(bounds["stop_s"]) + 1):
-                    capture.set(cv2.CAP_PROP_POS_FRAMES,
-                                round((t - motion["source_offset_s"]) * fps))
+                    capture.set(
+                        cv2.CAP_PROP_POS_FRAMES, round((t - motion["source_offset_s"]) * fps)
+                    )
                     ok, image = capture.read()
                     if not ok:
                         raise RuntimeError(f"Cannot decode source time {t}")
                     H, registration = cal.register(
-                        image, max_corner_displacement_px=motion[
-                            "max_corner_displacement_px"])
+                        image, max_corner_displacement_px=motion["max_corner_displacement_px"]
+                    )
                     stones = []
                     if H is not None:
                         A = np.array(registration["reference_to_current"])
                         background = cv2.warpPerspective(
-                            cal.reference, A, (image.shape[1], image.shape[0]))
-                        prior = transported_reference_camera(
-                            cal.H, H, cal.view["region"])
-                        found, _ = detect_and_localize(
-                            image, H, cal.view, background, prior)
+                            cal.reference, A, (image.shape[1], image.shape[0])
+                        )
+                        prior = transported_reference_camera(cal.H, H, cal.view["region"])
+                        found, _ = detect_and_localize(image, H, cal.view, background, prior)
                         stones = [
-                            {"colour": p["colour"],
-                             "pixel_center": p["pixel_center"],
-                             "view_local_ground_position_m": p["ground_position_m"],
-                             "localization_status": p["localization"]["status"]}
-                            for p in found if p["ground_position_m"] is not None and
-                            abs(p["ground_position_m"][0]) <= 2.375 and
-                            abs(p["ground_position_m"][1]) <= 4.5]
-                    frames.append({"source_time_s": float(t),
-                                   "status": registration["status"],
-                                   "stones": stones})
-            board = (stable_view_local_stones(frames) if bounds["eligible"] else
-                     {"status": "no_quiet_tail_before_next_candidate_or_interval_end",
-                      "stones": [], "last_registered_s": None})
-            rows.append({
-                "candidate_id": pid, "colour": event["colour"],
-                "crossing_time_s": event["crossing_time_s"],
-                "receiving_view": view,
-                "receiving_path_last_observed_s": path[-1]["source_time_s"],
-                "next_passage_candidate_time_s": next_candidate,
-                "tail": bounds,
-                "registered_frame_count": sum(frame["status"] == "registered"
-                                              for frame in frames),
-                "registration_abstention_count": sum(
-                    frame["status"] != "registered" for frame in frames),
-                "board": board,
-                "coordinate_frame": {"name": "receiving_camera_view_local_ice_plane",
-                                     "origin": "target_house_button",
-                                     "unit": "metres_conditional_projection",
-                                     "orientation_shared_across_views": False,
-                                     "metric_accuracy_verified": False},
-                "completeness": "unknown_from_video",
-                "post_throw_settle_verified": False,
-                "persistent_stone_ids_verified": False,
-                "simulation_ready": False,
-                "frames": frames,
-            })
+                            {
+                                "colour": p["colour"],
+                                "pixel_center": p["pixel_center"],
+                                "view_local_ground_position_m": p["ground_position_m"],
+                                "localization_status": p["localization"]["status"],
+                            }
+                            for p in found
+                            if p["ground_position_m"] is not None
+                            and abs(p["ground_position_m"][0]) <= 2.375
+                            and abs(p["ground_position_m"][1]) <= 4.5
+                        ]
+                    frames.append(
+                        {
+                            "source_time_s": float(t),
+                            "status": registration["status"],
+                            "stones": stones,
+                        }
+                    )
+            board = (
+                stable_view_local_stones(frames)
+                if bounds["eligible"]
+                else {
+                    "status": "no_quiet_tail_before_next_candidate_or_interval_end",
+                    "stones": [],
+                    "last_registered_s": None,
+                }
+            )
+            rows.append(
+                {
+                    "candidate_id": pid,
+                    "colour": event["colour"],
+                    "crossing_time_s": event["crossing_time_s"],
+                    "receiving_view": view,
+                    "receiving_path_last_observed_s": path[-1]["source_time_s"],
+                    "next_passage_candidate_time_s": next_candidate,
+                    "tail": bounds,
+                    "registered_frame_count": sum(
+                        frame["status"] == "registered" for frame in frames
+                    ),
+                    "registration_abstention_count": sum(
+                        frame["status"] != "registered" for frame in frames
+                    ),
+                    "board": board,
+                    "coordinate_frame": {
+                        "name": "receiving_camera_view_local_ice_plane",
+                        "origin": "target_house_button",
+                        "unit": "metres_conditional_projection",
+                        "orientation_shared_across_views": False,
+                        "metric_accuracy_verified": False,
+                    },
+                    "completeness": "unknown_from_video",
+                    "post_throw_settle_verified": False,
+                    "persistent_stone_ids_verified": False,
+                    "simulation_ready": False,
+                    "frames": frames,
+                }
+            )
             print(pid, board["status"], len(board["stones"]), flush=True)
     finally:
         capture.release()
@@ -149,8 +179,7 @@ def main():
         "motion_sha256": file_sha256(args.motion),
         "vision_calibration_sha256": file_sha256(vision_path),
         "rectification_sha256": file_sha256(rectification_path),
-        "board_code_sha256": file_sha256(
-            ROOT / "prototype/post_event_partial_board.py"),
+        "board_code_sha256": file_sha256(ROOT / "prototype/post_event_partial_board.py"),
         "runner_sha256": file_sha256(__file__),
         "board_status_counts": dict(Counter(row["board"]["status"] for row in rows)),
         "rows": rows,

@@ -28,7 +28,10 @@ def main():
         for item in (primary, cap)
     ) or primary["input_sha256"] != file_sha256(args.primary_raw):
         parser.error("Input source or primary raw/screen mismatch")
-    selected = [dict(item, evidence_channel="public_box_model") for item in primary["corroborated_candidates"]]
+    selected = [
+        dict(item, evidence_channel="public_box_model")
+        for item in primary["corroborated_candidates"]
+    ]
     supplemental = []
     withheld = []
     for item in cap["corroborated_candidates"]:
@@ -42,8 +45,13 @@ def main():
         )
         qualified = dict(item, id="cap:" + item["id"], evidence_channel="large_cap_fallback")
         if nearest <= 20:
-            withheld.append({"id": qualified["id"], "nearest_primary_s": round(nearest, 3),
-                             "reason": "primary_event_within_20s"})
+            withheld.append(
+                {
+                    "id": qualified["id"],
+                    "nearest_primary_s": round(nearest, 3),
+                    "reason": "primary_event_within_20s",
+                }
+            )
         else:
             supplemental.append(qualified)
     result = {
@@ -64,8 +72,15 @@ def main():
         ],
     }
     args.output.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({"primary": len(selected), "supplemented": len(supplemental),
-                      "withheld_supplements": len(withheld)}))
+    print(
+        json.dumps(
+            {
+                "primary": len(selected),
+                "supplemented": len(supplemental),
+                "withheld_supplements": len(withheld),
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

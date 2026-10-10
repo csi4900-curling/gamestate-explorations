@@ -18,8 +18,9 @@ def main():
     parser.add_argument("--video", type=Path, required=True)
     parser.add_argument("--learned-raw", type=Path, required=True)
     parser.add_argument("--cap-raw", type=Path, required=True)
-    parser.add_argument("--candidate-id", action="append", required=True,
-                        help="Prefix an ID with learned: or cap:")
+    parser.add_argument(
+        "--candidate-id", action="append", required=True, help="Prefix an ID with learned: or cap:"
+    )
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     if args.output.exists():
@@ -54,25 +55,28 @@ def main():
         kind, separator, candidate_id = qualified_id.partition(":")
         if not separator or kind not in sources:
             parser.error(f"Use learned:ID or cap:ID: {qualified_id}")
-        candidates = [row for row in sources[kind]["motion_candidates"]
-                      if row["id"] == candidate_id]
+        candidates = [
+            row for row in sources[kind]["motion_candidates"] if row["id"] == candidate_id
+        ]
         if len(candidates) != 1:
             parser.error(f"Candidate ID absent or duplicated: {qualified_id}")
         candidate = candidates[0]
         pair_rows = sample_track_camera_motion(candidate["visual_track_points"], frame_at)
-        rows.append({
-            "qualified_id": qualified_id,
-            "colour": candidate["colour"],
-            "evidence_interval_s": candidate["evidence_interval_s"],
-            "pair_count": len(pair_rows),
-            "reliable_pair_count": sum(row["registration_reliable"] for row in pair_rows),
-            "reliable_moving_pair_count": sum(
-                row["camera_residual_px"] is not None and row["camera_residual_px"] > 5
-                for row in pair_rows
-            ),
-            "longest_relative_motion_run": longest_relative_motion_run(pair_rows),
-            "pairs": pair_rows,
-        })
+        rows.append(
+            {
+                "qualified_id": qualified_id,
+                "colour": candidate["colour"],
+                "evidence_interval_s": candidate["evidence_interval_s"],
+                "pair_count": len(pair_rows),
+                "reliable_pair_count": sum(row["registration_reliable"] for row in pair_rows),
+                "reliable_moving_pair_count": sum(
+                    row["camera_residual_px"] is not None and row["camera_residual_px"] > 5
+                    for row in pair_rows
+                ),
+                "longest_relative_motion_run": longest_relative_motion_run(pair_rows),
+                "pairs": pair_rows,
+            }
+        )
     cap.release()
     result = {
         "status": "development_camera_relative_track_motion_probe",
@@ -96,10 +100,23 @@ def main():
         ],
     }
     args.output.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
-    print(json.dumps([{key: row[key] for key in
-                       ("qualified_id", "reliable_pair_count", "reliable_moving_pair_count",
-                        "longest_relative_motion_run")}
-                      for row in rows], indent=2))
+    print(
+        json.dumps(
+            [
+                {
+                    key: row[key]
+                    for key in (
+                        "qualified_id",
+                        "reliable_pair_count",
+                        "reliable_moving_pair_count",
+                        "longest_relative_motion_run",
+                    )
+                }
+                for row in rows
+            ],
+            indent=2,
+        )
+    )
 
 
 if __name__ == "__main__":

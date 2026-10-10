@@ -23,24 +23,27 @@ def main():
     candidates = json.loads(args.candidates.read_text())
     screen = json.loads(args.screen.read_text())
     reference = json.loads(args.reference.read_text())
-    sources = {(item["source_id"], item["source_sha256"],
-                tuple(item["source_interval_s"]))
-               for item in (candidates, screen, reference)}
+    sources = {
+        (item["source_id"], item["source_sha256"], tuple(item["source_interval_s"]))
+        for item in (candidates, screen, reference)
+    }
     if len(sources) != 1 or screen["candidates_sha256"] != file_sha256(args.candidates):
         parser.error("Input source or candidate chain differs")
     candidate_ids = {event["id"] for event in candidates["events"]}
     selected_ids = {event["id"] for event in screen["events"]}
-    if len(candidate_ids) != len(candidates["events"]) or (
-            len(selected_ids) != len(screen["events"])) or (
-            not selected_ids <= candidate_ids):
+    if (
+        len(candidate_ids) != len(candidates["events"])
+        or (len(selected_ids) != len(screen["events"]))
+        or (not selected_ids <= candidate_ids)
+    ):
         parser.error("Screen must select unique original candidate IDs")
     scores = {
         "candidate_baseline": evaluate_events(
-            candidates["events"], reference["events"],
-            reference["source_interval_s"]),
+            candidates["events"], reference["events"], reference["source_interval_s"]
+        ),
         "postscore_rescue_screen": evaluate_events(
-            screen["events"], reference["events"],
-            reference["source_interval_s"]),
+            screen["events"], reference["events"], reference["source_interval_s"]
+        ),
     }
     result = {
         "status": "postscore_exposed_development_fit_not_independent_transfer",
@@ -60,9 +63,15 @@ def main():
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
     for name, score in scores.items():
-        print(name, score["true_positives"], score["false_positives"],
-              score["false_negatives"], round(score["f1"], 3),
-              "colour_errors", score["colour_errors_among_matches"])
+        print(
+            name,
+            score["true_positives"],
+            score["false_positives"],
+            score["false_negatives"],
+            round(score["f1"], 3),
+            "colour_errors",
+            score["colour_errors_among_matches"],
+        )
 
 
 if __name__ == "__main__":

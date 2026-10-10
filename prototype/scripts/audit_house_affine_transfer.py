@@ -12,9 +12,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "prototype"))
 sys.path.insert(0, str(ROOT / "prototype/scripts"))
 from audit_split_panel_freeze import normalized_split_frame
-from house_affine_transfer_audit import (affine_line_residual,
-                                         summarize_residuals,
-                                         transverse_line_y)
+from house_affine_transfer_audit import affine_line_residual, summarize_residuals, transverse_line_y
 from split_house_ellipse_v2 import fit_house_ellipse
 
 
@@ -46,10 +44,8 @@ def main():
     reference_ellipse = fit_house_ellipse(reference_frame)
     if reference_ellipse is None:
         parser.error("Cannot fit reference house ellipse")
-    reference_line = transverse_line_y(reference_frame,
-                                       reference_ellipse["center_px"][1])
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    reference_line = transverse_line_y(reference_frame, reference_ellipse["center_px"][1])
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         parser.error("Cannot open target video")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -66,16 +62,22 @@ def main():
                 raise RuntimeError(f"Cannot decode target frame at {t}s")
             target_ellipse = item["stable_image_house_ellipse"]
             observed_line = transverse_line_y(
-                normalized_split_frame(frame), target_ellipse["center_px"][1])
-            rows.append({
-                "candidate_id": item["candidate_id"],
-                "sample_time_s": t,
-                "decoded_frame_index": frame_number,
-                "line_edge_strength": observed_line["mean_vertical_edge_strength"],
-                **affine_line_residual(
-                    reference_ellipse, reference_line["line_y_px"],
-                    target_ellipse, observed_line["line_y_px"]),
-            })
+                normalized_split_frame(frame), target_ellipse["center_px"][1]
+            )
+            rows.append(
+                {
+                    "candidate_id": item["candidate_id"],
+                    "sample_time_s": t,
+                    "decoded_frame_index": frame_number,
+                    "line_edge_strength": observed_line["mean_vertical_edge_strength"],
+                    **affine_line_residual(
+                        reference_ellipse,
+                        reference_line["line_y_px"],
+                        target_ellipse,
+                        observed_line["line_y_px"],
+                    ),
+                }
+            )
     finally:
         cap.release()
     result = {
@@ -88,7 +90,8 @@ def main():
         "model_code_sha256": digest(ROOT / "prototype/house_affine_transfer_audit.py"),
         "ellipse_code_sha256": digest(ROOT / "prototype/split_house_ellipse_v2.py"),
         "frame_normalization_code_sha256": digest(
-            ROOT / "prototype/scripts/audit_split_panel_freeze.py"),
+            ROOT / "prototype/scripts/audit_split_panel_freeze.py"
+        ),
         "runner_sha256": digest(Path(__file__)),
         "summary": summarize_residuals(rows),
         "rows": rows,

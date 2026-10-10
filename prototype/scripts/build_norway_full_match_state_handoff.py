@@ -37,8 +37,16 @@ def main():
     boards = data["official_boards"]
     scan = data["source_boards"]
     scaffold = data["scaffold"]
-    if len({official["source_video_sha256"], boards["source_video_sha256"],
-            scan["source_video_sha256"]}) != 1:
+    if (
+        len(
+            {
+                official["source_video_sha256"],
+                boards["source_video_sha256"],
+                scan["source_video_sha256"],
+            }
+        )
+        != 1
+    ):
         raise SystemExit("Video source hash conflict")
     if scaffold["input_sha256"]["official_shot_ledger"] != digest(PATHS["official_shots"]):
         raise SystemExit("Scaffold/official-ledger hash conflict")
@@ -48,19 +56,23 @@ def main():
         raise SystemExit("Postscore/source-scan hash conflict")
     if data["counter_gaps"]["input_sha256"]["slot_scaffold"] != digest(PATHS["scaffold"]):
         raise SystemExit("Gap/scaffold hash conflict")
-    gap_proposals = [row["unique_order_colour_display_proposal"]
-                     for row in data["counter_gaps"]["gaps"]
-                     if row["unique_order_colour_display_proposal"]]
+    gap_proposals = [
+        row["unique_order_colour_display_proposal"]
+        for row in data["counter_gaps"]["gaps"]
+        if row["unique_order_colour_display_proposal"]
+    ]
     if len(gap_proposals) != 1:
         raise SystemExit("Unique gap proposal count changed")
     rows = build_state_rows(
         scaffold["slots"],
         [shot for end in official["ends"] for shot in end["shots"]],
         [shot for end in boards["ends"] for shot in end["shots"]],
-        scan["rows"], gap_proposals, data["orientation_cues"]["rows"],
-        data["diagram_postscore"]["groups"])
-    if len({len(rows), official["official_shot_count"],
-            scaffold["official_shot_slot_count"]}) != 1:
+        scan["rows"],
+        gap_proposals,
+        data["orientation_cues"]["rows"],
+        data["diagram_postscore"]["groups"],
+    )
+    if len({len(rows), official["official_shot_count"], scaffold["official_shot_slot_count"]}) != 1:
         raise SystemExit("Shot slot count changed")
     basis_counts = Counter(row["video_event_evidence"]["association_basis"] for row in rows)
     result = {
@@ -73,11 +85,18 @@ def main():
         "association_basis_counts": dict(basis_counts),
         "slots_with_stable_video_house_observation": sum(
             row["video_post_shot_state"]["status"] == "partial_image_house_observations"
-            for row in rows),
-        "slots_with_retrospective_diagram_comparison": sum(any(
-            group["retrospective_official_diagram_comparison"] is not None
-            for group in row["video_post_shot_state"]["camera_groups"]) for row in rows),
-        "video_physics_simulation_ready_count": sum(row["video_physics_simulation_ready"] for row in rows),
+            for row in rows
+        ),
+        "slots_with_retrospective_diagram_comparison": sum(
+            any(
+                group["retrospective_official_diagram_comparison"] is not None
+                for group in row["video_post_shot_state"]["camera_groups"]
+            )
+            for row in rows
+        ),
+        "video_physics_simulation_ready_count": sum(
+            row["video_physics_simulation_ready"] for row in rows
+        ),
         "slots": rows,
         "limitations": [
             "Official PDF positions and rotation direction are independent reference data, not inferred from video.",
@@ -88,11 +107,18 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(result, indent=2) + "\n")
-    print({key: result[key] for key in
-           ("official_slot_count", "association_basis_counts",
-            "slots_with_stable_video_house_observation",
-            "slots_with_retrospective_diagram_comparison",
-            "video_physics_simulation_ready_count")})
+    print(
+        {
+            key: result[key]
+            for key in (
+                "official_slot_count",
+                "association_basis_counts",
+                "slots_with_stable_video_house_observation",
+                "slots_with_retrospective_diagram_comparison",
+                "video_physics_simulation_ready_count",
+            )
+        }
+    )
 
 
 if __name__ == "__main__":

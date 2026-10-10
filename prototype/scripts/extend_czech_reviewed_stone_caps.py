@@ -31,9 +31,12 @@ def digest(path):
 def search_roi(prediction, shape=(1080, 1920), radius=90):
     height, width = shape
     x, y = prediction
-    return (max(0, int(x - radius)), max(0, int(y - radius)),
-            min(width, int(x + radius + 1)),
-            min(height, int(y + radius + 1)))
+    return (
+        max(0, int(x - radius)),
+        max(0, int(y - radius)),
+        min(width, int(x + radius + 1)),
+        min(height, int(y + radius + 1)),
+    )
 
 
 def main():
@@ -45,8 +48,7 @@ def main():
     if source_hash != inventory["source_video_sha256"]:
         raise ValueError("Inventory and source video differ")
     by_gap = {r["episode_id"]: r for r in gaps["rows"]}
-    cap = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     fps = cap.get(cv2.CAP_PROP_FPS)
     if not cap.isOpened() or abs(fps - 30) > 0.01:
         raise ValueError("Source unreadable or FPS changed")
@@ -67,77 +69,91 @@ def main():
             for sample in case["samples"][1:]:
                 time = sample["source_time_s"]
                 dt_ratio = (time - current_time) / (current_time - previous_time)
-                prediction = [current_center[i] +
-                              (current_center[i] - previous_center[i]) * dt_ratio
-                              for i in (0, 1)]
+                prediction = [
+                    current_center[i] + (current_center[i] - previous_center[i]) * dt_ratio
+                    for i in (0, 1)
+                ]
                 roi = search_roi(prediction)
                 cap.set(cv2.CAP_PROP_POS_FRAMES, sample["decoded_frame_index"])
                 ok, frame = cap.read()
                 if not ok or frame.shape[:2] != (1080, 1920):
                     raise ValueError("Source frame unreadable")
-                components = [c for c in local_cap_components(
-                    frame, roi, case["colour_claim"])
-                    if c["area_px2"] <= 700]
-                decision = choose_next_cap(current_center, previous_center,
-                                           dt_ratio, components)
+                components = [
+                    c
+                    for c in local_cap_components(frame, roi, case["colour_claim"])
+                    if c["area_px2"] <= 700
+                ]
+                decision = choose_next_cap(current_center, previous_center, dt_ratio, components)
                 selected = decision["selected"]
-                near_competitors = (sum(
-                    dist(c["centroid_px_1080"],
-                         selected["centroid_px_1080"]) <= 65
-                    for c in components if c is not selected)
-                    if selected else None)
-                steps.append({
-                    "source_time_s": time,
-                    "decoded_frame_index": sample["decoded_frame_index"],
-                    "roi_xyxy_px_1080": list(roi),
-                    "component_count_in_roi": len(components),
-                    "components": components,
-                    "decision": decision,
-                    "other_same_colour_components_within_65px": near_competitors,
-                })
+                near_competitors = (
+                    sum(
+                        dist(c["centroid_px_1080"], selected["centroid_px_1080"]) <= 65
+                        for c in components
+                        if c is not selected
+                    )
+                    if selected
+                    else None
+                )
+                steps.append(
+                    {
+                        "source_time_s": time,
+                        "decoded_frame_index": sample["decoded_frame_index"],
+                        "roi_xyxy_px_1080": list(roi),
+                        "component_count_in_roi": len(components),
+                        "components": components,
+                        "decision": decision,
+                        "other_same_colour_components_within_65px": near_competitors,
+                    }
+                )
                 if selected is None:
                     abstention = decision["status"]
                     break
-                previous_center, current_center = current_center, selected[
-                    "centroid_px_1080"]
+                previous_center, current_center = current_center, selected["centroid_px_1080"]
                 previous_time, current_time = current_time, time
-            reached = (bool(steps) and abstention is None and
-                       steps[-1]["source_time_s"] ==
-                       case["first_same_colour_board_time_s"])
-            board_distance = (min(dist(current_center, center) for center in
-                                  case["first_same_colour_board_centers_px_1080"])
-                              if reached else None)
-            rows.append({
-                "episode_id": case["episode_id"],
-                "left_motion_candidate_id": case["left_motion_candidate_id"],
-                "colour_claim": case["colour_claim"],
-                "initial_observed_path_points": [previous, current],
-                "evaluation_horizon_first_board_time_s": case[
-                    "first_same_colour_board_time_s"],
-                "board_blind_continuation_reached_horizon": reached,
-                "abstention_reason": abstention,
-                "any_nearby_same_colour_competitor": any(
-                    s["other_same_colour_components_within_65px"]
-                    for s in steps if s[
-                        "other_same_colour_components_within_65px"] is not None),
-                "terminal_to_nearest_same_colour_board_center_px_1080":
-                    round(board_distance, 3) if board_distance is not None else None,
-                "steps": steps,
-                "persistent_stone_identity_verified": False,
-                "simulation_ready": False,
-            })
+            reached = (
+                bool(steps)
+                and abstention is None
+                and steps[-1]["source_time_s"] == case["first_same_colour_board_time_s"]
+            )
+            board_distance = (
+                min(
+                    dist(current_center, center)
+                    for center in case["first_same_colour_board_centers_px_1080"]
+                )
+                if reached
+                else None
+            )
+            rows.append(
+                {
+                    "episode_id": case["episode_id"],
+                    "left_motion_candidate_id": case["left_motion_candidate_id"],
+                    "colour_claim": case["colour_claim"],
+                    "initial_observed_path_points": [previous, current],
+                    "evaluation_horizon_first_board_time_s": case["first_same_colour_board_time_s"],
+                    "board_blind_continuation_reached_horizon": reached,
+                    "abstention_reason": abstention,
+                    "any_nearby_same_colour_competitor": any(
+                        s["other_same_colour_components_within_65px"]
+                        for s in steps
+                        if s["other_same_colour_components_within_65px"] is not None
+                    ),
+                    "terminal_to_nearest_same_colour_board_center_px_1080": round(board_distance, 3)
+                    if board_distance is not None
+                    else None,
+                    "steps": steps,
+                    "persistent_stone_identity_verified": False,
+                    "simulation_ready": False,
+                }
+            )
     finally:
         cap.release()
     result = {
         "status": "causal_local_cap_continuation_development_not_identity_truth",
         "source_video_sha256": source_hash,
-        "input_sha256": {"replay_gaps": digest(GAPS),
-                         "gap_inventory": digest(INVENTORY)},
+        "input_sha256": {"replay_gaps": digest(GAPS), "gap_inventory": digest(INVENTORY)},
         "runner_sha256": digest(Path(__file__)),
-        "selector_code_sha256": digest(ROOT /
-                                       "prototype/causal_cap_continuation.py"),
-        "component_code_sha256": digest(ROOT /
-                                        "prototype/local_colour_cap_probe.py"),
+        "selector_code_sha256": digest(ROOT / "prototype/causal_cap_continuation.py"),
+        "component_code_sha256": digest(ROOT / "prototype/local_colour_cap_probe.py"),
         "method": {
             "prediction": "constant pixel velocity from two past positions only",
             "search_radius_px": 90,
@@ -153,8 +169,7 @@ def main():
             "sampling_interval_s": 0.5,
         },
         "eligible_gap_count": len(rows),
-        "reached_horizon_count": sum(r[
-            "board_blind_continuation_reached_horizon"] for r in rows),
+        "reached_horizon_count": sum(r["board_blind_continuation_reached_horizon"] for r in rows),
         "rows": rows,
         "limitations": [
             "This is a post-inspection development rule; thresholds were chosen after studying E001, E011 and E019.",
@@ -165,10 +180,17 @@ def main():
         ],
     }
     OUT.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"eligible": len(rows),
-                      "reached_horizon": result["reached_horizon_count"],
-                      "abstentions": {r["episode_id"]: r["abstention_reason"]
-                                      for r in rows if r["abstention_reason"]}}))
+    print(
+        json.dumps(
+            {
+                "eligible": len(rows),
+                "reached_horizon": result["reached_horizon_count"],
+                "abstentions": {
+                    r["episode_id"]: r["abstention_reason"] for r in rows if r["abstention_reason"]
+                },
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

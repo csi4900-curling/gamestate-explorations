@@ -6,16 +6,14 @@ def visual(identifier, start, end, colour):
 
 
 def counter(identifier, time, colour):
-    return {"official_shot_id": identifier, "counter_time_s": time,
-            "counter_colour": colour}
+    return {"official_shot_id": identifier, "counter_time_s": time, "counter_colour": colour}
 
 
 def test_monotone_one_to_one_score_preserves_extra_and_miss():
     result = score_visual_against_counters(
-        [visual("A", 10, 20, "red"), visual("X", 21, 25, "red"),
-         visual("B", 60, 70, None)],
-        [counter("S1", 35, "red"), counter("S2", 85, "yellow"),
-         counter("S3", 140, "red")])
+        [visual("A", 10, 20, "red"), visual("X", 21, 25, "red"), visual("B", 60, 70, None)],
+        [counter("S1", 35, "red"), counter("S2", 85, "yellow"), counter("S3", 140, "red")],
+    )
     assert result["matched_count"] == 2
     assert result["unmatched_visual_ids"] == ["X"]
     assert result["unmatched_official_shot_ids"] == ["S3"]
@@ -24,5 +22,6 @@ def test_monotone_one_to_one_score_preserves_extra_and_miss():
 
 def test_rejects_implausibly_late_counter():
     result = score_visual_against_counters(
-        [visual("A", 10, 20, "red")], [counter("S1", 100, "red")])
+        [visual("A", 10, 20, "red")], [counter("S1", 100, "red")]
+    )
     assert result["matched_count"] == 0

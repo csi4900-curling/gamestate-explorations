@@ -45,16 +45,18 @@ def main():
             samples.append({"time_s": round(t, 3), **evidence})
         key = "split_2024_signature" if run["layout"] == "split_2024" else "beijing_2022_counter"
         matching = sum(row[key] for row in samples)
-        rows.append({
-            "event_id": event["id"],
-            "crossing_time_s": event["crossing_time_s"],
-            "source_run_id": event["source_run_id"],
-            "expected_layout": run["layout"],
-            "matching_samples": matching,
-            "sample_count": len(samples),
-            "layout_review_required": matching == 0,
-            "samples": samples,
-        })
+        rows.append(
+            {
+                "event_id": event["id"],
+                "crossing_time_s": event["crossing_time_s"],
+                "source_run_id": event["source_run_id"],
+                "expected_layout": run["layout"],
+                "matching_samples": matching,
+                "sample_count": len(samples),
+                "layout_review_required": matching == 0,
+                "samples": samples,
+            }
+        )
     cap.release()
     result = {
         "source_id": timeline["source_id"],
@@ -74,8 +76,14 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({"event_count": result["event_count"],
-                      "layout_review_count": result["layout_review_count"]}))
+    print(
+        json.dumps(
+            {
+                "event_count": result["event_count"],
+                "layout_review_count": result["layout_review_count"],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

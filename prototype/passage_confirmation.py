@@ -7,8 +7,14 @@ It must be frozen and tested on a new recording before any transfer claim.
 import math
 
 
-def confirm_passages(events, *, min_positive_speed=14.8, min_negative_speed=18.0,
-                     duplicate_window_s=15.0, phase_neighbor_s=90.0):
+def confirm_passages(
+    events,
+    *,
+    min_positive_speed=14.8,
+    min_negative_speed=18.0,
+    duplicate_window_s=15.0,
+    phase_neighbor_s=90.0,
+):
     """Return every candidate with a confirmation status and explicit reason."""
     if len({event["id"] for event in events}) != len(events):
         raise ValueError("Duplicate event IDs")
@@ -34,8 +40,10 @@ def confirm_passages(events, *, min_positive_speed=14.8, min_negative_speed=18.0
         if results[i]["status"] != "confirmed":
             continue
         competitors = [
-            j for j, other in enumerate(ordered)
-            if j != i and results[j]["status"] == "confirmed"
+            j
+            for j, other in enumerate(ordered)
+            if j != i
+            and results[j]["status"] == "confirmed"
             and abs(other["crossing_time_s"] - event["crossing_time_s"]) < duplicate_window_s
         ]
         if any(
@@ -50,12 +58,26 @@ def confirm_passages(events, *, min_positive_speed=14.8, min_negative_speed=18.0
     for i, event in enumerate(ordered):
         if results[i]["status"] != "confirmed":
             continue
-        earlier = [j for j in range(i) if results[j]["status"] == "confirmed"
-                   and event["crossing_time_s"] - ordered[j]["crossing_time_s"] <= phase_neighbor_s]
-        later = [j for j in range(i + 1, len(ordered)) if results[j]["status"] == "confirmed"
-                 and ordered[j]["crossing_time_s"] - event["crossing_time_s"] <= phase_neighbor_s]
-        if earlier and later and (ordered[earlier[-1]]["view_motion"]
-                                  == ordered[later[0]]["view_motion"]
-                                  != event["view_motion"]):
+        earlier = [
+            j
+            for j in range(i)
+            if results[j]["status"] == "confirmed"
+            and event["crossing_time_s"] - ordered[j]["crossing_time_s"] <= phase_neighbor_s
+        ]
+        later = [
+            j
+            for j in range(i + 1, len(ordered))
+            if results[j]["status"] == "confirmed"
+            and ordered[j]["crossing_time_s"] - event["crossing_time_s"] <= phase_neighbor_s
+        ]
+        if (
+            earlier
+            and later
+            and (
+                ordered[earlier[-1]]["view_motion"]
+                == ordered[later[0]]["view_motion"]
+                != event["view_motion"]
+            )
+        ):
             results[i].update(status="unconfirmed", reason="isolated_camera_direction")
     return results

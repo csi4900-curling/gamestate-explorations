@@ -20,9 +20,7 @@ def test_latvia_canada_scores_match_results_book():
     pdf = pymupdf.open(PDF)
     result = game_result(pdf[context["source"]["pdf_page_index_zero_based"]].get_text(), "LAT")
     for row in context["teams"]:
-        assert result["end_scores"][row["team"]][:6] == [
-            str(n) for n in row["points_by_end"]]
+        assert result["end_scores"][row["team"]][:6] == [str(n) for n in row["points_by_end"]]
         assert sum(row["points_by_end"]) == row["total_points"]
     assert result["completed_ends"] == list(range(1, context["completed_ends"] + 1))
-    assert result["nominal_completed_end_deliveries"] == context[
-        "nominal_completed_end_deliveries"]
+    assert result["nominal_completed_end_deliveries"] == context["nominal_completed_end_deliveries"]

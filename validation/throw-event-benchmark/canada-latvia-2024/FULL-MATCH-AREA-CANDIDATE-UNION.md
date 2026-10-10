@@ -62,4 +62,35 @@ Reproduce this additive export with
 it checks the original handoff, full right scan, episode inventory, context
 score and selected source strip hashes before writing a new versioned file.
 
+## End-one blind-interval gap candidate and six-end sequence audit
+
+Following the end-five recovery, [`audit_candidate_end_marker_counts.py`](../../../prototype/scripts/audit_candidate_end_marker_counts.py)
+audited color alternation within stable broadcast end-marker intervals. In the first end (200–1050 s),
+it surfaced two successive yellow proposals (`left:R01-S07` and `left:R01-S11`).
+The full-match area-aware right scan contains an intervening red moving-stone path,
+**`right_area:R01:A008`**, with clear-context review support and verified moving stone pixels.
+
+The new [149-row ordered handoff](full-match-candidate-handoff-end1-end5-gaps-development.json)
+adds A008 at its source time via [`export_latvia_end1_gap_candidate.py`](../../../prototype/scripts/export_latvia_end1_gap_candidate.py),
+bringing review-tier possible events to 98 (with 149 total ordered rows).
+
+Running [`audit_candidate_end_marker_counts.py`](../../../prototype/scripts/audit_candidate_end_marker_counts.py) produces:
+
+| Broadcast end marker | Stable window (s) | Candidate proposals | Color sequence | Adjacent color violations |
+| --- | ---: | ---: | --- | ---: |
+| End 1 | 200–1050 | 15 | Alternating (Y/R) | 0 |
+| End 2 | 1070–1900 | 16 | Alternating (Y/R) | 0 |
+| End 3 | 1970–2800 | 16 | Alternating (Y/R) | 0 |
+| End 4 | 2850–3800 | 16 | Alternating (Y/R) | 0 |
+| End 5 | 3850–5570 | 16 | Alternating (Y/R) | 0 |
+| End 6 | 5670–6670 | 17 | Alternating (Y/R) | 0 |
+| **Total inside stable ends** | | **96** | **All 6 ends alternate** | **0** |
+
+Across all six completed ends, the candidate total inside stable marker windows equals **96** (nominal 6×16 deliveries),
+with **zero adjacent same-color violations across all 6 ends**.
+
+As documented throughout, candidate count and color alternation are review heuristics rather than verified physical throw F1:
+End 1 has 15 candidates (1 delivery unobserved), End 6 has 17 candidates (1 candidate is likely an extra object track such as S119),
+S45 traces a player body, and physical stone identity across camera boundaries remains unverified.
+
 Reproduce with [`export_latvia_full_area_censored_handoff.py`](../../../prototype/scripts/export_latvia_full_area_censored_handoff.py), passing the earlier full-match handoff, the later censored handoff, both source-audit manifests, the 360p full source and the 1080p 5670–6670 s excerpt. The output refuses overwrite and records all input, source-video and code hashes.

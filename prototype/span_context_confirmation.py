@@ -5,9 +5,16 @@ It cannot support a transfer claim until frozen and checked on another source.
 """
 
 
-def confirm_span_context(events, motion_rows, *, center_x_px=160,
-                         half_width_px=60, max_changed_px_80x80=1250,
-                         duplicate_window_s=10, duplicate_x_px=30):
+def confirm_span_context(
+    events,
+    motion_rows,
+    *,
+    center_x_px=160,
+    half_width_px=60,
+    max_changed_px_80x80=1250,
+    duplicate_window_s=10,
+    duplicate_x_px=30,
+):
     by_id = {row["id"]: row for row in motion_rows}
     ids = [event["id"] for event in events]
     if len(ids) != len(set(ids)) or set(ids) != set(by_id):
@@ -34,6 +41,7 @@ def confirm_span_context(events, motion_rows, *, center_x_px=160,
         else:
             status, reason = "confirmed", "compact_tracked_motion"
             accepted.append(event)
-        decisions.append({"id": event["id"], "status": status, "reason": reason,
-                          "changed_px_80x80": changed})
+        decisions.append(
+            {"id": event["id"], "status": status, "reason": reason, "changed_px_80x80": changed}
+        )
     return decisions

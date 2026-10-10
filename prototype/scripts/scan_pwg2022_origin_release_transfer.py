@@ -14,15 +14,21 @@ from prototype.origin_release_passage import scan_origin_release
 REFERENCE = ROOT / "validation/official-shot-sequence/pwg2022-official-shot-ledger.json"
 OUTPUT = ROOT / "validation/official-shot-sequence/pwg2022-origin-release-transfer.json"
 INPUTS = {
-    "PREL000101": ("validation/curlobserver-learned-probe/swiss-full-transfer/shot-origin.json",
-                   "validation/curlobserver-learned-probe/swiss-full-transfer/two-shot-cap.json",
-                   "validation/curlobserver-learned-probe/swiss-full-transfer/hard-cuts.json"),
-    "PREL000102": ("validation/curlobserver-learned-probe/china-full-transfer/unlabelled-shot-origin-inference.json",
-                   "validation/curlobserver-learned-probe/china-full-transfer/two-shot-cap.json",
-                   "validation/curlobserver-learned-probe/china-full-transfer/hard-cuts.json"),
-    "PREL000103": ("validation/curlobserver-learned-probe/slovakia-full-transfer/shot-origin.json",
-                   "validation/curlobserver-learned-probe/slovakia-full-transfer/two-shot-cap.json",
-                   "validation/curlobserver-learned-probe/slovakia-full-transfer/hard-cuts.json"),
+    "PREL000101": (
+        "validation/curlobserver-learned-probe/swiss-full-transfer/shot-origin.json",
+        "validation/curlobserver-learned-probe/swiss-full-transfer/two-shot-cap.json",
+        "validation/curlobserver-learned-probe/swiss-full-transfer/hard-cuts.json",
+    ),
+    "PREL000102": (
+        "validation/curlobserver-learned-probe/china-full-transfer/unlabelled-shot-origin-inference.json",
+        "validation/curlobserver-learned-probe/china-full-transfer/two-shot-cap.json",
+        "validation/curlobserver-learned-probe/china-full-transfer/hard-cuts.json",
+    ),
+    "PREL000103": (
+        "validation/curlobserver-learned-probe/slovakia-full-transfer/shot-origin.json",
+        "validation/curlobserver-learned-probe/slovakia-full-transfer/two-shot-cap.json",
+        "validation/curlobserver-learned-probe/slovakia-full-transfer/hard-cuts.json",
+    ),
 }
 
 
@@ -44,13 +50,17 @@ def main():
         cuts = json.loads(cut_path.read_text())
         if cap_decisions["origins_sha256"] != digest(origin_path):
             raise ValueError(f"Cap provenance mismatch: {code}")
-        if any(item["source_sha256"] != game["source_video_sha256"]
-               for item in (origins, cap_decisions, cuts)):
+        if any(
+            item["source_sha256"] != game["source_video_sha256"]
+            for item in (origins, cap_decisions, cuts)
+        ):
             raise ValueError(f"Source video provenance mismatch: {code}")
-        input_hashes[code] = {"origin_sha256": digest(origin_path),
-                              "cap_decision_sha256": digest(cap_path),
-                              "hard_cuts_sha256": digest(cut_path),
-                              "source_video_sha256": game["source_video_sha256"]}
+        input_hashes[code] = {
+            "origin_sha256": digest(origin_path),
+            "cap_decision_sha256": digest(cap_path),
+            "hard_cuts_sha256": digest(cut_path),
+            "source_video_sha256": game["source_video_sha256"],
+        }
         decisions = {row["shot_id"]: row for row in cap_decisions["decisions"]}
         cut_times = [row["time_s"] for row in cuts["cuts"]]
         cap_video = cv2.VideoCapture(str(ROOT / game["source_video_path"]))
@@ -58,20 +68,25 @@ def main():
             raise RuntimeError(f"Cannot read {code} source")
         fps = cap_video.get(cv2.CAP_PROP_FPS)
         for origin in origins["rows"]:
-            if not origin["predicted"] or decisions[origin["shot_id"]]["status"] == "corroborated_candidate":
+            if (
+                not origin["predicted"]
+                or decisions[origin["shot_id"]]["status"] == "corroborated_candidate"
+            ):
                 continue
             start, end = origin["interval_s"]
-            result = scan_origin_release(cap_video, fps, start, end,
-                                         cut_times_s=cut_times)
+            result = scan_origin_release(cap_video, fps, start, end, cut_times_s=cut_times)
             passages = result["passages"]
-            rows.append({"official_game_code": code,
-                         "shot_id": origin["shot_id"],
-                         "origin_interval_s": origin["interval_s"],
-                         "origin_probability": origin["probability"],
-                         "cap_decision_reason": decisions[origin["shot_id"]]["reason"],
-                         **result,
-                         "unique_passage_colour": passages[0]["colour"]
-                         if len(passages) == 1 else None})
+            rows.append(
+                {
+                    "official_game_code": code,
+                    "shot_id": origin["shot_id"],
+                    "origin_interval_s": origin["interval_s"],
+                    "origin_probability": origin["probability"],
+                    "cap_decision_reason": decisions[origin["shot_id"]]["reason"],
+                    **result,
+                    "unique_passage_colour": passages[0]["colour"] if len(passages) == 1 else None,
+                }
+            )
         cap_video.release()
     output = {
         "status": "frozen_origin_held_cap_release_transfer_development_not_event_f1",
@@ -84,7 +99,9 @@ def main():
         "release_rule": "At 5 Hz in lower delivery-side ice, a relaxed coloured cap with neutral/ice surround must remain within 8 px for at least 1.0 s, then travel at least 35 px within 1.6 s along one same-colour track; tracks cannot cross a hard broadcast cut. Exactly one passage resolves colour.",
         "scanned_window_count": len(rows),
         "windows_with_passage": sum(bool(row["passages"]) for row in rows),
-        "windows_with_unique_passage_colour": sum(row["unique_passage_colour"] is not None for row in rows),
+        "windows_with_unique_passage_colour": sum(
+            row["unique_passage_colour"] is not None for row in rows
+        ),
         "rows": rows,
         "limitations": [
             "Thresholds were chosen after inspecting China end 4 missed deliveries; other 2022 windows test transfer only within the same production family.",
@@ -94,8 +111,16 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(output, indent=2) + "\n")
-    print({key: output[key] for key in
-           ("scanned_window_count", "windows_with_passage", "windows_with_unique_passage_colour")})
+    print(
+        {
+            key: output[key]
+            for key in (
+                "scanned_window_count",
+                "windows_with_passage",
+                "windows_with_unique_passage_colour",
+            )
+        }
+    )
     for code in INPUTS:
         game_rows = [row for row in rows if row["official_game_code"] == code]
         print(code, len(game_rows), sum(bool(row["passages"]) for row in game_rows))

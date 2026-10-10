@@ -59,8 +59,7 @@ class ScoreboardStateTests(unittest.TestCase):
         tracker.update((8, 8), 12)
         for t in (13, 14, 15):
             tracker.update((8, 7), t)
-        for t, counts in ((16, (8, 8)), (17, (8, 7)), (18, (8, 8)),
-                          (19, (8, 7)), (20, (8, 8))):
+        for t, counts in ((16, (8, 8)), (17, (8, 7)), (18, (8, 8)), (19, (8, 7)), (20, (8, 8))):
             tracker.update(counts, t)
         for t in (21, 22, 23):
             tracker.update((8, 7), t)

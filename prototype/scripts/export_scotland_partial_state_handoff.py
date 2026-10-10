@@ -27,10 +27,12 @@ def main():
     observations = json.loads(args.observations.read_text())
     alignment = json.loads(args.alignment.read_text())
     source_hash = sequence["source_sha256"]
-    if (observations["source_sha256"] != source_hash
-            or alignment["source_sha256"] != source_hash
-            or observations["candidate_sequence_sha256"] != digest(args.sequence)
-            or alignment["observations_sha256"] != digest(args.observations)):
+    if (
+        observations["source_sha256"] != source_hash
+        or alignment["source_sha256"] != source_hash
+        or observations["candidate_sequence_sha256"] != digest(args.sequence)
+        or alignment["observations_sha256"] != digest(args.observations)
+    ):
         parser.error("Sequence, observations and alignment provenance differ")
     observations_by_candidate = {row["candidate_id"]: row for row in observations["rows"]}
     if len(observations_by_candidate) != len(observations["rows"]):
@@ -38,21 +40,21 @@ def main():
     candidate_ids = {row["candidate_id"] for row in sequence["rows"]}
     if not set(observations_by_candidate) <= candidate_ids:
         parser.error("Right observation maps to an unknown candidate")
-    transitions = adjacent_cap_sequence(observations["rows"],
-                                        alignment["adjacent_pairs"])
+    transitions = adjacent_cap_sequence(observations["rows"], alignment["adjacent_pairs"])
     transition_by_after = {row["after_right_track_id"]: row for row in transitions}
     rows = []
     for candidate in sequence["rows"]:
         row = dict(candidate)
         observed = observations_by_candidate.get(row["candidate_id"])
         if observed:
-            if (row["right_entry"] is None
-                    or row["right_entry"]["raw_track_id"] != observed["right_raw_track_id"]):
+            if (
+                row["right_entry"] is None
+                or row["right_entry"]["raw_track_id"] != observed["right_raw_track_id"]
+            ):
                 parser.error("Candidate and right observation IDs differ")
             row["post_entry_right_image_observation"] = {
                 "status": observed["observation_status"],
-                "source_sample_times_s": [frame["time_s"] for frame in
-                                          observed["sample_frames"]],
+                "source_sample_times_s": [frame["time_s"] for frame in observed["sample_frames"]],
                 "stable_cap_proposals": observed["stable_cap_proposals"],
                 "coordinate_frame": observed["coordinate_frame"],
                 "complete_board_verified": False,
@@ -60,7 +62,8 @@ def main():
                 "persistent_stone_identity_verified": False,
             }
             row["image_transition_from_previous_right_entry"] = transition_by_after.get(
-                observed["right_raw_track_id"])
+                observed["right_raw_track_id"]
+            )
         else:
             row["post_entry_right_image_observation"] = None
             row["image_transition_from_previous_right_entry"] = None
@@ -78,10 +81,10 @@ def main():
         "candidate_sequence_count": len(rows),
         "right_observation_count": len(observations["rows"]),
         "observation_status_counts": observations["observation_status_counts"],
-        "image_transition_status_counts": dict(Counter(row["status"]
-                                                       for row in transitions)),
-        "conditional_local_cap_match_count": sum(len(row.get("matched_local_caps", []))
-                                                 for row in transitions),
+        "image_transition_status_counts": dict(Counter(row["status"] for row in transitions)),
+        "conditional_local_cap_match_count": sum(
+            len(row.get("matched_local_caps", [])) for row in transitions
+        ),
         "complete_game_state_count": 0,
         "simulation_ready_count": 0,
         "rows": rows,
@@ -94,9 +97,15 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"candidates": len(rows),
-                      "image_transitions": result["image_transition_status_counts"],
-                      "local_cap_matches": result["conditional_local_cap_match_count"]}))
+    print(
+        json.dumps(
+            {
+                "candidates": len(rows),
+                "image_transitions": result["image_transition_status_counts"],
+                "local_cap_matches": result["conditional_local_cap_match_count"],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

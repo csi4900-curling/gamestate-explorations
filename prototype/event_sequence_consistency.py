@@ -22,20 +22,21 @@ def audit_sequence(events, coverage_gaps, *, nearby_s=40.0):
             raise ValueError("Events share or reverse a timestamp")
         if previous["colour"] is None or previous["colour"] != current["colour"]:
             continue
-        crossed_gaps = [gap for gap in coverage_gaps
-                        if max(gap[0], start) < min(gap[1], end)]
+        crossed_gaps = [gap for gap in coverage_gaps if max(gap[0], start) < min(gap[1], end)]
         same_run = previous.get("source_run_id") == current.get("source_run_id")
-        rows.append({
-            "previous_event_id": previous["id"],
-            "current_event_id": current["id"],
-            "colour": current["colour"],
-            "previous_time_s": start,
-            "current_time_s": end,
-            "separation_s": round(end - start, 3),
-            "same_supported_run": same_run,
-            "crossed_coverage_gaps_s": crossed_gaps,
-            "nearby_review_priority": same_run and not crossed_gaps and end - start < nearby_s,
-        })
+        rows.append(
+            {
+                "previous_event_id": previous["id"],
+                "current_event_id": current["id"],
+                "colour": current["colour"],
+                "previous_time_s": start,
+                "current_time_s": end,
+                "separation_s": round(end - start, 3),
+                "same_supported_run": same_run,
+                "crossed_coverage_gaps_s": crossed_gaps,
+                "nearby_review_priority": same_run and not crossed_gaps and end - start < nearby_s,
+            }
+        )
     return rows
 
 
@@ -52,8 +53,10 @@ def audit_end_sequence(events, boundary_times_s, coverage_gaps=()):
     ordered = sorted(events, key=lambda row: row["crossing_time_s"])
     if len({row["id"] for row in ordered}) != len(ordered):
         raise ValueError("Duplicate event ID")
-    if any(right["crossing_time_s"] <= left["crossing_time_s"]
-           for left, right in zip(ordered, ordered[1:])):
+    if any(
+        right["crossing_time_s"] <= left["crossing_time_s"]
+        for left, right in zip(ordered, ordered[1:])
+    ):
         raise ValueError("Events share or reverse a timestamp")
     sections = [[] for _ in range(len(boundaries) + 1)]
     end_index = 0
@@ -68,16 +71,23 @@ def audit_end_sequence(events, boundary_times_s, coverage_gaps=()):
     for index, section in enumerate(sections):
         counts = Counter(event["colour"] for event in section)
         same_colour = audit_sequence(section, coverage_gaps)
-        rows.append({
-            "end": index + 1,
-            "first_event_id": section[0]["id"] if section else None,
-            "last_event_id": section[-1]["id"] if section else None,
-            "candidate_count": len(section),
-            "candidate_colour_counts": {colour: counts[colour] for colour in ("red", "yellow")},
-            "colour_capacity_excess": {colour: max(0, counts[colour] - 8)
-                                       for colour in ("red", "yellow")},
-            "same_colour_pairs": [{"previous_event_id": row["previous_event_id"],
-                                   "current_event_id": row["current_event_id"]}
-                                  for row in same_colour],
-        })
+        rows.append(
+            {
+                "end": index + 1,
+                "first_event_id": section[0]["id"] if section else None,
+                "last_event_id": section[-1]["id"] if section else None,
+                "candidate_count": len(section),
+                "candidate_colour_counts": {colour: counts[colour] for colour in ("red", "yellow")},
+                "colour_capacity_excess": {
+                    colour: max(0, counts[colour] - 8) for colour in ("red", "yellow")
+                },
+                "same_colour_pairs": [
+                    {
+                        "previous_event_id": row["previous_event_id"],
+                        "current_event_id": row["current_event_id"],
+                    }
+                    for row in same_colour
+                ],
+            }
+        )
     return rows

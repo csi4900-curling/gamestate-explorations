@@ -11,16 +11,23 @@ def calibration_group(candidate):
 
 def nearest_donor(target, accepted, candidates):
     group = calibration_group(candidates[target["candidate_id"]])
-    matching = [row for row in accepted
-                if calibration_group(candidates[row["candidate_id"]]) == group]
+    matching = [
+        row for row in accepted if calibration_group(candidates[row["candidate_id"]]) == group
+    ]
     if not matching:
         return None
-    return min(matching, key=lambda row: (abs(
-        row["sample_times_s"][1] - target["sample_times_s"][1]),
-        row["candidate_id"]))
+    return min(
+        matching,
+        key=lambda row: (
+            abs(row["sample_times_s"][1] - target["sample_times_s"][1]),
+            row["candidate_id"],
+        ),
+    )
 
 
-def alignment_supported(alignment, *, min_blue_iou=.7):
-    return bool(alignment["zero_translation_is_best"] and
-                alignment["best_translation_second_to_first_px"] == [0, 0] and
-                alignment["best_mask_iou"] >= min_blue_iou)
+def alignment_supported(alignment, *, min_blue_iou=0.7):
+    return bool(
+        alignment["zero_translation_is_best"]
+        and alignment["best_translation_second_to_first_px"] == [0, 0]
+        and alignment["best_mask_iou"] >= min_blue_iou
+    )

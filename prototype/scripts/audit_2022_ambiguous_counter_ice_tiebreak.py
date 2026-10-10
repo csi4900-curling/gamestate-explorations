@@ -14,14 +14,23 @@ from scripts.audit_candidate_ice_coverage import ice_fractions
 BASE = ROOT / "validation/curlobserver-learned-probe"
 REFERENCE = ROOT / "validation/official-shot-sequence/pwg2022-official-shot-ledger.json"
 INPUTS = {
-    "PREL000101": (BASE / "swiss-full-transfer/counter-cap.json",
-                   BASE / "swiss-full-transfer/shot-origin.json"),
-    "PREL000102": (BASE / "china-full-transfer/counter-shot-alignment-replay-cap.json",
-                   BASE / "china-full-transfer/unlabelled-shot-origin-inference.json"),
-    "PREL000103": (BASE / "slovakia-full-transfer/counter-cap.json",
-                   BASE / "slovakia-full-transfer/shot-origin.json"),
+    "PREL000101": (
+        BASE / "swiss-full-transfer/counter-cap.json",
+        BASE / "swiss-full-transfer/shot-origin.json",
+    ),
+    "PREL000102": (
+        BASE / "china-full-transfer/counter-shot-alignment-replay-cap.json",
+        BASE / "china-full-transfer/unlabelled-shot-origin-inference.json",
+    ),
+    "PREL000103": (
+        BASE / "slovakia-full-transfer/counter-cap.json",
+        BASE / "slovakia-full-transfer/shot-origin.json",
+    ),
 }
-OUTPUT = ROOT / "validation/official-shot-sequence/pwg2022-ambiguous-counter-ice-tiebreak-development.json"
+OUTPUT = (
+    ROOT
+    / "validation/official-shot-sequence/pwg2022-ambiguous-counter-ice-tiebreak-development.json"
+)
 MIN_ORIGIN_PROBABILITY = 0.2
 MIN_MAX_CENTER_LOWER_ICE = 0.25
 SAMPLE_FRACTIONS = (0.25, 0.5, 0.75)
@@ -32,9 +41,12 @@ def digest(path):
 
 
 def select_unique_ice_supported(options):
-    selected = [row for row in options
-                if row["origin_probability"] >= MIN_ORIGIN_PROBABILITY and
-                row["max_center_lower_ice_fraction"] >= MIN_MAX_CENTER_LOWER_ICE]
+    selected = [
+        row
+        for row in options
+        if row["origin_probability"] >= MIN_ORIGIN_PROBABILITY
+        and row["max_center_lower_ice_fraction"] >= MIN_MAX_CENTER_LOWER_ICE
+    ]
     return selected[0]["shot_id"] if len(selected) == 1 else None
 
 
@@ -44,13 +56,14 @@ def build():
     reserved = json.loads((ROOT / "validation/unseen-end/reservation.json").read_text())
     games = []
     for code, (align_path, origin_path) in INPUTS.items():
-        alignment, origins = (json.loads(path.read_text()) for path in
-                              (align_path, origin_path))
+        alignment, origins = (json.loads(path.read_text()) for path in (align_path, origin_path))
         source = origins["source_sha256"]
         video = by_code[code]
-        if (source == reserved["source_sha256"] or
-                alignment["source_sha256"] != source or
-                video["source_video_sha256"] != source):
+        if (
+            source == reserved["source_sha256"]
+            or alignment["source_sha256"] != source
+            or video["source_video_sha256"] != source
+        ):
             raise ValueError(f"Source mismatch or reserved source selected: {code}")
         source_video = ROOT / video["source_video_path"]
         if digest(source_video) != source:
@@ -78,45 +91,57 @@ def build():
                     ok, frame = capture.read()
                     if not ok:
                         raise RuntimeError(f"Frame decode failed: {code} {time_s}")
-                    samples.append({"time_s": round(time_s, 3),
-                                    "ice_fraction": ice_fractions(frame)})
-                options.append({
-                    "shot_id": shot_id,
-                    "interval_s": shot["interval_s"],
-                    "origin_probability": candidate["origin_probability"],
-                    "max_center_lower_ice_fraction": max(
-                        row["ice_fraction"]["center_lower"] for row in samples),
-                    "samples": samples,
-                })
+                    samples.append(
+                        {"time_s": round(time_s, 3), "ice_fraction": ice_fractions(frame)}
+                    )
+                options.append(
+                    {
+                        "shot_id": shot_id,
+                        "interval_s": shot["interval_s"],
+                        "origin_probability": candidate["origin_probability"],
+                        "max_center_lower_ice_fraction": max(
+                            row["ice_fraction"]["center_lower"] for row in samples
+                        ),
+                        "samples": samples,
+                    }
+                )
             chosen = select_unique_ice_supported(options)
-            rows.append({
-                "counter_id": counter["counter_id"],
-                "counter_colour": counter["colour"],
-                "counter_update_s": counter["counter_update_s"],
-                "chosen_shot_id": chosen,
-                "status": "unique_ice_supported_option" if chosen else "abstained",
-                "options": options,
-            })
+            rows.append(
+                {
+                    "counter_id": counter["counter_id"],
+                    "counter_colour": counter["colour"],
+                    "counter_update_s": counter["counter_update_s"],
+                    "chosen_shot_id": chosen,
+                    "status": "unique_ice_supported_option" if chosen else "abstained",
+                    "options": options,
+                }
+            )
         capture.release()
-        games.append({
-            "official_game_code": code,
-            "source_sha256": source,
-            "input_sha256": {"counter_alignment": digest(align_path),
-                             "shot_origins": digest(origin_path),
-                             "source_video": source},
-            "multi_option_counter_count": len(rows),
-            "unique_ice_choice_count": sum(row["chosen_shot_id"] is not None for row in rows),
-            "rows": rows,
-        })
+        games.append(
+            {
+                "official_game_code": code,
+                "source_sha256": source,
+                "input_sha256": {
+                    "counter_alignment": digest(align_path),
+                    "shot_origins": digest(origin_path),
+                    "source_video": source,
+                },
+                "multi_option_counter_count": len(rows),
+                "unique_ice_choice_count": sum(row["chosen_shot_id"] is not None for row in rows),
+                "rows": rows,
+            }
+        )
     return {
         "status": "postscore_exposed_source_ice_tiebreak_diagnostic_not_event_f1",
         "reference_metadata_sha256": digest(REFERENCE),
         "ice_code_sha256": digest(ROOT / "prototype/scripts/audit_candidate_ice_coverage.py"),
         "runner_sha256": digest(Path(__file__)),
-        "rule": {"minimum_origin_probability": MIN_ORIGIN_PROBABILITY,
-                 "minimum_max_center_lower_ice_fraction": MIN_MAX_CENTER_LOWER_ICE,
-                 "sample_fractions": list(SAMPLE_FRACTIONS),
-                 "choice": "Choose only if exactly one candidate passes both thresholds; otherwise abstain."},
+        "rule": {
+            "minimum_origin_probability": MIN_ORIGIN_PROBABILITY,
+            "minimum_max_center_lower_ice_fraction": MIN_MAX_CENTER_LOWER_ICE,
+            "sample_fractions": list(SAMPLE_FRACTIONS),
+            "choice": "Choose only if exactly one candidate passes both thresholds; otherwise abstain.",
+        },
         "games": games,
         "limitations": [
             "Thresholds were inspected on Swiss B70 before this three-recording run; results are development only.",

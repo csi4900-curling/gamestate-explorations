@@ -6,8 +6,7 @@ from span_passage_detection import SpanPassageDetector
 
 
 def observation(y, x=160, colour="red"):
-    return {"colour": colour, "pixel": [x, y], "bbox": [x - 4, y - 4, 8, 8],
-            "body_support": 1.0}
+    return {"colour": colour, "pixel": [x, y], "bbox": [x - 4, y - 4, 8, 8], "body_support": 1.0}
 
 
 def test_detects_stone_first_seen_beyond_fixed_gate():
@@ -21,8 +20,9 @@ def test_detects_stone_first_seen_beyond_fixed_gate():
     assert event["time_semantics"] == "observed_track_midpoint"
     assert 0 < event["crossing_time_s"] < event["confirmed_at_s"]
     assert len(event["observed_track_points"]) >= detector.config.min_observations
-    assert all(point["time_s"] <= event["confirmed_at_s"]
-               for point in event["observed_track_points"])
+    assert all(
+        point["time_s"] <= event["confirmed_at_s"] for point in event["observed_track_points"]
+    )
     at_confirmation = len(event["continued_track_points"])
     initial_evidence_count = len(event["observed_track_points"])
     detector.update([observation(13)], 1.6)

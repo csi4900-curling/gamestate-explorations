@@ -37,41 +37,47 @@ def main():
     view["world_bounds"] = [-2.375, -1.975, 2.375, 22.0]
     cal = ViewCalibrator(view, ROOT / "prototype/vision/frames")
     cal.H = np.asarray(json.loads(rect_path.read_text())["right"]["refined_H"])
-    capture = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not capture.isOpened():
         parser.error("Cannot open video")
     fps = capture.get(cv2.CAP_PROP_FPS)
-    capture.set(cv2.CAP_PROP_POS_FRAMES,
-                round((t - selection["source_offset_s"]) * fps))
+    capture.set(cv2.CAP_PROP_POS_FRAMES, round((t - selection["source_offset_s"]) * fps))
     ok, frame = capture.read()
     capture.release()
     if not ok:
         raise RuntimeError(f"Cannot decode anchor at {t}")
     local, registration = rebase_view_calibrator(
-        cal, frame,
-        max_corner_displacement_px=selection["max_corner_displacement_px"])
+        cal, frame, max_corner_displacement_px=selection["max_corner_displacement_px"]
+    )
     inv = np.linalg.inv(local.H)
     center = project(inv, [[0, 0]])[0]
     rings = {}
     overlay = frame.copy()
-    for radius, name, colour in ((1.829, "outer_12ft", (40, 245, 40)),
-                                  (1.219, "middle_8ft", (0, 200, 255)),
-                                  (0.610, "inner_4ft", (250, 60, 220))):
+    for radius, name, colour in (
+        (1.829, "outer_12ft", (40, 245, 40)),
+        (1.219, "middle_8ft", (0, 200, 255)),
+        (0.610, "inner_4ft", (250, 60, 220)),
+    ):
         angles = np.linspace(0, 2 * np.pi, 129)
-        world = np.column_stack((radius * np.cos(angles),
-                                 radius * np.sin(angles)))
+        world = np.column_stack((radius * np.cos(angles), radius * np.sin(angles)))
         points = project(inv, world)
         rings[name] = points[[0, 32, 64, 96]].tolist()
-        cv2.polylines(overlay, [np.round(points).astype(np.int32)],
-                      False, colour, 4, cv2.LINE_AA)
-    cv2.drawMarker(overlay, tuple(np.round(center).astype(int)), (10, 10, 250),
-                   cv2.MARKER_CROSS, 46, 4)
-    cv2.putText(overlay, f"Conditional projection at {t:.1f} s", (30, 50),
-                cv2.FONT_HERSHEY_SIMPLEX, 1.0, (10, 10, 250), 2, cv2.LINE_AA)
+        cv2.polylines(overlay, [np.round(points).astype(np.int32)], False, colour, 4, cv2.LINE_AA)
+    cv2.drawMarker(
+        overlay, tuple(np.round(center).astype(int)), (10, 10, 250), cv2.MARKER_CROSS, 46, 4
+    )
+    cv2.putText(
+        overlay,
+        f"Conditional projection at {t:.1f} s",
+        (30, 50),
+        cv2.FONT_HERSHEY_SIMPLEX,
+        1.0,
+        (10, 10, 250),
+        2,
+        cv2.LINE_AA,
+    )
     args.image_output.parent.mkdir(parents=True, exist_ok=True)
-    if not cv2.imwrite(str(args.image_output), overlay,
-                       [cv2.IMWRITE_JPEG_QUALITY, 91]):
+    if not cv2.imwrite(str(args.image_output), overlay, [cv2.IMWRITE_JPEG_QUALITY, 91]):
         raise RuntimeError("Cannot write overlay")
     result = {
         "status": "postscore_visual_geometry_diagnostic_not_metric_validation",

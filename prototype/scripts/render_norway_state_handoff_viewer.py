@@ -6,13 +6,15 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[2]
-SOURCE = ROOT / "validation/official-shot-sequence/norway-full-match-evidence-state-handoff-first.json"
+SOURCE = (
+    ROOT / "validation/official-shot-sequence/norway-full-match-evidence-state-handoff-first.json"
+)
 DIR = ROOT / "validation/official-shot-sequence/norway-state-handoff"
 HTML = DIR / "index.html"
 PROVENANCE = DIR / "provenance.json"
 
 
-TEMPLATE = r'''<!doctype html>
+TEMPLATE = r"""<!doctype html>
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Norway match · 128-shot evidence handoff</title>
 <style>
@@ -48,7 +50,7 @@ function renderVideo(groupIndex){const row=slots[index],evt=row.video_event_evid
 function move(delta){const vis=visibleIndices();let at=vis.indexOf(index);at=Math.max(0,Math.min(vis.length-1,at+delta));index=vis[at]??index;render()}
 $('countSlots').textContent=DATA.official_slot_count;$('countCounters').textContent=slots.filter(x=>x.video_event_evidence.counter_id).length;$('countBoards').textContent=DATA.slots_with_stable_video_house_observation;
 $('shotSelect').onchange=e=>{index=Number(e.target.value);render()};$('cameraSelect').onchange=e=>renderVideo(Number(e.target.value));$('previous').onclick=()=>move(-1);$('next').onclick=()=>move(1);$('onlyVideo').onchange=updateOptions;window.onkeydown=e=>{if(e.target.tagName==='SELECT'||e.target.tagName==='INPUT')return;if(e.key==='ArrowLeft')move(-1);if(e.key==='ArrowRight')move(1)};updateOptions();
-</script></html>'''
+</script></html>"""
 
 
 def digest(path):
@@ -64,16 +66,26 @@ def main():
     DIR.mkdir(parents=True, exist_ok=True)
     embedded = json.dumps(data, separators=(",", ":")).replace("</", "<\\/")
     HTML.write_text(TEMPLATE.replace("__DATA__", embedded) + "\n")
-    PROVENANCE.write_text(json.dumps({
-        "status": "offline_schematic_reference_and_partial_video_state_viewer",
-        "source_handoff_sha256": digest(SOURCE),
-        "runner_sha256": digest(Path(__file__)),
-        "html_sha256": digest(HTML),
-        "official_slot_count": data["official_slot_count"],
-        "video_physics_simulation_ready_count": data["video_physics_simulation_ready_count"],
-        "limitations": ["Static official schematic and partial image-coordinate observations only.",
-                        "No tracked physical throw animation or complete game state is inferred."],
-    }, indent=2) + "\n")
+    PROVENANCE.write_text(
+        json.dumps(
+            {
+                "status": "offline_schematic_reference_and_partial_video_state_viewer",
+                "source_handoff_sha256": digest(SOURCE),
+                "runner_sha256": digest(Path(__file__)),
+                "html_sha256": digest(HTML),
+                "official_slot_count": data["official_slot_count"],
+                "video_physics_simulation_ready_count": data[
+                    "video_physics_simulation_ready_count"
+                ],
+                "limitations": [
+                    "Static official schematic and partial image-coordinate observations only.",
+                    "No tracked physical throw animation or complete game state is inferred.",
+                ],
+            },
+            indent=2,
+        )
+        + "\n"
+    )
     print(HTML)
 
 

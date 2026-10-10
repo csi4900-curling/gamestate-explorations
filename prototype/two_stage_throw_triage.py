@@ -44,23 +44,27 @@ def triage_candidates(proposals, stages):
             if set(reasons) != active:
                 raise ValueError(f"{name} screened IDs differ from input")
         for event_id in sorted(active):
-            evidence[event_id].append({
-                "stage": name,
-                "decision": "supported" if event_id in accepted else "needs_review",
-                "reason": reasons.get(event_id),
-            })
+            evidence[event_id].append(
+                {
+                    "stage": name,
+                    "decision": "supported" if event_id in accepted else "needs_review",
+                    "reason": reasons.get(event_id),
+                }
+            )
         active = accepted
     rows = []
     for proposal in proposals:
         event_id = proposal["id"]
-        rows.append({
-            "id": event_id,
-            "crossing_time_s": proposal["crossing_time_s"],
-            "colour": proposal["colour"],
-            "disposition": "auto_confirmed_candidate" if event_id in active else "needs_review",
-            "stage_evidence": evidence[event_id],
-            "release_time_s": None,
-        })
+        rows.append(
+            {
+                "id": event_id,
+                "crossing_time_s": proposal["crossing_time_s"],
+                "colour": proposal["colour"],
+                "disposition": "auto_confirmed_candidate" if event_id in active else "needs_review",
+                "stage_evidence": evidence[event_id],
+                "release_time_s": None,
+            }
+        )
     counts = Counter(row["disposition"] for row in rows)
     return {
         "proposals": rows,

@@ -43,12 +43,11 @@ def game_result(page_text, opponent):
         if not matches:
             raise ValueError(f"Missing team {code}")
         index = matches[0]
-        values = lines[index + 1:index + 9]
+        values = lines[index + 1 : index + 9]
         if len(values) != 8 or any(not re.fullmatch(r"\d+|X", v) for v in values):
             raise ValueError(f"Invalid eight-end score row for {code}: {values}")
         teams[code] = values
-    completed = [i + 1 for i in range(8)
-                 if all(teams[code][i] != "X" for code in teams)]
+    completed = [i + 1 for i in range(8) if all(teams[code][i] != "X" for code in teams)]
     if completed != list(range(1, len(completed) + 1)):
         raise ValueError("Completed ends are not a prefix")
     return {
@@ -59,7 +58,8 @@ def game_result(page_text, opponent):
         "completed_ends": completed,
         "nominal_completed_end_deliveries": 16 * len(completed),
         "end_eight_status": "reported_X_unplayed_or_unfinished"
-        if any(teams[code][7] == "X" for code in teams) else "completed",
+        if any(teams[code][7] == "X" for code in teams)
+        else "completed",
     }
 
 
@@ -74,7 +74,7 @@ def main():
     pdf = pymupdf.open(args.pdf)
     rows = []
     for source_id, (opponent, page_number) in MATCHES.items():
-        matches = list(args.timelines_dir.glob(f"*/timeline.json"))
+        matches = list(args.timelines_dir.glob("*/timeline.json"))
         selected = [p for p in matches if json.loads(p.read_text())["source_id"] == source_id]
         if len(selected) != 1:
             raise ValueError(f"Expected exactly one timeline for {source_id}")
@@ -82,25 +82,30 @@ def main():
         timeline = json.loads(timeline_path.read_text())
         result = game_result(pdf[page_number - 1].get_text(), opponent)
         colour_counts = dict(Counter(row["colour"] for row in timeline["observed_events"]))
-        colour_excess = {colour: max(0, count - 8 * len(result["end_scores"]["CAN"]))
-                         for colour, count in colour_counts.items() if colour is not None}
-        rows.append({
-            "source_id": source_id,
-            "video_url": f"https://www.youtube.com/watch?v={source_id}",
-            "published_video_title": VIDEO_TITLES[source_id],
-            "opponent": opponent,
-            "official_pdf_page": page_number,
-            "timeline_path": str(timeline_path),
-            "timeline_sha256": sha256(timeline_path),
-            "provisional_event_count": timeline["observed_event_count"],
-            "provisional_colour_counts": colour_counts,
-            "colour_excess_over_eight_end_capacity": colour_excess,
-            "provisional_minus_completed_end_nominal": (
-                timeline["observed_event_count"] - result["nominal_completed_end_deliveries"]
-            ),
-            "coverage_gaps_s": timeline["coverage_gaps_s"],
-            **result,
-        })
+        colour_excess = {
+            colour: max(0, count - 8 * len(result["end_scores"]["CAN"]))
+            for colour, count in colour_counts.items()
+            if colour is not None
+        }
+        rows.append(
+            {
+                "source_id": source_id,
+                "video_url": f"https://www.youtube.com/watch?v={source_id}",
+                "published_video_title": VIDEO_TITLES[source_id],
+                "opponent": opponent,
+                "official_pdf_page": page_number,
+                "timeline_path": str(timeline_path),
+                "timeline_sha256": sha256(timeline_path),
+                "provisional_event_count": timeline["observed_event_count"],
+                "provisional_colour_counts": colour_counts,
+                "colour_excess_over_eight_end_capacity": colour_excess,
+                "provisional_minus_completed_end_nominal": (
+                    timeline["observed_event_count"] - result["nominal_completed_end_deliveries"]
+                ),
+                "coverage_gaps_s": timeline["coverage_gaps_s"],
+                **result,
+            }
+        )
     output = {
         "status": "development_count_audit_not_event_reference",
         "official_pdf_url": "https://curlit.com/PDF/WWhCC2024_ResultsBook.pdf?V=2",
@@ -118,8 +123,11 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(output, indent=2) + "\n")
-    print(json.dumps({row["opponent"]: row["provisional_minus_completed_end_nominal"]
-                      for row in rows}))
+    print(
+        json.dumps(
+            {row["opponent"]: row["provisional_minus_completed_end_nominal"] for row in rows}
+        )
+    )
 
 
 if __name__ == "__main__":

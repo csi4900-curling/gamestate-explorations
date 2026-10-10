@@ -57,8 +57,7 @@ def proposals(frame, view):
     if view == "left":
         return left_colour_cap_proposals(frame)
     right = right_colour_proposals(frame)
-    return [{"colour": colour, **proposal}
-            for colour, items in right.items() for proposal in items]
+    return [{"colour": colour, **proposal} for colour, items in right.items() for proposal in items]
 
 
 def scene_patch(frame, view):
@@ -79,8 +78,7 @@ def main():
     candidates = sorted(predictions["events"], key=lambda row: row["crossing_time_s"])
     if len({row["id"] for row in candidates}) != len(candidates):
         raise ValueError("Duplicate candidate ID")
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened() or cap.get(cv2.CAP_PROP_FPS) != 30:
         raise RuntimeError("Cannot open expected 30-fps source")
     rows = []
@@ -88,59 +86,85 @@ def main():
         for i, candidate in enumerate(candidates):
             t = candidate["crossing_time_s"]
             view = conditional_receiving_view(candidate["view_motion"])
-            previous_t = (candidates[i - 1]["crossing_time_s"] if i else
-                          predictions["source_interval_s"][0])
-            next_t = (candidates[i + 1]["crossing_time_s"] if i + 1 < len(candidates)
-                      else predictions["source_interval_s"][1])
-            item = {"candidate_id": candidate["id"],
-                    "crossing_time_s": t, "colour_claim": candidate["colour"],
-                    "source_motion_direction": candidate["view_motion"],
-                    "conditional_receiving_view": view,
-                    "previous_candidate_time_s": previous_t,
-                    "next_candidate_time_s": next_t,
-                    "physical_throw_verified": False,
-                    "complete_board_verified": False,
-                    "simulation_ready": False}
+            previous_t = (
+                candidates[i - 1]["crossing_time_s"] if i else predictions["source_interval_s"][0]
+            )
+            next_t = (
+                candidates[i + 1]["crossing_time_s"]
+                if i + 1 < len(candidates)
+                else predictions["source_interval_s"][1]
+            )
+            item = {
+                "candidate_id": candidate["id"],
+                "crossing_time_s": t,
+                "colour_claim": candidate["colour"],
+                "source_motion_direction": candidate["view_motion"],
+                "conditional_receiving_view": view,
+                "previous_candidate_time_s": previous_t,
+                "next_candidate_time_s": next_t,
+                "physical_throw_verified": False,
+                "complete_board_verified": False,
+                "simulation_ready": False,
+            }
             pre_times = [round(t + offset, 3) for offset in PRE_OFFSETS_S]
             post_times = [round(t + offset, 3) for offset in POST_OFFSETS_S]
             if view is None:
                 item["status"] = "abstain_unknown_direction"
-            elif (pre_times[0] <= previous_t + ADJACENT_CANDIDATE_GUARD_S or
-                  post_times[-1] >= next_t - ADJACENT_CANDIDATE_GUARD_S):
+            elif (
+                pre_times[0] <= previous_t + ADJACENT_CANDIDATE_GUARD_S
+                or post_times[-1] >= next_t - ADJACENT_CANDIDATE_GUARD_S
+            ):
                 item["status"] = "abstain_adjacent_candidate_or_interval_boundary"
             else:
                 before_frames = [frame_at(cap, sample) for sample in pre_times]
                 after_frames = [frame_at(cap, sample) for sample in post_times]
-                before_samples = [{"time_s": time_s,
-                                   "cap_candidates": proposals(frame, view)}
-                                  for time_s, frame in zip(pre_times, before_frames)]
-                after_samples = [{"time_s": time_s,
-                                  "cap_candidates": proposals(frame, view)}
-                                 for time_s, frame in zip(post_times, after_frames)]
+                before_samples = [
+                    {"time_s": time_s, "cap_candidates": proposals(frame, view)}
+                    for time_s, frame in zip(pre_times, before_frames)
+                ]
+                after_samples = [
+                    {"time_s": time_s, "cap_candidates": proposals(frame, view)}
+                    for time_s, frame in zip(post_times, after_frames)
+                ]
                 before_stable = stable_cap_candidates(before_samples)
                 after_stable = stable_cap_candidates(after_samples)
-                mae = float(np.mean(np.abs(scene_patch(before_frames[1], view) -
-                                           scene_patch(after_frames[1], view))))
-                before = {"candidate_id": candidate["id"],
-                          "coordinate_frame": f"source_{view}_camera_pixels_not_metric",
-                          "observation_status": "partial_repeated_caps" if before_stable
-                                                else "no_repeated_caps",
-                          "stable_cap_proposals": before_stable}
-                after = {"candidate_id": candidate["id"],
-                         "coordinate_frame": before["coordinate_frame"],
-                         "observation_status": "partial_repeated_caps" if after_stable
-                                               else "no_repeated_caps",
-                         "stable_cap_proposals": after_stable}
+                mae = float(
+                    np.mean(
+                        np.abs(
+                            scene_patch(before_frames[1], view) - scene_patch(after_frames[1], view)
+                        )
+                    )
+                )
+                before = {
+                    "candidate_id": candidate["id"],
+                    "coordinate_frame": f"source_{view}_camera_pixels_not_metric",
+                    "observation_status": "partial_repeated_caps"
+                    if before_stable
+                    else "no_repeated_caps",
+                    "stable_cap_proposals": before_stable,
+                }
+                after = {
+                    "candidate_id": candidate["id"],
+                    "coordinate_frame": before["coordinate_frame"],
+                    "observation_status": "partial_repeated_caps"
+                    if after_stable
+                    else "no_repeated_caps",
+                    "stable_cap_proposals": after_stable,
+                }
                 transition = compare_observation_rows(
-                    before, after, mae, max_scene_mae=MAX_SCENE_MAE[view],
-                    max_distance_px=5)
-                item.update({"status": transition["comparison_status"],
-                             "pre_sample_times_s": pre_times,
-                             "post_sample_times_s": post_times,
-                             "pre_repeated_cap_count": len(before_stable),
-                             "post_repeated_cap_count": len(after_stable),
-                             "cross_window_scene_mae": transition["cross_window_scene_mae"],
-                             "image_cap_delta": transition["image_cap_delta"]})
+                    before, after, mae, max_scene_mae=MAX_SCENE_MAE[view], max_distance_px=5
+                )
+                item.update(
+                    {
+                        "status": transition["comparison_status"],
+                        "pre_sample_times_s": pre_times,
+                        "post_sample_times_s": post_times,
+                        "pre_repeated_cap_count": len(before_stable),
+                        "post_repeated_cap_count": len(after_stable),
+                        "cross_window_scene_mae": transition["cross_window_scene_mae"],
+                        "image_cap_delta": transition["image_cap_delta"],
+                    }
+                )
             rows.append(item)
     finally:
         cap.release()
@@ -161,8 +185,7 @@ def main():
         "post_offsets_s": POST_OFFSETS_S,
         "adjacent_candidate_guard_s": ADJACENT_CANDIDATE_GUARD_S,
         "left_cap_roi_xyxy_360p": LEFT_ROI_XYXY,
-        "scene_rois_xyxy_360p": {"left": LEFT_SCENE_ROI,
-                                 "right": RIGHT_SCENE_ROI},
+        "scene_rois_xyxy_360p": {"left": LEFT_SCENE_ROI, "right": RIGHT_SCENE_ROI},
         "max_scene_mae": MAX_SCENE_MAE,
         "status_counts": dict(Counter(row["status"] for row in rows)),
         "rows": rows,
@@ -175,8 +198,7 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"source": result["source_id"],
-                      "status_counts": result["status_counts"]}))
+    print(json.dumps({"source": result["source_id"], "status_counts": result["status_counts"]}))
 
 
 if __name__ == "__main__":

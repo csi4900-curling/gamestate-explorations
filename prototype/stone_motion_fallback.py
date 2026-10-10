@@ -67,8 +67,7 @@ def stone_cap_candidates(frame, colour, *, allow_bright_body=False, allow_large_
     return candidates
 
 
-def moving_cap_tracks(observations, *, max_gap_s=2.0, max_step_px=25.0,
-                      cut_times_s=()):
+def moving_cap_tracks(observations, *, max_gap_s=2.0, max_step_px=25.0, cut_times_s=()):
     """Greedy short-track association, returning only sustained motion evidence."""
     tracks = []
     cuts = sorted(cut_times_s)
@@ -109,8 +108,9 @@ def moving_cap_tracks(observations, *, max_gap_s=2.0, max_step_px=25.0,
     return sorted(supported, key=lambda track: (-len(track["points"]), -track["span_px"]))
 
 
-def verify_stone_motion_in_interval(capture, fps, *, colour, start_s, end_s,
-                                    detect_hard_cuts=False):
+def verify_stone_motion_in_interval(
+    capture, fps, *, colour, start_s, end_s, detect_hard_cuts=False
+):
     """Search a declared interval and confirm only one supported colour track."""
     start = max(0, int(start_s))
     end = int(end_s)

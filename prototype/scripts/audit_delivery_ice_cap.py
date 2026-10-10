@@ -21,8 +21,9 @@ from stone_motion_fallback import moving_cap_tracks, stone_cap_candidates
 def ice_cap_candidates(frame, colour):
     """Keep candidates over broad lower ice, away from people at rink edge."""
     kept = []
-    for candidate in stone_cap_candidates(frame, colour, allow_bright_body=True,
-                                           allow_large_caps=True):
+    for candidate in stone_cap_candidates(
+        frame, colour, allow_bright_body=True, allow_large_caps=True
+    ):
         x, y = candidate["pixel"]
         if not (200 <= x <= 550 and y >= 240):
             continue
@@ -47,8 +48,7 @@ def main():
     origins = json.loads(args.origins.read_text())
     if origins["source_sha256"] != source_hash:
         parser.error("Origin predictions use a different source video")
-    capture = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not capture.isOpened():
         parser.error("Video cannot be opened")
     fps = capture.get(cv2.CAP_PROP_FPS)
@@ -75,28 +75,33 @@ def main():
                 raise RuntimeError(f"Retrieve failed at frame {frame_index}")
             time_s = round(frame_index / fps, 3)
             for colour in observations:
-                observations[colour].append(
-                    (time_s, ice_cap_candidates(frame, colour)))
+                observations[colour].append((time_s, ice_cap_candidates(frame, colour)))
             samples += 1
         tracks = {}
         for colour, events in observations.items():
             tracks[colour] = [
-                {"interval_s": [row["points"][0]["time_s"],
-                                 row["points"][-1]["time_s"]],
-                 "span_px": round(row["span_px"], 2),
-                 "point_count": len(row["points"]),
-                 "first_pixel": row["points"][0]["pixel"],
-                 "last_pixel": row["points"][-1]["pixel"]}
-                for row in moving_cap_tracks(events, max_gap_s=1.6,
-                                             max_step_px=130)
+                {
+                    "interval_s": [row["points"][0]["time_s"], row["points"][-1]["time_s"]],
+                    "span_px": round(row["span_px"], 2),
+                    "point_count": len(row["points"]),
+                    "first_pixel": row["points"][0]["pixel"],
+                    "last_pixel": row["points"][-1]["pixel"],
+                }
+                for row in moving_cap_tracks(events, max_gap_s=1.6, max_step_px=130)
             ]
-        rows.append({"shot_id": origin["shot_id"],
-                     "interval_s": origin["interval_s"],
-                     "sample_count": samples,
-                     "observation_count": {colour: sum(len(items) for _, items in events)
-                                           for colour, events in observations.items()},
-                     "tracks": tracks,
-                     "supported_colours": [colour for colour in tracks if tracks[colour]]})
+        rows.append(
+            {
+                "shot_id": origin["shot_id"],
+                "interval_s": origin["interval_s"],
+                "sample_count": samples,
+                "observation_count": {
+                    colour: sum(len(items) for _, items in events)
+                    for colour, events in observations.items()
+                },
+                "tracks": tracks,
+                "supported_colours": [colour for colour in tracks if tracks[colour]],
+            }
+        )
         total_samples += samples
     capture.release()
     result = {
@@ -107,8 +112,12 @@ def main():
         "cap_code_sha256": file_sha256(ROOT / "prototype/stone_motion_fallback.py"),
         "ice_code_sha256": file_sha256(ROOT / "prototype/origin_release_ice_support.py"),
         "runner_sha256": file_sha256(__file__),
-        "gate": {"x_px": [200, 550], "min_y_px": 240,
-                 "min_below_ice_fraction": 0.6, "frame_size_px": [640, 360]},
+        "gate": {
+            "x_px": [200, 550],
+            "min_y_px": 240,
+            "min_below_ice_fraction": 0.6,
+            "frame_size_px": [640, 360],
+        },
         "selection_rule": "All predicted shot-origin windows; no counter or official labels select windows.",
         "scanned_window_count": len(rows),
         "sample_count": total_samples,
@@ -122,8 +131,13 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print({"windows": len(rows), "samples": total_samples,
-           "supported": sum(bool(row["supported_colours"]) for row in rows)})
+    print(
+        {
+            "windows": len(rows),
+            "samples": total_samples,
+            "supported": sum(bool(row["supported_colours"]) for row in rows),
+        }
+    )
 
 
 if __name__ == "__main__":

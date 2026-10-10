@@ -6,9 +6,13 @@ from pathlib import Path
 
 import cv2
 
-from probe_right_bidirectional_clip import (bidirectional_spans, digest,
-                                            moving_cap_tracks,
-                                            right_colour_proposals, ROOT)
+from probe_right_bidirectional_clip import (
+    bidirectional_spans,
+    digest,
+    moving_cap_tracks,
+    right_colour_proposals,
+    ROOT,
+)
 
 
 def main():
@@ -16,16 +20,19 @@ def main():
     parser.add_argument("--video", type=Path, required=True)
     parser.add_argument("--source-start", type=int, required=True)
     parser.add_argument("--source-stop", type=int, required=True)
-    parser.add_argument("--source-offset", type=int, default=0,
-                        help="Source time represented by local video time zero")
+    parser.add_argument(
+        "--source-offset",
+        type=int,
+        default=0,
+        help="Source time represented by local video time zero",
+    )
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     if args.output.exists():
         parser.error("Output already exists")
     if not (0 <= args.source_offset <= args.source_start < args.source_stop):
         parser.error("Invalid source interval or video offset")
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         parser.error("Cannot open source video")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -49,8 +56,7 @@ def main():
     tracks = []
     for colour, samples in observations.items():
         for path in moving_cap_tracks(samples, max_gap_s=1, max_step_px=40):
-            tracks.append({"colour": colour, "points": path["points"],
-                           "span_px": path["span_px"]})
+            tracks.append({"colour": colour, "points": path["points"], "span_px": path["span_px"]})
     tracks.sort(key=lambda row: (row["points"][0]["time_s"], row["colour"]))
     for index, row in enumerate(tracks, 1):
         row["track_id"] = f"B{index:03d}"
@@ -65,7 +71,8 @@ def main():
         "maximum_inter_sample_gap_s": 1,
         "maximum_step_px_per_s": 40,
         "colour_proposal_code_sha256": digest(
-            ROOT / "prototype/scripts/probe_static_left_right_cap_motion.py"),
+            ROOT / "prototype/scripts/probe_static_left_right_cap_motion.py"
+        ),
         "tracker_code_sha256": digest(ROOT / "prototype/stone_motion_fallback.py"),
         "bidirectional_code_sha256": digest(ROOT / "prototype/right_bidirectional_span.py"),
         "runner_sha256": digest(Path(__file__)),
@@ -80,8 +87,11 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"raw_tracks": len(tracks), "review_proposals": len(proposals),
-                      "duration_s": duration}))
+    print(
+        json.dumps(
+            {"raw_tracks": len(tracks), "review_proposals": len(proposals), "duration_s": duration}
+        )
+    )
 
 
 if __name__ == "__main__":

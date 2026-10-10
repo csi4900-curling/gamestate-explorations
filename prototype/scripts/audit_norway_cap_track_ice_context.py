@@ -35,8 +35,7 @@ def main():
     transfer = json.loads(TRANSFER.read_text())
     if transfer["source_video_sha256"] != digest(VIDEO):
         raise ValueError("Source/transfer hashes differ")
-    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not capture.isOpened():
         raise ValueError("Source video unreadable")
     fps = capture.get(cv2.CAP_PROP_FPS)
@@ -52,33 +51,39 @@ def main():
                     raise ValueError(f"Frame missing at {frame_index}")
                 ring = nonice_ring_fraction(frame, point["pixel"])
                 under = underpoint_nonice_fraction(frame, point["pixel"])
-                samples.append({
-                    "time_s": point["time_s"],
-                    "decoded_frame_index": frame_index,
-                    "cap_center_px_360": point["pixel"],
-                    "nonice_ring_fraction": round(ring, 4),
-                    "underpoint_nonice_fraction": (
-                        None if under is None else round(under, 4)),
-                })
-            rows.append({
-                "episode_id": seed["episode_id"],
-                "colour": seed["colour"],
-                "samples": samples,
-                "exploratory_both_rings_below_0p30": all(
-                    sample["nonice_ring_fraction"] < 0.30
-                    for sample in samples),
-                "prior_area_next_step_status": (
-                    "camera_shot_boundary" if seed["shot_boundary_abstention"]
-                    else seed["past_cap_area_0p5_to_2_decision"]["status"]),
-                "physical_stone_identity_verified": False,
-            })
+                samples.append(
+                    {
+                        "time_s": point["time_s"],
+                        "decoded_frame_index": frame_index,
+                        "cap_center_px_360": point["pixel"],
+                        "nonice_ring_fraction": round(ring, 4),
+                        "underpoint_nonice_fraction": (None if under is None else round(under, 4)),
+                    }
+                )
+            rows.append(
+                {
+                    "episode_id": seed["episode_id"],
+                    "colour": seed["colour"],
+                    "samples": samples,
+                    "exploratory_both_rings_below_0p30": all(
+                        sample["nonice_ring_fraction"] < 0.30 for sample in samples
+                    ),
+                    "prior_area_next_step_status": (
+                        "camera_shot_boundary"
+                        if seed["shot_boundary_abstention"]
+                        else seed["past_cap_area_0p5_to_2_decision"]["status"]
+                    ),
+                    "physical_stone_identity_verified": False,
+                }
+            )
     finally:
         capture.release()
     if len(rows) != transfer["source_catalog_track_count"]:
         raise ValueError("Track coverage differs")
-    counts = Counter((row["prior_area_next_step_status"],
-                      row["exploratory_both_rings_below_0p30"])
-                     for row in rows)
+    counts = Counter(
+        (row["prior_area_next_step_status"], row["exploratory_both_rings_below_0p30"])
+        for row in rows
+    )
     result = {
         "status": "all_seed_source_pixel_ice_context_diagnostic_not_stone_truth",
         "source_video_sha256": transfer["source_video_sha256"],
@@ -89,10 +94,13 @@ def main():
         "track_count": len(rows),
         "method": "Two previously reconstructed terminal track points per seed; existing 28x40-pixel non-ice ring and below-point metrics on decoded 640x360 source; exploratory 0.30 threshold inspected after selected source cases.",
         "outcome_cross_tab": [
-            {"prior_area_next_step_status": status,
-             "both_rings_below_0p30": passes,
-             "seed_count": count}
-            for (status, passes), count in sorted(counts.items())],
+            {
+                "prior_area_next_step_status": status,
+                "both_rings_below_0p30": passes,
+                "seed_count": count,
+            }
+            for (status, passes), count in sorted(counts.items())
+        ],
         "rows": rows,
         "limitations": [
             "A ring threshold chosen after viewing three examples is post-hoc and cannot establish error rates.",
@@ -101,8 +109,7 @@ def main():
         ],
     }
     OUT.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"tracks": len(rows),
-                      "outcome_cross_tab": result["outcome_cross_tab"]}))
+    print(json.dumps({"tracks": len(rows), "outcome_cross_tab": result["outcome_cross_tab"]}))
 
 
 if __name__ == "__main__":

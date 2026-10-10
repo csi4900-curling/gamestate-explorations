@@ -12,9 +12,19 @@ def test_event_gate_rejects_review_from_another_recording(tmp_path, monkeypatch,
     review = tmp_path / "wrong-review.json"
     counter = tmp_path / "counter.json"
     if scanner is china:
-        review.write_text(json.dumps({"games": [{"official_game_code": "PREL000102",
-                                                "source_sha256": "wrong",
-                                                "segments": []}]}))
+        review.write_text(
+            json.dumps(
+                {
+                    "games": [
+                        {
+                            "official_game_code": "PREL000102",
+                            "source_sha256": "wrong",
+                            "segments": [],
+                        }
+                    ]
+                }
+            )
+        )
     else:
         review.write_text(json.dumps({"source_sha256": "wrong", "events": []}))
     counter.write_text(json.dumps({"source_sha256": "correct", "counter_events": []}))

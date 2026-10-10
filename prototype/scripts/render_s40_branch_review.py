@@ -42,8 +42,7 @@ def main():
     for path in selection["alternative_paths"]:
         for point in path:
             candidates.setdefault(point["source_time_s"], []).append(point["pixel_center"])
-    source = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                              [cv2.CAP_PROP_N_THREADS, 1])
+    source = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not source.isOpened():
         raise RuntimeError(f"Cannot open {VIDEO}")
     fps = source.get(cv2.CAP_PROP_FPS)
@@ -67,27 +66,39 @@ def main():
                 cv2.circle(left, xy, 28, (0, 255, 255), 4)
             panel = cv2.resize(left, (960, 540), interpolation=cv2.INTER_AREA)
             x0, y0 = (i % 3) * 960, (i // 3) * 600
-            canvas.paste(Image.fromarray(cv2.cvtColor(panel, cv2.COLOR_BGR2RGB)),
-                         (x0, y0 + 40))
-            draw.text((x0 + 8, y0 + 9),
-                      f"S40 source {t:.1f}s / frame {frame_index} / yellow circles = candidate branches",
-                      fill="black")
-            frames.append({"source_time_s": t, "decoded_frame_index": frame_index,
-                           "candidate_pixel_centers": points})
+            canvas.paste(Image.fromarray(cv2.cvtColor(panel, cv2.COLOR_BGR2RGB)), (x0, y0 + 40))
+            draw.text(
+                (x0 + 8, y0 + 9),
+                f"S40 source {t:.1f}s / frame {frame_index} / yellow circles = candidate branches",
+                fill="black",
+            )
+            frames.append(
+                {
+                    "source_time_s": t,
+                    "decoded_frame_index": frame_index,
+                    "candidate_pixel_centers": points,
+                }
+            )
     finally:
         source.release()
     canvas.save(OUTPUT, quality=92)
-    MANIFEST.write_text(json.dumps({
-        "status": "source_review_of_ambiguous_motion_not_independent_event_label",
-        "video_sha256": digest(VIDEO),
-        "motion_sha256": digest(MOTION),
-        "short_path_sha256": digest(SHORT),
-        "runner_sha256": digest(Path(__file__)),
-        "image_sha256": digest(OUTPUT),
-        "shared_prefix_interval_s": [1518.5, 1520.0],
-        "first_ambiguity_time_s": 1520.5,
-        "frames": frames,
-    }, indent=2) + "\n")
+    MANIFEST.write_text(
+        json.dumps(
+            {
+                "status": "source_review_of_ambiguous_motion_not_independent_event_label",
+                "video_sha256": digest(VIDEO),
+                "motion_sha256": digest(MOTION),
+                "short_path_sha256": digest(SHORT),
+                "runner_sha256": digest(Path(__file__)),
+                "image_sha256": digest(OUTPUT),
+                "shared_prefix_interval_s": [1518.5, 1520.0],
+                "first_ambiguity_time_s": 1520.5,
+                "frames": frames,
+            },
+            indent=2,
+        )
+        + "\n"
+    )
     print(OUTPUT)
 
 

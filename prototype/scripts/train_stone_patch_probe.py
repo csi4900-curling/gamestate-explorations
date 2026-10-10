@@ -32,8 +32,7 @@ def labels(path):
         rows.append(
             {
                 "colour": ("red", "yellow")[int(category)],
-                "bbox": [(x - width / 2) * 640, (y - height / 2) * 360, width * 640,
-                         height * 360],
+                "bbox": [(x - width / 2) * 640, (y - height / 2) * 360, width * 640, height * 360],
             }
         )
     return rows
@@ -45,7 +44,9 @@ def image_data(directory, index):
         raise ValueError(f"Unreadable publisher image {index}")
     image, proposals = colour_proposals(frame)
     reference = labels(directory / f"{index:04d}.txt")
-    features = np.stack([patch_features(image, row["bbox"]) for row in proposals]) if proposals else None
+    features = (
+        np.stack([patch_features(image, row["bbox"]) for row in proposals]) if proposals else None
+    )
     return image, proposals, reference, features
 
 
@@ -58,11 +59,16 @@ def training_rows(directory, indices):
             features.append(patch_features(image, row["bbox"]))
             targets.append(1)
             counters["positive"] += 1
-        for proposal, descriptor in zip(proposals, proposal_features if proposal_features is not None else []):
+        for proposal, descriptor in zip(
+            proposals, proposal_features if proposal_features is not None else []
+        ):
             best_any = max((iou(proposal["bbox"], row["bbox"]) for row in reference), default=0)
             best_same = max(
-                (iou(proposal["bbox"], row["bbox"]) for row in reference
-                 if row["colour"] == proposal["colour"]),
+                (
+                    iou(proposal["bbox"], row["bbox"])
+                    for row in reference
+                    if row["colour"] == proposal["colour"]
+                ),
                 default=0,
             )
             if best_same >= 0.5:
@@ -82,9 +88,17 @@ def predict_images(directory, indices, scaler, classifier):
     records = []
     for index in indices:
         _, proposals, reference, features = image_data(directory, index)
-        scores = classifier.decision_function(scaler.transform(features)) if features is not None else []
-        records.append({"index": index, "reference": reference, "proposals": proposals,
-                        "scores": [float(score) for score in scores]})
+        scores = (
+            classifier.decision_function(scaler.transform(features)) if features is not None else []
+        )
+        records.append(
+            {
+                "index": index,
+                "reference": reference,
+                "proposals": proposals,
+                "scores": [float(score) for score in scores],
+            }
+        )
     return records
 
 
@@ -129,7 +143,9 @@ def main():
     del fit_x, fit_y
     validation = predict_images(args.train, validation_indices, scaler, classifier)
     pool = np.asarray([score for row in validation for score in row["scores"]])
-    thresholds = sorted(set(float(value) for value in np.quantile(pool, np.linspace(0.5, 0.995, 40))))
+    thresholds = sorted(
+        set(float(value) for value in np.quantile(pool, np.linspace(0.5, 0.995, 40)))
+    )
     threshold_scores = []
     for threshold in thresholds:
         totals, _ = evaluate(validation, threshold)
@@ -142,8 +158,11 @@ def main():
     model_path = args.output / "model.npz"
     np.savez_compressed(
         model_path,
-        mean=scaler.mean_, scale=scaler.scale_, weights=classifier.coef_,
-        intercept=classifier.intercept_, threshold=selected["threshold"],
+        mean=scaler.mean_,
+        scale=scaler.scale_,
+        weights=classifier.coef_,
+        intercept=classifier.intercept_,
+        threshold=selected["threshold"],
     )
     result = {
         "status": "development_stone_patch_box_probe",

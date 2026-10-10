@@ -4,8 +4,9 @@
 def propose_held_origin_rescues(fused, held_rows, *, max_counter_lag_s=45.0):
     """One-to-one match only; retain every abstention and unmatched passage."""
     used_shots = {event["shot_id"] for event in fused["events"]}
-    used_counters = {event["counter_id"] for event in fused["events"]
-                     if event["counter_id"] is not None}
+    used_counters = {
+        event["counter_id"] for event in fused["events"] if event["counter_id"] is not None
+    }
     counter_rows = fused["unassociated_counter_events"]
     if any(row["counter_id"] in used_counters for row in counter_rows):
         raise ValueError("Counter is both associated and unassociated")
@@ -21,25 +22,40 @@ def propose_held_origin_rescues(fused, held_rows, *, max_counter_lag_s=45.0):
         if not passages:
             continue
         if len(passages) != 1 or colour != passages[0]["colour"]:
-            audit.append({"shot_id": row["shot_id"], "status": "ambiguous_passages",
-                          "counter_options": [], "proposed_event": None})
+            audit.append(
+                {
+                    "shot_id": row["shot_id"],
+                    "status": "ambiguous_passages",
+                    "counter_options": [],
+                    "proposed_event": None,
+                }
+            )
             continue
         passage = passages[0]
-        options = [counter for counter in counter_rows
-                   if counter["colour"] == colour and
-                   0 <= counter["counter_update_s"] - passage["release_cue_s"]
-                   <= max_counter_lag_s]
-        audit.append({
-            "shot_id": row["shot_id"],
-            "status": ("existing_fused_shot" if row["shot_id"] in used_shots else
-                       "no_counter_match" if not options else
-                       "ambiguous_counters" if len(options) > 1 else
-                       "pending_unique_match"),
-            "counter_options": [counter["counter_id"] for counter in options],
-            "proposed_event": None,
-            "passage": passage,
-            "origin_interval_s": row["origin_interval_s"],
-        })
+        options = [
+            counter
+            for counter in counter_rows
+            if counter["colour"] == colour
+            and 0 <= counter["counter_update_s"] - passage["release_cue_s"] <= max_counter_lag_s
+        ]
+        audit.append(
+            {
+                "shot_id": row["shot_id"],
+                "status": (
+                    "existing_fused_shot"
+                    if row["shot_id"] in used_shots
+                    else "no_counter_match"
+                    if not options
+                    else "ambiguous_counters"
+                    if len(options) > 1
+                    else "pending_unique_match"
+                ),
+                "counter_options": [counter["counter_id"] for counter in options],
+                "proposed_event": None,
+                "passage": passage,
+                "origin_interval_s": row["origin_interval_s"],
+            }
+        )
     competing = {}
     for row in audit:
         if row["status"] == "pending_unique_match":

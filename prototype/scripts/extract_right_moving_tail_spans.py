@@ -26,7 +26,8 @@ def main():
     probe = json.loads(args.probe.read_text())
     proposals = moving_tail_spans(probe)
     if {row["raw_track_id"] for row in proposals} != {
-            row["raw_track_id"] for row in probe["directional_review_proposals"]}:
+        row["raw_track_id"] for row in probe["directional_review_proposals"]
+    }:
         raise RuntimeError("Proposal identity changed during tail extraction")
     result = {
         "status": "postscore_right_moving_tail_review_lane_not_physical_throw_identity",
@@ -36,15 +37,16 @@ def main():
         "parent_probe_sha256": digest(args.probe),
         "model_code_sha256": digest(ROOT / "prototype/right_moving_tail_span.py"),
         "runner_sha256": digest(Path(__file__)),
-        "tail_parameters": {"long_prefix_greater_than_s": 10,
-                            "maximum_tail_duration_s": 5,
-                            "minimum_tail_points": 3,
-                            "minimum_signed_step_px": 8,
-                            "review_span_displacement_px": 60},
+        "tail_parameters": {
+            "long_prefix_greater_than_s": 10,
+            "maximum_tail_duration_s": 5,
+            "minimum_tail_points": 3,
+            "minimum_signed_step_px": 8,
+            "review_span_displacement_px": 60,
+        },
         "original_proposal_count": len(probe["directional_review_proposals"]),
         "directional_proposal_count": len(proposals),
-        "tail_status_counts": dict(Counter(row["tail_extraction_status"]
-                                           for row in proposals)),
+        "tail_status_counts": dict(Counter(row["tail_extraction_status"] for row in proposals)),
         "directional_review_proposals": proposals,
         "limitations": [
             "The tail rule was devised after inspecting six long Estonia/Italy tracks.",
@@ -54,8 +56,7 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"proposals": len(proposals),
-                      "tail_statuses": result["tail_status_counts"]}))
+    print(json.dumps({"proposals": len(proposals), "tail_statuses": result["tail_status_counts"]}))
 
 
 if __name__ == "__main__":

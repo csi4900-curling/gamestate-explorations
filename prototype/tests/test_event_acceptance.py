@@ -32,23 +32,33 @@ class EventAcceptanceTests(unittest.TestCase):
 
     def test_complete_independent_recording_can_pass(self):
         prediction, reference = self.fixture()
-        self.assertEqual(assess_recording(prediction, reference, **self.measured)["reason"], "target_met")
+        self.assertEqual(
+            assess_recording(prediction, reference, **self.measured)["reason"], "target_met"
+        )
 
     def test_missing_or_different_source_file_cannot_pass(self):
         prediction, reference = self.fixture()
-        self.assertEqual(assess_recording(prediction, reference)["reason"],
-                         "unverified_source_video_fingerprint")
-        self.assertEqual(assess_recording(prediction, reference,
-                                         measured_source_sha256="different",
-                                         measured_source_duration_s=60)["reason"],
-                         "unverified_source_video_fingerprint")
+        self.assertEqual(
+            assess_recording(prediction, reference)["reason"], "unverified_source_video_fingerprint"
+        )
+        self.assertEqual(
+            assess_recording(
+                prediction,
+                reference,
+                measured_source_sha256="different",
+                measured_source_duration_s=60,
+            )["reason"],
+            "unverified_source_video_fingerprint",
+        )
 
     def test_declared_excerpt_duration_cannot_stand_in_for_full_video(self):
         prediction, reference = self.fixture()
-        self.assertEqual(assess_recording(prediction, reference,
-                                         measured_source_sha256="abc",
-                                         measured_source_duration_s=120)["reason"],
-                         "unverified_full_recording_scope")
+        self.assertEqual(
+            assess_recording(
+                prediction, reference, measured_source_sha256="abc", measured_source_duration_s=120
+            )["reason"],
+            "unverified_full_recording_scope",
+        )
 
     def test_partial_timeline_cannot_pass_even_if_observed_event_matches(self):
         prediction, reference = self.fixture()

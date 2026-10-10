@@ -16,10 +16,15 @@ def score(rows):
     fp = sum(row["label"] == 0 and row["predicted"] == 1 for row in rows)
     fn = sum(row["label"] == 1 and row["predicted"] == 0 for row in rows)
     tn = sum(row["label"] == 0 and row["predicted"] == 0 for row in rows)
-    return {"tp": tp, "fp": fp, "fn": fn, "tn": tn,
-            "precision": tp / (tp + fp) if tp + fp else None,
-            "recall": tp / (tp + fn) if tp + fn else None,
-            "f1": 2 * tp / (2 * tp + fp + fn) if 2 * tp + fp + fn else None}
+    return {
+        "tp": tp,
+        "fp": fp,
+        "fn": fn,
+        "tn": tn,
+        "precision": tp / (tp + fp) if tp + fp else None,
+        "recall": tp / (tp + fn) if tp + fn else None,
+        "f1": 2 * tp / (2 * tp + fp + fn) if 2 * tp + fp + fn else None,
+    }
 
 
 def main():
@@ -36,16 +41,25 @@ def main():
     counter = json.loads(args.counter_alignment.read_text())
     digest = file_sha256(args.origins)
     for source in (two_shot, counter):
-        if (source["source_sha256"] != origins["source_sha256"] or
-                source["source_interval_s"] != origins["source_interval_s"]):
+        if (
+            source["source_sha256"] != origins["source_sha256"]
+            or source["source_interval_s"] != origins["source_interval_s"]
+        ):
             parser.error("Evidence sources do not cover the same interval")
     if two_shot["origins_sha256"] != digest or counter["shot_score_sha256"] != digest:
         parser.error("Evidence sources do not derive from these origin predictions")
-    fusion = fuse_shot_events(origins["rows"], two_shot["decisions"], counter["rows"],
-                              allow_rescue="learned" in two_shot["motion_sha256"])
+    fusion = fuse_shot_events(
+        origins["rows"],
+        two_shot["decisions"],
+        counter["rows"],
+        allow_rescue="learned" in two_shot["motion_sha256"],
+    )
     selected = {row["shot_id"] for row in fusion["events"]}
-    resolved = [{**row, "predicted": int(row["shot_id"] in selected)}
-                for row in origins["rows"] if row["label"] in (0, 1)]
+    resolved = [
+        {**row, "predicted": int(row["shot_id"] in selected)}
+        for row in origins["rows"]
+        if row["label"] in (0, 1)
+    ]
     result = {
         "status": "postscore_development_shot_evidence_fusion_not_full_event_detection",
         "source_sha256": origins["source_sha256"],
@@ -67,8 +81,11 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"candidates": result["candidate_count"],
-                      "shot_score": result["resolved_shot_score"]}))
+    print(
+        json.dumps(
+            {"candidates": result["candidate_count"], "shot_score": result["resolved_shot_score"]}
+        )
+    )
 
 
 if __name__ == "__main__":

@@ -18,9 +18,11 @@ def segment_summary(points):
     span = float(np.max(np.linalg.norm(xy - xy[0], axis=1)))
     return {
         "interval_s": [points[0]["time_s"], points[-1]["time_s"]],
-        "point_count": len(points), "span_px": round(span, 3),
+        "point_count": len(points),
+        "span_px": round(span, 3),
         "sustained_motion": len(points) >= 4
-        and points[-1]["time_s"] - points[0]["time_s"] >= 3 and span >= 25,
+        and points[-1]["time_s"] - points[0]["time_s"] >= 3
+        and span >= 25,
     }
 
 
@@ -34,21 +36,31 @@ def main():
         parser.error("Output exists; preserve the first audit")
     raw = json.loads(args.raw.read_text())
     cuts = json.loads(args.cuts.read_text())
-    if raw["source_sha256"] != cuts["source_sha256"] or raw["source_interval_s"] != cuts["source_interval_s"]:
+    if (
+        raw["source_sha256"] != cuts["source_sha256"]
+        or raw["source_interval_s"] != cuts["source_interval_s"]
+    ):
         parser.error("Raw tracks and cuts must cover the same source interval")
     times = [row["time_s"] for row in cuts["cuts"]]
     tracks = []
     for candidate in raw["motion_candidates"]:
         segments = split_points_at_cuts(candidate["visual_track_points"], times)
-        tracks.append({"id": candidate["id"], "colour": candidate["colour"],
-                       "raw_interval_s": candidate["evidence_interval_s"],
-                       "crosses_hard_cut": len(segments) > 1,
-                       "segments": [segment_summary(points) for points in segments]})
+        tracks.append(
+            {
+                "id": candidate["id"],
+                "colour": candidate["colour"],
+                "raw_interval_s": candidate["evidence_interval_s"],
+                "crosses_hard_cut": len(segments) > 1,
+                "segments": [segment_summary(points) for points in segments],
+            }
+        )
     result = {
         "status": "development_track_hard_cut_identity_audit",
-        "source_id": raw["source_id"], "source_sha256": raw["source_sha256"],
+        "source_id": raw["source_id"],
+        "source_sha256": raw["source_sha256"],
         "source_interval_s": raw["source_interval_s"],
-        "raw_sha256": file_sha256(args.raw), "cuts_sha256": file_sha256(args.cuts),
+        "raw_sha256": file_sha256(args.raw),
+        "cuts_sha256": file_sha256(args.cuts),
         "model_sha256": file_sha256(ROOT / "prototype/scene_cuts.py"),
         "runner_sha256": file_sha256(__file__),
         "raw_track_count": len(tracks),
@@ -61,8 +73,14 @@ def main():
         ],
     }
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"raw_tracks": result["raw_track_count"],
-                      "crossing_cuts": result["tracks_crossing_hard_cut"]}))
+    print(
+        json.dumps(
+            {
+                "raw_tracks": result["raw_track_count"],
+                "crossing_cuts": result["tracks_crossing_hard_cut"],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

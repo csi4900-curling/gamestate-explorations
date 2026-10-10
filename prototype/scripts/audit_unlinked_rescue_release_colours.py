@@ -18,14 +18,19 @@ from prototype.release_colour_review import classify_release_colour
 
 SOURCES = {
     "norway": {
-        "video": ROOT / "validation/throw-event-benchmark/paralympics-2022-canada-norway/source.mp4",
-        "manifest": ROOT / "validation/curlobserver-learned-probe/canada-norway-full-transfer/shot-review/manifest.json",
-        "proposals": ROOT / "validation/official-shot-sequence/norway-unlinked-motion-rescue-proposals-first.json",
+        "video": ROOT
+        / "validation/throw-event-benchmark/paralympics-2022-canada-norway/source.mp4",
+        "manifest": ROOT
+        / "validation/curlobserver-learned-probe/canada-norway-full-transfer/shot-review/manifest.json",
+        "proposals": ROOT
+        / "validation/official-shot-sequence/norway-unlinked-motion-rescue-proposals-first.json",
     },
     "china": {
         "video": ROOT / "validation/throw-event-benchmark/paralympics-2022-canada-china/source.mp4",
-        "manifest": ROOT / "validation/curlobserver-learned-probe/china-full-transfer/shot-review/manifest.json",
-        "proposals": ROOT / "validation/official-shot-sequence/china-unlinked-motion-rescue-transfer-first.json",
+        "manifest": ROOT
+        / "validation/curlobserver-learned-probe/china-full-transfer/shot-review/manifest.json",
+        "proposals": ROOT
+        / "validation/official-shot-sequence/china-unlinked-motion-rescue-transfer-first.json",
     },
 }
 OUTPUT = ROOT / "validation/official-shot-sequence/unlinked-motion-release-colour-audit-first.json"
@@ -58,23 +63,32 @@ def main():
                     raise SystemExit(f"{game}: origin interval changed for {shot_id}")
                 scan = scan_origin_release(capture, fps, start, end)
                 classification = classify_release_colour(
-                    scan["passages"], proposal["receiving_colour"],
-                    proposal["existing_candidate_colour"])
-                rows.append({"game": game, "origin_shot_id": shot_id,
-                             "origin_interval_s": [start, end],
-                             "receiving_episode_id": proposal["receiving_episode_id"],
-                             "receiving_colour": proposal["receiving_colour"],
-                             "existing_candidate_colour": proposal["existing_candidate_colour"],
-                             "sampled_frame_count": scan["sampled_frame_count"],
-                             "filtered_cap_observation_count": scan["filtered_cap_observation_count"],
-                             "shot_scoped_passages": scan["passages"],
-                             **classification,
-                             "physical_throw_verified": False})
+                    scan["passages"],
+                    proposal["receiving_colour"],
+                    proposal["existing_candidate_colour"],
+                )
+                rows.append(
+                    {
+                        "game": game,
+                        "origin_shot_id": shot_id,
+                        "origin_interval_s": [start, end],
+                        "receiving_episode_id": proposal["receiving_episode_id"],
+                        "receiving_colour": proposal["receiving_colour"],
+                        "existing_candidate_colour": proposal["existing_candidate_colour"],
+                        "sampled_frame_count": scan["sampled_frame_count"],
+                        "filtered_cap_observation_count": scan["filtered_cap_observation_count"],
+                        "shot_scoped_passages": scan["passages"],
+                        **classification,
+                        "physical_throw_verified": False,
+                    }
+                )
         finally:
             capture.release()
-        inputs[game] = {"video_sha256": digest(paths["video"]),
-                        "camera_shot_manifest_sha256": digest(paths["manifest"]),
-                        "proposal_sha256": digest(paths["proposals"])}
+        inputs[game] = {
+            "video_sha256": digest(paths["video"]),
+            "camera_shot_manifest_sha256": digest(paths["manifest"]),
+            "proposal_sha256": digest(paths["proposals"]),
+        }
     result = {
         "status": "source_only_shot_scoped_release_colour_review_not_automatic_event_filter",
         "input_sha256": inputs,
@@ -94,8 +108,13 @@ def main():
     }
     OUTPUT.write_text(json.dumps(result, indent=2) + "\n")
     print(result["status_counts"])
-    print([(row["game"], row["origin_shot_id"], row["release_colour"])
-           for row in rows if row["release_colour"]])
+    print(
+        [
+            (row["game"], row["origin_shot_id"], row["release_colour"])
+            for row in rows
+            if row["release_colour"]
+        ]
+    )
 
 
 if __name__ == "__main__":

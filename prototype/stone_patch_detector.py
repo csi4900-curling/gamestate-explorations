@@ -7,7 +7,7 @@ import cv2
 import numpy as np
 
 SMALL_SIZES = (14, 18, 24, 30, 38, 48)
-CELL_IDS = ((np.arange(32)[:, None] // 8) * 4 + (np.arange(32)[None, :] // 8))
+CELL_IDS = (np.arange(32)[:, None] // 8) * 4 + (np.arange(32)[None, :] // 8)
 
 
 def colour_proposals(frame):
@@ -82,8 +82,11 @@ def select_boxes(proposals, scores, threshold, *, nms_iou=0.4):
     if len(proposals) != len(scores):
         raise ValueError("Proposal/score length mismatch")
     ranked = sorted(
-        (dict(proposal, confidence=float(score)) for proposal, score in zip(proposals, scores)
-         if score >= threshold),
+        (
+            dict(proposal, confidence=float(score))
+            for proposal, score in zip(proposals, scores)
+            if score >= threshold
+        ),
         key=lambda item: -item["confidence"],
     )
     chosen = []
@@ -107,7 +110,10 @@ def select_boxes(proposals, scores, threshold, *, nms_iou=0.4):
 
 def load_model(path):
     with np.load(path, allow_pickle=False) as data:
-        return {name: data[name].copy() for name in ("mean", "scale", "weights", "intercept", "threshold")}
+        return {
+            name: data[name].copy()
+            for name in ("mean", "scale", "weights", "intercept", "threshold")
+        }
 
 
 def detect_stones(frame, model):

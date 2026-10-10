@@ -53,8 +53,12 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(output, indent=2) + "\n")
-    print({"partial_boards": len(observations),
-           "stone_observations": output["stone_observation_count"]})
+    print(
+        {
+            "partial_boards": len(observations),
+            "stone_observations": output["stone_observation_count"],
+        }
+    )
 
 
 if __name__ == "__main__":

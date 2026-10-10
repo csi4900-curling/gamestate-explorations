@@ -40,15 +40,14 @@ def main():
     classes = {}
     if args.source_review:
         review = json.loads(args.source_review.read_text())
-        if (review["source_sha256"] != source_hash or
-                review["variant_sha256"] != digest(args.right_proposals)):
+        if review["source_sha256"] != source_hash or review["variant_sha256"] != digest(
+            args.right_proposals
+        ):
             parser.error("Source review and proposal hashes disagree")
-        classes = {row["raw_track_id"]: row["sampled_prefix_class"]
-                   for row in review["review"]}
+        classes = {row["raw_track_id"]: row["sampled_prefix_class"] for row in review["review"]}
         if len(classes) != len(review["review"]):
             parser.error("Duplicate reviewed prefix")
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         parser.error("Cannot open video")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -67,18 +66,22 @@ def main():
     try:
         for proposal in proposals["entry_review_proposals"]:
             first = proposal["observed_prefix_points"][0]
-            extension = backward_extension(first, first["time_s"] - 8,
-                                           proposal["colour_claim"],
-                                           source_proposals)
-            rows.append({
-                "right_raw_track_id": proposal["raw_track_id"],
-                "colour_claim": proposal["colour_claim"],
-                "original_first_observed_s": first["time_s"],
-                "conditional_first_observed_s": extension["new_first_observed_s"],
-                "added_duration_s": round(first["time_s"] - extension["new_first_observed_s"], 3),
-                "development_source_prefix_class": classes.get(proposal["raw_track_id"]),
-                **extension,
-            })
+            extension = backward_extension(
+                first, first["time_s"] - 8, proposal["colour_claim"], source_proposals
+            )
+            rows.append(
+                {
+                    "right_raw_track_id": proposal["raw_track_id"],
+                    "colour_claim": proposal["colour_claim"],
+                    "original_first_observed_s": first["time_s"],
+                    "conditional_first_observed_s": extension["new_first_observed_s"],
+                    "added_duration_s": round(
+                        first["time_s"] - extension["new_first_observed_s"], 3
+                    ),
+                    "development_source_prefix_class": classes.get(proposal["raw_track_id"]),
+                    **extension,
+                }
+            )
     finally:
         cap.release()
     by_class = defaultdict(lambda: {"prefixes": 0, "extended": 0})
@@ -89,8 +92,10 @@ def main():
     output = {
         "status": "right_prefix_backward_transfer_diagnostic_not_throw_score",
         "source_sha256": source_hash,
-        "input_sha256": {"right_proposals": digest(args.right_proposals),
-                         "source_review": digest(args.source_review) if args.source_review else None},
+        "input_sha256": {
+            "right_proposals": digest(args.right_proposals),
+            "source_review": digest(args.source_review) if args.source_review else None,
+        },
         "expanded_detector_code_sha256": digest(ROOT / "prototype/expanded_right_colour.py"),
         "extension_code_sha256": digest(ROOT / "prototype/right_backward_seam.py"),
         "runner_sha256": digest(Path(__file__)),
@@ -108,9 +113,15 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(output, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({"prefixes": len(rows),
-                      "extended": output["extended_prefix_count"],
-                      "development_classes": output["development_class_counts"]}))
+    print(
+        json.dumps(
+            {
+                "prefixes": len(rows),
+                "extended": output["extended_prefix_count"],
+                "development_classes": output["development_class_counts"],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

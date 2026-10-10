@@ -7,8 +7,11 @@ def rebase_candidate_coverage(sequence, overlay):
     if sequence["source_sha256"] != overlay["source_sha256"]:
         raise ValueError("Source fingerprints differ")
     old = {row["id"]: row["interval_s"] for row in sequence["supported_runs"]}
-    new = {row["id"]: row["interval_s"] for row in overlay["supported_runs"]
-           if row["layout"] == "split_2024"}
+    new = {
+        row["id"]: row["interval_s"]
+        for row in overlay["supported_runs"]
+        if row["layout"] == "split_2024"
+    }
     if len(old) != len(sequence["supported_runs"]) or old.keys() != new.keys():
         raise ValueError("Supported run IDs differ")
     for run_id, (start, stop) in old.items():
@@ -30,10 +33,10 @@ def rebase_candidate_coverage(sequence, overlay):
         if not start <= right["passage_time_s"] < stop:
             raise ValueError("Right proposal leaves refined supported coverage")
     result = deepcopy(sequence)
-    result["supported_runs"] = [{"id": run_id, "interval_s": new[run_id]}
-                                for run_id in old]
+    result["supported_runs"] = [{"id": run_id, "interval_s": new[run_id]} for run_id in old]
     result["coverage_gaps_s"] = deepcopy(overlay["coverage_gaps_s"])
     result["routed_coverage_status"] = (
-        "source_reviewed_terminal_cut_overlay_other_gaps_still_uncertain")
+        "source_reviewed_terminal_cut_overlay_other_gaps_still_uncertain"
+    )
     result["complete_throw_sequence_verified"] = False
     return result

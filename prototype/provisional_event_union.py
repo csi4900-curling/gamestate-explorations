@@ -6,10 +6,12 @@ def combine_event_evidence(linked_events, travel_rows, relation_rows, held_propo
     relations = {row["counter_id"]: row for row in relation_rows}
     if len(relations) != len(relation_rows):
         raise ValueError("Duplicate travel relation counter")
-    travel = {row["counter_id"]: row for row in travel_rows
-              if row["status"] == "unlocalized_travel_candidate"}
-    if len(travel) != sum(row["status"] == "unlocalized_travel_candidate"
-                          for row in travel_rows):
+    travel = {
+        row["counter_id"]: row
+        for row in travel_rows
+        if row["status"] == "unlocalized_travel_candidate"
+    }
+    if len(travel) != sum(row["status"] == "unlocalized_travel_candidate" for row in travel_rows):
         raise ValueError("Duplicate travel counter")
     if set(travel) != set(relations):
         raise ValueError("Travel proposals and relation rows differ")
@@ -64,11 +66,15 @@ def combine_event_evidence(linked_events, travel_rows, relation_rows, held_propo
             by_counter[counter]["source_shot_ids"].append(cue["travel_shot_id"])
             continue
         if relation["possible_same_physical_throw"]:
-            unassigned.append({"counter_id": counter,
-                               "reason": "possible_existing_visual_event",
-                               "travel_shot_id": cue["travel_shot_id"],
-                               "preceding_fused_event": relation["preceding_fused_event"],
-                               "relation_status": relation["relation_status"]})
+            unassigned.append(
+                {
+                    "counter_id": counter,
+                    "reason": "possible_existing_visual_event",
+                    "travel_shot_id": cue["travel_shot_id"],
+                    "preceding_fused_event": relation["preceding_fused_event"],
+                    "relation_status": relation["relation_status"],
+                }
+            )
             continue
         shot = cue["travel_shot_id"]
         if shot in occupied_shots:
@@ -83,8 +89,11 @@ def combine_event_evidence(linked_events, travel_rows, relation_rows, held_propo
             "counter_id": counter,
             "colour": cue["colour"],
             "colour_status": "counter_and_travel_agree_not_identity_verified",
-            "evidence_sources": ["delayed_counter", "cap_travel_motion",
-                                 "learned_box_travel_motion"],
+            "evidence_sources": [
+                "delayed_counter",
+                "cap_travel_motion",
+                "learned_box_travel_motion",
+            ],
             "attached_travel_evidence": evidence,
             "attached_held_evidence": None,
             "physical_stone_identity_verified": False,
@@ -95,10 +104,12 @@ def combine_event_evidence(linked_events, travel_rows, relation_rows, held_propo
         by_counter[counter] = row
 
     for counter, cue in held.items():
-        evidence = {"shot_id": cue["shot_id"],
-                    "held_interval_s": cue["held_interval_s"],
-                    "release_cue_s": cue["release_cue_s"],
-                    "below_ice_fraction": cue["below_ice_fraction"]}
+        evidence = {
+            "shot_id": cue["shot_id"],
+            "held_interval_s": cue["held_interval_s"],
+            "release_cue_s": cue["release_cue_s"],
+            "below_ice_fraction": cue["below_ice_fraction"],
+        }
         if counter in by_counter:
             row = by_counter[counter]
             if row["colour"] is not None and row["colour"] != cue["colour"]:

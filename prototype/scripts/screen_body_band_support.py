@@ -22,9 +22,11 @@ def main():
         parser.error("Development screen already exists")
     screen = json.loads(args.screen.read_text())
     features = json.loads(args.features.read_text())
-    if (features["screen_sha256"] != file_sha256(args.screen) or
-            features["source_sha256"] != screen["source_sha256"] or
-            features["accepted_candidate_count"] != len(features["rows"])):
+    if (
+        features["screen_sha256"] != file_sha256(args.screen)
+        or features["source_sha256"] != screen["source_sha256"]
+        or features["accepted_candidate_count"] != len(features["rows"])
+    ):
         parser.error("Feature audit does not chain to frozen screen")
     derived = apply_body_band_abstention(screen, features, threshold=0.5)
     output = {
@@ -46,9 +48,13 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(output, indent=2) + "\n")
-    print(derived["frozen_accepted_count"], "->",
-          derived["development_accepted_count"], "accepted; flagged",
-          derived["flagged_candidate_ids"])
+    print(
+        derived["frozen_accepted_count"],
+        "->",
+        derived["development_accepted_count"],
+        "accepted; flagged",
+        derived["flagged_candidate_ids"],
+    )
 
 
 if __name__ == "__main__":

@@ -64,12 +64,14 @@ def partition(args):
         write(hold_path, hold_part)
         motion_part["hold_sha256"] = file_sha256(hold_path)
         write(motion_path, motion_part)
-        manifest["shards"].append({
-            "index": index,
-            "candidate_ids": motion_ids[start:stop],
-            "hold_sha256": file_sha256(hold_path),
-            "motion_sha256": file_sha256(motion_path),
-        })
+        manifest["shards"].append(
+            {
+                "index": index,
+                "candidate_ids": motion_ids[start:stop],
+                "hold_sha256": file_sha256(hold_path),
+                "motion_sha256": file_sha256(motion_path),
+            }
+        )
     write(args.output_dir / "manifest.json", manifest)
     print(len(motion_ids), "candidates in", len(manifest["shards"]), "shards")
 
@@ -78,9 +80,11 @@ def merge(args):
     if args.output.exists():
         raise ValueError("Merged patch audit already exists")
     manifest = read(args.partition_dir / "manifest.json")
-    if manifest["motion_sha256"] != file_sha256(args.motion) or \
-            manifest["hold_sha256"] != file_sha256(args.hold) or \
-            manifest["source_motion_sha256"] != file_sha256(args.source_motion):
+    if (
+        manifest["motion_sha256"] != file_sha256(args.motion)
+        or manifest["hold_sha256"] != file_sha256(args.hold)
+        or manifest["source_motion_sha256"] != file_sha256(args.source_motion)
+    ):
         raise ValueError("Partition manifest differs from full inputs")
     if ids(read(args.motion)["rows"]) != manifest["candidate_ids"]:
         raise ValueError("Full motion candidate order changed")
@@ -94,21 +98,30 @@ def merge(args):
         motion_path = args.partition_dir / f"patch-input-motion-{index:03d}.json"
         hold_path = args.partition_dir / f"patch-input-hold-{index:03d}.json"
         output_path = args.partition_dir / f"patch-result-{index:03d}.json"
-        if (file_sha256(motion_path) != shard["motion_sha256"] or
-                file_sha256(hold_path) != shard["hold_sha256"]):
+        if (
+            file_sha256(motion_path) != shard["motion_sha256"]
+            or file_sha256(hold_path) != shard["hold_sha256"]
+        ):
             raise ValueError(f"Input hash differs in shard {index}")
-        if ids(read(motion_path)["rows"]) != shard["candidate_ids"] or \
-                ids(read(hold_path)["rows"]) != shard["candidate_ids"]:
+        if (
+            ids(read(motion_path)["rows"]) != shard["candidate_ids"]
+            or ids(read(hold_path)["rows"]) != shard["candidate_ids"]
+        ):
             raise ValueError(f"Input candidate IDs differ in shard {index}")
         result = read(output_path)
-        if result["motion_sha256"] != shard["motion_sha256"] or \
-                result["hold_sha256"] != shard["hold_sha256"] or \
-                result["source_motion_sha256"] != manifest["source_motion_sha256"]:
+        if (
+            result["motion_sha256"] != shard["motion_sha256"]
+            or result["hold_sha256"] != shard["hold_sha256"]
+            or result["source_motion_sha256"] != manifest["source_motion_sha256"]
+        ):
             raise ValueError(f"Result hash chain differs in shard {index}")
         if ids(result["rows"]) != shard["candidate_ids"]:
             raise ValueError(f"Result candidate IDs differ in shard {index}")
-        common = {key: value for key, value in result.items()
-                  if key not in ("rows", "motion_sha256", "hold_sha256")}
+        common = {
+            key: value
+            for key, value in result.items()
+            if key not in ("rows", "motion_sha256", "hold_sha256")
+        }
         if shared is None:
             shared = common
         elif shared != common:

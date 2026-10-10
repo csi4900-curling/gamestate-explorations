@@ -47,9 +47,16 @@ def extract_stone_symbols(image, *, min_fill_score=65):
         raise ValueError("Expected 300×600 BGR shot diagram")
     house_y = house_center_y(image)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    found = cv2.HoughCircles(gray[40:580], cv2.HOUGH_GRADIENT, dp=1,
-                             minDist=10, param1=100, param2=9,
-                             minRadius=6, maxRadius=9)
+    found = cv2.HoughCircles(
+        gray[40:580],
+        cv2.HOUGH_GRADIENT,
+        dp=1,
+        minDist=10,
+        param1=100,
+        param2=9,
+        minRadius=6,
+        maxRadius=9,
+    )
     stones = []
     if found is None:
         return stones
@@ -57,7 +64,7 @@ def extract_stone_symbols(image, *, min_fill_score=65):
     kernel = ((xx**2 + yy**2) <= 49).astype(np.float32)
     scores = {}
     for colour, bgr in STONE_BGR.items():
-        mask = (np.max(np.abs(image.astype(np.int16) - np.asarray(bgr)), axis=2) < 20)
+        mask = np.max(np.abs(image.astype(np.int16) - np.asarray(bgr)), axis=2) < 20
         scores[colour] = cv2.filter2D(mask.astype(np.float32), -1, kernel)
     proposals = []
     for x_raw, y_raw, radius in found[0]:
@@ -68,27 +75,38 @@ def extract_stone_symbols(image, *, min_fill_score=65):
         for colour, score_map in scores.items():
             crop = score_map[y0:y1, x0:x1]
             offset_y, offset_x = np.unravel_index(np.argmax(crop), crop.shape)
-            values.append((round(float(crop[offset_y, offset_x])), colour,
-                           x0 + int(offset_x), y0 + int(offset_y)))
+            values.append(
+                (
+                    round(float(crop[offset_y, offset_x])),
+                    colour,
+                    x0 + int(offset_x),
+                    y0 + int(offset_y),
+                )
+            )
         score, colour, x, y = max(values)
         if score < min_fill_score:
             continue
-        proposals.append({
-            "colour": colour,
-            "diagram_pixel": [x, y],
-            "house_radius_coordinates": [round((x - 150) / HOUSE_RADIUS_PX, 4),
-                                         round((y - house_y) * (1 if house_y == 440 else -1)
-                                               / HOUSE_RADIUS_PX, 4)],
-            "fill_score_px": score,
-            "hough_radius_px": round(float(radius), 2),
-            "near_diagram_edge": x < 8 or x > 292 or y < 48 or y > 572,
-            "low_fill_margin": score < 85,
-        })
+        proposals.append(
+            {
+                "colour": colour,
+                "diagram_pixel": [x, y],
+                "house_radius_coordinates": [
+                    round((x - 150) / HOUSE_RADIUS_PX, 4),
+                    round((y - house_y) * (1 if house_y == 440 else -1) / HOUSE_RADIUS_PX, 4),
+                ],
+                "fill_score_px": score,
+                "hough_radius_px": round(float(radius), 2),
+                "near_diagram_edge": x < 8 or x > 292 or y < 48 or y > 572,
+                "low_fill_margin": score < 85,
+            }
+        )
     for proposal in sorted(proposals, key=lambda row: -row["fill_score_px"]):
         x, y = proposal["diagram_pixel"]
-        if all((x - other["diagram_pixel"][0]) ** 2
-               + (y - other["diagram_pixel"][1]) ** 2 >= 10**2
-               for other in stones):
+        if all(
+            (x - other["diagram_pixel"][0]) ** 2 + (y - other["diagram_pixel"][1]) ** 2 >= 10**2
+            for other in stones
+        ):
             stones.append(proposal)
-    return sorted(stones, key=lambda row: (row["colour"], row["diagram_pixel"][1],
-                                           row["diagram_pixel"][0]))
+    return sorted(
+        stones, key=lambda row: (row["colour"], row["diagram_pixel"][1], row["diagram_pixel"][0])
+    )

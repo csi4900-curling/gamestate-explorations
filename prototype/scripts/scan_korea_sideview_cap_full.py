@@ -20,7 +20,10 @@ from scripts.audit_korea_t11_sideview_patch import context_box
 
 VIDEO = ROOT / "prototype/continuous/clip.mp4"
 MODEL = ROOT / "validation/curlobserver-learned-probe/sideview-patch-transfer-v1/model.npz"
-OUT = ROOT / "validation/throw-event-benchmark/canada-korea-2024/t11-sideview-cap-fullclip-development.json"
+OUT = (
+    ROOT
+    / "validation/throw-event-benchmark/canada-korea-2024/t11-sideview-cap-fullclip-development.json"
+)
 SOURCE_START_S, SOURCE_STOP_S = 2260, 2350
 ICE_ROI_1080P = (990, 400, 1890, 970)
 NMS_CENTER_DISTANCE_1080P_PX = 30
@@ -29,14 +32,14 @@ NMS_CENTER_DISTANCE_1080P_PX = 30
 def digest(path):
     h = sha256()
     with path.open("rb") as stream:
-        for chunk in iter(lambda: stream.read(1024*1024), b""):
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
             h.update(chunk)
     return h.hexdigest()
 
 
 def point(proposal):
     x, y, w, h = proposal["bbox"]
-    return [3*(x+w/2), 3*(y+h/2)]
+    return [3 * (x + w / 2), 3 * (y + h / 2)]
 
 
 def main():
@@ -45,8 +48,7 @@ def main():
     reserved = json.loads((ROOT / "validation/unseen-end/reservation.json").read_text())
     if digest(VIDEO) == reserved["source_sha256"]:
         raise ValueError("Reserved source cannot be used for development")
-    cap = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened() or cap.get(cv2.CAP_PROP_FPS) != 30:
         raise RuntimeError("Cannot open expected 30-fps clip")
     rows = []
@@ -67,22 +69,36 @@ def main():
                     if not (x1 <= xy[0] <= x2 and y1 <= xy[1] <= y2):
                         continue
                     feature = patch_features(image, context_box(proposal["bbox"]))
-                    score = ((feature-model["mean"])/model["scale"]) @ \
-                        model["weights"].ravel() + model["intercept"].item()
+                    score = ((feature - model["mean"]) / model["scale"]) @ model[
+                        "weights"
+                    ].ravel() + model["intercept"].item()
                     if score >= threshold:
-                        screened.append({"center_1080p_px": xy,
-                                         "score": round(float(score), 5),
-                                         "proposal_bbox_360p": proposal["bbox"]})
+                        screened.append(
+                            {
+                                "center_1080p_px": xy,
+                                "score": round(float(score), 5),
+                                "proposal_bbox_360p": proposal["bbox"],
+                            }
+                        )
                 accepted = []
                 for p in sorted(screened, key=lambda item: -item["score"]):
-                    if all(hypot(p["center_1080p_px"][0]-q["center_1080p_px"][0],
-                                 p["center_1080p_px"][1]-q["center_1080p_px"][1])
-                           >= NMS_CENTER_DISTANCE_1080P_PX for q in accepted):
+                    if all(
+                        hypot(
+                            p["center_1080p_px"][0] - q["center_1080p_px"][0],
+                            p["center_1080p_px"][1] - q["center_1080p_px"][1],
+                        )
+                        >= NMS_CENTER_DISTANCE_1080P_PX
+                        for q in accepted
+                    ):
                         accepted.append(p)
-                rows.append({"source_time_s": t,
-                             "positive_raw_proposal_count": len(screened),
-                             "positive_nms_points": accepted})
-                if t+1 < SOURCE_STOP_S:
+                rows.append(
+                    {
+                        "source_time_s": t,
+                        "positive_raw_proposal_count": len(screened),
+                        "positive_nms_points": accepted,
+                    }
+                )
+                if t + 1 < SOURCE_STOP_S:
                     for _ in range(29):
                         if not cap.grab():
                             raise RuntimeError(f"Could not advance from {t}")
@@ -111,9 +127,15 @@ def main():
         ],
     }
     OUT.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({"raw": result["positive_raw_total"],
-                      "nms": result["positive_nms_total"],
-                      "frames": len(rows)}))
+    print(
+        json.dumps(
+            {
+                "raw": result["positive_raw_total"],
+                "nms": result["positive_nms_total"],
+                "frames": len(rows),
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

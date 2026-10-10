@@ -18,9 +18,12 @@ RELEASES = {
     "PREL000103": BASE / "slovakia-provisional-release-coverage-development.json",
 }
 SHOTS = {
-    "PREL000101": ROOT / "validation/curlobserver-learned-probe/swiss-full-transfer/shot-origin.json",
-    "PREL000102": ROOT / "validation/curlobserver-learned-probe/china-full-transfer/unlabelled-shot-origin-inference.json",
-    "PREL000103": ROOT / "validation/curlobserver-learned-probe/slovakia-full-transfer/shot-origin.json",
+    "PREL000101": ROOT
+    / "validation/curlobserver-learned-probe/swiss-full-transfer/shot-origin.json",
+    "PREL000102": ROOT
+    / "validation/curlobserver-learned-probe/china-full-transfer/unlabelled-shot-origin-inference.json",
+    "PREL000103": ROOT
+    / "validation/curlobserver-learned-probe/slovakia-full-transfer/shot-origin.json",
 }
 OUTPUT = BASE / "pwg2022-shot-scoped-release-cues-development.json"
 
@@ -39,9 +42,11 @@ def build():
         code = game["official_game_code"]
         release = json.loads(RELEASES[code].read_text())
         shots = json.loads(SHOTS[code].read_text())
-        if (game["source_sha256"] != release["source_sha256"]
-                or game["source_sha256"] != shots["source_sha256"]
-                or game["source_sha256"] == reserved["source_sha256"]):
+        if (
+            game["source_sha256"] != release["source_sha256"]
+            or game["source_sha256"] != shots["source_sha256"]
+            or game["source_sha256"] == reserved["source_sha256"]
+        ):
             raise ValueError("Event, release and shot sources differ or include reserved source")
         release_by_event = {row["event_id"]: row for row in release["rows"]}
         shot_by_id = {row["shot_id"]: row["interval_s"] for row in shots["rows"]}
@@ -55,39 +60,62 @@ def build():
             decision = select_event_release(event, original, shot_by_id, held_scans)
             colour = decision["unique_passage_colour"]
             ledger = event["colour"]
-            rows.append({"event_id": event["event_id"], "candidate_class": event["candidate_class"],
-                         "source_shot_ids": event["source_shot_ids"],
-                         "counter_id": event["counter_id"], "ledger_colour": ledger,
-                         "broad_scan_unique_release_cue_s": original["unique_release_cue_s"],
-                         **decision,
-                         "colour_relation": ("no_unique_passage" if colour is None else
-                                             "ledger_colour_unknown" if ledger is None else
-                                             "agrees_with_ledger" if colour == ledger else
-                                             "conflicts_with_ledger"),
-                         "physical_stone_identity_verified": False,
-                         "simulation_ready": False})
-        games.append({"recording_code": code, "source_sha256": game["source_sha256"],
-                      "provisional_event_count": len(rows),
-                      "unique_scoped_cue_count": sum(row["unique_release_cue_s"] is not None
-                                                     for row in rows),
-                      "unscoped_travel_abstention_count": sum(
-                          row["scope_status"] == "no_attached_origin_shot" for row in rows),
-                      "rows": rows})
-    return {"status": "development_shot_scoped_release_cue_coverage_not_throw_f1",
-            "input_sha256": {"union": digest(UNION), "held_shot_rescan": digest(HELD),
-                             "releases": {k: digest(v) for k, v in RELEASES.items()},
-                             "shot_tables": {k: digest(v) for k, v in SHOTS.items()},
-                             "selection_code": digest(ROOT / "prototype/shot_scoped_release.py"),
-                             "runner": digest(Path(__file__))},
-            "provisional_event_count": sum(game["provisional_event_count"] for game in games),
-            "unique_scoped_cue_count": sum(game["unique_scoped_cue_count"] for game in games),
-            "games": games,
-            "limitations": [
-                "Shot scope prevents assigning a passage from an unrelated camera shot to a travel-only candidate.",
-                "The scoped ledger reuses previous candidate-window scans except for two source-rescanned attached held-origin shots.",
-                "Candidate cue coverage is not independently measured physical throw precision, recall or F1.",
-                "No cross-view physical stone identity, settled-board transition or simulation-ready state is verified.",
-            ]}
+            rows.append(
+                {
+                    "event_id": event["event_id"],
+                    "candidate_class": event["candidate_class"],
+                    "source_shot_ids": event["source_shot_ids"],
+                    "counter_id": event["counter_id"],
+                    "ledger_colour": ledger,
+                    "broad_scan_unique_release_cue_s": original["unique_release_cue_s"],
+                    **decision,
+                    "colour_relation": (
+                        "no_unique_passage"
+                        if colour is None
+                        else "ledger_colour_unknown"
+                        if ledger is None
+                        else "agrees_with_ledger"
+                        if colour == ledger
+                        else "conflicts_with_ledger"
+                    ),
+                    "physical_stone_identity_verified": False,
+                    "simulation_ready": False,
+                }
+            )
+        games.append(
+            {
+                "recording_code": code,
+                "source_sha256": game["source_sha256"],
+                "provisional_event_count": len(rows),
+                "unique_scoped_cue_count": sum(
+                    row["unique_release_cue_s"] is not None for row in rows
+                ),
+                "unscoped_travel_abstention_count": sum(
+                    row["scope_status"] == "no_attached_origin_shot" for row in rows
+                ),
+                "rows": rows,
+            }
+        )
+    return {
+        "status": "development_shot_scoped_release_cue_coverage_not_throw_f1",
+        "input_sha256": {
+            "union": digest(UNION),
+            "held_shot_rescan": digest(HELD),
+            "releases": {k: digest(v) for k, v in RELEASES.items()},
+            "shot_tables": {k: digest(v) for k, v in SHOTS.items()},
+            "selection_code": digest(ROOT / "prototype/shot_scoped_release.py"),
+            "runner": digest(Path(__file__)),
+        },
+        "provisional_event_count": sum(game["provisional_event_count"] for game in games),
+        "unique_scoped_cue_count": sum(game["unique_scoped_cue_count"] for game in games),
+        "games": games,
+        "limitations": [
+            "Shot scope prevents assigning a passage from an unrelated camera shot to a travel-only candidate.",
+            "The scoped ledger reuses previous candidate-window scans except for two source-rescanned attached held-origin shots.",
+            "Candidate cue coverage is not independently measured physical throw precision, recall or F1.",
+            "No cross-view physical stone identity, settled-board transition or simulation-ready state is verified.",
+        ],
+    }
 
 
 def main():

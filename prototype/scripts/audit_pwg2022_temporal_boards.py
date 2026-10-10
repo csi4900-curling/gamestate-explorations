@@ -1,6 +1,5 @@
 """Build source-only partial boards from repeated overhead frames, then audit."""
 
-from collections import Counter
 import hashlib
 import json
 from pathlib import Path
@@ -28,8 +27,10 @@ def digest(path):
 
 
 def next_counter_time(counter_rows, current_time):
-    return min((row["counter_time_s"] for row in counter_rows
-                if row["counter_time_s"] > current_time), default=None)
+    return min(
+        (row["counter_time_s"] for row in counter_rows if row["counter_time_s"] > current_time),
+        default=None,
+    )
 
 
 def scan_frame(cap, fps, time_s):
@@ -45,16 +46,20 @@ def main():
     diagrams = json.loads(DIAGRAMS.read_text())
     reference = json.loads(REFERENCE.read_text())
     sample = json.loads(SAMPLE.read_text())
-    source_paths = {g["official_game_code"]: ROOT / g["source_video_path"]
-                    for g in reference["games"]}
-    official = {shot["official_shot_id"]: shot
-                for game in diagrams["games"] for end in game["ends"]
-                for shot in end["shots"]}
-    counter_by_game = {g["official_game_code"]: g["counter_rows"]
-                       for g in alignment["games"]}
-    selected_by_game = {code: [row for row in sample["rows"]
-                               if row["official_game_code"] == code]
-                        for code in source_paths}
+    source_paths = {
+        g["official_game_code"]: ROOT / g["source_video_path"] for g in reference["games"]
+    }
+    official = {
+        shot["official_shot_id"]: shot
+        for game in diagrams["games"]
+        for end in game["ends"]
+        for shot in end["shots"]
+    }
+    counter_by_game = {g["official_game_code"]: g["counter_rows"] for g in alignment["games"]}
+    selected_by_game = {
+        code: [row for row in sample["rows"] if row["official_game_code"] == code]
+        for code in source_paths
+    }
     rows = []
     for code, path in source_paths.items():
         cap = cv2.VideoCapture(str(path))
@@ -65,8 +70,11 @@ def main():
         for sample_row in selected_by_game[code]:
             anchor_time = sample_row["counter_time_s"]
             following = next_counter_time(counter_by_game[code], anchor_time)
-            offsets = [offset for offset in OFFSETS_S
-                       if following is None or anchor_time + offset <= following - NEXT_COUNTER_BUFFER_S]
+            offsets = [
+                offset
+                for offset in OFFSETS_S
+                if following is None or anchor_time + offset <= following - NEXT_COUNTER_BUFFER_S
+            ]
             frames = []
             for offset in offsets:
                 time_s = anchor_time + offset
@@ -75,14 +83,18 @@ def main():
                     continue
                 house = detect_overhead_house(frame)
                 if house is not None:
-                    frames.append({"time_s": time_s, "offset_s": offset,
-                                   "house": house, "frame": frame})
+                    frames.append(
+                        {"time_s": time_s, "offset_s": offset, "house": house, "frame": frame}
+                    )
             scans.append((sample_row, offsets, frames))
         # Source-only orientation propagation is allowed only if this
         # recording's clear views agree. Opposite views force abstention.
-        known = [frame["house"]["delivery_side"]
-                 for _, _, frames in scans for frame in frames
-                 if frame["house"]["delivery_side"] != "uncertain"]
+        known = [
+            frame["house"]["delivery_side"]
+            for _, _, frames in scans
+            for frame in frames
+            if frame["house"]["delivery_side"] != "uncertain"
+        ]
         inferred_side = known[0] if len(known) >= 3 and len(set(known)) == 1 else None
         for sample_row, offsets, frames in scans:
             observations = []
@@ -93,40 +105,53 @@ def main():
                         continue
                     house["delivery_side"] = inferred_side
                 stones = detect_board_stones(item["frame"], house)
-                observations.append({"time_s": item["time_s"],
-                                     "offset_s": item["offset_s"],
-                                     "house": house, "stones": stones})
+                observations.append(
+                    {
+                        "time_s": item["time_s"],
+                        "offset_s": item["offset_s"],
+                        "house": house,
+                        "stones": stones,
+                    }
+                )
             stable = stable_board_stones(observations)
             shot = official[sample_row["official_shot_id"]]
             comparison = compare_board_observations(
-                stable, shot["stones"],
-                official_house_center_y=shot["house_center_px"][1])
-            rows.append({
-                "official_game_code": code,
-                "official_shot_id": sample_row["official_shot_id"],
-                "counter_time_s": sample_row["counter_time_s"],
-                "following_counter_time_s": next_counter_time(counter_by_game[code],
-                                                                 sample_row["counter_time_s"]),
-                "sampled_offsets_s": offsets,
-                "inferred_recording_delivery_side": inferred_side,
-                "accepted_frame_count": len(observations),
-                "frame_observations": [{"time_s": item["time_s"],
-                                        "offset_s": item["offset_s"],
-                                        "house": item["house"],
-                                        "stones": item["stones"]}
-                                       for item in observations],
-                "stable_partial_board": stable,
-                "comparison": comparison,
-                "official_symbol_count": len(shot["stones"]),
-            })
+                stable, shot["stones"], official_house_center_y=shot["house_center_px"][1]
+            )
+            rows.append(
+                {
+                    "official_game_code": code,
+                    "official_shot_id": sample_row["official_shot_id"],
+                    "counter_time_s": sample_row["counter_time_s"],
+                    "following_counter_time_s": next_counter_time(
+                        counter_by_game[code], sample_row["counter_time_s"]
+                    ),
+                    "sampled_offsets_s": offsets,
+                    "inferred_recording_delivery_side": inferred_side,
+                    "accepted_frame_count": len(observations),
+                    "frame_observations": [
+                        {
+                            "time_s": item["time_s"],
+                            "offset_s": item["offset_s"],
+                            "house": item["house"],
+                            "stones": item["stones"],
+                        }
+                        for item in observations
+                    ],
+                    "stable_partial_board": stable,
+                    "comparison": comparison,
+                    "official_symbol_count": len(shot["stones"]),
+                }
+            )
         cap.release()
     output = {
         "status": "source_video_temporal_partial_board_development_audit_not_throw_f1",
         "sample_sha256": digest(SAMPLE),
         "counter_alignment_sha256": digest(ALIGNMENT),
         "official_diagrams_sha256": digest(DIAGRAMS),
-        "source_video_sha256_by_game": {g["official_game_code"]: g["source_video_sha256"]
-                                        for g in reference["games"]},
+        "source_video_sha256_by_game": {
+            g["official_game_code"]: g["source_video_sha256"] for g in reference["games"]
+        },
         "house_detector_sha256": digest(ROOT / "prototype/video_board_observation_v2.py"),
         "stone_detector_sha256": digest(ROOT / "prototype/video_board_observation.py"),
         "temporal_cluster_sha256": digest(ROOT / "prototype/temporal_board_state.py"),
@@ -148,9 +173,19 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(output, indent=2) + "\n")
-    print({key: output[key] for key in ("sample_count", "rows_with_accepted_frames",
-                                     "rows_with_stable_stones", "stable_stone_count",
-                                     "stable_matched_count", "stable_unmatched_count")})
+    print(
+        {
+            key: output[key]
+            for key in (
+                "sample_count",
+                "rows_with_accepted_frames",
+                "rows_with_stable_stones",
+                "stable_stone_count",
+                "stable_matched_count",
+                "stable_unmatched_count",
+            )
+        }
+    )
 
 
 if __name__ == "__main__":

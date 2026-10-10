@@ -27,8 +27,7 @@ def body_band(frame, bbox):
     _, saturation, value = cv2.split(hsv)
     return {
         "bbox_px": [left, top, right - left, bottom - top],
-        "neutral_gray_fraction": float(np.mean((saturation < 65) &
-                                               (value >= 55) & (value <= 195))),
+        "neutral_gray_fraction": float(np.mean((saturation < 65) & (value >= 55) & (value <= 195))),
         "dark_fraction": float(np.mean(value < 75)),
         "white_fraction": float(np.mean((saturation < 45) & (value > 195))),
     }
@@ -44,16 +43,20 @@ def main():
         parser.error("Audit already exists")
     patch = json.loads(args.patch.read_text())
     screen = json.loads(args.screen.read_text())
-    if (file_sha256(args.video) != patch["video_sha256"] or
-            file_sha256(args.patch) != screen["patch_sha256"]):
+    if (
+        file_sha256(args.video) != patch["video_sha256"]
+        or file_sha256(args.patch) != screen["patch_sha256"]
+    ):
         parser.error("Video, patch and screen hashes do not chain")
     decisions = {row["candidate_id"]: row for row in screen["decisions"]}
     rows = {row["candidate_id"]: row for row in patch["rows"]}
-    if (len(decisions) != len(screen["decisions"]) or
-            len(rows) != len(patch["rows"]) or set(decisions) != set(rows)):
+    if (
+        len(decisions) != len(screen["decisions"])
+        or len(rows) != len(patch["rows"])
+        or set(decisions) != set(rows)
+    ):
         parser.error("Patch and screen candidate coverage differs")
-    video = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                             [cv2.CAP_PROP_N_THREADS, 1])
+    video = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not video.isOpened():
         parser.error("Cannot open video")
     fps = video.get(cv2.CAP_PROP_FPS)
@@ -67,28 +70,34 @@ def main():
                 if sample["status"] != "scored":
                     continue
                 t = sample["source_time_s"]
-                video.set(cv2.CAP_PROP_POS_FRAMES,
-                          round((t - args.source_offset) * fps))
+                video.set(cv2.CAP_PROP_POS_FRAMES, round((t - args.source_offset) * fps))
                 ok, frame = video.read()
                 if not ok:
                     raise RuntimeError(f"Cannot read {pid} at {t}")
                 features = body_band(frame, sample["cap_bbox_1080p"])
-                samples.append({
-                    "source_time_s": t,
-                    "patch_score": sample["patch_score"],
-                    "patch_accepted": sample["patch_accepted"],
-                    "cap_bbox_px": sample["cap_bbox_1080p"],
-                    "body_band": features,
-                })
-            fractions = [s["body_band"]["neutral_gray_fraction"] for s in samples
-                         if s["body_band"] is not None]
-            output_rows.append({
-                "candidate_id": pid,
-                "scored_patch_count": len(samples),
-                "measurable_body_band_count": len(fractions),
-                "max_neutral_gray_fraction": max(fractions) if fractions else None,
-                "samples": samples,
-            })
+                samples.append(
+                    {
+                        "source_time_s": t,
+                        "patch_score": sample["patch_score"],
+                        "patch_accepted": sample["patch_accepted"],
+                        "cap_bbox_px": sample["cap_bbox_1080p"],
+                        "body_band": features,
+                    }
+                )
+            fractions = [
+                s["body_band"]["neutral_gray_fraction"]
+                for s in samples
+                if s["body_band"] is not None
+            ]
+            output_rows.append(
+                {
+                    "candidate_id": pid,
+                    "scored_patch_count": len(samples),
+                    "measurable_body_band_count": len(fractions),
+                    "max_neutral_gray_fraction": max(fractions) if fractions else None,
+                    "samples": samples,
+                }
+            )
     finally:
         video.release()
     result = {
@@ -108,8 +117,9 @@ def main():
         },
         "accepted_candidate_count": len(output_rows),
         "measurable_sample_count": sum(r["measurable_body_band_count"] for r in output_rows),
-        "body_band_count_distribution": dict(Counter(r["measurable_body_band_count"]
-                                                    for r in output_rows)),
+        "body_band_count_distribution": dict(
+            Counter(r["measurable_body_band_count"] for r in output_rows)
+        ),
         "rows": output_rows,
         "limitations": [
             "Feature geometry and thresholds were explored after source-reviewing this match's false positives.",
@@ -119,8 +129,11 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(len(output_rows), "accepted candidates; measurable samples",
-          result["measurable_sample_count"])
+    print(
+        len(output_rows),
+        "accepted candidates; measurable samples",
+        result["measurable_sample_count"],
+    )
 
 
 if __name__ == "__main__":

@@ -25,9 +25,9 @@ def main():
     visual, frozen = (json.loads(path.read_text()) for path in (VISUAL, FROZEN))
     if visual["source_sha256"] != frozen["source_sha256"]:
         raise ValueError("Source mismatch")
-    if (frozen["router_code_sha256"] != digest(ROOT / "prototype/dual_departure_gate.py")
-            or frozen["colour_code_sha256"] != digest(
-                ROOT / "prototype/departure_gate_decision.py")):
+    if frozen["router_code_sha256"] != digest(ROOT / "prototype/dual_departure_gate.py") or frozen[
+        "colour_code_sha256"
+    ] != digest(ROOT / "prototype/departure_gate_decision.py"):
         raise ValueError("Routing or colour decision changed after development")
     decisions = route_gate_sides(visual["rows"])
     result = {

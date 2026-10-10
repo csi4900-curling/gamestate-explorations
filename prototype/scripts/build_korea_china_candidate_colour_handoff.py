@@ -11,7 +11,10 @@ sys.path.insert(0, str(ROOT))
 from prototype.candidate_cross_view_colour import reconcile_visual_only_colours  # noqa: E402
 
 BASE = ROOT / "validation/throw-event-benchmark/paralympics-2022-korea-china"
-LEDGER = ROOT / "validation/curlobserver-learned-probe/korea-china-full-first-transfer/candidate-event-ledger.json"
+LEDGER = (
+    ROOT
+    / "validation/curlobserver-learned-probe/korea-china-full-first-transfer/candidate-event-ledger.json"
+)
 POSTCUT = BASE / "VISUAL-ONLY-POSTCUT.json"
 OUTPUT = BASE / "VISUAL-ONLY-COLOUR-HANDOFF.json"
 
@@ -23,8 +26,10 @@ def digest(path):
 def main():
     ledger = json.loads(LEDGER.read_text())
     postcut = json.loads(POSTCUT.read_text())
-    if (postcut["first_transfer_ledger_sha256"] != digest(LEDGER) or
-            postcut["source_video_sha256"] != ledger["source_sha256"]):
+    if (
+        postcut["first_transfer_ledger_sha256"] != digest(LEDGER)
+        or postcut["source_video_sha256"] != ledger["source_sha256"]
+    ):
         raise ValueError("Frozen ledger and post-cut audit differ")
     rows = reconcile_visual_only_colours(ledger["events"], postcut["rows"])
     result = {

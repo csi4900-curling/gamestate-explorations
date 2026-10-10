@@ -25,8 +25,7 @@ def digest(path):
 
 def build():
     sidecar = json.loads(POSTCUT.read_text())
-    by_game = {row["official_game_code_for_join_only"]: row
-               for row in sidecar["games"]}
+    by_game = {row["official_game_code_for_join_only"]: row for row in sidecar["games"]}
     if len(by_game) != len(sidecar["games"]):
         raise ValueError("Duplicate post-cut game")
     reserved = json.loads((ROOT / "validation/unseen-end/reservation.json").read_text())
@@ -34,23 +33,30 @@ def build():
     for code, path in PASSAGES.items():
         passage = json.loads(path.read_text())
         postcut = by_game[code]
-        if (passage["source_sha256"] != postcut["source_video_sha256"] or
-                passage["source_sha256"] == reserved["source_sha256"]):
+        if (
+            passage["source_sha256"] != postcut["source_video_sha256"]
+            or passage["source_sha256"] == reserved["source_sha256"]
+        ):
             raise ValueError(f"Source mismatch or reserved game: {code}")
         rows = join_source_colour(passage["rows"], postcut["rows"])
-        games.append({
-            "recording_code": code,
-            "source_sha256": passage["source_sha256"],
-            "release_audit_sha256": digest(path),
-            "unique_release_cue_count": len(rows),
-            "source_colour_concordance_count": sum(
-                row["source_colour"] is not None for row in rows),
-            "source_colour_ledger_unknown_count": sum(
-                row["ledger_relation"] == "ledger_unknown" for row in rows),
-            "source_colour_ledger_conflict_count": sum(
-                row["ledger_relation"] == "conflicts_with_ledger" for row in rows),
-            "rows": rows,
-        })
+        games.append(
+            {
+                "recording_code": code,
+                "source_sha256": passage["source_sha256"],
+                "release_audit_sha256": digest(path),
+                "unique_release_cue_count": len(rows),
+                "source_colour_concordance_count": sum(
+                    row["source_colour"] is not None for row in rows
+                ),
+                "source_colour_ledger_unknown_count": sum(
+                    row["ledger_relation"] == "ledger_unknown" for row in rows
+                ),
+                "source_colour_ledger_conflict_count": sum(
+                    row["ledger_relation"] == "conflicts_with_ledger" for row in rows
+                ),
+                "rows": rows,
+            }
+        )
     return {
         "status": "development_two_view_source_colour_handoff_not_identity_verified",
         "postcut_sha256": digest(POSTCUT),

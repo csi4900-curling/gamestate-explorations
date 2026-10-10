@@ -33,8 +33,10 @@ def main():
     for original, observations in zip(base["rows"], hold["rows"]):
         row = deepcopy(original)
         pid = row["candidate_id"]
-        if row["colour"] != observations["colour"] or \
-                row["receiving_view"] != observations["receiving_view"]:
+        if (
+            row["colour"] != observations["colour"]
+            or row["receiving_view"] != observations["receiving_view"]
+        ):
             raise ValueError(f"Candidate observations differ for {pid}")
         if row["receiving_view"] != "left":
             status = "right_view_preserved"
@@ -42,11 +44,17 @@ def main():
             status = "baseline_selected_path_preserved"
         else:
             trial = select_far_entry_motion_path(
-                observations["samples"], row["colour"], view="left",
-                max_gap_s=0.6, entry_y_threshold_m=-4.5,
-                forward_direction=1, min_samples=4,
+                observations["samples"],
+                row["colour"],
+                view="left",
+                max_gap_s=0.6,
+                entry_y_threshold_m=-4.5,
+                forward_direction=1,
+                min_samples=4,
                 max_forward_speed_change_m_s=2.0,
-                min_forward_step_m=0.15, min_travel_m=1.0)
+                min_forward_step_m=0.15,
+                min_travel_m=1.0,
+            )
             if trial["status"] == "provisional_unique_far_entry_motion_path":
                 row["selection"] = trial
                 status = "unique_short_path_proposal"
@@ -63,16 +71,21 @@ def main():
         "short_path_selector_sha256": file_sha256(ROOT / "prototype/stone_proposal_path.py"),
         "short_path_runner_sha256": file_sha256(Path(__file__)),
         "short_path_parameters": {
-            "receiving_view": "left", "sample_period_s": 0.5,
-            "max_gap_s": 0.6, "entry_y_threshold_m": -4.5,
-            "forward_direction": 1, "min_samples": 4,
+            "receiving_view": "left",
+            "sample_period_s": 0.5,
+            "max_gap_s": 0.6,
+            "entry_y_threshold_m": -4.5,
+            "forward_direction": 1,
+            "min_samples": 4,
             "max_forward_speed_change_m_s": 2.0,
-            "min_forward_step_m": 0.15, "min_travel_m": 1.0,
+            "min_forward_step_m": 0.15,
+            "min_travel_m": 1.0,
         },
         "short_path_status_counts": dict(Counter(d["status"] for d in decisions)),
         "short_path_decisions": decisions,
         "rows": rows,
-        "limitations": base["limitations"] + [
+        "limitations": base["limitations"]
+        + [
             "This permissive left-view proposal rule was selected after inspecting failures in this recording.",
             "A one-metre candidate path is not a verified throw and still requires appearance screening and independent labels.",
         ],
@@ -80,8 +93,7 @@ def main():
     a.output.parent.mkdir(parents=True, exist_ok=True)
     a.output.write_text(json.dumps(result, indent=2) + "\n")
     print(result["short_path_status_counts"])
-    print([d["candidate_id"] for d in decisions
-           if d["status"] == "unique_short_path_proposal"])
+    print([d["candidate_id"] for d in decisions if d["status"] == "unique_short_path_proposal"])
 
 
 if __name__ == "__main__":

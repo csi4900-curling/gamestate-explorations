@@ -52,14 +52,16 @@ def main():
     if sequence["input_sha256"]["fusion"] != digest(args.fusion):
         parser.error("Sequence and right-entry fusion differ")
     entries = sorted(fusion["right_entries"], key=lambda row: row["right_entry_time_s"])
-    by_right = {row["right_entry"]["raw_track_id"]: row for row in sequence["rows"]
-                if row["right_entry"] is not None}
-    if (len(by_right) != sum(row["right_entry"] is not None
-                            for row in sequence["rows"])
-            or set(by_right) != {row["right_raw_track_id"] for row in entries}):
+    by_right = {
+        row["right_entry"]["raw_track_id"]: row
+        for row in sequence["rows"]
+        if row["right_entry"] is not None
+    }
+    if len(by_right) != sum(row["right_entry"] is not None for row in sequence["rows"]) or set(
+        by_right
+    ) != {row["right_raw_track_id"] for row in entries}:
         parser.error("Sequence does not represent every right entry exactly once")
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         parser.error("Unreadable source video")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -68,8 +70,9 @@ def main():
     try:
         for index, entry in enumerate(entries):
             entry_time = entry["right_entry_time_s"]
-            next_time = (entries[index + 1]["right_entry_time_s"]
-                         if index + 1 < len(entries) else None)
+            next_time = (
+                entries[index + 1]["right_entry_time_s"] if index + 1 < len(entries) else None
+            )
             abstention = eligible_tail(entry_time, next_time, duration)
             frames, patches, stable, maes = [], [], [], []
             if abstention is None:
@@ -81,38 +84,47 @@ def main():
                         raise RuntimeError(f"Could not decode 640x360 source at {t}")
                     patches.append(image[155:245, 330:630].astype(np.int16))
                     proposals = right_colour_proposals(image)
-                    coloured = [{"colour": colour, **item}
-                                for colour, items in proposals.items() for item in items
-                                if 360 <= item["pixel"][0] <= 615
-                                and 155 <= item["pixel"][1] <= 235
-                                and item["cap_area_px2"] >= 6]
+                    coloured = [
+                        {"colour": colour, **item}
+                        for colour, items in proposals.items()
+                        for item in items
+                        if 360 <= item["pixel"][0] <= 615
+                        and 155 <= item["pixel"][1] <= 235
+                        and item["cap_area_px2"] >= 6
+                    ]
                     frames.append({"time_s": round(t, 3), "cap_candidates": coloured})
-                maes = [round(float(np.mean(np.abs(a - b))), 3)
-                        for a, b in zip(patches, patches[1:])]
+                maes = [
+                    round(float(np.mean(np.abs(a - b))), 3) for a, b in zip(patches, patches[1:])
+                ]
                 if max(maes) >= 20:
                     abstention = "abstain_scene_or_player_motion"
                 else:
                     stable = stable_cap_candidates(frames)
-            status = abstention or ("partial_stable_colour_cap_proposals" if stable else
-                                    "no_stable_colour_cap_proposals")
+            status = abstention or (
+                "partial_stable_colour_cap_proposals"
+                if stable
+                else "no_stable_colour_cap_proposals"
+            )
             linked = by_right[entry["right_raw_track_id"]]
-            rows.append({
-                "right_raw_track_id": entry["right_raw_track_id"],
-                "candidate_id": linked["candidate_id"],
-                "candidate_evidence_tier": linked["evidence_tier"],
-                "entry_time_s": entry_time,
-                "next_right_entry_time_s": next_time,
-                "observation_status": status,
-                "scene_mae_between_samples": maes,
-                "sample_frames": frames,
-                "stable_cap_proposals": stable,
-                "stable_cap_colour_counts": dict(Counter(x["colour"] for x in stable)),
-                "coordinate_frame": "full_source_right_camera_pixels_not_metric",
-                "complete_board_verified": False,
-                "physical_settle_verified": False,
-                "persistent_stone_identity_verified": False,
-                "simulation_ready": False,
-            })
+            rows.append(
+                {
+                    "right_raw_track_id": entry["right_raw_track_id"],
+                    "candidate_id": linked["candidate_id"],
+                    "candidate_evidence_tier": linked["evidence_tier"],
+                    "entry_time_s": entry_time,
+                    "next_right_entry_time_s": next_time,
+                    "observation_status": status,
+                    "scene_mae_between_samples": maes,
+                    "sample_frames": frames,
+                    "stable_cap_proposals": stable,
+                    "stable_cap_colour_counts": dict(Counter(x["colour"] for x in stable)),
+                    "coordinate_frame": "full_source_right_camera_pixels_not_metric",
+                    "complete_board_verified": False,
+                    "physical_settle_verified": False,
+                    "persistent_stone_identity_verified": False,
+                    "simulation_ready": False,
+                }
+            )
     finally:
         cap.release()
     result = {
@@ -120,7 +132,9 @@ def main():
         "source_sha256": source_hash,
         "fusion_sha256": digest(args.fusion),
         "candidate_sequence_sha256": digest(args.sequence),
-        "proposal_code_sha256": digest(ROOT / "prototype/scripts/probe_static_left_right_cap_motion.py"),
+        "proposal_code_sha256": digest(
+            ROOT / "prototype/scripts/probe_static_left_right_cap_motion.py"
+        ),
         "stable_cap_code_sha256": digest(ROOT / "prototype/right_view_partial_board.py"),
         "runner_sha256": digest(Path(__file__)),
         "sample_offsets_after_entry_s": list(OFFSETS_S),
@@ -141,8 +155,15 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"rows": len(rows), "statuses": result["observation_status_counts"],
-                      "stable_caps": result["stable_cap_proposal_count"]}))
+    print(
+        json.dumps(
+            {
+                "rows": len(rows),
+                "statuses": result["observation_status_counts"],
+                "stable_caps": result["stable_cap_proposal_count"],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

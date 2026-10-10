@@ -27,11 +27,9 @@ def main():
     if OUT.exists():
         raise ValueError("Later-episode source packet already exists")
     probe = json.loads(PROBE.read_text())
-    if probe["source_sha256"] != digest(VIDEO) or len(probe[
-            "later_review_proposals"]) != 4:
+    if probe["source_sha256"] != digest(VIDEO) or len(probe["later_review_proposals"]) != 4:
         raise ValueError("Later-episode source or inventory differs")
-    cap = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     fps = cap.get(cv2.CAP_PROP_FPS)
     if not cap.isOpened() or fps <= 0:
         raise ValueError("Source video unreadable")
@@ -39,14 +37,13 @@ def main():
     rows, pages = [], []
     try:
         for page_index, start in enumerate(range(0, 4, 2), 1):
-            chunk = probe["later_review_proposals"][start:start+2]
+            chunk = probe["later_review_proposals"][start : start + 2]
             sheet = Image.new("RGB", (960, 1008), "white")
             for row_index, proposal in enumerate(chunk):
                 points = proposal["observed_prefix_points"]
                 if len(points) < 3:
                     raise ValueError("Later episode has too few observed points")
-                samples = [points[index] for index in (0, len(points)//2,
-                                                       len(points)-1)]
+                samples = [points[index] for index in (0, len(points) // 2, len(points) - 1)]
                 for sample_index, point in enumerate(samples):
                     cap.set(cv2.CAP_PROP_POS_FRAMES, round(point["time_s"] * fps))
                     ok, frame = cap.read()
@@ -56,32 +53,40 @@ def main():
                     panel = source.crop((320, 0, 640, 360))
                     draw = ImageDraw.Draw(panel)
                     x, y, w, h = point["bbox"]
-                    draw.rectangle((x-325, y-5, x-315+w, y+h+5),
-                                   outline="magenta", width=3)
+                    draw.rectangle(
+                        (x - 325, y - 5, x - 315 + w, y + h + 5), outline="magenta", width=3
+                    )
                     draw.rectangle((0, 0, 150, 22), fill="white")
-                    draw.text((3, 4), f"{proposal['raw_track_id']} #{proposal['episode_index_within_raw_track']} {point['time_s']:.0f}s",
-                              fill="red")
+                    draw.text(
+                        (3, 4),
+                        f"{proposal['raw_track_id']} #{proposal['episode_index_within_raw_track']} {point['time_s']:.0f}s",
+                        fill="red",
+                    )
                     px, py = point["pixel"]
-                    crop = source.crop((int(px)-32, int(py)-32,
-                                        int(px)+32, int(py)+32)).resize(
-                                            (144, 144), Image.Resampling.NEAREST)
+                    crop = source.crop(
+                        (int(px) - 32, int(py) - 32, int(px) + 32, int(py) + 32)
+                    ).resize((144, 144), Image.Resampling.NEAREST)
                     left, top = sample_index * 320, row_index * 504
                     sheet.paste(panel, (left, top))
                     sheet.paste(crop, (left + 88, top + 360))
-                rows.append({
-                    "raw_track_id": proposal["raw_track_id"],
-                    "episode_index_within_raw_track": proposal[
-                        "episode_index_within_raw_track"],
-                    "passage_time_s": proposal["passage"]["time_s"],
-                    "colour_claim": proposal["colour_claim"],
-                    "direction": proposal["direction"],
-                    "source_sample_times_s": [point["time_s"] for point in samples],
-                    "review_page": f"later-page-{page_index}.jpg",
-                })
+                rows.append(
+                    {
+                        "raw_track_id": proposal["raw_track_id"],
+                        "episode_index_within_raw_track": proposal[
+                            "episode_index_within_raw_track"
+                        ],
+                        "passage_time_s": proposal["passage"]["time_s"],
+                        "colour_claim": proposal["colour_claim"],
+                        "direction": proposal["direction"],
+                        "source_sample_times_s": [point["time_s"] for point in samples],
+                        "review_page": f"later-page-{page_index}.jpg",
+                    }
+                )
             page = OUT / f"later-page-{page_index}.jpg"
             sheet.save(page, quality=93)
-            pages.append({"image": page.name, "sha256": digest(page),
-                          "candidate_count": len(chunk)})
+            pages.append(
+                {"image": page.name, "sha256": digest(page), "candidate_count": len(chunk)}
+            )
     finally:
         cap.release()
     result = {

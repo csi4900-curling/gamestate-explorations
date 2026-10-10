@@ -11,8 +11,14 @@ from PIL import Image, ImageDraw
 
 ROOT = Path(__file__).resolve().parents[2]
 VIDEO = ROOT / "validation/source-cache/Vp3TIdOAlrc-360p.mp4"
-EVENTS = ROOT / "validation/throw-event-benchmark/layout-router/full-2024-coverage/new-preflight-italy24/run-02/events.json"
-BOUNDARIES = ROOT / "validation/throw-event-benchmark/canada-latvia-2024/crossing-shape-source-audit-development.json"
+EVENTS = (
+    ROOT
+    / "validation/throw-event-benchmark/layout-router/full-2024-coverage/new-preflight-italy24/run-02/events.json"
+)
+BOUNDARIES = (
+    ROOT
+    / "validation/throw-event-benchmark/canada-latvia-2024/crossing-shape-source-audit-development.json"
+)
 OUT = ROOT / "validation/throw-event-benchmark/canada-italy/shape-veto-s03-source-audit"
 TIMES_S = (227.5, 227.9, 228.3, 228.7)
 
@@ -22,10 +28,25 @@ def digest(path):
 
 
 def source_frame(time_s):
-    data = subprocess.check_output([
-        "ffmpeg", "-hide_banner", "-loglevel", "error", "-ss", str(time_s),
-        "-i", str(VIDEO), "-frames:v", "1", "-f", "image2pipe", "-vcodec", "png", "-",
-    ])
+    data = subprocess.check_output(
+        [
+            "ffmpeg",
+            "-hide_banner",
+            "-loglevel",
+            "error",
+            "-ss",
+            str(time_s),
+            "-i",
+            str(VIDEO),
+            "-frames:v",
+            "1",
+            "-f",
+            "image2pipe",
+            "-vcodec",
+            "png",
+            "-",
+        ]
+    )
     return Image.open(io.BytesIO(data)).convert("RGB")
 
 
@@ -37,7 +58,9 @@ def main():
     if digest(EVENTS) != audit["cross_recording_proposal_distribution"]["italy24"]["input_sha256"]:
         raise ValueError("Italy candidate run differs from Latvia transfer audit")
     event = next(row for row in events["events"] if row["id"] == "S03")
-    minimum_stone_body = audit["stone_preserving_in_sample_boundaries"]["minimum_stone_mean_body_support"]
+    minimum_stone_body = audit["stone_preserving_in_sample_boundaries"][
+        "minimum_stone_mean_body_support"
+    ]
     if not event["mean_body_support"] < minimum_stone_body:
         raise ValueError("S03 is no longer flagged by the Latvia body threshold")
     if abs(event["crossing_time_s"] - TIMES_S[1]) > 0.1:

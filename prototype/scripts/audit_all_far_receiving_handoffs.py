@@ -29,8 +29,7 @@ def sample_times(start_s, end_s):
     if not start_s < end_s:
         raise ValueError("Invalid gap interval")
     times = {round(start_s, 3), round(end_s, 3)}
-    times.update(tick / 2 for tick in range(ceil(start_s * 2),
-                                            floor(end_s * 2) + 1))
+    times.update(tick / 2 for tick in range(ceil(start_s * 2), floor(end_s * 2) + 1))
     return sorted(times)
 
 
@@ -44,19 +43,21 @@ def corridor_candidates(detections, colour, departure_world, arrival_world):
             continue
         world = rink_position(detection["ground_position_m"], "receiving")
         x, y = world
-        if min(x0, x1) - 1.0 <= x <= max(x0, x1) + 1.0 and (
-                y0 - 1.0 <= y <= y1 + 1.0):
-            rows.append({"pixel": detection["pixel_center"],
-                         "world_m": world,
-                         "local_m": detection["ground_position_m"]})
+        if min(x0, x1) - 1.0 <= x <= max(x0, x1) + 1.0 and (y0 - 1.0 <= y <= y1 + 1.0):
+            rows.append(
+                {
+                    "pixel": detection["pixel_center"],
+                    "world_m": world,
+                    "local_m": detection["ground_position_m"],
+                }
+            )
     return rows
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--ids", nargs="*", help="Optional throw IDs for a pilot")
-    parser.add_argument("--video", type=Path,
-                        default=ROOT / "throw-analysis/end3.mp4")
+    parser.add_argument("--video", type=Path, default=ROOT / "throw-analysis/end3.mp4")
     parser.add_argument("--source-offset", type=float, default=1650.0)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
@@ -77,8 +78,7 @@ def main():
     cfg = dict(cfg, world_bounds=[-2.375, -1.975, 2.375, 22.0])
     calibrator = ViewCalibrator(cfg, ROOT / "vision/frames")
     calibrator.H = np.array(json.loads(rectify_path.read_text())["right"]["refined_H"])
-    capture = cv2.VideoCapture(str(video_path), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(video_path), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not capture.isOpened():
         parser.error("Cannot open source clip")
     fps = capture.get(cv2.CAP_PROP_FPS)
@@ -101,28 +101,36 @@ def main():
                     reference = cv2.warpPerspective(
                         calibrator.reference,
                         np.array(registration["reference_to_current"]),
-                        (frame.shape[1], frame.shape[0]))
+                        (frame.shape[1], frame.shape[0]),
+                    )
                     prior = transported_reference_camera(calibrator.H, H, cfg["region"])
                     detections, _ = detect_and_localize(frame, H, cfg, reference, prior)
                     candidates = corridor_candidates(
-                        detections, event["colour"], departure["world_m"],
-                        arrival["world_m"])
-                samples.append({"source_time_s": source_time,
-                                "registration_status": registration["status"],
-                                "corridor_candidate_count": len(candidates),
-                                "corridor_candidates": candidates})
-            rows.append({"throw_id": event["id"], "colour": event["colour"],
-                         "departure_last": {"time_s": start,
-                                            "world_m": departure["world_m"]},
-                         "arrival_first": {"time_s": end,
-                                           "world_m": arrival["world_m"]},
-                         "samples": samples,
-                         "unique_sample_count": sum(
-                             sample["corridor_candidate_count"] == 1
-                             for sample in samples),
-                         "ambiguous_sample_count": sum(
-                             sample["corridor_candidate_count"] > 1
-                             for sample in samples)})
+                        detections, event["colour"], departure["world_m"], arrival["world_m"]
+                    )
+                samples.append(
+                    {
+                        "source_time_s": source_time,
+                        "registration_status": registration["status"],
+                        "corridor_candidate_count": len(candidates),
+                        "corridor_candidates": candidates,
+                    }
+                )
+            rows.append(
+                {
+                    "throw_id": event["id"],
+                    "colour": event["colour"],
+                    "departure_last": {"time_s": start, "world_m": departure["world_m"]},
+                    "arrival_first": {"time_s": end, "world_m": arrival["world_m"]},
+                    "samples": samples,
+                    "unique_sample_count": sum(
+                        sample["corridor_candidate_count"] == 1 for sample in samples
+                    ),
+                    "ambiguous_sample_count": sum(
+                        sample["corridor_candidate_count"] > 1 for sample in samples
+                    ),
+                }
+            )
     finally:
         capture.release()
     result = {
@@ -146,9 +154,13 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print({"throws": len(rows),
-           "unique_samples": sum(row["unique_sample_count"] for row in rows),
-           "ambiguous_samples": sum(row["ambiguous_sample_count"] for row in rows)})
+    print(
+        {
+            "throws": len(rows),
+            "unique_samples": sum(row["unique_sample_count"] for row in rows),
+            "ambiguous_samples": sum(row["ambiguous_sample_count"] for row in rows),
+        }
+    )
 
 
 if __name__ == "__main__":

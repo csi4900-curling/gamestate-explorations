@@ -31,22 +31,32 @@ def main():
     cap = json.loads(args.cap_motion.read_text())
     learned = json.loads(args.learned_motion.read_text())
     fused = json.loads(args.fused_events.read_text())
-    if any(row["source_sha256"] != origins["source_sha256"] or
-           row["source_interval_s"] != origins["source_interval_s"]
-           for row in (alignment, cap, learned, fused)):
+    if any(
+        row["source_sha256"] != origins["source_sha256"]
+        or row["source_interval_s"] != origins["source_interval_s"]
+        for row in (alignment, cap, learned, fused)
+    ):
         parser.error("Evidence source or interval fingerprints differ")
-    if alignment["shot_score_sha256"] != digest(args.origins) or (
-            fused["origins_sha256"] != digest(args.origins)) or (
-            fused["counter_alignment_sha256"] != digest(args.alignment)):
+    if (
+        alignment["shot_score_sha256"] != digest(args.origins)
+        or (fused["origins_sha256"] != digest(args.origins))
+        or (fused["counter_alignment_sha256"] != digest(args.alignment))
+    ):
         parser.error("Derived evidence does not match the supplied origins/alignment")
     reserved = json.loads((ROOT / "validation/unseen-end/reservation.json").read_text())
     if origins["source_sha256"] == reserved["source_sha256"]:
         parser.error("Reserved independent source cannot be used for development")
     rows = link_existing_visual_candidates(
-        alignment["rows"], origins["rows"], fused["events"],
-        {"cap": cap["shots"], "learned": learned["shots"]})
-    linked = [row for row in rows if row["association_route"] ==
-              "existing_visual_candidate_and_following_motion"]
+        alignment["rows"],
+        origins["rows"],
+        fused["events"],
+        {"cap": cap["shots"], "learned": learned["shots"]},
+    )
+    linked = [
+        row
+        for row in rows
+        if row["association_route"] == "existing_visual_candidate_and_following_motion"
+    ]
     result = {
         "status": "postscore_development_existing_visual_counter_link",
         "source_sha256": origins["source_sha256"],
@@ -70,8 +80,15 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"associated": result["associated_count"],
-                      "counter_events": len(rows), "new_links": len(linked)}))
+    print(
+        json.dumps(
+            {
+                "associated": result["associated_count"],
+                "counter_events": len(rows),
+                "new_links": len(linked),
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

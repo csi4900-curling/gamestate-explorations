@@ -33,8 +33,7 @@ def main():
         parser.error("Expected one blind interval")
     start, stop = motion["intervals"][0]["interval_s"]
     times = list(range(int(start) + 5, int(stop), 10))
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         parser.error("Cannot open source video")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -42,7 +41,7 @@ def main():
     sheet_records = []
     try:
         for first in range(0, len(times), 12):
-            group = times[first:first + 12]
+            group = times[first : first + 12]
             sheet = Image.new("RGB", (960, 615), "white")
             draw = ImageDraw.Draw(sheet)
             for index, time_s in enumerate(group):
@@ -50,15 +49,15 @@ def main():
                 ok, frame = cap.read()
                 if not ok or frame.shape[:2] != (360, 640):
                     raise RuntimeError(f"Could not decode {time_s} s")
-                image = Image.fromarray(cv2.cvtColor(
-                    frame[:, 320:640], cv2.COLOR_BGR2RGB)).resize((240, 180))
+                image = Image.fromarray(cv2.cvtColor(frame[:, 320:640], cv2.COLOR_BGR2RGB)).resize(
+                    (240, 180)
+                )
                 x, y = index % 4 * 240, index // 4 * 205
                 sheet.paste(image, (x, y + 20))
                 draw.text((x + 4, y + 3), str(time_s), fill="black")
-            path = args.output_dir / f"sheet-{len(sheet_records)+1:02d}.jpg"
+            path = args.output_dir / f"sheet-{len(sheet_records) + 1:02d}.jpg"
             sheet.save(path, quality=88)
-            sheet_records.append({"file": path.name, "times_s": group,
-                                  "sha256": digest(path)})
+            sheet_records.append({"file": path.name, "times_s": group, "sha256": digest(path)})
     finally:
         cap.release()
     manifest = {

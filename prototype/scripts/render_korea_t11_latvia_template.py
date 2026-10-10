@@ -31,33 +31,38 @@ def main():
         raise ValueError("T11 upward-path set changed")
     path = yellow_paths[0]
     by_time = {p["time_s"]: p for p in path["points"]}
-    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     panels = []
     try:
         for t in TIMES:
-            capture.set(cv2.CAP_PROP_POS_MSEC, (t-2260)*1000)
+            capture.set(cv2.CAP_PROP_POS_MSEC, (t - 2260) * 1000)
             ok, frame = capture.read()
             if not ok:
                 raise RuntimeError(f"Cannot decode {t}")
-            view = cv2.resize(frame[:, 960:], (480, 540),
-                              interpolation=cv2.INTER_AREA)
+            view = cv2.resize(frame[:, 960:], (480, 540), interpolation=cv2.INTER_AREA)
             if t in by_time:
                 x, y = by_time[t]["center_1080p_px"]
-                x, y = round((x-960)/2), round(y/2)
-                cv2.rectangle(view, (x-24, y-18), (x+24, y+18),
-                              (255, 0, 255), 2)
+                x, y = round((x - 960) / 2), round(y / 2)
+                cv2.rectangle(view, (x - 24, y - 18), (x + 24, y + 18), (255, 0, 255), 2)
             cv2.rectangle(view, (0, 0), (480, 38), (10, 20, 30), -1)
-            cv2.putText(view, f"{t}s {'matched' if t in by_time else 'visible/no match'}",
-                        (8, 27), cv2.FONT_HERSHEY_SIMPLEX,
-                        .65, (255, 255, 255), 2)
+            cv2.putText(
+                view,
+                f"{t}s {'matched' if t in by_time else 'visible/no match'}",
+                (8, 27),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                0.65,
+                (255, 255, 255),
+                2,
+            )
             panels.append(view)
     finally:
         capture.release()
     image_path = BASE / "latvia-template-t11-source-review.jpg"
-    if not cv2.imwrite(str(image_path),
-                       np.vstack([np.hstack(panels[:3]), np.hstack(panels[3:])]),
-                       [cv2.IMWRITE_JPEG_QUALITY, 90]):
+    if not cv2.imwrite(
+        str(image_path),
+        np.vstack([np.hstack(panels[:3]), np.hstack(panels[3:])]),
+        [cv2.IMWRITE_JPEG_QUALITY, 90],
+    ):
         raise RuntimeError("Could not write source sheet")
     manifest = {
         "status": "same_agent_cross_match_source_review_not_independent_event_validation",
@@ -74,7 +79,8 @@ def main():
         "physical_identity_independently_verified": False,
     }
     (BASE / "latvia-template-t11-source-review.json").write_text(
-        json.dumps(manifest, indent=2) + "\n")
+        json.dumps(manifest, indent=2) + "\n"
+    )
     print(image_path.relative_to(ROOT))
 
 

@@ -28,7 +28,9 @@ def main():
     fourth = next(end for end in official["ends"] if end["end"] == 4)
     prior, after = fourth["shots"][10:12]
     if (prior["official_shot_id"], after["official_shot_id"]) != (
-            "PREL001501-E04-S11", "PREL001501-E04-S12"):
+        "PREL001501-E04-S11",
+        "PREL001501-E04-S12",
+    ):
         raise SystemExit("Official diagram slots changed")
     cap = cv2.VideoCapture(str(VIDEO))
     if not cap.isOpened():
@@ -41,8 +43,15 @@ def main():
             if not ok:
                 raise RuntimeError(f"Cannot read frame at {time_s}")
             frame = cv2.resize(frame, (640, 360), interpolation=cv2.INTER_AREA)
-            cv2.putText(frame, f"{time_s:.1f} s", (8, 340),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.75, (255, 255, 255), 2)
+            cv2.putText(
+                frame,
+                f"{time_s:.1f} s",
+                (8, 340),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                0.75,
+                (255, 255, 255),
+                2,
+            )
             frames.append(frame)
     finally:
         cap.release()
@@ -66,12 +75,16 @@ def main():
             "scope": "Visible house in sampled source frames only; stones elsewhere on the sheet are not inventoried.",
         },
         "official_diagrams": {
-            "before": {"shot_id": prior["official_shot_id"],
-                       "house_stone_counts": prior["stone_counts"],
-                       "stones": prior["stones"]},
-            "after": {"shot_id": after["official_shot_id"],
-                      "house_stone_counts": after["stone_counts"],
-                      "stones": after["stones"]},
+            "before": {
+                "shot_id": prior["official_shot_id"],
+                "house_stone_counts": prior["stone_counts"],
+                "stones": prior["stones"],
+            },
+            "after": {
+                "shot_id": after["official_shot_id"],
+                "house_stone_counts": after["stone_counts"],
+                "stones": after["stones"],
+            },
         },
         "limitations": [
             "Matching board counts and layout support the sequence hypothesis but do not prove physical identity across the camera cut.",

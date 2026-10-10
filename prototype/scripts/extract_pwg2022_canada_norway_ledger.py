@@ -51,7 +51,9 @@ def main():
     ends.sort(key=lambda row: row["end"])
     if pages != [129] or [row["pdf_page"] for row in ends] != list(range(130, 138)):
         raise ValueError("Unexpected official Canada–Norway PDF pages")
-    if [row["end"] for row in ends] != list(range(1, 9)) or any(row["shot_count"] != 16 for row in ends):
+    if [row["end"] for row in ends] != list(range(1, 9)) or any(
+        row["shot_count"] != 16 for row in ends
+    ):
         raise ValueError("Unexpected official Canada–Norway shot sequence")
     result = {
         "status": "independent_official_shot_order_without_video_timestamps",
@@ -68,7 +70,9 @@ def main():
         "parser_sha256": digest(ROOT / "prototype/official_shot_ledger.py"),
         "runner_sha256": digest(Path(__file__)),
         "ends": ends,
-        "limitations": ["Published shots and colours are independent of video inference, but the PDF provides no video event or release timestamps."],
+        "limitations": [
+            "Published shots and colours are independent of video inference, but the PDF provides no video event or release timestamps."
+        ],
     }
     OUTPUT.write_text(json.dumps(result, indent=2) + "\n")
     print(result["official_game_code"], result["official_shot_count"], colours)

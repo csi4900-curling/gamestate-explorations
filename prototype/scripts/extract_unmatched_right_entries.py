@@ -24,13 +24,16 @@ def main():
         parser.error("Output already exists")
     right = json.loads(args.right.read_text())
     links = json.loads(args.links.read_text())
-    if (links["source_sha256"] != right["source_sha256"] or
-            links["right_sha256"] != digest(args.right)):
+    if links["source_sha256"] != right["source_sha256"] or links["right_sha256"] != digest(
+        args.right
+    ):
         parser.error("Source or right-entry fingerprint differs")
-    unmatched_ids = {row["right_raw_track_id"] for row in links["links"]
-                     if row["match_status"] != "unique_conditional_time_colour_link"}
-    rows = [row for row in right["entry_review_proposals"]
-            if row["raw_track_id"] in unmatched_ids]
+    unmatched_ids = {
+        row["right_raw_track_id"]
+        for row in links["links"]
+        if row["match_status"] != "unique_conditional_time_colour_link"
+    }
+    rows = [row for row in right["entry_review_proposals"] if row["raw_track_id"] in unmatched_ids]
     if len(rows) != len(unmatched_ids):
         parser.error("Unmatched IDs are not one-to-one with right entries")
     result = {
@@ -40,7 +43,9 @@ def main():
         "links_sha256": digest(args.links),
         "runner_sha256": digest(Path(__file__)),
         "entry_review_proposals": rows,
-        "limitations": ["A missing time/colour link does not establish a newly found physical throw."],
+        "limitations": [
+            "A missing time/colour link does not establish a newly found physical throw."
+        ],
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")

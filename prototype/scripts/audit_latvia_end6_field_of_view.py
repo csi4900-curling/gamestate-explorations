@@ -24,8 +24,7 @@ def digest(path):
 
 
 def boundary_row(row):
-    points = row["compatible_highres_paths"][0][
-        "highres_handle_supported_moving_points"]
+    points = row["compatible_highres_paths"][0]["highres_handle_supported_moving_points"]
     if len(points) < 2:
         raise ValueError("Moving path has fewer than two high-resolution points")
     first, last = points[-2:]
@@ -46,26 +45,31 @@ def boundary_row(row):
         "remaining_to_search_bottom_px": SEARCH_BOTTOM_Y - y,
         "remaining_to_frame_bottom_px": FRAME_BOTTOM_Y - y,
         "constant_image_speed_time_to_frame_bottom_s_diagnostic": round(
-            (FRAME_BOTTOM_Y - y) / speed, 3),
+            (FRAME_BOTTOM_Y - y) / speed, 3
+        ),
     }
 
 
 def next_second_colour_screen(cap, row):
-    points = row["compatible_highres_paths"][0][
-        "highres_handle_supported_moving_points"]
+    points = row["compatible_highres_paths"][0]["highres_handle_supported_moving_points"]
     prior, last = points[-2:]
     dt = last["time_s"] - prior["time_s"]
     source_time = last["time_s"] + 1
-    predicted_x = last["center_1080p_px"][0] + (
-        last["center_1080p_px"][0] - prior["center_1080p_px"][0]) / dt
-    predicted_y = last["center_1080p_px"][1] + (
-        last["center_1080p_px"][1] - prior["center_1080p_px"][1]) / dt - 22
+    predicted_x = (
+        last["center_1080p_px"][0] + (last["center_1080p_px"][0] - prior["center_1080p_px"][0]) / dt
+    )
+    predicted_y = (
+        last["center_1080p_px"][1]
+        + (last["center_1080p_px"][1] - prior["center_1080p_px"][1]) / dt
+        - 22
+    )
     if predicted_y - 90 >= FRAME_BOTTOM_Y:
-        return {"source_time_s": source_time,
-                "status": "predicted_colour_region_outside_frame",
-                "colour_components": []}
-    cap.set(cv2.CAP_PROP_POS_MSEC,
-            (source_time - SOURCE_START_S) * 1000)
+        return {
+            "source_time_s": source_time,
+            "status": "predicted_colour_region_outside_frame",
+            "colour_components": [],
+        }
+    cap.set(cv2.CAP_PROP_POS_MSEC, (source_time - SOURCE_START_S) * 1000)
     ok, frame = cap.read()
     if not ok or frame.shape[:2] != (1080, 1920):
         raise ValueError(f"Cannot decode source frame at {source_time}")
@@ -75,27 +79,35 @@ def next_second_colour_screen(cap, row):
     if row["colour_claim"] == "yellow":
         mask = cv2.inRange(hsv, (17, 71, 66), (42, 255, 255))
     else:
-        mask = (cv2.inRange(hsv, (0, 71, 46), (11, 255, 255)) |
-                cv2.inRange(hsv, (171, 71, 46), (179, 255, 255)))
+        mask = cv2.inRange(hsv, (0, 71, 46), (11, 255, 255)) | cv2.inRange(
+            hsv, (171, 71, 46), (179, 255, 255)
+        )
     count, _, stats, centers = cv2.connectedComponentsWithStats(mask)
     candidates = []
     for i in range(1, count):
         x, y, width, height, area = (int(value) for value in stats[i])
         cx, cy = float(centers[i, 0] + x1), float(centers[i, 1] + y1)
-        distance = ((cx - predicted_x)**2 + (cy - predicted_y)**2)**0.5
+        distance = ((cx - predicted_x) ** 2 + (cy - predicted_y) ** 2) ** 0.5
         if 200 <= area <= 3500 and width >= 7 and height >= 4 and distance <= 30:
-            candidates.append({"center_1080p_px": [round(cx, 2), round(cy, 2)],
-                               "colour_area_px2": area,
-                               "prediction_distance_px": round(distance, 2),
-                               "touches_frame_bottom":
-                                   y1 + y + height >= FRAME_BOTTOM_Y})
+            candidates.append(
+                {
+                    "center_1080p_px": [round(cx, 2), round(cy, 2)],
+                    "colour_area_px2": area,
+                    "prediction_distance_px": round(distance, 2),
+                    "touches_frame_bottom": y1 + y + height >= FRAME_BOTTOM_Y,
+                }
+            )
     candidates.sort(key=lambda item: item["prediction_distance_px"])
-    return {"source_time_s": source_time,
-            "predicted_cap_center_1080p_px": [round(predicted_x, 2),
-                                               round(predicted_y, 2)],
-            "status": ("unique_colour_component_provisional" if
-                       len(candidates) == 1 else "abstain_ambiguous_or_absent"),
-            "colour_components": candidates}
+    return {
+        "source_time_s": source_time,
+        "predicted_cap_center_1080p_px": [round(predicted_x, 2), round(predicted_y, 2)],
+        "status": (
+            "unique_colour_component_provisional"
+            if len(candidates) == 1
+            else "abstain_ambiguous_or_absent"
+        ),
+        "colour_components": candidates,
+    }
 
 
 def witness(cap, time_s):
@@ -107,15 +119,23 @@ def witness(cap, time_s):
     hsv = cv2.cvtColor(frame[y1:y2, x1:x2], cv2.COLOR_BGR2HSV)
     yellow = cv2.inRange(hsv, (17, 71, 66), (42, 255, 255))
     count, _, stats, centers = cv2.connectedComponentsWithStats(yellow)
-    components = sorted((
-        {"yellow_pixels": int(stats[i, cv2.CC_STAT_AREA]),
-         "center_1080p_px": [round(float(centers[i, 0] + x1), 2),
-                             round(float(centers[i, 1] + y1), 2)],
-         "touches_frame_bottom": bool(
-             y1 + stats[i, cv2.CC_STAT_TOP] +
-             stats[i, cv2.CC_STAT_HEIGHT] >= FRAME_BOTTOM_Y)}
-        for i in range(1, count) if stats[i, cv2.CC_STAT_AREA] >= 100
-    ), key=lambda row: -row["yellow_pixels"])
+    components = sorted(
+        (
+            {
+                "yellow_pixels": int(stats[i, cv2.CC_STAT_AREA]),
+                "center_1080p_px": [
+                    round(float(centers[i, 0] + x1), 2),
+                    round(float(centers[i, 1] + y1), 2),
+                ],
+                "touches_frame_bottom": bool(
+                    y1 + stats[i, cv2.CC_STAT_TOP] + stats[i, cv2.CC_STAT_HEIGHT] >= FRAME_BOTTOM_Y
+                ),
+            }
+            for i in range(1, count)
+            if stats[i, cv2.CC_STAT_AREA] >= 100
+        ),
+        key=lambda row: -row["yellow_pixels"],
+    )
     return {"source_time_s": time_s, "yellow_components": components}
 
 
@@ -128,32 +148,34 @@ def main():
         parser.error("Output exists")
     links = json.loads(args.body_links.read_text())
     source_hash = digest(args.video)
-    if (source_hash != links["highres_source_sha256"] or
-            links["source_interval_s"] != [5670, 6670]):
+    if source_hash != links["highres_source_sha256"] or links["source_interval_s"] != [5670, 6670]:
         raise ValueError("High-resolution source differs from linked paths")
-    reviewed = [row for row in links["rows"] if
-                row["source_prefix_class"] == "moving_stone_pixels"]
-    if (len(reviewed) != 16 or any(row["body_path_status"] !=
-                                   "unique_compatible_body_path"
-                                   for row in reviewed)):
+    reviewed = [row for row in links["rows"] if row["source_prefix_class"] == "moving_stone_pixels"]
+    if len(reviewed) != 16 or any(
+        row["body_path_status"] != "unique_compatible_body_path" for row in reviewed
+    ):
         raise ValueError("Expected the 16 reviewed, uniquely linked paths")
     rows = [boundary_row(row) for row in reviewed]
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         raise RuntimeError("Could not open source video")
     try:
         for result, original in zip(rows, reviewed):
-            result["next_second_colour_screen"] = next_second_colour_screen(
-                cap, original)
+            result["next_second_colour_screen"] = next_second_colour_screen(cap, original)
         exemplar = [witness(cap, t) for t in WITNESS_TIMES_S]
     finally:
         cap.release()
-    areas = [entry["yellow_components"][0]["yellow_pixels"] if
-             entry["yellow_components"] else 0 for entry in exemplar]
-    if not (areas[0] >= 100 and areas[1] >= 100 and areas[2] >= 100 and
-            areas[3] == 0 and exemplar[2]["yellow_components"][0][
-                "touches_frame_bottom"]):
+    areas = [
+        entry["yellow_components"][0]["yellow_pixels"] if entry["yellow_components"] else 0
+        for entry in exemplar
+    ]
+    if not (
+        areas[0] >= 100
+        and areas[1] >= 100
+        and areas[2] >= 100
+        and areas[3] == 0
+        and exemplar[2]["yellow_components"][0]["touches_frame_bottom"]
+    ):
         raise ValueError("Exemplar frame-boundary witness changed")
     output = {
         "status": "postreview_field_of_view_censoring_diagnostic",
@@ -162,8 +184,9 @@ def main():
         "runner_sha256": digest(Path(__file__)),
         "reviewed_moving_stone_pixel_path_count": len(rows),
         "next_second_unique_colour_component_count": sum(
-            row["next_second_colour_screen"]["status"] ==
-            "unique_colour_component_provisional" for row in rows),
+            row["next_second_colour_screen"]["status"] == "unique_colour_component_provisional"
+            for row in rows
+        ),
         "highres_body_search_bottom_y_exclusive": SEARCH_BOTTOM_Y,
         "source_frame_bottom_y_exclusive": FRAME_BOTTOM_Y,
         "paths": rows,
@@ -171,8 +194,7 @@ def main():
             "right_proposal_id": "R01:A401",
             "selection_status": "selected_after_source_review_not_blind_validation",
             "roi_1080p_xyxy": WITNESS_BOX_XYXY,
-            "yellow_hsv_range": {"lower": [17, 71, 66],
-                                 "upper": [42, 255, 255]},
+            "yellow_hsv_range": {"lower": [17, 71, 66], "upper": [42, 255, 255]},
             "source_frames": exemplar,
         },
         "limitations": [
@@ -185,10 +207,17 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(output, indent=2) + "\n")
-    print(json.dumps({"paths": len(rows),
-                      "next_second_unique_colour_components": output[
-                          "next_second_unique_colour_component_count"],
-                      "A401_yellow_pixels_by_time": areas}))
+    print(
+        json.dumps(
+            {
+                "paths": len(rows),
+                "next_second_unique_colour_components": output[
+                    "next_second_unique_colour_component_count"
+                ],
+                "A401_yellow_pixels_by_time": areas,
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

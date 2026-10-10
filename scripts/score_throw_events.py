@@ -19,9 +19,19 @@ def sha(path):
 
 def video_duration_s(path):
     probe = subprocess.run(
-        ["ffprobe", "-v", "error", "-show_entries", "format=duration",
-         "-of", "default=noprint_wrappers=1:nokey=1", str(path)],
-        capture_output=True, text=True, check=True,
+        [
+            "ffprobe",
+            "-v",
+            "error",
+            "-show_entries",
+            "format=duration",
+            "-of",
+            "default=noprint_wrappers=1:nokey=1",
+            str(path),
+        ],
+        capture_output=True,
+        text=True,
+        check=True,
     )
     return float(probe.stdout.strip())
 
@@ -36,8 +46,11 @@ def main():
         "--prediction-time-mode", choices=("point", "evidence_interval"), default="point"
     )
     parser.add_argument("--max-prediction-interval-s", type=float)
-    parser.add_argument("--source-video", type=Path,
-                        help="Actual complete source recording; required with --assess-target")
+    parser.add_argument(
+        "--source-video",
+        type=Path,
+        help="Actual complete source recording; required with --assess-target",
+    )
     parser.add_argument(
         "--assess-target",
         action="store_true",
@@ -65,7 +78,9 @@ def main():
     if args.assess_target and (args.tolerance_s != 0 or args.prediction_time_mode != "point"):
         parser.error("Target assessment requires zero tolerance and point timestamps")
     if args.assess_target and (args.source_video is None or not args.source_video.is_file()):
-        parser.error("Target assessment requires --source-video pointing to the complete source file")
+        parser.error(
+            "Target assessment requires --source-video pointing to the complete source file"
+        )
     if "events" not in pred and not args.assess_target:
         parser.error("Predictions lack exhaustive events; use --assess-target for coverage audit")
     score = (
@@ -104,8 +119,11 @@ def main():
         result["measured_source_video_duration_s"] = measured_duration_s
         result["acceptance_gate_sha256"] = sha(ROOT / "prototype/event_acceptance.py")
         result["target_assessment"] = assess_recording(
-            pred, ref, measured_source_sha256=measured_sha256,
-            measured_source_duration_s=measured_duration_s)
+            pred,
+            ref,
+            measured_source_sha256=measured_sha256,
+            measured_source_duration_s=measured_duration_s,
+        )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
     print(json.dumps(score, indent=2))

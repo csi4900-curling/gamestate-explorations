@@ -12,70 +12,51 @@ OVERRIDES = {
     "Detection strategy": "Stratégie de détection",
     "Keep plausible throws, then filter false alarms.": "Garder les lancers plausibles, puis filtrer les fausses alertes.",
     "1 · Recall-oriented proposals": "1 · Propositions orientées vers le rappel",
-    "Collect plausible moving-stone passages across camera layouts. Keep the raw candidates, including ones that may later be rejected.":
-        "Recueillir les passages plausibles de pierres en mouvement malgré les changements de vue. Conserver les candidats bruts, même s'ils sont ensuite écartés.",
+    "Collect plausible moving-stone passages across camera layouts. Keep the raw candidates, including ones that may later be rejected.": "Recueillir les passages plausibles de pierres en mouvement malgré les changements de vue. Conserver les candidats bruts, même s'ils sont ensuite écartés.",
     "2 · Visual-context filter": "2 · Filtre de contexte visuel",
-    "Confirm candidates using image context and motion. Reject lookalikes without discarding the underlying evidence.":
-        "Confirmer les candidats grâce au contexte de l'image et au mouvement. Écarter les faux semblants sans supprimer les indices de départ.",
+    "Confirm candidates using image context and motion. Reject lookalikes without discarding the underlying evidence.": "Confirmer les candidats grâce au contexte de l'image et au mouvement. Écarter les faux semblants sans supprimer les indices de départ.",
     "3 · Auditable decisions": "3 · Décisions vérifiables",
-    "Save confirmed and withheld candidates in a review ledger. Score both missed throws and extra events on complete videos.":
-        "Conserver les candidats confirmés et écartés dans un registre de vérification. Compter les lancers manqués et les événements en trop sur des vidéos complètes.",
+    "Save confirmed and withheld candidates in a review ledger. Score both missed throws and extra events on complete videos.": "Conserver les candidats confirmés et écartés dans un registre de vérification. Compter les lancers manqués et les événements en trop sur des vidéos complètes.",
     "Development evidence (TP/FP/FN):": "Résultats de développement (VP/FP/FN) :",
-    "USA 19/20/1 raw → 19/1/1 filtered; Estonia 16/5/1 → 16/0/1; China 17/9/1 → 17/1/1. The filter cuts false alarms while retaining the raw matches on these excerpts.":
-        "États-Unis : 19/20/1 brut → 19/1/1 filtré ; Estonie : 16/5/1 → 16/0/1 ; Chine : 17/9/1 → 17/1/1. Sur ces extraits, le filtre réduit les fausses alertes en conservant les appariements bruts.",
-    "Each raw pool still misses one labelled passage. A filter cannot recover a throw absent from its proposal pool. These are exposed partial intervals with agent-made references, not independent full-match scores.":
-        "Chaque liste brute manque encore un passage annoté. Un filtre ne peut pas retrouver un lancer absent de la liste de propositions. Ces résultats portent sur des extraits déjà étudiés avec des références préparées par l'agent, pas sur des parties entières évaluées indépendamment.",
+    "USA 19/20/1 raw → 19/1/1 filtered; Estonia 16/5/1 → 16/0/1; China 17/9/1 → 17/1/1. The filter cuts false alarms while retaining the raw matches on these excerpts.": "États-Unis : 19/20/1 brut → 19/1/1 filtré ; Estonie : 16/5/1 → 16/0/1 ; Chine : 17/9/1 → 17/1/1. Sur ces extraits, le filtre réduit les fausses alertes en conservant les appariements bruts.",
+    "Each raw pool still misses one labelled passage. A filter cannot recover a throw absent from its proposal pool. These are exposed partial intervals with agent-made references, not independent full-match scores.": "Chaque liste brute manque encore un passage annoté. Un filtre ne peut pas retrouver un lancer absent de la liste de propositions. Ces résultats portent sur des extraits déjà étudiés avec des références préparées par l'agent, pas sur des parties entières évaluées indépendamment.",
     "Inspect the two-stage audit ↗": "Examiner l'audit en deux étapes ↗",
-    "“Our direction is a high-recall proposal stage followed by a visual-context filter. On three development excerpts, the filter removes many false alarms while retaining the raw matches; each raw pool still misses one labelled passage. T11 also shows candidate trajectories in both cameras, with a 0.61-metre geometric disagreement at the handoff. Next we must improve proposal coverage and validate the full pipeline on independently labelled complete matches.”":
-        "« Notre approche combine une première étape de propositions à fort rappel et un filtre de contexte visuel. Sur trois extraits de développement, le filtre retire beaucoup de fausses alertes tout en conservant les appariements bruts ; chaque liste brute manque encore un passage annoté. T11 montre aussi des trajectoires candidates dans les deux caméras, avec un désaccord géométrique de 0,61 m au raccord. La suite consiste à améliorer la couverture des propositions et à valider toute la chaîne sur des parties complètes annotées indépendamment. »",
+    "“Our direction is a high-recall proposal stage followed by a visual-context filter. On three development excerpts, the filter removes many false alarms while retaining the raw matches; each raw pool still misses one labelled passage. T11 also shows candidate trajectories in both cameras, with a 0.61-metre geometric disagreement at the handoff. Next we must improve proposal coverage and validate the full pipeline on independently labelled complete matches.”": "« Notre approche combine une première étape de propositions à fort rappel et un filtre de contexte visuel. Sur trois extraits de développement, le filtre retire beaucoup de fausses alertes tout en conservant les appariements bruts ; chaque liste brute manque encore un passage annoté. T11 montre aussi des trajectoires candidates dans les deux caméras, avec un désaccord géométrique de 0,61 m au raccord. La suite consiste à améliorer la couverture des propositions et à valider toute la chaîne sur des parties complètes annotées indépendamment. »",
     "Two-stage filter prototype:": "Prototype de filtre en deux étapes :",
-    "Raw throw proposals now remain in a review ledger when a confirmation gate withholds them. On the exposed Estonia excerpt, the older speed cutoff withheld three labelled passages; one common image-context gate now retains them as automated candidates on that already studied video. This is a development diagnostic, not independent full-match scores.":
-        "Les propositions de lancer restent dans un dossier de vérification lorsqu'un filtre ne les confirme pas. Sur l'extrait estonien déjà étudié, l'ancien seuil de vitesse avait écarté trois passages annotés ; une même règle de contexte les conserve maintenant comme candidats automatiques sur cette vidéo déjà étudiée. Il s'agit d'un diagnostic de développement, pas d'un score indépendant sur une partie entière.",
+    "Raw throw proposals now remain in a review ledger when a confirmation gate withholds them. On the exposed Estonia excerpt, the older speed cutoff withheld three labelled passages; one common image-context gate now retains them as automated candidates on that already studied video. This is a development diagnostic, not independent full-match scores.": "Les propositions de lancer restent dans un dossier de vérification lorsqu'un filtre ne les confirme pas. Sur l'extrait estonien déjà étudié, l'ancien seuil de vitesse avait écarté trois passages annotés ; une même règle de contexte les conserve maintenant comme candidats automatiques sur cette vidéo déjà étudiée. Il s'agit d'un diagnostic de développement, pas d'un score indépendant sur une partie entière.",
     "Open the three-video audit": "Ouvrir l'audit des trois vidéos",
     "Release timing:": "Moment du lâcher :",
-    "The frozen moving-stone tracks begin 0.3–1.5 seconds before their virtual-line crossings (median 0.7 seconds). For T11, source-frame review first shows a clearly separable moving stone at 2303.433 s, the frozen track starts at 2303.500 s, and the line is crossed at 2303.956 s. Separation from the delivery device is hidden by the player and remains unknown.":
-        "Les suivis figés des pierres en mouvement commencent 0,3 à 1,5 s avant le franchissement de la ligne virtuelle (médiane : 0,7 s). Pour T11, l'examen des images montre une pierre mobile clairement séparée à 2 303,433 s ; le suivi figé commence à 2 303,500 s et la ligne est franchie à 2 303,956 s. La séparation d'avec le dispositif de lancer est masquée par l'athlète et reste inconnue.",
+    "The frozen moving-stone tracks begin 0.3–1.5 seconds before their virtual-line crossings (median 0.7 seconds). For T11, source-frame review first shows a clearly separable moving stone at 2303.433 s, the frozen track starts at 2303.500 s, and the line is crossed at 2303.956 s. Separation from the delivery device is hidden by the player and remains unknown.": "Les suivis figés des pierres en mouvement commencent 0,3 à 1,5 s avant le franchissement de la ligne virtuelle (médiane : 0,7 s). Pour T11, l'examen des images montre une pierre mobile clairement séparée à 2 303,433 s ; le suivi figé commence à 2 303,500 s et la ligne est franchie à 2 303,956 s. La séparation d'avec le dispositif de lancer est masquée par l'athlète et reste inconnue.",
     "Inspect all 16 onsets": "Examiner les 16 débuts de suivi",
-    "Selected retrospective source-frame audit: first visible motion is a better review anchor than the later line crossing, but it is not the physical release time.":
-        "Vérification rétrospective de quelques images source : le premier mouvement visible situe mieux le début de la séquence à examiner que la ligne franchie plus tard, sans mesurer le lâcher physique.",
+    "Selected retrospective source-frame audit: first visible motion is a better review anchor than the later line crossing, but it is not the physical release time.": "Vérification rétrospective de quelques images source : le premier mouvement visible situe mieux le début de la séquence à examiner que la ligne franchie plus tard, sans mesurer le lâcher physique.",
     "Meeting guide": "À présenter",
     "The four points to report.": "Les quatre points à présenter.",
-    "If time is short, use this page. The technical sections below support each claim.":
-        "Si le temps manque, cette page suffit. Les sections suivantes apportent les éléments de preuve et les limites.",
+    "If time is short, use this page. The technical sections below support each claim.": "Si le temps manque, cette page suffit. Les sections suivantes apportent les éléments de preuve et les limites.",
     "1 · Goal": "1 · Objectif",
     "Detect every delivered stone": "Détecter chaque lancer",
-    "Segment a whole broadcast into throw events, then reconstruct observed paths and stone positions. High precision and recall on complete, independently labelled videos are the target.":
-        "Découper une partie entière en lancers, puis reconstruire les trajets observés et les positions des pierres. L'objectif est une précision et un rappel élevés sur des vidéos complètes annotées indépendamment.",
+    "Segment a whole broadcast into throw events, then reconstruct observed paths and stone positions. High precision and recall on complete, independently labelled videos are the target.": "Découper une partie entière en lancers, puis reconstruire les trajets observés et les positions des pierres. L'objectif est une précision et un rappel élevés sur des vidéos complètes annotées indépendamment.",
     "2 · Demonstration": "2 · Démonstration",
     "One end already works": "Une manche fonctionne déjà",
-    "On the Canada–Korea development end, 16 of 16 internally prepared passage windows match. T11 shows 31 departure and 29 receiving positions after a targeted range extension. Both views contain a candidate at 46.7 s, but their nominal longitudinal positions differ by 0.61 m.":
-        "Sur la manche Canada–Corée utilisée pour le développement, les 16 fenêtres de passage préparées en interne correspondent aux détections. Pour T11, nous montrons 31 positions au départ et 29 à l’arrivée après élargissement ciblé de la zone projetée. Les deux vues contiennent une proposition à 46,7 s, mais leurs positions longitudinales nominales diffèrent de 0,61 m.",
+    "On the Canada–Korea development end, 16 of 16 internally prepared passage windows match. T11 shows 31 departure and 29 receiving positions after a targeted range extension. Both views contain a candidate at 46.7 s, but their nominal longitudinal positions differ by 0.61 m.": "Sur la manche Canada–Corée utilisée pour le développement, les 16 fenêtres de passage préparées en interne correspondent aux détections. Pour T11, nous montrons 31 positions au départ et 29 à l’arrivée après élargissement ciblé de la zone projetée. Les deux vues contiennent une proposition à 46,7 s, mais leurs positions longitudinales nominales diffèrent de 0,61 m.",
     "3 · Transfer": "3 · Transfert",
     "Generalisation is the problem": "La généralisation échoue encore",
-    "Canada–USA reaches 19 matched passages, one extra and one missed coarse window on 18.5 minutes. Estonia misses four. A 2022 full-match run produces 142 candidates for 128 official shots. These scores do not prove full-match event F1.":
-        "Canada–États-Unis : 19 passages appariés, un candidat supplémentaire et une fenêtre manquée sur 18,5 minutes. En Estonie, quatre lancers sont manqués. Sur une partie de 2022 : 142 candidats pour 128 lancers officiels. Aucun de ces chiffres ne démontre un F1 des lancers sur une partie entière.",
+    "Canada–USA reaches 19 matched passages, one extra and one missed coarse window on 18.5 minutes. Estonia misses four. A 2022 full-match run produces 142 candidates for 128 official shots. These scores do not prove full-match event F1.": "Canada–États-Unis : 19 passages appariés, un candidat supplémentaire et une fenêtre manquée sur 18,5 minutes. En Estonie, quatre lancers sont manqués. Sur une partie de 2022 : 142 candidats pour 128 lancers officiels. Aucun de ces chiffres ne démontre un F1 des lancers sur une partie entière.",
     "4 · Decision": "4 · Décision",
     "Choose the next validation": "Choisir la prochaine validation",
-    "Agree on the target broadcast family and an exhaustive independent reference for whole matches. Then prioritise camera-aware stone identity and test precision and recall before simulation or coaching.":
-        "Choisir le type de diffusion visé et une référence indépendante et exhaustive pour des parties entières. Ensuite, améliorer le suivi de la pierre entre caméras et mesurer précision et rappel avant la simulation ou l'analyse pour l'entraînement.",
+    "Agree on the target broadcast family and an exhaustive independent reference for whole matches. Then prioritise camera-aware stone identity and test precision and recall before simulation or coaching.": "Choisir le type de diffusion visé et une référence indépendante et exhaustive pour des parties entières. Ensuite, améliorer le suivi de la pierre entre caméras et mesurer précision et rappel avant la simulation ou l'analyse pour l'entraînement.",
     "Say this in about one minute": "À dire en une minute environ",
-    "“We built a prototype that finds stone passages and links observations across two cameras. On one development end it found all 16 marked passages, but the camera link and physical path are still provisional. Our first same-format transfer scored 19 matches, one extra and one missed passage on a short extract; other videos show missed throws and excess candidates. The next step is a complete, independently labelled evaluation and a detector that follows the stone through changing camera views.”":
-        "« Nous avons construit un prototype qui détecte les passages des pierres et relie des observations prises par deux caméras. Sur une manche de développement, il retrouve les 16 passages repérés, mais l'identité entre caméras et la trajectoire physique restent provisoires. Sur un court extrait d'une autre vidéo du même type, nous obtenons 19 appariements, un candidat en trop et un passage manqué. D'autres vidéos révèlent davantage de lancers manqués ou de candidats supplémentaires. Il faut maintenant évaluer des parties entières avec une référence indépendante et suivre la pierre malgré les changements de caméra. »",
+    "“We built a prototype that finds stone passages and links observations across two cameras. On one development end it found all 16 marked passages, but the camera link and physical path are still provisional. Our first same-format transfer scored 19 matches, one extra and one missed passage on a short extract; other videos show missed throws and excess candidates. The next step is a complete, independently labelled evaluation and a detector that follows the stone through changing camera views.”": "« Nous avons construit un prototype qui détecte les passages des pierres et relie des observations prises par deux caméras. Sur une manche de développement, il retrouve les 16 passages repérés, mais l'identité entre caméras et la trajectoire physique restent provisoires. Sur un court extrait d'une autre vidéo du même type, nous obtenons 19 appariements, un candidat en trop et un passage manqué. D'autres vidéos révèlent davantage de lancers manqués ou de candidats supplémentaires. Il faut maintenant évaluer des parties entières avec une référence indépendante et suivre la pierre malgré les changements de caméra. »",
     "Keep the claim precise:": "Préciser la portée des chiffres :",
-    "16/16 is one development end; 0.950 F1 is a short same-family timing check against agent-prepared windows; 142 versus 128 is an excess-candidate count, not a full-match F1. Exact release and continuous physical trajectory are not validated.":
-        "16/16 concerne une seule manche de développement ; le F1 de 0,950 mesure la concordance temporelle sur un court extrait du même type de diffusion, avec des fenêtres préparées par l'agent ; 142 contre 128 signale un excès de candidats, pas un F1 sur la partie entière. L'instant exact du lâcher et la trajectoire physique continue ne sont pas validés.",
+    "16/16 is one development end; 0.950 F1 is a short same-family timing check against agent-prepared windows; 142 versus 128 is an excess-candidate count, not a full-match F1. Exact release and continuous physical trajectory are not validated.": "16/16 concerne une seule manche de développement ; le F1 de 0,950 mesure la concordance temporelle sur un court extrait du même type de diffusion, avec des fenêtres préparées par l'agent ; 142 contre 128 signale un excès de candidats, pas un F1 sur la partie entière. L'instant exact du lâcher et la trajectoire physique continue ne sont pas validés.",
     "Show the demonstration": "Montrer la démonstration",
     "T11 in two cameras ↗": "T11 dans deux caméras ↗",
     "Show the measured score": "Montrer le score mesuré",
     "Canada–USA 19/1/1 ↗": "Canada–États-Unis 19/1/1 ↗",
     "Show the failure": "Montrer la limite",
     "Canada–Norway 2022 ↗": "Canada–Norvège 2022 ↗",
-    "T11 has 31 departure positions and 29 receiving positions, including 15 provisional far-range points. Both cameras show a candidate at 46.7 s, with a 0.61 m nominal longitudinal and 0.09 m lateral disagreement. The cross-camera identity and physical coordinates remain provisional.":
-        "T11 comporte 31 positions au départ et 29 à l'arrivée, dont 15 points lointains provisoires. Les deux caméras montrent une proposition à 46,7 s, avec un écart nominal de 0,61 m longitudinalement et de 0,09 m latéralement. L'identité entre caméras et les coordonnées physiques restent provisoires.",
-    "Open the interactive two-camera trajectory ↗":
-        "Explorer la trajectoire interactive à deux caméras ↗",
-    "Curling video project | Supervisor progress briefing":
-        "Projet d'analyse vidéo du curling | Bilan pour la réunion de supervision",
+    "T11 has 31 departure positions and 29 receiving positions, including 15 provisional far-range points. Both cameras show a candidate at 46.7 s, with a 0.61 m nominal longitudinal and 0.09 m lateral disagreement. The cross-camera identity and physical coordinates remain provisional.": "T11 comporte 31 positions au départ et 29 à l'arrivée, dont 15 points lointains provisoires. Les deux caméras montrent une proposition à 46,7 s, avec un écart nominal de 0,61 m longitudinalement et de 0,09 m latéralement. L'identité entre caméras et les coordonnées physiques restent provisoires.",
+    "Open the interactive two-camera trajectory ↗": "Explorer la trajectoire interactive à deux caméras ↗",
+    "Curling video project | Supervisor progress briefing": "Projet d'analyse vidéo du curling | Bilan pour la réunion de supervision",
     "Evidence": "Résultats",
     "Latest transfer": "Essai sur une autre partie",
     "Speaker notes": "Notes de présentation",
@@ -87,226 +68,155 @@ OVERRIDES = {
     "Reproducible evidence pipeline": "Chaîne d'analyse reproductible",
     "Independent full-match F1 pending": "F1 indépendant sur une partie entière : à mesurer",
     "Our target system": "Notre objectif",
-    "Video → throw → board → coaching":
-        "Vidéo → lancer → état des pierres → analyse pour l'entraînement",
+    "Video → throw → board → coaching": "Vidéo → lancer → état des pierres → analyse pour l'entraînement",
     "Executive snapshot": "L'essentiel",
-    "The Canada–Korea end-three video shows stone passages and one partial arrival trajectory in a single recording. The remaining challenge is making that chain reliable across complete matches and camera layouts.":
-        "Dans une même vidéo de la troisième manche Canada–Corée, nous détectons les passages des pierres et suivons une partie de la trajectoire d'arrivée. Il reste à rendre cette chaîne fiable sur des parties entières et d'autres dispositifs de caméra.",
-    "Presentation length: about 8 minutes · All evidence and images are embedded for offline viewing; demo links use the project folder.":
-        "Durée prévue : environ 8 minutes · Les résultats et les images sont intégrés au rapport pour une consultation hors ligne ; les démonstrations nécessitent le dossier du projet.",
-    "Open with the useful outcome: we have a real pipeline and viewable artifacts. Then state the limit early: strong partial-window results do not yet prove a robust full-match throw detector.":
-        "Commencer par le résultat concret : une chaîne d'analyse et des démonstrations consultables. Préciser aussitôt la limite : de bons résultats sur de courts extraits ne prouvent pas la fiabilité sur une partie entière.",
-    "Built enough to demonstrate; not enough to claim automation at scale.":
-        "Une démonstration fonctionne ; la fiabilité à grande échelle reste à prouver.",
+    "The Canada–Korea end-three video shows stone passages and one partial arrival trajectory in a single recording. The remaining challenge is making that chain reliable across complete matches and camera layouts.": "Dans une même vidéo de la troisième manche Canada–Corée, nous détectons les passages des pierres et suivons une partie de la trajectoire d'arrivée. Il reste à rendre cette chaîne fiable sur des parties entières et d'autres dispositifs de caméra.",
+    "Presentation length: about 8 minutes · All evidence and images are embedded for offline viewing; demo links use the project folder.": "Durée prévue : environ 8 minutes · Les résultats et les images sont intégrés au rapport pour une consultation hors ligne ; les démonstrations nécessitent le dossier du projet.",
+    "Open with the useful outcome: we have a real pipeline and viewable artifacts. Then state the limit early: strong partial-window results do not yet prove a robust full-match throw detector.": "Commencer par le résultat concret : une chaîne d'analyse et des démonstrations consultables. Préciser aussitôt la limite : de bons résultats sur de courts extraits ne prouvent pas la fiabilité sur une partie entière.",
+    "Built enough to demonstrate; not enough to claim automation at scale.": "Une démonstration fonctionne ; la fiabilité à grande échelle reste à prouver.",
     "What works": "Ce qui fonctionne",
     "Evidence-rich throw candidates": "Lancers candidats reliés aux images source",
-    "Video, colour motion, camera cuts and delayed scoreboard changes flow into an ordered ledger with links back to the source.":
-        "Les indices tirés de la vidéo, le mouvement des pierres colorées, les changements de caméra et les mises à jour différées du compteur alimentent une liste chronologique reliée aux images source.",
+    "Video, colour motion, camera cuts and delayed scoreboard changes flow into an ordered ledger with links back to the source.": "Les indices tirés de la vidéo, le mouvement des pierres colorées, les changements de caméra et les mises à jour différées du compteur alimentent une liste chronologique reliée aux images source.",
     "Best partial transfer": "Meilleur essai sur un extrait distinct",
     "0.95 timing F1": "F1 temporel : 0,95",
-    "Canada–USA 2024: 19 correct, one extra, one missed coarse window over 18.5 minutes. This is a same-production, agent-authored reference.":
-        "Canada–États-Unis 2024 : 19 passages concordants, un candidat supplémentaire et un passage manqué sur 18,5 minutes. La référence a été préparée par l'agent sur une vidéo du même type de production.",
+    "Canada–USA 2024: 19 correct, one extra, one missed coarse window over 18.5 minutes. This is a same-production, agent-authored reference.": "Canada–États-Unis 2024 : 19 passages concordants, un candidat supplémentaire et un passage manqué sur 18,5 minutes. La référence a été préparée par l'agent sur une vidéo du même type de production.",
     "Main gap": "Limite principale",
     "Full-match reliability": "Fiabilité sur une partie entière",
-    "The new Canada–Norway 2022 transfer produces excess candidates and colour conflicts. No independent complete-recording precision/recall exists yet.":
-        "L'essai Canada–Norvège 2022 produit trop de candidats et des conflits de couleur. La précision et le rappel sur une partie entière n'ont pas encore été mesurés avec une référence indépendante.",
+    "The new Canada–Norway 2022 transfer produces excess candidates and colour conflicts. No independent complete-recording precision/recall exists yet.": "L'essai Canada–Norvège 2022 produit trop de candidats et des conflits de couleur. La précision et le rappel sur une partie entière n'ont pas encore été mesurés avec une référence indépendante.",
     "The honest status:": "État réel :",
     "not been met": "n'est pas encore atteint",
-    "a source-specific research prototype with useful event and board evidence. The 0.95 precision and 0.95 recall acceptance gate on complete, independently referenced recordings has":
-        "un prototype de recherche adapté à certaines vidéos, avec des indices utiles sur les lancers et l'état des pierres. Le critère d'acceptation — précision et rappel d'au moins 0,95 sur des parties entières avec référence indépendante —",
-    "Avoid calling the 0.95 result overall accuracy. It measures timing agreement on a short same-family interval against coarse windows prepared by the developing agent.":
-        "Ne pas présenter le résultat de 0,95 comme la précision globale du système : il mesure la concordance temporelle sur un court extrait, avec des fenêtres approximatives préparées par l'agent qui développait le détecteur.",
+    "a source-specific research prototype with useful event and board evidence. The 0.95 precision and 0.95 recall acceptance gate on complete, independently referenced recordings has": "un prototype de recherche adapté à certaines vidéos, avec des indices utiles sur les lancers et l'état des pierres. Le critère d'acceptation — précision et rappel d'au moins 0,95 sur des parties entières avec référence indépendante —",
+    "Avoid calling the 0.95 result overall accuracy. It measures timing agreement on a short same-family interval against coarse windows prepared by the developing agent.": "Ne pas présenter le résultat de 0,95 comme la précision globale du système : il mesure la concordance temporelle sur un court extrait, avec des fenêtres approximatives préparées par l'agent qui développait le détecteur.",
     "One recording through the pipeline": "Une même vidéo, du début à la fin de la chaîne",
-    "Canada–Korea 2024: detect a passage, then inspect its arrival.":
-        "Canada–Corée 2024 : détecter le passage d'une pierre, puis observer son arrivée.",
+    "Canada–Korea 2024: detect a passage, then inspect its arrival.": "Canada–Corée 2024 : détecter le passage d'une pierre, puis observer son arrivée.",
     "Event detection": "Détection des passages",
-    "For the meeting, follow one 18.5-minute end-three video from a virtual-line stone-passage detector to a partial receiving-view trajectory. This is the strongest coherent demonstration of the intended workflow, with its uncertainty shown beside each output.":
-        "Pour la réunion, suivre un seul extrait de 18,5 minutes de la troisième manche : du passage d'une pierre devant une ligne virtuelle jusqu'à sa trajectoire partielle dans la vue d'arrivée. C'est notre démonstration la plus cohérente de la chaîne envisagée, avec l'incertitude associée à chaque résultat.",
-    "All 16 coarse, internally prepared passage windows matched one-to-one, with no extra candidate in this same end. The virtual line marks stone passage, not physical release.":
-        "Les 16 fenêtres de passage approximatives préparées en interne correspondent chacune à une détection, sans candidat supplémentaire dans cette manche. La ligne virtuelle marque le passage de la pierre, pas l'instant physique du lâcher.",
+    "For the meeting, follow one 18.5-minute end-three video from a virtual-line stone-passage detector to a partial receiving-view trajectory. This is the strongest coherent demonstration of the intended workflow, with its uncertainty shown beside each output.": "Pour la réunion, suivre un seul extrait de 18,5 minutes de la troisième manche : du passage d'une pierre devant une ligne virtuelle jusqu'à sa trajectoire partielle dans la vue d'arrivée. C'est notre démonstration la plus cohérente de la chaîne envisagée, avec l'incertitude associée à chaque résultat.",
+    "All 16 coarse, internally prepared passage windows matched one-to-one, with no extra candidate in this same end. The virtual line marks stone passage, not physical release.": "Les 16 fenêtres de passage approximatives préparées en interne correspondent chacune à une détection, sans candidat supplémentaire dans cette manche. La ligne virtuelle marque le passage de la pierre, pas l'instant physique du lâcher.",
     "One arrival": "Une arrivée suivie",
-    "The yellow stone has an observed receiving-camera path and a provisional settled point. The link across the camera cut uses colour, timing and motion; physical identity is not verified.":
-        "Nous observons une partie du trajet d'une pierre jaune dans la caméra d'arrivée et proposons une position d'arrêt. Le rapprochement avec la vue de départ repose sur la couleur, le temps et le mouvement ; l'identité de la pierre à travers la coupe n'est pas vérifiée.",
+    "The yellow stone has an observed receiving-camera path and a provisional settled point. The link across the camera cut uses colour, timing and motion; physical identity is not verified.": "Nous observons une partie du trajet d'une pierre jaune dans la caméra d'arrivée et proposons une position d'arrêt. Le rapprochement avec la vue de départ repose sur la couleur, le temps et le mouvement ; l'identité de la pierre à travers la coupe n'est pas vérifiée.",
     "Trajectory check": "Vérification de la trajectoire",
-    "Retrospective RMSE on four manually read moving points. Both sides share calibration; this does not measure centimetre accuracy on the ice.":
-        "Écart quadratique moyen rétrospectif sur quatre positions lues manuellement pendant le mouvement. Les deux séries utilisent le même étalonnage : ce chiffre ne mesure pas la précision physique en centimètres sur la glace.",
-    "This is one development end and one selected arrival trajectory. The eight later passages were checked after the detector was frozen, but still share the recording and internally prepared reference. The middle of the throw, cross-view identity, complete board and physical accuracy remain unverified.":
-        "Il s'agit d'une seule manche de développement et d'une trajectoire d'arrivée choisie. Les huit derniers passages ont été évalués après le gel du détecteur, mais sur la même vidéo et avec une référence préparée en interne. Le milieu du lancer, l'identité entre caméras, l'état complet des pierres et la précision physique restent à valider.",
+    "Retrospective RMSE on four manually read moving points. Both sides share calibration; this does not measure centimetre accuracy on the ice.": "Écart quadratique moyen rétrospectif sur quatre positions lues manuellement pendant le mouvement. Les deux séries utilisent le même étalonnage : ce chiffre ne mesure pas la précision physique en centimètres sur la glace.",
+    "This is one development end and one selected arrival trajectory. The eight later passages were checked after the detector was frozen, but still share the recording and internally prepared reference. The middle of the throw, cross-view identity, complete board and physical accuracy remain unverified.": "Il s'agit d'une seule manche de développement et d'une trajectoire d'arrivée choisie. Les huit derniers passages ont été évalués après le gel du détecteur, mais sur la même vidéo et avec une référence préparée en interne. Le milieu du lancer, l'identité entre caméras, l'état complet des pierres et la précision physique restent à valider.",
     "Scope:": "Portée de ce résultat :",
     "Start here": "Commencer ici",
     "Sixteen passage detections ↗": "Seize passages détectés ↗",
     "Follow the stone": "Suivre la pierre",
     "Inspect both cameras": "Examiner les deux caméras",
-    "Camera-local stone tracks and registration status.":
-        "Suivis propres à chaque caméra et état du recalage des images.",
-    "Lead with this one recording: the line crossing is a practical event anchor, T11 demonstrates a partial receiving path, and the missing cross-camera identity is the research gap. Then use the transfer table to show why the same result cannot yet be claimed for arbitrary match video.":
-        "Commencer par cette vidéo : le franchissement de la ligne donne un repère temporel pratique ; T11 montre une partie du trajet à l'arrivée ; l'identité entre caméras reste inconnue. Montrer ensuite les essais sur d'autres vidéos pour expliquer pourquoi ce résultat ne se généralise pas encore.",
+    "Camera-local stone tracks and registration status.": "Suivis propres à chaque caméra et état du recalage des images.",
+    "Lead with this one recording: the line crossing is a practical event anchor, T11 demonstrates a partial receiving path, and the missing cross-camera identity is the research gap. Then use the transfer table to show why the same result cannot yet be claimed for arbitrary match video.": "Commencer par cette vidéo : le franchissement de la ligne donne un repère temporel pratique ; T11 montre une partie du trajet à l'arrivée ; l'identité entre caméras reste inconnue. Montrer ensuite les essais sur d'autres vidéos pour expliquer pourquoi ce résultat ne se généralise pas encore.",
     "What exists today": "Ce qui a été construit",
-    "One pipeline, with explicit uncertainty at each stage.":
-        "Une chaîne d'analyse qui conserve l'incertitude à chaque étape.",
+    "One pipeline, with explicit uncertainty at each stage.": "Une chaîne d'analyse qui conserve l'incertitude à chaque étape.",
     "Ingest + view routing": "Lecture vidéo et choix de la vue",
-    "Reads full videos, detects cuts and routes known layouts. Unknown spans remain gaps.":
-        "Lit les vidéos, détecte les changements de plan et reconnaît certaines dispositions de caméras. Les passages non reconnus restent explicitement manquants.",
+    "Reads full videos, detects cuts and routes known layouts. Unknown spans remain gaps.": "Lit les vidéos, détecte les changements de plan et reconnaît certaines dispositions de caméras. Les passages non reconnus restent explicitement manquants.",
     "Stone evidence": "Détection des pierres",
-    "Colour caps, learned boxes, local tracks and image-to-ice calibration.":
-        "Détection des poignées colorées, boîtes apprises, suivis locaux et projection de l'image vers la glace.",
+    "Colour caps, learned boxes, local tracks and image-to-ice calibration.": "Détection des poignées colorées, boîtes apprises, suivis locaux et projection de l'image vers la glace.",
     "Throw candidates": "Lancers candidats",
-    "Early-view passages, cross-view motion and counter-linked event windows.":
-        "Passages observés près du départ, mouvement vu après les coupes et fenêtres associées au compteur TV.",
+    "Early-view passages, cross-view motion and counter-linked event windows.": "Passages observés près du départ, mouvement vu après les coupes et fenêtres associées au compteur TV.",
     "Game-state observations": "Observations de l'état du jeu",
-    "Stable partial boards from selected overhead frames, compared with official diagrams.":
-        "États partiels des pierres observés dans certaines vues de dessus, puis comparés aux diagrammes officiels.",
+    "Stable partial boards from selected overhead frames, compared with official diagrams.": "États partiels des pierres observés dans certaines vues de dessus, puis comparés aux diagrammes officiels.",
     "Validated trajectories": "Trajectoires validées",
-    "Physical stone identity, exact phase boundaries and calibrated continuous paths.":
-        "Identité physique des pierres, instants exacts des phases du lancer et trajectoires continues calibrées.",
+    "Physical stone identity, exact phase boundaries and calibrated continuous paths.": "Identité physique des pierres, instants exacts des phases du lancer et trajectoires continues calibrées.",
     "Coaching agent": "Assistant d'analyse pour l'entraînement",
-    "Simulation and grounded feedback only after events and states are reliable.":
-        "Simulation et conseils fondés sur la vidéo, une fois les lancers et les états du jeu fiabilisés.",
-    "Existing cross-view prototype: one yellow stone shown before and after the broadcast camera handoff. This is a proposed link, not independently proven identity.":
-        "Prototype à deux vues : une pierre jaune apparaît avant et après un changement de caméra. Le lien est proposé, mais son identité physique n'est pas validée indépendamment.",
+    "Simulation and grounded feedback only after events and states are reliable.": "Simulation et conseils fondés sur la vidéo, une fois les lancers et les états du jeu fiabilisés.",
+    "Existing cross-view prototype: one yellow stone shown before and after the broadcast camera handoff. This is a proposed link, not independently proven identity.": "Prototype à deux vues : une pierre jaune apparaît avant et après un changement de caméra. Le lien est proposé, mais son identité physique n'est pas validée indépendamment.",
     "Working artifacts": "Démonstrations et données disponibles",
-    "One-end demo with 16 detected passages and 16 provisional two-view links.":
-        "Démonstration sur une manche : 16 passages détectés et 16 rapprochements provisoires entre deux vues.",
-    "Full-source event ledger with candidate windows, colour status, counter links and explicit gaps.":
-        "Liste des événements candidats sur les vidéos complètes, avec fenêtres temporelles, provenance des couleurs, liens au compteur et lacunes explicites.",
-    "Source-linked official shot and board references for evaluation.":
-        "Références officielles des lancers et des positions des pierres, reliées aux vidéos pour l'évaluation.",
-    "Interactive cross-view, segment and board evidence viewers.":
-        "Visionneuses interactives des deux caméras, des segments et des positions des pierres.",
-    "Complete throw boundaries and continuous physical trajectories.":
-        "Limites exactes de chaque lancer et trajectoires physiques continues.",
-    "Validated game states, simulations and grounded coaching.":
-        "États du jeu validés, simulations et conseils fondés sur les observations.",
-    "Use the cross-view image as a 30-second demo. Point out the broadcast cut: we cannot claim we saw the stone continuously through that gap.":
-        "Montrer pendant 30 secondes l'exemple à deux caméras. Signaler la coupe : nous n'avons pas observé la pierre sans interruption pendant ce passage.",
+    "One-end demo with 16 detected passages and 16 provisional two-view links.": "Démonstration sur une manche : 16 passages détectés et 16 rapprochements provisoires entre deux vues.",
+    "Full-source event ledger with candidate windows, colour status, counter links and explicit gaps.": "Liste des événements candidats sur les vidéos complètes, avec fenêtres temporelles, provenance des couleurs, liens au compteur et lacunes explicites.",
+    "Source-linked official shot and board references for evaluation.": "Références officielles des lancers et des positions des pierres, reliées aux vidéos pour l'évaluation.",
+    "Interactive cross-view, segment and board evidence viewers.": "Visionneuses interactives des deux caméras, des segments et des positions des pierres.",
+    "Complete throw boundaries and continuous physical trajectories.": "Limites exactes de chaque lancer et trajectoires physiques continues.",
+    "Validated game states, simulations and grounded coaching.": "États du jeu validés, simulations et conseils fondés sur les observations.",
+    "Use the cross-view image as a 30-second demo. Point out the broadcast cut: we cannot claim we saw the stone continuously through that gap.": "Montrer pendant 30 secondes l'exemple à deux caméras. Signaler la coupe : nous n'avons pas observé la pierre sans interruption pendant ce passage.",
     "Measured evidence": "Résultats mesurés",
-    "Promising intervals, visible transfer failures.":
-        "Un résultat prometteur sur la vidéo initiale, puis des échecs de transfert.",
-    "The table keeps scoring method and scope beside each number. It is deliberately not a leaderboard of interchangeable F1 scores.":
-        "Chaque chiffre est accompagné de sa méthode de mesure et de sa portée. Les différents scores F1 ne sont pas directement interchangeables.",
+    "Promising intervals, visible transfer failures.": "Un résultat prometteur sur la vidéo initiale, puis des échecs de transfert.",
+    "The table keeps scoring method and scope beside each number. It is deliberately not a leaderboard of interchangeable F1 scores.": "Chaque chiffre est accompagné de sa méthode de mesure et de sa portée. Les différents scores F1 ne sont pas directement interchangeables.",
     "Experiment": "Expérience",
     "Result": "Résultat",
     "What it establishes": "Ce que cela montre",
     "Limit": "Limite",
-    "Calibrated body localisation is feasible on chosen views.":
-        "La localisation calibrée du corps des pierres est possible dans certaines vues choisies.",
-    "Manual calibration and diagram references; not an unseen-video rate.":
-        "Étalonnage manuel et comparaison aux diagrammes ; ce n'est pas un taux mesuré sur une vidéo inconnue.",
+    "Calibrated body localisation is feasible on chosen views.": "La localisation calibrée du corps des pierres est possible dans certaines vues choisies.",
+    "Manual calibration and diagram references; not an unseen-video rate.": "Étalonnage manuel et comparaison aux diagrammes ; ce n'est pas un taux mesuré sur une vidéo inconnue.",
     "18.5-minute frozen transfer": "Essai figé sur 18,5 minutes",
     "Timing F1 0.950": "F1 temporel : 0,950",
     "Timing F1 0.867": "F1 temporel : 0,867",
-    "Coarse agent-authored windows; not a full match.":
-        "Fenêtres temporelles approximatives préparées par l'agent ; ce n'est pas une partie entière.",
+    "Coarse agent-authored windows; not a full match.": "Fenêtres temporelles approximatives préparées par l'agent ; ce n'est pas une partie entière.",
     "Earlier frozen transfer": "Essai figé précédent",
-    "Fixed pixel-speed and virtual-line rules lose real throws.":
-        "Les seuils fixes de vitesse dans l'image et la ligne virtuelle manquent de vrais lancers.",
-    "Partial interval; same-family coarse reference.":
-        "Extrait partiel ; référence approximative issue d'une vidéo du même type.",
+    "Fixed pixel-speed and virtual-line rules lose real throws.": "Les seuils fixes de vitesse dans l'image et la ligne virtuelle manquent de vrais lancers.",
+    "Partial interval; same-family coarse reference.": "Extrait partiel ; référence approximative issue d'une vidéo du même type.",
     "New full-match transfer": "Nouvel essai sur une partie entière",
     "128 official shots": "128 lancers officiels",
-    "Counter linkage reaches 100 readable updates, but the ledger has excess candidates.":
-        "Cent candidats sont associés à une mise à jour lisible du compteur TV, mais la liste contient trop de candidats.",
-    "No official video release times; no full-match event F1.":
-        "Les résultats officiels ne donnent pas l'instant du lâcher dans la vidéo ; aucun F1 de lancer sur la partie entière.",
+    "Counter linkage reaches 100 readable updates, but the ledger has excess candidates.": "Cent candidats sont associés à une mise à jour lisible du compteur TV, mais la liste contient trop de candidats.",
+    "No official video release times; no full-match event F1.": "Les résultats officiels ne donnent pas l'instant du lâcher dans la vidéo ; aucun F1 de lancer sur la partie entière.",
     "Adjacent-view pairing": "Association entre plans vidéo successifs",
     "Norway end 3 → end 4": "Norvège, manche 3 → manche 4",
     "Norway end 4 → end 6": "Norvège, manche 4 → manche 6",
     "End 4: 10/12": "Manche 4 : 10/12",
     "Only 6 colour-concordant": "Seulement 6 couleurs concordantes",
-    "Delayed counter proxy covers 12/16 throws; same-match development, not physical event F1.":
-        "Le compteur différé n'offre une référence indirecte que pour 12 des 16 lancers ; développement sur la même partie, sans F1 physique des événements.",
+    "Delayed counter proxy covers 12/16 throws; same-match development, not physical event F1.": "Le compteur différé n'offre une référence indirecte que pour 12 des 16 lancers ; développement sur la même partie, sans F1 physique des événements.",
     "Mirrored early line": "Ligne virtuelle des deux côtés",
     "19 partition cues": "19 indices de franchissement",
     "10/12 counter colours": "10/12 couleurs concordantes avec le compteur",
-    "Fixed line failed on end 5; delayed counter proxy, not physical event F1.":
-        "Une ligne fixe a échoué en manche 5 ; le compteur différé n'est qu'une référence indirecte, pas un F1 des lancers réels.",
+    "Fixed line failed on end 5; delayed counter proxy, not physical event F1.": "Une ligne fixe a échoué en manche 5 ; le compteur différé n'est qu'une référence indirecte, pas un F1 des lancers réels.",
     "Held-stone cue": "Indice de pierre tenue avant le lancer",
-    "Norway end 6 development → first end 7 transfer":
-        "Norvège, développement sur la manche 6 → premier essai sur la manche 7",
+    "Norway end 6 development → first end 7 transfer": "Norvège, développement sur la manche 6 → premier essai sur la manche 7",
     "End 7: 10/12": "Manche 7 : 10/12",
-    "14 candidates; 10/10 paired colours agree":
-        "14 candidats ; les 10 couleurs appariées concordent",
-    "End-six correction was postscore; end-seven counter coverage is 12/16 and same-match. No physical event F1.":
-        "La correction en manche 6 est rétrospective ; le compteur ne couvre que 12 des 16 lancers de la manche 7, dans la même partie. Aucun F1 des lancers réels.",
+    "14 candidates; 10/10 paired colours agree": "14 candidats ; les 10 couleurs appariées concordent",
+    "End-six correction was postscore; end-seven counter coverage is 12/16 and same-match. No physical event F1.": "La correction en manche 6 est rétrospective ; le compteur ne couvre que 12 des 16 lancers de la manche 7, dans la même partie. Aucun F1 des lancers réels.",
     "Early-line first end-8 transfer": "Premier essai de la ligne précoce en manche 8",
-    "Norway end 8; tie-break frozen after end 7":
-        "Norvège, manche 8 ; règle de départage figée après la manche 7",
+    "Norway end 8; tie-break frozen after end 7": "Norvège, manche 8 ; règle de départage figée après la manche 7",
     "8/9 counter pairs": "8/9 associations au compteur",
-    "16 candidates; 7/8 paired colours agree":
-        "16 candidats ; 7 des 8 couleurs appariées concordent",
-    "Only 9/16 official deliveries have clean counters; 8 visual candidates are unpaired. No physical event F1.":
-        "Seuls 9 des 16 lancers officiels ont une lecture fiable du compteur ; 8 candidats visuels restent sans association. Aucun F1 des lancers réels.",
+    "16 candidates; 7/8 paired colours agree": "16 candidats ; 7 des 8 couleurs appariées concordent",
+    "Only 9/16 official deliveries have clean counters; 8 visual candidates are unpaired. No physical event F1.": "Seuls 9 des 16 lancers officiels ont une lecture fiable du compteur ; 8 candidats visuels restent sans association. Aucun F1 des lancers réels.",
     "Non-origin motion fallback": "Détection de secours hors vue de départ",
-    "Norway end 7 development → two other recordings":
-        "Développement sur la manche 7 de Norvège → deux autres vidéos",
-    "End 7 / Slovakia / Switzerland candidates":
-        "Candidats en Norvège, Slovaquie et Suisse",
+    "Norway end 7 development → two other recordings": "Développement sur la manche 7 de Norvège → deux autres vidéos",
+    "End 7 / Slovakia / Switzerland candidates": "Candidats en Norvège, Slovaquie et Suisse",
     "Cross-recording check": "Vérification sur d'autres vidéos",
     "Full China track-quality audit": "Audit du suivi sur la partie Chine entière",
-    "All 102 existing cap-corroborated camera windows":
-        "Les 102 plans où le mouvement d'une poignée de pierre avait été corroboré",
+    "All 102 existing cap-corroborated camera windows": "Les 102 plans où le mouvement d'une poignée de pierre avait été corroboré",
     "15/102 supported": "15/102 avec cet indice supplémentaire",
-    "42 visually ambiguous-colour abstentions":
-        "42 abstentions faute de couleur visuelle claire",
-    "Colour provenance in China ledger":
-        "Origine des couleurs dans la liste des candidats Chine",
+    "42 visually ambiguous-colour abstentions": "42 abstentions faute de couleur visuelle claire",
+    "Colour provenance in China ledger": "Origine des couleurs dans la liste des candidats Chine",
     "112 existing event candidates": "112 candidats déjà recensés",
     "39 counter-derived": "39 couleurs déduites du compteur",
-    "Both visual colours supported; 3 still unresolved":
-        "Les deux couleurs restent possibles ; 3 cas non résolus",
+    "Both visual colours supported; 3 still unresolved": "Les deux couleurs restent possibles ; 3 cas non résolus",
     "Provenance audit": "Audit de l'origine des couleurs",
     "Official-sequence diagnostic": "Diagnostic de l'ordre officiel des lancers",
-    "Audit only, all three exposed 2022 recordings":
-        "Audit uniquement, sur trois vidéos de 2022 déjà examinées",
-    "15 candidates / 10 official slots":
-        "15 candidats écartés / 10 lancers officiels sans association",
-    "Persistent skip or gap in every minimum-cost alignment":
-        "Écarts présents dans tous les alignements de coût minimal",
+    "Audit only, all three exposed 2022 recordings": "Audit uniquement, sur trois vidéos de 2022 déjà examinées",
+    "15 candidates / 10 official slots": "15 candidats écartés / 10 lancers officiels sans association",
+    "Persistent skip or gap in every minimum-cost alignment": "Écarts présents dans tous les alignements de coût minimal",
     "Four source-frame reviews": "Quatre vérifications des images source",
     "25-case queue": "Liste de 25 cas à examiner",
     "sequence audit data": "données de l'audit de séquence",
     "Receiving-view recall lead": "Piste d'un lancer manqué dans la vue d'arrivée",
     "Selected China end-one gap": "Cas choisi : première manche Chine",
-    "Visible red travel / 0 accepted tracks":
-        "Pierre rouge en mouvement / aucun suivi accepté",
+    "Visible red travel / 0 accepted tracks": "Pierre rouge en mouvement / aucun suivi accepté",
     "Cut at 915.4 s": "Changement de plan à 915,4 s",
     "Source frames and diagnostic": "Images source et diagnostic",
     "China S593 colour check": "Vérification de la couleur : Chine S593",
     "Selected end-eight sensitivity": "Analyse choisie : huitième manche",
     "8 to 4 edit cost": "Coût d'alignement : de 8 à 4",
-    "Red ledger versus yellow source cues":
-        "Liste rouge, indices jaunes dans la vidéo",
+    "Red ledger versus yellow source cues": "Liste rouge, indices jaunes dans la vidéo",
     "sensitivity data": "données de sensibilité",
     "Three exposed 2022 recordings": "Trois vidéos de 2022 déjà examinées",
-    "359 candidates / 349 official shots":
-        "359 candidats / 349 lancers officiels",
-    "300 distinct counter-anchored slots":
-        "300 lancers officiels distincts associés au compteur",
+    "359 candidates / 349 official shots": "359 candidats / 349 lancers officiels",
+    "300 distinct counter-anchored slots": "300 lancers officiels distincts associés au compteur",
     "Slot audit": "Audit de couverture des lancers",
-    "Full unassigned-shot source scan":
-        "Analyse de tous les plans vidéo non attribués",
+    "Full unassigned-shot source scan": "Analyse de tous les plans vidéo non attribués",
     "1,351 camera shots": "1 351 plans vidéo",
-    "8 raw cues; 4 ice-supported":
-        "8 indices bruts ; 4 corroborés sur la glace",
+    "8 raw cues; 4 ice-supported": "8 indices bruts ; 4 corroborés sur la glace",
     "China frames": "Images de la partie Chine",
-    "Integrated event evidence handoff":
-        "Dossier d'indices associé à chaque événement",
+    "Integrated event evidence handoff": "Dossier d'indices associé à chaque événement",
     "Additive v3 candidate union": "Liste v3 enrichie des candidats",
     "359 event records": "359 fiches d'événement",
-    "113 release cues; 18 two-view colour agreements":
-        "113 indices près du lâcher ; 18 accords de couleur entre deux vues",
+    "113 release cues; 18 two-view colour agreements": "113 indices près du lâcher ; 18 accords de couleur entre deux vues",
     "Handoff and limits": "Dossier et limites",
-    "Outside-union origin-cue discovery":
-        "Indices de départ trouvés hors de la liste initiale",
+    "Outside-union origin-cue discovery": "Indices de départ trouvés hors de la liste initiale",
     "2 rescue proposals": "2 propositions de récupération",
-    "71 origin-like shots scanned; 3 raw cues":
-        "71 plans ressemblant à des vues de départ analysés ; 3 indices bruts",
+    "71 origin-like shots scanned; 3 raw cues": "71 plans ressemblant à des vues de départ analysés ; 3 indices bruts",
     "V2 review method": "Méthode de vérification v2",
     "Frame panel": "Planche d'images",
-    "Ice-context ambiguity tie-break":
-        "Départage selon la présence de glace autour de la pierre",
-    "Three exposed 2022 recordings, then Norway":
-        "Trois vidéos de 2022 déjà examinées, puis Norvège",
+    "Ice-context ambiguity tie-break": "Départage selon la présence de glace autour de la pierre",
+    "Three exposed 2022 recordings, then Norway": "Trois vidéos de 2022 déjà examinées, puis Norvège",
     "Study": "Étude",
     "Audit": "Audit",
     "Source audit": "Audit des images source",
@@ -316,16 +226,13 @@ OVERRIDES = {
     "Temporal boards": "États des pierres à différents instants",
     "Adjacent video boards": "États des pierres dans des plans vidéo successifs",
     "Latest full-match case study": "Essai récent sur une partie entière",
-    "Canada–Norway 2022 shows the current bottleneck.":
-        "Canada–Norvège 2022 révèle le principal obstacle.",
+    "Canada–Norway 2022 shows the current bottleneck.": "Canada–Norvège 2022 révèle le principal obstacle.",
     "From events to game state": "Des événements à l'état du jeu",
-    "We have reference states and partial video states. The gap is explicit.":
-        "Nous avons des états de référence et des états vidéo partiels. Ce qui manque est identifié.",
+    "We have reference states and partial video states. The gap is explicit.": "Nous avons des états de référence et des états vidéo partiels. Ce qui manque est identifié.",
     "Simulation readiness": "Prêt pour la simulation ?",
     "Not yet": "Pas encore",
     "Concrete next milestones": "Prochaines étapes concrètes",
-    "Raise reliability before adding interpretation.":
-        "Fiabiliser les observations avant de les interpréter.",
+    "Raise reliability before adding interpretation.": "Fiabiliser les observations avant de les interpréter.",
     "Track the stone, not just its colour": "Suivre la pierre, pas seulement sa couleur",
     "Resolve event sequence": "Résoudre la séquence des lancers",
     "Prove the detector": "Valider le détecteur",
@@ -346,16 +253,11 @@ OVERRIDES = {
 }
 
 ATTRIBUTE_TRANSLATIONS = {
-    "T11 source frames before and after the moving yellow stone becomes visible, while the player hides physical release.":
-        "Images source de T11 avant et après l'apparition de la pierre jaune en mouvement, tandis que l'athlète masque le lâcher physique.",
-    "T11: departure and receiving camera trajectories overlap in time but differ by 0.61 metres at the same frame.":
-        "T11 : trajectoires des deux caméras se chevauchant dans le temps mais présentant un écart de 0,61 m dans la même image.",
-    "Four real source frames show a yellow stone in departure and receiving camera views, with observed image points below.":
-        "Quatre images source montrent une pierre jaune dans les vues de départ et d'arrivée, avec ses positions observées au-dessous.",
-    "Canada–Norway second-end broadcast frame with a yellow delivery stone in the lower central ice and red-clothed people elsewhere.":
-        "Image de la deuxième manche Canada–Norvège : pierre jaune en cours de lancer au centre bas de la glace et personnes vêtues de rouge ailleurs.",
-    "Two pairs of China broadcast frames show camera views changing within camera-shot windows S123 and S519.":
-        "Deux paires d'images de la partie Chine montrent un changement de caméra dans les plans S123 et S519.",
+    "T11 source frames before and after the moving yellow stone becomes visible, while the player hides physical release.": "Images source de T11 avant et après l'apparition de la pierre jaune en mouvement, tandis que l'athlète masque le lâcher physique.",
+    "T11: departure and receiving camera trajectories overlap in time but differ by 0.61 metres at the same frame.": "T11 : trajectoires des deux caméras se chevauchant dans le temps mais présentant un écart de 0,61 m dans la même image.",
+    "Four real source frames show a yellow stone in departure and receiving camera views, with observed image points below.": "Quatre images source montrent une pierre jaune dans les vues de départ et d'arrivée, avec ses positions observées au-dessous.",
+    "Canada–Norway second-end broadcast frame with a yellow delivery stone in the lower central ice and red-clothed people elsewhere.": "Image de la deuxième manche Canada–Norvège : pierre jaune en cours de lancer au centre bas de la glace et personnes vêtues de rouge ailleurs.",
+    "Two pairs of China broadcast frames show camera views changing within camera-shot windows S123 and S519.": "Deux paires d'images de la partie Chine montrent un changement de caméra dans les plans S123 et S519.",
 }
 
 # Longer technical passages are edited by index against the frozen source-text
@@ -581,8 +483,8 @@ def translate_html(source):
         if translated is None:
             missing.add(key)
             continue
-        prefix = raw[:len(raw) - len(raw.lstrip())]
-        suffix = raw[len(raw.rstrip()):]
+        prefix = raw[: len(raw) - len(raw.lstrip())]
+        suffix = raw[len(raw.rstrip()) :]
         node.replace_with(prefix + translated + suffix)
     for image in soup.find_all("img", alt=True):
         image["alt"] = ATTRIBUTE_TRANSLATIONS[image["alt"]]

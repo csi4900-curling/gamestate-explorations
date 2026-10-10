@@ -21,20 +21,38 @@ def digest(path):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    for name in ("raw", "screen", "sequence", "prefixes", "prefix_boards",
-                 "right_links", "right_review", "output"):
+    for name in (
+        "raw",
+        "screen",
+        "sequence",
+        "prefixes",
+        "prefix_boards",
+        "right_links",
+        "right_review",
+        "output",
+    ):
         parser.add_argument("--" + name.replace("_", "-"), type=Path, required=True)
     args = parser.parse_args()
     if args.output.exists():
         parser.error("Output already exists")
-    paths = {name: getattr(args, name) for name in (
-        "raw", "screen", "sequence", "prefixes", "prefix_boards",
-        "right_links", "right_review")}
+    paths = {
+        name: getattr(args, name)
+        for name in (
+            "raw",
+            "screen",
+            "sequence",
+            "prefixes",
+            "prefix_boards",
+            "right_links",
+            "right_review",
+        )
+    }
     inputs = {name: json.loads(path.read_text()) for name, path in paths.items()}
-    if (inputs["sequence"]["input_sha256"]["screen"] != digest(args.screen) or
-            inputs["prefix_boards"]["proposals_sha256"] != digest(args.prefixes) or
-            inputs["right_review"]["variant_sha256"] !=
-            inputs["right_links"]["right_sha256"]):
+    if (
+        inputs["sequence"]["input_sha256"]["screen"] != digest(args.screen)
+        or inputs["prefix_boards"]["proposals_sha256"] != digest(args.prefixes)
+        or inputs["right_review"]["variant_sha256"] != inputs["right_links"]["right_sha256"]
+    ):
         parser.error("Input lineage fingerprints differ")
     union = build_evidence_union(**inputs)
     output = {
@@ -56,11 +74,17 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(output, indent=2) + "\n")
-    print(json.dumps({"raw": union["raw_trigger_count"],
-                      "tiers": union["candidate_tier_counts"],
-                      "partial_boards": union["partial_board_count"],
-                      "right_links": union["conditional_right_link_count"],
-                      "unmatched_right": union["unmatched_right_review_count"]}))
+    print(
+        json.dumps(
+            {
+                "raw": union["raw_trigger_count"],
+                "tiers": union["candidate_tier_counts"],
+                "partial_boards": union["partial_board_count"],
+                "right_links": union["conditional_right_link_count"],
+                "unmatched_right": union["unmatched_right_review_count"],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

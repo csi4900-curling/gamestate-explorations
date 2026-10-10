@@ -31,8 +31,14 @@ def main():
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open("x") as file:
         file.write(json.dumps(result, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({"candidates": result["candidate_count"],
-                      "image_statuses": result["image_observation_status_counts"]}))
+    print(
+        json.dumps(
+            {
+                "candidates": result["candidate_count"],
+                "image_statuses": result["image_observation_status_counts"],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

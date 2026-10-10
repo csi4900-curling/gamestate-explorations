@@ -15,8 +15,9 @@ from throw_motion_evidence import combine_directional_event  # noqa: E402
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--primary", type=Path, required=True)
-    parser.add_argument("--supplement", type=Path,
-                        help="Denser audit for an event missing in the primary sample")
+    parser.add_argument(
+        "--supplement", type=Path, help="Denser audit for an event missing in the primary sample"
+    )
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     if args.output.exists():
@@ -26,12 +27,14 @@ def main():
     overrides = {}
     if supplement is not None:
         if supplement["source_video_sha256"] != primary["source_video_sha256"] or (
-                supplement["reference_sha256"] != primary["reference_sha256"]):
+            supplement["reference_sha256"] != primary["reference_sha256"]
+        ):
             parser.error("Supplement source or reference differs")
         for row in supplement["rows"]:
             overrides[row["event_id"]] = row["left_reverse_selection"]
-    rows = [combine_directional_event(row, overrides.get(row["event_id"]))
-            for row in primary["rows"]]
+    rows = [
+        combine_directional_event(row, overrides.get(row["event_id"])) for row in primary["rows"]
+    ]
     summary = dict(Counter(row["status"] for row in rows))
     result = {
         "status": "development_directional_motion_evidence_not_event_validation_or_game_state",

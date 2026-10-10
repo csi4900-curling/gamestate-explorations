@@ -14,7 +14,7 @@ def find_near_duplicate_pairs(episodes):
     pairs = []
     for i, left in enumerate(ordered):
         left_start, left_end = left["motion_interval_s"]
-        for right in ordered[i + 1:]:
+        for right in ordered[i + 1 :]:
             right_start, right_end = right["motion_interval_s"]
             if right_start - left_start > 1.0:
                 break
@@ -32,13 +32,15 @@ def find_near_duplicate_pairs(episodes):
             last_distance = dist(left["last_pixel"], right["last_pixel"])
             if first_distance > 2.0 or last_distance > 2.0:
                 continue
-            pairs.append({
-                "episode_ids": [left["episode_id"], right["episode_id"]],
-                "colour": left["colour"],
-                "motion_intervals_s": [left["motion_interval_s"], right["motion_interval_s"]],
-                "candidate_ids": [left["candidate_ids"], right["candidate_ids"]],
-                "first_pixel_distance_px": round(first_distance, 3),
-                "last_pixel_distance_px": round(last_distance, 3),
-                "same_physical_stone_verified": False,
-            })
+            pairs.append(
+                {
+                    "episode_ids": [left["episode_id"], right["episode_id"]],
+                    "colour": left["colour"],
+                    "motion_intervals_s": [left["motion_interval_s"], right["motion_interval_s"]],
+                    "candidate_ids": [left["candidate_ids"], right["candidate_ids"]],
+                    "first_pixel_distance_px": round(first_distance, 3),
+                    "last_pixel_distance_px": round(last_distance, 3),
+                    "same_physical_stone_verified": False,
+                }
+            )
     return pairs

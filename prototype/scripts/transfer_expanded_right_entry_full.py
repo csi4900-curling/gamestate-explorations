@@ -35,21 +35,30 @@ def associate_baseline(baseline, expanded, *, max_time_gap_s=3):
         for index, new in enumerate(expanded):
             if index in used or old["colour_claim"] != new["colour_claim"]:
                 continue
-            gap = abs(old["entry_crossing"]["time_s"] -
-                      new["entry_crossing"]["time_s"])
+            gap = abs(old["entry_crossing"]["time_s"] - new["entry_crossing"]["time_s"])
             if gap <= max_time_gap_s:
                 choices.append((gap, index))
         if choices:
             gap, index = min(choices)
             used.add(index)
-            pairs.append({"baseline_id": old["raw_track_id"],
-                          "expanded_id": expanded[index]["raw_track_id"],
-                          "crossing_time_difference_s": round(gap, 3)})
-    return {"time_colour_pairs": pairs,
-            "unpaired_baseline_ids": [row["raw_track_id"] for row in baseline
-                                      if row["raw_track_id"] not in {pair["baseline_id"] for pair in pairs}],
-            "unpaired_expanded_ids": [row["raw_track_id"] for i, row in enumerate(expanded)
-                                      if i not in used]}
+            pairs.append(
+                {
+                    "baseline_id": old["raw_track_id"],
+                    "expanded_id": expanded[index]["raw_track_id"],
+                    "crossing_time_difference_s": round(gap, 3),
+                }
+            )
+    return {
+        "time_colour_pairs": pairs,
+        "unpaired_baseline_ids": [
+            row["raw_track_id"]
+            for row in baseline
+            if row["raw_track_id"] not in {pair["baseline_id"] for pair in pairs}
+        ],
+        "unpaired_expanded_ids": [
+            row["raw_track_id"] for i, row in enumerate(expanded) if i not in used
+        ],
+    }
 
 
 def main():
@@ -67,8 +76,7 @@ def main():
     start, stop = baseline["source_interval_s"]
     if not isinstance(start, int) or not isinstance(stop, int):
         parser.error("Expected whole-second baseline interval")
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         parser.error("Cannot open video")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -87,13 +95,17 @@ def main():
     tracks = []
     for colour, samples in observations.items():
         for path in moving_cap_tracks(samples, max_gap_s=2, max_step_px=25):
-            tracks.append({"colour": colour,
-                           "first_observed_s": path["points"][0]["time_s"],
-                           "last_observed_s": path["points"][-1]["time_s"],
-                           "observation_count": len(path["points"]),
-                           "span_px": path["span_px"],
-                           "points": path["points"],
-                           "physical_throw_verified": False})
+            tracks.append(
+                {
+                    "colour": colour,
+                    "first_observed_s": path["points"][0]["time_s"],
+                    "last_observed_s": path["points"][-1]["time_s"],
+                    "observation_count": len(path["points"]),
+                    "span_px": path["span_px"],
+                    "points": path["points"],
+                    "physical_throw_verified": False,
+                }
+            )
     tracks.sort(key=lambda row: (row["first_observed_s"], row["colour"]))
     for index, row in enumerate(tracks, 1):
         row["track_id"] = f"E{index:03d}"
@@ -124,10 +136,17 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(output, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({"raw_tracks": len(tracks), "expanded_entries": len(entries),
-                      "paired": len(comparison["time_colour_pairs"]),
-                      "baseline_unpaired": len(comparison["unpaired_baseline_ids"]),
-                      "expanded_unpaired": len(comparison["unpaired_expanded_ids"])}))
+    print(
+        json.dumps(
+            {
+                "raw_tracks": len(tracks),
+                "expanded_entries": len(entries),
+                "paired": len(comparison["time_colour_pairs"]),
+                "baseline_unpaired": len(comparison["unpaired_baseline_ids"]),
+                "expanded_unpaired": len(comparison["unpaired_expanded_ids"]),
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

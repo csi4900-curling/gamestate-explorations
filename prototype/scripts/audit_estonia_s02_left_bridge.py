@@ -27,7 +27,7 @@ MAX_STEP_PX = 75
 def digest(path):
     h = sha256()
     with path.open("rb") as stream:
-        for chunk in iter(lambda: stream.read(1024*1024), b""):
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
             h.update(chunk)
     return h.hexdigest()
 
@@ -36,18 +36,23 @@ def candidates(frame):
     x1, y1, x2, y2 = ROI_XYXY
     crop = frame[y1:y2, x1:x2]
     hue, saturation, value = cv2.split(cv2.cvtColor(crop, cv2.COLOR_BGR2HSV))
-    yellow = ((hue > 16) & (hue < 43) & (saturation > 60) & (value > 65))
-    contours, _ = cv2.findContours(yellow.astype("uint8")*255,
-                                   cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    yellow = (hue > 16) & (hue < 43) & (saturation > 60) & (value > 65)
+    contours, _ = cv2.findContours(
+        yellow.astype("uint8") * 255, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
+    )
     rows = []
     for contour in contours:
         x, y, w, h = cv2.boundingRect(contour)
         area = cv2.contourArea(contour)
         if area < 15 or w > 160 or h > 100:
             continue
-        rows.append({"center_1080p_px": [x1+x+w/2, y1+y+h/2],
-                     "bbox_1080p_px": [x1+x, y1+y, w, h],
-                     "yellow_contour_area_px2": round(float(area), 2)})
+        rows.append(
+            {
+                "center_1080p_px": [x1 + x + w / 2, y1 + y + h / 2],
+                "bbox_1080p_px": [x1 + x, y1 + y, w, h],
+                "yellow_contour_area_px2": round(float(area), 2),
+            }
+        )
     return rows
 
 
@@ -59,25 +64,27 @@ def main():
     source_hash = digest(VIDEO)
     if paired["source_sha256"] != source_hash or edge["video_sha256"] != source_hash:
         raise ValueError("High-resolution source changed")
-    cap = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened() or cap.get(cv2.CAP_PROP_FPS) != 30:
         raise RuntimeError("Cannot open expected 30-fps clip")
     rows = []
     try:
-        ticks = round((STOP_S-START_S)/STEP_S)
-        for tick in range(ticks+1):
-            t = START_S+tick*STEP_S
-            cap.set(cv2.CAP_PROP_POS_FRAMES, round((t-OFFSET_S)*30))
+        ticks = round((STOP_S - START_S) / STEP_S)
+        for tick in range(ticks + 1):
+            t = START_S + tick * STEP_S
+            cap.set(cv2.CAP_PROP_POS_FRAMES, round((t - OFFSET_S) * 30))
             ok, frame = cap.read()
             if not ok or frame.shape[:2] != (1080, 1920):
                 raise RuntimeError(f"Could not decode {t}")
             options = candidates(frame)
             if not rows:
                 fx1, fy1, fx2, fy2 = FIRST_XYXY
-                eligible = [p for p in options if
-                            fx1 <= p["center_1080p_px"][0] <= fx2 and
-                            fy1 <= p["center_1080p_px"][1] <= fy2]
+                eligible = [
+                    p
+                    for p in options
+                    if fx1 <= p["center_1080p_px"][0] <= fx2
+                    and fy1 <= p["center_1080p_px"][1] <= fy2
+                ]
                 if len(eligible) != 1:
                     raise RuntimeError(f"Ambiguous first left entry: {len(eligible)}")
                 chosen = eligible[0]
@@ -87,27 +94,29 @@ def main():
                 latest = rows[-1]["chosen"]["center_1080p_px"]
                 if len(rows) > 1:
                     before = rows[-2]["chosen"]["center_1080p_px"]
-                    prediction = [2*latest[a]-before[a] for a in (0, 1)]
+                    prediction = [2 * latest[a] - before[a] for a in (0, 1)]
                 else:
                     prediction = latest
                 choices = []
                 for p in options:
                     xy = p["center_1080p_px"]
-                    distance = hypot(xy[0]-latest[0], xy[1]-latest[1])
+                    distance = hypot(xy[0] - latest[0], xy[1] - latest[1])
                     if distance <= MAX_STEP_PX:
-                        pred_error = hypot(xy[0]-prediction[0],
-                                           xy[1]-prediction[1])
-                        choices.append((pred_error+0.25*distance, distance, p))
+                        pred_error = hypot(xy[0] - prediction[0], xy[1] - prediction[1])
+                        choices.append((pred_error + 0.25 * distance, distance, p))
                 if not choices:
                     raise RuntimeError(f"Left path lost at {t}")
                 cost, step, chosen = min(choices)
-            rows.append({"source_time_s": t, "candidate_count_in_roi": len(options),
-                         "eligible_count": len(eligible) if len(rows)==0 else
-                         len(choices),
-                         "chosen": chosen,
-                         "step_1080p_px": round(step, 2) if step is not None else None,
-                         "association_cost_1080p_px": round(cost, 2)
-                         if cost is not None else None})
+            rows.append(
+                {
+                    "source_time_s": t,
+                    "candidate_count_in_roi": len(options),
+                    "eligible_count": len(eligible) if len(rows) == 0 else len(choices),
+                    "chosen": chosen,
+                    "step_1080p_px": round(step, 2) if step is not None else None,
+                    "association_cost_1080p_px": round(cost, 2) if cost is not None else None,
+                }
+            )
     finally:
         cap.release()
     by_time = {r["source_time_s"]: r for r in rows}
@@ -118,12 +127,15 @@ def main():
         if t not in by_time:
             continue
         xy = by_time[t]["chosen"]["center_1080p_px"]
-        distance = hypot(xy[0]-p["pixel_center"][0],
-                         xy[1]-p["pixel_center"][1])
-        comparison.append({"source_time_s": t,
-                           "new_contour_center_1080p_px": xy,
-                           "prior_s02_pixel_center": p["pixel_center"],
-                           "center_distance_px": round(distance, 3)})
+        distance = hypot(xy[0] - p["pixel_center"][0], xy[1] - p["pixel_center"][1])
+        comparison.append(
+            {
+                "source_time_s": t,
+                "new_contour_center_1080p_px": xy,
+                "prior_s02_pixel_center": p["pixel_center"],
+                "center_distance_px": round(distance, 3),
+            }
+        )
     if not comparison:
         raise RuntimeError("No temporal overlap with prior S02 path")
     result = {
@@ -140,9 +152,9 @@ def main():
         "rows": rows,
         "prior_s02_overlap": comparison,
         "mean_overlap_center_distance_px": round(
-            sum(r["center_distance_px"] for r in comparison)/len(comparison), 3),
-        "maximum_overlap_center_distance_px": max(
-            r["center_distance_px"] for r in comparison),
+            sum(r["center_distance_px"] for r in comparison) / len(comparison), 3
+        ),
+        "maximum_overlap_center_distance_px": max(r["center_distance_px"] for r in comparison),
         "limitations": [
             "The first-entry region was chosen after source review; this is not a blind tracker test.",
             "The prior S02 path is used only after new source-only tracking, to measure overlap.",
@@ -151,9 +163,16 @@ def main():
         ],
     }
     OUT.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({"samples": len(rows), "overlap": len(comparison),
-                      "mean_center_distance_px": result["mean_overlap_center_distance_px"],
-                      "max_center_distance_px": result["maximum_overlap_center_distance_px"]}))
+    print(
+        json.dumps(
+            {
+                "samples": len(rows),
+                "overlap": len(comparison),
+                "mean_center_distance_px": result["mean_overlap_center_distance_px"],
+                "max_center_distance_px": result["maximum_overlap_center_distance_px"],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

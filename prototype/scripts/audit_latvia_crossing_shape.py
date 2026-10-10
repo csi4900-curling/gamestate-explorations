@@ -9,16 +9,21 @@ ROOT = Path(__file__).resolve().parents[2]
 BASE = ROOT / "validation/throw-event-benchmark"
 INPUTS = {
     "raw_left": BASE / "layout-router/full-2024-coverage/latvia24-full-v1/run-02/events.json",
-    "earlier_review": BASE / "layout-router/full-2024-coverage/latvia24-full-v1/source-pixel-review-ledger.json",
-    "accepted_no_right_review": BASE / "canada-latvia-2024/accepted-no-right-source-audit/manifest.json",
-    "withheld_cross_view_review": BASE / "canada-latvia-2024/withheld-cross-view-source-audit/manifest.json",
+    "earlier_review": BASE
+    / "layout-router/full-2024-coverage/latvia24-full-v1/source-pixel-review-ledger.json",
+    "accepted_no_right_review": BASE
+    / "canada-latvia-2024/accepted-no-right-source-audit/manifest.json",
+    "withheld_cross_view_review": BASE
+    / "canada-latvia-2024/withheld-cross-view-source-audit/manifest.json",
 }
 OUTPUT = BASE / "canada-latvia-2024/crossing-shape-source-audit-development.json"
 TRANSFER_INPUTS = {
     "italy24": BASE / "layout-router/full-2024-coverage/new-preflight-italy24/run-02/events.json",
-    "estonia24": BASE / "layout-router/full-2024-coverage/new-preflight-estonia24/run-02/events.json",
+    "estonia24": BASE
+    / "layout-router/full-2024-coverage/new-preflight-estonia24/run-02/events.json",
     "china24": BASE / "layout-router/full-2024-coverage/new-preflight-china24/run-02/events.json",
-    "scotland24": BASE / "layout-router/full-2024-coverage/scotland24-bridged-development/run-01/events.json",
+    "scotland24": BASE
+    / "layout-router/full-2024-coverage/scotland24-bridged-development/run-01/events.json",
 }
 
 
@@ -36,8 +41,7 @@ def main():
     data = {key: json.loads(path.read_text()) for key, path in INPUTS.items()}
     raw = data["raw_left"]
     for name in ("earlier_review", "accepted_no_right_review", "withheld_cross_view_review"):
-        reviewed_source = (data[name].get("source_sha256")
-                           or data[name].get("source_video_sha256"))
+        reviewed_source = data[name].get("source_sha256") or data[name].get("source_video_sha256")
         if reviewed_source != raw["source_sha256"]:
             raise ValueError(f"Review source fingerprint differs from raw left run: {name}")
     raw_rows = {row["id"]: row for row in raw["events"] + raw["withheld_events"]}
@@ -72,18 +76,20 @@ def main():
         event = raw_rows[candidate_id]
         width = event["median_candidate_bbox_width_px"]
         height = event["median_candidate_bbox_height_px"]
-        rows.append({
-            "candidate_id": candidate_id,
-            "raw_decision": "accepted" if event in raw["events"] else "withheld",
-            **review,
-            "mean_body_support": event["mean_body_support"],
-            "median_candidate_bbox_width_px": width,
-            "median_candidate_bbox_height_px": height,
-            "height_to_width_ratio": round(height / width, 4),
-            "recent_track_duration_s": event["recent_track_duration_s"],
-            "observed_span_px": event["observed_span_px"],
-            "direction_consistency": event["direction_consistency"],
-        })
+        rows.append(
+            {
+                "candidate_id": candidate_id,
+                "raw_decision": "accepted" if event in raw["events"] else "withheld",
+                **review,
+                "mean_body_support": event["mean_body_support"],
+                "median_candidate_bbox_width_px": width,
+                "median_candidate_bbox_height_px": height,
+                "height_to_width_ratio": round(height / width, 4),
+                "recent_track_duration_s": event["recent_track_duration_s"],
+                "observed_span_px": event["observed_span_px"],
+                "direction_consistency": event["direction_consistency"],
+            }
+        )
 
     stones = [row for row in rows if row["source_category"] == "stone_shaped_pixels"]
     people = [row for row in rows if row["source_category"] == "person_pixels"]
@@ -97,22 +103,32 @@ def main():
     max_stone_duration = max(round(row["recent_track_duration_s"], 3) for row in stones)
     # These boundaries are derived from this reviewed set. They are diagnostic,
     # not a rule to transfer or a measurement of throw-event precision/recall.
-    flagged_people = [row["candidate_id"] for row in people
-                      if row["height_to_width_ratio"] > max_stone_ratio
-                      or row["mean_body_support"] < min_stone_body]
-    surviving_people = [row["candidate_id"] for row in people
-                        if row["candidate_id"] not in flagged_people]
-    flagged_with_duration = [row["candidate_id"] for row in people
-                             if row["candidate_id"] in flagged_people
-                             or round(row["recent_track_duration_s"], 3) > max_stone_duration]
-    surviving_with_duration = [row["candidate_id"] for row in people
-                               if row["candidate_id"] not in flagged_with_duration]
+    flagged_people = [
+        row["candidate_id"]
+        for row in people
+        if row["height_to_width_ratio"] > max_stone_ratio
+        or row["mean_body_support"] < min_stone_body
+    ]
+    surviving_people = [
+        row["candidate_id"] for row in people if row["candidate_id"] not in flagged_people
+    ]
+    flagged_with_duration = [
+        row["candidate_id"]
+        for row in people
+        if row["candidate_id"] in flagged_people
+        or round(row["recent_track_duration_s"], 3) > max_stone_duration
+    ]
+    surviving_with_duration = [
+        row["candidate_id"] for row in people if row["candidate_id"] not in flagged_with_duration
+    ]
 
     def would_flag(event):
-        return (event["median_candidate_bbox_height_px"] /
-                event["median_candidate_bbox_width_px"] > max_stone_ratio
-                or event["mean_body_support"] < min_stone_body
-                or round(event["recent_track_duration_s"], 3) > max_stone_duration)
+        return (
+            event["median_candidate_bbox_height_px"] / event["median_candidate_bbox_width_px"]
+            > max_stone_ratio
+            or event["mean_body_support"] < min_stone_body
+            or round(event["recent_track_duration_s"], 3) > max_stone_duration
+        )
 
     transfer = {}
     for name, path in TRANSFER_INPUTS.items():
@@ -121,14 +137,18 @@ def main():
             "input_sha256": sha256(path.read_bytes()).hexdigest(),
             "source_sha256": candidate_data["source_sha256"],
             "candidate_counts_only_no_source_truth": {
-                key: {"total": len(candidate_data[key]),
-                      "would_flag": sum(would_flag(event) for event in candidate_data[key])}
+                key: {
+                    "total": len(candidate_data[key]),
+                    "would_flag": sum(would_flag(event) for event in candidate_data[key]),
+                }
                 for key in ("events", "withheld_events")
             },
         }
     result = {
         "status": "same_agent_source_pixel_development_audit_not_event_validation",
-        "input_sha256": {key: sha256(path.read_bytes()).hexdigest() for key, path in INPUTS.items()},
+        "input_sha256": {
+            key: sha256(path.read_bytes()).hexdigest() for key, path in INPUTS.items()
+        },
         "runner_sha256": sha256(Path(__file__).read_bytes()).hexdigest(),
         "reviewed_unique_left_crossings": len(rows),
         "source_category_counts": {
@@ -158,8 +178,10 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
-    print(f"{len(rows)} reviewed left crossings; {len(stones)} stone pixels, "
-          f"{len(people)} people, {len(ambiguous)} ambiguous")
+    print(
+        f"{len(rows)} reviewed left crossings; {len(stones)} stone pixels, "
+        f"{len(people)} people, {len(ambiguous)} ambiguous"
+    )
     print(f"In-sample stone-safe boundaries flag {len(flagged_people)}/{len(people)} people")
     print(f"Adding in-sample duration flags {len(flagged_with_duration)}/{len(people)} people")
 

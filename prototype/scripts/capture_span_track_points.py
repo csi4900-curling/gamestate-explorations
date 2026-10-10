@@ -45,8 +45,7 @@ def main():
     start, end = frozen["source_interval_s"]
     cv2.setNumThreads(1)
     detector = SpanPassageDetector()
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     fps = cap.get(cv2.CAP_PROP_FPS)
     duration = cap.get(cv2.CAP_PROP_FRAME_COUNT) / fps if fps > 0 else 0
     if not 0 <= start < end <= duration:
@@ -65,8 +64,7 @@ def main():
         ok, frame = cap.retrieve()
         if not ok:
             raise RuntimeError(f"Frame retrieval failed at {frame_number / fps:.3f}")
-        emitted = detector.update(stone_candidates(frame, detector.config),
-                                  frame_number / fps)
+        emitted = detector.update(stone_candidates(frame, detector.config), frame_number / fps)
         for event in emitted:
             if event["track_id"] in observed_ids:
                 raise ValueError("One track emitted more than one event")
@@ -90,17 +88,19 @@ def main():
         after = min((t for t in times if t >= crossing), default=None)
         if before is None or after is None:
             raise ValueError(f"Crossing unbracketed by captured track: {event['id']}")
-        rows.append({
-            "event_id": event["id"],
-            "track_id": event["track_id"],
-            "colour": event["colour"],
-            "crossing_time_s": crossing,
-            "crossing_time_bracket_s": [before, after],
-            "first_track_observation_s": times[0],
-            "last_track_observation_s": times[-1],
-            "point_count": len(points),
-            "points": points,
-        })
+        rows.append(
+            {
+                "event_id": event["id"],
+                "track_id": event["track_id"],
+                "colour": event["colour"],
+                "crossing_time_s": crossing,
+                "crossing_time_bracket_s": [before, after],
+                "first_track_observation_s": times[0],
+                "last_track_observation_s": times[-1],
+                "point_count": len(points),
+                "points": points,
+            }
+        )
     output = {
         "status": "exact_raw_span_replay_with_candidate_local_image_tracks_not_physical_identity",
         "source_id": frozen["source_id"],

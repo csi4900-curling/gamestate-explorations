@@ -17,13 +17,28 @@ def digest(path):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    for name in ("baseline", "bridged", "bridge_triage", "fusion", "crossing_review",
-                 "right_source_review", "output"):
+    for name in (
+        "baseline",
+        "bridged",
+        "bridge_triage",
+        "fusion",
+        "crossing_review",
+        "right_source_review",
+        "output",
+    ):
         parser.add_argument(f"--{name.replace('_', '-')}", type=Path, required=True)
     args = parser.parse_args()
-    paths = {name: getattr(args, name) for name in
-             ("baseline", "bridged", "bridge_triage", "fusion", "crossing_review",
-              "right_source_review")}
+    paths = {
+        name: getattr(args, name)
+        for name in (
+            "baseline",
+            "bridged",
+            "bridge_triage",
+            "fusion",
+            "crossing_review",
+            "right_source_review",
+        )
+    }
     inputs = {name: json.loads(path.read_text()) for name, path in paths.items()}
     if inputs["fusion"]["left_sha256"] != digest(paths["bridged"]):
         raise ValueError("Fusion does not use this bridged timeline")
@@ -35,10 +50,14 @@ def main():
         raise ValueError("Crossing audit does not use this bridge triage")
     if inputs["crossing_review"]["bridged_fusion_sha256"] != digest(paths["fusion"]):
         raise ValueError("Crossing audit does not use this fusion output")
-    result = build_candidate_sequence(inputs["baseline"], inputs["bridged"],
-                                      inputs["bridge_triage"],
-                                      inputs["fusion"], inputs["crossing_review"],
-                                      inputs["right_source_review"])
+    result = build_candidate_sequence(
+        inputs["baseline"],
+        inputs["bridged"],
+        inputs["bridge_triage"],
+        inputs["fusion"],
+        inputs["crossing_review"],
+        inputs["right_source_review"],
+    )
     output = {
         "status": "full_match_candidate_sequence_not_verified_throw_or_game_state",
         "source_sha256": inputs["baseline"]["source_sha256"],
@@ -55,9 +74,19 @@ def main():
         ],
     }
     args.output.write_text(json.dumps(output, indent=2) + "\n")
-    print(json.dumps({key: result[key] for key in
-                      ("candidate_sequence_count", "conditional_two_view_link_count",
-                       "right_only_count", "evidence_tier_counts")}))
+    print(
+        json.dumps(
+            {
+                key: result[key]
+                for key in (
+                    "candidate_sequence_count",
+                    "conditional_two_view_link_count",
+                    "right_only_count",
+                    "evidence_tier_counts",
+                )
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

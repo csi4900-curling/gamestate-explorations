@@ -34,8 +34,7 @@ def main():
             if timeline["source_id"] != source["source_id"]:
                 raise ValueError("Timeline source ID mismatch")
             by_id = {event["id"]: event for event in timeline["observed_events"]}
-            cap = cv2.VideoCapture(str(video_path), cv2.CAP_FFMPEG,
-                                   [cv2.CAP_PROP_N_THREADS, 1])
+            cap = cv2.VideoCapture(str(video_path), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
             fps = cap.get(cv2.CAP_PROP_FPS)
             if not cap.isOpened() or fps <= 0:
                 raise ValueError(f"Unreadable video: {video_path}")
@@ -47,24 +46,30 @@ def main():
                 reference = by_id[item["id"]]
                 replay, points = replay_track_spatial(cap, fps, reference)
                 onset = stationary_to_motion_episode(
-                    points, replay["crossing_time_s"], replay["view_motion"])
-                rows.append({
-                    "source_id": source["source_id"],
-                    "event_id": item["id"],
-                    "source_review": item["review"],
-                    "review_kind": item["review_kind"],
-                    "crossing_time_s": replay["crossing_time_s"],
-                    "first_observed_s": points[0]["time_s"],
-                    "observations_at_confirmation": len(points),
-                    "stationary_to_motion": onset,
-                })
+                    points, replay["crossing_time_s"], replay["view_motion"]
+                )
+                rows.append(
+                    {
+                        "source_id": source["source_id"],
+                        "event_id": item["id"],
+                        "source_review": item["review"],
+                        "review_kind": item["review_kind"],
+                        "crossing_time_s": replay["crossing_time_s"],
+                        "first_observed_s": points[0]["time_s"],
+                        "observations_at_confirmation": len(points),
+                        "stationary_to_motion": onset,
+                    }
+                )
             cap.release()
-            sources.append({
-                "source_id": source["source_id"],
-                "video_sha256": file_sha256(video_path),
-                "timeline_sha256": file_sha256(timeline_path),
-                "same_video_bytes_as_timeline": file_sha256(video_path) == timeline["source_sha256"],
-            })
+            sources.append(
+                {
+                    "source_id": source["source_id"],
+                    "video_sha256": file_sha256(video_path),
+                    "timeline_sha256": file_sha256(timeline_path),
+                    "same_video_bytes_as_timeline": file_sha256(video_path)
+                    == timeline["source_sha256"],
+                }
+            )
     result = {
         "status": "development_stationary_to_motion_audit",
         "selection_sha256s": {str(path): file_sha256(path) for path in args.selection},

@@ -41,11 +41,16 @@ def source_observations():
             stones = detect_board_stones(frame, house)
             cx, cy = house["center_px"]
             radius = house["outer_radius_px"]
-            normalized = [{**stone,
-                           "image_house_radius_coordinates": [
-                               round((stone["pixel"][0] - cx) / radius, 4),
-                               round((stone["pixel"][1] - cy) / radius, 4)]}
-                          for stone in stones]
+            normalized = [
+                {
+                    **stone,
+                    "image_house_radius_coordinates": [
+                        round((stone["pixel"][0] - cx) / radius, 4),
+                        round((stone["pixel"][1] - cy) / radius, 4),
+                    ],
+                }
+                for stone in stones
+            ]
             rows.append({"time_s": t, "house": house, "visible_stones": normalized})
     finally:
         cap.release()
@@ -56,8 +61,10 @@ def main():
     if OUTPUT.exists():
         raise SystemExit("First partial house state already exists")
     rows = source_observations()
-    if any(len(row["visible_stones"]) != 1 or row["visible_stones"][0]["colour"] != "red"
-           for row in rows):
+    if any(
+        len(row["visible_stones"]) != 1 or row["visible_stones"][0]["colour"] != "red"
+        for row in rows
+    ):
         raise RuntimeError("Expected one visible red stone in each sampled frame")
     if rows[2]["visible_stones"][0]["pixel"] != rows[3]["visible_stones"][0]["pixel"]:
         raise RuntimeError("Final two sampled red positions are not stable")
@@ -68,15 +75,22 @@ def main():
     if after["official_shot_id"] != "PREL001501-E04-S12" or len(after["stones"]) != 1:
         raise RuntimeError("Expected official after diagram changed")
     reference = after["stones"][0]
-    distance = hypot(*(a - b for a, b in zip(
-        state["image_house_radius_coordinates"], reference["house_radius_coordinates"])))
+    distance = hypot(
+        *(
+            a - b
+            for a, b in zip(
+                state["image_house_radius_coordinates"], reference["house_radius_coordinates"]
+            )
+        )
+    )
     result = {
         "status": "source_only_partial_house_state_with_retrospective_official_comparison",
         "source_video_sha256": digest(VIDEO),
         "official_boards_sha256": digest(OFFICIAL),
         "detector_code_sha256": {
             "v1": digest(ROOT / "prototype/video_board_observation.py"),
-            "v2": digest(ROOT / "prototype/video_board_observation_v2.py")},
+            "v2": digest(ROOT / "prototype/video_board_observation_v2.py"),
+        },
         "runner_sha256": digest(Path(__file__)),
         "candidate_camera_shot_id": "S281",
         "receiving_camera_shot_id": "S282",
@@ -109,8 +123,10 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(result, indent=2) + "\n")
-    print(result["observed_partial_house_state"],
-          result["retrospective_official_comparison"]["source_to_diagram_distance_house_radii"])
+    print(
+        result["observed_partial_house_state"],
+        result["retrospective_official_comparison"]["source_to_diagram_distance_house_radii"],
+    )
 
 
 if __name__ == "__main__":

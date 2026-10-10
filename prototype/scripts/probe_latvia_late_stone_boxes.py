@@ -13,8 +13,14 @@ sys.path.insert(0, str(ROOT / "prototype"))
 from stone_patch_detector import detect_stones, load_model
 
 VIDEO = ROOT / "validation/throw-event-benchmark/canada-latvia-2024/source-360p.mp4"
-TIMELINE = ROOT / "validation/throw-event-benchmark/layout-router/full-2024-coverage/latvia24-full-v1/timeline.json"
-OUTPUT = ROOT / "validation/throw-event-benchmark/canada-latvia-2024/late-right-stone-box-selected-development.json"
+TIMELINE = (
+    ROOT
+    / "validation/throw-event-benchmark/layout-router/full-2024-coverage/latvia24-full-v1/timeline.json"
+)
+OUTPUT = (
+    ROOT
+    / "validation/throw-event-benchmark/canada-latvia-2024/late-right-stone-box-selected-development.json"
+)
 TIMES_S = (5500, 5580, 5627, 5803, 5805, 5900, 6145, 6495)
 MODELS = {
     name: ROOT / f"validation/curlobserver-learned-probe/{name}/model.npz"
@@ -38,8 +44,7 @@ def main():
     if source_hash != timeline["source_sha256"]:
         raise ValueError("Source video differs from timeline")
     models = {name: load_model(path) for name, path in MODELS.items()}
-    cap = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         raise RuntimeError("Cannot open source video")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -55,13 +60,15 @@ def main():
                 boxes = []
                 for box in detect_stones(frame, model):
                     x, y, w, h = box["bbox"]
-                    if not (330 <= x + w / 2 < 630 and
-                            145 <= y + h / 2 < 325):
+                    if not (330 <= x + w / 2 < 630 and 145 <= y + h / 2 < 325):
                         continue
-                    boxes.append({"colour": box["colour"],
-                                  "bbox_xywh": [round(float(v), 2)
-                                                for v in box["bbox"]],
-                                  "confidence": round(float(box["confidence"]), 5)})
+                    boxes.append(
+                        {
+                            "colour": box["colour"],
+                            "bbox_xywh": [round(float(v), 2) for v in box["bbox"]],
+                            "confidence": round(float(box["confidence"]), 5),
+                        }
+                    )
                 row["models"][name] = boxes
             rows.append(row)
     finally:
@@ -83,8 +90,7 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({name: [len(row["models"][name]) for row in rows]
-                      for name in MODELS}))
+    print(json.dumps({name: [len(row["models"][name]) for row in rows] for name in MODELS}))
 
 
 if __name__ == "__main__":

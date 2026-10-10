@@ -12,8 +12,7 @@ def shot_intervals(start_s, end_s, cut_times_s):
 
 
 def shot_for_time(intervals, t):
-    hits = [index for index, (start, end) in enumerate(intervals)
-            if start <= t < end]
+    hits = [index for index, (start, end) in enumerate(intervals) if start <= t < end]
     if len(hits) != 1:
         raise ValueError("Time outside or multiply covered by shot intervals")
     return hits[0]

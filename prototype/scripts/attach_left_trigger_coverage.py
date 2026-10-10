@@ -22,8 +22,7 @@ def main():
     args = parser.parse_args()
     if args.output.exists():
         parser.error("Output already exists")
-    handoff, activity = [json.loads(path.read_text()) for path in
-                         (args.handoff, args.activity)]
+    handoff, activity = [json.loads(path.read_text()) for path in (args.handoff, args.activity)]
     result = attach_left_trigger_coverage(handoff, activity)
     result["left_trigger_coverage_provenance"] = {
         "handoff_sha256": digest(args.handoff),
@@ -33,10 +32,17 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"rows": len(result["rows"]),
-                      "blind_seconds": result["left_trigger_blind_seconds"],
-                      "right_candidates_in_blind": result[
-                          "right_view_candidate_ids_in_left_trigger_blind_interval"]}))
+    print(
+        json.dumps(
+            {
+                "rows": len(result["rows"]),
+                "blind_seconds": result["left_trigger_blind_seconds"],
+                "right_candidates_in_blind": result[
+                    "right_view_candidate_ids_in_left_trigger_blind_interval"
+                ],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

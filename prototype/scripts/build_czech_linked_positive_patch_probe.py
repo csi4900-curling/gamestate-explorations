@@ -44,16 +44,21 @@ def select(scores, episodes):
         episode_id, pid = eligible[round(i * (len(eligible) - 1) / 11)]
         chosen[pid] = (episode_id, "time_spaced")
     remaining = [item for item in eligible if item[1] not in chosen]
-    remaining.sort(key=lambda item: (
-        sum(s["patch_score"] for s in by_id[item[1]]["samples"]) /
-        len(by_id[item[1]]["samples"]), item[1]))
+    remaining.sort(
+        key=lambda item: (
+            sum(s["patch_score"] for s in by_id[item[1]]["samples"])
+            / len(by_id[item[1]]["samples"]),
+            item[1],
+        )
+    )
     for episode_id, pid in remaining[:8]:
         chosen[pid] = (episode_id, "lowest_mean_score_remaining")
     if len(chosen) != 20:
         raise ValueError("Positive probe selection changed")
-    return sorted(((episode_id, pid, kind) for pid, (episode_id, kind) in
-                   chosen.items()), key=lambda item: (by_id[item[1]][
-                       "passage_time_s"], item[1]))
+    return sorted(
+        ((episode_id, pid, kind) for pid, (episode_id, kind) in chosen.items()),
+        key=lambda item: (by_id[item[1]]["passage_time_s"], item[1]),
+    )
 
 
 def main():
@@ -61,14 +66,15 @@ def main():
         raise ValueError("Positive source probe already exists")
     scores, episodes = (json.loads(p.read_text()) for p in (SCORES, EPISODES))
     source_hash = digest(VIDEO)
-    if (scores["source_video_sha256"] != source_hash or
-            episodes["source_sha256"] != source_hash or
-            episodes["right_tail_sha256"] != scores["input_sha256"]["scan"]):
+    if (
+        scores["source_video_sha256"] != source_hash
+        or episodes["source_sha256"] != source_hash
+        or episodes["right_tail_sha256"] != scores["input_sha256"]["scan"]
+    ):
         raise ValueError("Score, episode or source lineage mismatch")
     selected = select(scores, episodes)
     by_id = {row["right_proposal_id"]: row for row in scores["rows"]}
-    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     fps = capture.get(cv2.CAP_PROP_FPS)
     if not capture.isOpened() or fps <= 0:
         raise ValueError("Czech video unreadable")
@@ -76,7 +82,7 @@ def main():
     rows = []
     try:
         for page_index, start in enumerate(range(0, len(selected), 3), 1):
-            chunk = selected[start:start + 3]
+            chunk = selected[start : start + 3]
             page = Image.new("RGB", (960, 504 * len(chunk)), "white")
             for row_index, (episode_id, pid, selection_kind) in enumerate(chunk):
                 score = by_id[pid]
@@ -86,35 +92,39 @@ def main():
                     ok, frame = capture.read()
                     if not ok or frame.shape[:2] != (360, 640):
                         raise ValueError(f"Unreadable source sample: {pid} {time}")
-                    panel = Image.fromarray(cv2.cvtColor(frame[:, 320:],
-                                                         cv2.COLOR_BGR2RGB))
+                    panel = Image.fromarray(cv2.cvtColor(frame[:, 320:], cv2.COLOR_BGR2RGB))
                     draw = ImageDraw.Draw(panel)
                     x, y, w, h = sample["cap_bbox_px"]
-                    draw.rectangle((x - 325, y - 5, x + w - 315, y + h + 5),
-                                   outline="magenta", width=3)
+                    draw.rectangle(
+                        (x - 325, y - 5, x + w - 315, y + h + 5), outline="magenta", width=3
+                    )
                     bx, by, side, _ = context_bbox(sample["cap_bbox_px"])
-                    draw.rectangle((bx - 320, by, bx + side - 320, by + side),
-                                   outline="cyan", width=2)
+                    draw.rectangle(
+                        (bx - 320, by, bx + side - 320, by + side), outline="cyan", width=2
+                    )
                     draw.rectangle((0, 0, 260, 22), fill="white")
-                    draw.text((3, 4),
-                              f"{episode_id} {pid} {time:.0f}s score {sample['patch_score']:.2f}",
-                              fill="black")
-                    crop = Image.fromarray(cv2.cvtColor(frame,
-                                                         cv2.COLOR_BGR2RGB)).crop(
-                                                             (bx, by, bx + side,
-                                                              by + side))
+                    draw.text(
+                        (3, 4),
+                        f"{episode_id} {pid} {time:.0f}s score {sample['patch_score']:.2f}",
+                        fill="black",
+                    )
+                    crop = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)).crop(
+                        (bx, by, bx + side, by + side)
+                    )
                     crop = crop.resize((144, 144), Image.Resampling.NEAREST)
                     left, top = sample_index * 320, row_index * 504
                     page.paste(panel, (left, top))
                     page.paste(crop, (left + 88, top + 360))
-                rows.append({"episode_id": episode_id,
-                             "right_proposal_id": pid,
-                             "selection_kind": selection_kind,
-                             "source_sample_times_s": [s["time_s"] for s in
-                                                       score["samples"]],
-                             "positive_patch_count": score[
-                                 "positive_patch_count"],
-                             "page": f"page-{page_index}.jpg"})
+                rows.append(
+                    {
+                        "episode_id": episode_id,
+                        "right_proposal_id": pid,
+                        "selection_kind": selection_kind,
+                        "source_sample_times_s": [s["time_s"] for s in score["samples"]],
+                        "positive_patch_count": score["positive_patch_count"],
+                        "page": f"page-{page_index}.jpg",
+                    }
+                )
             page.save(OUT / f"page-{page_index}.jpg", quality=93)
     finally:
         capture.release()
@@ -134,9 +144,15 @@ def main():
         ],
     }
     (OUT / "manifest.json").write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"selected": len(rows), "pages": len(result["page_sha256"]),
-                      "time_spaced": sum(r["selection_kind"] == "time_spaced"
-                                         for r in rows)}))
+    print(
+        json.dumps(
+            {
+                "selected": len(rows),
+                "pages": len(result["page_sha256"]),
+                "time_spaced": sum(r["selection_kind"] == "time_spaced" for r in rows),
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

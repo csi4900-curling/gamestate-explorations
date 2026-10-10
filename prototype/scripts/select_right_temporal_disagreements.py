@@ -21,15 +21,17 @@ def main():
         parser.error("Output already exists")
     inventory = json.loads(args.inventory.read_text())
     probe = json.loads(args.probe.read_text())
-    if (inventory["source_sha256"] != probe["source_sha256"]
-            or inventory["right_probe_sha256_by_run"].get(args.run_id)
-            != digest(args.probe)):
+    if inventory["source_sha256"] != probe["source_sha256"] or inventory[
+        "right_probe_sha256_by_run"
+    ].get(args.run_id) != digest(args.probe):
         parser.error("Inventory and probe lineage differs")
-    selected = [row for row in inventory["rows"]
-                if row["run_id"] == args.run_id
-                and row["temporal_status"] != "one_left_time_colour_candidate"]
-    proposal_by_id = {row["raw_track_id"]: row for row in
-                      probe["directional_review_proposals"]}
+    selected = [
+        row
+        for row in inventory["rows"]
+        if row["run_id"] == args.run_id
+        and row["temporal_status"] != "one_left_time_colour_candidate"
+    ]
+    proposal_by_id = {row["raw_track_id"]: row for row in probe["directional_review_proposals"]}
     if len(proposal_by_id) != len(probe["directional_review_proposals"]):
         parser.error("Duplicate raw proposal IDs")
     if any(row["raw_track_id"] not in proposal_by_id for row in selected):
@@ -43,13 +45,17 @@ def main():
         "inventory_sha256": digest(args.inventory),
         "parent_probe_sha256": digest(args.probe),
         "runner_sha256": digest(Path(__file__)),
-        "selection_rows": [{"raw_track_id": row["raw_track_id"],
-                            "temporal_status": row["temporal_status"],
-                            "direction_aware_same_colour_left_ids_within_lag": row[
-                                "direction_aware_same_colour_left_ids_within_lag"]}
-                           for row in selected],
-        "directional_review_proposals": [proposal_by_id[row["raw_track_id"]]
-                                         for row in selected],
+        "selection_rows": [
+            {
+                "raw_track_id": row["raw_track_id"],
+                "temporal_status": row["temporal_status"],
+                "direction_aware_same_colour_left_ids_within_lag": row[
+                    "direction_aware_same_colour_left_ids_within_lag"
+                ],
+            }
+            for row in selected
+        ],
+        "directional_review_proposals": [proposal_by_id[row["raw_track_id"]] for row in selected],
         "limitations": [
             "Temporal mismatch is a review priority, not a false-positive label.",
             "The existing left timeline can miss true throws or contain false proposals.",

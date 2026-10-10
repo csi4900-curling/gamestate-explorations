@@ -28,20 +28,26 @@ def main():
     if baseline["source_sha256"] == reserved["source_sha256"]:
         parser.error("Reserved source cannot be used for development comparison")
     result = compare_ledgers(baseline["events"], augmented["events"])
-    result.update({
-        "status": "development_candidate_ledger_comparison_not_validation",
-        "source_sha256": baseline["source_sha256"],
-        "source_interval_s": baseline["source_interval_s"],
-        "baseline_sha256": file_sha256(args.baseline),
-        "augmented_sha256": file_sha256(args.augmented),
-        "comparison_code_sha256": file_sha256(ROOT / "prototype/ledger_comparison.py"),
-        "runner_sha256": file_sha256(__file__),
-    })
+    result.update(
+        {
+            "status": "development_candidate_ledger_comparison_not_validation",
+            "source_sha256": baseline["source_sha256"],
+            "source_interval_s": baseline["source_interval_s"],
+            "baseline_sha256": file_sha256(args.baseline),
+            "augmented_sha256": file_sha256(args.augmented),
+            "comparison_code_sha256": file_sha256(ROOT / "prototype/ledger_comparison.py"),
+            "runner_sha256": file_sha256(__file__),
+        }
+    )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print({"baseline": result["baseline_count"],
-           "augmented": result["augmented_count"],
-           "counter_changes": len(result["counter_changes"])})
+    print(
+        {
+            "baseline": result["baseline_count"],
+            "augmented": result["augmented_count"],
+            "counter_changes": len(result["counter_changes"]),
+        }
+    )
 
 
 if __name__ == "__main__":

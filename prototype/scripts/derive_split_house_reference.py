@@ -37,16 +37,15 @@ def main():
     source_hash = digest(args.video)
     if timeline["source_sha256"] != source_hash:
         parser.error("Source fingerprints differ")
-    runs = {row["id"]: row for row in timeline["supported_runs"]
-            if row["layout"] == "split_2024"}
+    runs = {row["id"]: row for row in timeline["supported_runs"] if row["layout"] == "split_2024"}
     if args.run_id not in runs:
         parser.error("Run is not a supported split view")
     start, end = runs[args.run_id]["interval_s"]
     margin = min(15, (end - start) / 10)
-    times = [round(float(value), 3) for value in
-             np.linspace(start + margin, end - margin, FRAME_COUNT)]
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    times = [
+        round(float(value), 3) for value in np.linspace(start + margin, end - margin, FRAME_COUNT)
+    ]
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         parser.error("Unreadable source video")
     frames = []
@@ -66,17 +65,27 @@ def main():
     for index in selected:
         candidate = fit_right_house_paint(frames[index])
         if ellipse and candidate:
-            center_shift = round(float(np.linalg.norm(np.asarray(candidate["center_px"])
-                                                      - np.asarray(ellipse["center_px"]))), 3)
+            center_shift = round(
+                float(
+                    np.linalg.norm(
+                        np.asarray(candidate["center_px"]) - np.asarray(ellipse["center_px"])
+                    )
+                ),
+                3,
+            )
         else:
             center_shift = None
-        frame_checks.append({"source_time_s": times[index],
-                             "single_frame_house_ellipse": candidate,
-                             "center_shift_from_temporal_median_px": center_shift})
+        frame_checks.append(
+            {
+                "source_time_s": times[index],
+                "single_frame_house_ellipse": candidate,
+                "center_shift_from_temporal_median_px": center_shift,
+            }
+        )
     output = args.output
     output.parent.mkdir(parents=True, exist_ok=True)
-    median_path = output.with_name(output.stem + '-median.png')
-    mask_path = output.with_name(output.stem + '-paint-mask.png')
+    median_path = output.with_name(output.stem + "-median.png")
+    mask_path = output.with_name(output.stem + "-paint-mask.png")
     if median_path.exists() or mask_path.exists():
         parser.error("Reference images already exist")
     cv2.imwrite(str(median_path), reference)
@@ -105,9 +114,17 @@ def main():
         ],
     }
     output.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"run": args.run_id, "ellipse": ellipse,
-                      "single_frame_detected": sum(row["single_frame_house_ellipse"] is not None
-                                                   for row in frame_checks)}))
+    print(
+        json.dumps(
+            {
+                "run": args.run_id,
+                "ellipse": ellipse,
+                "single_frame_detected": sum(
+                    row["single_frame_house_ellipse"] is not None for row in frame_checks
+                ),
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

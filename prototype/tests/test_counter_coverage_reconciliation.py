@@ -16,11 +16,16 @@ def test_route_comparison_exposes_unreadable_supported_seconds():
             {"time_s": 2, "counts": None},
             {"time_s": 3, "counts": [8, 7]},
         ],
-        "counter_events": [{"id": "B01", "colour": "yellow", "crossing_time_s": 3.0,
-                            "evidence_interval_s": [1.0, 3.0]}],
+        "counter_events": [
+            {
+                "id": "B01",
+                "colour": "yellow",
+                "crossing_time_s": 3.0,
+                "evidence_interval_s": [1.0, 3.0],
+            }
+        ],
     }
-    timeline = {"observed_events": [{"id": "R01-B01", "colour": "yellow",
-                                     "crossing_time_s": 3.0}]}
+    timeline = {"observed_events": [{"id": "R01-B01", "colour": "yellow", "crossing_time_s": 3.0}]}
     route = {"layout_chunk_s": 2, "coverage_gaps_s": [[0, 2]]}
     result = compare_route(audit, timeline, route)
     assert result["counter_readable_in_declared_unknown_s"] == 1

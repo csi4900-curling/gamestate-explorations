@@ -1,22 +1,36 @@
 from prototype.pre_split_motion_proposal import (
-    deduplicate_identical_prefixes, propose_pre_split_motion)
+    deduplicate_identical_prefixes,
+    propose_pre_split_motion,
+)
 
 
 def example(candidate_id="S01"):
-    prefix = [{"source_time_s": 10.0, "pixel_center": [100, 100],
-               "ground_position_m": [0.0, -3.0]},
-              {"source_time_s": 10.5, "pixel_center": [105, 135],
-               "ground_position_m": [0.0, -1.8]}]
-    motion = {"candidate_id": candidate_id, "colour": "red",
-              "receiving_view": "left", "crossing_time_s": 5.0,
-              "selection": {"status": "ambiguous_far_entry_motion_paths",
-                            "shared_prefix": prefix,
-                            "first_ambiguity_time_s": 11.0}}
-    patch = {"candidate_id": candidate_id,
-             "samples": [{"source_time_s": t, "status": "scored",
-                          "patch_accepted": True} for t in (10.0, 10.5)]}
-    decision = {"candidate_id": candidate_id, "accepted": False,
-                "status": "abstain_no_supported_motion_path"}
+    prefix = [
+        {"source_time_s": 10.0, "pixel_center": [100, 100], "ground_position_m": [0.0, -3.0]},
+        {"source_time_s": 10.5, "pixel_center": [105, 135], "ground_position_m": [0.0, -1.8]},
+    ]
+    motion = {
+        "candidate_id": candidate_id,
+        "colour": "red",
+        "receiving_view": "left",
+        "crossing_time_s": 5.0,
+        "selection": {
+            "status": "ambiguous_far_entry_motion_paths",
+            "shared_prefix": prefix,
+            "first_ambiguity_time_s": 11.0,
+        },
+    }
+    patch = {
+        "candidate_id": candidate_id,
+        "samples": [
+            {"source_time_s": t, "status": "scored", "patch_accepted": True} for t in (10.0, 10.5)
+        ],
+    }
+    decision = {
+        "candidate_id": candidate_id,
+        "accepted": False,
+        "status": "abstain_no_supported_motion_path",
+    }
     return motion, patch, decision
 
 

@@ -28,60 +28,82 @@ STABLE_STEPS = 3
 def digest(path):
     h = sha256()
     with path.open("rb") as stream:
-        for chunk in iter(lambda: stream.read(1024*1024), b""):
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
             h.update(chunk)
     return h.hexdigest()
 
 
 def extend(seed, rows):
-    points = [{"time_s": p["time_s"],
-               "center_1080p_px": p["center_1080p_px"],
-               "cue": "body_template_plus_yellow_handle",
-               "cue_score": p["score"]} for p in seed["points"]]
+    points = [
+        {
+            "time_s": p["time_s"],
+            "center_1080p_px": p["center_1080p_px"],
+            "cue": "body_template_plus_yellow_handle",
+            "cue_score": p["score"],
+        }
+        for p in seed["points"]
+    ]
     last_seed_time = points[-1]["time_s"]
     decisions = []
     for row in rows:
         t = row["source_time_s"]
         if t <= last_seed_time:
             continue
-        if t-last_seed_time > MAX_EXTENSION_S:
+        if t - last_seed_time > MAX_EXTENSION_S:
             break
-        gap = t-points[-1]["time_s"]
+        gap = t - points[-1]["time_s"]
         if gap > MAX_GAP_S:
             break
         available = []
         for candidate in row["positive_nms_points"]:
-            distance = hypot(*(candidate["center_1080p_px"][axis] -
-                               points[-1]["center_1080p_px"][axis]
-                               for axis in (0, 1)))
-            if distance <= MAX_SPEED_1080P_PX_PER_S*gap:
+            distance = hypot(
+                *(
+                    candidate["center_1080p_px"][axis] - points[-1]["center_1080p_px"][axis]
+                    for axis in (0, 1)
+                )
+            )
+            if distance <= MAX_SPEED_1080P_PX_PER_S * gap:
                 available.append((distance, -candidate["score"], candidate))
         if not available:
             decisions.append({"time_s": t, "status": "no_cap_candidate_in_motion_gate"})
             continue
         distance, _, chosen = min(available)
-        points.append({"time_s": t,
-                       "center_1080p_px": chosen["center_1080p_px"],
-                       "cue": "sideview_cap_context_positive",
-                       "cue_score": chosen["score"]})
-        decisions.append({"time_s": t, "status": "cap_candidate_linked",
-                          "eligible_candidate_count": len(available),
-                          "link_distance_1080p_px": round(distance, 2)})
-        stop = split_moving_prefix(points, stable_step_px=STABLE_STEP_1080P_PX,
-                                   stable_steps=STABLE_STEPS)
+        points.append(
+            {
+                "time_s": t,
+                "center_1080p_px": chosen["center_1080p_px"],
+                "cue": "sideview_cap_context_positive",
+                "cue_score": chosen["score"],
+            }
+        )
+        decisions.append(
+            {
+                "time_s": t,
+                "status": "cap_candidate_linked",
+                "eligible_candidate_count": len(available),
+                "link_distance_1080p_px": round(distance, 2),
+            }
+        )
+        stop = split_moving_prefix(
+            points, stable_step_px=STABLE_STEP_1080P_PX, stable_steps=STABLE_STEPS
+        )
         if stop["visual_stop_bracket_s"] is not None:
             break
-    stop = split_moving_prefix(points, stable_step_px=STABLE_STEP_1080P_PX,
-                               stable_steps=STABLE_STEPS)
-    return {"seed_path_id": seed["diagnostic_path_id"],
-            "seed_interval_s": [seed["first_observed_s"], seed["last_observed_s"]],
-            "points": points, "link_decisions": decisions,
-            "image_motion_interpretation": stop,
-            "physical_throw_verified": False,
-            "same_stone_identity_verified": False,
-            "physical_stop_verified": False,
-            "ground_trajectory_verified": False,
-            "simulation_ready": False}
+    stop = split_moving_prefix(
+        points, stable_step_px=STABLE_STEP_1080P_PX, stable_steps=STABLE_STEPS
+    )
+    return {
+        "seed_path_id": seed["diagnostic_path_id"],
+        "seed_interval_s": [seed["first_observed_s"], seed["last_observed_s"]],
+        "points": points,
+        "link_decisions": decisions,
+        "image_motion_interpretation": stop,
+        "physical_throw_verified": False,
+        "same_stone_identity_verified": False,
+        "physical_stop_verified": False,
+        "ground_trajectory_verified": False,
+        "simulation_ready": False,
+    }
 
 
 def main():
@@ -89,12 +111,17 @@ def main():
         raise SystemExit("Output exists; preserve first handoff")
     body = json.loads(BODY.read_text())
     cap = json.loads(CAP.read_text())
-    if body["target_video_sha256"] != cap["target_video_sha256"] or \
-            body["source_interval_s"] != cap["source_interval_s"] or \
-            body["sample_period_s"] != cap["sample_period_s"]:
+    if (
+        body["target_video_sha256"] != cap["target_video_sha256"]
+        or body["source_interval_s"] != cap["source_interval_s"]
+        or body["sample_period_s"] != cap["sample_period_s"]
+    ):
         raise ValueError("Body and cap scans are not source aligned")
-    seeds = [p for p in body["variants"]["frozen_score_0.45"]["image_motion_paths"]
-             if p["direction"] == "upward"]
+    seeds = [
+        p
+        for p in body["variants"]["frozen_score_0.45"]["image_motion_paths"]
+        if p["direction"] == "upward"
+    ]
     joined = [extend(seed, cap["rows"]) for seed in seeds]
     result = {
         "status": "unpositioned_fullclip_template_to_cap_image_handoff_development",
@@ -120,11 +147,21 @@ def main():
         ],
     }
     OUT.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({"seed_paths": len(seeds),
-                      "joined_paths": [{"seed": p["seed_interval_s"],
-                                        "last": p["points"][-1]["time_s"],
-                                        "stop_bracket": p["image_motion_interpretation"]["visual_stop_bracket_s"]}
-                                       for p in joined]}))
+    print(
+        json.dumps(
+            {
+                "seed_paths": len(seeds),
+                "joined_paths": [
+                    {
+                        "seed": p["seed_interval_s"],
+                        "last": p["points"][-1]["time_s"],
+                        "stop_bracket": p["image_motion_interpretation"]["visual_stop_bracket_s"],
+                    }
+                    for p in joined
+                ],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

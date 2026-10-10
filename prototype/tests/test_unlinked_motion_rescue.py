@@ -5,10 +5,17 @@ SHOTS = [
     {"id": "S1", "interval_s": [0, 8]},
     {"id": "S2", "interval_s": [8, 20]},
 ]
-ORIGINS = [{"shot_id": "S1", "interval_s": [0, 8],
-            "probability": 0.96, "predicted": 0}]
-EPISODES = [{"episode_id": "E1", "camera_shot_id": "S2", "colour": "yellow",
-             "interval_s": [8.5, 14], "span_px": 40, "point_count": 5}]
+ORIGINS = [{"shot_id": "S1", "interval_s": [0, 8], "probability": 0.96, "predicted": 0}]
+EPISODES = [
+    {
+        "episode_id": "E1",
+        "camera_shot_id": "S2",
+        "colour": "yellow",
+        "interval_s": [8.5, 14],
+        "span_px": 40,
+        "point_count": 5,
+    }
+]
 LINKS = [{"episode_id": "E1", "candidate_ids": []}]
 
 
@@ -31,5 +38,9 @@ def test_colour_conflict_is_reviewed_but_same_colour_is_not():
 def test_late_or_already_linked_motion_is_not_a_rescue():
     episode = EPISODES[0] | {"interval_s": [10, 14]}
     assert find_adjacent_origin_proposals(LINKS, [episode], ORIGINS, SHOTS, []) == []
-    assert find_adjacent_origin_proposals([{"episode_id": "E1", "candidate_ids": ["S1"]}],
-                                          EPISODES, ORIGINS, SHOTS, []) == []
+    assert (
+        find_adjacent_origin_proposals(
+            [{"episode_id": "E1", "candidate_ids": ["S1"]}], EPISODES, ORIGINS, SHOTS, []
+        )
+        == []
+    )

@@ -29,8 +29,7 @@ def main():
     video_hash = digest(args.video)
     if video_hash != data["source_sha256"]:
         parser.error("Source fingerprints differ")
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         parser.error("Unreadable video")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -38,7 +37,7 @@ def main():
     sheets = []
     try:
         for start in range(0, len(data["rows"]), 4):
-            group = data["rows"][start:start + 4]
+            group = data["rows"][start : start + 4]
             sheet = np.full((520 * len(group), 640, 3), 25, dtype=np.uint8)
             for i, row in enumerate(group):
                 t = row["sample_frames"][1]["time_s"]
@@ -52,20 +51,38 @@ def main():
                     y = round((stone["pixel_center"][1] - 120) * 2)
                     colour = (0, 0, 255) if stone["colour"] == "red" else (0, 255, 255)
                     cv2.circle(crop, (x, y), 10, colour, 2)
-                    cv2.putText(crop, stone["local_observation_id"],
-                                (x + 8, y - 8), cv2.FONT_HERSHEY_SIMPLEX,
-                                .38, colour, 1, cv2.LINE_AA)
+                    cv2.putText(
+                        crop,
+                        stone["local_observation_id"],
+                        (x + 8, y - 8),
+                        cv2.FONT_HERSHEY_SIMPLEX,
+                        0.38,
+                        colour,
+                        1,
+                        cv2.LINE_AA,
+                    )
                 top = i * 520
-                sheet[top + 30:top + 510, :640] = crop
-                cv2.putText(sheet,
-                            f"{row['right_raw_track_id']} {row['observation_status']} {t:.1f}s",
-                            (7, top + 21), cv2.FONT_HERSHEY_SIMPLEX,
-                            .5, (255, 255, 255), 1, cv2.LINE_AA)
+                sheet[top + 30 : top + 510, :640] = crop
+                cv2.putText(
+                    sheet,
+                    f"{row['right_raw_track_id']} {row['observation_status']} {t:.1f}s",
+                    (7, top + 21),
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    0.5,
+                    (255, 255, 255),
+                    1,
+                    cv2.LINE_AA,
+                )
             path = args.output_dir / f"sheet-{start // 4 + 1:02}.jpg"
             if not cv2.imwrite(str(path), sheet):
                 raise RuntimeError(f"Could not write {path}")
-            sheets.append({"file": path.name, "sha256": digest(path),
-                           "right_track_ids": [row["right_raw_track_id"] for row in group]})
+            sheets.append(
+                {
+                    "file": path.name,
+                    "sha256": digest(path),
+                    "right_track_ids": [row["right_raw_track_id"] for row in group],
+                }
+            )
     finally:
         cap.release()
     manifest = {

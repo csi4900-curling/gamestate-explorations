@@ -22,8 +22,10 @@ def frame_features(frame):
     gx = cv2.Sobel(gray, cv2.CV_32F, 1, 0)
     gy = cv2.Sobel(gray, cv2.CV_32F, 0, 1)
     masks.append(np.sqrt(gx * gx + gy * gy) > 45)
-    grid = [cv2.resize(mask.astype(np.float32), (8, 5),
-                       interpolation=cv2.INTER_AREA).ravel() for mask in masks]
+    grid = [
+        cv2.resize(mask.astype(np.float32), (8, 5), interpolation=cv2.INTER_AREA).ravel()
+        for mask in masks
+    ]
     return np.concatenate([*grid, [float(compact_overlay_visible(frame))]]).astype(np.float32)
 
 

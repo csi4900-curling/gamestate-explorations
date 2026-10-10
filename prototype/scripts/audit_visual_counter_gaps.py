@@ -27,17 +27,18 @@ def main():
     reserved = json.loads((ROOT / "validation/unseen-end/reservation.json").read_text())
     if ledger["source_sha256"] == reserved["source_sha256"]:
         parser.error("Reserved source cannot be used for development audit")
-    result = screen_visual_counter_gaps(ledger["events"],
-                                         counters["counter_events"])
-    result.update({
-        "status": "development_visual_only_counter_consistency_not_event_truth",
-        "source_sha256": ledger["source_sha256"],
-        "source_interval_s": ledger["source_interval_s"],
-        "ledger_sha256": file_sha256(args.ledger),
-        "counter_replay_sha256": file_sha256(args.counter_replay),
-        "screen_code_sha256": file_sha256(ROOT / "prototype/visual_counter_gap_screen.py"),
-        "runner_sha256": file_sha256(__file__),
-    })
+    result = screen_visual_counter_gaps(ledger["events"], counters["counter_events"])
+    result.update(
+        {
+            "status": "development_visual_only_counter_consistency_not_event_truth",
+            "source_sha256": ledger["source_sha256"],
+            "source_interval_s": ledger["source_interval_s"],
+            "ledger_sha256": file_sha256(args.ledger),
+            "counter_replay_sha256": file_sha256(args.counter_replay),
+            "screen_code_sha256": file_sha256(ROOT / "prototype/visual_counter_gap_screen.py"),
+            "runner_sha256": file_sha256(__file__),
+        }
+    )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
     print(result["status_counts"])

@@ -43,8 +43,7 @@ def main():
     if source_hash == reserved["source_sha256"]:
         raise ValueError("Reserved source selected")
     model = load_model(MODEL)
-    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     fps = capture.get(cv2.CAP_PROP_FPS)
     step = round(fps / 5)
     rows = []
@@ -63,11 +62,10 @@ def main():
             ok, frame = capture.retrieve()
             if not ok:
                 raise RuntimeError(f"Retrieve failed: {shot_id} {frame_index}")
-            raw = stone_cap_candidates(frame, colour,
-                                       allow_bright_body=True,
-                                       allow_large_caps=True)
-            accepted = [row for row in score_candidates(frame, raw, model)
-                        if row["patch_score"] >= -0.6]
+            raw = stone_cap_candidates(frame, colour, allow_bright_body=True, allow_large_caps=True)
+            accepted = [
+                row for row in score_candidates(frame, raw, model) if row["patch_score"] >= -0.6
+            ]
             stream.append((round(frame_index / fps, 3), accepted))
         transits = short_transits(stream)
         tracks = _tracks(stream)
@@ -79,37 +77,51 @@ def main():
                 ok, frame = capture.read()
                 if not ok:
                     raise RuntimeError(f"Frame decode failed: {shot_id} {time_s}")
-                frame_cache[time_s] = cv2.resize(frame, (640, 360),
-                                                 interpolation=cv2.INTER_AREA)
+                frame_cache[time_s] = cv2.resize(frame, (640, 360), interpolation=cv2.INTER_AREA)
             return frame_cache[time_s]
 
         transit_rows = []
         for transit in transits[:3]:
-            linked = [track for track in tracks
-                      if track[0]["time_s"] == transit["interval_s"][0]
-                      and track[0]["pixel"] == transit["first_pixel"]
-                      and track[-1]["time_s"] == transit["interval_s"][1]]
+            linked = [
+                track
+                for track in tracks
+                if track[0]["time_s"] == transit["interval_s"][0]
+                and track[0]["pixel"] == transit["first_pixel"]
+                and track[-1]["time_s"] == transit["interval_s"][1]
+            ]
             if len(linked) != 1:
                 pairs = []
                 status = "track_link_abstention"
             else:
                 pairs = sample_track_camera_motion(linked[0], frame_at, step_s=0.4)
                 status = "registered_pairs" if pairs else "too_short_for_pairs"
-            residuals = [pair["camera_residual_px"] for pair in pairs
-                         if pair["camera_residual_px"] is not None]
-            transit_rows.append({"transit": transit, "status": status,
-                                 "pair_count": len(pairs),
-                                 "reliable_pair_count": len(residuals),
-                                 "reliable_over_10px_count": sum(value > 10
-                                                                 for value in residuals),
-                                 "max_reliable_residual_px": max(residuals, default=None),
-                                 "pairs": pairs})
-        rows.append({"shot_id": shot_id, "interval_s": candidate["interval_s"],
-                     "candidate_colour": colour,
-                     "sampled_frame_count": len(stream),
-                     "accepted_patch_count": sum(len(items) for _, items in stream),
-                     "transit_count": len(transits),
-                     "top_transit_camera_motion": transit_rows})
+            residuals = [
+                pair["camera_residual_px"]
+                for pair in pairs
+                if pair["camera_residual_px"] is not None
+            ]
+            transit_rows.append(
+                {
+                    "transit": transit,
+                    "status": status,
+                    "pair_count": len(pairs),
+                    "reliable_pair_count": len(residuals),
+                    "reliable_over_10px_count": sum(value > 10 for value in residuals),
+                    "max_reliable_residual_px": max(residuals, default=None),
+                    "pairs": pairs,
+                }
+            )
+        rows.append(
+            {
+                "shot_id": shot_id,
+                "interval_s": candidate["interval_s"],
+                "candidate_colour": colour,
+                "sampled_frame_count": len(stream),
+                "accepted_patch_count": sum(len(items) for _, items in stream),
+                "transit_count": len(transits),
+                "top_transit_camera_motion": transit_rows,
+            }
+        )
     capture.release()
     output = {
         "status": "selected_postscore_china_camera_relative_fallback_diagnostic_not_event_score",
@@ -129,10 +141,24 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(output, indent=2) + "\n")
-    print([(row["shot_id"], row["transit_count"],
-            [(item["status"], item["reliable_pair_count"],
-              item["reliable_over_10px_count"], item["max_reliable_residual_px"])
-             for item in row["top_transit_camera_motion"]]) for row in rows])
+    print(
+        [
+            (
+                row["shot_id"],
+                row["transit_count"],
+                [
+                    (
+                        item["status"],
+                        item["reliable_pair_count"],
+                        item["reliable_over_10px_count"],
+                        item["max_reliable_residual_px"],
+                    )
+                    for item in row["top_transit_camera_motion"]
+                ],
+            )
+            for row in rows
+        ]
+    )
 
 
 if __name__ == "__main__":

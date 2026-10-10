@@ -10,9 +10,15 @@ from math import isfinite
 from throw_event_benchmark import evaluate_events
 
 
-def assess_recording(prediction, reference, *, measured_source_sha256=None,
-                     measured_source_duration_s=None,
-                     min_precision=0.95, min_recall=0.95):
+def assess_recording(
+    prediction,
+    reference,
+    *,
+    measured_source_sha256=None,
+    measured_source_duration_s=None,
+    min_precision=0.95,
+    min_recall=0.95,
+):
     """Score exhaustive events and state whether the result supports the target.
 
     The prediction must explicitly declare complete video coverage. A partial
@@ -34,15 +40,19 @@ def assess_recording(prediction, reference, *, measured_source_sha256=None,
     if prediction.get("source_interval_s") != interval:
         raise ValueError("Prediction and reference intervals differ")
     duration = reference.get("source_duration_s")
-    if (isinstance(duration, bool) or not isinstance(duration, (int, float))
-            or not isfinite(duration) or duration <= 0
-            or prediction.get("source_duration_s") != duration
-            or reference.get("source_duration_verified") is not True
-            or isinstance(measured_source_duration_s, bool)
-            or not isinstance(measured_source_duration_s, (int, float))
-            or not isfinite(measured_source_duration_s)
-            or abs(measured_source_duration_s - duration) > 0.1
-            or interval != [0, duration]):
+    if (
+        isinstance(duration, bool)
+        or not isinstance(duration, (int, float))
+        or not isfinite(duration)
+        or duration <= 0
+        or prediction.get("source_duration_s") != duration
+        or reference.get("source_duration_verified") is not True
+        or isinstance(measured_source_duration_s, bool)
+        or not isinstance(measured_source_duration_s, (int, float))
+        or not isfinite(measured_source_duration_s)
+        or abs(measured_source_duration_s - duration) > 0.1
+        or interval != [0, duration]
+    ):
         return {
             "accepted": False,
             "reason": "unverified_full_recording_scope",

@@ -28,7 +28,9 @@ def gray_frame(cap, fps, seconds):
 
 def context_costs(before_image, after_image, before_xy, after_xy):
     before = cv2.getRectSubPix(before_image, (61, 61), tuple(map(float, before_xy))).astype(float)
-    stationary = cv2.getRectSubPix(after_image, (61, 61), tuple(map(float, before_xy))).astype(float)
+    stationary = cv2.getRectSubPix(after_image, (61, 61), tuple(map(float, before_xy))).astype(
+        float
+    )
     moving = cv2.getRectSubPix(after_image, (61, 61), tuple(map(float, after_xy))).astype(float)
     yy, xx = np.ogrid[-30:31, -30:31]
     radius = np.sqrt(xx * xx + yy * yy)
@@ -41,8 +43,8 @@ def context_costs(before_image, after_image, before_xy, after_xy):
         results[label] = {
             "stationary_mae": fixed_cost,
             "track_following_mae": following_cost,
-            "comovement_index": (fixed_cost - following_cost) /
-                                (fixed_cost + following_cost + 1e-6),
+            "comovement_index": (fixed_cost - following_cost)
+            / (fixed_cost + following_cost + 1e-6),
         }
     return results
 
@@ -58,8 +60,7 @@ def main():
     tracks = json.loads(args.tracks.read_text())
     if digest(args.video) != tracks["source_sha256"]:
         parser.error("Video differs from track replay")
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     fps = cap.get(cv2.CAP_PROP_FPS)
     if not cap.isOpened() or fps <= 0:
         parser.error("Unreadable video")
@@ -72,22 +73,28 @@ def main():
         elapsed = after["time_s"] - before["time_s"]
         travel = float(np.linalg.norm(np.subtract(after["pixel"], before["pixel"])))
         if elapsed < 0.2 or travel < 3:
-            rows.append({"event_id": track["event_id"],
-                         "status": "abstain_insufficient_observed_motion",
-                         "sample_times_s": [before["time_s"], after["time_s"]],
-                         "travel_px": travel})
+            rows.append(
+                {
+                    "event_id": track["event_id"],
+                    "status": "abstain_insufficient_observed_motion",
+                    "sample_times_s": [before["time_s"], after["time_s"]],
+                    "travel_px": travel,
+                }
+            )
             continue
         first = gray_frame(cap, fps, before["time_s"])
         second = gray_frame(cap, fps, after["time_s"])
-        rows.append({
-            "event_id": track["event_id"],
-            "status": "scored_surrounding_motion",
-            "sample_times_s": [before["time_s"], after["time_s"]],
-            "sample_positions_px": [before["pixel"], after["pixel"]],
-            "travel_px": travel,
-            "elapsed_s": elapsed,
-            "context": context_costs(first, second, before["pixel"], after["pixel"]),
-        })
+        rows.append(
+            {
+                "event_id": track["event_id"],
+                "status": "scored_surrounding_motion",
+                "sample_times_s": [before["time_s"], after["time_s"]],
+                "sample_positions_px": [before["pixel"], after["pixel"]],
+                "travel_px": travel,
+                "elapsed_s": elapsed,
+                "context": context_costs(first, second, before["pixel"], after["pixel"]),
+            }
+        )
     cap.release()
     result = {
         "status": "postscore_candidate_context_motion_diagnostic_not_physical_verifier",
@@ -107,8 +114,14 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({"scored": sum(row["status"] == "scored_surrounding_motion"
-                                    for row in rows), "total": len(rows)}))
+    print(
+        json.dumps(
+            {
+                "scored": sum(row["status"] == "scored_surrounding_motion" for row in rows),
+                "total": len(rows),
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

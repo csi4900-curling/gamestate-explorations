@@ -54,12 +54,13 @@ def main():
     packet = json.loads(HIGH_PACKET.read_text())
     scans = {name: json.loads(path.read_text()) for name, path in SCANS.items()}
     video_hash = digest(VIDEO)
-    if (queue["source_video_sha256"] != video_hash or
-            low["input_sha256"]["queue"] != digest(QUEUE) or
-            high["input_sha256"]["queue"] != digest(QUEUE) or
-            high["input_sha256"]["source_packet_manifest"] != digest(HIGH_PACKET)
-            or any(queue["input_sha256"][name] != digest(path) for name, path
-                   in SCANS.items())):
+    if (
+        queue["source_video_sha256"] != video_hash
+        or low["input_sha256"]["queue"] != digest(QUEUE)
+        or high["input_sha256"]["queue"] != digest(QUEUE)
+        or high["input_sha256"]["source_packet_manifest"] != digest(HIGH_PACKET)
+        or any(queue["input_sha256"][name] != digest(path) for name, path in SCANS.items())
+    ):
         raise ValueError("Source/review lineage mismatch")
     model = load_model(MODEL)
     if float(model["threshold"]) != 0.0:
@@ -82,17 +83,18 @@ def main():
     proposal_rows = {}
     raw_tracks = {}
     for name, scan in scans.items():
-        entries = (scan["later_review_proposals"] if name.endswith("_later")
-                   else scan["directional_review_proposals"])
+        entries = (
+            scan["later_review_proposals"]
+            if name.endswith("_later")
+            else scan["directional_review_proposals"]
+        )
         for row in entries:
-            pid = (f"{name}:{row['raw_track_id']}:"
-                   f"{row.get('episode_index_within_raw_track', 1)}")
+            pid = f"{name}:{row['raw_track_id']}:{row.get('episode_index_within_raw_track', 1)}"
             proposal_rows[pid] = row
         if "raw_tracks" in scan:
             raw_tracks[name] = {r["track_id"]: r for r in scan["raw_tracks"]}
     raw_tracks["two_second_global_later"] = raw_tracks["two_second_global"]
-    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     fps = capture.get(cv2.CAP_PROP_FPS)
     if not capture.isOpened() or fps <= 0:
         raise ValueError("Source unreadable")
@@ -116,31 +118,38 @@ def main():
                 ok, frame = capture.read()
                 if not ok or frame.shape[:2] != (360, 640):
                     raise ValueError(f"Source decode failed: {pid}")
-                result = score_candidates(frame, [{"bbox": point["bbox"]}],
-                                          model)[0]
-                samples.append({"time_s": time,
-                                "patch_score": round(result["patch_score"], 6),
-                                "patch_accepted": result["patch_accepted"]})
-            rows.append({
-                "proposal_id": pid,
-                "source_pixel_class": labels[pid],
-                "sample_scores": samples,
-                "positive_sample_count": sum(s["patch_accepted"] for s in samples),
-                "any_positive_patch": any(s["patch_accepted"] for s in samples),
-                "physical_throw_verified": False,
-            })
+                result = score_candidates(frame, [{"bbox": point["bbox"]}], model)[0]
+                samples.append(
+                    {
+                        "time_s": time,
+                        "patch_score": round(result["patch_score"], 6),
+                        "patch_accepted": result["patch_accepted"],
+                    }
+                )
+            rows.append(
+                {
+                    "proposal_id": pid,
+                    "source_pixel_class": labels[pid],
+                    "sample_scores": samples,
+                    "positive_sample_count": sum(s["patch_accepted"] for s in samples),
+                    "any_positive_patch": any(s["patch_accepted"] for s in samples),
+                    "physical_throw_verified": False,
+                }
+            )
     finally:
         capture.release()
-    counts = Counter((row["source_pixel_class"], row["any_positive_patch"])
-                     for row in rows)
+    counts = Counter((row["source_pixel_class"], row["any_positive_patch"]) for row in rows)
     result = {
         "status": "frozen_sideview_patch_transfer_on_selected_source_pixels_not_throw_truth",
         "source_video_sha256": video_hash,
-        "input_sha256": {"queue": digest(QUEUE), "low_consensus_review": digest(LOW),
-                         "high_consensus_review": digest(HIGH),
-                         "high_consensus_packet": digest(HIGH_PACKET),
-                         "model": digest(MODEL),
-                         **{name: digest(path) for name, path in SCANS.items()}},
+        "input_sha256": {
+            "queue": digest(QUEUE),
+            "low_consensus_review": digest(LOW),
+            "high_consensus_review": digest(HIGH),
+            "high_consensus_packet": digest(HIGH_PACKET),
+            "model": digest(MODEL),
+            **{name: digest(path) for name, path in SCANS.items()},
+        },
         "feature_code_sha256": digest(ROOT / "prototype/stone_patch_detector.py"),
         "scorer_code_sha256": digest(ROOT / "prototype/cap_patch_verifier.py"),
         "runner_sha256": digest(Path(__file__)),
@@ -149,8 +158,8 @@ def main():
         "reviewed_proposal_count": len(rows),
         "counts_by_source_class_and_any_positive_patch": {
             cls: {"positive": counts[cls, True], "negative": counts[cls, False]}
-            for cls in ("stone_pixels", "person_or_equipment_pixels",
-                        "mixed_or_identity_uncertain")},
+            for cls in ("stone_pixels", "person_or_equipment_pixels", "mixed_or_identity_uncertain")
+        },
         "rows": rows,
         "limitations": [
             "The patch model was trained on earlier development broadcasts and has known stone misses; a negative cannot reject a delivery.",
@@ -160,9 +169,14 @@ def main():
         ],
     }
     OUT.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"proposals": len(rows),
-                      "counts": result[
-                          "counts_by_source_class_and_any_positive_patch"]}))
+    print(
+        json.dumps(
+            {
+                "proposals": len(rows),
+                "counts": result["counts_by_source_class_and_any_positive_patch"],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

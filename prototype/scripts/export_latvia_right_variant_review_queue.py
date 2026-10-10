@@ -32,22 +32,25 @@ def digest(path):
 def main():
     scans = {name: json.loads(path.read_text()) for name, path in FILES.items()}
     source_hash = digest(BASE / "source-360p.mp4")
-    if any(scan["source_sha256"] != source_hash or
-           scan["source_interval_s"] != [0, 7058]
-           for scan in scans.values()):
+    if any(
+        scan["source_sha256"] != source_hash or scan["source_interval_s"] != [0, 7058]
+        for scan in scans.values()
+    ):
         raise ValueError("Variant source bytes or intervals disagree")
-    if scans["two_second_global_later"]["global_scan_sha256"] != digest(
-            FILES["two_second_global"]):
+    if scans["two_second_global_later"]["global_scan_sha256"] != digest(FILES["two_second_global"]):
         raise ValueError("Later episodes are not derived from the global scan")
-    variants = {name: scans[name]["directional_review_proposals"] for name in (
-        "one_second_greedy", "two_second_greedy", "two_second_global")}
+    variants = {
+        name: scans[name]["directional_review_proposals"]
+        for name in ("one_second_greedy", "two_second_greedy", "two_second_global")
+    }
     for name, rows in variants.items():
         if len(rows) != scans[name]["directional_proposal_count"]:
             raise ValueError(f"Proposal count mismatch: {name}")
-    variants["two_second_global_later"] = scans[
-        "two_second_global_later"]["later_review_proposals"]
-    if len(variants["two_second_global_later"]) != scans[
-            "two_second_global_later"]["later_quiet_separated_proposal_count"]:
+    variants["two_second_global_later"] = scans["two_second_global_later"]["later_review_proposals"]
+    if (
+        len(variants["two_second_global_later"])
+        != scans["two_second_global_later"]["later_quiet_separated_proposal_count"]
+    ):
         raise ValueError("Later episode count mismatch")
     proposals, groups = build_review_queue(variants, window_s=WINDOW_S)
 
@@ -56,12 +59,16 @@ def main():
         raise ValueError("Witness source differs")
     witnesses = []
     for witness in witness_file["witnesses"]:
-        matches = [row["proposal_id"] for row in proposals
-                   if row["colour_claim"] == witness["colour_claim"]
-                   and row["direction"] == witness["direction"]
-                   and abs(row["time_s"] - witness["source_time_s"]) <= WINDOW_S]
-        witnesses.append({"witness_id": witness["witness_id"],
-                          "temporally_matching_proposal_ids": matches})
+        matches = [
+            row["proposal_id"]
+            for row in proposals
+            if row["colour_claim"] == witness["colour_claim"]
+            and row["direction"] == witness["direction"]
+            and abs(row["time_s"] - witness["source_time_s"]) <= WINDOW_S
+        ]
+        witnesses.append(
+            {"witness_id": witness["witness_id"], "temporally_matching_proposal_ids": matches}
+        )
     result = {
         "status": "development_review_queue_not_verified_physical_throws",
         "source_video_sha256": source_hash,
@@ -75,11 +82,13 @@ def main():
         "variant_proposal_counts": {name: len(rows) for name, rows in variants.items()},
         "proposal_count": len(proposals),
         "review_group_count": len(groups),
-        "multi_proposal_review_group_count": sum(len(group["proposal_ids"]) > 1
-                                                  for group in groups),
+        "multi_proposal_review_group_count": sum(
+            len(group["proposal_ids"]) > 1 for group in groups
+        ),
         "source_visible_witness_count": len(witnesses),
         "source_visible_witnesses_with_temporal_proposal": sum(
-            bool(row["temporally_matching_proposal_ids"]) for row in witnesses),
+            bool(row["temporally_matching_proposal_ids"]) for row in witnesses
+        ),
         "witnesses": witnesses,
         "proposals": proposals,
         "review_groups": groups,
@@ -92,9 +101,15 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({"proposals": len(proposals), "review_groups": len(groups),
-                      "witness_coverage": result[
-                          "source_visible_witnesses_with_temporal_proposal"]}))
+    print(
+        json.dumps(
+            {
+                "proposals": len(proposals),
+                "review_groups": len(groups),
+                "witness_coverage": result["source_visible_witnesses_with_temporal_proposal"],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

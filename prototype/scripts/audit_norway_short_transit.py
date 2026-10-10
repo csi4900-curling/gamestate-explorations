@@ -9,8 +9,14 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "prototype"))
 from short_cap_transit import short_transits
 
-INPUT = ROOT / "validation/curlobserver-learned-probe/cap-patch-crossmatch-v1/norway-end2-targeted-transfer.json"
-OUTPUT = ROOT / "validation/curlobserver-learned-probe/cap-patch-crossmatch-v1/norway-end2-short-transit.json"
+INPUT = (
+    ROOT
+    / "validation/curlobserver-learned-probe/cap-patch-crossmatch-v1/norway-end2-targeted-transfer.json"
+)
+OUTPUT = (
+    ROOT
+    / "validation/curlobserver-learned-probe/cap-patch-crossmatch-v1/norway-end2-short-transit.json"
+)
 
 
 def digest(path):
@@ -25,19 +31,28 @@ def main():
     for window in source["rows"]:
         transits = []
         for colour in ("red", "yellow"):
-            observations = [(sample["time_s"], [candidate for candidate in
-                                              sample["candidates"][colour]
-                                              if candidate["patch_accepted"]])
-                            for sample in window["samples"]]
-            transits.extend(dict(track, colour=colour)
-                            for track in short_transits(observations))
-        transits.sort(key=lambda row: (-row["point_count"],
-                                       -row["displacement_px"]))
-        rows.append({"shot_id": window["shot_id"],
-                     "counter_proxy_colour": window["counter_proxy_colour"],
-                     "frozen_visual_colour": window["frozen_visual_colour"],
-                     "transits": transits,
-                     "top_transit_colour": transits[0]["colour"] if transits else None})
+            observations = [
+                (
+                    sample["time_s"],
+                    [
+                        candidate
+                        for candidate in sample["candidates"][colour]
+                        if candidate["patch_accepted"]
+                    ],
+                )
+                for sample in window["samples"]
+            ]
+            transits.extend(dict(track, colour=colour) for track in short_transits(observations))
+        transits.sort(key=lambda row: (-row["point_count"], -row["displacement_px"]))
+        rows.append(
+            {
+                "shot_id": window["shot_id"],
+                "counter_proxy_colour": window["counter_proxy_colour"],
+                "frozen_visual_colour": window["frozen_visual_colour"],
+                "transits": transits,
+                "top_transit_colour": transits[0]["colour"] if transits else None,
+            }
+        )
     result = {
         "status": "postscore_exposed_short_verified_cap_transit_not_event_f1",
         "source_sha256": source["source_sha256"],
@@ -55,10 +70,12 @@ def main():
     }
     OUTPUT.write_text(json.dumps(result, indent=2) + "\n")
     for row in rows:
-        print(row["shot_id"], row["counter_proxy_colour"],
-              row["top_transit_colour"],
-              [(t["colour"], t["point_count"], t["displacement_px"])
-               for t in row["transits"]])
+        print(
+            row["shot_id"],
+            row["counter_proxy_colour"],
+            row["top_transit_colour"],
+            [(t["colour"], t["point_count"], t["displacement_px"]) for t in row["transits"]],
+        )
 
 
 if __name__ == "__main__":

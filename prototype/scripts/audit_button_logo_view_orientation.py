@@ -9,8 +9,7 @@ import cv2
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
-from prototype.button_logo_orientation import (logo_colour_signature,
-                                               relative_view_rotation)
+from prototype.button_logo_orientation import logo_colour_signature, relative_view_rotation
 
 BASE = ROOT / "validation/official-shot-sequence"
 OUTPUT = BASE / "button-logo-cross-view-orientation-development.json"
@@ -25,7 +24,8 @@ CASES = [
     },
     {
         "name": "swiss_end2_s13",
-        "video": ROOT / "validation/throw-event-benchmark/paralympics-2022-sweden-switzerland/source.mp4",
+        "video": ROOT
+        / "validation/throw-event-benchmark/paralympics-2022-sweden-switzerland/source.mp4",
         "overhead": BASE / "swiss-end2-adjacent-video-boards-first.json",
         "overhead_shot_id": "PREL000101-E02-S13",
         "wide": BASE / "swiss-end2-wide-blue-ring-v2-development.json",
@@ -58,11 +58,15 @@ def signature_frames(capture, fps, observations, *, view):
         else:
             ellipse = observation["ellipse"]
             center = ellipse["center_px"]
-            axes = [max(ellipse["axis_lengths_px"]) / 2,
-                    min(ellipse["axis_lengths_px"]) / 2]
-        rows.append({"time_s": time_s, "center_px": center,
-                     "outer_axes_px": axes,
-                     "signature": logo_colour_signature(frame, center, axes)})
+            axes = [max(ellipse["axis_lengths_px"]) / 2, min(ellipse["axis_lengths_px"]) / 2]
+        rows.append(
+            {
+                "time_s": time_s,
+                "center_px": center,
+                "outer_axes_px": axes,
+                "signature": logo_colour_signature(frame, center, axes),
+            }
+        )
     return rows
 
 
@@ -77,43 +81,65 @@ def main():
             raise ValueError("Reserved source selected")
         overhead_artifact = json.loads(config["overhead"].read_text())
         wide_artifact = json.loads(config["wide"].read_text())
-        if (source_hash != overhead_artifact["source_sha256"]
-                or source_hash != wide_artifact["source_sha256"]):
+        if (
+            source_hash != overhead_artifact["source_sha256"]
+            or source_hash != wide_artifact["source_sha256"]
+        ):
             raise ValueError("Source fingerprint mismatch")
-        overhead = next(row["frame_observations"] for row in overhead_artifact["rows"]
-                        if row["shot_id"] == config["overhead_shot_id"])
+        overhead = next(
+            row["frame_observations"]
+            for row in overhead_artifact["rows"]
+            if row["shot_id"] == config["overhead_shot_id"]
+        )
         if config["wide_shot_id"] is None:
             wide = wide_artifact["frames"]
         else:
-            wide = next(row["wide_frames"] for row in wide_artifact["rows"]
-                        if row["shot_id"] == config["wide_shot_id"])
-        capture = cv2.VideoCapture(str(config["video"]), cv2.CAP_FFMPEG,
-                                   [cv2.CAP_PROP_N_THREADS, 1])
+            wide = next(
+                row["wide_frames"]
+                for row in wide_artifact["rows"]
+                if row["shot_id"] == config["wide_shot_id"]
+            )
+        capture = cv2.VideoCapture(
+            str(config["video"]), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1]
+        )
         fps = capture.get(cv2.CAP_PROP_FPS)
         overhead_signatures = signature_frames(capture, fps, overhead, view="overhead")
         wide_signatures = signature_frames(capture, fps, wide, view="wide")
         capture.release()
-        pairs = [{"overhead_time_s": left["time_s"],
-                  "wide_time_s": right["time_s"],
-                  "relative_rotation_degrees": relative_view_rotation(
-                      left["signature"], right["signature"])}
-                 for left in overhead_signatures for right in wide_signatures]
-        resolved = {row["relative_rotation_degrees"] for row in pairs
-                    if row["relative_rotation_degrees"] is not None}
-        cases.append({
-            "name": config["name"],
-            "source_sha256": source_hash,
-            "overhead_artifact_sha256": digest(config["overhead"]),
-            "wide_artifact_sha256": digest(config["wide"]),
-            "overhead_frames": overhead_signatures,
-            "wide_frames": wide_signatures,
-            "cross_view_pairs": pairs,
-            "resolved_pair_count": sum(row["relative_rotation_degrees"] is not None
-                                       for row in pairs),
-            "unanimous_relative_rotation_degrees": next(iter(resolved))
-            if len(resolved) == 1 and all(row["relative_rotation_degrees"] is not None
-                                          for row in pairs) else None,
-        })
+        pairs = [
+            {
+                "overhead_time_s": left["time_s"],
+                "wide_time_s": right["time_s"],
+                "relative_rotation_degrees": relative_view_rotation(
+                    left["signature"], right["signature"]
+                ),
+            }
+            for left in overhead_signatures
+            for right in wide_signatures
+        ]
+        resolved = {
+            row["relative_rotation_degrees"]
+            for row in pairs
+            if row["relative_rotation_degrees"] is not None
+        }
+        cases.append(
+            {
+                "name": config["name"],
+                "source_sha256": source_hash,
+                "overhead_artifact_sha256": digest(config["overhead"]),
+                "wide_artifact_sha256": digest(config["wide"]),
+                "overhead_frames": overhead_signatures,
+                "wide_frames": wide_signatures,
+                "cross_view_pairs": pairs,
+                "resolved_pair_count": sum(
+                    row["relative_rotation_degrees"] is not None for row in pairs
+                ),
+                "unanimous_relative_rotation_degrees": next(iter(resolved))
+                if len(resolved) == 1
+                and all(row["relative_rotation_degrees"] is not None for row in pairs)
+                else None,
+            }
+        )
     output = {
         "status": "selected_source_only_button_logo_orientation_development",
         "logo_code_sha256": digest(ROOT / "prototype/button_logo_orientation.py"),
@@ -128,9 +154,17 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(output, indent=2) + "\n")
-    print([(row["name"], row["resolved_pair_count"],
-            len(row["cross_view_pairs"]), row["unanimous_relative_rotation_degrees"])
-           for row in cases])
+    print(
+        [
+            (
+                row["name"],
+                row["resolved_pair_count"],
+                len(row["cross_view_pairs"]),
+                row["unanimous_relative_rotation_degrees"],
+            )
+            for row in cases
+        ]
+    )
 
 
 if __name__ == "__main__":

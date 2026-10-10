@@ -14,11 +14,15 @@ from stone_patch_detector import detect_stones, load_model  # noqa: E402
 
 BASE = ROOT / "validation/throw-event-benchmark/paralympics-2022-korea-china"
 SOURCE = BASE / "source.mp4"
-LEDGER = ROOT / "validation/curlobserver-learned-probe/korea-china-full-first-transfer/candidate-event-ledger.json"
+LEDGER = (
+    ROOT
+    / "validation/curlobserver-learned-probe/korea-china-full-first-transfer/candidate-event-ledger.json"
+)
 OUTPUT = BASE / "STONE-BOX-MODEL-SWAP-PILOT.json"
 MODELS = {
     "frozen_v1": ROOT / "validation/curlobserver-learned-probe/model-v1/model.npz",
-    "public_tracking_v2": ROOT / "validation/curlobserver-learned-probe/public-tracking-v2/model.npz",
+    "public_tracking_v2": ROOT
+    / "validation/curlobserver-learned-probe/public-tracking-v2/model.npz",
 }
 CONFLICT_IDS = ("T001", "T095", "T099", "T101")
 CONTROL_IDS = ("T002", "T004", "T006", "T008", "T010")
@@ -45,8 +49,7 @@ def main():
     if len(candidates) != len(ledger["events"]) or any(cid not in candidates for cid in ids):
         raise ValueError("Selected candidate missing or duplicate IDs")
     models = {name: load_model(path) for name, path in MODELS.items()}
-    cap = cv2.VideoCapture(str(SOURCE), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(SOURCE), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         raise RuntimeError("Cannot open source video")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -69,27 +72,38 @@ def main():
                     grouped = {"red": [], "yellow": []}
                     for box in detect_stones(frame, model):
                         x, y, width, height = box["bbox"]
-                        grouped[box["colour"]].append({
-                            "pixel": [x + width / 2, y + height / 2],
-                            "bbox": box["bbox"], "confidence": box["confidence"],
-                        })
+                        grouped[box["colour"]].append(
+                            {
+                                "pixel": [x + width / 2, y + height / 2],
+                                "bbox": box["bbox"],
+                                "confidence": box["confidence"],
+                            }
+                        )
                         box_counts[name][box["colour"]] += 1
                     for colour in grouped:
                         observations[name][colour].append((time_s, grouped[colour]))
-            rows.append({
-                "candidate_id": cid,
-                "selection": "postscore_colour_conflict" if cid in CONFLICT_IDS
-                else "counter_backed_red_control",
-                "shot_id": candidate["shot_id"],
-                "candidate_colour": candidate["colour"],
-                "counter_id": candidate["counter_id"],
-                "release_window_s": candidate["release_window_s"],
-                "sample_count": samples,
-                "models": {name: {"box_counts": box_counts[name],
-                                  "supported_tracks": tracks_for_shot(
-                                      observations[name], candidate["shot_id"])}
-                           for name in models},
-            })
+            rows.append(
+                {
+                    "candidate_id": cid,
+                    "selection": "postscore_colour_conflict"
+                    if cid in CONFLICT_IDS
+                    else "counter_backed_red_control",
+                    "shot_id": candidate["shot_id"],
+                    "candidate_colour": candidate["colour"],
+                    "counter_id": candidate["counter_id"],
+                    "release_window_s": candidate["release_window_s"],
+                    "sample_count": samples,
+                    "models": {
+                        name: {
+                            "box_counts": box_counts[name],
+                            "supported_tracks": tracks_for_shot(
+                                observations[name], candidate["shot_id"]
+                            ),
+                        }
+                        for name in models
+                    },
+                }
+            )
             print(f"{cid} {samples} frames", flush=True)
     finally:
         cap.release()

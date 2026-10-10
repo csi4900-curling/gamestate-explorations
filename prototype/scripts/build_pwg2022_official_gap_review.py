@@ -37,23 +37,31 @@ def main():
         candidates = json.loads(candidate_path.read_text())["events"]
         runs = build_gap_runs(game, aligned["counter_rows"], candidates)
         uncovered = sum(len(run["official_shots"]) for run in runs)
-        clean = sum(aligned["counter_status_counts"].get(status, 0) for status in
-                    ("unique_colour_concordant", "unique_colour_concordant_amid_duplicate"))
+        clean = sum(
+            aligned["counter_status_counts"].get(status, 0)
+            for status in ("unique_colour_concordant", "unique_colour_concordant_amid_duplicate")
+        )
         if clean + uncovered != game["official_shot_count"]:
             raise ValueError("Official-shot coverage arithmetic failed")
-        games.append({
-            "official_game_code": game["official_game_code"],
-            "official_shot_count": game["official_shot_count"],
-            "clean_counter_anchored_shot_count": clean,
-            "unanchored_official_shot_count": uncovered,
-            "gap_run_count": len(runs),
-            "bounded_gap_run_count": sum(run["bounded_within_end"] for run in runs),
-            "unanchored_by_end": dict(Counter(str(run["official_end"])
-                                              for run in runs for _ in run["official_shots"])),
-            "visual_candidate_triage_counts": dict(Counter(
-                run["visual_candidate_triage"] for run in runs if run["bounded_within_end"])),
-            "gap_runs": runs,
-        })
+        games.append(
+            {
+                "official_game_code": game["official_game_code"],
+                "official_shot_count": game["official_shot_count"],
+                "clean_counter_anchored_shot_count": clean,
+                "unanchored_official_shot_count": uncovered,
+                "gap_run_count": len(runs),
+                "bounded_gap_run_count": sum(run["bounded_within_end"] for run in runs),
+                "unanchored_by_end": dict(
+                    Counter(str(run["official_end"]) for run in runs for _ in run["official_shots"])
+                ),
+                "visual_candidate_triage_counts": dict(
+                    Counter(
+                        run["visual_candidate_triage"] for run in runs if run["bounded_within_end"]
+                    )
+                ),
+                "gap_runs": runs,
+            }
+        )
     packet = {
         "status": "official_shot_gap_review_search_spans_not_throw_labels",
         "official_reference_path": str(REFERENCE.relative_to(ROOT)),
@@ -72,8 +80,12 @@ def main():
     }
     OUTPUT.write_text(json.dumps(packet, indent=2) + "\n")
     for game in games:
-        print(game["official_game_code"], game["unanchored_official_shot_count"],
-              game["gap_run_count"], game["bounded_gap_run_count"])
+        print(
+            game["official_game_code"],
+            game["unanchored_official_shot_count"],
+            game["gap_run_count"],
+            game["bounded_gap_run_count"],
+        )
 
 
 if __name__ == "__main__":

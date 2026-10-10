@@ -7,7 +7,6 @@ This estimates a silhouette repeat interval, not a physical revolution count.
 from hashlib import sha256
 import json
 from pathlib import Path
-import sys
 
 import cv2
 import numpy as np
@@ -25,21 +24,29 @@ def digest(path):
 
 def track_pixels(throw, times, *, settled=False):
     points = throw["raw_arrival" if settled else "display_arrival"]
-    points = [p for p in points if (2319 <= p["time_s"] <= 2323.5 if settled
-                                     else 2307 <= p["time_s"] <= 2312.5)]
+    points = [
+        p
+        for p in points
+        if (2319 <= p["time_s"] <= 2323.5 if settled else 2307 <= p["time_s"] <= 2312.5)
+    ]
     pt = np.array([p["time_s"] for p in points])
-    return [(int(round(np.interp(t, pt, [p["pixel"][0] for p in points]))),
-             int(round(np.interp(t, pt, [p["pixel"][1] for p in points]))))
-            for t in times]
+    return [
+        (
+            int(round(np.interp(t, pt, [p["pixel"][0] for p in points]))),
+            int(round(np.interp(t, pt, [p["pixel"][1] for p in points]))),
+        )
+        for t in times
+    ]
 
 
 def normalized_yellow_mask(frame, x, y):
-    patch = frame[y - 40:y + 8, x - 40:x + 40]
+    patch = frame[y - 40 : y + 8, x - 40 : x + 40]
     if patch.shape[:2] != (48, 80):
         return None
     hsv = cv2.cvtColor(patch, cv2.COLOR_BGR2HSV)
-    mask = (((hsv[:, :, 0] > 16) & (hsv[:, :, 0] < 42) &
-             (hsv[:, :, 1] > 65) & (hsv[:, :, 2] > 75))).astype(np.uint8)
+    mask = (
+        (hsv[:, :, 0] > 16) & (hsv[:, :, 0] < 42) & (hsv[:, :, 1] > 65) & (hsv[:, :, 2] > 75)
+    ).astype(np.uint8)
     count, labels, stats, _ = cv2.connectedComponentsWithStats(mask)
     if count < 2:
         return None
@@ -62,8 +69,7 @@ def normalized_yellow_mask(frame, x, y):
     right, low = min(80, x0 + width), min(56, y0 + height)
     if right <= left or low <= top:
         return None
-    canvas[top:low, left:right] = resized[top - y0:low - y0,
-                                       left - x0:right - x0]
+    canvas[top:low, left:right] = resized[top - y0 : low - y0, left - x0 : right - x0]
     return canvas[:35, :]
 
 
@@ -92,9 +98,13 @@ def lag_curve(masks, max_lag_steps):
         intersection = (a * b).sum(axis=(1, 2))
         union = ((a + b) > 0).sum(axis=(1, 2))
         similarities = intersection / np.maximum(union, 1)
-        rows.append({"lag_s": round(steps / 10, 1),
-                     "mean_mask_iou": round(float(similarities.mean()), 4),
-                     "frame_pair_count": len(similarities)})
+        rows.append(
+            {
+                "lag_s": round(steps / 10, 1),
+                "mean_mask_iou": round(float(similarities.mean()), 4),
+                "frame_pair_count": len(similarities),
+            }
+        )
     return rows
 
 
@@ -110,10 +120,12 @@ def main():
     try:
         moving_times = np.round(np.arange(2307.0, 2312.51, 0.1), 3)
         settled_times = np.round(np.arange(2319.5, 2323.01, 0.1), 3)
-        moving, moving_retained = mask_series(cap, throw, moving_times,
-                                              meta["source_interval_s"][0])
-        settled, settled_retained = mask_series(cap, throw, settled_times,
-                                                meta["source_interval_s"][0], settled=True)
+        moving, moving_retained = mask_series(
+            cap, throw, moving_times, meta["source_interval_s"][0]
+        )
+        settled, settled_retained = mask_series(
+            cap, throw, settled_times, meta["source_interval_s"][0], settled=True
+        )
     finally:
         cap.release()
     if len(moving) != len(moving_times) or len(settled) != len(settled_times):
@@ -144,9 +156,19 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({k: result[k] for k in
-                      ("moving_sample_count", "settled_control_sample_count",
-                       "strongest_moving_repeat_lag_0_8_to_3_s")}, indent=2))
+    print(
+        json.dumps(
+            {
+                k: result[k]
+                for k in (
+                    "moving_sample_count",
+                    "settled_control_sample_count",
+                    "strongest_moving_repeat_lag_0_8_to_3_s",
+                )
+            },
+            indent=2,
+        )
+    )
 
 
 if __name__ == "__main__":

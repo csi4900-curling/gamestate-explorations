@@ -27,10 +27,12 @@ def main():
     delta = json.loads(args.delta.read_text())
     provenance = partial_sequence["partial_cap_handoff_provenance"]
     original_sequence_hash = provenance["candidate_sequence_sha256"]
-    if (pre["candidate_sequence_sha256"] != original_sequence_hash
-            or delta["input_sha256"]["candidate_sequence"] != original_sequence_hash
-            or delta["input_sha256"]["pre_cap_scan"] != digest(args.pre)
-            or delta["input_sha256"]["post_cap_scan"] != provenance["partial_cap_scan_sha256"]):
+    if (
+        pre["candidate_sequence_sha256"] != original_sequence_hash
+        or delta["input_sha256"]["candidate_sequence"] != original_sequence_hash
+        or delta["input_sha256"]["pre_cap_scan"] != digest(args.pre)
+        or delta["input_sha256"]["post_cap_scan"] != provenance["partial_cap_scan_sha256"]
+    ):
         parser.error("Partial-cap provenance differs")
     result = attach_deltas(partial_sequence, pre, delta)
     result["partial_cap_transition_handoff_provenance"] = {
@@ -41,11 +43,18 @@ def main():
         "runner_sha256": digest(Path(__file__)),
     }
     result["limitations"].append(
-        "Before/after changes are cap visibility differences, not verified stone movements or scoring states.")
+        "Before/after changes are cap visibility differences, not verified stone movements or scoring states."
+    )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"candidate_rows": result["sequence_row_count"],
-                      "comparison_statuses": result["partial_cap_image_transition_status_counts"]}))
+    print(
+        json.dumps(
+            {
+                "candidate_rows": result["sequence_row_count"],
+                "comparison_statuses": result["partial_cap_image_transition_status_counts"],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

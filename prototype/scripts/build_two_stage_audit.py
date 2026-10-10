@@ -51,9 +51,11 @@ def audit_run(name, stages):
     )
     unified_path = OUT / f"{name}-unified-gate.json"
     unified = json.loads(unified_path.read_text())
-    if (unified["source_sha256"] != raw["source_sha256"] or
-            unified["proposal_sha256"] != file_sha256(raw_path) or
-            unified["source_interval_s"] != raw["source_interval_s"]):
+    if (
+        unified["source_sha256"] != raw["source_sha256"]
+        or unified["proposal_sha256"] != file_sha256(raw_path)
+        or unified["source_interval_s"] != raw["source_interval_s"]
+    ):
         raise ValueError(f"Unified gate input mismatch: {unified_path}")
     unified_score = evaluate_events(
         unified["events"], reference["events"], reference["source_interval_s"]
@@ -61,13 +63,15 @@ def audit_run(name, stages):
     confirmed_refs = {row["reference_id"] for row in confirmed["matches"]}
     review_ids = {row["id"] for row in result["review_events"]}
     review_matches = [
-        row for row in pool["matches"]
+        row
+        for row in pool["matches"]
         if row["prediction_id"] in review_ids and row["reference_id"] not in confirmed_refs
     ]
     unified_refs = {row["reference_id"] for row in unified_score["matches"]}
     unified_review_ids = {row["id"] for row in unified["review_events"]}
     unified_review_matches = [
-        row for row in pool["matches"]
+        row
+        for row in pool["matches"]
         if row["prediction_id"] in unified_review_ids and row["reference_id"] not in unified_refs
     ]
     return {
@@ -76,8 +80,11 @@ def audit_run(name, stages):
         "scope": "frozen partial-interval development diagnostic",
         "source_sha256": raw["source_sha256"],
         "source_interval_s": raw["source_interval_s"],
-        "input_sha256": {"raw": file_sha256(raw_path), "reference": file_sha256(ref_path),
-                         **{path: file_sha256(base / path) for path in stages}},
+        "input_sha256": {
+            "raw": file_sha256(raw_path),
+            "reference": file_sha256(ref_path),
+            **{path: file_sha256(base / path) for path in stages},
+        },
         "stages": stages,
         "historical_counts": result["counts"],
         "unified_counts": unified["counts"],
@@ -108,33 +115,47 @@ def main():
     }
     (OUT / "results.json").write_text(json.dumps(document, indent=2) + "\n")
     lines = [
-        "# Two-stage throw-event development audit", "",
+        "# Two-stage throw-event development audit",
+        "",
         "Raw proposals are kept for recall. One image-context gate now runs over",
         "all three frozen raw candidate lists; every withheld proposal remains reviewable.",
         "China and Estonia were already exposed, so their new scores are post-score",
-        "development diagnostics. USA reproduces the frozen first transfer result.", "",
+        "development diagnostics. USA reproduces the frozen first transfer result.",
+        "",
         "| Recording | Proposal pool TP/FP/FN | Historical gate TP/FP/FN | Unified gate TP/FP/FN | Labelled throws in unified review |",
         "| --- | ---: | ---: | ---: | ---: |",
     ]
     for run in runs:
-        a, b, c = (run["proposal_pool_score"], run["historical_confirmed_score"],
-                   run["unified_confirmed_score"])
+        a, b, c = (
+            run["proposal_pool_score"],
+            run["historical_confirmed_score"],
+            run["unified_confirmed_score"],
+        )
         fmt = lambda s: f"{s['true_positives']}/{s['false_positives']}/{s['false_negatives']}"
-        lines.append(f"| {run['recording']} | {fmt(a)} | {fmt(b)} | {fmt(c)} | {len(run['unified_reference_matches_in_review'])} |")
-    lines.extend([
-        "", "On Estonia, the spatial gate retained 16 reference matches, but the later",
-        "image-speed gate withheld three of them. The unified context gate restores",
-        "those three to the automated candidate set on this exposed excerpt. The raw",
-        "pool still misses one labelled delivery; a filter cannot",
-        "recover a throw that the proposal stage never produced.", "",
-        "The same context rule removes 19 unmatched USA raw proposals while retaining",
-        "its 19 temporal matches. On China it removes eight raw proposals, leaving",
-        "17 matches and one extra. These are exposed, partial-interval checks with",
-        "agent-made labels; they do not establish general precision or recall.", "",
-        "Next: broaden the proposal routes for occluded/cut deliveries, then freeze a",
-        "single confirmation policy and score it on independently labelled full videos.", "",
-        "Machine-readable candidate-level decisions: [results.json](results.json).", "",
-    ])
+        lines.append(
+            f"| {run['recording']} | {fmt(a)} | {fmt(b)} | {fmt(c)} | {len(run['unified_reference_matches_in_review'])} |"
+        )
+    lines.extend(
+        [
+            "",
+            "On Estonia, the spatial gate retained 16 reference matches, but the later",
+            "image-speed gate withheld three of them. The unified context gate restores",
+            "those three to the automated candidate set on this exposed excerpt. The raw",
+            "pool still misses one labelled delivery; a filter cannot",
+            "recover a throw that the proposal stage never produced.",
+            "",
+            "The same context rule removes 19 unmatched USA raw proposals while retaining",
+            "its 19 temporal matches. On China it removes eight raw proposals, leaving",
+            "17 matches and one extra. These are exposed, partial-interval checks with",
+            "agent-made labels; they do not establish general precision or recall.",
+            "",
+            "Next: broaden the proposal routes for occluded/cut deliveries, then freeze a",
+            "single confirmation policy and score it on independently labelled full videos.",
+            "",
+            "Machine-readable candidate-level decisions: [results.json](results.json).",
+            "",
+        ]
+    )
     (OUT / "README.md").write_text("\n".join(lines))
     table_rows = []
     detail_rows = []
@@ -164,7 +185,7 @@ def main():
         for run in runs
     ]
     review_json = json.dumps(review_data, ensure_ascii=False).replace("<", "\\u003c")
-    html = f'''<!doctype html><html lang="fr"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Deux étapes pour détecter les lancers</title><style>
+    html = f"""<!doctype html><html lang="fr"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Deux étapes pour détecter les lancers</title><style>
     :root{{--ink:#173d3a;--teal:#087c76;--paper:#f6f3eb;--warn:#a44b31}}
     body{{max-width:1040px;margin:0 auto;padding:42px 24px;background:var(--paper);color:var(--ink);font:18px/1.52 system-ui}}
     h1{{font:clamp(34px,5vw,58px)/1.08 Georgia,serif;max-width:800px;margin:0 0 20px}}
@@ -175,15 +196,17 @@ def main():
     </style><p class="eyebrow">Prototype · audit de développement</p><h1>Proposer largement, confirmer prudemment.</h1>
     <p class="lead">Chaque indice de lancer reste traçable. Le filtre confirme les cas soutenus par l'image et envoie les autres en vérification, sans effacer les propositions.</p>
     <div class="flow"><div class="step"><b>1 · Proposer</b>Mouvement de pierre possible dans la vidéo ; on privilégie le rappel.</div><div class="arrow">→</div><div class="step"><b>2 · Examiner les indices</b>Position sur la glace, cohérence du mouvement et contexte du plan.</div><div class="arrow">→</div><div class="step"><b>3 · Décider</b>Candidat confirmé automatiquement ou cas à vérifier.</div></div>
-    <section class="card"><h2>Ce que montrent trois extraits déjà étudiés</h2><p>VP/FP/FN : passages appariés / candidats supplémentaires / passages manqués par rapport aux fenêtres de référence. « Ancien » conserve le premier résultat figé ; « commun » applique la même règle de contexte aux trois listes brutes.</p><div class="scroll"><table><thead><tr><th>Vidéo</th><th>Propositions</th><th>Brut<br>VP/FP/FN</th><th>Ancien filtre<br>VP/FP/FN</th><th>Filtre commun<br>VP/FP/FN</th><th>Lancers dans<br>la vérification</th></tr></thead><tbody>{''.join(table_rows)}</tbody></table></div></section>
-    <section class="card"><h2>Le cas décisif : Estonie</h2><p>La règle spatiale conservait 16 passages appariés. L'ancien seuil de vitesse en retirait trois :</p><ul>{''.join(detail_rows)}</ul><p>Le filtre commun retrouve ces trois propositions sur cet extrait déjà étudié. Un passage demeure manqué par toutes les propositions : aucun filtre ne peut retrouver un événement jamais proposé.</p></section>
+    <section class="card"><h2>Ce que montrent trois extraits déjà étudiés</h2><p>VP/FP/FN : passages appariés / candidats supplémentaires / passages manqués par rapport aux fenêtres de référence. « Ancien » conserve le premier résultat figé ; « commun » applique la même règle de contexte aux trois listes brutes.</p><div class="scroll"><table><thead><tr><th>Vidéo</th><th>Propositions</th><th>Brut<br>VP/FP/FN</th><th>Ancien filtre<br>VP/FP/FN</th><th>Filtre commun<br>VP/FP/FN</th><th>Lancers dans<br>la vérification</th></tr></thead><tbody>{"".join(table_rows)}</tbody></table></div></section>
+    <section class="card"><h2>Le cas décisif : Estonie</h2><p>La règle spatiale conservait 16 passages appariés. L'ancien seuil de vitesse en retirait trois :</p><ul>{"".join(detail_rows)}</ul><p>Le filtre commun retrouve ces trois propositions sur cet extrait déjà étudié. Un passage demeure manqué par toutes les propositions : aucun filtre ne peut retrouver un événement jamais proposé.</p></section>
     <section class="card"><h2>Ouvrir la file de vérification</h2><p>Chaque proposition incertaine reste liée à sa vidéo et aux raisons données par les filtres. Les images ne sont pas des annotations de référence.</p><label>Vidéo <select id="recording"></select></label><div class="queue" id="queue"></div><p id="decision"></p><video id="source" controls preload="metadata"></video><small id="source-time"></small></section>
     <p class="note"><strong>À ne pas surinterpréter.</strong> Chine et Estonie sont des essais rétrospectifs sur des sources déjà étudiées. Le résultat USA reproduit le premier score figé. Les références sont des fenêtres approximatives préparées par l'agent, et les extraits ne couvrent pas des parties entières. Les trois cas estoniens ont été identifiés rétrospectivement grâce à la référence ; leur récupération sur cette source n'est pas une preuve de généralisation. La précision et le rappel finaux restent à mesurer sur des vidéos complètes annotées indépendamment.</p>
     <p><a href="results.json">Décisions et scores par candidat (JSON)</a> · <a href="README.md">Note technique</a> · <a href="../throw-event-benchmark/README.md">Protocole d'évaluation</a></p>
     <script>const DATA=__REVIEW_DATA__,selector=document.getElementById('recording'),queue=document.getElementById('queue'),video=document.getElementById('source');
     selector.innerHTML=DATA.map((run,i)=>`<option value="${{i}}">${{run.recording}} · ${{run.events.length}} cas</option>`).join('');selector.value='1';
     function show(runIndex,eventIndex){{const run=DATA[runIndex],event=run.events[eventIndex];if(!event)return;document.querySelectorAll('#queue button').forEach((b,i)=>b.classList.toggle('active',i===eventIndex));const reasons=event.stage_evidence.map(e=>`${{e.stage}} : ${{e.reason||e.decision}}`).join(' · ');document.getElementById('decision').textContent=`${{event.id}} · ${{event.colour}} · ${{reasons}}`;document.getElementById('source-time').textContent=`Temps source : ${{event.crossing_time_s.toFixed(3)}} s. Fenêtre de vérification : quelques secondes avant et après.`;const src=`../throw-event-benchmark/${{run.recording}}/source.mp4`;if(video.getAttribute('src')!==src){{video.src=src;video.addEventListener('loadedmetadata',()=>{{video.currentTime=Math.max(0,event.crossing_time_s-4)}},{{once:true}})}}else{{video.currentTime=Math.max(0,event.crossing_time_s-4)}}}}
-    function render(){{const runIndex=Number(selector.value),events=DATA[runIndex].events;queue.innerHTML=events.map((e,i)=>`<button type="button" data-index="${{i}}">${{e.id}} · ${{e.crossing_time_s.toFixed(1)}} s</button>`).join('');queue.querySelectorAll('button').forEach(b=>b.onclick=()=>show(runIndex,Number(b.dataset.index)));show(runIndex,0)}}selector.onchange=render;render();</script></html>'''.replace('__REVIEW_DATA__', review_json)
+    function render(){{const runIndex=Number(selector.value),events=DATA[runIndex].events;queue.innerHTML=events.map((e,i)=>`<button type="button" data-index="${{i}}">${{e.id}} · ${{e.crossing_time_s.toFixed(1)}} s</button>`).join('');queue.querySelectorAll('button').forEach(b=>b.onclick=()=>show(runIndex,Number(b.dataset.index)));show(runIndex,0)}}selector.onchange=render;render();</script></html>""".replace(
+        "__REVIEW_DATA__", review_json
+    )
     (OUT / "index.html").write_text(html)
     print("\n".join(lines[:11]))
 

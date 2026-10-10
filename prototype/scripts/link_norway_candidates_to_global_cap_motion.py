@@ -14,7 +14,9 @@ from prototype.global_motion_links import link_candidate_windows
 
 CATALOG = ROOT / "validation/official-shot-sequence/norway-global-shot-scoped-cap-motion-first.json"
 CANDIDATES = ROOT / "validation/official-shot-sequence/norway-full-event-motion-cut-aware-v2.json"
-OUTPUT = ROOT / "validation/official-shot-sequence/norway-global-cap-motion-candidate-links-first.json"
+OUTPUT = (
+    ROOT / "validation/official-shot-sequence/norway-global-cap-motion-candidate-links-first.json"
+)
 
 
 def digest(path):
@@ -50,10 +52,19 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(result, indent=2) + "\n")
-    print({key: result[key] for key in
-           ("catalogue_episode_count", "candidate_count", "candidate_episode_edge_count",
-            "shared_by_multiple_candidates_episode_count", "unlinked_catalogue_episode_count",
-            "candidate_motion_status_counts")})
+    print(
+        {
+            key: result[key]
+            for key in (
+                "catalogue_episode_count",
+                "candidate_count",
+                "candidate_episode_edge_count",
+                "shared_by_multiple_candidates_episode_count",
+                "unlinked_catalogue_episode_count",
+                "candidate_motion_status_counts",
+            )
+        }
+    )
 
 
 if __name__ == "__main__":

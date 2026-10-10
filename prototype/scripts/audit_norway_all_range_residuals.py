@@ -27,19 +27,29 @@ def earliest(score):
     selected = {}
     for row in score["groups"]:
         key = row["video_candidate_shot_id"]
-        if key not in selected or row["source_observation_interval_s"][0] < selected[key]["source_observation_interval_s"][0]:
+        if (
+            key not in selected
+            or row["source_observation_interval_s"][0]
+            < selected[key]["source_observation_interval_s"][0]
+        ):
             selected[key] = row
     return selected
 
 
 def summarize(pairs):
-    return {"pair_count": len(pairs),
-            "mean_absolute_longitudinal_delta_house_radii": round(
-                sum(abs(row["delta_y_house_radii"]) for row in pairs) / len(pairs), 4)
-            if pairs else None,
-            "mean_signed_longitudinal_delta_house_radii": round(
-                sum(row["delta_y_house_radii"] for row in pairs) / len(pairs), 4)
-            if pairs else None}
+    return {
+        "pair_count": len(pairs),
+        "mean_absolute_longitudinal_delta_house_radii": round(
+            sum(abs(row["delta_y_house_radii"]) for row in pairs) / len(pairs), 4
+        )
+        if pairs
+        else None,
+        "mean_signed_longitudinal_delta_house_radii": round(
+            sum(row["delta_y_house_radii"] for row in pairs) / len(pairs), 4
+        )
+        if pairs
+        else None,
+    }
 
 
 def main():
@@ -49,53 +59,82 @@ def main():
     score = json.loads(SCORE.read_text())
     official = json.loads(OFFICIAL.read_text())
     focused = json.loads(FOCUSED.read_text())
-    if score["input_sha256"]["source_scan"] != digest(SCAN) or \
-            focused["input_sha256"]["source_scan"] != digest(SCAN):
+    if score["input_sha256"]["source_scan"] != digest(SCAN) or focused["input_sha256"][
+        "source_scan"
+    ] != digest(SCAN):
         raise SystemExit("Source scan hash conflict")
     by_candidate = {row["shot_id"]: row for row in scan["rows"]}
-    by_official = {shot["official_shot_id"]: shot for end in official["ends"]
-                   for shot in end["shots"]}
+    by_official = {
+        shot["official_shot_id"]: shot for end in official["ends"] for shot in end["shots"]
+    }
     rows = []
     excluded = defaultdict(int)
     for scored in earliest(score).values():
-        camera = next(group for group in by_candidate[scored["video_candidate_shot_id"]]["camera_shot_boards"]
-                      if group["camera_shot_id"] == scored["post_camera_shot_id"])
+        camera = next(
+            group
+            for group in by_candidate[scored["video_candidate_shot_id"]]["camera_shot_boards"]
+            if group["camera_shot_id"] == scored["post_camera_shot_id"]
+        )
         shot = by_official[scored["official_shot_id"]]
         if shot["house_center_px"][1] != 440 or camera["detected_delivery_side"] != "top":
             excluded["unsupported_orientation"] += 1
             continue
-        if any(sum(stone["colour"] == colour for stone in camera["stable_image_relative_stones"]) !=
-               sum(stone["colour"] == colour for stone in shot["stones"])
-               for colour in ("red", "yellow")):
+        if any(
+            sum(stone["colour"] == colour for stone in camera["stable_image_relative_stones"])
+            != sum(stone["colour"] == colour for stone in shot["stones"])
+            for colour in ("red", "yellow")
+        ):
             excluded["unequal_per_colour_counts"] += 1
             continue
         pairs = []
         for colour in ("red", "yellow"):
-            video = [stone["image_house_radius_coordinates"] for stone in
-                     camera["stable_image_relative_stones"] if stone["colour"] == colour]
-            reference = [stone["house_radius_coordinates"] for stone in shot["stones"]
-                         if stone["colour"] == colour]
+            video = [
+                stone["image_house_radius_coordinates"]
+                for stone in camera["stable_image_relative_stones"]
+                if stone["colour"] == colour
+            ]
+            reference = [
+                stone["house_radius_coordinates"]
+                for stone in shot["stones"]
+                if stone["colour"] == colour
+            ]
             if not video:
                 continue
             costs = np.asarray([[dist(a, b) for b in reference] for a in video])
             indices = linear_sum_assignment(costs)
             for vi, oi in zip(*indices):
                 a, b = video[int(vi)], reference[int(oi)]
-                pairs.append({"colour": colour,
-                              "diagram_y_house_radii": b[1],
-                              "delta_y_house_radii": round(a[1] - b[1], 4),
-                              "range_band": "far_above_house" if b[1] < -1.5 else
-                                            "near_house" if abs(b[1]) <= 1.25 else "intermediate"})
-        rows.append({"official_shot_id": scored["official_shot_id"],
-                     "candidate_id": scored["video_candidate_shot_id"],
-                     "post_camera_shot_id": scored["post_camera_shot_id"],
-                     "pair_count": len(pairs), "pairs": pairs})
+                pairs.append(
+                    {
+                        "colour": colour,
+                        "diagram_y_house_radii": b[1],
+                        "delta_y_house_radii": round(a[1] - b[1], 4),
+                        "range_band": "far_above_house"
+                        if b[1] < -1.5
+                        else "near_house"
+                        if abs(b[1]) <= 1.25
+                        else "intermediate",
+                    }
+                )
+        rows.append(
+            {
+                "official_shot_id": scored["official_shot_id"],
+                "candidate_id": scored["video_candidate_shot_id"],
+                "post_camera_shot_id": scored["post_camera_shot_id"],
+                "pair_count": len(pairs),
+                "pairs": pairs,
+            }
+        )
     near = [pair for row in rows for pair in row["pairs"] if pair["range_band"] == "near_house"]
     far = [pair for row in rows for pair in row["pairs"] if pair["range_band"] == "far_above_house"]
     result = {
         "status": "retrospective_comparable_board_range_countercheck_not_general_accuracy",
-        "input_sha256": {"source_scan": digest(SCAN), "postscore": digest(SCORE),
-                         "official_diagrams": digest(OFFICIAL), "focused_end8_audit": digest(FOCUSED)},
+        "input_sha256": {
+            "source_scan": digest(SCAN),
+            "postscore": digest(SCORE),
+            "official_diagrams": digest(OFFICIAL),
+            "focused_end8_audit": digest(FOCUSED),
+        },
         "runner_sha256": digest(Path(__file__)),
         "selection": "Earliest scoreable camera group by source time; retain only top-layout groups with equal per-colour video/PDF counts; no result-based stone threshold used for pairing.",
         "included_candidate_count": len(rows),

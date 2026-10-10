@@ -20,10 +20,16 @@ from prototype.video_board_observation_v2 import detect_overhead_house
 
 BASE = ROOT / "validation/official-shot-sequence"
 JOBS = (
-    ("china", BASE / "china-full-match-event-gated-source-video-boards-first.json",
-     ROOT / "validation/throw-event-benchmark/paralympics-2022-canada-china/source.mp4"),
-    ("norway_end2", BASE / "norway-end2-event-gated-source-video-boards-first.json",
-     ROOT / "validation/throw-event-benchmark/paralympics-2022-canada-norway/source.mp4"),
+    (
+        "china",
+        BASE / "china-full-match-event-gated-source-video-boards-first.json",
+        ROOT / "validation/throw-event-benchmark/paralympics-2022-canada-china/source.mp4",
+    ),
+    (
+        "norway_end2",
+        BASE / "norway-end2-event-gated-source-video-boards-first.json",
+        ROOT / "validation/throw-event-benchmark/paralympics-2022-canada-norway/source.mp4",
+    ),
 )
 OUTPUT = BASE / "event-gated-overhead-image-coverage-first.json"
 # Diagnostic rectangles in detected house-radius units, not claims about
@@ -45,13 +51,17 @@ def visible_bounds(house, side, width=640, height=360):
     sign = 1 if side == "top" else -1
     lateral = sorted((sign * (0 - cx) / radius, sign * ((width - 1) - cx) / radius))
     longitudinal = sorted((sign * (0 - cy) / radius, sign * ((height - 1) - cy) / radius))
-    return {"lateral": [round(v, 3) for v in lateral],
-            "longitudinal": [round(v, 3) for v in longitudinal]}
+    return {
+        "lateral": [round(v, 3) for v in lateral],
+        "longitudinal": [round(v, 3) for v in longitudinal],
+    }
 
 
 def contains(bounds, envelope):
-    return all(bounds[axis][0] <= limits[0] and bounds[axis][1] >= limits[1]
-               for axis, limits in envelope.items())
+    return all(
+        bounds[axis][0] <= limits[0] and bounds[axis][1] >= limits[1]
+        for axis, limits in envelope.items()
+    )
 
 
 def audit_recording(name, scan_path, video_path):
@@ -79,48 +89,77 @@ def audit_recording(name, scan_path, video_path):
                 if house is None or (house["delivery_side"] not in ("uncertain", side)):
                     continue
                 bounds = visible_bounds(house, side)
-                frames.append({"time_s": time_s,
-                               "house_center_px": house["center_px"],
-                               "detected_house_radius_px": house["outer_radius_px"],
-                               "image_bounds_house_radii": bounds,
-                               "envelope_visible_in_image": {
-                                   key: contains(bounds, envelope)
-                                   for key, envelope in ENVELOPES.items()}})
-            rows.append({"counter_id": row["counter_id"],
-                         "stable_stone_count": len(row["stable_partial_board"]),
-                         "orientation": side,
-                         "accepted_overhead_frame_count": len(frames),
-                         "any_frame_house_envelope": any(f["envelope_visible_in_image"]["house"] for f in frames),
-                         "any_frame_extended_envelope": any(f["envelope_visible_in_image"]["extended"] for f in frames),
-                         "frames": frames})
+                frames.append(
+                    {
+                        "time_s": time_s,
+                        "house_center_px": house["center_px"],
+                        "detected_house_radius_px": house["outer_radius_px"],
+                        "image_bounds_house_radii": bounds,
+                        "envelope_visible_in_image": {
+                            key: contains(bounds, envelope) for key, envelope in ENVELOPES.items()
+                        },
+                    }
+                )
+            rows.append(
+                {
+                    "counter_id": row["counter_id"],
+                    "stable_stone_count": len(row["stable_partial_board"]),
+                    "orientation": side,
+                    "accepted_overhead_frame_count": len(frames),
+                    "any_frame_house_envelope": any(
+                        f["envelope_visible_in_image"]["house"] for f in frames
+                    ),
+                    "any_frame_extended_envelope": any(
+                        f["envelope_visible_in_image"]["extended"] for f in frames
+                    ),
+                    "frames": frames,
+                }
+            )
     finally:
         cap.release()
-    return {"recording": name, "scan_sha256": digest(scan_path),
-            "source_video_sha256": digest(video_path),
-            "board_count": len(rows),
-            "house_envelope_image_count": sum(r["any_frame_house_envelope"] for r in rows),
-            "extended_envelope_image_count": sum(r["any_frame_extended_envelope"] for r in rows),
-            "rows": rows}
+    return {
+        "recording": name,
+        "scan_sha256": digest(scan_path),
+        "source_video_sha256": digest(video_path),
+        "board_count": len(rows),
+        "house_envelope_image_count": sum(r["any_frame_house_envelope"] for r in rows),
+        "extended_envelope_image_count": sum(r["any_frame_extended_envelope"] for r in rows),
+        "rows": rows,
+    }
 
 
 def main():
     if OUTPUT.exists():
         raise SystemExit("Output exists; preserve first image-coverage audit")
     records = [audit_recording(*job) for job in JOBS]
-    result = {"status": "source_video_image_bounds_audit_no_official_positions",
-              "envelopes_house_radii": ENVELOPES,
-              "house_detector_sha256": digest(ROOT / "prototype/video_board_observation_v2.py"),
-              "runner_sha256": digest(Path(__file__)),
-              "recordings": records,
-              "limitations": ["These are upper bounds from the rectangular image, not verified visible ice extents.",
-                              "Occlusions, rink edges, and unobserved camera cuts may reduce actual coverage.",
-                              "The extended rectangle is a diagnostic envelope, not an official in-play ruling.",
-                              "No official board positions or shot outcomes were read."]}
+    result = {
+        "status": "source_video_image_bounds_audit_no_official_positions",
+        "envelopes_house_radii": ENVELOPES,
+        "house_detector_sha256": digest(ROOT / "prototype/video_board_observation_v2.py"),
+        "runner_sha256": digest(Path(__file__)),
+        "recordings": records,
+        "limitations": [
+            "These are upper bounds from the rectangular image, not verified visible ice extents.",
+            "Occlusions, rink edges, and unobserved camera cuts may reduce actual coverage.",
+            "The extended rectangle is a diagnostic envelope, not an official in-play ruling.",
+            "No official board positions or shot outcomes were read.",
+        ],
+    }
     OUTPUT.write_text(json.dumps(result, indent=2) + "\n")
-    print([{key: record[key] for key in ("recording", "board_count",
-                                                "house_envelope_image_count",
-                                                "extended_envelope_image_count")}
-           for record in records])
+    print(
+        [
+            {
+                key: record[key]
+                for key in (
+                    "recording",
+                    "board_count",
+                    "house_envelope_image_count",
+                    "extended_envelope_image_count",
+                )
+            }
+            for record in records
+        ]
+    )
 
 
 if __name__ == "__main__":

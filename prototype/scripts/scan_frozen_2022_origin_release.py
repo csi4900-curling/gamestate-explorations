@@ -51,7 +51,10 @@ def main():
     fps = cap.get(cv2.CAP_PROP_FPS)
     rows = []
     for origin in origins["rows"]:
-        if not origin["predicted"] or by_id[origin["shot_id"]]["status"] == "corroborated_candidate":
+        if (
+            not origin["predicted"]
+            or by_id[origin["shot_id"]]["status"] == "corroborated_candidate"
+        ):
             continue
         start, end = origin["interval_s"]
         scan = scan_origin_release(cap, fps, start, end, cut_times_s=cut_times)
@@ -63,18 +66,20 @@ def main():
             if not ok:
                 raise RuntimeError(f"Frame decode failed at {time_s}")
             supported, fraction = passage_has_ice(frame, passage)
-            audited = {**passage, "held_frame_time_s": time_s,
-                       "below_ice_fraction": fraction}
+            audited = {**passage, "held_frame_time_s": time_s, "below_ice_fraction": fraction}
             (accepted if supported else rejected).append(audited)
-        rows.append({"shot_id": origin["shot_id"],
-                     "origin_interval_s": origin["interval_s"],
-                     "origin_probability": origin["probability"],
-                     "cap_decision_reason": by_id[origin["shot_id"]]["reason"],
-                     "filtered_cap_observation_count": scan["filtered_cap_observation_count"],
-                     "accepted_passages": accepted,
-                     "rejected_passages": rejected,
-                     "unique_passage_colour": accepted[0]["colour"]
-                     if len(accepted) == 1 else None})
+        rows.append(
+            {
+                "shot_id": origin["shot_id"],
+                "origin_interval_s": origin["interval_s"],
+                "origin_probability": origin["probability"],
+                "cap_decision_reason": by_id[origin["shot_id"]]["reason"],
+                "filtered_cap_observation_count": scan["filtered_cap_observation_count"],
+                "accepted_passages": accepted,
+                "rejected_passages": rejected,
+                "unique_passage_colour": accepted[0]["colour"] if len(accepted) == 1 else None,
+            }
+        )
     cap.release()
     output = {
         "status": "frozen_2022_visual_origin_release_transfer_not_throw_f1",
@@ -99,8 +104,12 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(output, indent=2) + "\n")
-    print({key: output[key] for key in
-           ("scanned_window_count", "accepted_window_count", "rejected_passage_count")})
+    print(
+        {
+            key: output[key]
+            for key in ("scanned_window_count", "accepted_window_count", "rejected_passage_count")
+        }
+    )
 
 
 if __name__ == "__main__":

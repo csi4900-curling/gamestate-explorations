@@ -35,8 +35,7 @@ def ring_mask(shape, image_to_world):
     world_to_image = np.linalg.inv(image_to_world)
     mask = np.zeros(shape[:2], np.uint8)
     for radius, value in [(1.829, 1), (1.219, 0)]:
-        points = np.column_stack((radius * np.cos(angles),
-                                  radius * np.sin(angles)))
+        points = np.column_stack((radius * np.cos(angles), radius * np.sin(angles)))
         polygon = np.round(project(world_to_image, points)).astype(np.int32)
         cv2.fillPoly(mask, [polygon], value)
     return mask > 0
@@ -51,8 +50,12 @@ def overlap(paint, projection):
         "classified_blue_paint_pixels": paint_count,
         "projected_annulus_pixels": projected_count,
         "intersection_pixels": intersection,
-        "blue_paint_inside_projection_fraction": intersection / paint_count if paint_count else None,
-        "projection_classified_blue_fraction": intersection / projected_count if projected_count else None,
+        "blue_paint_inside_projection_fraction": intersection / paint_count
+        if paint_count
+        else None,
+        "projection_classified_blue_fraction": intersection / projected_count
+        if projected_count
+        else None,
         "intersection_over_union": intersection / union if union else None,
     }
 
@@ -69,8 +72,10 @@ def main():
     if selection["view"] != "right" or selection["video_sha256"] != file_sha256(args.video):
         parser.error("Right-view anchor selection or source hash differs")
     offset = selection["source_offset_s"]
-    if any(not selection["source_interval_s"][0] <= t <= selection["source_interval_s"][1]
-           for t in TIMES_S):
+    if any(
+        not selection["source_interval_s"][0] <= t <= selection["source_interval_s"][1]
+        for t in TIMES_S
+    ):
         parser.error("Fixed sample time outside source interval")
     cfg_path = ROOT / "prototype/vision/annotations/calibration.json"
     rect_path = ROOT / "prototype/rectification/calibration.json"
@@ -78,39 +83,44 @@ def main():
     view["world_bounds"] = [-2.375, -1.975, 2.375, 22.0]
     base = ViewCalibrator(view, ROOT / "prototype/vision/frames")
     base.H = np.asarray(json.loads(rect_path.read_text())["right"]["refined_H"])
-    capture = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not capture.isOpened():
         parser.error("Cannot open video")
     fps = capture.get(cv2.CAP_PROP_FPS)
     anchor_t = selection["selected_anchor_time_s"]
     anchor = read_frame(capture, anchor_t, offset, fps)
     local, anchor_registration = rebase_view_calibrator(
-        base, anchor,
-        max_corner_displacement_px=selection["max_corner_displacement_px"])
+        base, anchor, max_corner_displacement_px=selection["max_corner_displacement_px"]
+    )
     samples = []
     for t in TIMES_S:
         frame = read_frame(capture, t, offset, fps)
         H, registration = local.register(
-            frame, is_reference=t == anchor_t,
-            max_corner_displacement_px=selection["max_corner_displacement_px"])
+            frame,
+            is_reference=t == anchor_t,
+            max_corner_displacement_px=selection["max_corner_displacement_px"],
+        )
         record = {"source_time_s": t, "registration": registration}
         if H is not None:
             projection = ring_mask(frame.shape, H)
             hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
             # Broad blue threshold, fixed after the exploratory anchor-frame check.
-            blue = cv2.inRange(hsv, np.array([90, 70, 70]),
-                               np.array([120, 255, 255])) > 0
+            blue = cv2.inRange(hsv, np.array([90, 70, 70]), np.array([120, 255, 255])) > 0
             roi = np.zeros(frame.shape[:2], bool)
             roi[470:630, 980:1910] = True
             blue &= roi
             record["overlap"] = overlap(blue, projection)
             controls = {}
             for dx, dy in SHIFTS_PX:
-                shifted = cv2.warpAffine(projection.astype(np.uint8),
-                                         np.float32([[1, 0, dx], [0, 1, dy]]),
-                                         (frame.shape[1], frame.shape[0]),
-                                         flags=cv2.INTER_NEAREST) > 0
+                shifted = (
+                    cv2.warpAffine(
+                        projection.astype(np.uint8),
+                        np.float32([[1, 0, dx], [0, 1, dy]]),
+                        (frame.shape[1], frame.shape[0]),
+                        flags=cv2.INTER_NEAREST,
+                    )
+                    > 0
+                )
                 controls[f"{dx},{dy}"] = overlap(blue, shifted)["intersection_over_union"]
             record["shifted_control_iou"] = controls
         samples.append(record)

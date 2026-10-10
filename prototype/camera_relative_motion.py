@@ -13,14 +13,21 @@ def estimate_camera_transform(before, after):
     mask = np.zeros(gray_before.shape, np.uint8)
     mask[70:, :] = 255
     features = cv2.goodFeaturesToTrack(
-        gray_before, maxCorners=700, qualityLevel=0.01,
-        minDistance=6, mask=mask,
+        gray_before,
+        maxCorners=700,
+        qualityLevel=0.01,
+        minDistance=6,
+        mask=mask,
     )
     if features is None or len(features) < 10:
         return None
     tracked, status, _ = cv2.calcOpticalFlowPyrLK(
-        gray_before, gray_after, features, None,
-        winSize=(21, 21), maxLevel=3,
+        gray_before,
+        gray_after,
+        features,
+        None,
+        winSize=(21, 21),
+        maxLevel=3,
     )
     valid = status.ravel() == 1
     first = features[valid].reshape(-1, 2)
@@ -28,7 +35,10 @@ def estimate_camera_transform(before, after):
     if len(first) < 10:
         return None
     matrix, inliers = cv2.estimateAffinePartial2D(
-        first, second, method=cv2.RANSAC, ransacReprojThreshold=3,
+        first,
+        second,
+        method=cv2.RANSAC,
+        ransacReprojThreshold=3,
     )
     if matrix is None or inliers is None:
         return None
@@ -60,25 +70,29 @@ def sample_track_camera_motion(points, frame_at, *, step_s=1.2):
             continue
         start_pixel = before["pixel"]
         end_pixel = after["pixel"]
-        inside = all(0 <= xy[0] < 640 and 0 <= xy[1] < 360
-                     for xy in (start_pixel, end_pixel))
+        inside = all(0 <= xy[0] < 640 and 0 <= xy[1] < 360 for xy in (start_pixel, end_pixel))
         registration = estimate_camera_transform(
             frame_at(before["time_s"]), frame_at(after["time_s"])
         )
         usable = bool(inside and registration is not None and registration["reliable"])
-        rows.append({
-            "interval_s": [before["time_s"], after["time_s"]],
-            "raw_displacement_px": round(float(np.linalg.norm(
-                np.subtract(end_pixel, start_pixel))), 3),
-            "camera_residual_px": round(residual_motion(start_pixel, end_pixel, registration), 3)
-            if usable else None,
-            "track_points_inside_frame": inside,
-            "tracked_features": registration["tracked_features"] if registration else 0,
-            "inliers": registration["inliers"] if registration else 0,
-            "inlier_fraction": round(registration["inlier_fraction"], 3)
-            if registration else 0,
-            "registration_reliable": usable,
-        })
+        rows.append(
+            {
+                "interval_s": [before["time_s"], after["time_s"]],
+                "raw_displacement_px": round(
+                    float(np.linalg.norm(np.subtract(end_pixel, start_pixel))), 3
+                ),
+                "camera_residual_px": round(
+                    residual_motion(start_pixel, end_pixel, registration), 3
+                )
+                if usable
+                else None,
+                "track_points_inside_frame": inside,
+                "tracked_features": registration["tracked_features"] if registration else 0,
+                "inliers": registration["inliers"] if registration else 0,
+                "inlier_fraction": round(registration["inlier_fraction"], 3) if registration else 0,
+                "registration_reliable": usable,
+            }
+        )
         target = before["time_s"] + step_s
     return rows
 
@@ -90,9 +104,11 @@ def longest_relative_motion_run(rows, *, min_residual_px=5, max_pair_gap_s=1.5):
     previous_start = None
     for row in rows:
         start = row["interval_s"][0]
-        if (row["camera_residual_px"] is not None
-                and row["camera_residual_px"] > min_residual_px
-                and (previous_start is None or start - previous_start <= max_pair_gap_s)):
+        if (
+            row["camera_residual_px"] is not None
+            and row["camera_residual_px"] > min_residual_px
+            and (previous_start is None or start - previous_start <= max_pair_gap_s)
+        ):
             current += 1
             longest = max(longest, current)
         else:

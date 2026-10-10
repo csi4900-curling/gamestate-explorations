@@ -11,10 +11,26 @@ PACKET = BASE / "full-linked-positive-patch-source-probe"
 OUT = BASE / "full-linked-positive-patch-pixel-audit.json"
 
 STONE_IDS = {
-    "R01:A001", "R01:A014", "R01:A025", "R01:A046", "R01:A060",
-    "R01:A072", "R01:A136", "R01:A154", "R01:A159", "R01:A183",
-    "R01:A200", "R01:A203", "R01:A213", "R01:A223", "R01:A228",
-    "R01:A246", "R01:A269", "R01:A289", "R01:A318", "R01:A358",
+    "R01:A001",
+    "R01:A014",
+    "R01:A025",
+    "R01:A046",
+    "R01:A060",
+    "R01:A072",
+    "R01:A136",
+    "R01:A154",
+    "R01:A159",
+    "R01:A183",
+    "R01:A200",
+    "R01:A203",
+    "R01:A213",
+    "R01:A223",
+    "R01:A228",
+    "R01:A246",
+    "R01:A269",
+    "R01:A289",
+    "R01:A318",
+    "R01:A358",
 }
 
 
@@ -29,8 +45,8 @@ def main():
         if digest(PACKET / name) != expected:
             raise ValueError(f"Source page changed: {name}")
     for name, path in {
-            "scores": BASE / "full-right-source-diverse-patch-transfer-development.json",
-            "episodes": BASE / "full-corridor-right-episodes-first-transfer.json",
+        "scores": BASE / "full-right-source-diverse-patch-transfer-development.json",
+        "episodes": BASE / "full-corridor-right-episodes-first-transfer.json",
     }.items():
         if digest(path) != manifest["input_sha256"][name]:
             raise ValueError(f"Packet input changed: {name}")
@@ -38,12 +54,16 @@ def main():
     if len(ids) != 20 or len(set(ids)) != 20 or set(ids) != STONE_IDS:
         raise ValueError("Positive probe inventory changed")
     selection_counts = Counter(row["selection_kind"] for row in manifest["rows"])
-    if selection_counts != {"time_spaced": 12,
-                            "lowest_mean_score_remaining": 8}:
+    if selection_counts != {"time_spaced": 12, "lowest_mean_score_remaining": 8}:
         raise ValueError("Positive probe selection changed")
-    rows = [{**row, "sampled_source_pixel_class": "moving_stone_pixels",
-             "physical_throw_verified": False}
-            for row in manifest["rows"]]
+    rows = [
+        {
+            **row,
+            "sampled_source_pixel_class": "moving_stone_pixels",
+            "physical_throw_verified": False,
+        }
+        for row in manifest["rows"]
+    ]
     result = {
         "status": "same_agent_postscore_positive_prefix_pixel_audit_not_event_truth",
         "manifest_sha256": digest(manifest_path),
@@ -61,9 +81,15 @@ def main():
         ],
     }
     OUT.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"reviewed": len(rows),
-                      "moving_stone_pixels": len(rows),
-                      "selection": dict(selection_counts)}))
+    print(
+        json.dumps(
+            {
+                "reviewed": len(rows),
+                "moving_stone_pixels": len(rows),
+                "selection": dict(selection_counts),
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

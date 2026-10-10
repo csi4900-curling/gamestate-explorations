@@ -26,16 +26,21 @@ def main():
         parser.error("Output exists")
     left = json.loads(args.left.read_text())
     tail = json.loads(args.right_tail.read_text())
-    if (left["source_sha256"] != tail["source_sha256"] or
-            left["source_interval_s"][0] < tail["source_interval_s"][0] or
-            left["source_interval_s"][1] > tail["source_interval_s"][1]):
+    if (
+        left["source_sha256"] != tail["source_sha256"]
+        or left["source_interval_s"][0] < tail["source_interval_s"][0]
+        or left["source_interval_s"][1] > tail["source_interval_s"][1]
+    ):
         raise ValueError("Left and right source intervals differ")
-    proposals = [{
-        "proposal_id": f"{args.run_id}:{row['raw_track_id']}",
-        "colour_claim": row["colour_claim"],
-        "direction": row["direction"],
-        "passage_time_s": row["passage"]["time_s"],
-    } for row in tail["directional_review_proposals"]]
+    proposals = [
+        {
+            "proposal_id": f"{args.run_id}:{row['raw_track_id']}",
+            "colour_claim": row["colour_claim"],
+            "direction": row["direction"],
+            "passage_time_s": row["passage"]["time_s"],
+        }
+        for row in tail["directional_review_proposals"]
+    ]
     rows = corroborate_left_proposals(left["events"], proposals)
     output = {
         "status": "first_transfer_prediction_only_two_view_candidate_corrob_not_throw_truth",

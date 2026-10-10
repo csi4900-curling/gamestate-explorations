@@ -10,8 +10,9 @@ def test_blue_ring_support_recovers_cap_rejected_by_white_ice_rule():
     cv2.rectangle(frame, (183, 285), (199, 294), (0, 225, 240), -1)
     ellipse = {"center_px": [320, 280], "axis_lengths_px": [86, 282]}
 
-    assert stone_cap_candidates(frame, "yellow", allow_bright_body=True,
-                                allow_large_caps=True) == []
+    assert (
+        stone_cap_candidates(frame, "yellow", allow_bright_body=True, allow_large_caps=True) == []
+    )
     proposed = wide_view_cap_candidates(frame, "yellow", ellipse)
 
     assert len(proposed) == 1

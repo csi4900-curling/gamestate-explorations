@@ -2,8 +2,14 @@
 
 
 def find_adjacent_origin_proposals(
-    episode_links, episodes, origin_rows, camera_shots, candidate_rows,
-    *, min_origin_probability=0.9, min_origin_duration_s=5.0,
+    episode_links,
+    episodes,
+    origin_rows,
+    camera_shots,
+    candidate_rows,
+    *,
+    min_origin_probability=0.9,
+    min_origin_duration_s=5.0,
     max_receiving_onset_delay_s=1.0,
 ):
     """Return source-review proposals; never certify a physical throw."""
@@ -45,21 +51,23 @@ def find_adjacent_origin_proposals(
             status = "existing_candidate_colour_conflict"
         else:
             continue
-        proposals.append({
-            "origin_shot_id": origin_shot["id"],
-            "origin_interval_s": origin_shot["interval_s"],
-            "origin_model_probability": origin["probability"],
-            "origin_model_predicted": origin["predicted"],
-            "receiving_shot_id": receiving["id"],
-            "receiving_episode_id": episode["episode_id"],
-            "receiving_colour": episode["colour"],
-            "receiving_motion_interval_s": episode["interval_s"],
-            "receiving_span_px": episode["span_px"],
-            "receiving_point_count": episode["point_count"],
-            "onset_after_camera_cut_s": round(delay, 3),
-            "candidate_status": status,
-            "existing_candidate_colour": candidate["candidate_colour"] if candidate else None,
-            "existing_counter_id": candidate["counter_id"] if candidate else None,
-            "physical_throw_verified": False,
-        })
+        proposals.append(
+            {
+                "origin_shot_id": origin_shot["id"],
+                "origin_interval_s": origin_shot["interval_s"],
+                "origin_model_probability": origin["probability"],
+                "origin_model_predicted": origin["predicted"],
+                "receiving_shot_id": receiving["id"],
+                "receiving_episode_id": episode["episode_id"],
+                "receiving_colour": episode["colour"],
+                "receiving_motion_interval_s": episode["interval_s"],
+                "receiving_span_px": episode["span_px"],
+                "receiving_point_count": episode["point_count"],
+                "onset_after_camera_cut_s": round(delay, 3),
+                "candidate_status": status,
+                "existing_candidate_colour": candidate["candidate_colour"] if candidate else None,
+                "existing_counter_id": candidate["counter_id"] if candidate else None,
+                "physical_throw_verified": False,
+            }
+        )
     return sorted(proposals, key=lambda row: row["origin_interval_s"][0])

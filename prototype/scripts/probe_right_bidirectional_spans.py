@@ -25,11 +25,15 @@ def digest(path):
 
 
 def window_ids(proposals, reference, time_key):
-    return {event["id"] for event in reference["events"]
-            for proposal in proposals
-            if proposal["colour_claim"] == event["colour"]
-            and event["delivery_interval_s"][0] <=
-            proposal[time_key]["time_s"] <= event["delivery_interval_s"][1]}
+    return {
+        event["id"]
+        for event in reference["events"]
+        for proposal in proposals
+        if proposal["colour_claim"] == event["colour"]
+        and event["delivery_interval_s"][0]
+        <= proposal[time_key]["time_s"]
+        <= event["delivery_interval_s"][1]
+    }
 
 
 def main():
@@ -49,8 +53,7 @@ def main():
     start, stop = variant["source_interval_s"]
     if start != int(start) or stop != int(stop):
         parser.error("Expected integer-second source interval")
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         parser.error("Cannot open source video")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -69,9 +72,7 @@ def main():
     tracks = []
     for colour, samples in observations.items():
         for path in moving_cap_tracks(samples, max_gap_s=1, max_step_px=40):
-            tracks.append({"colour": colour,
-                           "points": path["points"],
-                           "span_px": path["span_px"]})
+            tracks.append({"colour": colour, "points": path["points"], "span_px": path["span_px"]})
     tracks.sort(key=lambda row: (row["points"][0]["time_s"], row["colour"]))
     for index, row in enumerate(tracks, 1):
         row["track_id"] = f"B{index:03d}"
@@ -87,7 +88,9 @@ def main():
         "video_size_bytes": args.video.stat().st_size,
         "variant_sha256": digest(args.variant),
         "coarse_reference_sha256": digest(args.reference),
-        "colour_proposal_code_sha256": digest(ROOT / "prototype/scripts/probe_static_left_right_cap_motion.py"),
+        "colour_proposal_code_sha256": digest(
+            ROOT / "prototype/scripts/probe_static_left_right_cap_motion.py"
+        ),
         "tracker_code_sha256": digest(ROOT / "prototype/stone_motion_fallback.py"),
         "bidirectional_code_sha256": digest(ROOT / "prototype/right_bidirectional_span.py"),
         "runner_sha256": digest(Path(__file__)),
@@ -96,8 +99,10 @@ def main():
         "maximum_step_px_per_s": 40,
         "raw_track_count": len(tracks),
         "directional_proposal_count": len(proposals),
-        "direction_counts": {direction: sum(row["direction"] == direction for row in proposals)
-                             for direction in ("negative_y", "positive_y")},
+        "direction_counts": {
+            direction: sum(row["direction"] == direction for row in proposals)
+            for direction in ("negative_y", "positive_y")
+        },
         "coarse_window_count": len(all_windows),
         "coarse_windows_with_existing_variant_prefix": sorted(prior_windows),
         "coarse_windows_with_bidirectional_proposal": sorted(new_windows),
@@ -114,10 +119,17 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"tracks": len(tracks), "proposals": len(proposals),
-                      "directions": result["direction_counts"],
-                      "newly_covered": result["newly_covered_coarse_window_ids"],
-                      "still_uncovered": result["still_uncovered_coarse_window_ids"]}))
+    print(
+        json.dumps(
+            {
+                "tracks": len(tracks),
+                "proposals": len(proposals),
+                "directions": result["direction_counts"],
+                "newly_covered": result["newly_covered_coarse_window_ids"],
+                "still_uncovered": result["still_uncovered_coarse_window_ids"],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

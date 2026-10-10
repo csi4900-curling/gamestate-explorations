@@ -49,22 +49,28 @@ def static_runs(samples, *, max_left_mae, min_duration_s):
             edges.append(row)
         else:
             if edges and edges[-1]["time_s"] - start >= min_duration_s:
-                runs.append({"start_s": start, "stop_s": edges[-1]["time_s"],
-                             "duration_s": edges[-1]["time_s"] - start,
-                             "sample_edge_count": len(edges),
-                             "median_left_mae": float(np.median(
-                                 [edge["left_mae"] for edge in edges])),
-                             "median_right_mae": float(np.median(
-                                 [edge["right_mae"] for edge in edges]))})
+                runs.append(
+                    {
+                        "start_s": start,
+                        "stop_s": edges[-1]["time_s"],
+                        "duration_s": edges[-1]["time_s"] - start,
+                        "sample_edge_count": len(edges),
+                        "median_left_mae": float(np.median([edge["left_mae"] for edge in edges])),
+                        "median_right_mae": float(np.median([edge["right_mae"] for edge in edges])),
+                    }
+                )
             start, edges = None, []
     if edges and edges[-1]["time_s"] - start >= min_duration_s:
-        runs.append({"start_s": start, "stop_s": edges[-1]["time_s"],
-                     "duration_s": edges[-1]["time_s"] - start,
-                     "sample_edge_count": len(edges),
-                     "median_left_mae": float(np.median(
-                         [edge["left_mae"] for edge in edges])),
-                     "median_right_mae": float(np.median(
-                         [edge["right_mae"] for edge in edges]))})
+        runs.append(
+            {
+                "start_s": start,
+                "stop_s": edges[-1]["time_s"],
+                "duration_s": edges[-1]["time_s"] - start,
+                "sample_edge_count": len(edges),
+                "median_left_mae": float(np.median([edge["left_mae"] for edge in edges])),
+                "median_right_mae": float(np.median([edge["right_mae"] for edge in edges])),
+            }
+        )
     return runs
 
 
@@ -76,15 +82,15 @@ def main():
     parser.add_argument("--max-left-mae", type=float, default=3)
     parser.add_argument("--min-duration-s", type=int, default=60)
     parser.add_argument("--start", type=float, default=0)
-    parser.add_argument("--end", type=float,
-                        help="End of sampled source interval; defaults to video duration")
+    parser.add_argument(
+        "--end", type=float, help="End of sampled source interval; defaults to video duration"
+    )
     args = parser.parse_args()
     if args.output.exists():
         parser.error("Output already exists")
     if args.step_s <= 0 or args.min_duration_s < args.step_s:
         parser.error("Invalid sampling interval")
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         parser.error("Could not open source")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -103,13 +109,17 @@ def main():
             raise RuntimeError(f"Could not decode source time {t}")
         frame = normalized_split_frame(frame)
         if previous is not None:
-            edges.append({"previous_time_s": previous_t, "time_s": t,
-                          "left_mae": round(motion_mae(previous, frame, left_box), 4),
-                          "right_mae": round(motion_mae(previous, frame, right_box), 4)})
+            edges.append(
+                {
+                    "previous_time_s": previous_t,
+                    "time_s": t,
+                    "left_mae": round(motion_mae(previous, frame, left_box), 4),
+                    "right_mae": round(motion_mae(previous, frame, right_box), 4),
+                }
+            )
         previous, previous_t = frame, t
     cap.release()
-    runs = static_runs(edges, max_left_mae=args.max_left_mae,
-                       min_duration_s=args.min_duration_s)
+    runs = static_runs(edges, max_left_mae=args.max_left_mae, min_duration_s=args.min_duration_s)
     output = {
         "status": "source_image_panel_freeze_diagnostic_not_throw_truth",
         "source_sha256": digest(args.video),

@@ -42,18 +42,21 @@ def right_colour_proposals(frame):
         mask[325:] = False
         mask[:, :330] = False
         mask[:, 630:] = False
-        contours, _ = cv2.findContours(mask.astype(np.uint8) * 255,
-                                       cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        contours, _ = cv2.findContours(
+            mask.astype(np.uint8) * 255, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
+        )
         for contour in contours:
             x, y, width, height = cv2.boundingRect(contour)
             area = cv2.contourArea(contour)
             if not (4 <= area <= 120 and 4 <= width <= 24 and 3 <= height <= 16):
                 continue
-            result[colour].append({
-                "pixel": [x + width / 2, y + height / 2],
-                "bbox": [x, y, width, height],
-                "cap_area_px2": round(float(area), 2),
-            })
+            result[colour].append(
+                {
+                    "pixel": [x + width / 2, y + height / 2],
+                    "bbox": [x, y, width, height],
+                    "cap_area_px2": round(float(area), 2),
+                }
+            )
     return result
 
 
@@ -69,8 +72,7 @@ def main():
     video_hash = digest(args.video)
     if video_hash != overlay["source_sha256"]:
         parser.error("Video and overlay sources differ")
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         parser.error("Cannot open video")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -91,25 +93,33 @@ def main():
                 sample_count += 1
             tracks = []
             for colour, samples in observations.items():
-                for path in moving_cap_tracks(samples, max_gap_s=2,
-                                              max_step_px=25):
-                    tracks.append({"colour": colour,
-                                   "first_observed_s": path["points"][0]["time_s"],
-                                   "last_observed_s": path["points"][-1]["time_s"],
-                                   "observation_count": len(path["points"]),
-                                   "span_px": path["span_px"],
-                                   "points": path["points"],
-                                   "physical_throw_verified": False})
+                for path in moving_cap_tracks(samples, max_gap_s=2, max_step_px=25):
+                    tracks.append(
+                        {
+                            "colour": colour,
+                            "first_observed_s": path["points"][0]["time_s"],
+                            "last_observed_s": path["points"][-1]["time_s"],
+                            "observation_count": len(path["points"]),
+                            "span_px": path["span_px"],
+                            "points": path["points"],
+                            "physical_throw_verified": False,
+                        }
+                    )
             tracks.sort(key=lambda row: (row["first_observed_s"], row["colour"]))
             for index, track in enumerate(tracks, 1):
                 track["track_id"] = f"R{index:03d}"
-            intervals.append({"interval_s": [start, stop],
-                              "sample_count": sample_count,
-                              "raw_proposal_count_by_colour": {
-                                  colour: sum(len(candidates) for _, candidates in samples)
-                                  for colour, samples in observations.items()},
-                              "moving_track_count": len(tracks),
-                              "tracks": tracks})
+            intervals.append(
+                {
+                    "interval_s": [start, stop],
+                    "sample_count": sample_count,
+                    "raw_proposal_count_by_colour": {
+                        colour: sum(len(candidates) for _, candidates in samples)
+                        for colour, samples in observations.items()
+                    },
+                    "moving_track_count": len(tracks),
+                    "tracks": tracks,
+                }
+            )
     finally:
         cap.release()
     output = {
@@ -118,7 +128,8 @@ def main():
         "overlay_sha256": digest(args.overlay),
         "tracker_code_sha256": digest(ROOT / "prototype/stone_motion_fallback.py"),
         "frame_normalization_code_sha256": digest(
-            ROOT / "prototype/scripts/audit_split_panel_freeze.py"),
+            ROOT / "prototype/scripts/audit_split_panel_freeze.py"
+        ),
         "runner_sha256": digest(Path(__file__)),
         "sample_period_s": 1,
         "right_roi_xyxy": [330, 145, 630, 325],
@@ -134,8 +145,14 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(output, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({"intervals": len(intervals),
-                      "tracks": sum(row["moving_track_count"] for row in intervals)}))
+    print(
+        json.dumps(
+            {
+                "intervals": len(intervals),
+                "tracks": sum(row["moving_track_count"] for row in intervals),
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

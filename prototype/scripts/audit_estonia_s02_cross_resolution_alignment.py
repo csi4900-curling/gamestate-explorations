@@ -34,13 +34,14 @@ def gray_frame(cap, frame_index):
 
 
 def main():
-    full = cv2.VideoCapture(str(FULL), cv2.CAP_FFMPEG,
-                            [cv2.CAP_PROP_N_THREADS, 1])
-    excerpt = cv2.VideoCapture(str(EXCERPT), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
-    if (not full.isOpened() or not excerpt.isOpened() or
-            full.get(cv2.CAP_PROP_FPS) != 30 or
-            excerpt.get(cv2.CAP_PROP_FPS) != 30):
+    full = cv2.VideoCapture(str(FULL), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
+    excerpt = cv2.VideoCapture(str(EXCERPT), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
+    if (
+        not full.isOpened()
+        or not excerpt.isOpened()
+        or full.get(cv2.CAP_PROP_FPS) != 30
+        or excerpt.get(cv2.CAP_PROP_FPS) != 30
+    ):
         raise RuntimeError("Expected two 30-fps source files")
     results = []
     try:
@@ -48,21 +49,25 @@ def main():
             target = gray_frame(excerpt, round((t - EXCERPT_OFFSET_S) * 30))
             if target.shape != (1080, 1920):
                 raise ValueError("High-resolution excerpt dimensions changed")
-            target = cv2.resize(target, (640, 360),
-                                interpolation=cv2.INTER_AREA).astype(np.float32)
+            target = cv2.resize(target, (640, 360), interpolation=cv2.INTER_AREA).astype(np.float32)
             candidates = []
             for offset in SEARCH_FRAME_OFFSETS:
                 observed = gray_frame(full, round(t * 30) + offset)
                 if observed.shape != (360, 640):
                     raise ValueError("Full-source dimensions changed")
                 mae = float(np.mean(np.abs(target - observed.astype(np.float32))))
-                candidates.append({"offset_frames": offset,
-                                   "mean_absolute_gray_difference": round(mae, 4)})
+                candidates.append(
+                    {"offset_frames": offset, "mean_absolute_gray_difference": round(mae, 4)}
+                )
             ordered = sorted(candidates, key=lambda row: row["mean_absolute_gray_difference"])
-            results.append({"source_time_s": t, "best": ordered[0],
-                            "second_best": ordered[1],
-                            "zero_offset": next(row for row in candidates
-                                                if row["offset_frames"] == 0)})
+            results.append(
+                {
+                    "source_time_s": t,
+                    "best": ordered[0],
+                    "second_best": ordered[1],
+                    "zero_offset": next(row for row in candidates if row["offset_frames"] == 0),
+                }
+            )
     finally:
         full.release()
         excerpt.release()
@@ -77,7 +82,8 @@ def main():
         "search_offsets_frames": [-30, 30],
         "checkpoints": results,
         "zero_offset_best_at_all_checkpoints": all(
-            row["best"]["offset_frames"] == 0 for row in results),
+            row["best"]["offset_frames"] == 0 for row in results
+        ),
         "limitations": [
             "Only two checkpoints near the selected event and post-event board are tested.",
             "Similar decoded frames support timeline correspondence, not physical object identity.",

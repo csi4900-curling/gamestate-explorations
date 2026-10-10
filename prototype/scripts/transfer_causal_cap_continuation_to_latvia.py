@@ -38,16 +38,17 @@ def main():
         raise ValueError("Latvia cap continuation transfer already exists")
     motion, boards = (json.loads(p.read_text()) for p in (MOTION, BOARDS))
     source_hash = digest(VIDEO)
-    if (source_hash != motion["high_resolution_source_sha256"] or
-            source_hash != boards["high_resolution_source_sha256"] or
-            motion["source_offset_s"] != 1650.0 or
-            len(boards["rows"]) != 14):
+    if (
+        source_hash != motion["high_resolution_source_sha256"]
+        or source_hash != boards["high_resolution_source_sha256"]
+        or motion["source_offset_s"] != 1650.0
+        or len(boards["rows"]) != 14
+    ):
         raise ValueError("Latvia source, motion or board lineage differs")
     by_motion = {r["candidate_id"]: r for r in motion["rows"]}
     if len(by_motion) != len(motion["rows"]):
         raise ValueError("Duplicate motion candidate")
-    video = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                             [cv2.CAP_PROP_N_THREADS, 1])
+    video = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     fps = video.get(cv2.CAP_PROP_FPS)
     if not video.isOpened() or abs(fps - 30) > 0.01:
         raise ValueError("Latvia source unreadable or FPS changed")
@@ -56,13 +57,17 @@ def main():
         for board in boards["rows"]:
             cid = board["candidate_id"]
             path = by_motion[cid]["selection"].get("path", [])
-            same = sorted((s for s in board["board"].get("stones", [])
-                           if s["colour"] == board["colour"]),
-                          key=lambda s: (s["first_seen_s"],
-                                         s["local_observation_id"]))
-            reason = ("no_two_point_moving_path" if len(path) < 2 else
-                      "no_same_colour_stable_board_observation" if not same
-                      else None)
+            same = sorted(
+                (s for s in board["board"].get("stones", []) if s["colour"] == board["colour"]),
+                key=lambda s: (s["first_seen_s"], s["local_observation_id"]),
+            )
+            reason = (
+                "no_two_point_moving_path"
+                if len(path) < 2
+                else "no_same_colour_stable_board_observation"
+                if not same
+                else None
+            )
             steps = []
             abstention = None
             if reason is None:
@@ -72,39 +77,46 @@ def main():
                 previous_time = previous["source_time_s"]
                 current_time = current["source_time_s"]
                 offset = motion["source_offset_s"]
-                for index in sample_indices(current_time - offset,
-                                            same[-1]["first_seen_s"] - offset,
-                                            fps)[1:]:
+                for index in sample_indices(
+                    current_time - offset, same[-1]["first_seen_s"] - offset, fps
+                )[1:]:
                     time = round(offset + index / fps, 6)
                     ratio = (time - current_time) / (current_time - previous_time)
-                    prediction = [current_center[i] +
-                                  (current_center[i] - previous_center[i]) * ratio
-                                  for i in (0, 1)]
+                    prediction = [
+                        current_center[i] + (current_center[i] - previous_center[i]) * ratio
+                        for i in (0, 1)
+                    ]
                     roi = search_roi(prediction)
                     video.set(cv2.CAP_PROP_POS_FRAMES, index)
                     ok, frame = video.read()
                     if not ok or frame.shape[:2] != (1080, 1920):
                         raise ValueError(f"Latvia source frame unreadable: {cid} {index}")
-                    components = [c for c in local_cap_components(
-                        frame, roi, board["colour"])
-                        if c["area_px2"] <= 700]
-                    decision = choose_next_cap(current_center, previous_center,
-                                               ratio, components)
-                    steps.append({"source_time_s": time,
-                                  "decoded_interval_frame_index": index,
-                                  "roi_xyxy_px_1080": list(roi),
-                                  "components": components,
-                                  "decision": decision})
+                    components = [
+                        c
+                        for c in local_cap_components(frame, roi, board["colour"])
+                        if c["area_px2"] <= 700
+                    ]
+                    decision = choose_next_cap(current_center, previous_center, ratio, components)
+                    steps.append(
+                        {
+                            "source_time_s": time,
+                            "decoded_interval_frame_index": index,
+                            "roi_xyxy_px_1080": list(roi),
+                            "components": components,
+                            "decision": decision,
+                        }
+                    )
                     selected = decision["selected"]
                     if selected is None:
                         abstention = decision["status"]
                         break
-                    previous_center, current_center = current_center, selected[
-                        "centroid_px_1080"]
+                    previous_center, current_center = current_center, selected["centroid_px_1080"]
                     previous_time, current_time = current_time, time
-            cap_by_time = {s["source_time_s"]: s["decision"]["selected"][
-                "centroid_px_1080"] for s in steps
-                if s["decision"]["selected"]}
+            cap_by_time = {
+                s["source_time_s"]: s["decision"]["selected"]["centroid_px_1080"]
+                for s in steps
+                if s["decision"]["selected"]
+            }
             board_frames = {f["source_time_s"]: f for f in board["frames"]}
             checkpoints = []
             for observation in same:
@@ -112,35 +124,38 @@ def main():
                 frame = board_frames.get(time)
                 if frame is None:
                     raise ValueError(f"Missing first board observation frame: {cid}")
-                detected = onset_frame_detection(observation,
-                                                 frame["stones"])
+                detected = onset_frame_detection(observation, frame["stones"])
                 center = cap_by_time.get(time)
-                checkpoints.append({
-                    "local_observation_id": observation[
-                        "local_observation_id"],
-                    "first_seen_s": time,
-                    "tracked_cap_center_px_1080": center,
-                    "internal_board_frame_detection": detected,
-                    "tracked_cap_to_onset_detection_px_1080": (
-                        round(dist(center, detected["pixel_center_px_1080"]), 3)
-                        if center is not None and detected else None),
-                    "physical_identity_verified": False,
-                })
-            rows.append({
-                "candidate_id": cid,
-                "colour_claim": board["colour"],
-                "receiving_view": board["receiving_view"],
-                "source_path_last_time_s": path[-1]["source_time_s"]
-                if path else None,
-                "eligibility_reason": reason,
-                "abstention_reason": abstention,
-                "same_colour_board_onset_count": len(same),
-                "steps": steps,
-                "board_onset_checkpoints": checkpoints,
-                "physical_throw_verified": False,
-                "persistent_stone_identity_verified": False,
-                "simulation_ready": False,
-            })
+                checkpoints.append(
+                    {
+                        "local_observation_id": observation["local_observation_id"],
+                        "first_seen_s": time,
+                        "tracked_cap_center_px_1080": center,
+                        "internal_board_frame_detection": detected,
+                        "tracked_cap_to_onset_detection_px_1080": (
+                            round(dist(center, detected["pixel_center_px_1080"]), 3)
+                            if center is not None and detected
+                            else None
+                        ),
+                        "physical_identity_verified": False,
+                    }
+                )
+            rows.append(
+                {
+                    "candidate_id": cid,
+                    "colour_claim": board["colour"],
+                    "receiving_view": board["receiving_view"],
+                    "source_path_last_time_s": path[-1]["source_time_s"] if path else None,
+                    "eligibility_reason": reason,
+                    "abstention_reason": abstention,
+                    "same_colour_board_onset_count": len(same),
+                    "steps": steps,
+                    "board_onset_checkpoints": checkpoints,
+                    "physical_throw_verified": False,
+                    "persistent_stone_identity_verified": False,
+                    "simulation_ready": False,
+                }
+            )
     finally:
         video.release()
     result = {
@@ -149,10 +164,8 @@ def main():
         "source_offset_s": motion["source_offset_s"],
         "input_sha256": {"motion": digest(MOTION), "boards": digest(BOARDS)},
         "runner_sha256": digest(Path(__file__)),
-        "selector_code_sha256": digest(ROOT /
-                                       "prototype/causal_cap_continuation.py"),
-        "component_code_sha256": digest(ROOT /
-                                        "prototype/local_colour_cap_probe.py"),
+        "selector_code_sha256": digest(ROOT / "prototype/causal_cap_continuation.py"),
+        "component_code_sha256": digest(ROOT / "prototype/local_colour_cap_probe.py"),
         "onset_code_sha256": digest(ROOT / "prototype/board_onset_probes.py"),
         "method": {
             "source_resolution_px": [1920, 1080],
@@ -182,14 +195,27 @@ def main():
         ],
     }
     OUT.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"candidates": len(rows),
-                      "eligible": result["eligible_count"],
-                      "abstained": {r["candidate_id"]: r["abstention_reason"]
-                                   for r in rows if r["abstention_reason"]},
-                      "checkpoints_px": {r["candidate_id"]: [
-                          c["tracked_cap_to_onset_detection_px_1080"]
-                          for c in r["board_onset_checkpoints"]]
-                          for r in rows if r["eligibility_reason"] is None}}))
+    print(
+        json.dumps(
+            {
+                "candidates": len(rows),
+                "eligible": result["eligible_count"],
+                "abstained": {
+                    r["candidate_id"]: r["abstention_reason"]
+                    for r in rows
+                    if r["abstention_reason"]
+                },
+                "checkpoints_px": {
+                    r["candidate_id"]: [
+                        c["tracked_cap_to_onset_detection_px_1080"]
+                        for c in r["board_onset_checkpoints"]
+                    ]
+                    for r in rows
+                    if r["eligibility_reason"] is None
+                },
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

@@ -39,8 +39,7 @@ def main():
     ledger = json.loads(args.candidates.read_text())
     if ledger["source_sha256"] != source_hash:
         parser.error("Candidate ledger uses a different source video")
-    capture = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not capture.isOpened():
         parser.error("Cannot open source video")
     fps = capture.get(cv2.CAP_PROP_FPS)
@@ -57,18 +56,26 @@ def main():
             if not ok:
                 raise RuntimeError(f"Frame decode failed at {time_s}")
             house = detect_overhead_house(frame)
-            samples.append({"time_s": round(time_s, 3),
-                            "overhead_house_detected": house is not None,
-                            "house_center_px": house["center_px"] if house else None,
-                            "house_radius_px": house["outer_radius_px"] if house else None})
+            samples.append(
+                {
+                    "time_s": round(time_s, 3),
+                    "overhead_house_detected": house is not None,
+                    "house_center_px": house["center_px"] if house else None,
+                    "house_radius_px": house["outer_radius_px"] if house else None,
+                }
+            )
         count = sum(row["overhead_house_detected"] for row in samples)
-        rows.append({"candidate_id": event["candidate_id"],
-                     "shot_id": event["shot_id"],
-                     "counter_backed": event["counter_id"] is not None,
-                     "release_window_s": event["release_window_s"],
-                     "overhead_sample_count": count,
-                     "all_samples_overhead": count == len(samples),
-                     "samples": samples})
+        rows.append(
+            {
+                "candidate_id": event["candidate_id"],
+                "shot_id": event["shot_id"],
+                "counter_backed": event["counter_id"] is not None,
+                "release_window_s": event["release_window_s"],
+                "overhead_sample_count": count,
+                "all_samples_overhead": count == len(samples),
+                "samples": samples,
+            }
+        )
     capture.release()
     output = {
         "status": "source_only_candidate_view_context_diagnostic_not_throw_decision",
@@ -90,9 +97,13 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(output, indent=2) + "\n")
-    print({"candidates": len(rows),
-           "any_overhead": output["any_overhead_count"],
-           "all_overhead": output["all_overhead_count"]})
+    print(
+        {
+            "candidates": len(rows),
+            "any_overhead": output["any_overhead_count"],
+            "all_overhead": output["all_overhead_count"],
+        }
+    )
 
 
 if __name__ == "__main__":

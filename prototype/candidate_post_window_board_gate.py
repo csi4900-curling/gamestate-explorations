@@ -1,8 +1,9 @@
 """Sample candidate post-delivery views without crossing the next candidate."""
 
 
-def post_window_sample_times(window, next_start_s, *, lead_s=4.0, step_s=2.0,
-                             horizon_s=32.0, next_margin_s=2.0):
+def post_window_sample_times(
+    window, next_start_s, *, lead_s=4.0, step_s=2.0, horizon_s=32.0, next_margin_s=2.0
+):
     start_s, end_s = window
     if not start_s < end_s or next_start_s <= start_s:
         raise ValueError("Candidate timing is invalid")

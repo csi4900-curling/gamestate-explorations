@@ -24,8 +24,7 @@ def main():
         parser.error("Output already exists")
     if not 0 <= args.source_offset <= args.source_start < args.source_stop:
         parser.error("Invalid source interval or offset")
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         parser.error("Cannot open source video")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -35,8 +34,7 @@ def main():
     observations = {"red": [], "yellow": []}
     try:
         for source_second in range(args.source_start, args.source_stop + 1):
-            cap.set(cv2.CAP_PROP_POS_FRAMES, round(
-                (source_second - args.source_offset) * fps))
+            cap.set(cv2.CAP_PROP_POS_FRAMES, round((source_second - args.source_offset) * fps))
             ok, frame = cap.read()
             if not ok:
                 raise RuntimeError(f"Could not decode source second {source_second}")
@@ -67,8 +65,7 @@ def main():
         "minimum_supported_track_points": 3,
         "minimum_supported_track_duration_s": 2,
         "review_span_displacement_px": 60,
-        "colour_proposal_code_sha256": digest(
-            ROOT / "prototype/right_large_cap_proposals.py"),
+        "colour_proposal_code_sha256": digest(ROOT / "prototype/right_large_cap_proposals.py"),
         "association_code_sha256": digest(ROOT / "prototype/right_global_area_tracks.py"),
         "late_seed_code_sha256": digest(ROOT / "prototype/right_late_seed_span.py"),
         "runner_sha256": digest(Path(__file__)),

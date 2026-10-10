@@ -10,9 +10,11 @@ def apply_body_band_abstention(screen, features, threshold=0.5):
     observed = features["rows"]
     by_id = {row["candidate_id"]: row for row in observed}
     accepted_ids = {row["candidate_id"] for row in decisions if row["accepted"]}
-    if (len(by_id) != len(observed) or
-            len({row["candidate_id"] for row in decisions}) != len(decisions) or
-            set(by_id) != accepted_ids):
+    if (
+        len(by_id) != len(observed)
+        or len({row["candidate_id"] for row in decisions}) != len(decisions)
+        or set(by_id) != accepted_ids
+    ):
         raise ValueError("Feature rows must cover every frozen acceptance exactly once")
     derived = []
     flagged = []
@@ -24,8 +26,11 @@ def apply_body_band_abstention(screen, features, threshold=0.5):
             fraction = feature["max_neutral_gray_fraction"]
             if fraction is None or fraction < threshold:
                 new["accepted"] = False
-                new["status"] = ("abstain_body_band_unavailable" if fraction is None
-                                 else "abstain_low_neutral_stone_body_support")
+                new["status"] = (
+                    "abstain_body_band_unavailable"
+                    if fraction is None
+                    else "abstain_low_neutral_stone_body_support"
+                )
                 flagged.append(pid)
             new["max_neutral_gray_fraction"] = fraction
         derived.append(new)

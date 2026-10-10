@@ -31,9 +31,14 @@ def main():
     shards = [json.loads(path.read_text()) for path in paths]
     if len(shards) != 14:
         raise ValueError("Expected 14 bounded source shards")
-    for key in ("source_video_sha256", "template_video_sha256",
-                "red_template_audit_sha256", "runner_sha256",
-                "body_code_sha256", "handle_code_sha256"):
+    for key in (
+        "source_video_sha256",
+        "template_video_sha256",
+        "red_template_audit_sha256",
+        "runner_sha256",
+        "body_code_sha256",
+        "handle_code_sha256",
+    ):
         if len({s[key] for s in shards}) != 1:
             raise ValueError(f"Shard provenance differs: {key}")
     yellow = json.loads(YELLOW.read_text())
@@ -51,17 +56,19 @@ def main():
                 raise ValueError(f"Invalid or duplicate sample: {path}")
             rows[row["time_s"]] = row
         if shard["body_proposal_count"] != sum(
-                len(r["body_proposals"])
-                for r in shard["samples_with_body_proposals"]):
+            len(r["body_proposals"]) for r in shard["samples_with_body_proposals"]
+        ):
             raise ValueError(f"Shard count mismatch: {path}")
     if covered != set(range(START_S, STOP_S)):
         raise ValueError("Late interval coverage incomplete")
-    samples = [rows.get(t, {"time_s": t, "body_proposals": []})
-               for t in range(START_S, STOP_S)]
-    screened = [{"time_s": r["time_s"],
-                 "body_proposals": [p for p in r["body_proposals"]
-                                    if p["red_handle_supported"]]}
-                for r in samples]
+    samples = [rows.get(t, {"time_s": t, "body_proposals": []}) for t in range(START_S, STOP_S)]
+    screened = [
+        {
+            "time_s": r["time_s"],
+            "body_proposals": [p for p in r["body_proposals"] if p["red_handle_supported"]],
+        }
+        for r in samples
+    ]
     linked = link_paths(screened)
     result = {
         "status": "late_blind_full_red_body_handle_development_not_throw_validation",
@@ -71,19 +78,20 @@ def main():
         "template_video_sha256": shards[0]["template_video_sha256"],
         "yellow_screen_sha256": digest(YELLOW),
         "joiner_sha256": digest(Path(__file__)),
-        "linker_sha256": digest(
-            ROOT / "prototype/scripts/probe_latvia_1080p_body_paths.py"),
-        "shards": [{"path": str(path.relative_to(ROOT)),
-                    "sha256": digest(path),
-                    "interval_s": s["source_interval_s"]}
-                   for path, s in zip(paths, shards)],
+        "linker_sha256": digest(ROOT / "prototype/scripts/probe_latvia_1080p_body_paths.py"),
+        "shards": [
+            {
+                "path": str(path.relative_to(ROOT)),
+                "sha256": digest(path),
+                "interval_s": s["source_interval_s"],
+            }
+            for path, s in zip(paths, shards)
+        ],
         "red_body_proposal_count": sum(len(r["body_proposals"]) for r in samples),
         "red_handle_supported_count": sum(len(r["body_proposals"]) for r in screened),
-        "red_supported_path_direction_counts": dict(Counter(
-            p["direction"] for p in linked)),
+        "red_supported_path_direction_counts": dict(Counter(p["direction"] for p in linked)),
         "red_supported_image_paths": linked,
-        "prior_yellow_supported_path_direction_counts": yellow[
-            "supported_path_direction_counts"],
+        "prior_yellow_supported_path_direction_counts": yellow["supported_path_direction_counts"],
         "limitations": [
             "Both colour lanes are same-match development probes, not independently scored detectors.",
             "An upward image path is a review candidate until source-visible stone and delivery are confirmed.",
@@ -92,12 +100,17 @@ def main():
         ],
     }
     OUT.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({"seconds": len(covered),
-                      "red_body": result["red_body_proposal_count"],
-                      "red_handle": result["red_handle_supported_count"],
-                      "red_paths": result["red_supported_path_direction_counts"],
-                      "yellow_paths": result[
-                          "prior_yellow_supported_path_direction_counts"]}))
+    print(
+        json.dumps(
+            {
+                "seconds": len(covered),
+                "red_body": result["red_body_proposal_count"],
+                "red_handle": result["red_handle_supported_count"],
+                "red_paths": result["red_supported_path_direction_counts"],
+                "yellow_paths": result["prior_yellow_supported_path_direction_counts"],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

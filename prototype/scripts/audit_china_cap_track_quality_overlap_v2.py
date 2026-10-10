@@ -36,17 +36,19 @@ def main():
     for quality in sorted(set(row["quality"] for row in first["rows"])):
         members = [row for row in first["rows"] if row["quality"] == quality]
         associated = [row for row in members if row["shot_id"] in linked]
-        rows.append({
-            "quality": quality,
-            "candidate_window_count": len(members),
-            "counter_associated_window_count": len(associated),
-            "shot_ids": [row["shot_id"] for row in members],
-            "counter_associated_shot_ids": [row["shot_id"] for row in associated],
-        })
-    known_linked = [row for row in first["rows"]
-                    if row["colour"] is not None and row["shot_id"] in linked]
-    supported_linked = [row for row in known_linked
-                        if row["quality"] == "combined_cue_supported"]
+        rows.append(
+            {
+                "quality": quality,
+                "candidate_window_count": len(members),
+                "counter_associated_window_count": len(associated),
+                "shot_ids": [row["shot_id"] for row in members],
+                "counter_associated_shot_ids": [row["shot_id"] for row in associated],
+            }
+        )
+    known_linked = [
+        row for row in first["rows"] if row["colour"] is not None and row["shot_id"] in linked
+    ]
+    supported_linked = [row for row in known_linked if row["quality"] == "combined_cue_supported"]
     output = {
         "status": "postscore_china_exact_transit_track_quality_counter_overlap_not_event_score",
         "first_sha256": digest(FIRST),
@@ -70,9 +72,13 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(output, indent=2) + "\n")
-    print({"known_colour_counter_associated": len(known_linked),
-           "combined_supported": len(supported_linked),
-           "quality_counts": output["quality_counts"]})
+    print(
+        {
+            "known_colour_counter_associated": len(known_linked),
+            "combined_supported": len(supported_linked),
+            "quality_counts": output["quality_counts"],
+        }
+    )
 
 
 if __name__ == "__main__":

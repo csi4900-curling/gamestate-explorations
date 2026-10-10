@@ -37,15 +37,15 @@ def main():
     selections = [json.loads(path.read_text()) for path in args.selection]
     source_hash = digest(args.video)
     if source_hash != events["source_sha256"] or any(
-            item["source_sha256"] != source_hash for item in selections):
+        item["source_sha256"] != source_hash for item in selections
+    ):
         parser.error("Source fingerprints differ")
     by_id = {row["id"]: row for row in events["events"]}
     selected = [row for item in selections for row in item["selected"]]
     if len({row["candidate_id"] for row in selected}) != len(selected):
         parser.error("Selection files overlap")
     model = load_model(args.model)
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     fps = cap.get(cv2.CAP_PROP_FPS)
     if not cap.isOpened() or fps <= 0:
         parser.error("Unreadable video")
@@ -62,28 +62,33 @@ def main():
         image = cv2.resize(frame, (640, 360), interpolation=cv2.INTER_AREA)
         hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
         hue, saturation, value = cv2.split(hsv)
-        mask = (((hue < 12) | (hue > 170)) & (saturation > 60) & (value > 40)
-                if event["colour"] == "red" else
-                (hue > 16) & (hue < 43) & (saturation > 60) & (value > 65))
-        contours, _ = cv2.findContours(mask.astype(np.uint8) * 255,
-                                       cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        mask = (
+            ((hue < 12) | (hue > 170)) & (saturation > 60) & (value > 40)
+            if event["colour"] == "red"
+            else (hue > 16) & (hue < 43) & (saturation > 60) & (value > 65)
+        )
+        contours, _ = cv2.findContours(
+            mask.astype(np.uint8) * 255, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
+        )
         nearby = []
         proposed_boxes = []
         for contour in contours:
             x, y, width, height = cv2.boundingRect(contour)
             area = cv2.contourArea(contour)
             center = (x + width / 2, y + height / 2)
-            if math.hypot(center[0] - event["crossing_x_px"],
-                          center[1] - event["passage_y_px"]) > 15:
+            if (
+                math.hypot(center[0] - event["crossing_x_px"], center[1] - event["passage_y_px"])
+                > 15
+            ):
                 continue
             nearby.append({"area_px2": area, "bbox": [x, y, width, height]})
             if area < 3 or width > 30 or height > 20:
                 continue
             for side in (8, 10, 12, 14, 18, 24):
                 for offset in (0, 0.2):
-                    proposed_boxes.append([center[0] - side / 2,
-                                           center[1] + side * offset - side / 2,
-                                           side, side])
+                    proposed_boxes.append(
+                        [center[0] - side / 2, center[1] + side * offset - side / 2, side, side]
+                    )
         if proposed_boxes:
             features = np.stack([patch_features(image, box) for box in proposed_boxes])
             scores = ((features - model["mean"]) / model["scale"]) @ model["weights"].ravel()
@@ -91,15 +96,18 @@ def main():
             best = float(max(scores))
         else:
             best = None
-        rows.append({
-            "candidate_id": event["id"], "colour": event["colour"],
-            "crossing_time_s": t,
-            "nearby_same_colour_contours": nearby,
-            "small_box_proposal_count": len(proposed_boxes),
-            "best_frozen_model_score": best,
-            "frozen_model_threshold": float(model["threshold"]),
-            "would_pass_score_only": best is not None and best >= float(model["threshold"]),
-        })
+        rows.append(
+            {
+                "candidate_id": event["id"],
+                "colour": event["colour"],
+                "crossing_time_s": t,
+                "nearby_same_colour_contours": nearby,
+                "small_box_proposal_count": len(proposed_boxes),
+                "best_frozen_model_score": best,
+                "frozen_model_threshold": float(model["threshold"]),
+                "would_pass_score_only": best is not None and best >= float(model["threshold"]),
+            }
+        )
     cap.release()
     result = {
         "status": "selected_postscore_small_cap_diagnostic_not_promoted_inference_rule",
@@ -120,8 +128,14 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({"cases": len(rows), "score_positive": sum(
-        row["would_pass_score_only"] for row in rows)}))
+    print(
+        json.dumps(
+            {
+                "cases": len(rows),
+                "score_positive": sum(row["would_pass_score_only"] for row in rows),
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

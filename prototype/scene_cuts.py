@@ -20,8 +20,7 @@ def scene_cut_evidence(before, after, *, min_gray_change=45, min_hist_distance=0
         cv2.normalize(hist, hist)
         metrics.append((gray, hist))
     gray_change = float(np.mean(cv2.absdiff(metrics[0][0], metrics[1][0])))
-    hist_distance = float(cv2.compareHist(metrics[0][1], metrics[1][1],
-                                          cv2.HISTCMP_BHATTACHARYYA))
+    hist_distance = float(cv2.compareHist(metrics[0][1], metrics[1][1], cv2.HISTCMP_BHATTACHARYYA))
     return {
         "gray_change": round(gray_change, 3),
         "hist_distance": round(hist_distance, 4),

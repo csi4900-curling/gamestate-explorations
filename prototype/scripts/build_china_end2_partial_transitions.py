@@ -30,14 +30,17 @@ def main():
     transitions = []
     for before, after in zip(rows, rows[1:]):
         if not before["stable_partial_board"] or not after["stable_partial_board"]:
-            transitions.append({"before_shot_id": before["shot_id"],
-                                "after_shot_id": after["shot_id"],
-                                "status": "one_or_both_video_boards_missing",
-                                "simulation_ready": False})
+            transitions.append(
+                {
+                    "before_shot_id": before["shot_id"],
+                    "after_shot_id": after["shot_id"],
+                    "status": "one_or_both_video_boards_missing",
+                    "simulation_ready": False,
+                }
+            )
             continue
         transition = compare_partial_boards(before, after)
-        transitions.append({"status": "local_partial_board_comparison",
-                            **transition})
+        transitions.append({"status": "local_partial_board_comparison", **transition})
     output = {
         "status": "first_source_only_partial_board_transition_evidence",
         "source_sha256": source["source_sha256"],
@@ -47,7 +50,8 @@ def main():
         "selected_shot_numbers": source["selected_shot_numbers"],
         "transition_count": len(transitions),
         "observed_transition_count": sum(
-            row["status"] == "local_partial_board_comparison" for row in transitions),
+            row["status"] == "local_partial_board_comparison" for row in transitions
+        ),
         "transitions": transitions,
         "limitations": [
             "Only locally repeated same-colour positions are associated across partial boards.",
@@ -58,9 +62,15 @@ def main():
     }
     OUTPUT.write_text(json.dumps(output, indent=2) + "\n")
     for row in transitions:
-        print(row["before_shot_id"], "->", row["after_shot_id"], row["status"],
-              len(row.get("locally_retained", [])), row.get("newly_observed"),
-              row.get("no_longer_observed"))
+        print(
+            row["before_shot_id"],
+            "->",
+            row["after_shot_id"],
+            row["status"],
+            len(row.get("locally_retained", [])),
+            row.get("newly_observed"),
+            row.get("no_longer_observed"),
+        )
 
 
 if __name__ == "__main__":

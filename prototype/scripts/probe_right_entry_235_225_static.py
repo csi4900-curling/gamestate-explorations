@@ -43,13 +43,18 @@ def main():
             parser.error("Frozen baseline no longer reproduces")
         rows = variant(tracks)
         ids = {row["raw_track_id"] for row in rows}
-        intervals.append({"interval_s": m["interval_s"],
-                          "raw_track_count": len(tracks),
-                          "baseline_ids": frozen,
-                          "baseline_ids_lost": [id for id in frozen if id not in ids],
-                          "new_ids": [row["raw_track_id"] for row in rows
-                                      if row["raw_track_id"] not in frozen],
-                          "entry_review_proposals": rows})
+        intervals.append(
+            {
+                "interval_s": m["interval_s"],
+                "raw_track_count": len(tracks),
+                "baseline_ids": frozen,
+                "baseline_ids_lost": [id for id in frozen if id not in ids],
+                "new_ids": [
+                    row["raw_track_id"] for row in rows if row["raw_track_id"] not in frozen
+                ],
+                "entry_review_proposals": rows,
+            }
+        )
     result = {
         "status": "postreview_threshold_variant_static_left_transfer_not_accepted_events",
         "source_sha256": motion["source_sha256"],
@@ -58,15 +63,27 @@ def main():
         "variant_code_sha256": digest(ROOT / "prototype/scripts/probe_right_entry_235_225.py"),
         "runner_sha256": digest(Path(__file__)),
         "intervals": intervals,
-        "limitations": ["This rule was selected after reviewing exposed 2024 source clips.",
-                        "New prefixes require source review and independent event validation."],
+        "limitations": [
+            "This rule was selected after reviewing exposed 2024 source clips.",
+            "New prefixes require source review and independent event validation.",
+        ],
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps([{"interval": i["interval_s"], "baseline": len(i["baseline_ids"]),
-                       "variant": len(i["entry_review_proposals"]),
-                       "new_ids": i["new_ids"], "lost": i["baseline_ids_lost"]}
-                      for i in intervals]))
+    print(
+        json.dumps(
+            [
+                {
+                    "interval": i["interval_s"],
+                    "baseline": len(i["baseline_ids"]),
+                    "variant": len(i["entry_review_proposals"]),
+                    "new_ids": i["new_ids"],
+                    "lost": i["baseline_ids_lost"],
+                }
+                for i in intervals
+            ]
+        )
+    )
 
 
 if __name__ == "__main__":

@@ -27,13 +27,15 @@ def main():
         parser.error("Input preflight has no saved samples or chunks")
     start, end = source["source_interval_s"]
     refreshed = [
-        {**row, "split_2024_signature": split_2024_signature(
-            row["left_pale_fraction"], row["left_bright_fraction"],
-            row["right_blue_fraction"])}
+        {
+            **row,
+            "split_2024_signature": split_2024_signature(
+                row["left_pale_fraction"], row["left_bright_fraction"], row["right_blue_fraction"]
+            ),
+        }
         for row in source["samples"]
     ]
-    route = summarize_evidence(refreshed, start, end,
-                               chunk_s=source["layout_chunk_s"])
+    route = summarize_evidence(refreshed, start, end, chunk_s=source["layout_chunk_s"])
     result = {
         "status": "postscore_development_layout_replay_not_event_validation",
         "source_id": source["source_id"],
@@ -45,8 +47,7 @@ def main():
         "runner_sha256": digest(Path(__file__)),
         "original_layout": source["layout"],
         "original_coverage_gaps_s": source["coverage_gaps_s"],
-        "recomputed_split_signature_count": sum(
-            row["split_2024_signature"] for row in refreshed),
+        "recomputed_split_signature_count": sum(row["split_2024_signature"] for row in refreshed),
         **route,
         "limitations": [
             "Replaying sparse saved frames is a routing diagnostic, not continuous camera coverage.",
@@ -57,9 +58,15 @@ def main():
     args.output.write_text(json.dumps(result, indent=2) + "\n")
     original_gap_s = sum(hi - lo for lo, hi in source["coverage_gaps_s"])
     revised_gap_s = sum(hi - lo for lo, hi in route["coverage_gaps_s"])
-    print(json.dumps({"source_id": source["source_id"],
-                      "original_unknown_s": original_gap_s,
-                      "revised_unknown_s": revised_gap_s}))
+    print(
+        json.dumps(
+            {
+                "source_id": source["source_id"],
+                "original_unknown_s": original_gap_s,
+                "revised_unknown_s": revised_gap_s,
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

@@ -33,23 +33,24 @@ def main():
     if OUT.exists():
         raise ValueError("Low-resolution registration audit already exists")
     alignment, paths, control, prior = (
-        json.loads(p.read_text()) for p in
-        (ALIGNMENT, PATHS, CONTROL, PRIOR))
+        json.loads(p.read_text()) for p in (ALIGNMENT, PATHS, CONTROL, PRIOR)
+    )
     source_hash = digest(VIDEO)
     high_hash = prior["source_sha256"]
-    if (source_hash != paths["source_video_sha256"] or
-            source_hash != alignment["full_video_sha256"] or
-            high_hash != alignment["interval_video_sha256"] or
-            high_hash != control["source_sha256"] or
-            not alignment["all_best_at_zero_adjustment"] or
-            prior["reviewed_ledger_sha256"] != digest(PATHS) or
-            prior["registration_code_sha256"] != digest(ROOT /
-                "prototype/split_panel_camera_registration.py") or
-            control["registration_code_sha256"] != digest(ROOT /
-                "prototype/split_panel_camera_registration.py")):
+    if (
+        source_hash != paths["source_video_sha256"]
+        or source_hash != alignment["full_video_sha256"]
+        or high_hash != alignment["interval_video_sha256"]
+        or high_hash != control["source_sha256"]
+        or not alignment["all_best_at_zero_adjustment"]
+        or prior["reviewed_ledger_sha256"] != digest(PATHS)
+        or prior["registration_code_sha256"]
+        != digest(ROOT / "prototype/split_panel_camera_registration.py")
+        or control["registration_code_sha256"]
+        != digest(ROOT / "prototype/split_panel_camera_registration.py")
+    ):
         raise ValueError("Czech source or high-resolution reference differs")
-    cap = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         raise ValueError("Czech 360p video unreadable")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -79,25 +80,38 @@ def main():
                 result = source_pair(
                     [v / 3 for v in first["pixel_center_1080"]],
                     [v / 3 for v in second["pixel_center_1080"]],
-                    t0, t1, frame_at)
-                results.append({"group": "reviewed_moving_path",
-                                "id": row["episode_id"],
-                                "interval_s": [t0, t1],
-                                "highres_residual_px": old[index][
-                                    "camera_residual_px"],
-                                "lowres": result})
+                    t0,
+                    t1,
+                    frame_at,
+                )
+                results.append(
+                    {
+                        "group": "reviewed_moving_path",
+                        "id": row["episode_id"],
+                        "interval_s": [t0, t1],
+                        "highres_residual_px": old[index]["camera_residual_px"],
+                        "lowres": result,
+                    }
+                )
             print(row["episode_id"], "moving", len(points) - 1, flush=True)
         for row in control["rows"]:
             t0, t1 = row["interval_s"]
             result = source_pair(
                 [v / 3 for v in row["first_pixel_1080"]],
                 [v / 3 for v in row["second_pixel_1080"]],
-                t0, t1, frame_at)
-            results.append({"group": row["control_group"],
-                            "id": row["candidate_id"],
-                            "interval_s": [t0, t1],
-                            "highres_residual_px": row["camera_residual_px"],
-                            "lowres": result})
+                t0,
+                t1,
+                frame_at,
+            )
+            results.append(
+                {
+                    "group": row["control_group"],
+                    "id": row["candidate_id"],
+                    "interval_s": [t0, t1],
+                    "highres_residual_px": row["camera_residual_px"],
+                    "lowres": result,
+                }
+            )
         print("board_controls", len(control["rows"]), flush=True)
     finally:
         cap.release()
@@ -105,31 +119,36 @@ def main():
     summary = {}
     for group in groups:
         subset = [r for r in results if r["group"] == group]
-        accepted = [r for r in subset if r["lowres"][
-            "camera_residual_px"] is not None]
+        accepted = [r for r in subset if r["lowres"]["camera_residual_px"] is not None]
         summary[group] = {
             "pair_count": len(subset),
             "registered_count": len(accepted),
-            "residual_over_5_count": sum(r["lowres"][
-                "camera_residual_px"] > 5 for r in accepted),
-            "highres_registered_count": sum(r["highres_residual_px"]
-                                            is not None for r in subset),
-            "lowres_abstention_statuses": dict(Counter(r["lowres"]["subpairs"][-1][
-                "status"] if r["lowres"]["subpairs"] else r["lowres"]["status"]
-                for r in subset if r["lowres"]["camera_residual_px"] is None)),
+            "residual_over_5_count": sum(r["lowres"]["camera_residual_px"] > 5 for r in accepted),
+            "highres_registered_count": sum(r["highres_residual_px"] is not None for r in subset),
+            "lowres_abstention_statuses": dict(
+                Counter(
+                    r["lowres"]["subpairs"][-1]["status"]
+                    if r["lowres"]["subpairs"]
+                    else r["lowres"]["status"]
+                    for r in subset
+                    if r["lowres"]["camera_residual_px"] is None
+                )
+            ),
         }
     payload = {
         "status": "upsampled_360p_split_registration_development_comparison_not_throw_truth",
         "source_video_sha256": source_hash,
         "source_1080p_sha256": high_hash,
-        "input_sha256": {"alignment": digest(ALIGNMENT),
-                         "reviewed_paths": digest(PATHS),
-                         "highres_controls": digest(CONTROL),
-                         "highres_moving_paths": digest(PRIOR)},
-        "lowres_adapter_sha256": digest(ROOT /
-            "prototype/lowres_split_panel_camera_registration.py"),
-        "registration_code_sha256": digest(ROOT /
-            "prototype/split_panel_camera_registration.py"),
+        "input_sha256": {
+            "alignment": digest(ALIGNMENT),
+            "reviewed_paths": digest(PATHS),
+            "highres_controls": digest(CONTROL),
+            "highres_moving_paths": digest(PRIOR),
+        },
+        "lowres_adapter_sha256": digest(
+            ROOT / "prototype/lowres_split_panel_camera_registration.py"
+        ),
+        "registration_code_sha256": digest(ROOT / "prototype/split_panel_camera_registration.py"),
         "runner_sha256": digest(Path(__file__)),
         "method": "Use verified zero-offset 360p↔1080p alignment; scale reviewed 1080p pixels by 1/3, crop their 320x360 source panel, upsample 2x without distortion, apply unchanged 640x720 camera registration and edge guard.",
         "summary_by_group": summary,

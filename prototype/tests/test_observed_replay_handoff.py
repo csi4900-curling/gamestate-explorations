@@ -9,10 +9,11 @@ def point(time, x, y):
 
 def candidate(arrival_start):
     return {
-        "id": "T01", "colour": "red", "gate_time_s": 10.5,
+        "id": "T01",
+        "colour": "red",
+        "gate_time_s": 10.5,
         "departure": [point(10, 0, 5), point(11, 0.1, 7)],
-        "arrival": [point(arrival_start, 0.3, 12),
-                    point(arrival_start + 1, 0.4, 14)],
+        "arrival": [point(arrival_start, 0.3, 12), point(arrival_start + 1, 0.4, 14)],
     }
 
 

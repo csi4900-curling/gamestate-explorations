@@ -26,12 +26,10 @@ def main():
     edit = json.loads(EDIT.read_text())
     if digest(VIDEO) != edit["source_sha256"]:
         raise ValueError("Source fingerprint mismatch")
-    proposed = {(row["shot_id"], row["time_s"])
-                for row in edit["possible_edits_outside_hard_cuts"]}
+    proposed = {(row["shot_id"], row["time_s"]) for row in edit["possible_edits_outside_hard_cuts"]}
     if not set(EXAMPLES) <= proposed:
         raise ValueError("Selected example disappeared from full scan")
-    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     fps = capture.get(cv2.CAP_PROP_FPS)
     rows = []
     for shot_id, time_s in EXAMPLES:
@@ -44,13 +42,20 @@ def main():
             frame = cv2.resize(frame, (480, 270), interpolation=cv2.INTER_AREA)
             label = f"{shot_id} / {instant:.1f} s"
             cv2.rectangle(frame, (0, 235), (480, 270), (12, 27, 35), -1)
-            cv2.putText(frame, label, (12, 260), cv2.FONT_HERSHEY_SIMPLEX,
-                        0.72, (255, 255, 255), 2, cv2.LINE_AA)
+            cv2.putText(
+                frame,
+                label,
+                (12, 260),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                0.72,
+                (255, 255, 255),
+                2,
+                cv2.LINE_AA,
+            )
             cells.append(frame)
         rows.append(np.concatenate(cells, axis=1))
     capture.release()
-    cv2.imwrite(str(OUTPUT), np.concatenate(rows, axis=0),
-                [cv2.IMWRITE_JPEG_QUALITY, 87])
+    cv2.imwrite(str(OUTPUT), np.concatenate(rows, axis=0), [cv2.IMWRITE_JPEG_QUALITY, 87])
     print(OUTPUT)
 
 

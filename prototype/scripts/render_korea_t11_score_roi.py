@@ -30,35 +30,33 @@ def main():
     if len(path) != 1 or path[0]["direction"] != "upward":
         raise ValueError("Low-score path set changed")
     by_time = {p["time_s"]: p for p in path[0]["points"]}
-    cap = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         raise RuntimeError("Cannot open source")
     panels = []
     try:
         for t in TIMES:
-            cap.set(cv2.CAP_PROP_POS_MSEC, (t-2260)*1000)
+            cap.set(cv2.CAP_PROP_POS_MSEC, (t - 2260) * 1000)
             ok, frame = cap.read()
             if not ok or frame.shape[:2] != (1080, 1920):
                 raise RuntimeError(f"Cannot decode {t}")
-            view = cv2.resize(frame[:, 960:], (480, 540),
-                              interpolation=cv2.INTER_AREA)
+            view = cv2.resize(frame[:, 960:], (480, 540), interpolation=cv2.INTER_AREA)
             if t in by_time:
                 x, y = by_time[t]["center_1080p_px"]
-                x, y = round((x-960)/2), round(y/2)
-                cv2.rectangle(view, (x-24, y-18), (x+24, y+18),
-                              (255, 0, 255), 2)
+                x, y = round((x - 960) / 2), round(y / 2)
+                cv2.rectangle(view, (x - 24, y - 18), (x + 24, y + 18), (255, 0, 255), 2)
             cv2.rectangle(view, (0, 0), (480, 38), (10, 20, 30), -1)
             label = f"{t}s score>=0.45 {'match' if t in by_time else 'no path'}"
-            cv2.putText(view, label, (8, 27), cv2.FONT_HERSHEY_SIMPLEX,
-                        .6, (255, 255, 255), 2)
+            cv2.putText(view, label, (8, 27), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)
             panels.append(view)
     finally:
         cap.release()
     image_path = BASE / "t11-score-roi-source-review.jpg"
-    if not cv2.imwrite(str(image_path),
-                       np.vstack([np.hstack(panels[:3]), np.hstack(panels[3:])]),
-                       [cv2.IMWRITE_JPEG_QUALITY, 90]):
+    if not cv2.imwrite(
+        str(image_path),
+        np.vstack([np.hstack(panels[:3]), np.hstack(panels[3:])]),
+        [cv2.IMWRITE_JPEG_QUALITY, 90],
+    ):
         raise RuntimeError("Could not write source review sheet")
     manifest = {
         "status": "same_agent_development_source_review_not_independent_event_validation",
@@ -73,8 +71,7 @@ def main():
         },
         "physical_identity_independently_verified": False,
     }
-    (BASE / "t11-score-roi-source-review.json").write_text(
-        json.dumps(manifest, indent=2) + "\n")
+    (BASE / "t11-score-roi-source-review.json").write_text(json.dumps(manifest, indent=2) + "\n")
     print(image_path.relative_to(ROOT))
 
 

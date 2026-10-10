@@ -24,12 +24,10 @@ def main():
     if OUT.exists():
         raise ValueError("Anchor audit exists")
     raw, motion = (json.loads(p.read_text()) for p in (RAW, MOTION))
-    if (raw["source_sha256"] != motion["candidate_source_sha256"] or
-            motion["source_offset_s"] != 0):
+    if raw["source_sha256"] != motion["candidate_source_sha256"] or motion["source_offset_s"] != 0:
         raise ValueError("Raw and downstream motion lineage differs")
     by_id = {r["candidate_id"]: r for r in motion["rows"]}
-    if len(by_id) != len(motion["rows"]) or not set(by_id) <= {
-            e["id"] for e in raw["events"]}:
+    if len(by_id) != len(motion["rows"]) or not set(by_id) <= {e["id"] for e in raw["events"]}:
         raise ValueError("Candidate IDs do not match")
     rows = []
     for event in raw["events"]:
@@ -47,22 +45,32 @@ def main():
                 if dt > 0.15:
                     continue
                 source_1080 = [3 * v for v in original["pixel"]]
-                pairings.append({
-                    "raw_time_s": original["time_s"],
-                    "downstream_time_s": later["source_time_s"],
-                    "time_difference_s": round(dt, 3),
-                    "raw_center_1080p_px": source_1080,
-                    "downstream_center_1080p_px": later["pixel_center"],
-                    "center_separation_px": round(math.dist(
-                        source_1080, later["pixel_center"]), 3),
-                })
-        closest = min(pairings, key=lambda r: (
-            r["time_difference_s"], r["center_separation_px"])) if pairings else None
-        rows.append({"candidate_id": event["id"],
-                     "downstream_selection_status": selected["status"],
-                     "downstream_path_points": len(path),
-                     "near_time_pair_count": len(pairings),
-                     "closest_time_pair": closest})
+                pairings.append(
+                    {
+                        "raw_time_s": original["time_s"],
+                        "downstream_time_s": later["source_time_s"],
+                        "time_difference_s": round(dt, 3),
+                        "raw_center_1080p_px": source_1080,
+                        "downstream_center_1080p_px": later["pixel_center"],
+                        "center_separation_px": round(
+                            math.dist(source_1080, later["pixel_center"]), 3
+                        ),
+                    }
+                )
+        closest = (
+            min(pairings, key=lambda r: (r["time_difference_s"], r["center_separation_px"]))
+            if pairings
+            else None
+        )
+        rows.append(
+            {
+                "candidate_id": event["id"],
+                "downstream_selection_status": selected["status"],
+                "downstream_path_points": len(path),
+                "near_time_pair_count": len(pairings),
+                "closest_time_pair": closest,
+            }
+        )
     overlaps = [r for r in rows if r["closest_time_pair"] is not None]
     output = {
         "status": "raw_to_downstream_spatial_anchor_audit_not_identity_truth",
@@ -82,9 +90,15 @@ def main():
         ],
     }
     OUT.write_text(json.dumps(output, indent=2) + "\n")
-    print(json.dumps({"left_view_rows": len(rows),
-                      "near_time_pairs": len(overlaps),
-                      "S96": next(r for r in rows if r["candidate_id"] == "S96")}))
+    print(
+        json.dumps(
+            {
+                "left_view_rows": len(rows),
+                "near_time_pairs": len(overlaps),
+                "S96": next(r for r in rows if r["candidate_id"] == "S96"),
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

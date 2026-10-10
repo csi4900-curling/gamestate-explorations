@@ -1,11 +1,11 @@
-from prototype.visual_only_patch_evidence import (patch_evidence_status,
-                                                  summarize_tracks)
+from prototype.visual_only_patch_evidence import patch_evidence_status, summarize_tracks
 
 
 def track(scores):
-    return {"span_px": 50, "points": [
-        {"time_s": index, "patch_score": score}
-        for index, score in enumerate(scores)]}
+    return {
+        "span_px": 50,
+        "points": [{"time_s": index, "patch_score": score} for index, score in enumerate(scores)],
+    }
 
 
 def test_negative_track_is_diagnostic_not_dropped():

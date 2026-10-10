@@ -15,7 +15,10 @@ from prototype.stone_motion_fallback import moving_cap_tracks, stone_cap_candida
 
 
 VIDEO = ROOT / "validation/throw-event-benchmark/paralympics-2022-canada-norway/source.mp4"
-MANIFEST = ROOT / "validation/curlobserver-learned-probe/canada-norway-full-transfer/shot-review/manifest.json"
+MANIFEST = (
+    ROOT
+    / "validation/curlobserver-learned-probe/canada-norway-full-transfer/shot-review/manifest.json"
+)
 OUTPUT = ROOT / "validation/official-shot-sequence/norway-global-shot-scoped-cap-motion-first.json"
 
 
@@ -42,8 +45,7 @@ def tracks_for_shot(observations, shot_id):
     rows = []
     for colour in ("red", "yellow"):
         tracks = moving_cap_tracks(observations[colour])
-        rows.extend(summary(track, shot_id, colour, i)
-                    for i, track in enumerate(tracks, 1))
+        rows.extend(summary(track, shot_id, colour, i) for i, track in enumerate(tracks, 1))
     return rows
 
 
@@ -59,8 +61,9 @@ def main():
         raise SystemExit("Missing start of camera-shot coverage")
     if shots[-1]["interval_s"][1] != manifest["source_interval_s"][1]:
         raise SystemExit("Missing end of camera-shot coverage")
-    if any(left["interval_s"][1] != right["interval_s"][0]
-           for left, right in zip(shots, shots[1:])):
+    if any(
+        left["interval_s"][1] != right["interval_s"][0] for left, right in zip(shots, shots[1:])
+    ):
         raise SystemExit("Camera-shot manifest is not contiguous")
     cap = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
@@ -76,8 +79,13 @@ def main():
         for second in range(int(manifest["source_interval_s"][1])):
             while shot_index + 1 < len(shots) and second >= shots[shot_index]["interval_s"][1]:
                 shot = shots[shot_index]
-                rows.append({"camera_shot_id": shot["id"], "interval_s": shot["interval_s"],
-                             "tracks": tracks_for_shot(observations, shot["id"])})
+                rows.append(
+                    {
+                        "camera_shot_id": shot["id"],
+                        "interval_s": shot["interval_s"],
+                        "tracks": tracks_for_shot(observations, shot["id"]),
+                    }
+                )
                 observations = {"red": [], "yellow": []}
                 shot_index += 1
             cap.set(cv2.CAP_PROP_POS_FRAMES, round(second * fps))
@@ -92,12 +100,20 @@ def main():
     finally:
         cap.release()
     shot = shots[shot_index]
-    rows.append({"camera_shot_id": shot["id"], "interval_s": shot["interval_s"],
-                 "tracks": tracks_for_shot(observations, shot["id"])})
-    for remaining in shots[shot_index + 1:]:
-        rows.append({"camera_shot_id": remaining["id"], "interval_s": remaining["interval_s"],
-                     "tracks": []})
-    if len(rows) != len(shots) or len({track["episode_id"] for row in rows for track in row["tracks"]}) != sum(len(row["tracks"]) for row in rows):
+    rows.append(
+        {
+            "camera_shot_id": shot["id"],
+            "interval_s": shot["interval_s"],
+            "tracks": tracks_for_shot(observations, shot["id"]),
+        }
+    )
+    for remaining in shots[shot_index + 1 :]:
+        rows.append(
+            {"camera_shot_id": remaining["id"], "interval_s": remaining["interval_s"], "tracks": []}
+        )
+    if len(rows) != len(shots) or len(
+        {track["episode_id"] for row in rows for track in row["tracks"]}
+    ) != sum(len(row["tracks"]) for row in rows):
         raise RuntimeError("Shot or episode identity invariant failed")
     result = {
         "status": "source_only_global_1hz_shot_scoped_cap_motion_catalog_not_throw_events",

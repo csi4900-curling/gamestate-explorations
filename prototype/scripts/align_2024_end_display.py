@@ -32,19 +32,24 @@ def main():
     summary = json.loads(args.temporal_summary.read_text())
     if timeline["source_id"] not in scan["video_path"]:
         parser.error("Timeline and marker scan identify different videos")
-    game = next((row for row in summary["games"]
-                 if row["video_sha256"] == scan["video_sha256"]), None)
+    game = next(
+        (row for row in summary["games"] if row["video_sha256"] == scan["video_sha256"]), None
+    )
     if game is None or game["scan_sha256"] != digest(args.marker_scan):
         parser.error("Temporal summary does not refer to this exact scan")
-    excluded_times = [row["first_hit_s"] for row in game["discarded_short_runs"]
-                      if row["hit_count"] == 1]
-    rows = annotate_display_context(timeline["observed_events"], scan["samples"],
-                                    ignored_marker_times_s=excluded_times)
+    excluded_times = [
+        row["first_hit_s"] for row in game["discarded_short_runs"] if row["hit_count"] == 1
+    ]
+    rows = annotate_display_context(
+        timeline["observed_events"], scan["samples"], ignored_marker_times_s=excluded_times
+    )
     result = {
         "status": "development_display_context_not_physical_end_assignment",
         "source_id": timeline["source_id"],
-        "timeline_path": str(args.timeline), "timeline_sha256": digest(args.timeline),
-        "marker_scan_path": str(args.marker_scan), "marker_scan_sha256": digest(args.marker_scan),
+        "timeline_path": str(args.timeline),
+        "timeline_sha256": digest(args.timeline),
+        "marker_scan_path": str(args.marker_scan),
+        "marker_scan_sha256": digest(args.marker_scan),
         "temporal_summary_path": str(args.temporal_summary),
         "temporal_summary_sha256": digest(args.temporal_summary),
         "aligner_sha256": digest(ROOT / "prototype/end_display_context.py"),
@@ -64,12 +69,18 @@ def main():
         audit = json.loads(args.boundary_audit.read_text())
         boundaries = audit["boundary_review_times_s"]
         excluded_ids = set(audit["source_reviewed_likely_nonstone_event_ids"])
-        assessed = [row for row in rows if row["displayed_end"] is not None
-                    and row["event_id"] not in excluded_ids]
+        assessed = [
+            row
+            for row in rows
+            if row["displayed_end"] is not None and row["event_id"] not in excluded_ids
+        ]
         disagreements = [
-            {"event_id": row["event_id"], "crossing_time_s": row["crossing_time_s"],
-             "displayed_end": row["displayed_end"],
-             "source_reviewed_end": bisect_right(boundaries, row["crossing_time_s"]) + 1}
+            {
+                "event_id": row["event_id"],
+                "crossing_time_s": row["crossing_time_s"],
+                "displayed_end": row["displayed_end"],
+                "source_reviewed_end": bisect_right(boundaries, row["crossing_time_s"]) + 1,
+            }
             for row in assessed
             if row["displayed_end"] != bisect_right(boundaries, row["crossing_time_s"]) + 1
         ]
@@ -82,9 +93,15 @@ def main():
         }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(args.output, result["context_status_counts"],
-          len(result.get("source_reviewed_boundary_comparison", {}).get(
-              "display_vs_source_end_disagreements", [])))
+    print(
+        args.output,
+        result["context_status_counts"],
+        len(
+            result.get("source_reviewed_boundary_comparison", {}).get(
+                "display_vs_source_end_disagreements", []
+            )
+        ),
+    )
 
 
 if __name__ == "__main__":

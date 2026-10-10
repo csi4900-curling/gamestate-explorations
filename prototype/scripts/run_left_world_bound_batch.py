@@ -36,8 +36,7 @@ def main():
     if manifest_path.exists():
         parser.error("Batch manifest already exists; output is immutable")
     candidates = json.loads(args.candidates.read_text())
-    ids = [row["id"] for row in candidates["events"]
-           if row["view_motion"] == "positive_y"]
+    ids = [row["id"] for row in candidates["events"] if row["view_motion"] == "positive_y"]
     if len(ids) != len(set(ids)):
         parser.error("Duplicate left candidate ID")
     video_sha = digest(args.video)
@@ -48,40 +47,61 @@ def main():
     for index, candidate_id in enumerate(ids, 1):
         output = args.output_dir / f"{candidate_id.lower()}-paired.json"
         if not output.exists():
-            command = [sys.executable, str(PROBE), "--video", str(args.video),
-                       "--candidates", str(args.candidates),
-                       "--candidate-id", candidate_id,
-                       "--source-offset-s", str(args.source_offset_s),
-                       "--extended-min-y-m", str(args.extended_min_y_m),
-                       "--output", str(output)]
+            command = [
+                sys.executable,
+                str(PROBE),
+                "--video",
+                str(args.video),
+                "--candidates",
+                str(args.candidates),
+                "--candidate-id",
+                candidate_id,
+                "--source-offset-s",
+                str(args.source_offset_s),
+                "--extended-min-y-m",
+                str(args.extended_min_y_m),
+                "--output",
+                str(output),
+            ]
             subprocess.run(command, check=True)
         result = json.loads(output.read_text())
-        if (result["candidate_id"] != candidate_id or
-                result["source_sha256"] != video_sha or
-                result["candidates_sha256"] != candidate_sha or
-                result["runner_sha256"] != probe_sha or
-                result["source_offset_s"] != args.source_offset_s or
-                result["cases"]["extended"]["world_bounds_m"][1]
-                != args.extended_min_y_m):
+        if (
+            result["candidate_id"] != candidate_id
+            or result["source_sha256"] != video_sha
+            or result["candidates_sha256"] != candidate_sha
+            or result["runner_sha256"] != probe_sha
+            or result["source_offset_s"] != args.source_offset_s
+            or result["cases"]["extended"]["world_bounds_m"][1] != args.extended_min_y_m
+        ):
             raise ValueError(f"Existing artifact does not match batch: {output}")
         base = result["cases"]["base"]
         wide = result["cases"]["extended"]
-        rows.append({
-            "candidate_id": candidate_id,
-            "artifact": output.name,
-            "artifact_sha256": digest(output),
-            "original_selection": base["selection"]["status"],
-            "extended_selection": wide["selection"]["status"],
-            "original_same_colour_proposals": sum(
-                sample["same_colour_proposal_count"] for sample in base["samples"]),
-            "extended_same_colour_proposals": sum(
-                sample["same_colour_proposal_count"] for sample in wide["samples"]),
-            "original_path_samples": len(base["selection"].get("path", [])),
-            "extended_path_samples": len(wide["selection"].get("path", [])),
-        })
-        print(index, len(ids), candidate_id,
-              rows[-1]["original_selection"], "→",
-              rows[-1]["extended_selection"], flush=True)
+        rows.append(
+            {
+                "candidate_id": candidate_id,
+                "artifact": output.name,
+                "artifact_sha256": digest(output),
+                "original_selection": base["selection"]["status"],
+                "extended_selection": wide["selection"]["status"],
+                "original_same_colour_proposals": sum(
+                    sample["same_colour_proposal_count"] for sample in base["samples"]
+                ),
+                "extended_same_colour_proposals": sum(
+                    sample["same_colour_proposal_count"] for sample in wide["samples"]
+                ),
+                "original_path_samples": len(base["selection"].get("path", [])),
+                "extended_path_samples": len(wide["selection"].get("path", [])),
+            }
+        )
+        print(
+            index,
+            len(ids),
+            candidate_id,
+            rows[-1]["original_selection"],
+            "→",
+            rows[-1]["extended_selection"],
+            flush=True,
+        )
     summary = {
         "status": "postscore_full_left_corridor_bound_comparison_not_event_truth",
         "video_sha256": video_sha,
@@ -93,9 +113,11 @@ def main():
         "left_candidate_count": len(ids),
         "original_status_counts": dict(Counter(row["original_selection"] for row in rows)),
         "extended_status_counts": dict(Counter(row["extended_selection"] for row in rows)),
-        "changed_selection_ids": [row["candidate_id"] for row in rows
-                                  if row["original_selection"] !=
-                                  row["extended_selection"]],
+        "changed_selection_ids": [
+            row["candidate_id"]
+            for row in rows
+            if row["original_selection"] != row["extended_selection"]
+        ],
         "rows": rows,
         "limitations": [
             "Candidate set was generated by the existing corridor; misses outside it are unmeasured.",

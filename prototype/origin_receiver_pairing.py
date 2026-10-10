@@ -19,16 +19,23 @@ def pair_origin_receiver(shots, origins):
             continue
         own = shot["transits"]
         next_shot = shots[index + 1] if index + 1 < len(shots) else None
-        following = (next_shot["transits"] if next_shot is not None and
-                     not origins[next_shot["shot_id"]]["predicted"] else [])
+        following = (
+            next_shot["transits"]
+            if next_shot is not None and not origins[next_shot["shot_id"]]["predicted"]
+            else []
+        )
         own_colours = {track["colour"] for track in own}
         next_colours = {track["colour"] for track in following}
         shared = own_colours & next_colours
         if shared:
-            colour = max(shared, key=lambda value: (
-                max(track["point_count"] for track in own if track["colour"] == value),
-                max(track["point_count"] for track in following
-                    if track["colour"] == value), value))
+            colour = max(
+                shared,
+                key=lambda value: (
+                    max(track["point_count"] for track in own if track["colour"] == value),
+                    max(track["point_count"] for track in following if track["colour"] == value),
+                    value,
+                ),
+            )
             route = "same_colour_across_adjacent_camera_shots"
         elif own:
             colour = own[0]["colour"]
@@ -39,19 +46,21 @@ def pair_origin_receiver(shots, origins):
         else:
             continue
         own_tracks = [track for track in own if track["colour"] == colour]
-        following_tracks = [track for track in following
-                            if track["colour"] == colour]
-        events.append({
-            "candidate_id": f"{shot['shot_id']}-paired",
-            "origin_shot_id": shot["shot_id"],
-            "origin_probability": origin["probability"],
-            "receiving_shot_id": next_shot["shot_id"] if following_tracks else None,
-            "release_window_s": shot["interval_s"],
-            "colour": colour,
-            "evidence_route": route,
-            "origin_visual_tracks": own_tracks,
-            "receiving_visual_tracks": following_tracks,
-            "identity_status": "provisional_same_colour_adjacent_view" if following_tracks
-            else "unlinked_single_view",
-        })
+        following_tracks = [track for track in following if track["colour"] == colour]
+        events.append(
+            {
+                "candidate_id": f"{shot['shot_id']}-paired",
+                "origin_shot_id": shot["shot_id"],
+                "origin_probability": origin["probability"],
+                "receiving_shot_id": next_shot["shot_id"] if following_tracks else None,
+                "release_window_s": shot["interval_s"],
+                "colour": colour,
+                "evidence_route": route,
+                "origin_visual_tracks": own_tracks,
+                "receiving_visual_tracks": following_tracks,
+                "identity_status": "provisional_same_colour_adjacent_view"
+                if following_tracks
+                else "unlinked_single_view",
+            }
+        )
     return events

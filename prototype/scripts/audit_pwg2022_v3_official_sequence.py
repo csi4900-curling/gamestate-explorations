@@ -45,8 +45,10 @@ def build():
     for game in union["games"]:
         code = game["official_game_code"]
         ref = reference_games[code]
-        if (game["source_sha256"] != ref["source_video_sha256"] or
-                game["source_sha256"] == reserved["source_sha256"]):
+        if (
+            game["source_sha256"] != ref["source_video_sha256"]
+            or game["source_sha256"] == reserved["source_sha256"]
+        ):
             raise ValueError("Source mismatch or reserved-source overlap")
         counter_by_id = index(counter_games[code]["counter_rows"], "counter_id")
         events = sorted(game["events"], key=lambda e: (shot_number(e), e["event_id"]))
@@ -56,17 +58,25 @@ def build():
             if counter_id is None:
                 continue
             counter = counter_by_id[counter_id]
-            if (counter["status"] == "unique_colour_concordant" and
-                    counter["official_shot_id"] is not None and
-                    event["colour"] == counter["official_colour"]):
-                anchors.append({"event_id": event["event_id"],
-                                "source_shot_number": shot_number(event),
-                                "official_end": counter["official_end"],
-                                "official_shot_number": counter["inferred_shot_number"],
-                                "official_shot_id": counter["official_shot_id"]})
-        if any((right["official_end"], right["official_shot_number"]) <=
-               (left["official_end"], left["official_shot_number"])
-               for left, right in zip(anchors, anchors[1:])):
+            if (
+                counter["status"] == "unique_colour_concordant"
+                and counter["official_shot_id"] is not None
+                and event["colour"] == counter["official_colour"]
+            ):
+                anchors.append(
+                    {
+                        "event_id": event["event_id"],
+                        "source_shot_number": shot_number(event),
+                        "official_end": counter["official_end"],
+                        "official_shot_number": counter["inferred_shot_number"],
+                        "official_shot_id": counter["official_shot_id"],
+                    }
+                )
+        if any(
+            (right["official_end"], right["official_shot_number"])
+            <= (left["official_end"], left["official_shot_number"])
+            for left, right in zip(anchors, anchors[1:])
+        ):
             raise ValueError("Clean counter anchors contradict source chronology")
         by_end = defaultdict(list)
         for anchor in anchors:
@@ -74,9 +84,14 @@ def build():
         ends = [row["end"] for row in ref["ends"]]
         if set(by_end) != set(ends):
             raise ValueError("Every official end needs a clean source anchor")
-        boundaries = [(max(row["source_shot_number"] for row in by_end[left]) +
-                       min(row["source_shot_number"] for row in by_end[right])) / 2
-                      for left, right in zip(ends, ends[1:])]
+        boundaries = [
+            (
+                max(row["source_shot_number"] for row in by_end[left])
+                + min(row["source_shot_number"] for row in by_end[right])
+            )
+            / 2
+            for left, right in zip(ends, ends[1:])
+        ]
         if any(right <= left for left, right in zip(boundaries, boundaries[1:])):
             raise ValueError("End midpoint boundaries overlap")
         grouped = defaultdict(list)
@@ -86,63 +101,89 @@ def build():
         end_rows = []
         for official_end in ref["ends"]:
             end = official_end["end"]
-            candidates = [{"candidate_id": event["event_id"],
-                           "colour": event["colour"]} for event in grouped[end]]
+            candidates = [
+                {"candidate_id": event["event_id"], "colour": event["colour"]}
+                for event in grouped[end]
+            ]
             fixed = {row["event_id"]: row["official_shot_id"] for row in by_end[end]}
             if not set(fixed) <= {row["candidate_id"] for row in candidates}:
                 raise ValueError("Counter anchor partitioned into wrong official end")
             result = align_official_sequence(
-                candidates, official_end["shots"], ref["team_handle_colours"], fixed)
-            end_rows.append({"end": end,
-                             "candidate_count": len(candidates),
-                             "official_shot_count": official_end["shot_count"],
-                             "clean_fixed_counter_anchor_count": len(fixed),
-                             "minimum_edit_cost": result["minimum_cost"],
-                             "equally_optimal_alignment_count": result[
-                                 "optimal_path_count"],
-                             "candidate_status_counts": dict(Counter(
-                                 row["status"] for row in result["candidate_rows"])),
-                             "official_status_counts": dict(Counter(
-                                 row["status"] for row in result["official_rows"])),
-                             "candidate_rows": result["candidate_rows"],
-                             "official_rows": result["official_rows"]})
-        games.append({"recording_code": code,
-                      "source_sha256": game["source_sha256"],
-                      "provisional_candidate_count": len(events),
-                      "official_shot_count": ref["official_shot_count"],
-                      "clean_fixed_counter_anchor_count": len(anchors),
-                      "end_partition_midpoint_shot_numbers": boundaries,
-                      "candidate_status_counts": dict(Counter(
-                          row["status"] for end in end_rows
-                          for row in end["candidate_rows"])),
-                      "official_status_counts": dict(Counter(
-                          row["status"] for end in end_rows
-                          for row in end["official_rows"])),
-                      "ends": end_rows})
-    return {"status": "development_v3_official_order_sequence_audit_not_event_f1",
-            "input_sha256": {"v3_union": digest(UNION),
-                             "counter_alignment": digest(COUNTERS),
-                             "official_reference": digest(REFERENCE),
-                             "alignment_code": digest(ROOT / "prototype/official_candidate_sequence.py"),
-                             "runner": digest(Path(__file__))},
-            "provisional_candidate_count": sum(g["provisional_candidate_count"]
-                                               for g in games),
-            "official_shot_count": sum(g["official_shot_count"] for g in games),
-            "clean_fixed_counter_anchor_count": sum(
-                g["clean_fixed_counter_anchor_count"] for g in games),
-            "candidate_status_counts": dict(Counter(
-                row["status"] for game in games for end in game["ends"]
-                for row in end["candidate_rows"])),
-            "official_status_counts": dict(Counter(
-                row["status"] for game in games for end in game["ends"]
-                for row in end["official_rows"])),
-            "games": games,
-            "limitations": [
-                "Official shot order and colour enter only this audit; this alignment is not a runtime video-only detector.",
-                "Fixed counter anchors and end midpoint partitions are proxy assumptions, not physical throw identity.",
-                "Every-optimum alignment statuses depend on the stated skip and colour costs and do not prove event precision or recall.",
-                "Official shot pages provide no physical video timestamps, so event F1 remains unmeasured.",
-            ]}
+                candidates, official_end["shots"], ref["team_handle_colours"], fixed
+            )
+            end_rows.append(
+                {
+                    "end": end,
+                    "candidate_count": len(candidates),
+                    "official_shot_count": official_end["shot_count"],
+                    "clean_fixed_counter_anchor_count": len(fixed),
+                    "minimum_edit_cost": result["minimum_cost"],
+                    "equally_optimal_alignment_count": result["optimal_path_count"],
+                    "candidate_status_counts": dict(
+                        Counter(row["status"] for row in result["candidate_rows"])
+                    ),
+                    "official_status_counts": dict(
+                        Counter(row["status"] for row in result["official_rows"])
+                    ),
+                    "candidate_rows": result["candidate_rows"],
+                    "official_rows": result["official_rows"],
+                }
+            )
+        games.append(
+            {
+                "recording_code": code,
+                "source_sha256": game["source_sha256"],
+                "provisional_candidate_count": len(events),
+                "official_shot_count": ref["official_shot_count"],
+                "clean_fixed_counter_anchor_count": len(anchors),
+                "end_partition_midpoint_shot_numbers": boundaries,
+                "candidate_status_counts": dict(
+                    Counter(row["status"] for end in end_rows for row in end["candidate_rows"])
+                ),
+                "official_status_counts": dict(
+                    Counter(row["status"] for end in end_rows for row in end["official_rows"])
+                ),
+                "ends": end_rows,
+            }
+        )
+    return {
+        "status": "development_v3_official_order_sequence_audit_not_event_f1",
+        "input_sha256": {
+            "v3_union": digest(UNION),
+            "counter_alignment": digest(COUNTERS),
+            "official_reference": digest(REFERENCE),
+            "alignment_code": digest(ROOT / "prototype/official_candidate_sequence.py"),
+            "runner": digest(Path(__file__)),
+        },
+        "provisional_candidate_count": sum(g["provisional_candidate_count"] for g in games),
+        "official_shot_count": sum(g["official_shot_count"] for g in games),
+        "clean_fixed_counter_anchor_count": sum(
+            g["clean_fixed_counter_anchor_count"] for g in games
+        ),
+        "candidate_status_counts": dict(
+            Counter(
+                row["status"]
+                for game in games
+                for end in game["ends"]
+                for row in end["candidate_rows"]
+            )
+        ),
+        "official_status_counts": dict(
+            Counter(
+                row["status"]
+                for game in games
+                for end in game["ends"]
+                for row in end["official_rows"]
+            )
+        ),
+        "games": games,
+        "limitations": [
+            "Official shot order and colour enter only this audit; this alignment is not a runtime video-only detector.",
+            "Fixed counter anchors and end midpoint partitions are proxy assumptions, not physical throw identity.",
+            "Every-optimum alignment statuses depend on the stated skip and colour costs and do not prove event precision or recall.",
+            "Official shot pages provide no physical video timestamps, so event F1 remains unmeasured.",
+        ],
+    }
 
 
 def main():

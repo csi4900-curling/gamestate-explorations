@@ -29,9 +29,10 @@ def main():
     args = parser.parse_args()
     if args.output.exists():
         parser.error("Output exists; preserve first triage")
-    raw, confirmed, tracks, context = (json.loads(path.read_text()) for path in
-                                       (args.raw, args.confirmed, args.tracks,
-                                        args.context))
+    raw, confirmed, tracks, context = (
+        json.loads(path.read_text())
+        for path in (args.raw, args.confirmed, args.tracks, args.context)
+    )
     if len({row["source_sha256"] for row in (raw, confirmed, tracks, context)}) != 1:
         raise ValueError("Source fingerprints differ")
     if tracks["raw_artifact_sha256"] != digest(args.raw):
@@ -49,26 +50,36 @@ def main():
     for candidate in raw["events"]:
         event_id = candidate["id"]
         diagnostic = by_id[event_id]
-        index = (diagnostic["context"]["full"]["comovement_index"]
-                 if diagnostic["status"] == "scored_surrounding_motion" else None)
-        rows.append({
-            "candidate_id": event_id,
-            "candidate_time_s": candidate["crossing_time_s"],
-            "colour_claim": candidate["colour"],
-            "previously_auto_accepted": event_id in accepted,
-            "comovement_index": index,
-            "context_cue": classify_context(index),
-            "physical_throw_verified": False,
-        })
+        index = (
+            diagnostic["context"]["full"]["comovement_index"]
+            if diagnostic["status"] == "scored_surrounding_motion"
+            else None
+        )
+        rows.append(
+            {
+                "candidate_id": event_id,
+                "candidate_time_s": candidate["crossing_time_s"],
+                "colour_claim": candidate["colour"],
+                "previously_auto_accepted": event_id in accepted,
+                "comovement_index": index,
+                "context_cue": classify_context(index),
+                "physical_throw_verified": False,
+            }
+        )
     summary = {}
     for previous in (True, False):
         group = [row for row in rows if row["previously_auto_accepted"] == previous]
         summary["previously_accepted" if previous else "previously_withheld"] = {
             "total": len(group),
-            "cue_counts": {cue: sum(row["context_cue"] == cue for row in group)
-                           for cue in ("isolated_motion_cue", "ambiguous_context",
-                                       "comoving_context_review",
-                                       "abstain_insufficient_motion")},
+            "cue_counts": {
+                cue: sum(row["context_cue"] == cue for row in group)
+                for cue in (
+                    "isolated_motion_cue",
+                    "ambiguous_context",
+                    "comoving_context_review",
+                    "abstain_insufficient_motion",
+                )
+            },
         }
     result = {
         "status": "additive_track_context_review_not_revised_event_acceptance",
@@ -80,8 +91,7 @@ def main():
         "context_sha256": digest(args.context),
         "triage_code_sha256": digest(ROOT / "prototype/track_context_triage.py"),
         "runner_sha256": digest(Path(__file__)),
-        "thresholds": {"isolated_at_or_below": -0.20,
-                       "comoving_at_or_above": 0.20},
+        "thresholds": {"isolated_at_or_below": -0.20, "comoving_at_or_above": 0.20},
         "summary": summary,
         "rows": rows,
         "limitations": [

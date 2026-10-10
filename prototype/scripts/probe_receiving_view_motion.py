@@ -34,9 +34,11 @@ def associate_tracks(observations, cut_times_s=(), *, max_gap_s=0.5, max_step_px
     tracks = []
     cuts = set(cut_times_s)
     for t, candidates in observations:
-        live = [] if t in cuts else [
-            i for i, track in enumerate(tracks) if t - track[-1]["time_s"] <= max_gap_s
-        ]
+        live = (
+            []
+            if t in cuts
+            else [i for i, track in enumerate(tracks) if t - track[-1]["time_s"] <= max_gap_s]
+        )
         costs = np.full((len(live), len(candidates)), 1e6)
         for row, index in enumerate(live):
             last = tracks[index][-1]
@@ -93,7 +95,9 @@ def scan_window(cap, fps, config, start, end):
             hard_cuts.append(sample_time)
         previous_right = right
         observations.append((sample_time, stone_candidates(frame, config)))
-    tracks = [summarize(track) for track in associate_tracks(observations, hard_cuts) if len(track) >= 5]
+    tracks = [
+        summarize(track) for track in associate_tracks(observations, hard_cuts) if len(track) >= 5
+    ]
     return tracks, hard_cuts
 
 
@@ -102,8 +106,11 @@ def main():
     parser.add_argument("--video", required=True, type=Path)
     parser.add_argument("--timeline", required=True, type=Path)
     parser.add_argument("--event-id", required=True, action="append")
-    parser.add_argument("--shared-window", action="store_true",
-                        help="Also track continuously from the first event to the last")
+    parser.add_argument(
+        "--shared-window",
+        action="store_true",
+        help="Also track continuously from the first event to the last",
+    )
     parser.add_argument("--output", required=True, type=Path)
     args = parser.parse_args()
     if args.output.exists():
@@ -127,19 +134,25 @@ def main():
         end = min(cap.get(cv2.CAP_PROP_FRAME_COUNT) / fps, crossing + 12.0)
         tracks, hard_cuts = scan_window(cap, fps, config, start, end)
         tracks.sort(key=lambda row: (row["colour"] != event["colour"], -row["displacement_px"]))
-        results.append({
-            "event_id": event_id,
-            "colour": event["colour"],
-            "crossing_time_s": crossing,
-            "window_s": [round(start, 3), round(end, 3)],
-            "hard_cut_times_s": hard_cuts,
-            "tracks": tracks,
-        })
+        results.append(
+            {
+                "event_id": event_id,
+                "colour": event["colour"],
+                "crossing_time_s": crossing,
+                "window_s": [round(start, 3), round(end, 3)],
+                "hard_cut_times_s": hard_cuts,
+                "tracks": tracks,
+            }
+        )
     shared = None
     if args.shared_window:
-        start = max(0.0, min(by_id[event_id]["crossing_time_s"] for event_id in args.event_id) - 2.0)
-        end = min(cap.get(cv2.CAP_PROP_FRAME_COUNT) / fps,
-                  max(by_id[event_id]["crossing_time_s"] for event_id in args.event_id) + 12.0)
+        start = max(
+            0.0, min(by_id[event_id]["crossing_time_s"] for event_id in args.event_id) - 2.0
+        )
+        end = min(
+            cap.get(cv2.CAP_PROP_FRAME_COUNT) / fps,
+            max(by_id[event_id]["crossing_time_s"] for event_id in args.event_id) + 12.0,
+        )
         tracks, cuts = scan_window(cap, fps, config, start, end)
         shared = {
             "window_s": [round(start, 3), round(end, 3)],

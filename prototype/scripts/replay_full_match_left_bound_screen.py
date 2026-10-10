@@ -27,8 +27,7 @@ def digest(path):
 
 def replay(events, motions, patches):
     ids = [event["id"] for event in events]
-    if (len(ids) != len(set(ids)) or set(ids) != set(motions) or
-            set(ids) != set(patches)):
+    if len(ids) != len(set(ids)) or set(ids) != set(motions) or set(ids) != set(patches):
         raise ValueError("Candidate, motion and patch IDs differ")
     decisions = [screen_rescue_candidate(motions[pid], patches[pid]) for pid in ids]
     by_id = {row["candidate_id"]: row for row in decisions}
@@ -42,9 +41,11 @@ def replay(events, motions, patches):
     for row in dedup["decisions"]:
         pid = row["candidate_id"]
         if by_id[pid]["accepted"] and row["status"] != "primary_motion_path":
-            by_id[pid].update(status="duplicate_shared_timed_motion_path",
-                              accepted=False,
-                              primary_candidate_id=row["primary_candidate_id"])
+            by_id[pid].update(
+                status="duplicate_shared_timed_motion_path",
+                accepted=False,
+                primary_candidate_id=row["primary_candidate_id"],
+            )
     return decisions, dedup
 
 
@@ -60,24 +61,29 @@ def main():
     patch = json.loads(args.patch.read_text())
     screen = json.loads(args.screen.read_text())
     batch = json.loads(args.batch.read_text())
-    if (motion["source_motion_sha256"] != patch["source_motion_sha256"] or
-            patch["motion_sha256"] != digest(args.motion) or
-            screen["motion_sha256"] != digest(args.motion) or
-            screen["patch_sha256"] != digest(args.patch) or
-            screen["candidates_sha256"] != digest(args.candidates) or
-            screen["screen_code_sha256"] != digest(ROOT / "prototype/candidate_motion_rescue_screen.py") or
-            screen["dedup_code_sha256"] != digest(ROOT / "prototype/motion_path_dedup.py") or
-            batch["candidates_sha256"] != digest(args.candidates) or
-            batch["video_sha256"] != patch["video_sha256"]):
+    if (
+        motion["source_motion_sha256"] != patch["source_motion_sha256"]
+        or patch["motion_sha256"] != digest(args.motion)
+        or screen["motion_sha256"] != digest(args.motion)
+        or screen["patch_sha256"] != digest(args.patch)
+        or screen["candidates_sha256"] != digest(args.candidates)
+        or screen["screen_code_sha256"]
+        != digest(ROOT / "prototype/candidate_motion_rescue_screen.py")
+        or screen["dedup_code_sha256"] != digest(ROOT / "prototype/motion_path_dedup.py")
+        or batch["candidates_sha256"] != digest(args.candidates)
+        or batch["video_sha256"] != patch["video_sha256"]
+    ):
         raise ValueError("Input or frozen code hash chain differs")
     events = candidates["events"]
     motions = {row["candidate_id"]: row for row in motion["rows"]}
     patches = {row["candidate_id"]: row for row in patch["rows"]}
     baseline, baseline_dedup = replay(events, motions, patches)
-    if (baseline != screen["decisions"] or
-            baseline_dedup["pairs"] != screen["shared_timed_path_pairs"] or
-            {row["candidate_id"] for row in baseline if row["accepted"]} !=
-            {event["id"] for event in screen["events"]}):
+    if (
+        baseline != screen["decisions"]
+        or baseline_dedup["pairs"] != screen["shared_timed_path_pairs"]
+        or {row["candidate_id"] for row in baseline if row["accepted"]}
+        != {event["id"] for event in screen["events"]}
+    ):
         raise ValueError("Could not exactly reproduce frozen full-match screen")
     original_by_id = {row["candidate_id"]: row for row in baseline}
     provenance = []
@@ -95,35 +101,46 @@ def main():
         paired = json.loads(paired_path.read_text())
         postscore = json.loads(patch_path.read_text())
         batch_row = batch_by_id[pid]
-        if (batch_row["artifact"] != paired_path.name or
-                batch_row["artifact_sha256"] != digest(paired_path) or
-                batch_row["original_selection"] != "no_supported_far_entry_motion_path" or
-                batch_row["extended_selection"] != "provisional_unique_far_entry_motion_path" or
-                paired["candidate_id"] != pid or
-                paired["candidates_sha256"] != digest(args.candidates) or
-                postscore["candidate_id"] != pid or
-                postscore["probe_sha256"] != digest(paired_path) or
-                postscore["model_sha256"] != model_sha or
-                not postscore["decision"]["accepted"] or
-                original_by_id[pid]["status"] != "abstain_no_supported_motion_path"):
+        if (
+            batch_row["artifact"] != paired_path.name
+            or batch_row["artifact_sha256"] != digest(paired_path)
+            or batch_row["original_selection"] != "no_supported_far_entry_motion_path"
+            or batch_row["extended_selection"] != "provisional_unique_far_entry_motion_path"
+            or paired["candidate_id"] != pid
+            or paired["candidates_sha256"] != digest(args.candidates)
+            or postscore["candidate_id"] != pid
+            or postscore["probe_sha256"] != digest(paired_path)
+            or postscore["model_sha256"] != model_sha
+            or not postscore["decision"]["accepted"]
+            or original_by_id[pid]["status"] != "abstain_no_supported_motion_path"
+        ):
             raise ValueError(f"Invalid changed-path evidence for {pid}")
-        motions[pid] = dict(motions[pid],
-                            selection=paired["cases"]["extended"]["selection"])
+        motions[pid] = dict(motions[pid], selection=paired["cases"]["extended"]["selection"])
         patches[pid] = dict(patches[pid], samples=postscore["samples"])
         times = [node["source_time_s"] for node in motions[pid]["selection"]["path"]]
         start, end = min(times), max(times)
-        gap_s, closest_id = min((start - other_end if start > other_end else
-                                 other_start - end if end < other_start else 0,
-                                 other_id)
-                                for other_id, (other_start, other_end)
-                                in frozen_intervals.items())
-        provenance.append({"candidate_id": pid,
-                           "paired_sha256": digest(paired_path),
-                           "patch_sha256": digest(patch_path),
-                           "path_sample_count": len(motions[pid]["selection"]["path"]),
-                           "accepted_patch_count": postscore["decision"]["accepted_patch_count"],
-                           "closest_frozen_accepted_path_id": closest_id,
-                           "closest_frozen_accepted_path_window_gap_s": gap_s})
+        gap_s, closest_id = min(
+            (
+                start - other_end
+                if start > other_end
+                else other_start - end
+                if end < other_start
+                else 0,
+                other_id,
+            )
+            for other_id, (other_start, other_end) in frozen_intervals.items()
+        )
+        provenance.append(
+            {
+                "candidate_id": pid,
+                "paired_sha256": digest(paired_path),
+                "patch_sha256": digest(patch_path),
+                "path_sample_count": len(motions[pid]["selection"]["path"]),
+                "accepted_patch_count": postscore["decision"]["accepted_patch_count"],
+                "closest_frozen_accepted_path_id": closest_id,
+                "closest_frozen_accepted_path_window_gap_s": gap_s,
+            }
+        )
     decisions, dedup = replay(events, motions, patches)
     accepted = {row["candidate_id"] for row in decisions if row["accepted"]}
     frozen = {event["id"] for event in screen["events"]}
@@ -147,10 +164,12 @@ def main():
         "removed_candidate_ids": sorted(frozen - accepted),
         "changed_path_provenance": provenance,
         "minimum_changed_to_frozen_path_window_gap_s": min(
-            row["closest_frozen_accepted_path_window_gap_s"] for row in provenance),
+            row["closest_frozen_accepted_path_window_gap_s"] for row in provenance
+        ),
         "shared_timed_path_pairs": dedup["pairs"],
-        "new_shared_timed_path_pairs": [pair for pair in dedup["pairs"]
-                                       if pair not in baseline_dedup["pairs"]],
+        "new_shared_timed_path_pairs": [
+            pair for pair in dedup["pairs"] if pair not in baseline_dedup["pairs"]
+        ],
         "decision_status_counts": dict(Counter(row["status"] for row in decisions)),
         "decisions": decisions,
         "events": [event for event in events if event["id"] in accepted],
@@ -163,10 +182,18 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(output, indent=2) + "\n")
-    print("frozen", len(frozen), "derived", len(accepted),
-          "added", output["added_candidate_ids"],
-          "removed", output["removed_candidate_ids"],
-          "new dedup pairs", len(output["new_shared_timed_path_pairs"]))
+    print(
+        "frozen",
+        len(frozen),
+        "derived",
+        len(accepted),
+        "added",
+        output["added_candidate_ids"],
+        "removed",
+        output["removed_candidate_ids"],
+        "new dedup pairs",
+        len(output["new_shared_timed_path_pairs"]),
+    )
 
 
 if __name__ == "__main__":

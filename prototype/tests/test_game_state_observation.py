@@ -10,15 +10,17 @@ def sample():
         "counter_time_s": 100.0,
         "official_symbol_count": 99,
         "comparison": {"matched_count": 0, "unmatched_official": ["secret"]},
-        "stable_partial_board": [{
-            "colour": "yellow",
-            "canonical_lateral_house_radii": 0.25,
-            "longitudinal_house_radii": -0.5,
-            "first_seen_s": 105.0,
-            "last_seen_s": 111.0,
-            "supporting_frame_count": 4,
-            "max_position_spread_house_radii": 0.02,
-        }],
+        "stable_partial_board": [
+            {
+                "colour": "yellow",
+                "canonical_lateral_house_radii": 0.25,
+                "longitudinal_house_radii": -0.5,
+                "first_seen_s": 105.0,
+                "last_seen_s": 111.0,
+                "supporting_frame_count": 4,
+                "max_position_spread_house_radii": 0.02,
+            }
+        ],
     }
 
 

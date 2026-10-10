@@ -42,14 +42,16 @@ def sample_caps(cap, times):
         patches.append(image[sy0:sy1, sx0:sx1].astype(np.int16))
         cx0, cy0, cx1, cy1 = CAP_ROI
         proposals = right_colour_proposals(image)
-        coloured = [{"colour": colour, **item}
-                    for colour, items in proposals.items() for item in items
-                    if cx0 <= item["pixel"][0] <= cx1
-                    and cy0 <= item["pixel"][1] <= cy1
-                    and item["cap_area_px2"] >= 6]
+        coloured = [
+            {"colour": colour, **item}
+            for colour, items in proposals.items()
+            for item in items
+            if cx0 <= item["pixel"][0] <= cx1
+            and cy0 <= item["pixel"][1] <= cy1
+            and item["cap_area_px2"] >= 6
+        ]
         frames.append({"time_s": t, "cap_candidates": coloured})
-    maes = [round(float(np.mean(np.abs(a - b))), 3)
-            for a, b in zip(patches, patches[1:])]
+    maes = [round(float(np.mean(np.abs(a - b))), 3) for a, b in zip(patches, patches[1:])]
     if max(maes) >= MAX_SCENE_MAE:
         return frames, maes, [], "abstain_scene_or_player_motion"
     return frames, maes, stable_cap_candidates(frames), None
@@ -67,20 +69,21 @@ def main():
     source_hash = digest(args.video)
     if source_hash != sequence["source_sha256"]:
         parser.error("Source fingerprints differ")
-    runs = {row["id"]: tuple(row["interval_s"])
-            for row in sequence["supported_runs"]}
+    runs = {row["id"]: tuple(row["interval_s"]) for row in sequence["supported_runs"]}
     grouped = {run_id: [] for run_id in runs}
     for event in sequence["rows"]:
         if event["observation_kind"] != "left_tracked_passage":
             continue
         run_id = event["left_event_id"].split("-", 1)[0]
-        if run_id not in runs or not runs[run_id][0] <= event["observation_time_s"] < runs[run_id][1]:
+        if (
+            run_id not in runs
+            or not runs[run_id][0] <= event["observation_time_s"] < runs[run_id][1]
+        ):
             parser.error("Left event outside its routed run")
         grouped[run_id].append(event)
     if sum(map(len, grouped.values())) != sequence["left_candidate_count"]:
         parser.error("Candidate sequence left count differs")
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         parser.error("Unreadable source video")
     rows = []
@@ -90,19 +93,27 @@ def main():
             start, end = runs[run_id]
             for index, event in enumerate(events):
                 t = event["observation_time_s"]
-                neighbor = (events[index - 1]["observation_time_s"] if index
-                            else None) if args.phase == "pre" else (
-                            events[index + 1]["observation_time_s"]
-                            if index + 1 < len(events) else None)
-                times, abstention = (eligible_pre(t, neighbor, start)
-                                     if args.phase == "pre" else
-                                     eligible_post(t, neighbor, end))
+                neighbor = (
+                    (events[index - 1]["observation_time_s"] if index else None)
+                    if args.phase == "pre"
+                    else (
+                        events[index + 1]["observation_time_s"] if index + 1 < len(events) else None
+                    )
+                )
+                times, abstention = (
+                    eligible_pre(t, neighbor, start)
+                    if args.phase == "pre"
+                    else eligible_post(t, neighbor, end)
+                )
                 if times is None:
                     frames, maes, stable = [], [], []
                 else:
                     frames, maes, stable, abstention = sample_caps(cap, times)
-                status = abstention or ("partial_stable_colour_cap_proposals" if stable else
-                                        "no_stable_colour_cap_proposals")
+                status = abstention or (
+                    "partial_stable_colour_cap_proposals"
+                    if stable
+                    else "no_stable_colour_cap_proposals"
+                )
                 row = {
                     "candidate_id": event["candidate_id"],
                     "left_event_id": event["left_event_id"],
@@ -120,8 +131,9 @@ def main():
                     "persistent_stone_identity_verified": False,
                     "simulation_ready": False,
                 }
-                row[("previous" if args.phase == "pre" else "next") +
-                    "_left_passage_time_s"] = neighbor
+                row[("previous" if args.phase == "pre" else "next") + "_left_passage_time_s"] = (
+                    neighbor
+                )
                 rows.append(row)
     finally:
         cap.release()
@@ -131,10 +143,16 @@ def main():
         "phase": args.phase,
         "source_sha256": source_hash,
         "candidate_sequence_sha256": digest(args.sequence),
-        "proposal_code_sha256": digest(ROOT / "prototype/scripts/probe_static_left_right_cap_motion.py"),
+        "proposal_code_sha256": digest(
+            ROOT / "prototype/scripts/probe_static_left_right_cap_motion.py"
+        ),
         "stable_cap_code_sha256": digest(ROOT / "prototype/right_view_partial_board.py"),
-        "pre_gate_code_sha256": digest(ROOT / "prototype/scripts/scan_full_match_split_pre_event_caps.py"),
-        "post_gate_code_sha256": digest(ROOT / "prototype/scripts/scan_full_match_split_post_event_caps.py"),
+        "pre_gate_code_sha256": digest(
+            ROOT / "prototype/scripts/scan_full_match_split_pre_event_caps.py"
+        ),
+        "post_gate_code_sha256": digest(
+            ROOT / "prototype/scripts/scan_full_match_split_post_event_caps.py"
+        ),
         "runner_sha256": digest(Path(__file__)),
         "candidate_roi_xyxy": list(CAP_ROI),
         "scene_comparison_roi_xyxy": list(SCENE_ROI),
@@ -151,9 +169,16 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"phase": args.phase, "candidates": len(rows),
-                      "statuses": result["observation_status_counts"],
-                      "stable_caps": result["stable_cap_proposal_count"]}))
+    print(
+        json.dumps(
+            {
+                "phase": args.phase,
+                "candidates": len(rows),
+                "statuses": result["observation_status_counts"],
+                "stable_caps": result["stable_cap_proposal_count"],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

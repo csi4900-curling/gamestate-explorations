@@ -8,11 +8,15 @@ import sys
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 from prototype.candidate_duplicate_evidence import (
-    contained_visual_duplicates, fuse_candidate_events,
+    contained_visual_duplicates,
+    fuse_candidate_events,
 )
 
 ALIGNMENT = ROOT / "validation/official-shot-sequence/pwg2022-official-counter-alignment.json"
-SEQUENCE = ROOT / "validation/official-shot-sequence/pwg2022-official-candidate-sequence-postcut-audit.json"
+SEQUENCE = (
+    ROOT
+    / "validation/official-shot-sequence/pwg2022-official-candidate-sequence-postcut-audit.json"
+)
 OUTPUT = ROOT / "validation/official-shot-sequence/pwg2022-candidate-duplicate-fusion.json"
 
 
@@ -35,19 +39,29 @@ def main():
         events = json.loads(path.read_text())["events"]
         duplicates = contained_visual_duplicates(events)
         fused = fuse_candidate_events(events, duplicates)
-        statuses = {row["candidate_id"]: row["status"]
-                    for end in audits[code]["ends"] for row in end["candidate_rows"]}
-        games.append({
-            "official_game_code": code,
-            "candidate_ledger_path": game["candidate_ledger_path"],
-            "candidate_ledger_sha256": digest(path),
-            "raw_candidate_count": len(events),
-            "fused_event_count": len(fused),
-            "duplicates": [{"candidate_id": identifier, **decision,
-                            "development_sequence_status": statuses[identifier]}
-                           for identifier, decision in sorted(duplicates.items())],
-            "fused_events": fused,
-        })
+        statuses = {
+            row["candidate_id"]: row["status"]
+            for end in audits[code]["ends"]
+            for row in end["candidate_rows"]
+        }
+        games.append(
+            {
+                "official_game_code": code,
+                "candidate_ledger_path": game["candidate_ledger_path"],
+                "candidate_ledger_sha256": digest(path),
+                "raw_candidate_count": len(events),
+                "fused_event_count": len(fused),
+                "duplicates": [
+                    {
+                        "candidate_id": identifier,
+                        **decision,
+                        "development_sequence_status": statuses[identifier],
+                    }
+                    for identifier, decision in sorted(duplicates.items())
+                ],
+                "fused_events": fused,
+            }
+        )
     output = {
         "status": "source_only_duplicate_evidence_fusion_proposal_not_event_f1",
         "alignment_sha256": digest(ALIGNMENT),
@@ -67,8 +81,12 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(output, indent=2) + "\n")
-    print({key: output[key] for key in
-           ("raw_candidate_count", "fused_event_count", "duplicate_evidence_count")})
+    print(
+        {
+            key: output[key]
+            for key in ("raw_candidate_count", "fused_event_count", "duplicate_evidence_count")
+        }
+    )
 
 
 if __name__ == "__main__":

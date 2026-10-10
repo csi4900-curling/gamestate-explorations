@@ -108,4 +108,5 @@ from add_joined_trajectory_to_accuracy import augment_html
 
 (out / "index.html").write_text(augment_html(html))
 from build_two_camera_live import main as add_two_camera_live
+
 add_two_camera_live()

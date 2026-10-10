@@ -31,7 +31,8 @@ def main():
         summary["unresolved_previous_symbols"] += len(row["unresolved_previous_symbol_indices"])
         summary["unresolved_current_symbols"] += len(row["unresolved_current_symbol_indices"])
         summary["shots_with_unresolved_symbols"] += bool(
-            row["unresolved_previous_symbol_indices"] or row["unresolved_current_symbol_indices"])
+            row["unresolved_previous_symbol_indices"] or row["unresolved_current_symbol_indices"]
+        )
         summary["shots_with_review_flags"] += bool(row["diagram_review_flags"])
     result = {
         "status": "official_pdf_diagram_coordinate_changes_not_physical_stone_tracks",

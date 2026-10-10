@@ -23,13 +23,13 @@ def main():
     hard = json.loads(args.hard_cuts.read_text())
     edits = json.loads(args.edit_audit.read_text())
     if hard["source_sha256"] != edits["source_sha256"] or (
-            len(edits["rows"]) != sum(edits["counts"].values())):
+        len(edits["rows"]) != sum(edits["counts"].values())
+    ):
         raise ValueError("Edit audit does not match hard-cut source or counts")
     reserved = json.loads((ROOT / "validation/unseen-end/reservation.json").read_text())
     if hard["source_sha256"] == reserved["source_sha256"]:
         raise ValueError("Reserved source cannot be used for development")
-    cuts = merge_cut_evidence(hard["cuts"], edits["rows"],
-                              *hard["source_interval_s"])
+    cuts = merge_cut_evidence(hard["cuts"], edits["rows"], *hard["source_interval_s"])
     result = {
         "status": "development_augmented_camera_shot_timeline_not_verified_cuts",
         "source_id": hard["source_id"],

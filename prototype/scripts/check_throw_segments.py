@@ -33,7 +33,11 @@ for s in segments:
         if p["position_m"]:
             assert all(math.isfinite(v) for v in p["position_m"])
 t12 = next(s for s in segments if s["id"] == "T12")
-assert t12["visible_scene_stability_confirmation_s"] - t12["candidate_active_window"]["end_confirmation_s"] == 15.0
+assert (
+    t12["visible_scene_stability_confirmation_s"]
+    - t12["candidate_active_window"]["end_confirmation_s"]
+    == 15.0
+)
 with sync_playwright() as p:
     b = p.chromium.launch(
         executable_path=browser_os.environ.get("CHROMIUM_EXECUTABLE")

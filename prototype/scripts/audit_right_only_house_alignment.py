@@ -10,8 +10,7 @@ import cv2
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "prototype"))
-from right_view_house_alignment import (ROI_XYXY, alignment_probe,
-                                        blue_house_mask)
+from right_view_house_alignment import ROI_XYXY, alignment_probe, blue_house_mask
 
 
 def digest(path):
@@ -34,8 +33,7 @@ def main():
     video_hash = digest(args.video)
     if video_hash != observations["source_sha256"]:
         parser.error("Source fingerprints differ")
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         parser.error("Cannot open video")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -52,9 +50,13 @@ def main():
                 raise RuntimeError(f"Could not decode source time {time_s}")
             track_id = row["right_raw_track_id"]
             masks[track_id] = blue_house_mask(frame)
-            frames.append({"right_raw_track_id": track_id,
-                           "sample_time_s": time_s,
-                           "decoded_frame_index": round(time_s * fps)})
+            frames.append(
+                {
+                    "right_raw_track_id": track_id,
+                    "sample_time_s": time_s,
+                    "decoded_frame_index": round(time_s * fps),
+                }
+            )
     finally:
         cap.release()
     rows = observations["rows"]
@@ -75,8 +77,7 @@ def main():
         "alignment_code_sha256": digest(ROOT / "prototype/right_view_house_alignment.py"),
         "runner_sha256": digest(Path(__file__)),
         "roi_xyxy": ROI_XYXY,
-        "hsv_blue_mask": {"hue_inclusive": [90, 135],
-                          "min_saturation": 45, "min_value": 45},
+        "hsv_blue_mask": {"hue_inclusive": [90, 135], "min_saturation": 45, "min_value": 45},
         "translation_search_radius_px": 8,
         "frames": frames,
         "adjacent_pairs": adjacent,
@@ -89,10 +90,18 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"adjacent_probed": sum(row["status"] ==
-                      "painted_ring_alignment_probe" for row in adjacent),
-                      "zero_translation_best": sum(row.get(
-                          "zero_translation_is_best", False) for row in adjacent)}))
+    print(
+        json.dumps(
+            {
+                "adjacent_probed": sum(
+                    row["status"] == "painted_ring_alignment_probe" for row in adjacent
+                ),
+                "zero_translation_best": sum(
+                    row.get("zero_translation_is_best", False) for row in adjacent
+                ),
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

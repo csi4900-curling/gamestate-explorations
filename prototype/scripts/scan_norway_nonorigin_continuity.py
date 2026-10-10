@@ -37,15 +37,16 @@ def main():
     if end == 8:
         frozen_path = STUDY / "norway-end7-nonorigin-continuity-development.json"
         frozen = json.loads(frozen_path.read_text())
-        if (frozen["rescue_code_sha256"] != digest(CODE) or
-                frozen["source_sha256"] != shots["source_sha256"]):
+        if (
+            frozen["rescue_code_sha256"] != digest(CODE)
+            or frozen["source_sha256"] != shots["source_sha256"]
+        ):
             raise ValueError("Rescue code or source changed after end seven")
     reserved = json.loads((ROOT / "validation/unseen-end/reservation.json").read_text())
     if shots["source_sha256"] == reserved["source_sha256"]:
         raise ValueError("Reserved independent source is not development data")
     origin_by_id = {row["shot_id"]: row for row in origins["rows"]}
-    candidates = rescue_nonorigin_shots(shots["shots"], origin_by_id,
-                                        INTERVALS[end])
+    candidates = rescue_nonorigin_shots(shots["shots"], origin_by_id, INTERVALS[end])
     output = {
         "status": f"source_only_end{end}_nonorigin_continuity_{tag}",
         "source_sha256": shots["source_sha256"],
@@ -65,8 +66,7 @@ def main():
         ],
     }
     output_path.write_text(json.dumps(output, indent=2) + "\n")
-    print({"end": end, "candidates": [(row["shot_id"], row["colour"])
-                                      for row in candidates]})
+    print({"end": end, "candidates": [(row["shot_id"], row["colour"]) for row in candidates]})
 
 
 if __name__ == "__main__":

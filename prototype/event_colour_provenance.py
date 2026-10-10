@@ -15,8 +15,9 @@ def annotate_event_colours(events, decisions, counter_alignments):
         decision = by_decision[shot_id]
         visual = decision["status"] == "corroborated_candidate"
         visual_colours = list(decision["supported_colours"]) if visual else []
-        unique_visual = (decision["colour"] if visual and
-                         decision["colour_status"] == "unique" else None)
+        unique_visual = (
+            decision["colour"] if visual and decision["colour_status"] == "unique" else None
+        )
         counter_id = event["counter_id"]
         counter = by_counter.get(counter_id) if counter_id else None
         if counter_id and (counter is None or counter["shot_id"] != shot_id):

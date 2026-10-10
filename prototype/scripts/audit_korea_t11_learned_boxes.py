@@ -11,7 +11,6 @@ import sys
 from math import hypot
 
 import cv2
-import numpy as np
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "prototype"))
@@ -22,7 +21,8 @@ VIDEO = ROOT / "prototype/continuous/clip.mp4"
 ABLATION = BASE / "t11-score-roi-ablation-development.json"
 TRACK = ROOT / "prototype/cross-view/results.json"
 MODELS = {
-    "public_tracking_v2": ROOT / "validation/curlobserver-learned-probe/public-tracking-v2/model.npz",
+    "public_tracking_v2": ROOT
+    / "validation/curlobserver-learned-probe/public-tracking-v2/model.npz",
     "model_v2": ROOT / "validation/curlobserver-learned-probe/model-v2/model.npz",
 }
 SCANS = {
@@ -43,7 +43,7 @@ def digest(path):
 
 def center(box):
     x, y, w, h = box
-    return [(x+w/2)*3, (y+h/2)*3]
+    return [(x + w / 2) * 3, (y + h / 2) * 3]
 
 
 def main():
@@ -52,34 +52,36 @@ def main():
     ablation = json.loads(ABLATION.read_text())
     scans = {name: json.loads(path.read_text()) for name, path in SCANS.items()}
     if ablation["target_video_sha256"] != digest(VIDEO) or any(
-        scan["source_sha256"] != digest(VIDEO) or
-        scan["model_sha256"] != digest(MODELS[name])
+        scan["source_sha256"] != digest(VIDEO) or scan["model_sha256"] != digest(MODELS[name])
         for name, scan in scans.items()
     ):
         raise ValueError("Source or model changed")
     path = ablation["variants"]["frozen_score_0.45"]["image_motion_paths"]
     if len(path) != 1 or path[0]["direction"] != "upward":
         raise ValueError("T11 image path changed")
-    expected = {p["time_s"]: {"center": p["center_1080p_px"],
-                               "basis": "source_reviewed_low_score_template_path"}
-                for p in path[0]["points"]}
-    t11 = next(row for row in json.loads(TRACK.read_text())["throws"]
-               if row["id"] == "T11")
+    expected = {
+        p["time_s"]: {
+            "center": p["center_1080p_px"],
+            "basis": "source_reviewed_low_score_template_path",
+        }
+        for p in path[0]["points"]
+    }
+    t11 = next(row for row in json.loads(TRACK.read_text())["throws"] if row["id"] == "T11")
     for point in t11["arrival"]:
         t = point["time_s"]
         if 2315 <= t <= 2319 and t.is_integer():
             expected[int(t)] = {
-                "center": [point["pixel"][0], point["pixel"][1]+15],
-                "basis": "provisional_cap_track_plus_postreview_15px_body_offset"}
-    cap = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+                "center": [point["pixel"][0], point["pixel"][1] + 15],
+                "basis": "provisional_cap_track_plus_postreview_15px_body_offset",
+            }
+    cap = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         raise RuntimeError("Cannot open target video")
     models = {name: load_model(path) for name, path in MODELS.items()}
     rows = []
     try:
         for t, reference in sorted(expected.items()):
-            cap.set(cv2.CAP_PROP_POS_MSEC, (t-2260)*1000)
+            cap.set(cv2.CAP_PROP_POS_MSEC, (t - 2260) * 1000)
             ok, frame = cap.read()
             if not ok or frame.shape[:2] != (1080, 1920):
                 raise RuntimeError(f"Could not decode {t}")
@@ -89,23 +91,30 @@ def main():
                 if proposal["colour"] != "yellow":
                     continue
                 pixel = center(proposal["bbox"])
-                distance = hypot(pixel[0]-reference["center"][0],
-                                 pixel[1]-reference["center"][1])
+                distance = hypot(
+                    pixel[0] - reference["center"][0], pixel[1] - reference["center"][1]
+                )
                 if distance <= NEAR_RADIUS_1080P_PX:
                     near.append((distance, proposal))
             near.sort(key=lambda item: item[0])
             stage = {}
             for name, model in models.items():
-                boxes = scans[name]["frames"][t-2260]["boxes"]
-                accepted = [box for box in boxes if box["colour"] == "yellow"
-                            and hypot(*(center(box["bbox"])[axis] -
-                                        reference["center"][axis]
-                                        for axis in (0, 1))) <= NEAR_RADIUS_1080P_PX]
+                boxes = scans[name]["frames"][t - 2260]["boxes"]
+                accepted = [
+                    box
+                    for box in boxes
+                    if box["colour"] == "yellow"
+                    and hypot(
+                        *(center(box["bbox"])[axis] - reference["center"][axis] for axis in (0, 1))
+                    )
+                    <= NEAR_RADIUS_1080P_PX
+                ]
                 scored = []
                 for distance, proposal in near:
                     feature = patch_features(image, proposal["bbox"])
-                    score = ((feature-model["mean"])/model["scale"]) @ \
-                        model["weights"].ravel() + model["intercept"].item()
+                    score = ((feature - model["mean"]) / model["scale"]) @ model[
+                        "weights"
+                    ].ravel() + model["intercept"].item()
                     scored.append((float(score), float(distance), proposal))
                 scored.sort(key=lambda item: -item[0])
                 stage[name] = {
@@ -115,13 +124,21 @@ def main():
                         "score": round(scored[0][0], 5),
                         "center_distance_1080p_px": round(scored[0][1], 2),
                         "bbox_360p": scored[0][2]["bbox"],
-                    } if scored else None,
+                    }
+                    if scored
+                    else None,
                     "near_raw_proposals_above_threshold": sum(
-                        score >= float(model["threshold"])
-                        for score, _, _ in scored),
+                        score >= float(model["threshold"]) for score, _, _ in scored
+                    ),
                 }
-            rows.append({"source_time_s": t, "expected": reference,
-                         "yellow_raw_proposals_near": len(near), "models": stage})
+            rows.append(
+                {
+                    "source_time_s": t,
+                    "expected": reference,
+                    "yellow_raw_proposals_near": len(near),
+                    "models": stage,
+                }
+            )
     finally:
         cap.release()
     result = {
@@ -142,15 +159,22 @@ def main():
         ],
     }
     OUT.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({name: {
-        "near_accepted_frames": sum(r["models"][name]["accepted_near_box_count"] > 0
-                                    for r in rows),
-        "near_proposal_frames": sum(r["yellow_raw_proposals_near"] > 0
-                                    for r in rows),
-        "near_raw_above_threshold_frames": sum(
-            r["models"][name]["near_raw_proposals_above_threshold"] > 0
-            for r in rows),
-    } for name in models}))
+    print(
+        json.dumps(
+            {
+                name: {
+                    "near_accepted_frames": sum(
+                        r["models"][name]["accepted_near_box_count"] > 0 for r in rows
+                    ),
+                    "near_proposal_frames": sum(r["yellow_raw_proposals_near"] > 0 for r in rows),
+                    "near_raw_above_threshold_frames": sum(
+                        r["models"][name]["near_raw_proposals_above_threshold"] > 0 for r in rows
+                    ),
+                }
+                for name in models
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

@@ -14,9 +14,14 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "prototype"))
 from stone_patch_detector import patch_features  # noqa: E402
 
-DEFAULT_PACKET = ROOT / "validation/official-shot-sequence/latvia-italy-crossing-patch-source-class-packet"
+DEFAULT_PACKET = (
+    ROOT / "validation/official-shot-sequence/latvia-italy-crossing-patch-source-class-packet"
+)
 MODEL = ROOT / "validation/official-shot-sequence/identity-crossing-transfer-v1/model.npz"
-DEFAULT_OUTPUT = ROOT / "validation/official-shot-sequence/latvia-italy-frozen-crossing-patch-source-class-score.json"
+DEFAULT_OUTPUT = (
+    ROOT
+    / "validation/official-shot-sequence/latvia-italy-frozen-crossing-patch-source-class-score.json"
+)
 
 
 def digest(path):
@@ -44,21 +49,25 @@ def main():
             if image is None or image.shape[:2] != (48, 48):
                 raise ValueError(f"Unexpected crop geometry: {path}")
             features = patch_features(image, [0, 0, 48, 48])
-            score = float(np.dot((features - frozen["mean"]) / frozen["scale"],
-                                 frozen["weights"][0]) + frozen["intercept"][0])
+            score = float(
+                np.dot((features - frozen["mean"]) / frozen["scale"], frozen["weights"][0])
+                + frozen["intercept"][0]
+            )
             scores.append(round(score, 6))
         if len(scores) != 3:
             raise ValueError("Expected three crossing-local samples")
         mean_score = round(float(np.mean(scores)), 6)
-        rows.append({
-            "source_id": event["source_id"],
-            "event_id": event["event_id"],
-            "source_pixel_class": event["source_review"],
-            "source_review_kind": event["review_kind"],
-            "sample_scores": scores,
-            "mean_score": mean_score,
-            "model_positive": mean_score >= float(frozen["threshold"]),
-        })
+        rows.append(
+            {
+                "source_id": event["source_id"],
+                "event_id": event["event_id"],
+                "source_pixel_class": event["source_review"],
+                "source_review_kind": event["review_kind"],
+                "sample_scores": scores,
+                "mean_score": mean_score,
+                "model_positive": mean_score >= float(frozen["threshold"]),
+            }
+        )
     counts = {}
     for source_class in ("stone_shaped_pixels", "person_pixels"):
         group = [row for row in rows if row["source_pixel_class"] == source_class]

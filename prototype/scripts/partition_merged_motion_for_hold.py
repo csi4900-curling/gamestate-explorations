@@ -20,22 +20,26 @@ def main():
         parser.error("Hold partition directory exists")
     source = json.loads(args.motion.read_text())
     rows = source["rows"]
-    if (len(rows) != source["candidate_count"] or
-            len({row["candidate_id"] for row in rows}) != len(rows)):
+    if len(rows) != source["candidate_count"] or len({row["candidate_id"] for row in rows}) != len(
+        rows
+    ):
         raise ValueError("Merged motion coverage is inconsistent")
     digest = file_sha256(args.motion)
     args.output_dir.mkdir(parents=True)
     for index, row in enumerate(rows, 1):
-        part = {**source,
-                "status": "singleton_hold_input_from_merged_motion",
-                "candidate_count": 1,
-                "selection_status_counts": dict(Counter([row["selection"]["status"]])),
-                "rows": [row],
-                "parent_motion_sha256": digest,
-                "singleton_partition_index": index,
-                "partition_runner_sha256": file_sha256(Path(__file__))}
+        part = {
+            **source,
+            "status": "singleton_hold_input_from_merged_motion",
+            "candidate_count": 1,
+            "selection_status_counts": dict(Counter([row["selection"]["status"]])),
+            "rows": [row],
+            "parent_motion_sha256": digest,
+            "singleton_partition_index": index,
+            "partition_runner_sha256": file_sha256(Path(__file__)),
+        }
         (args.output_dir / f"fixed-grid-motion-{index:03d}.json").write_text(
-            json.dumps(part, indent=2) + "\n")
+            json.dumps(part, indent=2) + "\n"
+        )
     print(len(rows), "singleton hold inputs")
 
 

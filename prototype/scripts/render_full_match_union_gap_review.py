@@ -30,13 +30,17 @@ def main():
     video_hash = digest(args.video)
     if video_hash != union["source_sha256"]:
         parser.error("Source fingerprints differ")
-    selected = [row for row in union["raw_candidates"] if row["tier"] in (
-        "screen_provisional", "pre_split_review_only")]
-    gaps = sorted(zip(selected, selected[1:]),
-                  key=lambda pair: pair[1]["passage_time_s"] -
-                  pair[0]["passage_time_s"], reverse=True)[:5]
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    selected = [
+        row
+        for row in union["raw_candidates"]
+        if row["tier"] in ("screen_provisional", "pre_split_review_only")
+    ]
+    gaps = sorted(
+        zip(selected, selected[1:]),
+        key=lambda pair: pair[1]["passage_time_s"] - pair[0]["passage_time_s"],
+        reverse=True,
+    )[:5]
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         parser.error("Cannot open video")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -56,34 +60,37 @@ def main():
                     raise RuntimeError(f"Cannot decode source second {second}")
                 tile = cv2.resize(frame, (480, 270))
                 cv2.rectangle(tile, (0, 0), (100, 27), (0, 0, 0), -1)
-                cv2.putText(tile, str(second), (8, 19),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 1)
+                cv2.putText(
+                    tile, str(second), (8, 19), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 1
+                )
                 tiles.append(tile)
-                frames.append({"source_time_s": second,
-                               "decoded_frame_index": frame_index})
+                frames.append({"source_time_s": second, "decoded_frame_index": frame_index})
             if not tiles:
                 raise ValueError("Gap has no sampled interior")
             while len(tiles) % 3:
                 tiles.append(np.zeros_like(tiles[0]))
-            sheet = np.vstack([np.hstack(tiles[i:i + 3])
-                               for i in range(0, len(tiles), 3)])
+            sheet = np.vstack([np.hstack(tiles[i : i + 3]) for i in range(0, len(tiles), 3)])
             name = f"gap-{index:02d}-{before['candidate_id']}-{after['candidate_id']}.jpg"
             path = args.output_dir / name
             if not cv2.imwrite(str(path), sheet):
                 raise RuntimeError(f"Cannot write {path}")
-            intervening = [row for row in union["raw_candidates"]
-                           if low < row["passage_time_s"] < high]
-            rows.append({"rank": index,
-                         "before_candidate_id": before["candidate_id"],
-                         "after_candidate_id": after["candidate_id"],
-                         "interval_s": [low, high],
-                         "duration_s": round(high - low, 3),
-                         "intervening_raw_candidate_ids": [
-                             row["candidate_id"] for row in intervening],
-                         "frames": frames,
-                         "sheet": name,
-                         "sheet_sha256": digest(path),
-                         "physical_throws_in_gap_verified": False})
+            intervening = [
+                row for row in union["raw_candidates"] if low < row["passage_time_s"] < high
+            ]
+            rows.append(
+                {
+                    "rank": index,
+                    "before_candidate_id": before["candidate_id"],
+                    "after_candidate_id": after["candidate_id"],
+                    "interval_s": [low, high],
+                    "duration_s": round(high - low, 3),
+                    "intervening_raw_candidate_ids": [row["candidate_id"] for row in intervening],
+                    "frames": frames,
+                    "sheet": name,
+                    "sheet_sha256": digest(path),
+                    "physical_throws_in_gap_verified": False,
+                }
+            )
     finally:
         cap.release()
     manifest = {
@@ -101,8 +108,9 @@ def main():
         ],
     }
     (args.output_dir / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
-    print(json.dumps({"gaps": len(rows),
-                      "sampled_frames": sum(len(row["frames"]) for row in rows)}))
+    print(
+        json.dumps({"gaps": len(rows), "sampled_frames": sum(len(row["frames"]) for row in rows)})
+    )
 
 
 if __name__ == "__main__":

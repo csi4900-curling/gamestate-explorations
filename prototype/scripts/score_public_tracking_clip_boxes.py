@@ -32,10 +32,13 @@ def reference_boxes(path):
         x, y, width, height = map(float, fields[1:5])
         if not all(0 <= value <= 1 for value in (x, y, width, height)):
             raise ValueError(f"Out-of-range tracking label: {path}")
-        rows.append({"colour": colour,
-                     "bbox": [(x - width / 2) * 640, (y - height / 2) * 360,
-                              width * 640, height * 360],
-                     "track_id": fields[5]})
+        rows.append(
+            {
+                "colour": colour,
+                "bbox": [(x - width / 2) * 640, (y - height / 2) * 360, width * 640, height * 360],
+                "track_id": fields[5],
+            }
+        )
     return rows
 
 
@@ -59,8 +62,7 @@ def main():
         parser.error("Output exists; preserve first public tracking clip score")
     if args.frame_step < 1:
         parser.error("Frame step must be positive")
-    capture = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not capture.isOpened():
         parser.error("Cannot open video")
     fps = capture.get(cv2.CAP_PROP_FPS)
@@ -81,17 +83,24 @@ def main():
         score = score_boxes(reference, predicted)
         for key in total:
             total[key] += score[key]
-        rows.append({"frame_index": index,
-                     "time_s": round(index / fps, 3),
-                     "reference": reference,
-                     "predicted": predicted,
-                     "score": score})
+        rows.append(
+            {
+                "frame_index": index,
+                "time_s": round(index / fps, 3),
+                "reference": reference,
+                "predicted": predicted,
+                "score": score,
+            }
+        )
     capture.release()
     tp, fp, fn = total["matches"], total["extras"], total["misses"]
-    total.update({"precision": round(tp / (tp + fp), 4) if tp + fp else None,
-                  "recall": round(tp / (tp + fn), 4) if tp + fn else None,
-                  "f1": round(2 * tp / (2 * tp + fp + fn), 4)
-                  if 2 * tp + fp + fn else None})
+    total.update(
+        {
+            "precision": round(tp / (tp + fp), 4) if tp + fp else None,
+            "recall": round(tp / (tp + fn), 4) if tp + fn else None,
+            "f1": round(2 * tp / (2 * tp + fp + fn), 4) if 2 * tp + fp + fn else None,
+        }
+    )
     output = {
         "status": "public_tracking_clip_box_probe_not_throw_event_score",
         "video_sha256": digest(args.video),

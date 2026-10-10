@@ -35,10 +35,16 @@ def main():
         raise SystemExit("Candidate order or count changed")
     registry = build_registry(cut_aware["rows"])
     near_pairs = find_near_duplicate_pairs(registry["episodes"])
-    losses = [new["shot_id"] for old, new in zip(baseline["rows"], cut_aware["rows"])
-              if old["any_supported_motion"] and not new["any_supported_motion"]]
-    gains = [new["shot_id"] for old, new in zip(baseline["rows"], cut_aware["rows"])
-             if not old["any_supported_motion"] and new["any_supported_motion"]]
+    losses = [
+        new["shot_id"]
+        for old, new in zip(baseline["rows"], cut_aware["rows"])
+        if old["any_supported_motion"] and not new["any_supported_motion"]
+    ]
+    gains = [
+        new["shot_id"]
+        for old, new in zip(baseline["rows"], cut_aware["rows"])
+        if not old["any_supported_motion"] and new["any_supported_motion"]
+    ]
     result = {
         "status": "source_only_cut_aware_episode_link_audit_not_physical_throw_assignment",
         "baseline_motion_transfer_sha256": digest(BASELINE),
@@ -47,8 +53,12 @@ def main():
         "near_duplicate_code_sha256": digest(ROOT / "prototype/motion_episode_near_duplicates.py"),
         "runner_sha256": digest(Path(__file__)),
         "candidate_count": len(new_ids),
-        "baseline_supported_candidates": sum(row["any_supported_motion"] for row in baseline["rows"]),
-        "cut_aware_supported_candidates": sum(row["any_supported_motion"] for row in cut_aware["rows"]),
+        "baseline_supported_candidates": sum(
+            row["any_supported_motion"] for row in baseline["rows"]
+        ),
+        "cut_aware_supported_candidates": sum(
+            row["any_supported_motion"] for row in cut_aware["rows"]
+        ),
         "support_lost_after_cut_breaks": losses,
         "support_gained_after_cut_breaks": gains,
         "cut_aware_episode_count": registry["episode_count"],
@@ -65,10 +75,19 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(result, indent=2) + "\n")
-    print({key: result[key] for key in
-           ("baseline_supported_candidates", "cut_aware_supported_candidates",
-            "support_lost_after_cut_breaks", "cut_aware_episode_count",
-            "cut_aware_shared_episode_count", "candidate_motion_status_counts")})
+    print(
+        {
+            key: result[key]
+            for key in (
+                "baseline_supported_candidates",
+                "cut_aware_supported_candidates",
+                "support_lost_after_cut_breaks",
+                "cut_aware_episode_count",
+                "cut_aware_shared_episode_count",
+                "candidate_motion_status_counts",
+            )
+        }
+    )
     print("near_pairs", [row["episode_ids"] for row in near_pairs])
 
 

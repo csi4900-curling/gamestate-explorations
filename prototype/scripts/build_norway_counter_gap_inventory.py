@@ -11,9 +11,16 @@ sys.path.insert(0, str(ROOT))
 from prototype.counter_gap_inventory import inventory_gaps
 
 
-SLOTS = ROOT / "validation/official-shot-sequence/norway-full-match-official-counter-slot-scaffold-first.json"
-EVENTS = ROOT / "validation/curlobserver-learned-probe/canada-norway-full-transfer/fused-linked.json"
-DISPLAY = ROOT / "validation/official-shot-sequence/norway-counterless-candidate-end-display-v2.json"
+SLOTS = (
+    ROOT
+    / "validation/official-shot-sequence/norway-full-match-official-counter-slot-scaffold-first.json"
+)
+EVENTS = (
+    ROOT / "validation/curlobserver-learned-probe/canada-norway-full-transfer/fused-linked.json"
+)
+DISPLAY = (
+    ROOT / "validation/official-shot-sequence/norway-counterless-candidate-end-display-v2.json"
+)
 OUTPUT = ROOT / "validation/official-shot-sequence/norway-counter-gap-inventory-first.json"
 
 
@@ -34,14 +41,18 @@ def main():
     rows = inventory_gaps(slots["slots"], events["events"], display["rows"])
     output = {
         "status": "chronological_counter_gap_inventory_not_verified_throw_identity",
-        "input_sha256": {"slot_scaffold": digest(SLOTS), "candidate_ledger": digest(EVENTS),
-                         "display_audit": digest(DISPLAY)},
+        "input_sha256": {
+            "slot_scaffold": digest(SLOTS),
+            "candidate_ledger": digest(EVENTS),
+            "display_audit": digest(DISPLAY),
+        },
         "inventory_code_sha256": digest(ROOT / "prototype/counter_gap_inventory.py"),
         "runner_sha256": digest(Path(__file__)),
         "gap_count": len(rows),
         "gaps_with_missing_counter_slots": sum(bool(row["missing_slots"]) for row in rows),
         "unique_order_colour_display_proposal_count": sum(
-            row["unique_order_colour_display_proposal"] is not None for row in rows),
+            row["unique_order_colour_display_proposal"] is not None for row in rows
+        ),
         "gaps": rows,
         "limitations": [
             "Only intervals between video-linked counter anchors are inventoried; terminal ends are not resolved.",
@@ -52,8 +63,16 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(output, indent=2) + "\n")
-    print({key: output[key] for key in ("gap_count", "gaps_with_missing_counter_slots",
-                                          "unique_order_colour_display_proposal_count")})
+    print(
+        {
+            key: output[key]
+            for key in (
+                "gap_count",
+                "gaps_with_missing_counter_slots",
+                "unique_order_colour_display_proposal_count",
+            )
+        }
+    )
 
 
 if __name__ == "__main__":

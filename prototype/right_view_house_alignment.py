@@ -11,10 +11,8 @@ def blue_house_mask(frame):
     if frame.shape[:2] != (360, 640):
         raise ValueError("Expected 640x360 broadcast frame")
     x0, y0, x1, y1 = ROI_XYXY
-    hue, saturation, value = cv2.split(
-        cv2.cvtColor(frame[y0:y1, x0:x1], cv2.COLOR_BGR2HSV))
-    return ((hue >= 90) & (hue <= 135) &
-            (saturation >= 45) & (value >= 45)).astype(np.uint8)
+    hue, saturation, value = cv2.split(cv2.cvtColor(frame[y0:y1, x0:x1], cv2.COLOR_BGR2HSV))
+    return ((hue >= 90) & (hue <= 135) & (saturation >= 45) & (value >= 45)).astype(np.uint8)
 
 
 def alignment_probe(first_mask, second_mask, *, max_shift_px=8):
@@ -31,8 +29,11 @@ def alignment_probe(first_mask, second_mask, *, max_shift_px=8):
     for dy in range(-max_shift_px, max_shift_px + 1):
         for dx in range(-max_shift_px, max_shift_px + 1):
             shifted = cv2.warpAffine(
-                second, np.float32([[1, 0, dx], [0, 1, dy]]),
-                (width, height), flags=cv2.INTER_NEAREST)
+                second,
+                np.float32([[1, 0, dx], [0, 1, dy]]),
+                (width, height),
+                flags=cv2.INTER_NEAREST,
+            )
             intersection = int(np.count_nonzero(first & shifted))
             union = int(np.count_nonzero(first | shifted))
             scores.append((intersection / union, dx, dy))

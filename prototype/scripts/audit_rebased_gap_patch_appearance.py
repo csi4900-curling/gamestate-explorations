@@ -31,11 +31,15 @@ def main():
     motion = json.loads(args.motion.read_text())
     hold = json.loads(args.hold.read_text())
     source_metadata = json.loads(args.source_motion.read_text())
-    if motion["hold_sha256"] != file_sha256(args.hold) or \
-            hold["motion_sha256"] != file_sha256(args.source_motion):
+    if motion["hold_sha256"] != file_sha256(args.hold) or hold["motion_sha256"] != file_sha256(
+        args.source_motion
+    ):
         parser.error("Gap, hold, and source-motion artifacts do not chain")
     hold_rows = {row["candidate_id"]: row for row in hold["rows"]}
-    if source_metadata.get("detection_background") != "original_clean_reference_transported_to_current_frame":
+    if (
+        source_metadata.get("detection_background")
+        != "original_clean_reference_transported_to_current_frame"
+    ):
         parser.error("Motion artifact does not use the clean-reference rebased geometry")
     if file_sha256(args.video) != source_metadata["high_resolution_source_sha256"]:
         parser.error("Video differs from candidate motion audit")
@@ -54,61 +58,75 @@ def main():
         calibrators[name] = cal
         original_H[name] = cal.H.copy()
         clean_reference[name] = cal.reference.copy()
-    capture = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not capture.isOpened():
         parser.error("Cannot open video")
     fps = capture.get(cv2.CAP_PROP_FPS)
     rows = []
     try:
         anchor_time = source_metadata["right_reference_anchor_time_s"]
-        capture.set(cv2.CAP_PROP_POS_FRAMES,
-                    round((anchor_time - source_metadata["source_offset_s"]) * fps))
+        capture.set(
+            cv2.CAP_PROP_POS_FRAMES, round((anchor_time - source_metadata["source_offset_s"]) * fps)
+        )
         ok, anchor_frame = capture.read()
         if not ok:
             raise RuntimeError(f"Cannot decode right-camera anchor {anchor_time}")
         calibrators["right"], anchor_registration = rebase_view_calibrator(
-            calibrators["right"], anchor_frame,
-            max_corner_displacement_px=source_metadata[
-                "max_corner_displacement_px"])
+            calibrators["right"],
+            anchor_frame,
+            max_corner_displacement_px=source_metadata["max_corner_displacement_px"],
+        )
         for event in motion["rows"]:
             path = event["selection"].get("path") or event["selection"].get("shared_prefix", [])
             if not path:
-                rows.append({"candidate_id": event["candidate_id"],
-                             "status": "no_selected_motion_path", "samples": []})
+                rows.append(
+                    {
+                        "candidate_id": event["candidate_id"],
+                        "status": "no_selected_motion_path",
+                        "samples": [],
+                    }
+                )
                 continue
             sample_nodes = [path[i] for i in sorted({0, len(path) // 2, len(path) - 1})]
             cal = calibrators[event["receiving_view"]]
             samples = []
             for node in sample_nodes:
                 t = node["source_time_s"]
-                capture.set(cv2.CAP_PROP_POS_FRAMES,
-                            round((t - source_metadata["source_offset_s"]) * fps))
+                capture.set(
+                    cv2.CAP_PROP_POS_FRAMES, round((t - source_metadata["source_offset_s"]) * fps)
+                )
                 ok, frame = capture.read()
                 if not ok:
                     raise RuntimeError(f"Cannot decode source time {t}")
                 H, reg = cal.register(
-                    frame, max_corner_displacement_px=source_metadata[
-                        "max_corner_displacement_px"])
-                record = {"source_time_s": t, "pixel_center": node["pixel_center"],
-                          "registration_status": reg["status"]}
+                    frame, max_corner_displacement_px=source_metadata["max_corner_displacement_px"]
+                )
+                record = {
+                    "source_time_s": t,
+                    "pixel_center": node["pixel_center"],
+                    "registration_status": reg["status"],
+                }
                 if H is None:
-                    held = next(sample for sample in
-                                hold_rows[event["candidate_id"]]["samples"]
-                                if sample["source_time_s"] == t)
+                    held = next(
+                        sample
+                        for sample in hold_rows[event["candidate_id"]]["samples"]
+                        if sample["source_time_s"] == t
+                    )
                     if held["status"] == "borrowed_transform_with_ice_similarity":
                         held_anchor_time = held["anchor_time_s"]
-                        capture.set(cv2.CAP_PROP_POS_FRAMES,
-                                    round((held_anchor_time - source_metadata[
-                                        "source_offset_s"]) * fps))
+                        capture.set(
+                            cv2.CAP_PROP_POS_FRAMES,
+                            round((held_anchor_time - source_metadata["source_offset_s"]) * fps),
+                        )
                         anchor_ok, held_anchor_frame = capture.read()
                         if not anchor_ok:
-                            raise RuntimeError(
-                                f"Cannot decode held anchor {held_anchor_time}")
+                            raise RuntimeError(f"Cannot decode held anchor {held_anchor_time}")
                         H, _ = cal.register(
                             held_anchor_frame,
                             max_corner_displacement_px=source_metadata[
-                                "max_corner_displacement_px"])
+                                "max_corner_displacement_px"
+                            ],
+                        )
                         if H is None:
                             raise ValueError("Held anchor no longer registers")
                         record["appearance_geometry_source"] = "borrowed_anchor"
@@ -116,54 +134,76 @@ def main():
                 if H is not None:
                     A = np.linalg.inv(H) @ original_H[event["receiving_view"]]
                     background = cv2.warpPerspective(
-                        clean_reference[event["receiving_view"]], A,
-                        (frame.shape[1], frame.shape[0]))
+                        clean_reference[event["receiving_view"]],
+                        A,
+                        (frame.shape[1], frame.shape[0]),
+                    )
                     caps, _ = detect_caps(frame, H, cal.view, background)
-                    nearby = [p for p in caps if p["colour"] == event["colour"] and
-                              np.linalg.norm(np.array(p["pixel_center"]) -
-                                             node["pixel_center"]) <= 2.0]
+                    nearby = [
+                        p
+                        for p in caps
+                        if p["colour"] == event["colour"]
+                        and np.linalg.norm(np.array(p["pixel_center"]) - node["pixel_center"])
+                        <= 2.0
+                    ]
                     if len(nearby) == 1:
                         bbox = [v / 3 for v in nearby[0]["bbox"]]
                         scored = score_candidates(frame, [{"bbox": bbox}], model)[0]
-                        record.update(status="scored", patch_score=scored["patch_score"],
-                                      patch_accepted=scored["patch_accepted"],
-                                      cap_bbox_1080p=nearby[0]["bbox"])
+                        record.update(
+                            status="scored",
+                            patch_score=scored["patch_score"],
+                            patch_accepted=scored["patch_accepted"],
+                            cap_bbox_1080p=nearby[0]["bbox"],
+                        )
                     else:
-                        record.update(status="no_unique_matching_cap",
-                                      matching_cap_count=len(nearby))
+                        record.update(
+                            status="no_unique_matching_cap", matching_cap_count=len(nearby)
+                        )
                 else:
                     record["status"] = "registration_abstained"
                 samples.append(record)
-            rows.append({"candidate_id": event["candidate_id"],
-                         "motion_status": event["selection"]["status"],
-                         "status": "sampled_motion_path",
-                         "samples": samples})
+            rows.append(
+                {
+                    "candidate_id": event["candidate_id"],
+                    "motion_status": event["selection"]["status"],
+                    "status": "sampled_motion_path",
+                    "samples": samples,
+                }
+            )
     finally:
         capture.release()
-    result = {"status": "postscore_development_rebased_gap_patch_not_event_score",
-              "motion_sha256": file_sha256(args.motion),
-              "hold_sha256": file_sha256(args.hold),
-              "source_motion_sha256": file_sha256(args.source_motion),
-              "video_sha256": source_metadata["high_resolution_source_sha256"],
-              "model_sha256": file_sha256(args.model),
-              "runner_sha256": file_sha256(__file__),
-              "rebase_code_sha256": file_sha256(ROOT / "prototype/adaptive_view_reference.py"),
-              "right_reference_anchor_time_s": anchor_time,
-              "right_reference_anchor_registration": anchor_registration,
-              "detection_background": source_metadata["detection_background"],
-              "patch_code_sha256": file_sha256(ROOT / "prototype/cap_patch_verifier.py"),
-              "sample_strategy": "First, midpoint, and last path node, or shared-prefix node",
-              "rows": rows,
-              "limitations": [
-                  "The model comes from small handpicked, agent-labelled 2022 clips and is not an independent 2024 event classifier.",
-                  "A stone-like patch does not prove delivery, and a weak patch does not disprove a stone.",
-                  "Only three path points are sampled; appearance may change between them.",
-              ]}
+    result = {
+        "status": "postscore_development_rebased_gap_patch_not_event_score",
+        "motion_sha256": file_sha256(args.motion),
+        "hold_sha256": file_sha256(args.hold),
+        "source_motion_sha256": file_sha256(args.source_motion),
+        "video_sha256": source_metadata["high_resolution_source_sha256"],
+        "model_sha256": file_sha256(args.model),
+        "runner_sha256": file_sha256(__file__),
+        "rebase_code_sha256": file_sha256(ROOT / "prototype/adaptive_view_reference.py"),
+        "right_reference_anchor_time_s": anchor_time,
+        "right_reference_anchor_registration": anchor_registration,
+        "detection_background": source_metadata["detection_background"],
+        "patch_code_sha256": file_sha256(ROOT / "prototype/cap_patch_verifier.py"),
+        "sample_strategy": "First, midpoint, and last path node, or shared-prefix node",
+        "rows": rows,
+        "limitations": [
+            "The model comes from small handpicked, agent-labelled 2022 clips and is not an independent 2024 event classifier.",
+            "A stone-like patch does not prove delivery, and a weak patch does not disprove a stone.",
+            "Only three path points are sampled; appearance may change between them.",
+        ],
+    }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print([(r["candidate_id"], [round(s["patch_score"], 2)
-                                for s in r["samples"] if s["status"] == "scored"])
-           for r in rows])
+    print(
+        [
+            (
+                r["candidate_id"],
+                [round(s["patch_score"], 2) for s in r["samples"] if s["status"] == "scored"],
+            )
+            for r in rows
+        ]
+    )
 
 
 if __name__ == "__main__":

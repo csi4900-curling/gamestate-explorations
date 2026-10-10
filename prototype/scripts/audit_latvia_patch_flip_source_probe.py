@@ -47,27 +47,35 @@ def main():
         if digest(PACKET / name) != expected:
             raise ValueError(f"Source page changed: {name}")
     for name, expected in manifest["input_sha256"].items():
-        path = (BASE / "full-right-variant-review-queue-development.json"
-                if name == "queue" else
-                BASE / "full-right-all-proposal-source-diverse-patch-development.json"
-                if name == "scores" else
-                ROOT / "validation/throw-event-benchmark/right-sideview-source-diverse-development-v1/latvia-fixed-source-review-transfer.json"
-                if name == "reviewed_transfer" else
-                BASE / {"one_second_greedy": "full-right-area-first-transfer.json",
-                        "two_second_greedy": "full-right-area-gap2-development.json",
-                        "two_second_global": "full-right-global-area-development.json",
-                        "two_second_global_later": "full-right-global-multi-episode-development.json"}[name])
+        path = (
+            BASE / "full-right-variant-review-queue-development.json"
+            if name == "queue"
+            else BASE / "full-right-all-proposal-source-diverse-patch-development.json"
+            if name == "scores"
+            else ROOT
+            / "validation/throw-event-benchmark/right-sideview-source-diverse-development-v1/latvia-fixed-source-review-transfer.json"
+            if name == "reviewed_transfer"
+            else BASE
+            / {
+                "one_second_greedy": "full-right-area-first-transfer.json",
+                "two_second_greedy": "full-right-area-gap2-development.json",
+                "two_second_global": "full-right-global-area-development.json",
+                "two_second_global_later": "full-right-global-multi-episode-development.json",
+            }[name]
+        )
         if digest(path) != expected:
             raise ValueError(f"Input changed: {name}")
     rows = manifest["rows"]
     ids = [row["proposal_id"] for row in rows]
     if len(rows) != 20 or len(set(ids)) != 20 or set(ids) != set(JUDGMENTS):
         raise ValueError("Fixed source packet changed")
-    reviewed = [{**row, "source_pixel_judgment": JUDGMENTS[row["proposal_id"]]}
-                for row in rows]
+    reviewed = [{**row, "source_pixel_judgment": JUDGMENTS[row["proposal_id"]]} for row in rows]
     counts = {
-        kind: dict(Counter(row["source_pixel_judgment"] for row in reviewed
-                           if row["selection_kind"] == kind))
+        kind: dict(
+            Counter(
+                row["source_pixel_judgment"] for row in reviewed if row["selection_kind"] == kind
+            )
+        )
         for kind in sorted({row["selection_kind"] for row in reviewed})
     }
     result = {

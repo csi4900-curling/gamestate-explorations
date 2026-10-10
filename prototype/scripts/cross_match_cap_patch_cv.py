@@ -34,8 +34,13 @@ def main():
         labels = json.loads(labels_path.read_text())
         sources = {key: value for key, value in labels.items() if isinstance(value, dict)}
         rows.extend(make_features(manifest, sources))
-        inputs.append({"review": str(review), "manifest_sha256": file_sha256(manifest_path),
-                       "labels_sha256": file_sha256(labels_path)})
+        inputs.append(
+            {
+                "review": str(review),
+                "manifest_sha256": file_sha256(manifest_path),
+                "labels_sha256": file_sha256(labels_path),
+            }
+        )
     source_ids = sorted({row["source_id"] for row in rows})
     if len(source_ids) != 3:
         parser.error("Three distinct source matches required")
@@ -47,29 +52,49 @@ def main():
         x_fit = np.stack([row["feature"] for row in fit])
         y_fit = np.asarray([row["label"] for row in fit])
         scaler = StandardScaler().fit(x_fit)
-        model = LinearSVC(C=0.1, class_weight="balanced", max_iter=5000,
-                          random_state=9031).fit(scaler.transform(x_fit), y_fit)
+        model = LinearSVC(C=0.1, class_weight="balanced", max_iter=5000, random_state=9031).fit(
+            scaler.transform(x_fit), y_fit
+        )
         x_test = np.stack([row["feature"] for row in test])
         scores = model.decision_function(scaler.transform(x_test))
-        evaluated = [{"id": row["id"], "track_id": row["track_id"],
-                      "label": row["label"], "score": float(score),
-                      "predicted": int(score >= 0)}
-                     for row, score in zip(test, scores)]
+        evaluated = [
+            {
+                "id": row["id"],
+                "track_id": row["track_id"],
+                "label": row["label"],
+                "score": float(score),
+                "predicted": int(score >= 0),
+            }
+            for row, score in zip(test, scores)
+        ]
         model_path = args.output / f"model-excluding-{heldout}.npz"
-        np.savez_compressed(model_path, mean=scaler.mean_, scale=scaler.scale_,
-                            weights=model.coef_, intercept=model.intercept_,
-                            threshold=np.asarray(0.0))
-        folds.append({"heldout": heldout,
-                      "train_sources": [source for source in source_ids if source != heldout],
-                      "train_count": len(fit), "test_count": len(test),
-                      "model_sha256": file_sha256(model_path),
-                      "score": counts(evaluated), "rows": evaluated})
+        np.savez_compressed(
+            model_path,
+            mean=scaler.mean_,
+            scale=scaler.scale_,
+            weights=model.coef_,
+            intercept=model.intercept_,
+            threshold=np.asarray(0.0),
+        )
+        folds.append(
+            {
+                "heldout": heldout,
+                "train_sources": [source for source in source_ids if source != heldout],
+                "train_count": len(fit),
+                "test_count": len(test),
+                "model_sha256": file_sha256(model_path),
+                "score": counts(evaluated),
+                "rows": evaluated,
+            }
+        )
     total = counts([row for fold in folds for row in fold["rows"]])
     result = {
         "status": "development_leave_one_match_out_cap_patch_identity_probe",
-        "inputs": inputs, "runner_sha256": file_sha256(__file__),
+        "inputs": inputs,
+        "runner_sha256": file_sha256(__file__),
         "model_specification": "HOG+HSV on 3x cap context; StandardScaler; balanced LinearSVC C=0.1; threshold=0; no fold-specific tuning",
-        "folds": folds, "pooled": total,
+        "folds": folds,
+        "pooled": total,
         "limitations": [
             "All source matches and labels are exposed development material.",
             "Three handpicked samples per track do not represent detection proposals or full broadcasts.",

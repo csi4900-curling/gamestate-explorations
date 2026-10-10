@@ -27,10 +27,25 @@ def digest(path):
 
 
 def frame_at(time_s):
-    data = subprocess.check_output([
-        "ffmpeg", "-hide_banner", "-loglevel", "error", "-ss", str(time_s),
-        "-i", str(VIDEO), "-frames:v", "1", "-f", "image2pipe", "-vcodec", "png", "-",
-    ])
+    data = subprocess.check_output(
+        [
+            "ffmpeg",
+            "-hide_banner",
+            "-loglevel",
+            "error",
+            "-ss",
+            str(time_s),
+            "-i",
+            str(VIDEO),
+            "-frames:v",
+            "1",
+            "-f",
+            "image2pipe",
+            "-vcodec",
+            "png",
+            "-",
+        ]
+    )
     return Image.open(io.BytesIO(data)).convert("RGB")
 
 
@@ -38,12 +53,17 @@ def main():
     score = json.loads(SCORE.read_text())
     packet = json.loads(PACKET.read_text())
     source = packet["sources"]
-    if (len(source) != 1 or source[0]["video_sha256"] != digest(VIDEO) or
-            not source[0]["same_video_bytes_as_timeline"] or
-            score["packet_manifest_sha256"] != digest(PACKET)):
+    if (
+        len(source) != 1
+        or source[0]["video_sha256"] != digest(VIDEO)
+        or not source[0]["same_video_bytes_as_timeline"]
+        or score["packet_manifest_sha256"] != digest(PACKET)
+    ):
         raise ValueError("Patch score, packet, and Latvia video lineage differ")
-    selected = sorted((row for row in score["rows"] if row["source_review"] == "unreviewed"),
-                      key=lambda row: (row["mean_score"], row["event_id"]))[:5]
+    selected = sorted(
+        (row for row in score["rows"] if row["source_review"] == "unreviewed"),
+        key=lambda row: (row["mean_score"], row["event_id"]),
+    )[:5]
     if tuple(row["event_id"] for row in selected) != EXPECTED_IDS:
         raise ValueError("Lowest-score review selection changed")
     packet_by_id = {row["event_id"]: row for row in packet["rows"]}
@@ -65,14 +85,16 @@ def main():
             draw.text((4, 3), f"{score_row['event_id']} {time_s:.1f}", fill="black")
             sheet.paste(left, (sample_index * 320, row_index * 380))
             observations.append({"source_time_s": time_s, "marked_pixel": [x, y]})
-        rows.append({
-            "candidate_id": score_row["event_id"],
-            "frozen_patch_mean_score": score_row["mean_score"],
-            "source_pixel_class": "yellow_cap_and_stone_body_pixels_on_path",
-            "class_origin": "same_agent_postscore_source_review",
-            "physical_throw_verified": False,
-            "sampled_source_frames": observations,
-        })
+        rows.append(
+            {
+                "candidate_id": score_row["event_id"],
+                "frozen_patch_mean_score": score_row["mean_score"],
+                "source_pixel_class": "yellow_cap_and_stone_body_pixels_on_path",
+                "class_origin": "same_agent_postscore_source_review",
+                "physical_throw_verified": False,
+                "sampled_source_frames": observations,
+            }
+        )
     OUT.mkdir(parents=True, exist_ok=True)
     image = OUT / "lowest-five-source-frames.jpg"
     sheet.save(image, quality=90)

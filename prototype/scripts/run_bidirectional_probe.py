@@ -40,8 +40,10 @@ def main():
     if any(not 25 <= gate_y <= 95 for gate_y in gate_ys):
         parser.error("Gate y must be inside the departure ROI with room for observations")
     detectors = [
-        (PassageDetector(PassageConfig(gate_y=gate_y)),
-         IncomingPassageDetector(PassageConfig(gate_y=gate_y)))
+        (
+            PassageDetector(PassageConfig(gate_y=gate_y)),
+            IncomingPassageDetector(PassageConfig(gate_y=gate_y)),
+        )
         for gate_y in gate_ys
     ]
     cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
@@ -84,11 +86,14 @@ def main():
     merged = []
     for event in events:
         same_stone = next(
-            (prior for prior in merged
-             if prior["colour"] == event["colour"]
-             and prior["view_motion"] == event["view_motion"]
-             and abs(prior["crossing_time_s"] - event["crossing_time_s"]) <= 4
-             and abs(prior["crossing_x_px"] - event["crossing_x_px"]) <= 20),
+            (
+                prior
+                for prior in merged
+                if prior["colour"] == event["colour"]
+                and prior["view_motion"] == event["view_motion"]
+                and abs(prior["crossing_time_s"] - event["crossing_time_s"]) <= 4
+                and abs(prior["crossing_x_px"] - event["crossing_x_px"]) <= 20
+            ),
             None,
         )
         if same_stone is None:

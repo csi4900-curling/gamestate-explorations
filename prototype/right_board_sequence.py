@@ -22,20 +22,26 @@ def build_right_board_sequence(union, boards, alignments, *, min_blue_iou=0.7):
         raise ValueError("Duplicate candidate ID")
     right_by_id = {
         row["right_entry_ids"][0]: row
-        for row in candidates if row["origin"] == "right_entry_review"
+        for row in candidates
+        if row["origin"] == "right_entry_review"
     }
     if set(right_by_id) != set(ids):
         raise ValueError("Right-entry candidates and board entries differ")
     transitions = []
     for before, after, alignment in zip(rows, rows[1:], alignments):
         first, second = before["right_entry_id"], after["right_entry_id"]
-        if (alignment["before_right_entry_id"] != first or
-                alignment["after_right_entry_id"] != second):
+        if (
+            alignment["before_right_entry_id"] != first
+            or alignment["after_right_entry_id"] != second
+        ):
             raise ValueError("Alignment and board pair differ")
         interval = [before["entry_time_s"], after["entry_time_s"]]
-        intervening = [row["candidate_id"] for row in candidates
-                       if interval[0] < row["source_time_s"] < interval[1]
-                       and row["candidate_id"] != right_by_id[second]["candidate_id"]]
+        intervening = [
+            row["candidate_id"]
+            for row in candidates
+            if interval[0] < row["source_time_s"] < interval[1]
+            and row["candidate_id"] != right_by_id[second]["candidate_id"]
+        ]
         item = {
             "before_right_entry_id": first,
             "after_right_entry_id": second,
@@ -52,16 +58,19 @@ def build_right_board_sequence(union, boards, alignments, *, min_blue_iou=0.7):
             item["status"] = "abstain_intervening_candidate"
         elif before["observation_status"] != USABLE or after["observation_status"] != USABLE:
             item["status"] = "abstain_missing_usable_cap_set"
-        elif (alignment["status"] != "painted_ring_alignment_probe" or
-              not alignment["zero_translation_is_best"] or
-              alignment["best_translation_second_to_first_px"] != [0, 0] or
-              alignment["best_mask_iou"] < min_blue_iou):
+        elif (
+            alignment["status"] != "painted_ring_alignment_probe"
+            or not alignment["zero_translation_is_best"]
+            or alignment["best_translation_second_to_first_px"] != [0, 0]
+            or alignment["best_mask_iou"] < min_blue_iou
+        ):
             item["status"] = "abstain_house_image_alignment"
         else:
             item["status"] = "conditional_image_pixel_cap_association"
             item["sampled_house_blue_mask_iou"] = alignment["best_mask_iou"]
-            item.update(compare_cap_sets(before["stable_cap_proposals"],
-                                         after["stable_cap_proposals"]))
+            item.update(
+                compare_cap_sets(before["stable_cap_proposals"], after["stable_cap_proposals"])
+            )
         transitions.append(item)
     return {
         "status": "adjacent_partial_image_cap_changes_not_physical_game_state",

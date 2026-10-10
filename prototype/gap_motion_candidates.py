@@ -22,8 +22,13 @@ def interior_beijing_gaps(runs):
 
 
 def candidates_from_observations(
-    observations_by_colour, gap_id, gap_interval, *, tracker_max_gap_s=2.0,
-    tracker_max_step_px=25.0, cut_times_s=()
+    observations_by_colour,
+    gap_id,
+    gap_interval,
+    *,
+    tracker_max_gap_s=2.0,
+    tracker_max_step_px=25.0,
+    cut_times_s=(),
 ):
     """Keep every sustained visual track as an unconfirmed candidate."""
     candidates = []

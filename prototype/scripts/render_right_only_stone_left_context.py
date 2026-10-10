@@ -26,18 +26,22 @@ def main():
         parser.error("Output directory already exists")
     inventory = json.loads(args.inventory.read_text())
     review = json.loads(args.source_review.read_text())
-    if (inventory["source_sha256"] != review["source_sha256"]
-            or inventory["source_sha256"] != digest(args.video)):
+    if inventory["source_sha256"] != review["source_sha256"] or inventory[
+        "source_sha256"
+    ] != digest(args.video):
         parser.error("Source fingerprints differ")
-    review_ids = {r["raw_track_id"] for r in review["rows"]
-                  if r["source_prefix_class"] == "moving_stone"}
-    rows = [r for r in inventory["rows"]
-            if r["raw_track_id"] in review_ids and
-            r["temporal_status"] == "no_left_time_colour_candidate"]
+    review_ids = {
+        r["raw_track_id"] for r in review["rows"] if r["source_prefix_class"] == "moving_stone"
+    }
+    rows = [
+        r
+        for r in inventory["rows"]
+        if r["raw_track_id"] in review_ids
+        and r["temporal_status"] == "no_left_time_colour_candidate"
+    ]
     if len(rows) != len(review_ids):
         parser.error("Moving-stone review IDs do not map one-to-one")
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         parser.error("Cannot open source video")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -54,19 +58,30 @@ def main():
                 ok, frame = cap.read()
                 if not ok:
                     raise RuntimeError(f"Could not decode {source_t:.3f} s")
-                resized = cv2.resize(frame, (640, 360),
-                                     interpolation=cv2.INTER_AREA)
+                resized = cv2.resize(frame, (640, 360), interpolation=cv2.INTER_AREA)
                 left = resized[:, :320]
                 top, x = row_index * 390, col * 320
-                sheet[top + 20:top + 380, x:x + 320] = left
-                cv2.putText(sheet, f"{row['proposal_id']} {source_t:.1f}s",
-                            (x + 5, top + 16), cv2.FONT_HERSHEY_SIMPLEX,
-                            .43, (255, 255, 255), 1)
-                samples.append({"source_time_s": round(source_t, 3),
-                                "decoded_frame_index": frame_index})
-            manifest_rows.append({"proposal_id": row["proposal_id"],
-                                  "right_passage_time_s": t,
-                                  "sheet": "sheet-01.jpg", "samples": samples})
+                sheet[top + 20 : top + 380, x : x + 320] = left
+                cv2.putText(
+                    sheet,
+                    f"{row['proposal_id']} {source_t:.1f}s",
+                    (x + 5, top + 16),
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    0.43,
+                    (255, 255, 255),
+                    1,
+                )
+                samples.append(
+                    {"source_time_s": round(source_t, 3), "decoded_frame_index": frame_index}
+                )
+            manifest_rows.append(
+                {
+                    "proposal_id": row["proposal_id"],
+                    "right_passage_time_s": t,
+                    "sheet": "sheet-01.jpg",
+                    "samples": samples,
+                }
+            )
     finally:
         cap.release()
     args.output_dir.mkdir(parents=True)

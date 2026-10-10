@@ -6,12 +6,14 @@ from right_view_span_fallback import span_fallback
 
 
 def track(track_id="R1", y0=218, y1=150):
-    return {"track_id": track_id, "colour": "yellow", "points": [
-        {"time_s": 1.0, "pixel": [430, y0], "bbox": [422, y0 - 4, 16, 8],
-         "cap_area_px2": 60},
-        {"time_s": 4.0, "pixel": [424, y1], "bbox": [416, y1 - 4, 16, 8],
-         "cap_area_px2": 55},
-    ]}
+    return {
+        "track_id": track_id,
+        "colour": "yellow",
+        "points": [
+            {"time_s": 1.0, "pixel": [430, y0], "bbox": [422, y0 - 4, 16, 8], "cap_area_px2": 60},
+            {"time_s": 4.0, "pixel": [424, y1], "bbox": [416, y1 - 4, 16, 8], "cap_area_px2": 55},
+        ],
+    }
 
 
 def test_track_starting_beyond_entry_line_gets_observed_span_time():

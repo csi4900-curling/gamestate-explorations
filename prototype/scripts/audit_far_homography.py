@@ -29,7 +29,9 @@ def line_samples(image, columns, H):
     samples = []
     for x in columns:
         ys = [
-            y for xx in range(x - 5, x + 6) for y in range(280, 365)
+            y
+            for xx in range(x - 5, x + 6)
+            for y in range(280, 365)
             if 116 <= int(hsv[y, xx, 0]) <= 140
             and int(hsv[y, xx, 1]) > 55
             and int(hsv[y, xx, 2]) < 160
@@ -38,16 +40,21 @@ def line_samples(image, columns, H):
             raise RuntimeError(f"Cannot locate purple hog line near x={x}")
         y = float(np.median(ys))
         mapped_y = float(project(H, [[x, y]])[0, 1])
-        samples.append({
-            "pixel": [x, y], "projected_y_m": mapped_y,
-            "error_from_nominal_line_centre_m": mapped_y - HOG_CENTRE_M,
-        })
+        samples.append(
+            {
+                "pixel": [x, y],
+                "projected_y_m": mapped_y,
+                "error_from_nominal_line_centre_m": mapped_y - HOG_CENTRE_M,
+            }
+        )
     return {
         "sample_count": len(samples),
-        "median_absolute_error_cm": round(float(np.median(
-            [abs(s["error_from_nominal_line_centre_m"]) for s in samples])) * 100, 2),
-        "maximum_absolute_error_cm": round(max(
-            abs(s["error_from_nominal_line_centre_m"]) for s in samples) * 100, 2),
+        "median_absolute_error_cm": round(
+            float(np.median([abs(s["error_from_nominal_line_centre_m"]) for s in samples])) * 100, 2
+        ),
+        "maximum_absolute_error_cm": round(
+            max(abs(s["error_from_nominal_line_centre_m"]) for s in samples) * 100, 2
+        ),
         "samples": samples,
     }
 
@@ -55,8 +62,9 @@ def line_samples(image, columns, H):
 def main():
     cfg = json.loads((ROOT / "vision/annotations/calibration.json").read_text())["views"]["left"]
     cal = ViewCalibrator(cfg, ROOT / "vision/frames")
-    refined = np.asarray(json.loads((ROOT / "rectification/calibration.json").read_text())
-                         ["left"]["refined_H"])
+    refined = np.asarray(
+        json.loads((ROOT / "rectification/calibration.json").read_text())["left"]["refined_H"]
+    )
     video = cv2.VideoCapture(str(OUT / "clip.mp4"))
     fps = video.get(cv2.CAP_PROP_FPS)
     video.set(cv2.CAP_PROP_POS_FRAMES, round(CLIP_S * fps))
@@ -94,15 +102,22 @@ def main():
         cap_point = row["pixel"]
         uncorrected = row["localization"]["uncorrected_position_m"]
         ground = row["position_local_m"]
-        stone.append({
-            "source_time_s": row["time_s"],
-            "observed_cap_pixel": cap_point,
-            "cap_plane_projection_refined_m": uncorrected,
-            "conditional_height_corrected_ground_m": ground,
-            "height_correction_y_m": round(ground[1] - uncorrected[1], 3),
-            "initial_minus_refined_cap_y_m_same_frame": round(float(
-                project(H_initial, [cap_point])[0, 1] - project(H_refined, [cap_point])[0, 1]), 3),
-        })
+        stone.append(
+            {
+                "source_time_s": row["time_s"],
+                "observed_cap_pixel": cap_point,
+                "cap_plane_projection_refined_m": uncorrected,
+                "conditional_height_corrected_ground_m": ground,
+                "height_correction_y_m": round(ground[1] - uncorrected[1], 3),
+                "initial_minus_refined_cap_y_m_same_frame": round(
+                    float(
+                        project(H_initial, [cap_point])[0, 1]
+                        - project(H_refined, [cap_point])[0, 1]
+                    ),
+                    3,
+                ),
+            }
+        )
     video.release()
     if len(stone) != 3:
         raise RuntimeError("Missing T11 departure audit records")

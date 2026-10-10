@@ -30,16 +30,26 @@ def main():
     handoff = json.loads(args.handoff.read_text())
     boards = json.loads(args.left_boards.read_text())
     result = attach_left_candidate_boards(handoff, boards)
-    result.update({
-        "input_sha256": {"candidate_state_handoff": digest(args.handoff),
-                         "left_candidate_partial_caps": digest(args.left_boards)},
-        "model_code_sha256": digest(ROOT / "prototype/candidate_state_handoff_v2.py"),
-        "runner_sha256": digest(Path(__file__)),
-    })
+    result.update(
+        {
+            "input_sha256": {
+                "candidate_state_handoff": digest(args.handoff),
+                "left_candidate_partial_caps": digest(args.left_boards),
+            },
+            "model_code_sha256": digest(ROOT / "prototype/candidate_state_handoff_v2.py"),
+            "runner_sha256": digest(Path(__file__)),
+        }
+    )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"candidates": result["candidate_count"],
-                      "statuses": result["image_observation_status_counts"]}))
+    print(
+        json.dumps(
+            {
+                "candidates": result["candidate_count"],
+                "statuses": result["image_observation_status_counts"],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

@@ -32,9 +32,10 @@ def main():
     if visual["source_sha256"] != origin["source_sha256"]:
         raise ValueError("Source mismatch")
     by_id = {row["shot_id"]: row for row in origin["rows"]}
-    if not all(row["shot_id"] in by_id and
-               row["interval_s"] == by_id[row["shot_id"]]["interval_s"]
-               for row in visual["rows"]):
+    if not all(
+        row["shot_id"] in by_id and row["interval_s"] == by_id[row["shot_id"]]["interval_s"]
+        for row in visual["rows"]
+    ):
         raise ValueError("Origin and transit camera shots differ")
     events = pair_origin_receiver(visual["rows"], by_id)
     result = {
@@ -47,8 +48,7 @@ def main():
         "runner_sha256": digest(Path(__file__)),
         "end": 4,
         "camera_shot_count": len(visual["rows"]),
-        "origin_positive_count": sum(by_id[row["shot_id"]]["predicted"]
-                                     for row in visual["rows"]),
+        "origin_positive_count": sum(by_id[row["shot_id"]]["predicted"] for row in visual["rows"]),
         "event_candidate_count": len(events),
         "events": events,
         "limitations": [
@@ -59,10 +59,16 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(result, indent=2) + "\n")
-    print({"origins": result["origin_positive_count"],
-           "events": len(events),
-           "routes": {route: sum(e["evidence_route"] == route for e in events)
-                      for route in sorted({e["evidence_route"] for e in events})}})
+    print(
+        {
+            "origins": result["origin_positive_count"],
+            "events": len(events),
+            "routes": {
+                route: sum(e["evidence_route"] == route for e in events)
+                for route in sorted({e["evidence_route"] for e in events})
+            },
+        }
+    )
 
 
 if __name__ == "__main__":

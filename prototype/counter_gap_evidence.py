@@ -35,14 +35,16 @@ def classify_counter_gap_events(counter_events, coverage_gaps):
                 else "boundary_ambiguous_counter_evidence"
             )
             break
-        result.append({
-            "counter_id": event["id"],
-            "colour": event["colour"],
-            "counter_update_s": update,
-            "counter_evidence_interval_s": [first, last],
-            "remaining_before": event["remaining_before"],
-            "remaining_after": event["remaining_after"],
-            "classification": classification,
-            "gap_interval_s": selected_gap,
-        })
+        result.append(
+            {
+                "counter_id": event["id"],
+                "colour": event["colour"],
+                "counter_update_s": update,
+                "counter_evidence_interval_s": [first, last],
+                "remaining_before": event["remaining_before"],
+                "remaining_after": event["remaining_after"],
+                "classification": classification,
+                "gap_interval_s": selected_gap,
+            }
+        )
     return result

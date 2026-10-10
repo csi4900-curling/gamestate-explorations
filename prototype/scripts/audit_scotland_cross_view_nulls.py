@@ -17,16 +17,19 @@ def digest(path):
 
 
 def link_count(right, left):
-    return sum(row["fusion_status"] == "cross_view_time_colour_corrob"
-               for row in fuse(right, left, left))
+    return sum(
+        row["fusion_status"] == "cross_view_time_colour_corrob" for row in fuse(right, left, left)
+    )
 
 
 def build_audit(right_path, left_path, fusion_path):
     right = json.loads(right_path.read_text())
     left = json.loads(left_path.read_text())
     recorded = json.loads(fusion_path.read_text())
-    if (right["source_sha256"] != left["source_sha256"]
-            or right["source_sha256"] != recorded["source_sha256"]):
+    if (
+        right["source_sha256"] != left["source_sha256"]
+        or right["source_sha256"] != recorded["source_sha256"]
+    ):
         raise ValueError("Source fingerprints differ")
     if recorded["right_sha256"] != digest(right_path):
         raise ValueError("Recorded fusion does not use this right proposal file")
@@ -43,8 +46,7 @@ def build_audit(right_path, left_path, fusion_path):
     duration_s = end_s - start_s
     if duration_s <= 60 or not entries:
         raise ValueError("Expected a nonempty full-match source interval")
-    if any(not start_s <= entry["entry_crossing"]["time_s"] < end_s
-           for entry in entries):
+    if any(not start_s <= entry["entry_crossing"]["time_s"] < end_s for entry in entries):
         raise ValueError("Right entry outside source interval")
     # Offset the complete sequence together, keeping inter-entry spacing and
     # colour order. Omit shifts near zero and the wrap boundary.
@@ -101,11 +103,15 @@ def main():
     args = parser.parse_args()
     output = build_audit(args.right, args.left, args.fusion)
     args.output.write_text(json.dumps(output, indent=2) + "\n")
-    print(json.dumps({
-        "observed": output["observed_conditional_link_count"],
-        "shift_control_max": output["time_shift_control"]["maximum"],
-        "swapped_colour": output["swapped_colour_control_conditional_link_count"],
-    }))
+    print(
+        json.dumps(
+            {
+                "observed": output["observed_conditional_link_count"],
+                "shift_control_max": output["time_shift_control"]["maximum"],
+                "swapped_colour": output["swapped_colour_control_conditional_link_count"],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

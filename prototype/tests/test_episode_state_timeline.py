@@ -25,26 +25,31 @@ def test_partial_episode_is_one_review_proposal_without_losing_candidates():
     result = build_episode_state_timeline(*inputs())
     assert len(result["candidate_timeline"]) == 27
     assert len(result["event_timeline"]) == 15
-    assert [row["event_id"] for row in result["event_timeline"]][9:12] == [
-        "S19", "P01", "S23"]
-    grouped = [row["candidate_id"] for row in result["candidate_timeline"]
-               if row["partial_episode_id"] == "P01"]
+    assert [row["event_id"] for row in result["event_timeline"]][9:12] == ["S19", "P01", "S23"]
+    grouped = [
+        row["candidate_id"]
+        for row in result["candidate_timeline"]
+        if row["partial_episode_id"] == "P01"
+    ]
     assert grouped == ["S21", "S22"]
-    partial = next(row for row in result["event_timeline"]
-                   if row["event_id"] == "P01")
-    assert partial["comparison_from_previous_accepted_event"]["status"] == \
-        "abstain_intervening_passage_candidate"
-    assert partial["comparison_to_next_accepted_event"]["status"] == \
-        "view_local_partial_comparison"
-    assert all(not row["simulation_ready"] and row["release_time_s"] is None
-               for row in result["event_timeline"])
+    partial = next(row for row in result["event_timeline"] if row["event_id"] == "P01")
+    assert (
+        partial["comparison_from_previous_accepted_event"]["status"]
+        == "abstain_intervening_passage_candidate"
+    )
+    assert partial["comparison_to_next_accepted_event"]["status"] == "view_local_partial_comparison"
+    assert all(
+        not row["simulation_ready"] and row["release_time_s"] is None
+        for row in result["event_timeline"]
+    )
 
 
 def test_frozen_accepted_event_cannot_be_reclassified_into_partial_episode():
     base, union, boards, comparisons = inputs()
     union = deepcopy(union)
     next(row for row in union["candidate_rows"] if row["candidate_id"] == "S19")[
-        "partial_episode_id"] = "P01"
+        "partial_episode_id"
+    ] = "P01"
     with pytest.raises(ValueError, match="Frozen accepted event"):
         build_episode_state_timeline(base, union, boards, comparisons)
 

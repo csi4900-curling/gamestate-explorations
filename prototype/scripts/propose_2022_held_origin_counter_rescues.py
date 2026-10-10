@@ -14,8 +14,10 @@ ICE = BASE / "pwg2022-origin-release-ice-gate.json"
 TRANSFER = BASE / "pwg2022-origin-release-transfer.json"
 FUSED = {
     "PREL000101": ROOT / "validation/curlobserver-learned-probe/swiss-full-transfer/fused-cap.json",
-    "PREL000102": ROOT / "validation/curlobserver-learned-probe/china-full-transfer/fused-shot-candidates-replay-cap.json",
-    "PREL000103": ROOT / "validation/curlobserver-learned-probe/slovakia-full-transfer/fused-cap.json",
+    "PREL000102": ROOT
+    / "validation/curlobserver-learned-probe/china-full-transfer/fused-shot-candidates-replay-cap.json",
+    "PREL000103": ROOT
+    / "validation/curlobserver-learned-probe/slovakia-full-transfer/fused-cap.json",
 }
 OUTPUT = BASE / "pwg2022-held-origin-counter-rescue-development.json"
 
@@ -38,17 +40,20 @@ def build():
             raise ValueError(f"Source mismatch or reserved source selected: {code}")
         held = [row for row in ice["rows"] if row["official_game_code"] == code]
         result = propose_held_origin_rescues(fused, held)
-        games.append({
-            "official_game_code": code,
-            "source_sha256": source,
-            "fused_sha256": digest(path),
-            "existing_fused_event_count": fused["candidate_count"],
-            "unassociated_counter_count": len(fused["unassociated_counter_events"]),
-            "ice_gated_passage_count": sum(len(row["accepted_passages"]) for row in held),
-            "provisional_rescue_count": len(result["proposals"]),
-            "proposed_event_count_if_added": fused["candidate_count"] + len(result["proposals"]),
-            **result,
-        })
+        games.append(
+            {
+                "official_game_code": code,
+                "source_sha256": source,
+                "fused_sha256": digest(path),
+                "existing_fused_event_count": fused["candidate_count"],
+                "unassociated_counter_count": len(fused["unassociated_counter_events"]),
+                "ice_gated_passage_count": sum(len(row["accepted_passages"]) for row in held),
+                "provisional_rescue_count": len(result["proposals"]),
+                "proposed_event_count_if_added": fused["candidate_count"]
+                + len(result["proposals"]),
+                **result,
+            }
+        )
     return {
         "status": "postscore_development_proposals_not_independent_throw_f1",
         "ice_gate_sha256": digest(ICE),

@@ -25,9 +25,10 @@ def overlay_active_static_left(timeline, audit, *, min_right_mae=5.0):
         raise ValueError("Timeline partition does not cover requested interval")
     if any(left[1] != right[0] for left, right in zip(ordered, ordered[1:])):
         raise ValueError("Timeline partition has an overlap or gap")
-    active = sorted((row for row in audit["static_left_runs"]
-                     if row["median_right_mae"] >= min_right_mae),
-                    key=lambda row: row["start_s"])
+    active = sorted(
+        (row for row in audit["static_left_runs"] if row["median_right_mae"] >= min_right_mae),
+        key=lambda row: row["start_s"],
+    )
     if any(left["stop_s"] > right["start_s"] for left, right in zip(active, active[1:])):
         raise ValueError("Active static-left spans overlap")
     revised_runs = []
@@ -35,9 +36,9 @@ def overlay_active_static_left(timeline, audit, *, min_right_mae=5.0):
     for run in supported:
         start, stop = run["interval_s"]
         if run["layout"] != "split_2024":
-            revised_runs.append({"source_run_id": run["id"],
-                                 "layout": run["layout"],
-                                 "interval_s": [start, stop]})
+            revised_runs.append(
+                {"source_run_id": run["id"], "layout": run["layout"], "interval_s": [start, stop]}
+            )
             continue
         cursor = start
         for frozen in active:
@@ -45,34 +46,36 @@ def overlay_active_static_left(timeline, audit, *, min_right_mae=5.0):
             if b <= a:
                 continue
             if cursor < a:
-                revised_runs.append({"source_run_id": run["id"],
-                                     "layout": run["layout"],
-                                     "interval_s": [cursor, a]})
-            impacted = [event["id"] for event in timeline["observed_events"]
-                        if a <= event["crossing_time_s"] < b]
-            newly_unsupported.append({
-                "interval_s": [a, b],
-                "reason": "left_panel_static_while_right_panel_active",
-                "source_run_id": run["id"],
-                "median_left_mae": frozen["median_left_mae"],
-                "median_right_mae": frozen["median_right_mae"],
-                "existing_event_ids_inside": impacted,
-            })
+                revised_runs.append(
+                    {"source_run_id": run["id"], "layout": run["layout"], "interval_s": [cursor, a]}
+                )
+            impacted = [
+                event["id"]
+                for event in timeline["observed_events"]
+                if a <= event["crossing_time_s"] < b
+            ]
+            newly_unsupported.append(
+                {
+                    "interval_s": [a, b],
+                    "reason": "left_panel_static_while_right_panel_active",
+                    "source_run_id": run["id"],
+                    "median_left_mae": frozen["median_left_mae"],
+                    "median_right_mae": frozen["median_right_mae"],
+                    "existing_event_ids_inside": impacted,
+                }
+            )
             cursor = b
         if cursor < stop:
-            revised_runs.append({"source_run_id": run["id"],
-                                 "layout": run["layout"],
-                                 "interval_s": [cursor, stop]})
+            revised_runs.append(
+                {"source_run_id": run["id"], "layout": run["layout"], "interval_s": [cursor, stop]}
+            )
     old_supported = sum(b - a for a, b in (row["interval_s"] for row in supported))
-    added_unknown = sum(b - a for a, b in
-                        (row["interval_s"] for row in newly_unsupported))
-    new_supported = sum(b - a for a, b in
-                        (row["interval_s"] for row in revised_runs))
+    added_unknown = sum(b - a for a, b in (row["interval_s"] for row in newly_unsupported))
+    new_supported = sum(b - a for a, b in (row["interval_s"] for row in revised_runs))
     if abs(old_supported - added_unknown - new_supported) > 1e-6:
         raise ValueError("Coverage seconds were not conserved")
     for row in newly_unsupported:
-        if not any(_overlap(row["interval_s"], run["interval_s"]) > 0
-                   for run in supported):
+        if not any(_overlap(row["interval_s"], run["interval_s"]) > 0 for run in supported):
             raise ValueError("Added gap does not overlap supported run")
     return {
         "status": "development_source_activity_coverage_overlay_not_throw_truth",

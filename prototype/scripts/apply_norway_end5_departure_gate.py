@@ -29,14 +29,18 @@ def main():
     decisions = []
     for row in gate["rows"]:
         choice = decide_gate_colour(row)
-        decisions.append({"candidate_id": f"{row['shot_id']}-early-gate",
-                          "origin_shot_id": row["shot_id"],
-                          "release_window_s": row["interval_s"],
-                          "early_gate_anchor_s": choice["anchor_s"],
-                          "colour": choice["colour"],
-                          "evidence_route": choice["route"],
-                          "gate_counts": row["gate_counts"],
-                          "transits": row["transits"]})
+        decisions.append(
+            {
+                "candidate_id": f"{row['shot_id']}-early-gate",
+                "origin_shot_id": row["shot_id"],
+                "release_window_s": row["interval_s"],
+                "early_gate_anchor_s": choice["anchor_s"],
+                "colour": choice["colour"],
+                "evidence_route": choice["route"],
+                "gate_counts": row["gate_counts"],
+                "transits": row["transits"],
+            }
+        )
     result = {
         "status": "source_only_first_end5_early_gate_event_decisions",
         "source_sha256": gate["source_sha256"],
@@ -56,9 +60,15 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(result, indent=2) + "\n")
-    print({"origin_positives": len(decisions),
-           "colours": {colour: sum(row["colour"] == colour for row in decisions)
-                       for colour in ("red", "yellow", None)}})
+    print(
+        {
+            "origin_positives": len(decisions),
+            "colours": {
+                colour: sum(row["colour"] == colour for row in decisions)
+                for colour in ("red", "yellow", None)
+            },
+        }
+    )
 
 
 if __name__ == "__main__":

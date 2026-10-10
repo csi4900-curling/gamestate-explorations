@@ -38,20 +38,20 @@ def main():
     tail = json.loads(args.right_tail.read_text())
     corroboration = json.loads(args.corroboration.read_text())
     source_hash = digest(args.video)
-    if source_hash != tail["source_sha256"] or source_hash != corroboration[
-            "source_sha256"]:
+    if source_hash != tail["source_sha256"] or source_hash != corroboration["source_sha256"]:
         raise ValueError("Source hash mismatch")
-    selected_ids = {m["right_proposal_id"] for row in corroboration["rows"]
-                    for m in row["matching_right_proposals"]}
-    by_raw_id = {r["raw_track_id"]: r
-                 for r in tail["directional_review_proposals"]}
-    if (len(by_raw_id) != len(tail["directional_review_proposals"]) or
-            any(rid.count(":") != 1 or rid.split(":")[1] not in by_raw_id
-                for rid in selected_ids)):
+    selected_ids = {
+        m["right_proposal_id"]
+        for row in corroboration["rows"]
+        for m in row["matching_right_proposals"]
+    }
+    by_raw_id = {r["raw_track_id"]: r for r in tail["directional_review_proposals"]}
+    if len(by_raw_id) != len(tail["directional_review_proposals"]) or any(
+        rid.count(":") != 1 or rid.split(":")[1] not in by_raw_id for rid in selected_ids
+    ):
         raise ValueError("Right track IDs differ")
     model = load_model(args.model)
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         raise RuntimeError("Cannot open source video")
     rows = []
@@ -64,32 +64,47 @@ def main():
                 cap.set(cv2.CAP_PROP_POS_MSEC, t * 1000)
                 ok, frame = cap.read()
                 if not ok or frame.shape[:2] != (360, 640):
-                    samples.append({"source_time_s": point["time_s"],
-                                    "status": "decode_failed", "patch_score": None,
-                                    "patch_accepted": None})
+                    samples.append(
+                        {
+                            "source_time_s": point["time_s"],
+                            "status": "decode_failed",
+                            "patch_score": None,
+                            "patch_accepted": None,
+                        }
+                    )
                     continue
                 scored = score_candidates(frame, [{"bbox": point["bbox"]}], model)[0]
-                samples.append({"source_time_s": point["time_s"],
-                                "status": "scored",
-                                "patch_score": round(scored["patch_score"], 5),
-                                "patch_accepted": scored["patch_accepted"]})
+                samples.append(
+                    {
+                        "source_time_s": point["time_s"],
+                        "status": "scored",
+                        "patch_score": round(scored["patch_score"], 5),
+                        "patch_accepted": scored["patch_accepted"],
+                    }
+                )
             accepted = sum(sample["patch_accepted"] is True for sample in samples)
             scored_count = sum(sample["status"] == "scored" for sample in samples)
-            rows.append({"right_proposal_id": proposal_id,
-                         "colour_claim": proposal["colour_claim"],
-                         "direction": proposal["direction"],
-                         "sample_count": len(samples),
-                         "scored_count": scored_count,
-                         "positive_patch_count": accepted,
-                         "samples": samples})
+            rows.append(
+                {
+                    "right_proposal_id": proposal_id,
+                    "colour_claim": proposal["colour_claim"],
+                    "direction": proposal["direction"],
+                    "sample_count": len(samples),
+                    "scored_count": scored_count,
+                    "positive_patch_count": accepted,
+                    "samples": samples,
+                }
+            )
     finally:
         cap.release()
     output = {
         "status": "prediction_only_postreview_patch_diagnostic_not_event_truth",
         "source_sha256": source_hash,
-        "input_sha256": {"right_tail": digest(args.right_tail),
-                         "corroboration": digest(args.corroboration),
-                         "model": digest(args.model)},
+        "input_sha256": {
+            "right_tail": digest(args.right_tail),
+            "corroboration": digest(args.corroboration),
+            "model": digest(args.model),
+        },
         "feature_code_sha256": digest(ROOT / "prototype/stone_patch_detector.py"),
         "scorer_code_sha256": digest(ROOT / "prototype/cap_patch_verifier.py"),
         "runner_sha256": digest(Path(__file__)),
@@ -104,9 +119,14 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(output, indent=2) + "\n")
-    print(json.dumps({"right_tracks": len(rows),
-                      "positive_in_any_sample": sum(r["positive_patch_count"] > 0
-                                                    for r in rows)}))
+    print(
+        json.dumps(
+            {
+                "right_tracks": len(rows),
+                "positive_in_any_sample": sum(r["positive_patch_count"] > 0 for r in rows),
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

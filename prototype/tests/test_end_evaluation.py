@@ -36,16 +36,19 @@ class EndEvaluationTests(unittest.TestCase):
             source_interval_s=[0, 30],
             events=[dict(id="P01", colour="red", crossing_time_s=7, arrival_identity="stone1")],
             boards=[copy.deepcopy(self.board)],
-            identity_correspondence={"method": "reviewed_source_link",
-                                     "prediction_to_reference": {"stone1": "stone1"}},
+            identity_correspondence={
+                "method": "reviewed_source_link",
+                "prediction_to_reference": {"stone1": "stone1"},
+            },
         )
 
     def test_missing_outputs_are_failures(self):
         self.pred.update(events=[], boards=[])
         r = evaluate_end(self.ref, self.pred)
         self.assertEqual(r["events"]["misses"], 1)
-        self.assertEqual((r["events"]["precision"], r["events"]["recall"],
-                          r["events"]["f1"]), (0, 0, 0))
+        self.assertEqual(
+            (r["events"]["precision"], r["events"]["recall"], r["events"]["f1"]), (0, 0, 0)
+        )
         self.assertEqual(r["boards"]["complete_correct_fraction"], 0)
         self.assertEqual(r["cross_view_identity"]["coverage"], 0)
 
@@ -53,8 +56,7 @@ class EndEvaluationTests(unittest.TestCase):
         self.pred["events"].append(dict(self.pred["events"][0], id="P02"))
         result = evaluate_end(self.ref, self.pred)["events"]
         self.assertEqual(result["extras"], 1)
-        self.assertEqual((result["precision"], result["recall"], result["f1"]),
-                         (0.5, 1.0, 2 / 3))
+        self.assertEqual((result["precision"], result["recall"], result["f1"]), (0.5, 1.0, 2 / 3))
 
     def test_wrong_colour_not_hidden_by_matching(self):
         self.pred["events"][0]["colour"] = "yellow"
@@ -86,16 +88,15 @@ class EndEvaluationTests(unittest.TestCase):
     def test_reviewed_mapping_allows_different_track_and_reference_ids(self):
         self.pred["events"][0]["arrival_identity"] = "local-7"
         self.pred["boards"][0]["stones"][0]["identity"] = "local-7"
-        self.pred["identity_correspondence"]["prediction_to_reference"] = {
-            "local-7": "stone1"
-        }
+        self.pred["identity_correspondence"]["prediction_to_reference"] = {"local-7": "stone1"}
         result = evaluate_end(self.ref, self.pred)
         self.assertEqual(result["cross_view_identity"]["correct"], 1)
         self.assertTrue(result["boards"]["details"][0]["correct"])
 
     def test_invalid_identity_mapping_rejected(self):
         self.pred["identity_correspondence"]["prediction_to_reference"] = {
-            "local-1": "stone1", "local-2": "stone1"
+            "local-1": "stone1",
+            "local-2": "stone1",
         }
         with self.assertRaisesRegex(ValueError, "one-to-one"):
             evaluate_end(self.ref, self.pred)
@@ -118,10 +119,16 @@ class EndEvaluationTests(unittest.TestCase):
         )
         b = evaluate_end(self.ref, self.pred)["boards"]
         detail = b["details"][0]
-        self.assertEqual(b["visible_stones"], {
-            "reference_count": 2, "matched": 1, "missed": 1, "recall": 0.5,
-            "scope": "annotated_visible_stones_only; no precision or completeness claim for incomplete boards",
-        })
+        self.assertEqual(
+            b["visible_stones"],
+            {
+                "reference_count": 2,
+                "matched": 1,
+                "missed": 1,
+                "recall": 0.5,
+                "scope": "annotated_visible_stones_only; no precision or completeness claim for incomplete boards",
+            },
+        )
         self.assertEqual(detail["matched_position_rmse"], 0)
         self.assertNotIn("extras", detail)
         self.assertIsNone(detail["correct"])
@@ -182,9 +189,15 @@ class EndEvaluationTests(unittest.TestCase):
 
     def test_correct_outputs(self):
         r = evaluate_end(self.ref, self.pred)
-        self.assertEqual((r["events"]["precision"], r["events"]["recall"],
-                          r["events"]["f1"], r["events"]["colour_aware_f1"]),
-                         (1, 1, 1, 1))
+        self.assertEqual(
+            (
+                r["events"]["precision"],
+                r["events"]["recall"],
+                r["events"]["f1"],
+                r["events"]["colour_aware_f1"],
+            ),
+            (1, 1, 1, 1),
+        )
         self.assertEqual(r["boards"]["complete_correct_fraction"], 1)
         self.assertEqual(r["cross_view_identity"]["coverage"], 1)
 

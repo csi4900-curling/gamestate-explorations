@@ -26,9 +26,11 @@ def main():
     batch = json.loads(args.batch.read_text())
     boards = json.loads(args.boards.read_text())
     by_board = {row["candidate_id"]: row for row in boards["rows"]}
-    if (len(by_board) != len(boards["rows"]) or
-            set(by_board) != set(batch["changed_selection_ids"]) or
-            boards["high_resolution_source_sha256"] != batch["video_sha256"]):
+    if (
+        len(by_board) != len(boards["rows"])
+        or set(by_board) != set(batch["changed_selection_ids"])
+        or boards["high_resolution_source_sha256"] != batch["video_sha256"]
+    ):
         parser.error("Added boards and paired paths differ")
     rows = []
     for pid in batch["changed_selection_ids"]:
@@ -36,30 +38,42 @@ def main():
         paired = json.loads(paired_path.read_text())
         path = paired["cases"]["extended"]["selection"]["path"]
         board = by_board[pid]
-        if (paired["candidate_id"] != pid or paired["colour"] != board["colour"] or
-                board["receiving_view"] != "left" or not path or
-                board["board"]["status"] != "partial_stable_view_local_board"):
+        if (
+            paired["candidate_id"] != pid
+            or paired["colour"] != board["colour"]
+            or board["receiving_view"] != "left"
+            or not path
+            or board["board"]["status"] != "partial_stable_view_local_board"
+        ):
             raise ValueError(f"Invalid path/board pair {pid}")
         last = path[-1]
-        proposals = [stone for stone in board["board"]["stones"]
-                     if stone["colour"] == board["colour"]]
-        nearest = min(((dist(last["ground_position_m"],
-                             stone["view_local_ground_position_m"]), stone)
-                       for stone in proposals), key=lambda item: item[0],
-                      default=None)
-        rows.append({
-            "candidate_id": pid,
-            "paired_path_sha256": digest(paired_path),
-            "candidate_colour": board["colour"],
-            "path_last_observed_s": last["source_time_s"],
-            "path_last_conditional_position_m": last["ground_position_m"],
-            "stable_same_colour_board_proposal_count": len(proposals),
-            "nearest_same_colour_board_observation_id":
-                nearest[1]["local_observation_id"] if nearest else None,
-            "nearest_distance_m_conditional": round(nearest[0], 4) if nearest else None,
-            "physical_identity_verified": False,
-            "simulation_ready": False,
-        })
+        proposals = [
+            stone for stone in board["board"]["stones"] if stone["colour"] == board["colour"]
+        ]
+        nearest = min(
+            (
+                (dist(last["ground_position_m"], stone["view_local_ground_position_m"]), stone)
+                for stone in proposals
+            ),
+            key=lambda item: item[0],
+            default=None,
+        )
+        rows.append(
+            {
+                "candidate_id": pid,
+                "paired_path_sha256": digest(paired_path),
+                "candidate_colour": board["colour"],
+                "path_last_observed_s": last["source_time_s"],
+                "path_last_conditional_position_m": last["ground_position_m"],
+                "stable_same_colour_board_proposal_count": len(proposals),
+                "nearest_same_colour_board_observation_id": nearest[1]["local_observation_id"]
+                if nearest
+                else None,
+                "nearest_distance_m_conditional": round(nearest[0], 4) if nearest else None,
+                "physical_identity_verified": False,
+                "simulation_ready": False,
+            }
+        )
     result = {
         "status": "postscore_path_endpoint_to_partial_board_gap_not_identity",
         "batch_sha256": digest(args.batch),

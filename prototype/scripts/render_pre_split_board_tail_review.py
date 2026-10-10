@@ -28,8 +28,7 @@ def main():
     source_hash = digest(args.video)
     if source_hash != boards["high_resolution_source_sha256"]:
         parser.error("Board and video sources differ")
-    capture = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not capture.isOpened():
         parser.error("Cannot open source video")
     fps = capture.get(cv2.CAP_PROP_FPS)
@@ -51,28 +50,39 @@ def main():
             panel = frame[:, :960] if view == "left" else frame[:, 960:]
             panel = cv2.resize(panel, (960, 540), interpolation=cv2.INTER_AREA)
             x0, y0 = (index % 2) * 960, (index // 2) * 580
-            canvas.paste(Image.fromarray(cv2.cvtColor(panel, cv2.COLOR_BGR2RGB)),
-                         (x0, y0 + 34))
-            draw.text((x0 + 8, y0 + 9),
-                      f"{row['candidate_id']} {view} {time_s:.1f}s frame {frame_index} / stable proposals {len(row['board']['stones'])}",
-                      fill="black")
-            frames.append({"candidate_id": row["candidate_id"],
-                           "receiving_view": view,
-                           "source_time_s": time_s,
-                           "decoded_frame_index": frame_index,
-                           "stable_proposal_count": len(row["board"]["stones"])})
+            canvas.paste(Image.fromarray(cv2.cvtColor(panel, cv2.COLOR_BGR2RGB)), (x0, y0 + 34))
+            draw.text(
+                (x0 + 8, y0 + 9),
+                f"{row['candidate_id']} {view} {time_s:.1f}s frame {frame_index} / stable proposals {len(row['board']['stones'])}",
+                fill="black",
+            )
+            frames.append(
+                {
+                    "candidate_id": row["candidate_id"],
+                    "receiving_view": view,
+                    "source_time_s": time_s,
+                    "decoded_frame_index": frame_index,
+                    "stable_proposal_count": len(row["board"]["stones"]),
+                }
+            )
     finally:
         capture.release()
     args.output.parent.mkdir(parents=True, exist_ok=True)
     canvas.save(args.output, quality=92)
-    args.manifest.write_text(json.dumps({
-        "status": "source_frame_review_of_partial_boards_not_exhaustive_stone_labels",
-        "video_sha256": source_hash,
-        "boards_sha256": digest(args.boards),
-        "runner_sha256": digest(Path(__file__)),
-        "image_sha256": digest(args.output),
-        "frames": frames,
-    }, indent=2) + "\n")
+    args.manifest.write_text(
+        json.dumps(
+            {
+                "status": "source_frame_review_of_partial_boards_not_exhaustive_stone_labels",
+                "video_sha256": source_hash,
+                "boards_sha256": digest(args.boards),
+                "runner_sha256": digest(Path(__file__)),
+                "image_sha256": digest(args.output),
+                "frames": frames,
+            },
+            indent=2,
+        )
+        + "\n"
+    )
     print(args.output)
 
 

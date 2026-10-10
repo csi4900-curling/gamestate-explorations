@@ -38,39 +38,52 @@ def build():
             cue = row["ice_supported_passages"][0]
             if not start <= cue["held_interval_s"][0] < cue["release_cue_s"] < end:
                 raise ValueError("Release cue outside camera shot")
-            overlapping = [event["event_id"] for event in current["events"]
-                           if event["delivery_window_s"][0] < end
-                           and event["delivery_window_s"][1] > start]
+            overlapping = [
+                event["event_id"]
+                for event in current["events"]
+                if event["delivery_window_s"][0] < end and event["delivery_window_s"][1] > start
+            ]
             if overlapping:
                 raise ValueError(f"Rescue overlaps existing event windows: {overlapping}")
-            proposals.append({
-                "proposal_id": f"SOURCE-RELEASE-{code}-{row['shot_id']}",
-                "recording_code": code, "source_sha256": game["source_sha256"],
-                "origin_shot_id": row["shot_id"], "origin_shot_interval_s": row["interval_s"],
-                "origin_probability": row["origin_probability"],
-                "candidate_class": "source_only_held_release_provisional",
-                "release_cue_s": cue["release_cue_s"], "observed_colour": cue["colour"],
-                "held_interval_s": cue["held_interval_s"],
-                "moving_interval_s": cue["moving_interval_s"],
-                "max_travel_px": cue["max_travel_px"],
-                "below_ice_fraction": cue["below_ice_fraction"],
-                "counter_id": None, "official_shot_id": None,
-                "receiving_view_identity_verified": False,
-                "physical_throw_identity_verified": False,
-                "settled_board_transition_verified": False,
-                "simulation_ready": False,
-            })
-    return {"status": "development_source_only_rescue_proposals_not_validated_physical_throws",
-            "input_sha256": {"outside_union_scan": digest(SCAN),
-                             "frozen_selection": digest(PLAN),
-                             "provisional_union": digest(UNION),
-                             "runner": digest(Path(__file__))},
-            "proposal_count": len(proposals), "proposals": proposals,
-            "limitations": [
-                "The proposals have source-visible held-to-motion passages but no independently labeled physical throw identity.",
-                "Neither proposal is merged into the frozen provisional event union or assigned an official shot number.",
-                "No cross-view identity, settled board, or simulation-ready trajectory is established.",
-            ]}
+            proposals.append(
+                {
+                    "proposal_id": f"SOURCE-RELEASE-{code}-{row['shot_id']}",
+                    "recording_code": code,
+                    "source_sha256": game["source_sha256"],
+                    "origin_shot_id": row["shot_id"],
+                    "origin_shot_interval_s": row["interval_s"],
+                    "origin_probability": row["origin_probability"],
+                    "candidate_class": "source_only_held_release_provisional",
+                    "release_cue_s": cue["release_cue_s"],
+                    "observed_colour": cue["colour"],
+                    "held_interval_s": cue["held_interval_s"],
+                    "moving_interval_s": cue["moving_interval_s"],
+                    "max_travel_px": cue["max_travel_px"],
+                    "below_ice_fraction": cue["below_ice_fraction"],
+                    "counter_id": None,
+                    "official_shot_id": None,
+                    "receiving_view_identity_verified": False,
+                    "physical_throw_identity_verified": False,
+                    "settled_board_transition_verified": False,
+                    "simulation_ready": False,
+                }
+            )
+    return {
+        "status": "development_source_only_rescue_proposals_not_validated_physical_throws",
+        "input_sha256": {
+            "outside_union_scan": digest(SCAN),
+            "frozen_selection": digest(PLAN),
+            "provisional_union": digest(UNION),
+            "runner": digest(Path(__file__)),
+        },
+        "proposal_count": len(proposals),
+        "proposals": proposals,
+        "limitations": [
+            "The proposals have source-visible held-to-motion passages but no independently labeled physical throw identity.",
+            "Neither proposal is merged into the frozen provisional event union or assigned an official shot number.",
+            "No cross-view identity, settled board, or simulation-ready trajectory is established.",
+        ],
+    }
 
 
 def main():

@@ -7,9 +7,14 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 BASE = ROOT / "validation/throw-event-benchmark/canada-latvia-2024"
-SOURCE_REVIEW = (ROOT / "validation/throw-event-benchmark/layout-router/full-2024-coverage/"
-                 "latvia24-full-v1/right-entry-review/manifest.json")
-LEDGER = BASE / "full-match-area-censored-candidate-handoff-all-area-right-only-accounted-development.json"
+SOURCE_REVIEW = (
+    ROOT / "validation/throw-event-benchmark/layout-router/full-2024-coverage/"
+    "latvia24-full-v1/right-entry-review/manifest.json"
+)
+LEDGER = (
+    BASE
+    / "full-match-area-censored-candidate-handoff-all-area-right-only-accounted-development.json"
+)
 AREA = BASE / "full-right-area-first-transfer.json"
 GAP2 = BASE / "right-area-gap2-r008-5080-5140-development.json"
 GLOBAL = BASE / "right-global-r008-5080-5140-development.json"
@@ -26,50 +31,70 @@ def digest(path):
 
 
 def local_path(scan):
-    proposals = [row for row in scan["directional_review_proposals"]
-                 if row["colour_claim"] == "red" and row["direction"] == "negative_y"
-                 and 5115 <= row["passage"]["time_s"] <= 5122]
+    proposals = [
+        row
+        for row in scan["directional_review_proposals"]
+        if row["colour_claim"] == "red"
+        and row["direction"] == "negative_y"
+        and 5115 <= row["passage"]["time_s"] <= 5122
+    ]
     if len(proposals) != 1:
         raise ValueError("Local R008 recovery is not unique")
     proposal = proposals[0]
-    track = next(row for row in scan["raw_tracks"] if row["track_id"] ==
-                 proposal["raw_track_id"])
+    track = next(row for row in scan["raw_tracks"] if row["track_id"] == proposal["raw_track_id"])
     return proposal, track
 
 
 def main():
     if OUT.exists():
         raise ValueError("R008 audit already exists")
-    ledger, area, gap2, global_scan, review = [json.loads(path.read_text())
-        for path in (LEDGER, AREA, GAP2, GLOBAL, SOURCE_REVIEW)]
+    ledger, area, gap2, global_scan, review = [
+        json.loads(path.read_text()) for path in (LEDGER, AREA, GAP2, GLOBAL, SOURCE_REVIEW)
+    ]
     source_hash = digest(VIDEO)
-    if not (ledger["source_sha256"] == area["source_sha256"] == gap2[
-            "source_sha256"] == global_scan["source_sha256"] == review[
-            "source_sha256"] == source_hash):
+    if not (
+        ledger["source_sha256"]
+        == area["source_sha256"]
+        == gap2["source_sha256"]
+        == global_scan["source_sha256"]
+        == review["source_sha256"]
+        == source_hash
+    ):
         raise ValueError("R008 source video fingerprints differ")
-    if (not gap2["source_interval_s"] == global_scan["source_interval_s"] ==
-            [5080, 5140] or gap2["maximum_inter_sample_gap_s"] != 2 or
-            global_scan["maximum_inter_sample_gap_s"] != 2 or
-            not area["sample_period_s"] == gap2["sample_period_s"] == 1):
+    if (
+        not gap2["source_interval_s"] == global_scan["source_interval_s"] == [5080, 5140]
+        or gap2["maximum_inter_sample_gap_s"] != 2
+        or global_scan["maximum_inter_sample_gap_s"] != 2
+        or not area["sample_period_s"] == gap2["sample_period_s"] == 1
+    ):
         raise ValueError("R008 local comparison settings differ")
-    old = [row for row in ledger["ordered_candidates"]
-           if row["candidate_id"] == "right:R008"]
+    old = [row for row in ledger["ordered_candidates"] if row["candidate_id"] == "right:R008"]
     if len(old) != 1 or old[0]["source_pixel_review"] is not None:
         raise ValueError("Older R008 candidate differs")
     prefix = old[0]["observed_motion"]["observed_prefix_points"]
-    split = [point for track in area["raw_tracks"] if track["track_id"]
-             in ("A352", "A353") for point in track["points"]
-             if 5115 <= point["time_s"] <= 5121]
+    split = [
+        point
+        for track in area["raw_tracks"]
+        if track["track_id"] in ("A352", "A353")
+        for point in track["points"]
+        if 5115 <= point["time_s"] <= 5121
+    ]
     split.sort(key=lambda point: point["time_s"])
     if len(prefix) != 6 or prefix != split:
         raise ValueError("Frozen area tracks do not reproduce older R008 prefix")
     recovered = {}
     for kind, scan in (("area_gap2", gap2), ("global_gap2", global_scan)):
         proposal, track = local_path(scan)
-        observed = [point for point in track["points"] if point["time_s"]
-                    in {row["time_s"] for row in prefix}]
-        if (observed != prefix or proposal["passage"]["time_s"] < 5115 or
-                proposal["passage"]["time_s"] > 5122):
+        observed = [
+            point
+            for point in track["points"]
+            if point["time_s"] in {row["time_s"] for row in prefix}
+        ]
+        if (
+            observed != prefix
+            or proposal["passage"]["time_s"] < 5115
+            or proposal["passage"]["time_s"] > 5122
+        ):
             raise ValueError(f"{kind} does not reconnect exact R008 prefix")
         recovered[kind] = {
             "raw_track_id_local_interval": track["track_id"],
@@ -80,10 +105,8 @@ def main():
             "full_track_observation_count": len(track["points"]),
         }
     source_sheet = SOURCE_REVIEW.parent / "sheet-01.jpg"
-    sheet = next(row for row in review["sheets"] if row["file"] ==
-                 source_sheet.name)
-    if sheet["sha256"] != digest(source_sheet) or "R008" not in sheet[
-            "track_ids"]:
+    sheet = next(row for row in review["sheets"] if row["file"] == source_sheet.name)
+    if sheet["sha256"] != digest(source_sheet) or "R008" not in sheet["track_ids"]:
         raise ValueError("Archived R008 source review differs")
     output = {
         "status": "postinspection_r008_exact_observation_recovery_not_event_recall",
@@ -114,8 +137,11 @@ def main():
         ],
     }
     OUT.write_text(json.dumps(output, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({"candidate_id": output["candidate_id"],
-                      "exactly_recovered_by": list(recovered)}))
+    print(
+        json.dumps(
+            {"candidate_id": output["candidate_id"], "exactly_recovered_by": list(recovered)}
+        )
+    )
 
 
 if __name__ == "__main__":

@@ -24,7 +24,8 @@ def main():
     a.output_dir.mkdir(parents=True)
     for index, shard in enumerate(shards, 1):
         (a.output_dir / f"candidates-{index:02d}.json").write_text(
-            json.dumps(shard, indent=2) + "\n")
+            json.dumps(shard, indent=2) + "\n"
+        )
     print(len(shards), [len(shard["events"]) for shard in shards])
 
 

@@ -29,8 +29,7 @@ def main():
     rescue = json.loads(RESCUE.read_text())
     if digest(SOURCE) != rescue["source_video_sha256"]:
         raise ValueError("Selected source changed")
-    cap = cv2.VideoCapture(str(SOURCE), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(SOURCE), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         raise RuntimeError("Cannot open source video")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -42,10 +41,18 @@ def main():
             ok, frame = cap.read()
             if not ok:
                 raise RuntimeError(f"Frame decode failed at {t}")
-            canvas[:height, i * width:(i + 1) * width] = cv2.resize(
-                frame, (width, height), interpolation=cv2.INTER_AREA)
-            cv2.putText(canvas, f"source {t:.1f} s", (i * width + 10, height + 19),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (30, 30, 30), 1)
+            canvas[:height, i * width : (i + 1) * width] = cv2.resize(
+                frame, (width, height), interpolation=cv2.INTER_AREA
+            )
+            cv2.putText(
+                canvas,
+                f"source {t:.1f} s",
+                (i * width + 10, height + 19),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                0.5,
+                (30, 30, 30),
+                1,
+            )
     finally:
         cap.release()
     if not cv2.imwrite(str(OUTPUT), canvas):

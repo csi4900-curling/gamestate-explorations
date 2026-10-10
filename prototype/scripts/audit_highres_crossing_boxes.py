@@ -42,8 +42,9 @@ def local_proposals(frame, colour, point, scale):
         mask = ((hue < 12) | (hue > 170)) & (saturation > 60) & (value > 40)
     else:
         mask = (hue > 16) & (hue < 43) & (saturation > 60) & (value > 65)
-    contours, _ = cv2.findContours(mask.astype(np.uint8) * 255,
-                                   cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    contours, _ = cv2.findContours(
+        mask.astype(np.uint8) * 255, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
+    )
     proposals, nearby = [], []
     for contour in contours:
         x, y, width, height = cv2.boundingRect(contour)
@@ -52,25 +53,28 @@ def local_proposals(frame, colour, point, scale):
         if distance > 15 * scale:
             continue
         area = cv2.contourArea(contour)
-        nearby.append({"area_px2": round(area, 2),
-                       "center_distance_px": round(distance, 2),
-                       "bbox": [x, y, width, height]})
+        nearby.append(
+            {
+                "area_px2": round(area, 2),
+                "center_distance_px": round(distance, 2),
+                "bbox": [x, y, width, height],
+            }
+        )
         # The physical area floor is the original 15 px² at 360p, scaled
         # with image area. The smaller-box experiment remains separate.
         if area < 15 * scale * scale or width > 160 * scale or height > 100 * scale:
             continue
         if width > 35 * scale:
-            sizes = sorted({min(160 * scale, round(width * factor))
-                            for factor in (1.2, 1.6)})
+            sizes = sorted({min(160 * scale, round(width * factor)) for factor in (1.2, 1.6)})
             offsets = (0.22, 0.38)
         else:
             sizes = [side * scale for side in (14, 18, 24, 30, 38, 48)]
             offsets = (0, 0.2)
         for side in sizes:
             for offset in offsets:
-                proposals.append([center_x - side / 2,
-                                  center_y + side * offset - side / 2,
-                                  side, side])
+                proposals.append(
+                    [center_x - side / 2, center_y + side * offset - side / 2, side, side]
+                )
     return proposals, sorted(nearby, key=lambda item: item["center_distance_px"])
 
 
@@ -81,9 +85,11 @@ def score(frame, boxes, model):
     scores = ((features - model["mean"]) / model["scale"]) @ model["weights"].ravel()
     scores += model["intercept"].item()
     index = int(np.argmax(scores))
-    return {"best_score": float(scores[index]),
-            "passes_frozen_threshold": bool(scores[index] >= float(model["threshold"])),
-            "best_box": boxes[index]}
+    return {
+        "best_score": float(scores[index]),
+        "passes_frozen_threshold": bool(scores[index] >= float(model["threshold"])),
+        "best_box": boxes[index],
+    }
 
 
 def main():
@@ -119,22 +125,40 @@ def main():
             high_frame = frame_at(high, t + offset - args.high_start_s)
             if low_frame.shape[:2] != (360, 640) or high_frame.shape[:2] != (1080, 1920):
                 raise ValueError("Expected aligned 360p and 1080p sources")
-            alignment_mae = float(np.abs(low_frame.astype(np.float32) -
-                             cv2.resize(high_frame, (640, 360)).astype(np.float32)).mean())
+            alignment_mae = float(
+                np.abs(
+                    low_frame.astype(np.float32)
+                    - cv2.resize(high_frame, (640, 360)).astype(np.float32)
+                ).mean()
+            )
             point = case["crossing_point_px"]
             views = {}
             for name, frame, scale in (("360p", low_frame, 1), ("1080p", high_frame, 3)):
                 proposals, contours = local_proposals(
-                    frame, case["colour_claim"], [coordinate * scale for coordinate in point], scale)
-                views[name] = {"nearby_contours": contours,
-                               "local_proposal_count": len(proposals),
-                               "models": {key: score(frame, proposals, model)
-                                          for key, model in models.items()}}
-            samples.append({"time_s": round(t + offset, 3),
-                            "frame_alignment_mae": alignment_mae,
-                            "views": views})
-        rows.append({"event_id": case["event_id"], "colour_claim": case["colour_claim"],
-                     "crossing_time_s": t, "samples": samples})
+                    frame, case["colour_claim"], [coordinate * scale for coordinate in point], scale
+                )
+                views[name] = {
+                    "nearby_contours": contours,
+                    "local_proposal_count": len(proposals),
+                    "models": {
+                        key: score(frame, proposals, model) for key, model in models.items()
+                    },
+                }
+            samples.append(
+                {
+                    "time_s": round(t + offset, 3),
+                    "frame_alignment_mae": alignment_mae,
+                    "views": views,
+                }
+            )
+        rows.append(
+            {
+                "event_id": case["event_id"],
+                "colour_claim": case["colour_claim"],
+                "crossing_time_s": t,
+                "samples": samples,
+            }
+        )
     low.release()
     high.release()
     result = {

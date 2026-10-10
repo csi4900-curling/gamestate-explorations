@@ -30,8 +30,7 @@ def main():
     if track["source_video_sha256"] != digest(VIDEO):
         raise ValueError("Latvia source or track changed")
     by_id = {r["candidate_id"]: r for r in track["rows"]}
-    video = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                             [cv2.CAP_PROP_N_THREADS, 1])
+    video = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not video.isOpened():
         raise ValueError("Latvia source unreadable")
     OUT.mkdir(parents=True)
@@ -40,8 +39,11 @@ def main():
         for cid in IDS:
             row = by_id[cid]
             steps = row["steps"]
-            centers = [s["decision"]["selected"]["centroid_px_1080"]
-                       for s in steps if s["decision"]["selected"]]
+            centers = [
+                s["decision"]["selected"]["centroid_px_1080"]
+                for s in steps
+                if s["decision"]["selected"]
+            ]
             if len(centers) != len(steps):
                 raise ValueError(f"Selected packet contains abstention: {cid}")
             x0 = max(0, int(min(p[0] for p in centers) - 95))
@@ -49,42 +51,45 @@ def main():
             y0 = max(0, int(min(p[1] for p in centers) - 95))
             y1 = min(1080, int(max(p[1] for p in centers) + 95))
             pane_w, pane_h = 680, 500
-            sheet = Image.new("RGB", (2 * pane_w,
-                                      ((len(steps) + 1) // 2) * pane_h),
-                              "#eef1f5")
+            sheet = Image.new("RGB", (2 * pane_w, ((len(steps) + 1) // 2) * pane_h), "#eef1f5")
             for index, step in enumerate(steps):
-                video.set(cv2.CAP_PROP_POS_FRAMES,
-                          step["decoded_interval_frame_index"])
+                video.set(cv2.CAP_PROP_POS_FRAMES, step["decoded_interval_frame_index"])
                 ok, frame = video.read()
                 if not ok or frame.shape[:2] != (1080, 1920):
                     raise ValueError(f"Latvia source frame unreadable: {cid}")
-                crop = Image.fromarray(cv2.cvtColor(frame[y0:y1, x0:x1],
-                                                    cv2.COLOR_BGR2RGB))
-                scale = min((pane_w - 20) / crop.width,
-                            (pane_h - 45) / crop.height)
-                crop = crop.resize((round(crop.width * scale),
-                                    round(crop.height * scale)),
-                                   Image.Resampling.NEAREST)
+                crop = Image.fromarray(cv2.cvtColor(frame[y0:y1, x0:x1], cv2.COLOR_BGR2RGB))
+                scale = min((pane_w - 20) / crop.width, (pane_h - 45) / crop.height)
+                crop = crop.resize(
+                    (round(crop.width * scale), round(crop.height * scale)),
+                    Image.Resampling.NEAREST,
+                )
                 x, y = centers[index]
                 cx, cy = (x - x0) * scale, (y - y0) * scale
                 ImageDraw.Draw(crop).ellipse(
-                    (cx - 12, cy - 12, cx + 12, cy + 12),
-                    outline="#00e8ff", width=4)
+                    (cx - 12, cy - 12, cx + 12, cy + 12), outline="#00e8ff", width=4
+                )
                 pane = Image.new("RGB", (pane_w, pane_h), "white")
                 pane.paste(crop, ((pane_w - crop.width) // 2, 38))
                 ImageDraw.Draw(pane).text(
-                    (10, 11), f"Latvia {cid} source {step['source_time_s']:.1f} s"
-                    " | selected cap", fill="black")
-                sheet.paste(pane, ((index % 2) * pane_w,
-                                   (index // 2) * pane_h))
+                    (10, 11),
+                    f"Latvia {cid} source {step['source_time_s']:.1f} s | selected cap",
+                    fill="black",
+                )
+                sheet.paste(pane, ((index % 2) * pane_w, (index // 2) * pane_h))
             filename = f"{cid.lower()}-cap-continuation.jpg"
             sheet.save(OUT / filename, quality=95)
-            sheets.append({"candidate_id": cid, "sheet": filename,
-                           "sheet_sha256": digest(OUT / filename),
-                           "frame_count": len(steps),
-                           "roi_xyxy_px_1080": [x0, y0, x1, y1],
-                           "decoded_interval_frame_indices": [s[
-                               "decoded_interval_frame_index"] for s in steps]})
+            sheets.append(
+                {
+                    "candidate_id": cid,
+                    "sheet": filename,
+                    "sheet_sha256": digest(OUT / filename),
+                    "frame_count": len(steps),
+                    "roi_xyxy_px_1080": [x0, y0, x1, y1],
+                    "decoded_interval_frame_indices": [
+                        s["decoded_interval_frame_index"] for s in steps
+                    ],
+                }
+            )
     finally:
         video.release()
     manifest = {

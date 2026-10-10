@@ -37,8 +37,12 @@ def combine_directional_event(row, left_override=None):
         "right_selection_status": right["status"],
         "left_selection_status": left["status"],
         "first_identity_ambiguity_s": (
-            right.get("first_ambiguity_time_s") if view == "right" else
-            left.get("first_ambiguity_time_s") if view == "left" else None),
+            right.get("first_ambiguity_time_s")
+            if view == "right"
+            else left.get("first_ambiguity_time_s")
+            if view == "left"
+            else None
+        ),
         "release_time_observed": False,
         "settled_board_observed": False,
         "physical_identity_verified": False,

@@ -9,7 +9,6 @@ import json
 from pathlib import Path
 import re
 import subprocess
-import sys
 
 import cv2
 
@@ -19,7 +18,9 @@ BASE = ROOT / "validation/curlobserver-learned-probe/canada-norway-full-transfer
 VIDEO = ROOT / "validation/throw-event-benchmark/paralympics-2022-canada-norway/source.mp4"
 EVENTS = BASE / "fused-linked.json"
 SHOTS = BASE / "shot-review/manifest.json"
-OUTPUT = ROOT / "validation/official-shot-sequence/norway-counterless-candidate-end-display-first.json"
+OUTPUT = (
+    ROOT / "validation/official-shot-sequence/norway-counterless-candidate-end-display-first.json"
+)
 PATTERN = re.compile(r"\b([1-8])\s*(?:ST|ND|RD|TH)\s*END\b")
 
 
@@ -37,8 +38,12 @@ def read_label(frame):
     ok, encoded = cv2.imencode(".png", crop)
     if not ok:
         raise RuntimeError("Could not encode end-label crop")
-    process = subprocess.run(["tesseract", "stdin", "stdout", "--psm", "7"],
-                             input=encoded.tobytes(), capture_output=True, check=True)
+    process = subprocess.run(
+        ["tesseract", "stdin", "stdout", "--psm", "7"],
+        input=encoded.tobytes(),
+        capture_output=True,
+        check=True,
+    )
     read = process.stdout.decode(errors="replace").strip().upper()
     match = PATTERN.search(read)
     return {"text": read, "end": int(match.group(1)) if match else None}
@@ -65,18 +70,22 @@ def main():
             for time_s in shot["frame_times_s"]:
                 cap.set(cv2.CAP_PROP_POS_MSEC, 1000 * time_s)
                 ok, frame = cap.read()
-                observations.append({"time_s": time_s,
-                                     **read_label(frame if ok else None)})
+                observations.append({"time_s": time_s, **read_label(frame if ok else None)})
             hits = [row["end"] for row in observations if row["end"] is not None]
             stable_end = hits[0] if len(hits) >= 2 and len(set(hits)) == 1 else None
-            rows.append({"shot_id": event["shot_id"],
-                         "delivery_window_s": event["delivery_window_s"],
-                         "candidate_colour": event["colour"],
-                         "ocr_observations": observations,
-                         "displayed_end": stable_end,
-                         "display_status": "repeated_label" if stable_end else
-                                           "unreadable_or_conflicting",
-                         "physical_end": None})
+            rows.append(
+                {
+                    "shot_id": event["shot_id"],
+                    "delivery_window_s": event["delivery_window_s"],
+                    "candidate_colour": event["colour"],
+                    "ocr_observations": observations,
+                    "displayed_end": stable_end,
+                    "display_status": "repeated_label"
+                    if stable_end
+                    else "unreadable_or_conflicting",
+                    "physical_end": None,
+                }
+            )
     finally:
         cap.release()
     result = {

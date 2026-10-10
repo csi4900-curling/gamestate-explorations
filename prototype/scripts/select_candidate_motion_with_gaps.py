@@ -24,33 +24,49 @@ def main():
     rows = []
     for row in source["rows"]:
         view = row["receiving_view"]
-        kwargs = ({"view": "left", "entry_y_threshold_m": -4.5,
-                   "forward_direction": 1, "min_samples": 4,
-                   "max_forward_speed_change_m_s": 2.0}
-                  if view == "left" else {"view": "right"})
+        kwargs = (
+            {
+                "view": "left",
+                "entry_y_threshold_m": -4.5,
+                "forward_direction": 1,
+                "min_samples": 4,
+                "max_forward_speed_change_m_s": 2.0,
+            }
+            if view == "left"
+            else {"view": "right"}
+        )
         selection = select_far_entry_motion_path(
-            row["samples"], row["colour"],
-            max_gap_s=args.max_gap_s, allow_missing_samples=True,
-            skip_status_required="abstained_no_stable_anchor", **kwargs)
-        rows.append({"candidate_id": row["candidate_id"],
-                     "colour": row["colour"],
-                     "receiving_view": view,
-                     "hold_selection_status": row["selection"]["status"],
-                     "selection": selection})
-    result = {"status": "postscore_bounded_gap_motion_development_not_continuous_identity",
-              "hold_sha256": file_sha256(args.hold),
-              "selector_sha256": file_sha256(ROOT / "prototype/stone_proposal_path.py"),
-              "runner_sha256": file_sha256(__file__),
-              "max_gap_s": args.max_gap_s,
-              "skip_status_required": "abstained_no_stable_anchor",
-              "selection_status_counts": dict(Counter(
-                  row["selection"]["status"] for row in rows)),
-              "rows": rows,
-              "limitations": [
-                  "Missing samples are not interpolated; endpoint compatibility across at most 4.1 s is only provisional identity evidence.",
-                  "The gap policy was introduced after observing two Estonia misses and cannot change the frozen transfer result.",
-                  "Borrowed camera transforms and motion paths lack independent metric and physical-identity validation.",
-              ]}
+            row["samples"],
+            row["colour"],
+            max_gap_s=args.max_gap_s,
+            allow_missing_samples=True,
+            skip_status_required="abstained_no_stable_anchor",
+            **kwargs,
+        )
+        rows.append(
+            {
+                "candidate_id": row["candidate_id"],
+                "colour": row["colour"],
+                "receiving_view": view,
+                "hold_selection_status": row["selection"]["status"],
+                "selection": selection,
+            }
+        )
+    result = {
+        "status": "postscore_bounded_gap_motion_development_not_continuous_identity",
+        "hold_sha256": file_sha256(args.hold),
+        "selector_sha256": file_sha256(ROOT / "prototype/stone_proposal_path.py"),
+        "runner_sha256": file_sha256(__file__),
+        "max_gap_s": args.max_gap_s,
+        "skip_status_required": "abstained_no_stable_anchor",
+        "selection_status_counts": dict(Counter(row["selection"]["status"] for row in rows)),
+        "rows": rows,
+        "limitations": [
+            "Missing samples are not interpolated; endpoint compatibility across at most 4.1 s is only provisional identity evidence.",
+            "The gap policy was introduced after observing two Estonia misses and cannot change the frozen transfer result.",
+            "Borrowed camera transforms and motion paths lack independent metric and physical-identity validation.",
+        ],
+    }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
     print(result["selection_status_counts"])

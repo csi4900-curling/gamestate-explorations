@@ -39,11 +39,15 @@ def digest(path):
 
 def planned_windows(cap, shots):
     by_id = {shot["shot_id"]: shot for shot in shots["shots"]}
-    return [{"shot_id": row["shot_id"],
-             "interval_s": by_id[row["shot_id"]]["interval_s"],
-             "colour": row["colour"]}
-            for row in cap["decisions"]
-            if row["status"] == "corroborated_candidate"]
+    return [
+        {
+            "shot_id": row["shot_id"],
+            "interval_s": by_id[row["shot_id"]]["interval_s"],
+            "colour": row["colour"],
+        }
+        for row in cap["decisions"]
+        if row["status"] == "corroborated_candidate"
+    ]
 
 
 def main():
@@ -52,32 +56,44 @@ def main():
     plan = json.loads(PLAN.read_text())
     cap = json.loads(CAP.read_text())
     shots = json.loads(SHOTS.read_text())
-    hashes = {name: digest(path) for name, path in
-              (("video", VIDEO), ("model", MODEL), ("cap", CAP), ("shots", SHOTS),
-               ("runner", __file__))}
+    hashes = {
+        name: digest(path)
+        for name, path in (
+            ("video", VIDEO),
+            ("model", MODEL),
+            ("cap", CAP),
+            ("shots", SHOTS),
+            ("runner", __file__),
+        )
+    }
     if hashes != plan["sha256"] or planned_windows(cap, shots) != plan["windows"]:
         raise ValueError("Frozen plan or source inputs changed")
     reserved = json.loads((ROOT / "validation/unseen-end/reservation.json").read_text())
     if hashes["video"] == reserved["source_sha256"]:
         raise ValueError("Reserved independent source selected")
     model = load_model(MODEL)
-    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     fps = capture.get(cv2.CAP_PROP_FPS)
     step = round(fps / plan["sample_rate_hz"])
     rows = []
     for window in plan["windows"]:
         shot_id = window["shot_id"]
         if window["colour"] is None:
-            rows.append({
-                **window, "sampled_frames": 0, "accepted_patch_count": 0,
-                "transit_count": 0, "top_transit": None,
-                "track_link_status": "unknown_colour",
-                "step_shape": None, "camera_pair_count": 0,
-                "reliable_camera_pair_count": 0,
-                "maximum_camera_residual_px": None,
-                "quality": "abstain_unknown_colour",
-            })
+            rows.append(
+                {
+                    **window,
+                    "sampled_frames": 0,
+                    "accepted_patch_count": 0,
+                    "transit_count": 0,
+                    "top_transit": None,
+                    "track_link_status": "unknown_colour",
+                    "step_shape": None,
+                    "camera_pair_count": 0,
+                    "reliable_camera_pair_count": 0,
+                    "maximum_camera_residual_px": None,
+                    "quality": "abstain_unknown_colour",
+                }
+            )
             continue
         start, end = window["interval_s"]
         beginning, stop = ceil(start * fps), ceil(end * fps)
@@ -93,14 +109,16 @@ def main():
             if not ok:
                 raise RuntimeError(f"Retrieve failed: {shot_id} {frame_index}")
             time_s = round(frame_index / fps, 3)
-            raw = stone_cap_candidates(frame, window["colour"],
-                                       allow_bright_body=True,
-                                       allow_large_caps=True)
-            accepted = [row for row in score_candidates(frame, raw, model)
-                        if row["patch_score"] >= plan["minimum_patch_score"]]
+            raw = stone_cap_candidates(
+                frame, window["colour"], allow_bright_body=True, allow_large_caps=True
+            )
+            accepted = [
+                row
+                for row in score_candidates(frame, raw, model)
+                if row["patch_score"] >= plan["minimum_patch_score"]
+            ]
             stream.append((time_s, accepted))
-            frames[time_s] = cv2.resize(frame, (640, 360),
-                                        interpolation=cv2.INTER_AREA)
+            frames[time_s] = cv2.resize(frame, (640, 360), interpolation=cv2.INTER_AREA)
         transits = short_transits(stream)
         tracks = _tracks(stream)
         shape = None
@@ -108,21 +126,28 @@ def main():
         link_status = "no_transit"
         if transits:
             top = transits[0]
-            linked = [track for track in tracks
-                      if track[0]["time_s"] == top["interval_s"][0]
-                      and track[0]["pixel"] == top["first_pixel"]
-                      and track[-1]["time_s"] == top["interval_s"][1]]
+            linked = [
+                track
+                for track in tracks
+                if track[0]["time_s"] == top["interval_s"][0]
+                and track[0]["pixel"] == top["first_pixel"]
+                and track[-1]["time_s"] == top["interval_s"][1]
+            ]
             link_status = "linked" if len(linked) == 1 else "ambiguous_or_missing"
             if len(linked) == 1:
                 shape = step_shape(linked[0])
-                pairs = sample_track_camera_motion(linked[0], frames.__getitem__,
-                                                   step_s=plan["camera_pair_step_s"])
-        reliable = [pair["camera_residual_px"] for pair in pairs
-                    if pair["camera_residual_px"] is not None]
-        distributed = bool(shape and
-                           shape["steps_over_5px"] >= plan["minimum_moving_steps"] and
-                           shape["largest_step_fraction"] is not None and
-                           shape["largest_step_fraction"] <= plan["maximum_step_fraction"])
+                pairs = sample_track_camera_motion(
+                    linked[0], frames.__getitem__, step_s=plan["camera_pair_step_s"]
+                )
+        reliable = [
+            pair["camera_residual_px"] for pair in pairs if pair["camera_residual_px"] is not None
+        ]
+        distributed = bool(
+            shape
+            and shape["steps_over_5px"] >= plan["minimum_moving_steps"]
+            and shape["largest_step_fraction"] is not None
+            and shape["largest_step_fraction"] <= plan["maximum_step_fraction"]
+        )
         if not shape:
             quality = "abstain_no_linked_transit"
         elif not distributed:
@@ -133,19 +158,21 @@ def main():
             quality = "weak_camera_relative_motion"
         else:
             quality = "combined_cue_supported"
-        rows.append({
-            **window,
-            "sampled_frames": len(stream),
-            "accepted_patch_count": sum(len(items) for _, items in stream),
-            "transit_count": len(transits),
-            "top_transit": transits[0] if transits else None,
-            "track_link_status": link_status,
-            "step_shape": shape,
-            "camera_pair_count": len(pairs),
-            "reliable_camera_pair_count": len(reliable),
-            "maximum_camera_residual_px": max(reliable, default=None),
-            "quality": quality,
-        })
+        rows.append(
+            {
+                **window,
+                "sampled_frames": len(stream),
+                "accepted_patch_count": sum(len(items) for _, items in stream),
+                "transit_count": len(transits),
+                "top_transit": transits[0] if transits else None,
+                "track_link_status": link_status,
+                "step_shape": shape,
+                "camera_pair_count": len(pairs),
+                "reliable_camera_pair_count": len(reliable),
+                "maximum_camera_residual_px": max(reliable, default=None),
+                "quality": quality,
+            }
+        )
         if len(rows) % 20 == 0:
             print(f"scanned {len(rows)}/{len(plan['windows'])}", flush=True)
     capture.release()
@@ -165,6 +192,7 @@ def main():
     }
     OUTPUT.write_text(json.dumps(output, indent=2) + "\n")
     from collections import Counter
+
     print(dict(Counter(row["quality"] for row in rows)))
 
 

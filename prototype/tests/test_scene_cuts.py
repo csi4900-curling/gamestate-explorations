@@ -30,8 +30,6 @@ def test_cut_prevents_greedy_track_from_becoming_one_continuous_identity():
 def test_existing_track_points_split_at_cut_without_dropping_observations():
     points = [{"time_s": t} for t in (0.0, 0.2, 1.0, 1.2)]
     segments = split_points_at_cuts(points, [0.6])
-    assert [[row["time_s"] for row in segment] for segment in segments] == [
-        [0.0, 0.2], [1.0, 1.2]
-    ]
+    assert [[row["time_s"] for row in segment] for segment in segments] == [[0.0, 0.2], [1.0, 1.2]]
     with pytest.raises(ValueError):
         split_points_at_cuts([points[0], points[0]], [])

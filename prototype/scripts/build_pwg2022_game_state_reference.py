@@ -38,52 +38,60 @@ def main():
             for shot in end["shots"]:
                 identifier = shot["official_shot_id"]
                 board = board_shots[identifier]
-                stones = [{
-                    "colour": row["colour"],
-                    "x_house_radii": row["house_radius_coordinates"][0],
-                    "longitudinal_house_radii": row["house_radius_coordinates"][1],
-                    "diagram_pixel": row["diagram_pixel"],
-                    "near_diagram_edge": row["near_diagram_edge"],
-                    "low_fill_margin": row["low_fill_margin"],
-                } for row in board["stones"]]
+                stones = [
+                    {
+                        "colour": row["colour"],
+                        "x_house_radii": row["house_radius_coordinates"][0],
+                        "longitudinal_house_radii": row["house_radius_coordinates"][1],
+                        "diagram_pixel": row["diagram_pixel"],
+                        "near_diagram_edge": row["near_diagram_edge"],
+                        "low_fill_margin": row["low_fill_margin"],
+                    }
+                    for row in board["stones"]
+                ]
                 counts = Counter(row["colour"] for row in stones)
-                if any(counts[colour] != board["stone_counts"][colour]
-                       for colour in ("red", "yellow")):
+                if any(
+                    counts[colour] != board["stone_counts"][colour] for colour in ("red", "yellow")
+                ):
                     raise ValueError("Diagram stone count mismatch")
-                transitions.append({
-                    "official_shot_id": identifier,
-                    "end": end["end"],
-                    "shot_number": shot["shot_number"],
-                    "delivery_team": shot["team"],
-                    "delivery_handle_colour": game["team_handle_colours"][shot["team"]],
-                    "shooter": shot["shooter"],
-                    "shot_type": shot["shot_type"],
-                    "official_evaluation_percent": shot["evaluation_percent"],
-                    "rotation": shot["rotation"],
-                    "official_notes": shot["notes"],
-                    "pre_state_shot_id": previous_id,
-                    "pre_state_is_empty_end_start": previous_id is None,
-                    "post_state": {
-                        "coordinate_system": "unitless_house_outer_radius",
-                        "red_stone_count": counts["red"],
-                        "yellow_stone_count": counts["yellow"],
-                        "stone_symbols": stones,
-                        "diagram_review_flags": board["review_flags"],
-                    },
-                    "source_pdf_page": end["pdf_page"],
-                    "source_diagram_image_sha256": board["diagram_image_sha256"],
-                    "video_release_time_s": None,
-                    "video_trajectory": None,
-                })
+                transitions.append(
+                    {
+                        "official_shot_id": identifier,
+                        "end": end["end"],
+                        "shot_number": shot["shot_number"],
+                        "delivery_team": shot["team"],
+                        "delivery_handle_colour": game["team_handle_colours"][shot["team"]],
+                        "shooter": shot["shooter"],
+                        "shot_type": shot["shot_type"],
+                        "official_evaluation_percent": shot["evaluation_percent"],
+                        "rotation": shot["rotation"],
+                        "official_notes": shot["notes"],
+                        "pre_state_shot_id": previous_id,
+                        "pre_state_is_empty_end_start": previous_id is None,
+                        "post_state": {
+                            "coordinate_system": "unitless_house_outer_radius",
+                            "red_stone_count": counts["red"],
+                            "yellow_stone_count": counts["yellow"],
+                            "stone_symbols": stones,
+                            "diagram_review_flags": board["review_flags"],
+                        },
+                        "source_pdf_page": end["pdf_page"],
+                        "source_diagram_image_sha256": board["diagram_image_sha256"],
+                        "video_release_time_s": None,
+                        "video_trajectory": None,
+                    }
+                )
                 previous_id = identifier
-        games.append({
-            "official_game_code": game["official_game_code"],
-            "teams": game["teams"],
-            "team_handle_colours": game["team_handle_colours"],
-            "source_video_sha256": game["source_video_sha256"],
-            "official_shot_count": game["official_shot_count"],
-            "transitions": transitions,
-        })
+        games.append(
+            {
+                "official_game_code": game["official_game_code"],
+                "teams": game["teams"],
+                "team_handle_colours": game["team_handle_colours"],
+                "source_video_sha256": game["source_video_sha256"],
+                "official_shot_count": game["official_shot_count"],
+                "transitions": transitions,
+            }
+        )
     output = {
         "status": "official_pdf_postshot_state_reference_without_video_reconstruction",
         "official_pdf_url": shot_reference["official_pdf_url"],

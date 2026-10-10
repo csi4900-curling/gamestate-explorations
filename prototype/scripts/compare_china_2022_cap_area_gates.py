@@ -14,11 +14,13 @@ BASE = ROOT / "validation/official-shot-sequence"
 SOURCE = BASE / "china-2022-cap-continuation-scale-transfer-development.json"
 OUT = BASE / "china-2022-cap-area-gate-sensitivity-development.json"
 SCALE = 3.0
-GATES = {"scaled_czech_absolute_area": None,
-         "past_cap_area_0p33_to_3": (1 / 3, 3),
-         "past_cap_area_0p5_to_2": (0.5, 2),
-         "past_cap_area_0p75_to_1p5": (0.75, 1.5),
-         "no_area_limit_diagnostic": (0, float("inf"))}
+GATES = {
+    "scaled_czech_absolute_area": None,
+    "past_cap_area_0p33_to_3": (1 / 3, 3),
+    "past_cap_area_0p5_to_2": (0.5, 2),
+    "past_cap_area_0p75_to_1p5": (0.75, 1.5),
+    "no_area_limit_diagnostic": (0, float("inf")),
+}
 
 
 def digest(path):
@@ -32,12 +34,9 @@ def digest(path):
 def eligible_components(row, gate):
     raw = row["raw_colour_components"]
     if gate is None:
-        return [c for c in raw if 20 / SCALE**2 <= c["area_px2"]
-                <= 700 / SCALE**2]
-    past_area = row["last_two_reconstructed_points_360"][-1][
-        "cap_area_px2"]
-    return [c for c in raw if gate[0] * past_area <= c["area_px2"]
-            <= gate[1] * past_area]
+        return [c for c in raw if 20 / SCALE**2 <= c["area_px2"] <= 700 / SCALE**2]
+    past_area = row["last_two_reconstructed_points_360"][-1]["cap_area_px2"]
+    return [c for c in raw if gate[0] * past_area <= c["area_px2"] <= gate[1] * past_area]
 
 
 def score(row, gate):
@@ -45,9 +44,10 @@ def score(row, gate):
     previous = [v * SCALE for v in points[-2]["pixel"]]
     current = [v * SCALE for v in points[-1]["pixel"]]
     ratio = 0.5 / (points[-1]["time_s"] - points[-2]["time_s"])
-    components = [{**c, "centroid_px_1080": [round(v * SCALE, 3)
-                                            for v in c["centroid_px_1080"]]}
-                  for c in eligible_components(row, gate)]
+    components = [
+        {**c, "centroid_px_1080": [round(v * SCALE, 3) for v in c["centroid_px_1080"]]}
+        for c in eligible_components(row, gate)
+    ]
     return choose_next_cap(current, previous, ratio, components)
 
 
@@ -55,8 +55,7 @@ def main():
     if OUT.exists():
         raise ValueError("2022 area-gate sensitivity already exists")
     source = json.loads(SOURCE.read_text())
-    if source["selector_code_sha256"] != digest(ROOT /
-                                               "prototype/causal_cap_continuation.py"):
+    if source["selector_code_sha256"] != digest(ROOT / "prototype/causal_cap_continuation.py"):
         raise ValueError("Selector changed since source inventory")
     rows = []
     counts = {name: Counter() for name in GATES}
@@ -71,31 +70,40 @@ def main():
             counts[name][decision["status"]] += 1
         absolute = eligible_components(case, None)
         if statuses["scaled_czech_absolute_area"] == "no_cap_inside_motion_gate":
-            reason = ("no_raw_colour_component" if not case[
-                "raw_colour_components"] else
-                "all_components_excluded_by_absolute_area" if not absolute
-                else "components_fail_motion_gate")
+            reason = (
+                "no_raw_colour_component"
+                if not case["raw_colour_components"]
+                else "all_components_excluded_by_absolute_area"
+                if not absolute
+                else "components_fail_motion_gate"
+            )
             reason_counts[reason] += 1
         else:
             reason = None
-        rows.append({
-            "episode_id": case["episode_id"],
-            "camera_shot_id": case["camera_shot_id"],
-            "colour": case["colour"],
-            "last_cap_area_px2_360": case[
-                "last_two_reconstructed_points_360"][-1]["cap_area_px2"],
-            "next_frame_raw_component_areas_px2_360": [c["area_px2"]
-                for c in case["raw_colour_components"]],
-            "status_by_gate": statuses,
-            "absolute_gate_failure_reason": reason,
-            "physical_stone_identity_verified": False,
-        })
-    if len(rows) != source["source_catalog_track_count"] - source[
-            "status_counts"]["camera_shot_boundary"]:
+        rows.append(
+            {
+                "episode_id": case["episode_id"],
+                "camera_shot_id": case["camera_shot_id"],
+                "colour": case["colour"],
+                "last_cap_area_px2_360": case["last_two_reconstructed_points_360"][-1][
+                    "cap_area_px2"
+                ],
+                "next_frame_raw_component_areas_px2_360": [
+                    c["area_px2"] for c in case["raw_colour_components"]
+                ],
+                "status_by_gate": statuses,
+                "absolute_gate_failure_reason": reason,
+                "physical_stone_identity_verified": False,
+            }
+        )
+    if (
+        len(rows)
+        != source["source_catalog_track_count"] - source["status_counts"]["camera_shot_boundary"]
+    ):
         raise ValueError("2022 in-shot track inventory differs")
     if dict(counts["scaled_czech_absolute_area"]) != {
-            k: v for k, v in source["status_counts"].items()
-            if k != "camera_shot_boundary"}:
+        k: v for k, v in source["status_counts"].items() if k != "camera_shot_boundary"
+    }:
         raise ValueError("Absolute-gate source statuses not reproduced")
     result = {
         "status": "postinspection_cap_area_gate_sensitivity_not_identity_accuracy",
@@ -111,8 +119,7 @@ def main():
             "no_area_limit_diagnostic": "all raw colour contours in the search ROI",
         },
         "in_shot_track_count": len(rows),
-        "status_counts_by_gate": {name: dict(count)
-                                  for name, count in counts.items()},
+        "status_counts_by_gate": {name: dict(count) for name, count in counts.items()},
         "absolute_gate_failure_reason_counts": dict(reason_counts),
         "rows": rows,
         "limitations": [
@@ -123,9 +130,15 @@ def main():
         ],
     }
     OUT.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"in_shot": len(rows),
-                      "counts": result["status_counts_by_gate"],
-                      "absolute_failures": dict(reason_counts)}))
+    print(
+        json.dumps(
+            {
+                "in_shot": len(rows),
+                "counts": result["status_counts_by_gate"],
+                "absolute_failures": dict(reason_counts),
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

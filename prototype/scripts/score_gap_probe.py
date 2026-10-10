@@ -31,9 +31,7 @@ def totals(rows):
         "colour_aware_true_positives": ctp,
         "colour_aware_false_positives": cfp,
         "colour_aware_false_negatives": cfn,
-        "colour_aware_f1": 2 * ctp / (2 * ctp + cfp + cfn)
-        if 2 * ctp + cfp + cfn
-        else None,
+        "colour_aware_f1": 2 * ctp / (2 * ctp + cfp + cfn) if 2 * ctp + cfp + cfn else None,
     }
 
 

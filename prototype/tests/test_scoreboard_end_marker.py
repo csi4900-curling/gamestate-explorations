@@ -1,14 +1,18 @@
 import numpy as np
 import pytest
 
-from prototype.scoreboard_end_marker import (ARROW, fit_header_grid,
-                                             panel_shift_evidence, read_active_end_marker)
+from prototype.scoreboard_end_marker import (
+    ARROW,
+    fit_header_grid,
+    panel_shift_evidence,
+    read_active_end_marker,
+)
 
 
 def test_reads_marker_and_abstains_on_blank_or_occluded_frame():
     frame = np.full((360, 640, 3), 215, dtype=np.uint8)
     x = 399 + round(4 * 10.3)
-    patch = frame[68:78, x:x + 9]
+    patch = frame[68:78, x : x + 9]
     patch[ARROW.astype(bool)] = 25
     assert read_active_end_marker(frame)["end"] == 5
     assert read_active_end_marker(np.full_like(frame, 215)) is None

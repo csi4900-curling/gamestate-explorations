@@ -22,16 +22,25 @@ def main():
         parser.error("Output exists; preserve first rescue result")
     origins = json.loads(args.origins.read_text())
     two_shot = json.loads(args.two_shot.read_text())
-    if (two_shot["origins_sha256"] != file_sha256(args.origins)
-            or two_shot["source_sha256"] != origins["source_sha256"]):
+    if (
+        two_shot["origins_sha256"] != file_sha256(args.origins)
+        or two_shot["source_sha256"] != origins["source_sha256"]
+    ):
         parser.error("Two-shot decision does not derive from these origin predictions")
     if "learned" not in two_shot["motion_sha256"]:
         parser.error("Two-channel motion is required for rescue")
     decisions = rescue_weak_origins(origins["rows"], two_shot["decisions"])
     by_id = {row["shot_id"]: row for row in decisions}
-    evaluated = [{**row, "predicted": int(by_id[row["shot_id"]]["status"]
-                                   in ("corroborated_candidate", "rescued_candidate"))}
-                 for row in origins["rows"] if row["label"] in (0, 1)]
+    evaluated = [
+        {
+            **row,
+            "predicted": int(
+                by_id[row["shot_id"]]["status"] in ("corroborated_candidate", "rescued_candidate")
+            ),
+        }
+        for row in origins["rows"]
+        if row["label"] in (0, 1)
+    ]
     result = {
         "status": "postscore_development_weak_origin_rescue_not_confirmed_events",
         "source_sha256": origins["source_sha256"],

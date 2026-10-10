@@ -49,8 +49,7 @@ def main():
         frames = []
         for index, node in enumerate(nodes):
             t = node["source_time_s"]
-            cap.set(cv2.CAP_PROP_POS_FRAMES,
-                    round((t - args.source_offset_s) * fps))
+            cap.set(cv2.CAP_PROP_POS_FRAMES, round((t - args.source_offset_s) * fps))
             ok, frame = cap.read()
             if not ok:
                 raise RuntimeError(f"Cannot read {candidate_id} at {t}")
@@ -59,27 +58,43 @@ def main():
             marked = frame.copy()
             cv2.circle(marked, (x, y), 17, (0, 255, 255), 4)
             context = cv2.resize(marked, (640, 360), interpolation=cv2.INTER_AREA)
-            padded = cv2.copyMakeBorder(frame, 100, 100, 100, 100, cv2.BORDER_CONSTANT,
-                                        value=(255, 255, 255))
-            crop = padded[y+100-80:y+100+80, x+100-80:x+100+80]
+            padded = cv2.copyMakeBorder(
+                frame, 100, 100, 100, 100, cv2.BORDER_CONSTANT, value=(255, 255, 255)
+            )
+            crop = padded[y + 100 - 80 : y + 100 + 80, x + 100 - 80 : x + 100 + 80]
             crop = cv2.resize(crop, (320, 320), interpolation=cv2.INTER_NEAREST)
             py = index * 384
             sheet.paste(Image.fromarray(cv2.cvtColor(context, cv2.COLOR_BGR2RGB)), (0, py + 24))
             sheet.paste(Image.fromarray(cv2.cvtColor(crop, cv2.COLOR_BGR2RGB)), (650, py + 24))
-            draw.text((6, py + 5), f"{candidate_id}  {t:.1f}s  frame {frame_index}  center ({x}, {y})", fill="black")
-            frames.append({"source_time_s": t, "decoded_frame_index": frame_index,
-                           "path_pixel_center": node["pixel_center"]})
+            draw.text(
+                (6, py + 5),
+                f"{candidate_id}  {t:.1f}s  frame {frame_index}  center ({x}, {y})",
+                fill="black",
+            )
+            frames.append(
+                {
+                    "source_time_s": t,
+                    "decoded_frame_index": frame_index,
+                    "path_pixel_center": node["pixel_center"],
+                }
+            )
         name = f"{candidate_id.lower()}-path-review.jpg"
         sheet.save(args.output_dir / name, quality=90)
         output.append({"candidate_id": candidate_id, "sheet": name, "frames": frames})
     cap.release()
-    (args.output_dir / "path-review-manifest.json").write_text(json.dumps({
-        "status": "prediction_selected_source_review_not_independent_labels",
-        "source_sha256": digest(args.video),
-        "motion_sha256": digest(args.motion),
-        "source_offset_s": args.source_offset_s,
-        "items": output,
-    }, indent=2) + "\n")
+    (args.output_dir / "path-review-manifest.json").write_text(
+        json.dumps(
+            {
+                "status": "prediction_selected_source_review_not_independent_labels",
+                "source_sha256": digest(args.video),
+                "motion_sha256": digest(args.motion),
+                "source_offset_s": args.source_offset_s,
+                "items": output,
+            },
+            indent=2,
+        )
+        + "\n"
+    )
     print([row["sheet"] for row in output])
 
 

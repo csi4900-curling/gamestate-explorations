@@ -20,8 +20,13 @@ from prototype.video_board_observation_v2 import detect_board_stones, detect_ove
 
 BASE = ROOT / "validation/official-shot-sequence"
 SEQUENCE = BASE / "norway-end1-16-shot-sequence-hypothesis-first.json"
-COUNTERS = ROOT / "validation/curlobserver-learned-probe/canada-norway-full-transfer/counter-replay.json"
-MANIFEST = ROOT / "validation/curlobserver-learned-probe/canada-norway-full-transfer/shot-review/manifest.json"
+COUNTERS = (
+    ROOT / "validation/curlobserver-learned-probe/canada-norway-full-transfer/counter-replay.json"
+)
+MANIFEST = (
+    ROOT
+    / "validation/curlobserver-learned-probe/canada-norway-full-transfer/shot-review/manifest.json"
+)
 VIDEO = ROOT / "validation/throw-event-benchmark/paralympics-2022-canada-norway/source.mp4"
 OUTPUT = BASE / "norway-end1-source-video-partial-boards-first.json"
 
@@ -42,23 +47,42 @@ def sample_plan(sequence, counter_events, shot_manifest):
     for index, row in enumerate(rows[:15]):
         counter = by_counter[row["counter_id"]]
         previous = by_counter[rows[index - 1]["counter_id"]]["crossing_time_s"] if index else None
-        following = (by_counter[rows[index + 1]["counter_id"]]["crossing_time_s"]
-                     if index < 14 else final_origin_start)
-        times = make_sample_times(counter["crossing_time_s"], previous, following,
-                                  row["provisional_delivery_window_s"][1])
-        plans.append({"shot_number": index + 1, "video_candidate_shot_id": row["video_candidate_shot_id"],
-                      "anchor_kind": "broadcast_counter_decrement", "anchor_s": counter["crossing_time_s"],
-                      "sampled_times_s": times})
+        following = (
+            by_counter[rows[index + 1]["counter_id"]]["crossing_time_s"]
+            if index < 14
+            else final_origin_start
+        )
+        times = make_sample_times(
+            counter["crossing_time_s"], previous, following, row["provisional_delivery_window_s"][1]
+        )
+        plans.append(
+            {
+                "shot_number": index + 1,
+                "video_candidate_shot_id": row["video_candidate_shot_id"],
+                "anchor_kind": "broadcast_counter_decrement",
+                "anchor_s": counter["crossing_time_s"],
+                "sampled_times_s": times,
+            }
+        )
     final = rows[-1]
     receiving_shot_id = "S87"
     receiving = next(shot for shot in shot_manifest if shot["id"] == receiving_shot_id)
     motion_last_s = final["provisional_delivery_window_s"][1]
-    times = [float(t) for t in range(int(motion_last_s + 2), int(receiving["interval_s"][1]) + 1, 2)
-             if t < receiving["interval_s"][1]]
-    plans.append({"shot_number": 16, "video_candidate_shot_id": final["video_candidate_shot_id"],
-                  "anchor_kind": "source_receiving_motion_end_not_counter", "anchor_s": motion_last_s,
-                  "receiving_shot_id": receiving_shot_id,
-                  "sampled_times_s": times})
+    times = [
+        float(t)
+        for t in range(int(motion_last_s + 2), int(receiving["interval_s"][1]) + 1, 2)
+        if t < receiving["interval_s"][1]
+    ]
+    plans.append(
+        {
+            "shot_number": 16,
+            "video_candidate_shot_id": final["video_candidate_shot_id"],
+            "anchor_kind": "source_receiving_motion_end_not_counter",
+            "anchor_s": motion_last_s,
+            "receiving_shot_id": receiving_shot_id,
+            "sampled_times_s": times,
+        }
+    )
     return plans
 
 
@@ -88,8 +112,12 @@ def build():
             scans.append({"plan": plan, "frames": frames})
     finally:
         cap.release()
-    known = [item["house"]["delivery_side"] for scan in scans for item in scan["frames"]
-             if item["house"]["delivery_side"] != "uncertain"]
+    known = [
+        item["house"]["delivery_side"]
+        for scan in scans
+        for item in scan["frames"]
+        if item["house"]["delivery_side"] != "uncertain"
+    ]
     side = known[0] if len(known) >= 3 and len(set(known)) == 1 else None
     rows = []
     for scan in scans:
@@ -102,15 +130,29 @@ def build():
                 house["delivery_side"] = side
             elif side is not None and house["delivery_side"] != side:
                 continue
-            observations.append({"time_s": item["time_s"], "house": house,
-                                 "stones": detect_board_stones(item["frame"], house)})
+            observations.append(
+                {
+                    "time_s": item["time_s"],
+                    "house": house,
+                    "stones": detect_board_stones(item["frame"], house),
+                }
+            )
         stable = stable_board_stones(observations)
-        rows.append({**scan["plan"],
-                     "accepted_frame_count": len(observations),
-                     "observation_interval_s": [min(o["time_s"] for o in observations),
-                                                max(o["time_s"] for o in observations)] if observations else None,
-                     "stable_partial_board": stable,
-                     "completeness": "unknown_from_video", "simulation_ready": False})
+        rows.append(
+            {
+                **scan["plan"],
+                "accepted_frame_count": len(observations),
+                "observation_interval_s": [
+                    min(o["time_s"] for o in observations),
+                    max(o["time_s"] for o in observations),
+                ]
+                if observations
+                else None,
+                "stable_partial_board": stable,
+                "completeness": "unknown_from_video",
+                "simulation_ready": False,
+            }
+        )
     return {
         "status": "source_only_norway_end1_partial_boards_before_official_comparison",
         "source_video_sha256": video_hash,
@@ -142,8 +184,17 @@ def main():
         raise SystemExit("Output exists; preserve first end-one video-board scan")
     result = build()
     OUTPUT.write_text(json.dumps(result, indent=2) + "\n")
-    print({key: result[key] for key in
-           ("shot_count", "rows_with_accepted_frames", "rows_with_stable_board", "stable_stone_count")})
+    print(
+        {
+            key: result[key]
+            for key in (
+                "shot_count",
+                "rows_with_accepted_frames",
+                "rows_with_stable_board",
+                "stable_stone_count",
+            )
+        }
+    )
 
 
 if __name__ == "__main__":

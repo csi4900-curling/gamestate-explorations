@@ -45,11 +45,14 @@ def main():
     selection = json.loads(SELECTION.read_text())
     model = load_model(MODEL)
     video_hash = digest(VIDEO)
-    if (prior["source_video_sha256"] != video_hash or
-            training["selection_sha256"] != digest(SELECTION) or
-            training["model_sha256"] != digest(MODEL) or
-            any(s["video_sha256"] == video_hash or "latvia" in s["video"]
-                for s in selection["sources"])):
+    if (
+        prior["source_video_sha256"] != video_hash
+        or training["selection_sha256"] != digest(SELECTION)
+        or training["model_sha256"] != digest(MODEL)
+        or any(
+            s["video_sha256"] == video_hash or "latvia" in s["video"] for s in selection["sources"]
+        )
+    ):
         raise ValueError("Training or Latvia source lineage differs")
     proposal_rows = {}
     raw_tracks = {}
@@ -57,17 +60,18 @@ def main():
         scan = json.loads(path.read_text())
         if scan["source_sha256"] != video_hash:
             raise ValueError("Latvia scan source differs")
-        entries = (scan["later_review_proposals"] if name.endswith("_later")
-                   else scan["directional_review_proposals"])
+        entries = (
+            scan["later_review_proposals"]
+            if name.endswith("_later")
+            else scan["directional_review_proposals"]
+        )
         for row in entries:
-            pid = (f"{name}:{row['raw_track_id']}:"
-                   f"{row.get('episode_index_within_raw_track', 1)}")
+            pid = f"{name}:{row['raw_track_id']}:{row.get('episode_index_within_raw_track', 1)}"
             proposal_rows[pid] = row
         if "raw_tracks" in scan:
             raw_tracks[name] = {r["track_id"]: r for r in scan["raw_tracks"]}
     raw_tracks["two_second_global_later"] = raw_tracks["two_second_global"]
-    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     fps = capture.get(cv2.CAP_PROP_FPS)
     if not capture.isOpened() or fps <= 0:
         raise ValueError("Latvia video unreadable")
@@ -90,35 +94,41 @@ def main():
                 ok, frame = capture.read()
                 if not ok or frame.shape[:2] != (360, 640):
                     raise ValueError(f"Cannot decode Latvia {pid}")
-                scored = score_candidates(frame, [{"bbox": by_time[time][
-                    "bbox"]}], model)[0]
-                samples.append({"time_s": time,
-                                "patch_score": round(scored["patch_score"], 6),
-                                "patch_accepted": scored["patch_accepted"]})
-            rows.append({
-                "proposal_id": pid,
-                "source_pixel_class": reference["source_pixel_class"],
-                "old_model_any_positive": reference["any_positive_patch"],
-                "new_model_any_positive": any(s["patch_accepted"] for s in samples),
-                "old_model_positive_sample_count": reference["positive_sample_count"],
-                "new_model_positive_sample_count": sum(s["patch_accepted"] for s in samples),
-                "new_model_samples": samples,
-                "physical_throw_verified": False,
-            })
+                scored = score_candidates(frame, [{"bbox": by_time[time]["bbox"]}], model)[0]
+                samples.append(
+                    {
+                        "time_s": time,
+                        "patch_score": round(scored["patch_score"], 6),
+                        "patch_accepted": scored["patch_accepted"],
+                    }
+                )
+            rows.append(
+                {
+                    "proposal_id": pid,
+                    "source_pixel_class": reference["source_pixel_class"],
+                    "old_model_any_positive": reference["any_positive_patch"],
+                    "new_model_any_positive": any(s["patch_accepted"] for s in samples),
+                    "old_model_positive_sample_count": reference["positive_sample_count"],
+                    "new_model_positive_sample_count": sum(s["patch_accepted"] for s in samples),
+                    "new_model_samples": samples,
+                    "physical_throw_verified": False,
+                }
+            )
     finally:
         capture.release()
     if len(rows) != prior["reviewed_proposal_count"]:
         raise ValueError("Latvia reviewed set changed")
-    counts = Counter((r["source_pixel_class"], r["new_model_any_positive"])
-                     for r in rows)
+    counts = Counter((r["source_pixel_class"], r["new_model_any_positive"]) for r in rows)
     result = {
         "status": "development_non_latvia_fit_on_selected_latvia_source_pixels_not_event_truth",
         "source_video_sha256": video_hash,
-        "input_sha256": {"prior_latvia_score": digest(PRIOR),
-                         "training_selection": digest(SELECTION),
-                         "training_result": digest(TRAINING),
-                         "new_model": digest(MODEL),
-                         **{name: digest(path) for name, path in SCANS.items()}},
+        "input_sha256": {
+            "prior_latvia_score": digest(PRIOR),
+            "training_selection": digest(SELECTION),
+            "training_result": digest(TRAINING),
+            "new_model": digest(MODEL),
+            **{name: digest(path) for name, path in SCANS.items()},
+        },
         "feature_code_sha256": digest(ROOT / "prototype/stone_patch_detector.py"),
         "scorer_code_sha256": digest(ROOT / "prototype/cap_patch_verifier.py"),
         "runner_sha256": digest(Path(__file__)),
@@ -126,7 +136,8 @@ def main():
         "reviewed_proposal_count": len(rows),
         "new_model_counts_by_source_pixel_class": {
             cls: {"positive": counts[cls, True], "negative": counts[cls, False]}
-            for cls in sorted({r["source_pixel_class"] for r in rows})},
+            for cls in sorted({r["source_pixel_class"] for r in rows})
+        },
         "rows": rows,
         "limitations": [
             "Latvia examples did not enter fitting, but these labels and prior-model failures were inspected before the new model was specified; this is not a blind holdout.",
@@ -136,8 +147,9 @@ def main():
         ],
     }
     OUT.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"paths": len(rows), "counts": result[
-        "new_model_counts_by_source_pixel_class"]}))
+    print(
+        json.dumps({"paths": len(rows), "counts": result["new_model_counts_by_source_pixel_class"]})
+    )
 
 
 if __name__ == "__main__":

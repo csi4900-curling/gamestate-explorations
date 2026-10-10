@@ -13,11 +13,17 @@ BASE = ROOT / "validation/throw-event-benchmark/layout-router/full-2024-coverage
 
 
 def inputs():
-    return [json.loads((BASE / name).read_text()) for name in (
-        "timeline.json", "run-02/events.json", "right-entry-variant-235-225.json",
-        "right-entry-camera-aware-fusion.json",
-        "right-entry-partial-cap-sequence-alignment-gated.json",
-        "source-activity-coverage-overlay.json")]
+    return [
+        json.loads((BASE / name).read_text())
+        for name in (
+            "timeline.json",
+            "run-02/events.json",
+            "right-entry-variant-235-225.json",
+            "right-entry-camera-aware-fusion.json",
+            "right-entry-partial-cap-sequence-alignment-gated.json",
+            "source-activity-coverage-overlay.json",
+        )
+    ]
 
 
 def test_full_match_handoff_keeps_all_raw_and_right_observations():
@@ -29,16 +35,23 @@ def test_full_match_handoff_keeps_all_raw_and_right_observations():
     }
     assert result["candidate_count"] == 127
     assert result["possible_event_proposal_count"] == 80
-    assert all(not row["physical_throw_verified"] and
-               not row["game_state_after"]["simulation_ready"]
-               for row in result["ordered_candidates"])
-    right = [r for r in result["ordered_candidates"]
-             if r["observation_kind"] == "right_only_review_entry"]
-    assert all(r["left_coverage_status"] == "left_static_right_active"
-               and r["post_candidate_partial_board"]["complete_board_verified"] is False
-               for r in right)
+    assert all(
+        not row["physical_throw_verified"] and not row["game_state_after"]["simulation_ready"]
+        for row in result["ordered_candidates"]
+    )
+    right = [
+        r
+        for r in result["ordered_candidates"]
+        if r["observation_kind"] == "right_only_review_entry"
+    ]
+    assert all(
+        r["left_coverage_status"] == "left_static_right_active"
+        and r["post_candidate_partial_board"]["complete_board_verified"] is False
+        for r in right
+    )
     assert [r["source_time_s"] for r in result["ordered_candidates"]] == sorted(
-        r["source_time_s"] for r in result["ordered_candidates"])
+        r["source_time_s"] for r in result["ordered_candidates"]
+    )
 
 
 def test_rejects_right_colour_or_time_mismatch():
@@ -68,8 +81,9 @@ def test_source_pixel_review_flags_person_without_promoting_or_dropping_row():
     by_id = {r["candidate_id"]: r for r in result["ordered_candidates"]}
     assert result["candidate_count"] == 127
     assert result["source_pixel_review_counts"]["person_at_crossing"] == 1
-    assert by_id["left:R01-S45"]["source_pixel_review"][
-        "source_pixel_class"] == "person_at_crossing"
+    assert (
+        by_id["left:R01-S45"]["source_pixel_review"]["source_pixel_class"] == "person_at_crossing"
+    )
     assert by_id["left:R01-S45"]["observation_kind"] == "left_provisional_passage"
     assert not by_id["left:R01-S45"]["physical_throw_verified"]
     changed = copy.deepcopy(reviews)

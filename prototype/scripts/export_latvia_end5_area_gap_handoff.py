@@ -27,11 +27,13 @@ def main():
     audit = json.loads(args.audit.read_text())
     scan = json.loads(args.right_scan.read_text())
     source_sheet = args.audit.parent / audit["source_sheet"]
-    if (audit["previous_ledger_sha256"] != digest(args.ledger) or
-            audit["right_area_scan_sha256"] != digest(args.right_scan) or
-            audit["source_sheet_sha256"] != digest(source_sheet) or
-            audit["runner_sha256"] != digest(
-                ROOT / "prototype/scripts/audit_latvia_end5_area_gap.py")):
+    if (
+        audit["previous_ledger_sha256"] != digest(args.ledger)
+        or audit["right_area_scan_sha256"] != digest(args.right_scan)
+        or audit["source_sheet_sha256"] != digest(source_sheet)
+        or audit["runner_sha256"]
+        != digest(ROOT / "prototype/scripts/audit_latvia_end5_area_gap.py")
+    ):
         raise ValueError("A367 audit lineage differs")
     output = attach_end5_area_gap_candidate(ledger, audit, scan)
     output["provenance"]["end5_area_gap_enrichment"] = {
@@ -44,12 +46,16 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(output, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({
-        "candidate_count": output["candidate_count"],
-        "review_proposal_count": output["development_possible_event_review_count"],
-        "new_candidate_id": "right_area:R01:A367",
-        "physical_throw_count_verified": output["physical_throw_count_verified"],
-    }))
+    print(
+        json.dumps(
+            {
+                "candidate_count": output["candidate_count"],
+                "review_proposal_count": output["development_possible_event_review_count"],
+                "new_candidate_id": "right_area:R01:A367",
+                "physical_throw_count_verified": output["physical_throw_count_verified"],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

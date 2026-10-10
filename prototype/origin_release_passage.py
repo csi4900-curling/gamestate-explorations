@@ -8,10 +8,16 @@ import cv2
 from prototype.stone_motion_fallback import stone_cap_candidates
 
 
-def hold_to_motion_passages(observations, *, max_gap_s=0.41,
-                            max_step_px=65, min_hold_s=1.0,
-                            hold_radius_px=8, min_travel_px=35,
-                            max_release_span_s=1.6):
+def hold_to_motion_passages(
+    observations,
+    *,
+    max_gap_s=0.41,
+    max_step_px=65,
+    min_hold_s=1.0,
+    hold_radius_px=8,
+    min_travel_px=35,
+    max_release_span_s=1.6,
+):
     """Return colour-specific release cues from timestamped cap candidates.
 
     Observations contain `time_s`, `colour`, and `pixel`. Track association
@@ -43,27 +49,34 @@ def hold_to_motion_passages(observations, *, max_gap_s=0.41,
             held = track[:release_index]
             if held[-1]["time_s"] - held[0]["time_s"] < min_hold_s:
                 continue
-            center = (median(row["pixel"][0] for row in held),
-                      median(row["pixel"][1] for row in held))
+            center = (
+                median(row["pixel"][0] for row in held),
+                median(row["pixel"][1] for row in held),
+            )
             if max(dist(row["pixel"], center) for row in held) > hold_radius_px:
                 continue
             if dist(track[release_index]["pixel"], center) <= hold_radius_px:
                 continue
             start = held[-1]["time_s"]
-            moved = [row for row in track[release_index:]
-                     if row["time_s"] - start <= max_release_span_s]
+            moved = [
+                row for row in track[release_index:] if row["time_s"] - start <= max_release_span_s
+            ]
             if len(moved) < 2:
                 continue
             distance = max(dist(row["pixel"], center) for row in moved)
             if distance < min_travel_px:
                 continue
-            passages.append({"colour": track[0]["colour"],
-                             "held_interval_s": [held[0]["time_s"], start],
-                             "release_cue_s": moved[0]["time_s"],
-                             "moving_interval_s": [moved[0]["time_s"], moved[-1]["time_s"]],
-                             "held_center_px": [round(value, 2) for value in center],
-                             "max_travel_px": round(distance, 2),
-                             "track_observation_count": len(track)})
+            passages.append(
+                {
+                    "colour": track[0]["colour"],
+                    "held_interval_s": [held[0]["time_s"], start],
+                    "release_cue_s": moved[0]["time_s"],
+                    "moving_interval_s": [moved[0]["time_s"], moved[-1]["time_s"]],
+                    "held_center_px": [round(value, 2) for value in center],
+                    "max_travel_px": round(distance, 2),
+                    "track_observation_count": len(track),
+                }
+            )
             break
     return sorted(passages, key=lambda row: (row["release_cue_s"], row["colour"]))
 
@@ -78,16 +91,22 @@ def scan_origin_release(cap, fps, start_s, end_s, *, cut_times_s=()):
         if not ok:
             raise RuntimeError(f"Frame decode failed at {time_s}")
         for colour in ("red", "yellow"):
-            candidates = stone_cap_candidates(frame, colour,
-                                               allow_large_caps=True,
-                                               allow_bright_body=True)
+            candidates = stone_cap_candidates(
+                frame, colour, allow_large_caps=True, allow_bright_body=True
+            )
             for item in candidates:
                 x, y = item["pixel"]
                 _, _, width, height = item["bbox"]
-                if (200 <= x <= 550 and y >= 240 and width <= 70 and height <= 35
-                        and item["neutral_surround_fraction"] >= 0.25):
-                    observations.append({"time_s": time_s, "colour": colour,
-                                         "pixel": item["pixel"]})
+                if (
+                    200 <= x <= 550
+                    and y >= 240
+                    and width <= 70
+                    and height <= 35
+                    and item["neutral_surround_fraction"] >= 0.25
+                ):
+                    observations.append(
+                        {"time_s": time_s, "colour": colour, "pixel": item["pixel"]}
+                    )
     segments = [[]]
     cuts = sorted(cut for cut in cut_times_s if start_s < cut < end_s)
     for observation in sorted(observations, key=lambda row: row["time_s"]):
@@ -95,8 +114,9 @@ def scan_origin_release(cap, fps, start_s, end_s, *, cut_times_s=()):
             segments.append([])
             cuts.pop(0)
         segments[-1].append(observation)
-    passages = [passage for segment in segments
-                for passage in hold_to_motion_passages(segment)]
-    return {"sampled_frame_count": round(end_s * 5) - round(start_s * 5),
-            "filtered_cap_observation_count": len(observations),
-            "passages": sorted(passages, key=lambda row: row["release_cue_s"])}
+    passages = [passage for segment in segments for passage in hold_to_motion_passages(segment)]
+    return {
+        "sampled_frame_count": round(end_s * 5) - round(start_s * 5),
+        "filtered_cap_observation_count": len(observations),
+        "passages": sorted(passages, key=lambda row: row["release_cue_s"]),
+    }

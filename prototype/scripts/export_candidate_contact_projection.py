@@ -39,8 +39,7 @@ def main():
     video_hash = digest(args.video)
     if video_hash != calibrations["source_sha256"]:
         parser.error("Source and calibration fingerprints differ")
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         parser.error("Cannot open source video")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -48,9 +47,14 @@ def main():
     try:
         for candidate in calibrations["rows"]:
             if candidate["status"] != "conditional_image_evidence_supported":
-                rows.append({"candidate_id": candidate["candidate_id"],
-                             "status": "abstain_no_conditional_plane_calibration",
-                             "cap_results": [], "simulation_ready": False})
+                rows.append(
+                    {
+                        "candidate_id": candidate["candidate_id"],
+                        "status": "abstain_no_conditional_plane_calibration",
+                        "cap_results": [],
+                        "simulation_ready": False,
+                    }
+                )
                 continue
             images = []
             for t in candidate["sample_times_s"]:
@@ -62,39 +66,44 @@ def main():
             H = np.asarray(candidate["conditional_plane_H"])
             results = []
             for proposal in candidate["cap_center_plane_projections"]:
-                contact_samples = [contact_below_cap(
-                    image, proposal["cap_pixel_center"]) for image in images]
+                contact_samples = [
+                    contact_below_cap(image, proposal["cap_pixel_center"]) for image in images
+                ]
                 stable, status = stable_body_bottom(contact_samples)
-                result = {"local_observation_id": proposal["local_observation_id"],
-                          "colour": proposal["colour"],
-                          "status": status,
-                          "three_frame_contact_samples": contact_samples,
-                          "stone_ground_contact_verified": False,
-                          "metric_accuracy_validated": False}
+                result = {
+                    "local_observation_id": proposal["local_observation_id"],
+                    "colour": proposal["colour"],
+                    "status": status,
+                    "three_frame_contact_samples": contact_samples,
+                    "stone_ground_contact_verified": False,
+                    "metric_accuracy_validated": False,
+                }
                 if stable is not None:
                     point = stable["body_bottom_pixel_median"]
                     world = project(H, [point])[0]
-                    cap_world = proposal[
-                        "cap_center_projected_as_if_on_ice_plane_m"]
+                    cap_world = proposal["cap_center_projected_as_if_on_ice_plane_m"]
                     result.update(stable)
                     result["body_bottom_proxy_plane_projection_m"] = [
-                        round(float(value), 4) for value in world]
+                        round(float(value), 4) for value in world
+                    ]
                     result["cap_to_body_proxy_projected_shift_m"] = round(
-                        float(np.linalg.norm(world - cap_world)), 4)
+                        float(np.linalg.norm(world - cap_world)), 4
+                    )
                 results.append(result)
-            rows.append({
-                "candidate_id": candidate["candidate_id"],
-                "status": "conditional_body_bottom_proxy_audit",
-                "sample_times_s": candidate["sample_times_s"],
-                "cap_results": results,
-                "metric_accuracy_validated": False,
-                "complete_board_verified": False,
-                "simulation_ready": False,
-            })
+            rows.append(
+                {
+                    "candidate_id": candidate["candidate_id"],
+                    "status": "conditional_body_bottom_proxy_audit",
+                    "sample_times_s": candidate["sample_times_s"],
+                    "cap_results": results,
+                    "metric_accuracy_validated": False,
+                    "complete_board_verified": False,
+                    "simulation_ready": False,
+                }
+            )
     finally:
         cap.release()
-    status_counts = Counter(result["status"] for row in rows
-                            for result in row["cap_results"])
+    status_counts = Counter(result["status"] for row in rows for result in row["cap_results"])
     result = {
         "status": "conditional_body_bottom_plane_projection_not_physical_game_state",
         "source_sha256": video_hash,
@@ -102,7 +111,8 @@ def main():
         "contact_code_sha256": digest(ROOT / "prototype/wide_view_ground_contact.py"),
         "stability_code_sha256": digest(ROOT / "prototype/candidate_contact_projection.py"),
         "frame_normalization_code_sha256": digest(
-            ROOT / "prototype/scripts/audit_split_panel_freeze.py"),
+            ROOT / "prototype/scripts/audit_split_panel_freeze.py"
+        ),
         "runner_sha256": digest(Path(__file__)),
         "candidate_count": len(rows),
         "cap_status_counts": dict(status_counts),
@@ -117,8 +127,7 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"candidates": len(rows),
-                      "cap_statuses": result["cap_status_counts"]}))
+    print(json.dumps({"candidates": len(rows), "cap_statuses": result["cap_status_counts"]}))
 
 
 if __name__ == "__main__":

@@ -31,13 +31,17 @@ def main():
     decisions = []
     for row in gate["decisions"]:
         cue = combine_with_gate(row["colour"], by_id[row["shot_id"]]["evidence"])
-        decisions.append({"shot_id": row["shot_id"],
-                          "interval_s": row["interval_s"],
-                          "side": row["side"],
-                          "gate_colour": row["colour"],
-                          "colour": cue["colour"],
-                          "route": cue["route"],
-                          "held_override": cue["held_override"]})
+        decisions.append(
+            {
+                "shot_id": row["shot_id"],
+                "interval_s": row["interval_s"],
+                "side": row["side"],
+                "gate_colour": row["colour"],
+                "colour": cue["colour"],
+                "route": cue["route"],
+                "held_override": cue["held_override"],
+            }
+        )
     result = {
         "status": "postscore_end6_source_only_held_cap_arbitration_development",
         "source_sha256": gate["source_sha256"],
@@ -56,8 +60,7 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(result, indent=2) + "\n")
-    print({"candidates": result["candidate_count"],
-           "overrides": result["override_count"]})
+    print({"candidates": result["candidate_count"], "overrides": result["override_count"]})
 
 
 if __name__ == "__main__":

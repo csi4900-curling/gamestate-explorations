@@ -24,26 +24,31 @@ def build(raw, corridor, screen, motion, review=None):
     withheld_rows = by_id(corridor["withheld_events"], "id")
     decisions = by_id(screen["decisions"], "candidate_id")
     motions = by_id(motion["rows"], "candidate_id")
-    if raw["source_id"] != corridor["source_id"] or \
-            raw["source_sha256"] != corridor["source_sha256"] or \
-            raw["source_interval_s"] != corridor["source_interval_s"]:
+    if (
+        raw["source_id"] != corridor["source_id"]
+        or raw["source_sha256"] != corridor["source_sha256"]
+        or raw["source_interval_s"] != corridor["source_interval_s"]
+    ):
         raise ValueError("Raw and corridor sources differ")
-    if (set(raw_rows) != set(corridor_rows) | set(withheld_rows) or
-            set(corridor_rows) & set(withheld_rows) or
-            set(decisions) != set(corridor_rows) or
-            set(motions) != set(corridor_rows)):
+    if (
+        set(raw_rows) != set(corridor_rows) | set(withheld_rows)
+        or set(corridor_rows) & set(withheld_rows)
+        or set(decisions) != set(corridor_rows)
+        or set(motions) != set(corridor_rows)
+    ):
         raise ValueError("Candidate coverage differs between stages")
     if screen["source_sha256"] != raw["source_sha256"]:
         raise ValueError("Screen source differs")
     reviewed_id = None
     if review:
         reviewed_id = review["candidate_id"]
-        if (review["source_sha256"] != raw["source_sha256"] or
-                reviewed_id not in decisions or
-                not decisions[reviewed_id]["accepted"] or
-                review["screen_status"] != decisions[reviewed_id]["status"] or
-                review["review_conclusion"] !=
-                "false_positive_postgame_player_wheelchair_movement"):
+        if (
+            review["source_sha256"] != raw["source_sha256"]
+            or reviewed_id not in decisions
+            or not decisions[reviewed_id]["accepted"]
+            or review["screen_status"] != decisions[reviewed_id]["status"]
+            or review["review_conclusion"] != "false_positive_postgame_player_wheelchair_movement"
+        ):
             raise ValueError("Source review does not match screened candidate")
     output = []
     for candidate in sorted(raw_rows.values(), key=lambda row: row["crossing_time_s"]):
@@ -85,11 +90,14 @@ def build(raw, corridor, screen, motion, review=None):
                 "coordinate_frame": "receiving_camera_view_local_conditional_ice_plane",
                 "metric_accuracy_verified": False,
                 "inter_camera_identity_verified": False,
-                "samples": [{
-                    "source_time_s": sample["source_time_s"],
-                    "pixel_center": sample["pixel_center"],
-                    "ground_position_m_conditional": sample["ground_position_m"],
-                } for sample in path],
+                "samples": [
+                    {
+                        "source_time_s": sample["source_time_s"],
+                        "pixel_center": sample["pixel_center"],
+                        "ground_position_m_conditional": sample["ground_position_m"],
+                    }
+                    for sample in path
+                ],
             }
         output.append(entry)
     return output
@@ -104,11 +112,11 @@ def main():
     args = parser.parse_args()
     if args.output.exists():
         parser.error("Timeline already exists")
-    paths = {name: getattr(args, name) for name in
-             ("raw", "corridor", "screen", "motion")}
+    paths = {name: getattr(args, name) for name in ("raw", "corridor", "screen", "motion")}
     inputs = {name: json.loads(path.read_text()) for name, path in paths.items()}
-    if inputs["screen"]["candidates_sha256"] != file_sha256(args.corridor) or \
-            inputs["screen"]["motion_sha256"] != file_sha256(args.motion):
+    if inputs["screen"]["candidates_sha256"] != file_sha256(args.corridor) or inputs["screen"][
+        "motion_sha256"
+    ] != file_sha256(args.motion):
         parser.error("Screen hash chain differs")
     review = json.loads(args.source_review.read_text()) if args.source_review else None
     timeline = build(**inputs, review=review)

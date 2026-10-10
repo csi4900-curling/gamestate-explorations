@@ -24,10 +24,11 @@ def score_candidates(frame, candidates, model):
     if not candidates:
         return []
     image = cv2.resize(frame, (640, 360), interpolation=cv2.INTER_AREA)
-    features = np.stack([patch_features(image, context_bbox(row["bbox"]))
-                         for row in candidates])
+    features = np.stack([patch_features(image, context_bbox(row["bbox"])) for row in candidates])
     scores = ((features - model["mean"]) / model["scale"]) @ model["weights"].ravel()
     scores += model["intercept"].item()
     threshold = float(model["threshold"])
-    return [dict(row, patch_score=float(score), patch_accepted=bool(score >= threshold))
-            for row, score in zip(candidates, scores)]
+    return [
+        dict(row, patch_score=float(score), patch_accepted=bool(score >= threshold))
+        for row, score in zip(candidates, scores)
+    ]

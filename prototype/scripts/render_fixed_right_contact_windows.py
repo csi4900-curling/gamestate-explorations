@@ -22,8 +22,7 @@ def main():
     manifest = json.loads(args.manifest.read_text())
     if sha256(args.video) != manifest["source_sha256"]:
         parser.error("Source video hash differs from manifest")
-    capture = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not capture.isOpened():
         parser.error("Cannot open source video")
     fps = capture.get(cv2.CAP_PROP_FPS)
@@ -34,25 +33,23 @@ def main():
     for row in manifest["rows"]:
         tiles = []
         for t in row["source_times_s"]:
-            capture.set(cv2.CAP_PROP_POS_FRAMES,
-                        round((t - manifest["source_offset_s"]) * fps))
+            capture.set(cv2.CAP_PROP_POS_FRAMES, round((t - manifest["source_offset_s"]) * fps))
             ok, frame = capture.read()
             if not ok:
                 raise RuntimeError(f"Cannot decode {t}")
             tile = cv2.resize(frame[y0:y1, x0:x1], (width, height))
             cv2.rectangle(tile, (0, 0), (130, 32), (0, 0, 0), -1)
-            cv2.putText(tile, f"{t:.1f} s", (8, 24),
-                        cv2.FONT_HERSHEY_SIMPLEX, .7, (255, 255, 255), 2)
+            cv2.putText(
+                tile, f"{t:.1f} s", (8, 24), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2
+            )
             tiles.append(tile)
         columns = 4
         rows = (len(tiles) + columns - 1) // columns
         sheet = np.full((rows * height, columns * width, 3), 245, np.uint8)
         for i, tile in enumerate(tiles):
             y, x = divmod(i, columns)
-            sheet[y * height:(y + 1) * height,
-                  x * width:(x + 1) * width] = tile
-        ok, encoded = cv2.imencode(".jpg", sheet,
-                                   [cv2.IMWRITE_JPEG_QUALITY, 90])
+            sheet[y * height : (y + 1) * height, x * width : (x + 1) * width] = tile
+        ok, encoded = cv2.imencode(".jpg", sheet, [cv2.IMWRITE_JPEG_QUALITY, 90])
         if not ok:
             raise RuntimeError("JPEG encoding failed")
         target = args.manifest.parent / row["right_view_contact_sheet"]

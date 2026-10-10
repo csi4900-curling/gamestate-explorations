@@ -24,8 +24,7 @@ def main():
     interval = json.loads(a.interval_boards.read_text())
     full_rows = {row["candidate_id"]: row for row in full["rows"]}
     interval_rows = {row["candidate_id"]: row for row in interval["rows"]}
-    if len(full_rows) != len(full["rows"]) or \
-            len(interval_rows) != len(interval["rows"]):
+    if len(full_rows) != len(full["rows"]) or len(interval_rows) != len(interval["rows"]):
         raise ValueError("Duplicate board ID")
     rows = []
     for pair in audit["interval_reconciliation"]["candidate_id_pairs"]:
@@ -35,19 +34,22 @@ def main():
         if full_id not in full_rows:
             continue
         current, frozen = full_rows[full_id], interval_rows[interval_id]
-        rows.append({
-            "full_id": full_id,
-            "interval_id": interval_id,
-            "same_status": current["board"]["status"] == frozen["board"]["status"],
-            "full_status": current["board"]["status"],
-            "interval_status": frozen["board"]["status"],
-            "same_stone_count": len(current["board"]["stones"]) == len(frozen["board"]["stones"]),
-            "full_stone_count": len(current["board"]["stones"]),
-            "interval_stone_count": len(frozen["board"]["stones"]),
-            "same_tail_bounds": current["tail"] == frozen["tail"],
-            "full_tail": current["tail"],
-            "interval_tail": frozen["tail"],
-        })
+        rows.append(
+            {
+                "full_id": full_id,
+                "interval_id": interval_id,
+                "same_status": current["board"]["status"] == frozen["board"]["status"],
+                "full_status": current["board"]["status"],
+                "interval_status": frozen["board"]["status"],
+                "same_stone_count": len(current["board"]["stones"])
+                == len(frozen["board"]["stones"]),
+                "full_stone_count": len(current["board"]["stones"]),
+                "interval_stone_count": len(frozen["board"]["stones"]),
+                "same_tail_bounds": current["tail"] == frozen["tail"],
+                "full_tail": current["tail"],
+                "interval_tail": frozen["tail"],
+            }
+        )
     result = {
         "status": "postscore_conditional_partial_board_overlap_audit",
         "input_sha256": {
@@ -68,8 +70,14 @@ def main():
     }
     a.output.parent.mkdir(parents=True, exist_ok=True)
     a.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(len(rows), "boards;", result["same_board_status_count"], "same status;",
-          result["same_stone_count_count"], "same stone count")
+    print(
+        len(rows),
+        "boards;",
+        result["same_board_status_count"],
+        "same status;",
+        result["same_stone_count_count"],
+        "same stone count",
+    )
 
 
 if __name__ == "__main__":

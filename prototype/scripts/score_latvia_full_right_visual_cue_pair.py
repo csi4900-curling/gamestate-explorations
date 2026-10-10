@@ -43,12 +43,13 @@ def main():
     reviewed = json.loads(REVIEWED.read_text())
     scans = {name: json.loads(path.read_text()) for name, path in SCANS.items()}
     video_hash = digest(VIDEO)
-    if (queue["source_video_sha256"] != video_hash or
-            context["input_sha256"]["queue"] != digest(QUEUE) or
-            reviewed["input_sha256"]["queue"] != digest(QUEUE) or
-            reviewed["input_sha256"]["model"] != digest(MODEL) or
-            any(queue["input_sha256"][name] != digest(path) for name, path
-                   in SCANS.items())):
+    if (
+        queue["source_video_sha256"] != video_hash
+        or context["input_sha256"]["queue"] != digest(QUEUE)
+        or reviewed["input_sha256"]["queue"] != digest(QUEUE)
+        or reviewed["input_sha256"]["model"] != digest(MODEL)
+        or any(queue["input_sha256"][name] != digest(path) for name, path in SCANS.items())
+    ):
         raise ValueError("Source/score/model lineage mismatch")
     model = load_model(MODEL)
     if float(model["threshold"]) != 0:
@@ -56,21 +57,22 @@ def main():
     proposal_rows = {}
     raw_tracks = {}
     for name, scan in scans.items():
-        entries = (scan["later_review_proposals"] if name.endswith("_later")
-                   else scan["directional_review_proposals"])
+        entries = (
+            scan["later_review_proposals"]
+            if name.endswith("_later")
+            else scan["directional_review_proposals"]
+        )
         for row in entries:
-            pid = (f"{name}:{row['raw_track_id']}:"
-                   f"{row.get('episode_index_within_raw_track', 1)}")
+            pid = f"{name}:{row['raw_track_id']}:{row.get('episode_index_within_raw_track', 1)}"
             proposal_rows[pid] = row
         if "raw_tracks" in scan:
             raw_tracks[name] = {r["track_id"]: r for r in scan["raw_tracks"]}
     raw_tracks["two_second_global_later"] = raw_tracks["two_second_global"]
-    if (len(proposal_rows) != queue["proposal_count"] or
-            {r["proposal_id"] for r in context["proposals"]} !=
-            set(proposal_rows)):
+    if len(proposal_rows) != queue["proposal_count"] or {
+        r["proposal_id"] for r in context["proposals"]
+    } != set(proposal_rows):
         raise ValueError("Full proposal inventory mismatch")
-    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     fps = capture.get(cv2.CAP_PROP_FPS)
     if not capture.isOpened() or fps <= 0:
         raise ValueError("Source unreadable")
@@ -92,54 +94,67 @@ def main():
                 ok, frame = capture.read()
                 if not ok or frame.shape[:2] != (360, 640):
                     raise ValueError(f"Source decode failed: {pid}")
-                scored = score_candidates(
-                    frame, [{"bbox": by_time[time]["bbox"]}], model)[0]
-                samples.append({"time_s": time,
-                                "patch_score": round(scored["patch_score"], 6),
-                                "patch_accepted": scored["patch_accepted"]})
+                scored = score_candidates(frame, [{"bbox": by_time[time]["bbox"]}], model)[0]
+                samples.append(
+                    {
+                        "time_s": time,
+                        "patch_score": round(scored["patch_score"], 6),
+                        "patch_accepted": scored["patch_accepted"],
+                    }
+                )
             patch_positive = any(sample["patch_accepted"] for sample in samples)
-            tier = visual_cue_pair(item["frozen_paired_context_tier"],
-                                   patch_positive)
-            rows.append({
-                "proposal_id": pid,
-                "review_group_id": item["review_group_id"],
-                "context_tier": item["frozen_paired_context_tier"],
-                "sample_patch_scores": samples,
-                "any_positive_patch": patch_positive,
-                "visual_cue_pair_review_tier": tier,
-                "physical_throw_verified": False,
-                "simulation_ready": False,
-            })
+            tier = visual_cue_pair(item["frozen_paired_context_tier"], patch_positive)
+            rows.append(
+                {
+                    "proposal_id": pid,
+                    "review_group_id": item["review_group_id"],
+                    "context_tier": item["frozen_paired_context_tier"],
+                    "sample_patch_scores": samples,
+                    "any_positive_patch": patch_positive,
+                    "visual_cue_pair_review_tier": tier,
+                    "physical_throw_verified": False,
+                    "simulation_ready": False,
+                }
+            )
     finally:
         capture.release()
     prior = {row["proposal_id"]: row for row in reviewed["rows"]}
     for row in rows:
         previous = prior.get(row["proposal_id"])
-        if previous is not None and (row["sample_patch_scores"] != previous[
-                "sample_scores"] or row["any_positive_patch"] != previous[
-                    "any_positive_patch"]):
+        if previous is not None and (
+            row["sample_patch_scores"] != previous["sample_scores"]
+            or row["any_positive_patch"] != previous["any_positive_patch"]
+        ):
             raise ValueError(f"Reviewed patch score changed: {row['proposal_id']}")
     by_id = {row["proposal_id"]: row for row in rows}
     groups = []
     for group in queue["review_groups"]:
-        tiers = [by_id[pid]["visual_cue_pair_review_tier"]
-                 for pid in group["proposal_ids"]]
-        groups.append({"review_group_id": group["group_id"],
-                       "proposal_ids": group["proposal_ids"],
-                       "visual_cue_group_priority": group_visual_priority(tiers),
-                       "physical_event_verified": False})
+        tiers = [by_id[pid]["visual_cue_pair_review_tier"] for pid in group["proposal_ids"]]
+        groups.append(
+            {
+                "review_group_id": group["group_id"],
+                "proposal_ids": group["proposal_ids"],
+                "visual_cue_group_priority": group_visual_priority(tiers),
+                "physical_event_verified": False,
+            }
+        )
     tier_counts = Counter(row["visual_cue_pair_review_tier"] for row in rows)
     group_counts = Counter(row["visual_cue_group_priority"] for row in groups)
-    reviewed_counts = Counter((prior[row["proposal_id"]]["source_pixel_class"],
-                               row["visual_cue_pair_review_tier"])
-                              for row in rows if row["proposal_id"] in prior)
+    reviewed_counts = Counter(
+        (prior[row["proposal_id"]]["source_pixel_class"], row["visual_cue_pair_review_tier"])
+        for row in rows
+        if row["proposal_id"] in prior
+    )
     result = {
         "status": "full_match_frozen_visual_cue_pair_review_not_event_filter",
         "source_video_sha256": video_hash,
-        "input_sha256": {"queue": digest(QUEUE), "full_context": digest(CONTEXT),
-                         "reviewed_patch_transfer": digest(REVIEWED),
-                         "model": digest(MODEL),
-                         **{name: digest(path) for name, path in SCANS.items()}},
+        "input_sha256": {
+            "queue": digest(QUEUE),
+            "full_context": digest(CONTEXT),
+            "reviewed_patch_transfer": digest(REVIEWED),
+            "model": digest(MODEL),
+            **{name: digest(path) for name, path in SCANS.items()},
+        },
         "feature_code_sha256": digest(ROOT / "prototype/stone_patch_detector.py"),
         "patch_scorer_code_sha256": digest(ROOT / "prototype/cap_patch_verifier.py"),
         "cue_pair_code_sha256": digest(ROOT / "prototype/right_visual_cue_pair.py"),
@@ -151,7 +166,8 @@ def main():
         "group_review_priority_counts": dict(group_counts),
         "reviewed_source_class_by_tier": {
             cls: {tier: reviewed_counts[cls, tier] for tier in sorted(tier_counts)}
-            for cls in sorted({key[0] for key in reviewed_counts})},
+            for cls in sorted({key[0] for key in reviewed_counts})
+        },
         "proposals": rows,
         "review_groups": groups,
         "limitations": [
@@ -162,9 +178,16 @@ def main():
         ],
     }
     OUT.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"proposals": len(rows), "groups": len(groups),
-                      "proposal_tiers": dict(tier_counts),
-                      "group_priorities": dict(group_counts)}))
+    print(
+        json.dumps(
+            {
+                "proposals": len(rows),
+                "groups": len(groups),
+                "proposal_tiers": dict(tier_counts),
+                "group_priorities": dict(group_counts),
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

@@ -9,18 +9,24 @@ def group_candidate_passages(events, *, max_group_span_s=25):
         raise ValueError("Duplicate candidate ID")
     groups = []
     for event in ordered:
-        if (groups and event["colour"] == groups[-1]["colour"]
-                and event["view_motion"] == groups[-1]["view_motion"]
-                and event["crossing_time_s"] - groups[-1]["first_time_s"]
-                <= max_group_span_s):
+        if (
+            groups
+            and event["colour"] == groups[-1]["colour"]
+            and event["view_motion"] == groups[-1]["view_motion"]
+            and event["crossing_time_s"] - groups[-1]["first_time_s"] <= max_group_span_s
+        ):
             groups[-1]["member_ids"].append(event["id"])
             groups[-1]["last_time_s"] = event["crossing_time_s"]
         else:
-            groups.append({"colour": event["colour"],
-                           "view_motion": event["view_motion"],
-                           "first_time_s": event["crossing_time_s"],
-                           "last_time_s": event["crossing_time_s"],
-                           "member_ids": [event["id"]]})
+            groups.append(
+                {
+                    "colour": event["colour"],
+                    "view_motion": event["view_motion"],
+                    "first_time_s": event["crossing_time_s"],
+                    "last_time_s": event["crossing_time_s"],
+                    "member_ids": [event["id"]],
+                }
+            )
     for index, group in enumerate(groups, 1):
         group["group_id"] = f"G{index:03d}"
         group["physical_throw_verified"] = False

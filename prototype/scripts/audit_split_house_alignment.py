@@ -30,8 +30,10 @@ def unresolved_groups(rows):
     current = []
     for row in rows:
         if row["status"] == "house_paint_unresolved_review":
-            if current and (row["run_id"] != current[-1]["run_id"]
-                            or row["source_time_s"] - current[-1]["source_time_s"] != STEP_S):
+            if current and (
+                row["run_id"] != current[-1]["run_id"]
+                or row["source_time_s"] - current[-1]["source_time_s"] != STEP_S
+            ):
                 groups.append(current)
                 current = []
             current.append(row)
@@ -40,20 +42,25 @@ def unresolved_groups(rows):
             current = []
     if current:
         groups.append(current)
-    return [{"run_id": group[0]["run_id"],
-             "first_sample_s": group[0]["source_time_s"],
-             "last_sample_s": group[-1]["source_time_s"],
-             "sample_count": len(group),
-             "minimum_overlap": min(row["paint_reference_overlap"] for row in group)}
-            for group in groups]
+    return [
+        {
+            "run_id": group[0]["run_id"],
+            "first_sample_s": group[0]["source_time_s"],
+            "last_sample_s": group[-1]["source_time_s"],
+            "sample_count": len(group),
+            "minimum_overlap": min(row["paint_reference_overlap"] for row in group),
+        }
+        for group in groups
+    ]
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--video", type=Path, required=True)
     parser.add_argument("--timeline", type=Path, required=True)
-    parser.add_argument("--reference", nargs=2, action="append", required=True,
-                        metavar=("RUN_ID", "REFERENCE_JSON"))
+    parser.add_argument(
+        "--reference", nargs=2, action="append", required=True, metavar=("RUN_ID", "REFERENCE_JSON")
+    )
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     if args.output.exists():
@@ -62,8 +69,7 @@ def main():
     source_hash = digest(args.video)
     if timeline["source_sha256"] != source_hash:
         parser.error("Video and timeline fingerprints differ")
-    runs = {row["id"]: row for row in timeline["supported_runs"]
-            if row["layout"] == "split_2024"}
+    runs = {row["id"]: row for row in timeline["supported_runs"] if row["layout"] == "split_2024"}
     references = {}
     for run_id, raw_path in args.reference:
         path = Path(raw_path)
@@ -71,11 +77,13 @@ def main():
             parser.error("Duplicate or unsupported reference run")
         item = json.loads(path.read_text())
         mask_path = path.parent / item["paint_mask_image"]
-        if (item["source_sha256"] != source_hash
-                or item["timeline_sha256"] != digest(args.timeline)
-                or item["run_id"] != run_id
-                or item["run_interval_s"] != runs[run_id]["interval_s"]
-                or item["paint_mask_sha256"] != digest(mask_path)):
+        if (
+            item["source_sha256"] != source_hash
+            or item["timeline_sha256"] != digest(args.timeline)
+            or item["run_id"] != run_id
+            or item["run_interval_s"] != runs[run_id]["interval_s"]
+            or item["paint_mask_sha256"] != digest(mask_path)
+        ):
             parser.error(f"{run_id} reference lineage differs")
         mask = cv2.imread(str(mask_path), cv2.IMREAD_GRAYSCALE)
         if mask is None or item["temporal_median_house_ellipse"] is None:
@@ -83,8 +91,7 @@ def main():
         references[run_id] = (path, mask)
     if set(references) != set(runs):
         parser.error("Exactly one reference per supported run required")
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         parser.error("Unreadable source video")
     rows = []
@@ -101,13 +108,20 @@ def main():
                 if not ok or frame.shape != (360, 640, 3):
                     raise RuntimeError(f"Cannot decode 640x360 source at {t}")
                 score = paint_reference_overlap(frame, reference_mask)
-                nearby = [event["id"] for event in timeline["observed_events"]
-                          if abs(event["crossing_time_s"] - t) <= STEP_S]
-                rows.append({"run_id": run_id,
-                             "source_time_s": t,
-                             "paint_reference_overlap": round(score, 4),
-                             "status": sample_status(score, threshold=OVERLAP_THRESHOLD),
-                             "left_event_ids_within_5s": nearby})
+                nearby = [
+                    event["id"]
+                    for event in timeline["observed_events"]
+                    if abs(event["crossing_time_s"] - t) <= STEP_S
+                ]
+                rows.append(
+                    {
+                        "run_id": run_id,
+                        "source_time_s": t,
+                        "paint_reference_overlap": round(score, 4),
+                        "status": sample_status(score, threshold=OVERLAP_THRESHOLD),
+                        "left_event_ids_within_5s": nearby,
+                    }
+                )
     finally:
         cap.release()
     counts = dict(Counter(row["status"] for row in rows))
@@ -115,8 +129,9 @@ def main():
         "status": "five_second_right_house_paint_alignment_samples_not_continuous_coverage",
         "source_sha256": source_hash,
         "timeline_sha256": digest(args.timeline),
-        "reference_sha256_by_run": {run_id: digest(path) for run_id, (path, _) in
-                                    references.items()},
+        "reference_sha256_by_run": {
+            run_id: digest(path) for run_id, (path, _) in references.items()
+        },
         "feature_code_sha256": digest(ROOT / "prototype/split_house_reference.py"),
         "alignment_code_sha256": digest(ROOT / "prototype/split_house_alignment.py"),
         "runner_sha256": digest(Path(__file__)),
@@ -135,8 +150,15 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"samples": len(rows), "counts": counts,
-                      "unresolved_groups": result["unresolved_sample_groups"][:12]}))
+    print(
+        json.dumps(
+            {
+                "samples": len(rows),
+                "counts": counts,
+                "unresolved_groups": result["unresolved_sample_groups"][:12],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

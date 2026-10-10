@@ -34,21 +34,24 @@ def main():
     video = ROOT / plan["video_relative_path"]
     hard_path = ROOT / plan["hard_cuts_relative_path"]
     expected = plan["sha256"]
-    actual = {"video": digest(video), "hard_cuts": digest(hard_path),
-              "scene_code": digest(ROOT / "prototype/scene_cuts.py"),
-              "runner": digest(__file__)}
+    actual = {
+        "video": digest(video),
+        "hard_cuts": digest(hard_path),
+        "scene_code": digest(ROOT / "prototype/scene_cuts.py"),
+        "runner": digest(__file__),
+    }
     if actual != expected:
         raise ValueError("Frozen possible-edit plan input changed")
     hard = json.loads(hard_path.read_text())
-    if hard["source_sha256"] != actual["video"] or hard["source_interval_s"] != plan[
-        "source_interval_s"
-    ]:
+    if (
+        hard["source_sha256"] != actual["video"]
+        or hard["source_interval_s"] != plan["source_interval_s"]
+    ):
         raise ValueError("Hard-cut artifact does not cover planned source")
     reserved = json.loads((ROOT / "validation/unseen-end/reservation.json").read_text())
     if actual["video"] == reserved["source_sha256"]:
         raise ValueError("Reserved independent source selected")
-    capture = cv2.VideoCapture(str(video), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     fps = capture.get(cv2.CAP_PROP_FPS)
     step = round(fps / plan["sample_rate_hz"])
     if fps / step != hard["sample_rate_hz"]:
@@ -73,8 +76,10 @@ def main():
             evidence = scene_cut_evidence(previous, frame)
             if evidence["hard_cut"]:
                 observed_hard.append(time_s)
-            if (evidence["gray_change"] >= plan["minimum_gray_change"] and
-                    evidence["hist_distance"] >= plan["minimum_hist_distance"]):
+            if (
+                evidence["gray_change"] >= plan["minimum_gray_change"]
+                and evidence["hist_distance"] >= plan["minimum_hist_distance"]
+            ):
                 possible.append({"time_s": time_s, **evidence})
         previous = frame
         sample_count += 1
@@ -88,12 +93,22 @@ def main():
     for row in possible:
         time_s = row["time_s"]
         shot_index = bisect_right(hard_times, time_s)
-        nearest = min((abs(time_s - hard_times[i])
-                       for i in (shot_index - 1, shot_index)
-                       if 0 <= i < len(hard_times)), default=float("inf"))
+        nearest = min(
+            (
+                abs(time_s - hard_times[i])
+                for i in (shot_index - 1, shot_index)
+                if 0 <= i < len(hard_times)
+            ),
+            default=float("inf"),
+        )
         if nearest > plan["hard_cut_exclusion_s"]:
-            novel.append({**row, "shot_id": f"S{shot_index + 1:02d}",
-                          "distance_to_nearest_hard_cut_s": round(nearest, 3)})
+            novel.append(
+                {
+                    **row,
+                    "shot_id": f"S{shot_index + 1:02d}",
+                    "distance_to_nearest_hard_cut_s": round(nearest, 3),
+                }
+            )
     shot_counts = Counter(row["shot_id"] for row in novel)
     output = {
         "status": "first_full_source_only_possible_edit_diagnostic_not_verified_cut_recall",
@@ -117,9 +132,15 @@ def main():
         ],
     }
     args.output.write_text(json.dumps(output, indent=2) + "\n")
-    print({"source": plan["source_id"], "hard": len(observed_hard),
-           "possible": len(possible), "novel": len(novel),
-           "affected_shots": len(shot_counts)})
+    print(
+        {
+            "source": plan["source_id"],
+            "hard": len(observed_hard),
+            "possible": len(possible),
+            "novel": len(novel),
+            "affected_shots": len(shot_counts),
+        }
+    )
 
 
 if __name__ == "__main__":

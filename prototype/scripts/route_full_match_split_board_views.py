@@ -31,12 +31,19 @@ def main():
     routed["runner_sha256"] = digest(Path(__file__))
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(routed, indent=2) + "\n")
-    print(json.dumps({"source_id": routed["source_id"],
-                      "view_counts": routed["conditional_receiving_view_counts"],
-                      "abstentions": routed["left_candidate_count"] - sum(
-                          routed["conditional_receiving_view_counts"].values()),
-                      "prior_right_scan_wrong_view_conditional":
-                          routed["existing_right_scan_wrong_view_count_conditional"]}))
+    print(
+        json.dumps(
+            {
+                "source_id": routed["source_id"],
+                "view_counts": routed["conditional_receiving_view_counts"],
+                "abstentions": routed["left_candidate_count"]
+                - sum(routed["conditional_receiving_view_counts"].values()),
+                "prior_right_scan_wrong_view_conditional": routed[
+                    "existing_right_scan_wrong_view_count_conditional"
+                ],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

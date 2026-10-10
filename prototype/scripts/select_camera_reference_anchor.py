@@ -27,10 +27,11 @@ def cluster_registered(rows, max_corner_distance_px):
             continue
         corners = np.asarray(row["current_corners_px"])
         for cluster in clusters:
-            if all(np.max(np.linalg.norm(
-                    corners - np.asarray(member["current_corners_px"]),
-                    axis=1)) <= max_corner_distance_px
-                   for member in cluster):
+            if all(
+                np.max(np.linalg.norm(corners - np.asarray(member["current_corners_px"]), axis=1))
+                <= max_corner_distance_px
+                for member in cluster
+            ):
                 cluster.append(row)
                 break
         else:
@@ -41,11 +42,10 @@ def cluster_registered(rows, max_corner_distance_px):
 def select_anchor(clusters):
     if not clusters:
         return None, None
-    chosen = sorted(clusters,
-                    key=lambda cluster: (-len(cluster), cluster[0]["source_time_s"]))[0]
-    anchor = sorted(chosen,
-                    key=lambda row: (-row["inliers"], row["rmse_px"],
-                                     row["source_time_s"]))[0]
+    chosen = sorted(clusters, key=lambda cluster: (-len(cluster), cluster[0]["source_time_s"]))[0]
+    anchor = sorted(
+        chosen, key=lambda row: (-row["inliers"], row["rmse_px"], row["source_time_s"])
+    )[0]
     return chosen, anchor
 
 
@@ -75,8 +75,7 @@ def main():
     cal.H = np.asarray(json.loads(rect_path.read_text())[args.view]["refined_H"])
     x0, y0, x1, y1 = view["region"]
     corners = np.asarray([[x0, y0], [x1, y0], [x1, y1], [x0, y1]], dtype=float)
-    capture = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not capture.isOpened():
         parser.error("Cannot open video")
     fps = capture.get(cv2.CAP_PROP_FPS)
@@ -87,17 +86,20 @@ def main():
             t = args.interval_start + args.phase_s + n * args.period_s
             if t >= args.interval_end:
                 break
-            capture.set(cv2.CAP_PROP_POS_FRAMES,
-                        round((t - args.source_offset) * fps))
+            capture.set(cv2.CAP_PROP_POS_FRAMES, round((t - args.source_offset) * fps))
             ok, frame = capture.read()
             if not ok:
                 raise RuntimeError(f"Cannot decode source time {t}")
             _, registration = cal.register(
-                frame, max_corner_displacement_px=args.max_corner_displacement_px)
-            row = {"source_time_s": t, "status": registration["status"],
-                   "reason": registration.get("reason"),
-                   "inliers": registration.get("inliers"),
-                   "rmse_px": registration.get("rmse_px")}
+                frame, max_corner_displacement_px=args.max_corner_displacement_px
+            )
+            row = {
+                "source_time_s": t,
+                "status": registration["status"],
+                "reason": registration.get("reason"),
+                "inliers": registration.get("inliers"),
+                "rmse_px": registration.get("rmse_px"),
+            }
             if registration["status"] == "registered":
                 A = np.asarray(registration["reference_to_current"])
                 row["current_corners_px"] = project(A, corners).tolist()
@@ -137,8 +139,12 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(output, indent=2) + "\n")
-    print("selected anchor", output["selected_anchor_time_s"],
-          "cluster size", output["selected_cluster_size"])
+    print(
+        "selected anchor",
+        output["selected_anchor_time_s"],
+        "cluster size",
+        output["selected_cluster_size"],
+    )
 
 
 if __name__ == "__main__":

@@ -7,14 +7,15 @@ end, deletes a candidate, or treats a marker timestamp as a delivery time.
 from bisect import bisect_left
 
 
-def annotate_display_context(events, samples, *, max_bracket_s=30.0,
-                             ignored_marker_times_s=()):
+def annotate_display_context(events, samples, *, max_bracket_s=30.0, ignored_marker_times_s=()):
     if max_bracket_s <= 0:
         raise ValueError("Maximum bracket distance must be positive")
     ignored = set(ignored_marker_times_s)
-    hits = [(row["time_s"], row["marker"]["end"])
-            for row in samples
-            if row.get("marker") is not None and row["time_s"] not in ignored]
+    hits = [
+        (row["time_s"], row["marker"]["end"])
+        for row in samples
+        if row.get("marker") is not None and row["time_s"] not in ignored
+    ]
     if any(right[0] <= left[0] for left, right in zip(hits, hits[1:])):
         raise ValueError("Marker observations must have increasing times")
     times = [time_s for time_s, _ in hits]
@@ -36,13 +37,15 @@ def annotate_display_context(events, samples, *, max_bracket_s=30.0,
         else:
             status = "display_context_unknown"
             displayed_end = None
-        result.append({
-            "event_id": event["id"],
-            "crossing_time_s": t,
-            "display_context_status": status,
-            "displayed_end": displayed_end,
-            "left_marker": {"time_s": left[0], "end": left[1]} if left else None,
-            "right_marker": {"time_s": right[0], "end": right[1]} if right else None,
-            "physical_end": None,
-        })
+        result.append(
+            {
+                "event_id": event["id"],
+                "crossing_time_s": t,
+                "display_context_status": status,
+                "displayed_end": displayed_end,
+                "left_marker": {"time_s": left[0], "end": left[1]} if left else None,
+                "right_marker": {"time_s": right[0], "end": right[1]} if right else None,
+                "physical_end": None,
+            }
+        )
     return result

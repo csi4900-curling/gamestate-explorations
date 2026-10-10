@@ -22,8 +22,9 @@ def main():
         parser.error("Display-context output already exists")
     raw = json.loads(args.raw.read_text())
     scan = json.loads(args.marker_scan.read_text())
-    if (raw["source_sha256"] != scan["video_sha256"] or
-            scan["video_sha256"] != file_sha256(Path(scan["video_path"]))):
+    if raw["source_sha256"] != scan["video_sha256"] or scan["video_sha256"] != file_sha256(
+        Path(scan["video_path"])
+    ):
         parser.error("Candidate and marker source fingerprints differ")
     ids = [row["id"] for row in raw["events"]]
     if len(ids) != len(set(ids)):
@@ -41,8 +42,7 @@ def main():
         "aligner_sha256": file_sha256(ROOT / "prototype/end_display_context.py"),
         "runner_sha256": file_sha256(Path(__file__)),
         "candidate_count": len(rows),
-        "context_status_counts": dict(Counter(row["display_context_status"]
-                                              for row in rows)),
+        "context_status_counts": dict(Counter(row["display_context_status"] for row in rows)),
         "events": rows,
         "limitations": [
             "Displayed end can lag a physical delivery; no physical end is assigned.",

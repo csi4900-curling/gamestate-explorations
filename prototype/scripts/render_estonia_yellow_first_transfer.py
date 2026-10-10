@@ -17,7 +17,7 @@ TIMES = (1738, 1753, 1754, 1755, 1756, 1757, 1758, 1759)
 def digest(path):
     h = sha256()
     with path.open("rb") as stream:
-        for chunk in iter(lambda: stream.read(1024*1024), b""):
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
             h.update(chunk)
     return h.hexdigest()
 
@@ -30,33 +30,31 @@ def main():
     if len(paths) != 1:
         raise ValueError("Expected one body path")
     by_time = {p["time_s"]: p for p in paths[0]["points"]}
-    cap = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     panels = []
     try:
         for t in TIMES:
-            cap.set(cv2.CAP_PROP_POS_MSEC, (t-1650)*1000)
+            cap.set(cv2.CAP_PROP_POS_MSEC, (t - 1650) * 1000)
             ok, frame = cap.read()
             if not ok or frame.shape[:2] != (1080, 1920):
                 raise RuntimeError(f"Could not decode {t}")
-            view = cv2.resize(frame[:, 960:], (480, 540),
-                              interpolation=cv2.INTER_AREA)
+            view = cv2.resize(frame[:, 960:], (480, 540), interpolation=cv2.INTER_AREA)
             if t in by_time:
                 x, y = by_time[t]["center_1080p_px"]
-                x, y = round((x-960)/2), round(y/2)
-                cv2.rectangle(view, (x-20, y-13), (x+20, y+13),
-                              (255, 0, 255), 2)
+                x, y = round((x - 960) / 2), round(y / 2)
+                cv2.rectangle(view, (x - 20, y - 13), (x + 20, y + 13), (255, 0, 255), 2)
             cv2.rectangle(view, (0, 0), (480, 38), (10, 20, 30), -1)
             label = f"{t}s {'body match' if t in by_time else 'no body match'}"
-            cv2.putText(view, label, (8, 27), cv2.FONT_HERSHEY_SIMPLEX,
-                        .62, (255, 255, 255), 2)
+            cv2.putText(view, label, (8, 27), cv2.FONT_HERSHEY_SIMPLEX, 0.62, (255, 255, 255), 2)
             panels.append(view)
     finally:
         cap.release()
     image_path = BASE / "yellow-contour-1720-1800-first-source-review.jpg"
-    if not cv2.imwrite(str(image_path),
-                       np.vstack([np.hstack(panels[:4]), np.hstack(panels[4:])]),
-                       [cv2.IMWRITE_JPEG_QUALITY, 90]):
+    if not cv2.imwrite(
+        str(image_path),
+        np.vstack([np.hstack(panels[:4]), np.hstack(panels[4:])]),
+        [cv2.IMWRITE_JPEG_QUALITY, 90],
+    ):
         raise RuntimeError("Could not write source review")
     manifest = {
         "status": "same_agent_postresult_direction_source_review",
@@ -69,7 +67,8 @@ def main():
         "physical_throw_identity_independently_verified": False,
     }
     (BASE / "yellow-contour-1720-1800-first-source-review.json").write_text(
-        json.dumps(manifest, indent=2) + "\n")
+        json.dumps(manifest, indent=2) + "\n"
+    )
     print(image_path.relative_to(ROOT))
 
 

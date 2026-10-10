@@ -21,10 +21,16 @@ from stone_patch_detector import detect_stones, load_model
 BASE = ROOT / "validation/throw-event-benchmark/paralympics-2022-canada-norway"
 VIDEO = BASE / "source.mp4"
 FIRST = BASE / "FIRST-TRANSFER.json"
-SHOTS = ROOT / "validation/curlobserver-learned-probe/canada-norway-full-transfer/selected-learned-motion.json"
+SHOTS = (
+    ROOT
+    / "validation/curlobserver-learned-probe/canada-norway-full-transfer/selected-learned-motion.json"
+)
 OLD = ROOT / "validation/curlobserver-learned-probe/model-v1/model.npz"
 NEW = ROOT / "validation/curlobserver-learned-probe/public-tracking-v2/model.npz"
-OUTPUT = ROOT / "validation/curlobserver-learned-probe/public-tracking-v2/norway-end2-targeted-transfer.json"
+OUTPUT = (
+    ROOT
+    / "validation/curlobserver-learned-probe/public-tracking-v2/norway-end2-targeted-transfer.json"
+)
 
 # Four known counter-colour conflicts and four agreement controls. Selection
 # deliberately uses the exposed first transfer; it is not a held-out test.
@@ -58,8 +64,7 @@ def main():
     if not all(key in by_match and key in by_id for key in IDS):
         raise ValueError("Declared frozen end-2 controls changed")
     models = {"frozen_v1": load_model(OLD), "public_clip_v2": load_model(NEW)}
-    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not capture.isOpened():
         raise ValueError("Cannot open source")
     fps = capture.get(cv2.CAP_PROP_FPS)
@@ -89,30 +94,41 @@ def main():
                 per_model[model_name] = boxes
                 for box in boxes:
                     x, y, width, height = box["bbox"]
-                    observations[model_name][box["colour"]].setdefault(t, []).append({
-                        "pixel": [x + width / 2, y + height / 2],
-                        "bbox": box["bbox"], "confidence": box["confidence"]})
+                    observations[model_name][box["colour"]].setdefault(t, []).append(
+                        {
+                            "pixel": [x + width / 2, y + height / 2],
+                            "bbox": box["bbox"],
+                            "confidence": box["confidence"],
+                        }
+                    )
                     counts[model_name][box["colour"]] += 1
                 counts[model_name]["frames"] += 1
             frame_rows.append({"time_s": t, "detections": per_model})
         model_rows = {}
         for model_name in models:
-            sampled = {colour: sorted(observations[model_name][colour].items())
-                       for colour in ("red", "yellow")}
+            sampled = {
+                colour: sorted(observations[model_name][colour].items())
+                for colour in ("red", "yellow")
+            }
             tracks = tracks_for_shot(sampled, shot_id)
             model_rows[model_name] = {
                 "frame_count": counts[model_name]["frames"],
-                "box_counts": {colour: counts[model_name][colour]
-                               for colour in ("red", "yellow")},
+                "box_counts": {colour: counts[model_name][colour] for colour in ("red", "yellow")},
                 "supported_track_counts": dict(Counter(row["colour"] for row in tracks)),
                 "supported_tracks": tracks,
             }
         match = by_match[shot_id]
-        rows.append({"shot_id": shot_id, "interval_s": interval,
-                     "frozen_visual_colour": match["visual_colour"],
-                     "counter_proxy_colour": match["counter_colour"],
-                     "counter_pair_official_shot_id": match["official_shot_id"],
-                     "model_evidence": model_rows, "sampled_frames": frame_rows})
+        rows.append(
+            {
+                "shot_id": shot_id,
+                "interval_s": interval,
+                "frozen_visual_colour": match["visual_colour"],
+                "counter_proxy_colour": match["counter_colour"],
+                "counter_pair_official_shot_id": match["official_shot_id"],
+                "model_evidence": model_rows,
+                "sampled_frames": frame_rows,
+            }
+        )
     capture.release()
     output = {
         "status": "exposed_development_targeted_model_swap_not_event_score",
@@ -134,9 +150,11 @@ def main():
     }
     OUTPUT.write_text(json.dumps(output, indent=2) + "\n")
     for row in rows:
-        print(row["shot_id"], row["counter_proxy_colour"],
-              {name: data["supported_track_counts"]
-               for name, data in row["model_evidence"].items()})
+        print(
+            row["shot_id"],
+            row["counter_proxy_colour"],
+            {name: data["supported_track_counts"] for name, data in row["model_evidence"].items()},
+        )
 
 
 if __name__ == "__main__":

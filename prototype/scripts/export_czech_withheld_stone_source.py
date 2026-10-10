@@ -38,19 +38,19 @@ def main():
     decision_by_id = {row["id"]: row for row in events["decisions"]}
     if any(row["id"] in TIMES for row in events["events"]):
         raise ValueError("A reviewed case became context-confirmed")
-    cap = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         raise ValueError("Source video unreadable")
     fps = cap.get(cv2.CAP_PROP_FPS)
     try:
         for id, times in TIMES.items():
             event, decision = event_by_id[id], decision_by_id[id]
-            if (decision["status"] != "unconfirmed" or
-                    decision["reason"] != "large_surrounding_motion"):
+            if (
+                decision["status"] != "unconfirmed"
+                or decision["reason"] != "large_surrounding_motion"
+            ):
                 raise ValueError(f"{id} context decision changed")
-            points = {point["time_s"]: point for point in
-                      event["observed_track_points"]}
+            points = {point["time_s"]: point for point in event["observed_track_points"]}
             if any(t not in points for t in times[:3]):
                 raise ValueError(f"{id} expected raw points missing")
             out = outputs[id]
@@ -65,12 +65,16 @@ def main():
                 if not cv2.imwrite(str(path), frame):
                     raise ValueError(f"Cannot write {path}")
                 point = points.get(time_s)
-                frames.append({"source_time_s": time_s,
-                               "video_frame_index": int(cap.get(
-                                   cv2.CAP_PROP_POS_FRAMES)) - 1,
-                               "file": path.name, "sha256": digest(path),
-                               "raw_track_pixel": point["pixel"] if point else None,
-                               "raw_track_bbox": point["bbox"] if point else None})
+                frames.append(
+                    {
+                        "source_time_s": time_s,
+                        "video_frame_index": int(cap.get(cv2.CAP_PROP_POS_FRAMES)) - 1,
+                        "file": path.name,
+                        "sha256": digest(path),
+                        "raw_track_pixel": point["pixel"] if point else None,
+                        "raw_track_bbox": point["bbox"] if point else None,
+                    }
+                )
             manifest = {
                 "status": "unmarked_source_frames_for_agent_review_not_independent_labels",
                 "source_video_sha256": raw["source_sha256"],
@@ -82,12 +86,10 @@ def main():
                 "context_decision": decision,
                 "frames": frames,
             }
-            (out / "manifest.json").write_text(json.dumps(
-                manifest, indent=2) + "\n")
+            (out / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
     finally:
         cap.release()
-    print(json.dumps({"candidates": list(TIMES),
-                      "source_frames": sum(map(len, TIMES.values()))}))
+    print(json.dumps({"candidates": list(TIMES), "source_frames": sum(map(len, TIMES.values()))}))
 
 
 if __name__ == "__main__":

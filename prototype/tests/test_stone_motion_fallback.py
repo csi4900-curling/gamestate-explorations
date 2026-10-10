@@ -92,10 +92,11 @@ class StoneMotionFallbackTests(unittest.TestCase):
                 cv2.circle(frame, (x, 207), 6, (0, 0, 190), -1)
             frames.append(frame)
         uncut = verify_stone_motion_in_interval(
-            FrameCapture(frames), 1, colour="red", start_s=0, end_s=8)
+            FrameCapture(frames), 1, colour="red", start_s=0, end_s=8
+        )
         cut_aware = verify_stone_motion_in_interval(
-            FrameCapture(frames), 1, colour="red", start_s=0, end_s=8,
-            detect_hard_cuts=True)
+            FrameCapture(frames), 1, colour="red", start_s=0, end_s=8, detect_hard_cuts=True
+        )
         self.assertEqual(len(uncut["tracks"]), 1)
         self.assertEqual(cut_aware["hard_cut_times_s"], [4.0])
         self.assertEqual(len(cut_aware["tracks"]), 2)

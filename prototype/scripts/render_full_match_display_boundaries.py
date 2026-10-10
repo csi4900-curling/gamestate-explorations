@@ -30,12 +30,13 @@ def main():
     source_hash = digest(args.video)
     if source_hash != joined["source_sha256"]:
         parser.error("Source fingerprints differ")
-    targets = [row for row in joined["raw_candidates"]
-               if row["tier"] == "screen_provisional" and
-               row["broadcast_display_context"]["display_context_status"] ==
-               "bracketed_display_change"]
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    targets = [
+        row
+        for row in joined["raw_candidates"]
+        if row["tier"] == "screen_provisional"
+        and row["broadcast_display_context"]["display_context_status"] == "bracketed_display_change"
+    ]
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         parser.error("Cannot open video")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -55,28 +56,31 @@ def main():
                     raise RuntimeError(f"Cannot decode source second {second}")
                 tile = cv2.resize(frame, (480, 270))
                 cv2.rectangle(tile, (0, 0), (100, 26), (0, 0, 0), -1)
-                cv2.putText(tile, str(second), (8, 19),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 1)
+                cv2.putText(
+                    tile, str(second), (8, 19), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 1
+                )
                 tiles.append(tile)
-                frames.append({"source_time_s": second,
-                               "decoded_frame_index": frame_index})
+                frames.append({"source_time_s": second, "decoded_frame_index": frame_index})
             while len(tiles) % 3:
                 tiles.append(np.zeros_like(tiles[0]))
-            sheet = np.vstack([np.hstack(tiles[i:i + 3])
-                               for i in range(0, len(tiles), 3)])
+            sheet = np.vstack([np.hstack(tiles[i : i + 3]) for i in range(0, len(tiles), 3)])
             name = target["candidate_id"].lower() + "-display-change.jpg"
             path = args.output_dir / name
             if not cv2.imwrite(str(path), sheet):
                 raise RuntimeError(f"Cannot write {path}")
-            rows.append({"candidate_id": target["candidate_id"],
-                         "passage_time_s": t,
-                         "colour_claim": target["colour_claim"],
-                         "left_marker": target["broadcast_display_context"]["left_marker"],
-                         "right_marker": target["broadcast_display_context"]["right_marker"],
-                         "frames": frames,
-                         "sheet": name,
-                         "sheet_sha256": digest(path),
-                         "physical_end_identity_verified": False})
+            rows.append(
+                {
+                    "candidate_id": target["candidate_id"],
+                    "passage_time_s": t,
+                    "colour_claim": target["colour_claim"],
+                    "left_marker": target["broadcast_display_context"]["left_marker"],
+                    "right_marker": target["broadcast_display_context"]["right_marker"],
+                    "frames": frames,
+                    "sheet": name,
+                    "sheet_sha256": digest(path),
+                    "physical_end_identity_verified": False,
+                }
+            )
     finally:
         cap.release()
     output = {
@@ -94,8 +98,11 @@ def main():
         ],
     }
     (args.output_dir / "manifest.json").write_text(json.dumps(output, indent=2) + "\n")
-    print(json.dumps({"targets": len(rows),
-                      "sampled_frames": sum(len(row["frames"]) for row in rows)}))
+    print(
+        json.dumps(
+            {"targets": len(rows), "sampled_frames": sum(len(row["frames"]) for row in rows)}
+        )
+    )
 
 
 if __name__ == "__main__":

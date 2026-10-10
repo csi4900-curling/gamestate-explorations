@@ -1,7 +1,6 @@
 import numpy as np
 
-from prototype.highres_underpoint_context import (
-    review_tier, underpoint_nonice_fraction)
+from prototype.highres_underpoint_context import review_tier, underpoint_nonice_fraction
 
 
 def test_scaled_underpoint_measures_below_the_body_and_abstains_at_frame_edge():

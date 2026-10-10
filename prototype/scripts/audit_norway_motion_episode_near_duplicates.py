@@ -52,8 +52,12 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(result, indent=2) + "\n")
-    print({"possible_duplicate_pair_count": len(pairs),
-           "episode_pairs": [row["episode_ids"] for row in pairs]})
+    print(
+        {
+            "possible_duplicate_pair_count": len(pairs),
+            "episode_pairs": [row["episode_ids"] for row in pairs],
+        }
+    )
 
 
 if __name__ == "__main__":

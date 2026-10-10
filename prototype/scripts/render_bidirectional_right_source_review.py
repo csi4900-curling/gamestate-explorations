@@ -18,10 +18,14 @@ def digest(path):
 
 
 def matching_window_ids(proposal, reference):
-    return [event["id"] for event in reference["events"]
-            if event["colour"] == proposal["colour_claim"]
-            and event["delivery_interval_s"][0] <= proposal["passage"]["time_s"] <=
-            event["delivery_interval_s"][1]]
+    return [
+        event["id"]
+        for event in reference["events"]
+        if event["colour"] == proposal["colour_claim"]
+        and event["delivery_interval_s"][0]
+        <= proposal["passage"]["time_s"]
+        <= event["delivery_interval_s"][1]
+    ]
 
 
 def main():
@@ -34,9 +38,11 @@ def main():
     probe = json.loads(args.probe.read_text())
     reference = json.loads(args.reference.read_text())
     source_hash = digest(args.video)
-    if (probe["source_sha256"] != source_hash
-            or reference["source_sha256"] != source_hash
-            or probe["coarse_reference_sha256"] != digest(args.reference)):
+    if (
+        probe["source_sha256"] != source_hash
+        or reference["source_sha256"] != source_hash
+        or probe["coarse_reference_sha256"] != digest(args.reference)
+    ):
         parser.error("Source or coarse-reference fingerprints differ")
     new_windows = set(probe["newly_covered_coarse_window_ids"])
     selected = []
@@ -44,8 +50,7 @@ def main():
         ids = matching_window_ids(proposal, reference)
         if not ids or new_windows.intersection(ids):
             selected.append((proposal, ids))
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         parser.error("Cannot open source video")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -53,14 +58,16 @@ def main():
     sheets, rows = [], []
     try:
         for start in range(0, len(selected), 5):
-            group = selected[start:start + 5]
+            group = selected[start : start + 5]
             sheet = np.full((230 * len(group), 960, 3), 20, dtype=np.uint8)
             for i, (proposal, window_ids) in enumerate(group):
                 points = proposal["observed_prefix_points"]
                 passage_t = proposal["passage"]["time_s"]
-                chosen = [points[0],
-                          min(points, key=lambda point: abs(point["time_s"] - passage_t)),
-                          points[-1]]
+                chosen = [
+                    points[0],
+                    min(points, key=lambda point: abs(point["time_s"] - passage_t)),
+                    points[-1],
+                ]
                 samples = []
                 for col, point in enumerate(chosen):
                     t = point["time_s"]
@@ -73,26 +80,45 @@ def main():
                     x, y = point["pixel"]
                     cv2.circle(crop, (round(x - 320), round(y - 120)), 8, (0, 255, 0), 2)
                     top, left = i * 230, col * 320
-                    sheet[top + 20:top + 230, left:left + 320] = crop
-                    cv2.putText(sheet, f"{proposal['raw_track_id']} {t:.1f}s",
-                                (left + 5, top + 16), cv2.FONT_HERSHEY_SIMPLEX,
-                                .44, (255, 255, 255), 1)
-                    samples.append({"source_time_s": t,
-                                    "decoded_frame_index": frame_index,
-                                    "tracked_pixel": point["pixel"]})
-                rows.append({"raw_track_id": proposal["raw_track_id"],
-                             "direction": proposal["direction"],
-                             "coarse_window_ids": window_ids,
-                             "selection_reason": ("new_coarse_window" if window_ids else
-                                                  "outside_all_coarse_windows"),
-                             "sheet": f"sheet-{start // 5 + 1:02}.jpg",
-                             "samples": samples})
+                    sheet[top + 20 : top + 230, left : left + 320] = crop
+                    cv2.putText(
+                        sheet,
+                        f"{proposal['raw_track_id']} {t:.1f}s",
+                        (left + 5, top + 16),
+                        cv2.FONT_HERSHEY_SIMPLEX,
+                        0.44,
+                        (255, 255, 255),
+                        1,
+                    )
+                    samples.append(
+                        {
+                            "source_time_s": t,
+                            "decoded_frame_index": frame_index,
+                            "tracked_pixel": point["pixel"],
+                        }
+                    )
+                rows.append(
+                    {
+                        "raw_track_id": proposal["raw_track_id"],
+                        "direction": proposal["direction"],
+                        "coarse_window_ids": window_ids,
+                        "selection_reason": (
+                            "new_coarse_window" if window_ids else "outside_all_coarse_windows"
+                        ),
+                        "sheet": f"sheet-{start // 5 + 1:02}.jpg",
+                        "samples": samples,
+                    }
+                )
             path = args.output_dir / f"sheet-{start // 5 + 1:02}.jpg"
             if not cv2.imwrite(str(path), sheet):
                 raise RuntimeError(f"Could not write {path}")
-            sheets.append({"file": path.name, "sha256": digest(path),
-                           "raw_track_ids": [proposal["raw_track_id"]
-                                             for proposal, _ in group]})
+            sheets.append(
+                {
+                    "file": path.name,
+                    "sha256": digest(path),
+                    "raw_track_ids": [proposal["raw_track_id"] for proposal, _ in group],
+                }
+            )
     finally:
         cap.release()
     result = {

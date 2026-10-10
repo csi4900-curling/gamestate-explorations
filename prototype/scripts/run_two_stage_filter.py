@@ -48,10 +48,15 @@ def measure_candidates(video, events):
         for event in events:
             t = event["crossing_time_s"]
             x, y = event["crossing_x_px"], passage_y(event)
-            rows.append({
-                "id": event["id"], "time_s": t, "x_px": x, "y_px": y,
-                **motion_context_features(frame_at(t - 0.25), frame_at(t + 0.25), x=x, y=y),
-            })
+            rows.append(
+                {
+                    "id": event["id"],
+                    "time_s": t,
+                    "x_px": x,
+                    "y_px": y,
+                    **motion_context_features(frame_at(t - 0.25), frame_at(t + 0.25), x=x, y=y),
+                }
+            )
     finally:
         cap.release()
     return rows
@@ -68,16 +73,19 @@ def main():
     source = json.loads(args.candidates.read_text())
     configs = source.get("config")
     configs = configs if isinstance(configs, list) else [configs]
-    if not configs or any(not isinstance(config, dict) or config.get("roi") != [40, 4, 280, 116]
-                          for config in configs):
+    if not configs or any(
+        not isinstance(config, dict) or config.get("roi") != [40, 4, 280, 116] for config in configs
+    ):
         parser.error("Only the known 2024 split-screen departure ROI is supported")
     digest = file_sha256(args.video)
     if digest != source["source_sha256"]:
         parser.error("Video fingerprint does not match candidates")
     reserved = json.loads((ROOT / "validation/unseen-end/reservation.json").read_text())
-    if (digest == reserved["source_sha256"] or
-            args.video.resolve() == (ROOT / "validation/unseen-end/source.mp4").resolve() or
-            any(source["source_id"] in row["video_url"] for row in reserved["reserved_rows"])):
+    if (
+        digest == reserved["source_sha256"]
+        or args.video.resolve() == (ROOT / "validation/unseen-end/source.mp4").resolve()
+        or any(source["source_id"] in row["video_url"] for row in reserved["reserved_rows"])
+    ):
         parser.error("This source is reserved for independent evaluation")
     rows = measure_candidates(args.video, source["events"])
     decisions = confirm_span_context(source["events"], rows)

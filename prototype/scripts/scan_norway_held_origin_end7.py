@@ -41,10 +41,12 @@ def main():
     frozen_decision = json.loads(FROZEN_DECISION.read_text())
     if routed["source_sha256"] != source_hash:
         raise ValueError("Source mismatch")
-    if (frozen_held["cue_code_sha256"] != digest(ROOT / "prototype/held_origin_cue.py")
-            or frozen_held["model_sha256"] != digest(MODEL)
-            or frozen_decision["decision_code_sha256"] != digest(
-                ROOT / "prototype/held_origin_decision.py")):
+    if (
+        frozen_held["cue_code_sha256"] != digest(ROOT / "prototype/held_origin_cue.py")
+        or frozen_held["model_sha256"] != digest(MODEL)
+        or frozen_decision["decision_code_sha256"]
+        != digest(ROOT / "prototype/held_origin_decision.py")
+    ):
         raise ValueError("Held cue, decision or cap model changed after end six")
     if len(routed["decisions"]) != 17:
         raise ValueError("Predeclared end-seven origin count changed")
@@ -52,8 +54,7 @@ def main():
     if source_hash == reserved["source_sha256"]:
         raise ValueError("Reserved independent source is not development data")
     model = load_model(MODEL)
-    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     fps = capture.get(cv2.CAP_PROP_FPS)
     step = round(fps / 5)
     if fps <= 0 or step < 1:
@@ -75,19 +76,28 @@ def main():
             t = round(frame_index / fps, 3)
             candidates = []
             for colour in ("red", "yellow"):
-                raw = stone_cap_candidates(frame, colour,
-                                           allow_bright_body=True,
-                                           allow_large_caps=True)
+                raw = stone_cap_candidates(
+                    frame, colour, allow_bright_body=True, allow_large_caps=True
+                )
                 scored = score_candidates(frame, raw, model)
-                candidates.extend(dict(row, colour=colour)
-                                  for row in central_cap_candidates(scored, event["side"]))
+                candidates.extend(
+                    dict(row, colour=colour)
+                    for row in central_cap_candidates(scored, event["side"])
+                )
             observations.append((t, candidates))
         evidence = summarize_held_origin(observations)
-        rows.append({"shot_id": event["shot_id"], "interval_s": event["interval_s"],
-                     "side": event["side"], "sampled_frames": len(observations),
-                     "evidence": evidence,
-                     "samples": [{"time_s": t, "candidates": candidates}
-                                 for t, candidates in observations]})
+        rows.append(
+            {
+                "shot_id": event["shot_id"],
+                "interval_s": event["interval_s"],
+                "side": event["side"],
+                "sampled_frames": len(observations),
+                "evidence": evidence,
+                "samples": [
+                    {"time_s": t, "candidates": candidates} for t, candidates in observations
+                ],
+            }
+        )
         if len(rows) % 5 == 0:
             print(f"Scanned {len(rows)}/{len(routed['decisions'])} origin shots", flush=True)
     capture.release()
@@ -111,11 +121,19 @@ def main():
     }
     OUTPUT.write_text(json.dumps(output, indent=2) + "\n")
     for row in rows:
-        print(row["shot_id"], {colour: {
-            "count": row["evidence"][colour]["candidate_count"],
-            "hold_s": (row["evidence"][colour]["best_hold"] or {}).get("duration_s"),
-            "motion_px": (row["evidence"][colour]["best_motion"] or {}).get("displacement_px")}
-            for colour in ("red", "yellow")})
+        print(
+            row["shot_id"],
+            {
+                colour: {
+                    "count": row["evidence"][colour]["candidate_count"],
+                    "hold_s": (row["evidence"][colour]["best_hold"] or {}).get("duration_s"),
+                    "motion_px": (row["evidence"][colour]["best_motion"] or {}).get(
+                        "displacement_px"
+                    ),
+                }
+                for colour in ("red", "yellow")
+            },
+        )
 
 
 if __name__ == "__main__":

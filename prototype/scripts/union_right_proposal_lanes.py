@@ -27,19 +27,25 @@ def main():
         parser.error("Output already exists")
     first = json.loads(args.first.read_text())
     second = json.loads(args.second.read_text())
-    rows = union_right_proposals(first, second,
-                                first_lane=args.first_lane,
-                                second_lane=args.second_lane)
+    rows = union_right_proposals(
+        first, second, first_lane=args.first_lane, second_lane=args.second_lane
+    )
     result = {
         "status": "lossless_right_proposal_union_not_deduplicated_events",
         "source_sha256": first["source_sha256"],
         "source_interval_s": first["source_interval_s"],
         "source_time_offset_s": first.get("source_time_offset_s", 0),
         "lane_inputs": [
-            {"lane": args.first_lane, "proposal_file_sha256": digest(args.first),
-             "proposal_count": len(first["directional_review_proposals"])},
-            {"lane": args.second_lane, "proposal_file_sha256": digest(args.second),
-             "proposal_count": len(second["directional_review_proposals"])},
+            {
+                "lane": args.first_lane,
+                "proposal_file_sha256": digest(args.first),
+                "proposal_count": len(first["directional_review_proposals"]),
+            },
+            {
+                "lane": args.second_lane,
+                "proposal_file_sha256": digest(args.second),
+                "proposal_count": len(second["directional_review_proposals"]),
+            },
         ],
         "union_code_sha256": digest(ROOT / "prototype/right_proposal_union.py"),
         "runner_sha256": digest(Path(__file__)),
@@ -53,9 +59,17 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"candidates": len(rows), "lanes": [
-        len(first["directional_review_proposals"]),
-        len(second["directional_review_proposals"])]}))
+    print(
+        json.dumps(
+            {
+                "candidates": len(rows),
+                "lanes": [
+                    len(first["directional_review_proposals"]),
+                    len(second["directional_review_proposals"]),
+                ],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

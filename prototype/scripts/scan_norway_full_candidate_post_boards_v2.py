@@ -19,7 +19,10 @@ BASE = ROOT / "validation/curlobserver-learned-probe/canada-norway-full-transfer
 EVENTS = BASE / "fused-linked.json"
 SHOTS = BASE / "shot-review/manifest.json"
 VIDEO = ROOT / "validation/throw-event-benchmark/paralympics-2022-canada-norway/source.mp4"
-OUTPUT = ROOT / "validation/official-shot-sequence/norway-full-candidate-post-window-image-boards-v2.json"
+OUTPUT = (
+    ROOT
+    / "validation/official-shot-sequence/norway-full-candidate-post-window-image-boards-v2.json"
+)
 
 
 def digest(path):
@@ -56,18 +59,23 @@ def main():
                 house = detect_overhead_house(frame)
                 if house is None:
                     continue
-                observations.append({"time_s": time_s, "house": house,
-                                     "stones": detect_board_stones(frame, house)})
+                observations.append(
+                    {"time_s": time_s, "house": house, "stones": detect_board_stones(frame, house)}
+                )
             groups = stable_image_boards_by_camera_shot(observations, camera_shots)
-            rows.append({"shot_id": event["shot_id"],
-                         "counter_id": event["counter_id"],
-                         "candidate_colour": event["colour"],
-                         "delivery_window_s": event["delivery_window_s"],
-                         "next_candidate_start_s": next_start,
-                         "sampled_times_s": times,
-                         "camera_shot_boards": groups,
-                         "completeness": "unknown_from_video",
-                         "simulation_ready": False})
+            rows.append(
+                {
+                    "shot_id": event["shot_id"],
+                    "counter_id": event["counter_id"],
+                    "candidate_colour": event["colour"],
+                    "delivery_window_s": event["delivery_window_s"],
+                    "next_candidate_start_s": next_start,
+                    "sampled_times_s": times,
+                    "camera_shot_boards": groups,
+                    "completeness": "unknown_from_video",
+                    "simulation_ready": False,
+                }
+            )
     finally:
         cap.release()
     result = {
@@ -79,7 +87,8 @@ def main():
         "image_board_code_sha256": digest(ROOT / "prototype/image_relative_board_state.py"),
         "house_detector_sha256": {
             "v1": digest(ROOT / "prototype/video_board_observation.py"),
-            "v2": digest(ROOT / "prototype/video_board_observation_v2.py")},
+            "v2": digest(ROOT / "prototype/video_board_observation_v2.py"),
+        },
         "stability_code_sha256": digest(ROOT / "prototype/temporal_board_state.py"),
         "runner_sha256": digest(Path(__file__)),
         "sampling_rule": "Every 2 s from candidate window end +4 s to earlier of end +32 s or next candidate start -2 s; source camera cuts isolate boards.",
@@ -88,10 +97,13 @@ def main():
         "candidates_with_overhead_frames": sum(bool(row["camera_shot_boards"]) for row in rows),
         "candidates_with_stable_image_board": sum(
             any(group["stable_image_relative_stones"] for group in row["camera_shot_boards"])
-            for row in rows),
+            for row in rows
+        ),
         "stable_image_stone_count": sum(
             len(group["stable_image_relative_stones"])
-            for row in rows for group in row["camera_shot_boards"]),
+            for row in rows
+            for group in row["camera_shot_boards"]
+        ),
         "rows": rows,
         "limitations": [
             "Coordinates are image-house relative, not calibrated physical or canonical rink coordinates.",
@@ -103,9 +115,17 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(result, indent=2) + "\n")
-    print({key: result[key] for key in ("candidate_count", "candidates_with_overhead_frames",
-                                          "candidates_with_stable_image_board",
-                                          "stable_image_stone_count")})
+    print(
+        {
+            key: result[key]
+            for key in (
+                "candidate_count",
+                "candidates_with_overhead_frames",
+                "candidates_with_stable_image_board",
+                "stable_image_stone_count",
+            )
+        }
+    )
 
 
 if __name__ == "__main__":

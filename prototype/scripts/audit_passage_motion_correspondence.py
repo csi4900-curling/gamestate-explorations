@@ -26,12 +26,14 @@ def main():
     motion = json.loads(args.motion.read_text())
     reference = json.loads(args.reference.read_text())
     if candidates["source_id"] != reference["source_id"] or (
-            candidates["source_sha256"] != reference["source_sha256"]):
+        candidates["source_sha256"] != reference["source_sha256"]
+    ):
         parser.error("Candidate source differs from reference source")
     if file_sha256(args.reference) != motion["reference_sha256"]:
         parser.error("Motion audit reference differs")
     joined = join_passages_to_motion(
-        candidates["events"], motion["rows"], max_delay_s=args.max_delay_s)
+        candidates["events"], motion["rows"], max_delay_s=args.max_delay_s
+    )
     result = {
         "status": "development_window_conditioned_passage_motion_diagnostic_not_detector_score",
         "source_id": candidates["source_id"],

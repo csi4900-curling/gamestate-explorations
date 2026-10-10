@@ -27,16 +27,21 @@ assert DATA["first_full_scan_board_score"]["matched_stone_count"] == 106
 assert DATA["first_full_scan_board_score"]["complete_board_match_count"] == 16
 assert DATA["counter_aligned_reference_link_count"] == 114
 assert DATA["simulation_ready_count"] == 0
-assert all(not row["simulation_ready"] and row["physical_settle_time_s"] is None
-           and row["continuous_trajectory"] is None for row in DATA["events"])
+assert all(
+    not row["simulation_ready"]
+    and row["physical_settle_time_s"] is None
+    and row["continuous_trajectory"] is None
+    for row in DATA["events"]
+)
 by_id = {row["id"]: row for row in DATA["events"]}
 assert by_id["VISUAL-S529"]["colour"] == "yellow"
 assert by_id["VISUAL-S593"]["colour"] == "yellow"
 assert by_id["VISUAL-S593"]["colour_reconciliation"]["original_colour"] == "red"
 
 with sync_playwright() as p:
-    browser = p.chromium.launch(executable_path="/run/current-system/sw/bin/chromium",
-                                args=["--no-sandbox"])
+    browser = p.chromium.launch(
+        executable_path="/run/current-system/sw/bin/chromium", args=["--no-sandbox"]
+    )
     page = browser.new_page(viewport={"width": 1500, "height": 1050})
     errors = []
     page.on("pageerror", lambda error: errors.append(str(error)))
@@ -76,16 +81,27 @@ with sync_playwright() as p:
     assert "plateau partiel" in perspective.locator("#status").inner_text().lower()
     perspective.locator("#experimental-mode").click()
     assert perspective.locator("#state option").count() == 125
-    b40 = perspective.evaluate("EXPERIMENTAL_VIDEO_STATES.rows.findIndex(row => row.counter_id === 'B40')")
+    b40 = perspective.evaluate(
+        "EXPERIMENTAL_VIDEO_STATES.rows.findIndex(row => row.counter_id === 'B40')"
+    )
     perspective.locator("#state").select_option(str(b40))
     assert "zone étendue : non" in perspective.locator("#status").inner_text().lower()
-    b66 = perspective.evaluate("EXPERIMENTAL_VIDEO_STATES.rows.findIndex(row => row.counter_id === 'B66')")
+    b66 = perspective.evaluate(
+        "EXPERIMENTAL_VIDEO_STATES.rows.findIndex(row => row.counter_id === 'B66')"
+    )
     perspective.locator("#state").select_option(str(b66))
     assert "aucun plateau stable" in perspective.locator("#status").inner_text().lower()
-    s593 = perspective.evaluate("EXPERIMENTAL_VIDEO_STATES.rows.findIndex(row => row.event_id === 'VISUAL-S593')")
+    s593 = perspective.evaluate(
+        "EXPERIMENTAL_VIDEO_STATES.rows.findIndex(row => row.event_id === 'VISUAL-S593')"
+    )
     perspective.locator("#state").select_option(str(s593))
-    assert "couleur corrigée par deux vues source" in perspective.locator("#status").inner_text().lower()
-    s52 = perspective.evaluate("EXPERIMENTAL_VIDEO_STATES.rows.findIndex(row => row.event_id === 'VISUAL-S52')")
+    assert (
+        "couleur corrigée par deux vues source"
+        in perspective.locator("#status").inner_text().lower()
+    )
+    s52 = perspective.evaluate(
+        "EXPERIMENTAL_VIDEO_STATES.rows.findIndex(row => row.event_id === 'VISUAL-S52')"
+    )
     perspective.locator("#state").select_option(str(s52))
     assert "lancer non confirmé" in perspective.locator("#status").inner_text().lower()
     perspective.locator("#wide-view").click()
@@ -94,4 +110,6 @@ with sync_playwright() as p:
     assert not errors, errors
     browser.close()
 
-print("Full-match demo verified: 125 events, 125 official states, 30 frozen demo boards, 59 experimental video boards; no browser errors")
+print(
+    "Full-match demo verified: 125 events, 125 official states, 30 frozen demo boards, 59 experimental video boards; no browser errors"
+)

@@ -16,9 +16,11 @@ def bridge_split_gaps(preflight, *, min_split_samples=4, max_beijing_only=1):
     promoted = []
     for index in range(1, len(chunks) - 1):
         chunk = chunks[index]
-        if (chunk["layout"] != "unknown" or
-                chunks[index - 1]["layout"] != "split_2024" or
-                chunks[index + 1]["layout"] != "split_2024"):
+        if (
+            chunk["layout"] != "unknown"
+            or chunks[index - 1]["layout"] != "split_2024"
+            or chunks[index + 1]["layout"] != "split_2024"
+        ):
             continue
         start, end = chunk["interval_s"]
         if end - start != 90 or chunk["samples"] != 9:
@@ -27,10 +29,14 @@ def bridge_split_gaps(preflight, *, min_split_samples=4, max_beijing_only=1):
         if len(rows) != 9:
             raise ValueError("Saved chunk/sample count differs")
         split = sum(row["split_2024_signature"] for row in rows)
-        beijing_only = sum(row["beijing_2022_counter"] and
-                           not row["split_2024_signature"] for row in rows)
-        if (split < min_split_samples or beijing_only > max_beijing_only or
-                split != chunk["split_signature_count"]):
+        beijing_only = sum(
+            row["beijing_2022_counter"] and not row["split_2024_signature"] for row in rows
+        )
+        if (
+            split < min_split_samples
+            or beijing_only > max_beijing_only
+            or split != chunk["split_signature_count"]
+        ):
             continue
         chunk["layout"] = "split_2024"
         chunk["bridge_status"] = "conditional_short_interior_gap"
@@ -48,15 +54,15 @@ def bridge_split_gaps(preflight, *, min_split_samples=4, max_beijing_only=1):
             runs[-1]["interval_s"][1] = end
             runs[-1]["samples"] += chunk["samples"]
         else:
-            runs.append({"layout": kind, "interval_s": [start, end],
-                         "samples": chunk["samples"]})
+            runs.append({"layout": kind, "interval_s": [start, end], "samples": chunk["samples"]})
     result = deepcopy(preflight)
     result["chunks"] = chunks
     result["runs"] = runs
-    result["coverage_gaps_s"] = [row["interval_s"] for row in runs
-                                 if row["layout"] == "unknown"]
+    result["coverage_gaps_s"] = [row["interval_s"] for row in runs if row["layout"] == "unknown"]
     kinds = {row["layout"] for row in runs}
-    result["layout"] = next(iter(kinds)) if len(kinds) == 1 and "unknown" not in kinds else "unknown"
+    result["layout"] = (
+        next(iter(kinds)) if len(kinds) == 1 and "unknown" not in kinds else "unknown"
+    )
     result["bridge_promoted_intervals_s"] = promoted
     result["bridge_rule"] = {
         "min_split_samples_of_nine": min_split_samples,

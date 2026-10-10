@@ -2,13 +2,16 @@ from right_multi_episode_span import multi_episode_spans
 
 
 def point(t, y):
-    return {"time_s": float(t), "pixel": [400.0, float(y)],
-            "bbox": [395, int(y), 10, 6], "cap_area_px2": 20.0}
+    return {
+        "time_s": float(t),
+        "pixel": [400.0, float(y)],
+        "bbox": [395, int(y), 10, 6],
+        "cap_area_px2": 20.0,
+    }
 
 
 def track(points):
-    return {"track_id": "A001", "colour": "red", "points": points,
-            "span_px": 200.0}
+    return {"track_id": "A001", "colour": "red", "points": points, "span_px": 200.0}
 
 
 def test_two_motion_episodes_separated_by_quiet_are_both_proposed():
@@ -23,7 +26,7 @@ def test_two_motion_episodes_separated_by_quiet_are_both_proposed():
 
 
 def test_continuous_motion_does_not_produce_another_span():
-    points = [point(t, 300 - 22*t) for t in range(12)]
+    points = [point(t, 300 - 22 * t) for t in range(12)]
     found = multi_episode_spans([track(points)])
     assert len(found) == 1
 

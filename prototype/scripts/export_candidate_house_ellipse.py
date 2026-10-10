@@ -13,8 +13,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "prototype"))
 sys.path.insert(0, str(ROOT / "prototype/scripts"))
 from audit_split_panel_freeze import normalized_split_frame
-from split_house_ellipse_v2 import (fit_house_ellipse, normalized_cap_image_xy,
-                                    stable_house_ellipse)
+from split_house_ellipse_v2 import fit_house_ellipse, normalized_cap_image_xy, stable_house_ellipse
 
 
 def digest(path):
@@ -43,25 +42,35 @@ def export_rows(cap, fps, candidates):
                 raise RuntimeError(f"Cannot decode source time {t}")
             ellipses.append(fit_house_ellipse(normalized_split_frame(frame)))
         stable, status = stable_house_ellipse(ellipses)
-        caps = [] if stable is None else [{
-            "local_observation_id": item["local_observation_id"],
-            "colour": item["colour"],
-            "cap_image_xy_house_ellipse_radii": normalized_cap_image_xy(
-                stable, item["pixel_center"]),
-            "physical_stone_identity_verified": False,
-            "ground_contact_position_verified": False,
-        } for item in observation["stable_cap_proposals"]]
-        rows.append({
-            "candidate_id": candidate["candidate_id"],
-            "sample_times_s": times,
-            "observation_status": status,
-            "sample_ellipses": ellipses,
-            "stable_image_house_ellipse": stable,
-            "normalized_cap_proposals": caps,
-            "metric_rink_coordinates_verified": False,
-            "complete_board_verified": False,
-            "simulation_ready": False,
-        })
+        caps = (
+            []
+            if stable is None
+            else [
+                {
+                    "local_observation_id": item["local_observation_id"],
+                    "colour": item["colour"],
+                    "cap_image_xy_house_ellipse_radii": normalized_cap_image_xy(
+                        stable, item["pixel_center"]
+                    ),
+                    "physical_stone_identity_verified": False,
+                    "ground_contact_position_verified": False,
+                }
+                for item in observation["stable_cap_proposals"]
+            ]
+        )
+        rows.append(
+            {
+                "candidate_id": candidate["candidate_id"],
+                "sample_times_s": times,
+                "observation_status": status,
+                "sample_ellipses": ellipses,
+                "stable_image_house_ellipse": stable,
+                "normalized_cap_proposals": caps,
+                "metric_rink_coordinates_verified": False,
+                "complete_board_verified": False,
+                "simulation_ready": False,
+            }
+        )
     return rows
 
 
@@ -77,13 +86,11 @@ def main():
     video_hash = digest(args.video)
     if video_hash != handoff["source_sha256"]:
         parser.error("Source and handoff fingerprints differ")
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         parser.error("Cannot open source video")
     try:
-        rows = export_rows(cap, cap.get(cv2.CAP_PROP_FPS),
-                           handoff["ordered_candidates"])
+        rows = export_rows(cap, cap.get(cv2.CAP_PROP_FPS), handoff["ordered_candidates"])
     finally:
         cap.release()
     result = {
@@ -93,12 +100,12 @@ def main():
         "paint_mask_code_sha256": digest(ROOT / "prototype/split_house_reference.py"),
         "model_code_sha256": digest(ROOT / "prototype/split_house_ellipse_v2.py"),
         "frame_normalization_code_sha256": digest(
-            ROOT / "prototype/scripts/audit_split_panel_freeze.py"),
+            ROOT / "prototype/scripts/audit_split_panel_freeze.py"
+        ),
         "runner_sha256": digest(Path(__file__)),
         "normalized_coordinate_unit": "cap_pixel_divided_by_image_ellipse_semiaxis",
         "fitted_candidate_count": len(rows),
-        "observation_status_counts": dict(Counter(row["observation_status"]
-                                                  for row in rows)),
+        "observation_status_counts": dict(Counter(row["observation_status"] for row in rows)),
         "rows": rows,
         "limitations": [
             "Ellipse thresholds were adjusted after inspecting Latvia and Italy sources; this is development evidence.",
@@ -110,8 +117,7 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"rows": len(rows),
-                      "statuses": result["observation_status_counts"]}))
+    print(json.dumps({"rows": len(rows), "statuses": result["observation_status_counts"]}))
 
 
 if __name__ == "__main__":

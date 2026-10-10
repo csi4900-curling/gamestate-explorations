@@ -34,8 +34,9 @@ def header_icon_evidence(page):
     colours = []
     samples = []
     for x in (84, 335):
-        pix = page.get_pixmap(matrix=pymupdf.Matrix(4, 4),
-                              clip=pymupdf.Rect(x - 3, 151, x + 3, 157), alpha=False)
+        pix = page.get_pixmap(
+            matrix=pymupdf.Matrix(4, 4), clip=pymupdf.Rect(x - 3, 151, x + 3, 157), alpha=False
+        )
         rgb = np.frombuffer(pix.samples, dtype=np.uint8).reshape(-1, 3)
         median = np.median(rgb, axis=0)
         red, green, blue = median
@@ -44,7 +45,9 @@ def header_icon_evidence(page):
         elif red > 160 and green > 150 and blue < 130:
             colour = "yellow"
         else:
-            raise ValueError(f"Unrecognized official team-colour icon on PDF page {page.number + 1}")
+            raise ValueError(
+                f"Unrecognized official team-colour icon on PDF page {page.number + 1}"
+            )
         colours.append(colour)
         samples.append([int(value) for value in median])
     if colours != ["red", "yellow"]:
@@ -87,20 +90,22 @@ def main():
         if [row["end"] for row in ends] != list(range(1, len(ends) + 1)):
             raise ValueError(f"Noncontiguous official ends for {code}")
         source = ROOT / "validation/throw-event-benchmark" / folder / "source.mp4"
-        games.append({
-            "official_game_code": code,
-            "teams": list(teams),
-            "team_handle_colours": team_colours,
-            "header_icon_median_rgb_on_first_shot_page": icon_samples,
-            "source_video_url": f"https://www.youtube.com/watch?v={source_id}",
-            "source_video_path": str(source.relative_to(ROOT)),
-            "source_video_sha256": digest(source),
-            "result_pdf_page": result_pages[0],
-            "shot_pdf_pages": [row["pdf_page"] for row in ends],
-            "official_end_count": len(ends),
-            "official_shot_count": sum(row["shot_count"] for row in ends),
-            "ends": ends,
-        })
+        games.append(
+            {
+                "official_game_code": code,
+                "teams": list(teams),
+                "team_handle_colours": team_colours,
+                "header_icon_median_rgb_on_first_shot_page": icon_samples,
+                "source_video_url": f"https://www.youtube.com/watch?v={source_id}",
+                "source_video_path": str(source.relative_to(ROOT)),
+                "source_video_sha256": digest(source),
+                "result_pdf_page": result_pages[0],
+                "shot_pdf_pages": [row["pdf_page"] for row in ends],
+                "official_end_count": len(ends),
+                "official_shot_count": sum(row["shot_count"] for row in ends),
+                "ends": ends,
+            }
+        )
     result = {
         "status": "independent_official_shot_order_without_video_timestamps",
         "official_pdf_url": "https://curlit.com/PDF/PWG2022_ResultsBook.pdf",
@@ -118,8 +123,12 @@ def main():
     }
     OUTPUT.write_text(json.dumps(result, indent=2) + "\n")
     for game in games:
-        print(game["official_game_code"], game["teams"], game["official_shot_count"],
-              [row["shot_count"] for row in game["ends"]])
+        print(
+            game["official_game_code"],
+            game["teams"],
+            game["official_shot_count"],
+            [row["shot_count"] for row in game["ends"]],
+        )
 
 
 if __name__ == "__main__":

@@ -13,12 +13,18 @@ ALIGNMENT = ROOT / "validation/official-shot-sequence/pwg2022-official-counter-a
 REFERENCE = ROOT / "validation/official-shot-sequence/pwg2022-official-shot-ledger.json"
 OUTPUT = ROOT / "validation/official-shot-sequence/pwg2022-visual-counter-proxy.json"
 INPUTS = {
-    "PREL000101": ("validation/curlobserver-learned-probe/swiss-full-transfer/shot-origin.json",
-                   "validation/curlobserver-learned-probe/swiss-full-transfer/two-shot-cap.json"),
-    "PREL000102": ("validation/curlobserver-learned-probe/china-full-transfer/unlabelled-shot-origin-inference.json",
-                   "validation/curlobserver-learned-probe/china-full-transfer/two-shot-cap.json"),
-    "PREL000103": ("validation/curlobserver-learned-probe/slovakia-full-transfer/shot-origin.json",
-                   "validation/curlobserver-learned-probe/slovakia-full-transfer/two-shot-cap.json"),
+    "PREL000101": (
+        "validation/curlobserver-learned-probe/swiss-full-transfer/shot-origin.json",
+        "validation/curlobserver-learned-probe/swiss-full-transfer/two-shot-cap.json",
+    ),
+    "PREL000102": (
+        "validation/curlobserver-learned-probe/china-full-transfer/unlabelled-shot-origin-inference.json",
+        "validation/curlobserver-learned-probe/china-full-transfer/two-shot-cap.json",
+    ),
+    "PREL000103": (
+        "validation/curlobserver-learned-probe/slovakia-full-transfer/shot-origin.json",
+        "validation/curlobserver-learned-probe/slovakia-full-transfer/two-shot-cap.json",
+    ),
 }
 CLEAN_STATUSES = {"unique_colour_concordant", "unique_colour_concordant_amid_duplicate"}
 
@@ -43,36 +49,51 @@ def main():
         origins, cap = json.loads(origin_path.read_text()), json.loads(cap_path.read_text())
         if cap["origins_sha256"] != digest(origin_path):
             raise ValueError(f"Visual decisions use different origin rows: {code}")
-        if origins["source_sha256"] != game["source_video_sha256"] or cap["source_sha256"] != game["source_video_sha256"]:
+        if (
+            origins["source_sha256"] != game["source_video_sha256"]
+            or cap["source_sha256"] != game["source_video_sha256"]
+        ):
             raise ValueError(f"Visual evidence uses different source video: {code}")
-        input_hashes[code] = {"origin_path": INPUTS[code][0],
-                              "origin_sha256": digest(origin_path),
-                              "cap_decision_path": INPUTS[code][1],
-                              "cap_decision_sha256": digest(cap_path)}
+        input_hashes[code] = {
+            "origin_path": INPUTS[code][0],
+            "origin_sha256": digest(origin_path),
+            "cap_decision_path": INPUTS[code][1],
+            "cap_decision_sha256": digest(cap_path),
+        }
         origin_by_id = {row["shot_id"]: row for row in origins["rows"]}
-        visual_all = [{"shot_id": decision["shot_id"],
-                       "interval_s": origin_by_id[decision["shot_id"]]["interval_s"],
-                       "colour": decision["colour"]}
-                      for decision in cap["decisions"]
-                      if decision["status"] == "corroborated_candidate"]
+        visual_all = [
+            {
+                "shot_id": decision["shot_id"],
+                "interval_s": origin_by_id[decision["shot_id"]]["interval_s"],
+                "colour": decision["colour"],
+            }
+            for decision in cap["decisions"]
+            if decision["status"] == "corroborated_candidate"
+        ]
         alignment_game = by_alignment[code]
         for end in game["ends"]:
-            counter_rows = [row for row in alignment_game["counter_rows"]
-                            if row["official_end"] == end["end"]
-                            and row["status"] in CLEAN_STATUSES]
+            counter_rows = [
+                row
+                for row in alignment_game["counter_rows"]
+                if row["official_end"] == end["end"] and row["status"] in CLEAN_STATUSES
+            ]
             if len(counter_rows) != len(end["shots"]):
                 continue
             times = [row["counter_time_s"] for row in counter_rows]
             first, last = min(times), max(times)
-            visual = [row for row in visual_all
-                      if first - 70 <= row["interval_s"][0] <= last]
+            visual = [row for row in visual_all if first - 70 <= row["interval_s"][0] <= last]
             score = score_visual_against_counters(visual, counter_rows)
-            rows.append({"official_game_code": code, "end": end["end"],
-                         "counter_span_s": [first, last],
-                         "visual_search_span_s": [first - 70, last],
-                         "visual_candidates": visual,
-                         "clean_counters": counter_rows,
-                         "score": score})
+            rows.append(
+                {
+                    "official_game_code": code,
+                    "end": end["end"],
+                    "counter_span_s": [first, last],
+                    "visual_search_span_s": [first - 70, last],
+                    "visual_candidates": visual,
+                    "clean_counters": counter_rows,
+                    "score": score,
+                }
+            )
     output = {
         "status": "complete_end_visual_to_counter_proxy_not_physical_throw_f1",
         "official_reference_sha256": digest(REFERENCE),
@@ -95,12 +116,26 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(output, indent=2) + "\n")
-    print({key: output[key] for key in
-           ("complete_end_count", "total_visual_candidates", "total_clean_counters", "total_matched")})
+    print(
+        {
+            key: output[key]
+            for key in (
+                "complete_end_count",
+                "total_visual_candidates",
+                "total_clean_counters",
+                "total_matched",
+            )
+        }
+    )
     for row in rows:
-        print(row["official_game_code"], row["end"],
-              {key: row["score"][key] for key in
-               ("counter_proxy_precision", "counter_proxy_recall", "counter_proxy_f1")})
+        print(
+            row["official_game_code"],
+            row["end"],
+            {
+                key: row["score"][key]
+                for key in ("counter_proxy_precision", "counter_proxy_recall", "counter_proxy_f1")
+            },
+        )
 
 
 if __name__ == "__main__":

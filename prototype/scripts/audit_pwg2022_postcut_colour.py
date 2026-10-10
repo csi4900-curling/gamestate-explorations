@@ -26,8 +26,7 @@ def digest(path):
 
 
 def scan_receiving_view(cap, fps, cut_s):
-    observations = {colour: {"strict": [], "relaxed": []}
-                    for colour in ("red", "yellow")}
+    observations = {colour: {"strict": [], "relaxed": []} for colour in ("red", "yellow")}
     cuts = []
     previous = None
     for tick in range(round(cut_s * 5) + 1, round((cut_s + 12) * 5) + 1):
@@ -39,14 +38,18 @@ def scan_receiving_view(cap, fps, cut_s):
         if previous is not None and scene_cut_evidence(previous, frame)["hard_cut"]:
             cuts.append(time_s)
         for colour in observations:
-            observations[colour]["strict"].append(
-                (time_s, stone_cap_candidates(frame, colour)))
+            observations[colour]["strict"].append((time_s, stone_cap_candidates(frame, colour)))
             observations[colour]["relaxed"].append(
-                (time_s, stone_cap_candidates(frame, colour,
-                                              allow_bright_body=True,
-                                              allow_large_caps=True)))
+                (
+                    time_s,
+                    stone_cap_candidates(
+                        frame, colour, allow_bright_body=True, allow_large_caps=True
+                    ),
+                )
+            )
         previous = frame
     tracks = {}
+
     def frame_at(time_s):
         cap.set(cv2.CAP_PROP_POS_FRAMES, round(time_s * fps))
         ok, frame = cap.read()
@@ -61,14 +64,18 @@ def scan_receiving_view(cap, fps, cut_s):
             tracks[colour][mode] = []
             for row in found:
                 camera_rows = sample_track_camera_motion(row["points"], frame_at)
-                tracks[colour][mode].append({
-                    "time_interval_s": [row["points"][0]["time_s"],
-                                        row["points"][-1]["time_s"]],
-                    "span_px": round(row["span_px"], 2),
-                    "observations": len(row["points"]),
-                    "camera_motion_pairs": camera_rows,
-                    "camera_motion_status": camera_motion_status(camera_rows),
-                })
+                tracks[colour][mode].append(
+                    {
+                        "time_interval_s": [
+                            row["points"][0]["time_s"],
+                            row["points"][-1]["time_s"],
+                        ],
+                        "span_px": round(row["span_px"], 2),
+                        "observations": len(row["points"]),
+                        "camera_motion_pairs": camera_rows,
+                        "camera_motion_status": camera_motion_status(camera_rows),
+                    }
+                )
     return tracks, cuts
 
 
@@ -93,31 +100,43 @@ def main():
         for row in selected:
             cut_s = row["candidate_release_window_s"][1]
             if not any(abs(cut_s - cut) < 0.01 for cut in row["hard_cut_times_s"]):
-                raise ValueError(f"Candidate {row['candidate_id']} is not followed by a verified cut")
+                raise ValueError(
+                    f"Candidate {row['candidate_id']} is not followed by a verified cut"
+                )
             tracks, further_cuts = scan_receiving_view(cap, fps, cut_s)
-            raw_counts = {colour: {mode: len(items) for mode, items in modes.items()}
-                          for colour, modes in tracks.items()}
-            counts = {colour: {mode: sum(item["camera_motion_status"] !=
-                                          "camera_explained_static" for item in items)
-                               for mode, items in modes.items()}
-                      for colour, modes in tracks.items()}
+            raw_counts = {
+                colour: {mode: len(items) for mode, items in modes.items()}
+                for colour, modes in tracks.items()
+            }
+            counts = {
+                colour: {
+                    mode: sum(
+                        item["camera_motion_status"] != "camera_explained_static" for item in items
+                    )
+                    for mode, items in modes.items()
+                }
+                for colour, modes in tracks.items()
+            }
             decision = resolve_postcut_colour(counts)
-            results.append({
-                "official_game_code": code,
-                "official_shot_id": row["official_shot_id"],
-                "official_colour": row["expected_colour"],
-                "candidate_id": row["candidate_id"],
-                "candidate_colour": row["candidate_colour"],
-                "cut_time_s": cut_s,
-                "receiving_view_window_s": [round(cut_s + 0.2, 3), round(cut_s + 12, 3)],
-                "further_cut_times_s": further_cuts,
-                "raw_track_counts": raw_counts,
-                "track_counts_after_camera_filter": counts,
-                "tracks": tracks,
-                "decision": decision,
-                "decision_matches_official_colour": (decision["colour"] == row["expected_colour"]
-                                                     if decision["colour"] else None),
-            })
+            results.append(
+                {
+                    "official_game_code": code,
+                    "official_shot_id": row["official_shot_id"],
+                    "official_colour": row["expected_colour"],
+                    "candidate_id": row["candidate_id"],
+                    "candidate_colour": row["candidate_colour"],
+                    "cut_time_s": cut_s,
+                    "receiving_view_window_s": [round(cut_s + 0.2, 3), round(cut_s + 12, 3)],
+                    "further_cut_times_s": further_cuts,
+                    "raw_track_counts": raw_counts,
+                    "track_counts_after_camera_filter": counts,
+                    "tracks": tracks,
+                    "decision": decision,
+                    "decision_matches_official_colour": (
+                        decision["colour"] == row["expected_colour"] if decision["colour"] else None
+                    ),
+                }
+            )
         cap.release()
     output = {
         "status": "postcut_colour_development_diagnostic_not_throw_identity_or_f1",
@@ -129,10 +148,12 @@ def main():
         "selected_gap_count": len(results),
         "decision_status_counts": dict(Counter(row["decision"]["status"] for row in results)),
         "resolved_colour_count": sum(row["decision"]["colour"] is not None for row in results),
-        "resolved_correct_colour_count": sum(row["decision_matches_official_colour"] is True
-                                             for row in results),
-        "resolved_wrong_colour_count": sum(row["decision_matches_official_colour"] is False
-                                           for row in results),
+        "resolved_correct_colour_count": sum(
+            row["decision_matches_official_colour"] is True for row in results
+        ),
+        "resolved_wrong_colour_count": sum(
+            row["decision_matches_official_colour"] is False for row in results
+        ),
         "results": results,
         "limitations": [
             "Candidate windows and shot links were selected during development; this is not held-out colour accuracy or event F1.",
@@ -142,8 +163,12 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(output, indent=2) + "\n")
-    print(output["selected_gap_count"], output["decision_status_counts"],
-          output["resolved_correct_colour_count"], output["resolved_wrong_colour_count"])
+    print(
+        output["selected_gap_count"],
+        output["decision_status_counts"],
+        output["resolved_correct_colour_count"],
+        output["resolved_wrong_colour_count"],
+    )
 
 
 if __name__ == "__main__":

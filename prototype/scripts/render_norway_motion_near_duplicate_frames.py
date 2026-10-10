@@ -41,22 +41,33 @@ def main():
                 if not ok:
                     raise RuntimeError(f"Frame decode failed at {second}s")
                 frame = cv2.resize(frame, (640, 360), interpolation=cv2.INTER_AREA)
-                canvas.paste(Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)),
-                             (column * 640, row * 390 + 30))
-                draw.text((column * 640 + 10, row * 390 + 8),
-                          f"{LABELS[row]}   {second}s", fill="black")
+                canvas.paste(
+                    Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)),
+                    (column * 640, row * 390 + 30),
+                )
+                draw.text(
+                    (column * 640 + 10, row * 390 + 8), f"{LABELS[row]}   {second}s", fill="black"
+                )
     finally:
         cap.release()
     canvas.save(IMAGE, quality=85)
-    META.write_text(json.dumps({
-        "status": "source_frames_for_near_duplicate_motion_review",
-        "source_video_sha256": digest(VIDEO),
-        "baseline_motion_transfer_sha256": digest(BASELINE),
-        "runner_sha256": digest(Path(__file__)),
-        "sample_times_s": TIMES,
-        "image_sha256": digest(IMAGE),
-        "limitations": ["Sparse source frames show camera context, not complete physical stone identity."],
-    }, indent=2) + "\n")
+    META.write_text(
+        json.dumps(
+            {
+                "status": "source_frames_for_near_duplicate_motion_review",
+                "source_video_sha256": digest(VIDEO),
+                "baseline_motion_transfer_sha256": digest(BASELINE),
+                "runner_sha256": digest(Path(__file__)),
+                "sample_times_s": TIMES,
+                "image_sha256": digest(IMAGE),
+                "limitations": [
+                    "Sparse source frames show camera context, not complete physical stone identity."
+                ],
+            },
+            indent=2,
+        )
+        + "\n"
+    )
     print(IMAGE)
 
 

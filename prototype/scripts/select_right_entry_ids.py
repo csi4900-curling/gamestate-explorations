@@ -22,8 +22,7 @@ def main():
     ids = set(args.ids)
     if len(ids) != len(args.ids):
         parser.error("Duplicate requested ID")
-    selected = [row for row in source["entry_review_proposals"]
-                if row["raw_track_id"] in ids]
+    selected = [row for row in source["entry_review_proposals"] if row["raw_track_id"] in ids]
     if {row["raw_track_id"] for row in selected} != ids:
         parser.error("Requested ID not found")
     output = {

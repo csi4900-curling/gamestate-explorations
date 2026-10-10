@@ -48,7 +48,9 @@ def main():
             page = document[end["pdf_page"] - 1]
             images = shot_images(page)
             if len(images) != end["shot_count"]:
-                raise ValueError(f"Diagram count differs from official shots on page {end['pdf_page']}")
+                raise ValueError(
+                    f"Diagram count differs from official shots on page {end['pdf_page']}"
+                )
             rows = []
             previous_strict_count = None
             for shot, (_, _, xref, rect) in zip(end["shots"], images):
@@ -69,23 +71,35 @@ def main():
                     flags.append("edge_symbol_play_status_uncertain")
                 if any(row["low_fill_margin"] for row in stones):
                     flags.append("low_fill_margin_needs_review")
-                rows.append({
-                    "official_shot_id": shot["official_shot_id"],
-                    "diagram_image_xref": xref,
-                    "diagram_image_sha256": hashlib.sha256(raw).hexdigest(),
-                    "diagram_pdf_rect": [round(value, 3) for value in rect],
-                    "house_center_px": [150, house_y],
-                    "delivery_side": "top" if house_y == 440 else "bottom",
-                    "stone_counts": {colour: counts[colour] for colour in ("red", "yellow")},
-                    "stones": stones,
-                    "review_flags": flags,
-                })
+                rows.append(
+                    {
+                        "official_shot_id": shot["official_shot_id"],
+                        "diagram_image_xref": xref,
+                        "diagram_image_sha256": hashlib.sha256(raw).hexdigest(),
+                        "diagram_pdf_rect": [round(value, 3) for value in rect],
+                        "house_center_px": [150, house_y],
+                        "delivery_side": "top" if house_y == 440 else "bottom",
+                        "stone_counts": {colour: counts[colour] for colour in ("red", "yellow")},
+                        "stones": stones,
+                        "review_flags": flags,
+                    }
+                )
                 previous_strict_count = strict_count
-            ends.append({"end": end["end"], "pdf_page": end["pdf_page"],
-                         "diagram_count": len(rows), "shots": rows})
-        games.append({"official_game_code": game["official_game_code"],
-                      "source_video_sha256": game["source_video_sha256"],
-                      "ends": ends})
+            ends.append(
+                {
+                    "end": end["end"],
+                    "pdf_page": end["pdf_page"],
+                    "diagram_count": len(rows),
+                    "shots": rows,
+                }
+            )
+        games.append(
+            {
+                "official_game_code": game["official_game_code"],
+                "source_video_sha256": game["source_video_sha256"],
+                "ends": ends,
+            }
+        )
     shots = [shot for game in games for end in game["ends"] for shot in end["shots"]]
     flags = Counter(flag for shot in shots for flag in shot["review_flags"])
     output = {
@@ -110,8 +124,11 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(output, indent=2) + "\n")
-    print(output["shot_diagram_count"], output["detected_stone_symbol_count"],
-          output["review_flag_counts"])
+    print(
+        output["shot_diagram_count"],
+        output["detected_stone_symbol_count"],
+        output["review_flag_counts"],
+    )
 
 
 if __name__ == "__main__":

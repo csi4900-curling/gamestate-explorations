@@ -25,15 +25,22 @@ def main():
     pairs, first = (json.loads(path.read_text()) for path in (EVENTS, FIRST))
     if pairs["source_sha256"] != first["source_video_sha256"]:
         raise ValueError("Source mismatch")
-    counters = [row for row in first["counter_alignment_rows"]
-                if row["official_end"] == 3 and
-                row["status"] in ("unique_colour_concordant",
-                                  "unique_colour_concordant_amid_duplicate")]
+    counters = [
+        row
+        for row in first["counter_alignment_rows"]
+        if row["official_end"] == 3
+        and row["status"] in ("unique_colour_concordant", "unique_colour_concordant_amid_duplicate")
+    ]
     if len(counters) != 14:
         raise ValueError("Clean counter reference changed")
-    visual = [{"shot_id": event["candidate_id"],
-               "interval_s": event["release_window_s"],
-               "colour": event["colour"]} for event in pairs["events"]]
+    visual = [
+        {
+            "shot_id": event["candidate_id"],
+            "interval_s": event["release_window_s"],
+            "colour": event["colour"],
+        }
+        for event in pairs["events"]
+    ]
     score = score_visual_against_counters(visual, counters)
     result = {
         "status": "development_paired_event_to_delayed_counter_proxy_not_physical_f1",
@@ -54,10 +61,20 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(result, indent=2) + "\n")
-    print({key: score[key] for key in (
-        "visual_candidate_count", "matched_count", "clean_counter_count",
-        "known_colour_match_count", "known_colour_conflict_count",
-        "counter_proxy_precision", "counter_proxy_recall")})
+    print(
+        {
+            key: score[key]
+            for key in (
+                "visual_candidate_count",
+                "matched_count",
+                "clean_counter_count",
+                "known_colour_match_count",
+                "known_colour_conflict_count",
+                "counter_proxy_precision",
+                "counter_proxy_recall",
+            )
+        }
+    )
     print("unmatched visual", score["unmatched_visual_ids"])
 
 

@@ -23,8 +23,7 @@ def main():
         parser.error("Output already exists")
     variant = json.loads(args.variant.read_text())
     new_ids = set(variant["new_ids"])
-    rows = [row for row in variant["entry_review_proposals"]
-            if row["raw_track_id"] in new_ids]
+    rows = [row for row in variant["entry_review_proposals"] if row["raw_track_id"] in new_ids]
     if len(rows) != len(new_ids):
         parser.error("New IDs are not one-to-one with proposals")
     result = {

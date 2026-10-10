@@ -17,7 +17,10 @@ from stone_motion_fallback import moving_cap_tracks, stone_cap_candidates  # noq
 
 BASE = ROOT / "validation/throw-event-benchmark/paralympics-2022-korea-china"
 SOURCE = BASE / "source.mp4"
-LEDGER = ROOT / "validation/curlobserver-learned-probe/korea-china-full-first-transfer/candidate-event-ledger.json"
+LEDGER = (
+    ROOT
+    / "validation/curlobserver-learned-probe/korea-china-full-first-transfer/candidate-event-ledger.json"
+)
 OUTPUT = BASE / "ORIGIN-TRACK-GEOMETRY-PILOT.json"
 CONFLICT_IDS = ("T001", "T095", "T099", "T101")
 CONTROL_IDS = ("T002", "T004", "T006", "T008", "T010")
@@ -45,10 +48,10 @@ def summarize(track, shot_id, colour, index):
         "net_delta_px": [round(float(v), 2) for v in net],
         "span_px": round(track["span_px"], 2),
         "path_length_px": round(length, 2),
-        "net_to_path_ratio": round(float(np.linalg.norm(net) / length), 4)
-        if length > 0 else None,
+        "net_to_path_ratio": round(float(np.linalg.norm(net) / length), 4) if length > 0 else None,
         "fraction_y_steps_in_net_direction": round(float(np.mean(ystep * signed_y > 0)), 4)
-        if signed_y else None,
+        if signed_y
+        else None,
         "y_range_px": round(float(np.ptp(xy[:, 1])), 2),
     }
 
@@ -60,12 +63,13 @@ def main():
     if digest(SOURCE) != ledger["source_sha256"]:
         raise ValueError("Source video differs from frozen ledger")
     by_id = {row["candidate_id"]: row for row in ledger["events"]}
-    selected = [(cid, "postscore_colour_conflict" if cid in CONFLICT_IDS else
-                 "counter_backed_red_control") for cid in CONFLICT_IDS + CONTROL_IDS]
+    selected = [
+        (cid, "postscore_colour_conflict" if cid in CONFLICT_IDS else "counter_backed_red_control")
+        for cid in CONFLICT_IDS + CONTROL_IDS
+    ]
     if len(by_id) != len(ledger["events"]) or any(cid not in by_id for cid, _ in selected):
         raise ValueError("Selected candidate missing or duplicate IDs")
-    cap = cv2.VideoCapture(str(SOURCE), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(SOURCE), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         raise RuntimeError("Cannot open source video")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -82,17 +86,30 @@ def main():
                 if not ok:
                     raise RuntimeError(f"Frame decode failed at {time_s}")
                 for colour in observations:
-                    observations[colour].append((time_s, stone_cap_candidates(
-                        frame, colour, allow_bright_body=True, allow_large_caps=True)))
+                    observations[colour].append(
+                        (
+                            time_s,
+                            stone_cap_candidates(
+                                frame, colour, allow_bright_body=True, allow_large_caps=True
+                            ),
+                        )
+                    )
             tracks = []
             for colour, samples in observations.items():
-                for index, track in enumerate(moving_cap_tracks(
-                        samples, max_gap_s=1.6, max_step_px=130), 1):
+                for index, track in enumerate(
+                    moving_cap_tracks(samples, max_gap_s=1.6, max_step_px=130), 1
+                ):
                     tracks.append(summarize(track, candidate["shot_id"], colour, index))
-            rows.append({"candidate_id": cid, "selection": selection,
-                         "shot_id": candidate["shot_id"],
-                         "candidate_colour": candidate["colour"],
-                         "counter_id": candidate["counter_id"], "tracks": tracks})
+            rows.append(
+                {
+                    "candidate_id": cid,
+                    "selection": selection,
+                    "shot_id": candidate["shot_id"],
+                    "candidate_colour": candidate["colour"],
+                    "counter_id": candidate["counter_id"],
+                    "tracks": tracks,
+                }
+            )
     finally:
         cap.release()
     result = {

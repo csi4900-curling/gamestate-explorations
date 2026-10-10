@@ -41,11 +41,13 @@ def step_shape(track):
         "interval_s": [track[0]["time_s"], track[-1]["time_s"]],
         "path_px": round(path, 2),
         "largest_step_px": round(steps[largest_index], 2) if steps else 0,
-        "largest_step_fraction": round(steps[largest_index] / path, 3)
-        if steps and path else None,
-        "largest_step_interval_s": [track[largest_index]["time_s"],
-                                    track[largest_index + 1]["time_s"]]
-        if steps else None,
+        "largest_step_fraction": round(steps[largest_index] / path, 3) if steps and path else None,
+        "largest_step_interval_s": [
+            track[largest_index]["time_s"],
+            track[largest_index + 1]["time_s"],
+        ]
+        if steps
+        else None,
         "steps_over_5px": sum(step >= 5 for step in steps),
     }
 
@@ -61,8 +63,7 @@ def main():
     if source_hash == reserved["source_sha256"]:
         raise ValueError("Reserved source selected")
     model = load_model(MODEL)
-    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     fps = capture.get(cv2.CAP_PROP_FPS)
     step = round(fps / 5)
     rows = []
@@ -83,39 +84,48 @@ def main():
             if not ok:
                 raise RuntimeError(f"Retrieve failed: {shot_id} {frame_index}")
             time_s = round(frame_index / fps, 3)
-            raw = stone_cap_candidates(frame, candidate["colour"],
-                                       allow_bright_body=True,
-                                       allow_large_caps=True)
-            accepted = [row for row in score_candidates(frame, raw, model)
-                        if row["patch_score"] >= -0.6]
+            raw = stone_cap_candidates(
+                frame, candidate["colour"], allow_bright_body=True, allow_large_caps=True
+            )
+            accepted = [
+                row for row in score_candidates(frame, raw, model) if row["patch_score"] >= -0.6
+            ]
             stream.append((time_s, accepted))
             if previous is not None:
-                changes.append({"time_s": time_s,
-                                **scene_cut_evidence(previous, frame)})
+                changes.append({"time_s": time_s, **scene_cut_evidence(previous, frame)})
             previous = frame
         tracks = _tracks(stream)
         transits = short_transits(stream)
         transit_tracks = []
         for transit in transits[:3]:
-            linked = [track for track in tracks
-                      if track[0]["time_s"] == transit["interval_s"][0]
-                      and track[0]["pixel"] == transit["first_pixel"]
-                      and track[-1]["time_s"] == transit["interval_s"][1]]
-            transit_tracks.append({"transit": transit,
-                                   "linked_track_count": len(linked),
-                                   "step_shape": step_shape(linked[0])
-                                   if len(linked) == 1 else None})
-        changes.sort(key=lambda row: row["gray_change"] * row["hist_distance"],
-                     reverse=True)
-        rows.append({
-            "shot_id": shot_id, "interval_s": candidate["interval_s"],
-            "sampled_frame_count": len(stream),
-            "internal_hard_cut_count": sum(row["hard_cut"] for row in changes),
-            "top_frame_changes": changes[:5],
-            "transit_tracks": transit_tracks,
-            "longest_tracks": [step_shape(track) for track in
-                               sorted(tracks, key=len, reverse=True)[:3]],
-        })
+            linked = [
+                track
+                for track in tracks
+                if track[0]["time_s"] == transit["interval_s"][0]
+                and track[0]["pixel"] == transit["first_pixel"]
+                and track[-1]["time_s"] == transit["interval_s"][1]
+            ]
+            transit_tracks.append(
+                {
+                    "transit": transit,
+                    "linked_track_count": len(linked),
+                    "step_shape": step_shape(linked[0]) if len(linked) == 1 else None,
+                }
+            )
+        changes.sort(key=lambda row: row["gray_change"] * row["hist_distance"], reverse=True)
+        rows.append(
+            {
+                "shot_id": shot_id,
+                "interval_s": candidate["interval_s"],
+                "sampled_frame_count": len(stream),
+                "internal_hard_cut_count": sum(row["hard_cut"] for row in changes),
+                "top_frame_changes": changes[:5],
+                "transit_tracks": transit_tracks,
+                "longest_tracks": [
+                    step_shape(track) for track in sorted(tracks, key=len, reverse=True)[:3]
+                ],
+            }
+        )
     capture.release()
     output = {
         "status": "selected_postscore_track_continuity_and_edit_diagnostic_not_event_score",
@@ -134,10 +144,17 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(output, indent=2) + "\n")
-    print([(row["shot_id"], row["internal_hard_cut_count"],
-            row["top_frame_changes"][0]["time_s"],
-            row["transit_tracks"][0]["step_shape"])
-           for row in rows])
+    print(
+        [
+            (
+                row["shot_id"],
+                row["internal_hard_cut_count"],
+                row["top_frame_changes"][0]["time_s"],
+                row["transit_tracks"][0]["step_shape"],
+            )
+            for row in rows
+        ]
+    )
 
 
 if __name__ == "__main__":

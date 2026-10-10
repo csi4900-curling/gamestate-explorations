@@ -30,8 +30,7 @@ def main():
     ids = [event["id"] for event in candidates["events"]]
     motions = {row["candidate_id"]: row for row in motion["rows"]}
     patches = {row["candidate_id"]: row for row in patch["rows"]}
-    if len(set(ids)) != len(ids) or any(set(rows) != set(ids)
-                                    for rows in (motions, patches)):
+    if len(set(ids)) != len(ids) or any(set(rows) != set(ids) for rows in (motions, patches)):
         parser.error("Candidate IDs differ")
     decisions = [screen_rescue_candidate(motions[pid], patches[pid]) for pid in ids]
     by_decision = {row["candidate_id"]: row for row in decisions}
@@ -46,8 +45,10 @@ def main():
         pid = row["candidate_id"]
         if by_decision[pid]["accepted"] and row["status"] != "primary_motion_path":
             by_decision[pid].update(
-                status="duplicate_shared_timed_motion_path", accepted=False,
-                primary_candidate_id=row["primary_candidate_id"])
+                status="duplicate_shared_timed_motion_path",
+                accepted=False,
+                primary_candidate_id=row["primary_candidate_id"],
+            )
     retained = {row["candidate_id"] for row in decisions if row["accepted"]}
     result = {
         "status": "postscore_exposed_development_dropout_rescue_screen_not_transfer_validation",
@@ -57,15 +58,13 @@ def main():
         "candidates_sha256": file_sha256(args.candidates),
         "motion_sha256": file_sha256(args.motion),
         "patch_sha256": file_sha256(args.patch),
-        "screen_code_sha256": file_sha256(
-            ROOT / "prototype/candidate_motion_rescue_screen.py"),
+        "screen_code_sha256": file_sha256(ROOT / "prototype/candidate_motion_rescue_screen.py"),
         "dedup_code_sha256": file_sha256(ROOT / "prototype/motion_path_dedup.py"),
         "runner_sha256": file_sha256(__file__),
         "shared_timed_path_pairs": dedup["pairs"],
         "decisions": decisions,
         "decision_status_counts": dict(Counter(row["status"] for row in decisions)),
-        "events": [event for event in candidates["events"]
-                   if event["id"] in retained],
+        "events": [event for event in candidates["events"] if event["id"] in retained],
         "limitations": [
             "The rescue rule was designed after seeing exposed Italy, Estonia and China errors.",
             "Shared prefixes prove neither later path identity nor complete throw trajectories.",

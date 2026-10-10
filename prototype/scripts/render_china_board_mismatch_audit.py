@@ -31,10 +31,10 @@ def digest(path):
 
 
 def unmatched_stones(stones, comparison):
-    by_colour = {colour: [s for s in stones if s["colour"] == colour]
-                 for colour in ("red", "yellow")}
-    return [by_colour[row["colour"]][row["video_index"]]
-            for row in comparison["unmatched_video"]]
+    by_colour = {
+        colour: [s for s in stones if s["colour"] == colour] for colour in ("red", "yellow")
+    }
+    return [by_colour[row["colour"]][row["video_index"]] for row in comparison["unmatched_video"]]
 
 
 def main():
@@ -42,7 +42,9 @@ def main():
         raise SystemExit("Audit artifact exists; preserve first review")
     scan = json.loads(SCAN.read_text())
     score = json.loads(SCORE.read_text())
-    if scan["source_video_sha256"] != digest(VIDEO) or score["source_only_scan_sha256"] != digest(SCAN):
+    if scan["source_video_sha256"] != digest(VIDEO) or score["source_only_scan_sha256"] != digest(
+        SCAN
+    ):
         raise ValueError("Source-only scan, score, or video provenance mismatch")
     scans = {r["counter_id"]: r for r in scan["rows"]}
     scores = {r["counter_id"]: r for r in score["rows"]}
@@ -57,8 +59,9 @@ def main():
         for i, counter_id in enumerate(SELECTION):
             observation = scans[counter_id]
             scored = scores[counter_id]
-            stones = unmatched_stones(observation["stable_partial_board"],
-                                      scored["current_comparison"])
+            stones = unmatched_stones(
+                observation["stable_partial_board"], scored["current_comparison"]
+            )
             if not stones:
                 raise ValueError(f"{counter_id} no longer has unmatched video stones")
             time_s = min(stone["last_seen_s"] for stone in stones)
@@ -81,29 +84,50 @@ def main():
                 x = cx + sign * stone["canonical_lateral_house_radii"] * radius
                 y = cy + sign * stone["longitudinal_house_radii"] * radius
                 draw.ellipse((x - 15, y - 15, x + 15, y + 15), outline="#ff4c00", width=3)
-                marks.append({"colour": stone["colour"],
-                              "position_house_radii": [stone["canonical_lateral_house_radii"],
-                                                       stone["longitudinal_house_radii"]],
-                              "marked_pixel": [round(x, 1), round(y, 1)]})
+                marks.append(
+                    {
+                        "colour": stone["colour"],
+                        "position_house_radii": [
+                            stone["canonical_lateral_house_radii"],
+                            stone["longitudinal_house_radii"],
+                        ],
+                        "marked_pixel": [round(x, 1), round(y, 1)],
+                    }
+                )
             x0, y0 = (i % 2) * 640, (i // 2) * 405
             canvas.paste(panel, (x0, y0 + 45))
             header = ImageDraw.Draw(canvas)
-            header.text((x0 + 14, y0 + 11),
-                        f"{counter_id}  t={time_s:.1f}s  video/official: "
-                        f"{scored['video_stone_count']}/{scored['official_symbol_count']}",
-                        fill="#111827", font=font)
-            rows.append({"counter_id": counter_id, "source_time_s": time_s,
-                         "official_shot_id": scored["official_shot_id"],
-                         "unmatched_video_marks": marks})
+            header.text(
+                (x0 + 14, y0 + 11),
+                f"{counter_id}  t={time_s:.1f}s  video/official: "
+                f"{scored['video_stone_count']}/{scored['official_symbol_count']}",
+                fill="#111827",
+                font=font,
+            )
+            rows.append(
+                {
+                    "counter_id": counter_id,
+                    "source_time_s": time_s,
+                    "official_shot_id": scored["official_shot_id"],
+                    "unmatched_video_marks": marks,
+                }
+            )
     finally:
         cap.release()
     canvas.save(OUTPUT)
-    record = {"status": "postscore_visual_diagnostic_not_detector_input",
-              "source_video_sha256": digest(VIDEO), "source_only_scan_sha256": digest(SCAN),
-              "postscore_sha256": digest(SCORE), "runner_sha256": digest(Path(__file__)),
-              "output_sha256": digest(OUTPUT), "rows": rows,
-              "limitations": ["Orange circles are detections unmatched to PDF symbols, not independently labelled false positives.",
-                              "The comparison cannot distinguish an out-of-play stone, wrong colour, or official-diagram omission without source review."]}
+    record = {
+        "status": "postscore_visual_diagnostic_not_detector_input",
+        "source_video_sha256": digest(VIDEO),
+        "source_only_scan_sha256": digest(SCAN),
+        "postscore_sha256": digest(SCORE),
+        "runner_sha256": digest(Path(__file__)),
+        "output_sha256": digest(OUTPUT),
+        "rows": rows,
+        "limitations": [
+            "Orange circles are detections unmatched to PDF symbols, not independently labelled false positives.",
+            "The comparison cannot distinguish an out-of-play stone, wrong colour, or official-diagram omission without source review.",
+        ],
+    }
     PROVENANCE.write_text(json.dumps(record, indent=2) + "\n")
     print({"panels": len(rows), "output": str(OUTPUT), "sha256": record["output_sha256"]})
 

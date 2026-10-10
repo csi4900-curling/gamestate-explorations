@@ -50,9 +50,15 @@ def main():
         ],
     }
     args.output.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({"events": len(tracker.events),
-                      "removed": result["removed_previous_event_keys"],
-                      "added": result["added_event_keys"]}))
+    print(
+        json.dumps(
+            {
+                "events": len(tracker.events),
+                "removed": result["removed_previous_event_keys"],
+                "added": result["added_event_keys"],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

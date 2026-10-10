@@ -39,7 +39,9 @@ def main():
     source_hash = digest(VIDEO)
     manifest = json.loads(SHOTS.read_text())
     frozen = json.loads(FROZEN.read_text())
-    first_window = json.loads((BASE / "cap-patch-crossmatch-v1/norway-end2-targeted-transfer.json").read_text())
+    first_window = json.loads(
+        (BASE / "cap-patch-crossmatch-v1/norway-end2-targeted-transfer.json").read_text()
+    )
     if manifest["source_sha256"] != source_hash or frozen["source_sha256"] != source_hash:
         raise ValueError("Source mismatch")
     if frozen["motion_code_sha256"] != digest(ROOT / "prototype/short_cap_transit.py"):
@@ -49,13 +51,15 @@ def main():
     reserved = json.loads((ROOT / "validation/unseen-end/reservation.json").read_text())
     if source_hash == reserved["source_sha256"]:
         raise ValueError("Reserved independent source is not development data")
-    selected = [shot for shot in manifest["shots"]
-                if INTERVAL[0] <= sum(shot["interval_s"]) / 2 < INTERVAL[1]]
+    selected = [
+        shot
+        for shot in manifest["shots"]
+        if INTERVAL[0] <= sum(shot["interval_s"]) / 2 < INTERVAL[1]
+    ]
     if len(selected) != 73 or selected[0]["shot_id"] != "S234" or selected[-1]["shot_id"] != "S306":
         raise ValueError("Predeclared end-4 shot selection changed")
     model = load_model(MODEL)
-    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not capture.isOpened():
         raise ValueError("Cannot open source")
     fps = capture.get(cv2.CAP_PROP_FPS)
@@ -79,27 +83,32 @@ def main():
                 raise RuntimeError(f"Retrieve failed at frame {frame_index}")
             t = round(frame_index / fps, 3)
             for colour in observations:
-                raw = stone_cap_candidates(frame, colour,
-                                           allow_bright_body=True,
-                                           allow_large_caps=True)
+                raw = stone_cap_candidates(
+                    frame, colour, allow_bright_body=True, allow_large_caps=True
+                )
                 scored = score_candidates(frame, raw, model)
-                observations[colour].append((t, [item for item in scored
-                                                 if item["patch_accepted"]]))
+                observations[colour].append(
+                    (t, [item for item in scored if item["patch_accepted"]])
+                )
                 counts[f"{colour}_raw"] += len(raw)
-                counts[f"{colour}_accepted"] += sum(item["patch_accepted"]
-                                                     for item in scored)
+                counts[f"{colour}_accepted"] += sum(item["patch_accepted"] for item in scored)
             counts["frames"] += 1
         tracks = []
         for colour in observations:
-            tracks.extend(dict(row, colour=colour)
-                          for row in short_transits(observations[colour]))
-        tracks.sort(key=lambda row: (-row["point_count"],
-                                     -row["displacement_px"]))
-        rows.append({"shot_id": shot["shot_id"], "interval_s": shot["interval_s"],
-                     "sampled_frames": counts["frames"],
-                     "candidate_counts": {key: counts[key] for key in
-                                          ("red_raw", "red_accepted", "yellow_raw", "yellow_accepted")},
-                     "transits": tracks})
+            tracks.extend(dict(row, colour=colour) for row in short_transits(observations[colour]))
+        tracks.sort(key=lambda row: (-row["point_count"], -row["displacement_px"]))
+        rows.append(
+            {
+                "shot_id": shot["shot_id"],
+                "interval_s": shot["interval_s"],
+                "sampled_frames": counts["frames"],
+                "candidate_counts": {
+                    key: counts[key]
+                    for key in ("red_raw", "red_accepted", "yellow_raw", "yellow_accepted")
+                },
+                "transits": tracks,
+            }
+        )
         if len(rows) % 8 == 0:
             print(f"Scanned {len(rows)}/{len(selected)} camera shots", flush=True)
     capture.release()
@@ -127,8 +136,13 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(result, indent=2) + "\n")
-    print({"shots": len(rows), "with_transit": result["shots_with_transit"],
-           "transits": result["transit_count"]})
+    print(
+        {
+            "shots": len(rows),
+            "with_transit": result["shots_with_transit"],
+            "transits": result["transit_count"],
+        }
+    )
 
 
 if __name__ == "__main__":

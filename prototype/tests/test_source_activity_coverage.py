@@ -6,20 +6,24 @@ from source_activity_coverage import overlay_active_static_left
 
 
 def fixture():
-    timeline = {"source_id": "recording", "source_sha256": "a" * 64,
-                "source_interval_s": [0, 300],
-                "supported_runs": [{"id": "R1", "layout": "split_2024",
-                                    "interval_s": [30, 270]}],
-                "coverage_gaps_s": [[0, 30], [270, 300]],
-                "observed_events": [{"id": "E1", "crossing_time_s": 50},
-                                    {"id": "E2", "crossing_time_s": 120}]}
-    audit = {"source_sha256": "a" * 64,
-             "static_left_runs": [{"start_s": 100, "stop_s": 200,
-                                   "median_left_mae": 1.5,
-                                   "median_right_mae": 12.0},
-                                  {"start_s": 250, "stop_s": 300,
-                                   "median_left_mae": 1.0,
-                                   "median_right_mae": 1.0}]}
+    timeline = {
+        "source_id": "recording",
+        "source_sha256": "a" * 64,
+        "source_interval_s": [0, 300],
+        "supported_runs": [{"id": "R1", "layout": "split_2024", "interval_s": [30, 270]}],
+        "coverage_gaps_s": [[0, 30], [270, 300]],
+        "observed_events": [
+            {"id": "E1", "crossing_time_s": 50},
+            {"id": "E2", "crossing_time_s": 120},
+        ],
+    }
+    audit = {
+        "source_sha256": "a" * 64,
+        "static_left_runs": [
+            {"start_s": 100, "stop_s": 200, "median_left_mae": 1.5, "median_right_mae": 12.0},
+            {"start_s": 250, "stop_s": 300, "median_left_mae": 1.0, "median_right_mae": 1.0},
+        ],
+    }
     return timeline, audit
 
 
@@ -29,7 +33,9 @@ def test_active_static_split_preserves_events_and_seconds():
     assert result["revised_supported_seconds"] == 140
     assert result["revised_unknown_seconds"] == 160
     assert [row["interval_s"] for row in result["revised_supported_runs"]] == [
-        [30, 100], [200, 270]]
+        [30, 100],
+        [200, 270],
+    ]
     assert result["newly_unsupported_intervals"][0]["existing_event_ids_inside"] == ["E2"]
     assert result["original_event_count_unchanged"] == 2
 

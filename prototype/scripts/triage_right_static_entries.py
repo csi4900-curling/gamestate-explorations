@@ -26,15 +26,18 @@ def main():
             raise ValueError("Duplicate raw track ID within interval")
         proposals = triage_tracks(tracks)
         chosen = {item["raw_track_id"] for item in proposals}
-        intervals.append({
-            "interval_s": row["interval_s"],
-            "raw_track_count": len(tracks),
-            "entry_review_count": len(proposals),
-            "unpromoted_raw_track_count": len(tracks) - len(proposals),
-            "entry_review_proposals": proposals,
-            "unpromoted_raw_track_ids": [track["track_id"] for track in tracks
-                                         if track["track_id"] not in chosen],
-        })
+        intervals.append(
+            {
+                "interval_s": row["interval_s"],
+                "raw_track_count": len(tracks),
+                "entry_review_count": len(proposals),
+                "unpromoted_raw_track_count": len(tracks) - len(proposals),
+                "entry_review_proposals": proposals,
+                "unpromoted_raw_track_ids": [
+                    track["track_id"] for track in tracks if track["track_id"] not in chosen
+                ],
+            }
+        )
     output = {
         "status": "postreview_development_right_entry_proposals_not_throw_truth",
         "source_sha256": probe["source_sha256"],
@@ -53,8 +56,7 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(output, indent=2, allow_nan=False) + "\n")
-    print([(row["raw_track_count"], row["entry_review_count"])
-           for row in intervals])
+    print([(row["raw_track_count"], row["entry_review_count"]) for row in intervals])
 
 
 if __name__ == "__main__":

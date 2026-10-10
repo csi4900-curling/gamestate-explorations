@@ -4,13 +4,17 @@ from counter_sample_support import local_counter_support
 
 
 def event():
-    return {"id": "B01", "colour": "red", "crossing_time_s": 20,
-            "remaining_before": [4, 2], "remaining_after": [3, 2]}
+    return {
+        "id": "B01",
+        "colour": "red",
+        "crossing_time_s": 20,
+        "remaining_before": [4, 2],
+        "remaining_after": [3, 2],
+    }
 
 
 def test_repeated_underread_is_reported_without_rejecting_event():
-    samples = [{"time_s": t, "counts": [4, 2] if t % 2 else [3, 2]}
-               for t in range(8, 19)]
+    samples = [{"time_s": t, "counts": [4, 2] if t % 2 else [3, 2]} for t in range(8, 19)]
     samples += [{"time_s": t, "counts": [3, 2]} for t in range(22, 33)]
     result = local_counter_support(event(), samples)
     assert result["before"]["visible_samples"] == 11

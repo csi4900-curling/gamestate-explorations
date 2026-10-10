@@ -79,8 +79,12 @@ def main():
         "source_sha256": digest,
         "source_interval_s": [args.start, args.end],
         "scanned_gaps": [
-            {"id": args.gap_id, "interval_s": [args.start, args.end], "samples": 5 * (args.end - args.start),
-             "candidate_count": len(candidates)}
+            {
+                "id": args.gap_id,
+                "interval_s": [args.start, args.end],
+                "samples": 5 * (args.end - args.start),
+                "candidate_count": len(candidates),
+            }
         ],
         "model_sha256": file_sha256(args.model),
         "feature_code_sha256": file_sha256(ROOT / "prototype/stone_patch_detector.py"),
@@ -99,7 +103,9 @@ def main():
         ],
     }
     args.output.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({"samples": 5 * (args.end - args.start), "motion_candidates": len(candidates)}))
+    print(
+        json.dumps({"samples": 5 * (args.end - args.start), "motion_candidates": len(candidates)})
+    )
 
 
 if __name__ == "__main__":

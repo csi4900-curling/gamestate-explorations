@@ -22,7 +22,8 @@ def main():
     screen = json.loads(args.screen.read_text())
     reference = json.loads(args.reference.read_text())
     if screen["source_id"] != reference["source_id"] or (
-            screen["source_sha256"] != reference["source_sha256"]):
+        screen["source_sha256"] != reference["source_sha256"]
+    ):
         parser.error("Screen and reference source differ")
     result = {
         "status": "postscore_in_sample_development_not_independent_validation",
@@ -30,8 +31,9 @@ def main():
         "reference_sha256": file_sha256(args.reference),
         "scorer_sha256": file_sha256(ROOT / "prototype/throw_event_benchmark.py"),
         "runner_sha256": file_sha256(__file__),
-        "score": evaluate_events(screen["events"], reference["events"],
-                                 reference["source_interval_s"]),
+        "score": evaluate_events(
+            screen["events"], reference["events"], reference["source_interval_s"]
+        ),
         "limitations": [
             "The 2024 source and all four first-pass false candidates were inspected before assembling this screen.",
             "The reference consists of coarse, same-agent, source-only windows, not independent exhaustive labels.",
@@ -41,9 +43,21 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print({key: result["score"][key] for key in (
-        "true_positives", "false_positives", "false_negatives", "precision",
-        "recall", "f1", "missed_reference_ids", "extra_prediction_ids")})
+    print(
+        {
+            key: result["score"][key]
+            for key in (
+                "true_positives",
+                "false_positives",
+                "false_negatives",
+                "precision",
+                "recall",
+                "f1",
+                "missed_reference_ids",
+                "extra_prediction_ids",
+            )
+        }
+    )
 
 
 if __name__ == "__main__":

@@ -37,10 +37,11 @@ def replay_track(cap, fps, reference):
         if not ok:
             raise RuntimeError(f"Retrieve failed at {n / fps:.3f} s")
         for event in detector.update(stone_candidates(frame, detector.config), n / fps):
-            if (event["colour"] == reference["colour"]
-                    and abs(event["crossing_time_s"] - center) <= 0.15):
-                track = next(row for row in detector.tracker.tracks
-                             if row.id == event["track_id"])
+            if (
+                event["colour"] == reference["colour"]
+                and abs(event["crossing_time_s"] - center) <= 0.15
+            ):
+                track = next(row for row in detector.tracker.tracks if row.id == event["track_id"])
                 matches.append((event, [dict(point) for point in track.points]))
     if len(matches) != 1:
         raise ValueError(f"Expected one matching raw track at {center}, found {len(matches)}")
@@ -65,15 +66,25 @@ def make_contact(rows, output):
         for sample in row["samples"]:
             crop = cv2.imread(str(output / sample["crop_path"]))
             tile = cv2.resize(crop, (144, 144), interpolation=cv2.INTER_NEAREST)
-            tile = cv2.copyMakeBorder(tile, 24, 0, 0, 0, cv2.BORDER_CONSTANT,
-                                      value=(30, 30, 30))
+            tile = cv2.copyMakeBorder(tile, 24, 0, 0, 0, cv2.BORDER_CONSTANT, value=(30, 30, 30))
             caption = f"{row['event_id']} {sample['time_s']:.1f}"
-            cv2.putText(tile, caption, (3, 17), cv2.FONT_HERSHEY_SIMPLEX,
-                        0.45, (255, 255, 255), 1, cv2.LINE_AA)
+            cv2.putText(
+                tile,
+                caption,
+                (3, 17),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                0.45,
+                (255, 255, 255),
+                1,
+                cv2.LINE_AA,
+            )
             line.append(tile)
         tiles.append(cv2.hconcat(line))
-    if tiles and not cv2.imwrite(str(output / f"{rows[0]['source_id']}-contact.jpg"),
-                                 cv2.vconcat(tiles), [cv2.IMWRITE_JPEG_QUALITY, 94]):
+    if tiles and not cv2.imwrite(
+        str(output / f"{rows[0]['source_id']}-contact.jpg"),
+        cv2.vconcat(tiles),
+        [cv2.IMWRITE_JPEG_QUALITY, 94],
+    ):
         raise RuntimeError("Could not save contact sheet")
 
 
@@ -98,8 +109,7 @@ def main():
         by_id = {row["id"]: row for row in timeline["observed_events"]}
         if len(by_id) != len(timeline["observed_events"]):
             raise ValueError("Timeline event IDs are not unique")
-        cap = cv2.VideoCapture(str(video_path), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+        cap = cv2.VideoCapture(str(video_path), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
         fps = cap.get(cv2.CAP_PROP_FPS)
         if not cap.isOpened() or fps <= 0:
             raise ValueError(f"Unreadable video: {video_path}")
@@ -115,17 +125,22 @@ def main():
                 point = points[point_index]
                 crop_path = Path("crops") / source["source_id"] / f"{selected['id']}-{index}.jpg"
                 (args.output / crop_path).parent.mkdir(parents=True, exist_ok=True)
-                if not cv2.imwrite(str(args.output / crop_path), crop_at(cap, fps, point),
-                                   [cv2.IMWRITE_JPEG_QUALITY, 95]):
+                if not cv2.imwrite(
+                    str(args.output / crop_path),
+                    crop_at(cap, fps, point),
+                    [cv2.IMWRITE_JPEG_QUALITY, 95],
+                ):
                     raise RuntimeError(f"Could not save {crop_path}")
-                samples.append({
-                    "time_s": point["time_s"],
-                    "pixel": point["pixel"],
-                    "bbox": point["bbox"],
-                    "body_support": point["body_support"],
-                    "crop_path": str(crop_path),
-                    "crop_sha256": file_sha256(args.output / crop_path),
-                })
+                samples.append(
+                    {
+                        "time_s": point["time_s"],
+                        "pixel": point["pixel"],
+                        "bbox": point["bbox"],
+                        "body_support": point["body_support"],
+                        "crop_path": str(crop_path),
+                        "crop_sha256": file_sha256(args.output / crop_path),
+                    }
+                )
             row = {
                 "source_id": source["source_id"],
                 "event_id": selected["id"],
@@ -140,14 +155,17 @@ def main():
             output_rows.append(row)
         cap.release()
         make_contact(source_rows, args.output)
-        sources.append({
-            "source_id": source["source_id"],
-            "video_path": source["video"],
-            "video_sha256": file_sha256(video_path),
-            "timeline_path": source["timeline"],
-            "timeline_sha256": file_sha256(timeline_path),
-            "same_video_bytes_as_timeline": file_sha256(video_path) == timeline["source_sha256"],
-        })
+        sources.append(
+            {
+                "source_id": source["source_id"],
+                "video_path": source["video"],
+                "video_sha256": file_sha256(video_path),
+                "timeline_path": source["timeline"],
+                "timeline_sha256": file_sha256(timeline_path),
+                "same_video_bytes_as_timeline": file_sha256(video_path)
+                == timeline["source_sha256"],
+            }
+        )
     result = {
         "status": "development_source_review_identity_packet",
         "selection_sha256": file_sha256(args.selection),
@@ -156,14 +174,21 @@ def main():
         "crop_size_px": [48, 48],
         "sources": sources,
         "rows": output_rows,
-        "limitations": selection["limitations"] + [
+        "limitations": selection["limitations"]
+        + [
             "Patch crops are centered on cap tracks and may include surrounding people or ice.",
             "A three-frame crop packet does not prove physical identity or end-to-end throw accuracy.",
         ],
     }
     (args.output / "manifest.json").write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({row["source_id"]: sum(r["source_id"] == row["source_id"]
-                                                for r in output_rows) for row in sources}))
+    print(
+        json.dumps(
+            {
+                row["source_id"]: sum(r["source_id"] == row["source_id"] for r in output_rows)
+                for row in sources
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

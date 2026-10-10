@@ -22,8 +22,11 @@ def crossing_points(points, crossing):
     used = set()
     selected = []
     for target in targets:
-        candidates = sorted((abs(point["time_s"] - target), index)
-                            for index, point in enumerate(points) if index not in used)
+        candidates = sorted(
+            (abs(point["time_s"] - target), index)
+            for index, point in enumerate(points)
+            if index not in used
+        )
         if not candidates or candidates[0][0] > 0.25:
             raise ValueError(f"No tracked point within 0.25 s of {target:.3f}")
         index = candidates[0][1]
@@ -51,8 +54,7 @@ def main():
         if timeline["source_id"] != source["source_id"]:
             raise ValueError("Timeline source ID mismatch")
         by_id = {event["id"]: event for event in timeline["observed_events"]}
-        cap = cv2.VideoCapture(str(video_path), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+        cap = cv2.VideoCapture(str(video_path), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
         fps = cap.get(cv2.CAP_PROP_FPS)
         if not cap.isOpened() or fps <= 0:
             raise ValueError(f"Unreadable video: {video_path}")
@@ -66,17 +68,20 @@ def main():
                 relative = Path("crops") / source["source_id"] / f"{selected['id']}-{index}.jpg"
                 path = args.output / relative
                 path.parent.mkdir(parents=True, exist_ok=True)
-                if not cv2.imwrite(str(path), crop_at(cap, fps, point),
-                                   [cv2.IMWRITE_JPEG_QUALITY, 95]):
+                if not cv2.imwrite(
+                    str(path), crop_at(cap, fps, point), [cv2.IMWRITE_JPEG_QUALITY, 95]
+                ):
                     raise RuntimeError(f"Could not save {path}")
-                samples.append({
-                    "time_s": point["time_s"],
-                    "pixel": point["pixel"],
-                    "bbox": point["bbox"],
-                    "body_support": point["body_support"],
-                    "crop_path": str(relative),
-                    "crop_sha256": file_sha256(path),
-                })
+                samples.append(
+                    {
+                        "time_s": point["time_s"],
+                        "pixel": point["pixel"],
+                        "bbox": point["bbox"],
+                        "body_support": point["body_support"],
+                        "crop_path": str(relative),
+                        "crop_sha256": file_sha256(path),
+                    }
+                )
             row = {
                 "source_id": source["source_id"],
                 "event_id": selected["id"],
@@ -91,32 +96,44 @@ def main():
             rows.append(row)
         cap.release()
         make_contact(source_rows, args.output)
-        sources.append({
-            "source_id": source["source_id"],
-            "video_path": source["video"],
-            "video_sha256": file_sha256(video_path),
-            "timeline_path": source["timeline"],
-            "timeline_sha256": file_sha256(timeline_path),
-            "same_video_bytes_as_timeline": file_sha256(video_path) == timeline["source_sha256"],
-        })
+        sources.append(
+            {
+                "source_id": source["source_id"],
+                "video_path": source["video"],
+                "video_sha256": file_sha256(video_path),
+                "timeline_path": source["timeline"],
+                "timeline_sha256": file_sha256(timeline_path),
+                "same_video_bytes_as_timeline": file_sha256(video_path)
+                == timeline["source_sha256"],
+            }
+        )
     result = {
         "status": "development_crossing_local_identity_packet",
         "selection_sha256": file_sha256(args.selection),
         "runner_sha256": file_sha256(__file__),
-        "replay_code_sha256": file_sha256(ROOT / "prototype/scripts/build_2024_identity_patch_packet.py"),
+        "replay_code_sha256": file_sha256(
+            ROOT / "prototype/scripts/build_2024_identity_patch_packet.py"
+        ),
         "sampling_policy": "nearest_distinct_track_points_at_crossing_minus_0.2_zero_plus_0.2_s",
         "samples_per_event": 3,
         "crop_size_px": [48, 48],
         "sources": sources,
         "rows": rows,
-        "limitations": selection["limitations"] + [
+        "limitations": selection["limitations"]
+        + [
             "Even crossing-local crops can contain occlusion or a tracker identity switch.",
             "Patch identity is not a verified delivered-stone event.",
         ],
     }
     (args.output / "manifest.json").write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({source["source_id"]: sum(row["source_id"] == source["source_id"]
-                                                for row in rows) for source in sources}))
+    print(
+        json.dumps(
+            {
+                source["source_id"]: sum(row["source_id"] == source["source_id"] for row in rows)
+                for source in sources
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

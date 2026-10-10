@@ -20,15 +20,20 @@ def main():
         parser.error("Output already exists")
     motion = json.loads(args.motion.read_text())
     triage = json.loads(args.triage.read_text())
-    if (len(motion["intervals"]) != 1 or len(triage["intervals"]) != 1 or
-            triage["source_sha256"] != motion["source_sha256"] or
-            triage["probe_sha256"] != digest(args.motion)):
+    if (
+        len(motion["intervals"]) != 1
+        or len(triage["intervals"]) != 1
+        or triage["source_sha256"] != motion["source_sha256"]
+        or triage["probe_sha256"] != digest(args.motion)
+    ):
         parser.error("Expected one matching source/interval pair")
     raw = motion["intervals"][0]
     entries = triage["intervals"][0]
-    if (raw["interval_s"] != entries["interval_s"] or
-            raw["moving_track_count"] != entries["raw_track_count"] or
-            len(entries["entry_review_proposals"]) != entries["entry_review_count"]):
+    if (
+        raw["interval_s"] != entries["interval_s"]
+        or raw["moving_track_count"] != entries["raw_track_count"]
+        or len(entries["entry_review_proposals"]) != entries["entry_review_count"]
+    ):
         parser.error("Saved motion and triage counts disagree")
     output = {
         "status": "saved_static_left_right_entry_baseline_adapter_not_throw_labels",
@@ -45,8 +50,14 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(output, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({"interval": output["source_interval_s"],
-                      "entries": len(output["entry_review_proposals"])}))
+    print(
+        json.dumps(
+            {
+                "interval": output["source_interval_s"],
+                "entries": len(output["entry_review_proposals"]),
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

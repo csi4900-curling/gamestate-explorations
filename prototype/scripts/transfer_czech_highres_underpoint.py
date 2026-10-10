@@ -12,7 +12,9 @@ import cv2
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "prototype"))
 from highres_underpoint_context import (  # noqa: E402
-    review_tier, underpoint_nonice_fraction)
+    review_tier,
+    underpoint_nonice_fraction,
+)
 
 BASE = ROOT / "validation/throw-event-benchmark/canada-czech-2024"
 LATVIA = ROOT / "validation/throw-event-benchmark/canada-latvia-2024"
@@ -37,18 +39,20 @@ def main():
     if OUT.exists():
         raise ValueError("Czech high-resolution underpoint transfer exists")
     alignment, scores, positive, negative, frozen = (
-        json.loads(p.read_text()) for p in
-        (ALIGNMENT, SCORES, POSITIVE, NEGATIVE, FROZEN))
+        json.loads(p.read_text()) for p in (ALIGNMENT, SCORES, POSITIVE, NEGATIVE, FROZEN)
+    )
     source_hash = digest(VIDEO)
     source_360_hash = scores["source_video_sha256"]
     code_hash = digest(ROOT / "prototype/highres_underpoint_context.py")
-    if (source_hash != alignment["interval_video_sha256"] or
-            source_360_hash != alignment["full_video_sha256"] or
-            source_360_hash != positive["source_video_sha256"] or
-            source_360_hash != negative["source_video_sha256"] or
-            not alignment["all_best_at_zero_adjustment"] or
-            alignment["source_offset_s"] != 0 or
-            code_hash != frozen["feature_code_sha256"]):
+    if (
+        source_hash != alignment["interval_video_sha256"]
+        or source_360_hash != alignment["full_video_sha256"]
+        or source_360_hash != positive["source_video_sha256"]
+        or source_360_hash != negative["source_video_sha256"]
+        or not alignment["all_best_at_zero_adjustment"]
+        or alignment["source_offset_s"] != 0
+        or code_hash != frozen["feature_code_sha256"]
+    ):
         raise ValueError("Czech source alignment or Latvia-frozen rule differs")
     by_id = {r["right_proposal_id"]: r for r in scores["rows"]}
     if len(by_id) != len(scores["rows"]):
@@ -56,8 +60,7 @@ def main():
     selected = positive["rows"] + negative["rows"]
     if len(selected) != 43 or len({r["right_proposal_id"] for r in selected}) != 43:
         raise ValueError("Reviewed Czech prefix inventory differs")
-    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not capture.isOpened():
         raise ValueError("Czech source unreadable")
     fps = capture.get(cv2.CAP_PROP_FPS)
@@ -79,47 +82,63 @@ def main():
                 if not ok:
                     raise ValueError(f"Czech frame {index} unreadable")
                 score = underpoint_nonice_fraction(frame, center)
-                samples.append({"source_time_s": point["time_s"],
-                                "decoded_frame_index": index,
-                                "scaled_cap_center_1080p_px": center,
-                                "underpoint_nonice_fraction": (
-                                    None if score is None else round(score, 4))})
-            available = [s["underpoint_nonice_fraction"] for s in samples
-                         if s["underpoint_nonice_fraction"] is not None]
+                samples.append(
+                    {
+                        "source_time_s": point["time_s"],
+                        "decoded_frame_index": index,
+                        "scaled_cap_center_1080p_px": center,
+                        "underpoint_nonice_fraction": (None if score is None else round(score, 4)),
+                    }
+                )
+            available = [
+                s["underpoint_nonice_fraction"]
+                for s in samples
+                if s["underpoint_nonice_fraction"] is not None
+            ]
             middle = round(median(available), 4) if available else None
-            rows.append({"right_proposal_id": pid,
-                         "source_pixel_class_for_audit_only": reviewed[
-                             "sampled_source_pixel_class"],
-                         "median_underpoint_nonice_fraction": middle,
-                         "available_sample_count": len(available),
-                         "review_tier": review_tier(middle),
-                         "samples": samples,
-                         "physical_throw_verified": False})
+            rows.append(
+                {
+                    "right_proposal_id": pid,
+                    "source_pixel_class_for_audit_only": reviewed["sampled_source_pixel_class"],
+                    "median_underpoint_nonice_fraction": middle,
+                    "available_sample_count": len(available),
+                    "review_tier": review_tier(middle),
+                    "samples": samples,
+                    "physical_throw_verified": False,
+                }
+            )
             print(pid, rows[-1]["review_tier"], middle, flush=True)
     finally:
         capture.release()
-    counts = Counter((r["source_pixel_class_for_audit_only"],
-                      r["review_tier"]) for r in rows)
+    counts = Counter((r["source_pixel_class_for_audit_only"], r["review_tier"]) for r in rows)
     payload = {
         "status": "latvia_developed_1080p_underpoint_czech_source_review_transfer_not_throw_truth",
         "source_video_sha256": source_hash,
         "source_360p_sha256": source_360_hash,
-        "input_sha256": {"alignment": digest(ALIGNMENT),
-                         "scores": digest(SCORES),
-                         "positive_source_review": digest(POSITIVE),
-                         "negative_source_review": digest(NEGATIVE),
-                         "latvia_frozen_underpoint": digest(FROZEN)},
+        "input_sha256": {
+            "alignment": digest(ALIGNMENT),
+            "scores": digest(SCORES),
+            "positive_source_review": digest(POSITIVE),
+            "negative_source_review": digest(NEGATIVE),
+            "latvia_frozen_underpoint": digest(FROZEN),
+        },
         "feature_code_sha256": code_hash,
         "runner_sha256": digest(Path(__file__)),
         "method": "Unchanged Latvia-developed 1080p underpoint HSV and 0.05/0.25 review tiers; Czech 360p source-reviewed cap-bbox centers scaled 3x using verified zero-offset full-1080p alignment; no label-dependent score choices.",
         "pixel_semantics_difference": "Czech center is a scaled coloured cap bbox, while Latvia center was a high-resolution body-template center; fractions are not identical physical patches.",
         "reviewed_path_count": len(rows),
         "tier_counts_by_source_class": {
-            cls: {tier: counts[(cls, tier)] for tier in (
-                "clear_context_review", "ambiguous_context_review",
-                "cluttered_context_review", "context_unavailable")}
-            for cls in sorted({r["source_pixel_class_for_audit_only"]
-                               for r in rows})},
+            cls: {
+                tier: counts[(cls, tier)]
+                for tier in (
+                    "clear_context_review",
+                    "ambiguous_context_review",
+                    "cluttered_context_review",
+                    "context_unavailable",
+                )
+            }
+            for cls in sorted({r["source_pixel_class_for_audit_only"] for r in rows})
+        },
         "rows": rows,
         "limitations": [
             "Czech and Latvia are exposed 2024 broadcasts with similar split layouts, not independent event ground truth.",
@@ -129,8 +148,7 @@ def main():
         ],
     }
     OUT.write_text(json.dumps(payload, indent=2) + "\n")
-    print(json.dumps({"paths": len(rows),
-                      "tiers": payload["tier_counts_by_source_class"]}))
+    print(json.dumps({"paths": len(rows), "tiers": payload["tier_counts_by_source_class"]}))
 
 
 if __name__ == "__main__":

@@ -28,13 +28,14 @@ def main():
     late = json.loads(args.late.read_text())
     if early["candidate_id"] != args.candidate_id:
         parser.error("Early candidate ID differs")
-    later = next((row for row in late["rows"]
-                  if row["candidate_id"] == args.candidate_id), None)
+    later = next((row for row in late["rows"] if row["candidate_id"] == args.candidate_id), None)
     if later is None:
         parser.error("Late candidate ID absent")
-    if (early["source_sha256"] != late["high_resolution_source_sha256"] or
-            early["colour"] != later["colour"] or
-            later["receiving_view"] != "left"):
+    if (
+        early["source_sha256"] != late["high_resolution_source_sha256"]
+        or early["colour"] != later["colour"]
+        or later["receiving_view"] != "left"
+    ):
         parser.error("Source, colour, or view differs")
     first = early["cases"]["extended"]["selection"]["path"]
     second = later["selection"]["path"]
@@ -54,18 +55,28 @@ def main():
         world_distance = dist(a["ground_position_m"], b["ground_position_m"])
         if pixel_distance > 2.0 or world_distance > 0.2:
             parser.error("Shared observation disagrees beyond tolerance")
-        overlap.append({"source_time_s": time_s,
-                        "pixel_distance_px": pixel_distance,
-                        "conditional_position_distance_m": world_distance})
+        overlap.append(
+            {
+                "source_time_s": time_s,
+                "pixel_distance_px": pixel_distance,
+                "conditional_position_distance_m": world_distance,
+            }
+        )
     combined = []
     for time_s in sorted(first_by_time.keys() | second_by_time.keys()):
         node = first_by_time.get(time_s) or second_by_time[time_s]
-        provenance = ("both" if time_s in first_by_time and time_s in second_by_time
-                      else "extended_bound" if time_s in first_by_time
-                      else "existing_later_path")
+        provenance = (
+            "both"
+            if time_s in first_by_time and time_s in second_by_time
+            else "extended_bound"
+            if time_s in first_by_time
+            else "existing_later_path"
+        )
         combined.append({**node, "path_source": provenance})
-    gaps = [round(right["source_time_s"] - left["source_time_s"], 6)
-            for left, right in zip(combined, combined[1:])]
+    gaps = [
+        round(right["source_time_s"] - left["source_time_s"], 6)
+        for left, right in zip(combined, combined[1:])
+    ]
     if not gaps or max(gaps) > 0.6:
         parser.error("Observed paths leave a gap greater than 0.6 s")
     output = {
@@ -96,8 +107,12 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(output, indent=2) + "\n")
-    print(args.candidate_id, len(combined),
-          combined[0]["source_time_s"], combined[-1]["source_time_s"])
+    print(
+        args.candidate_id,
+        len(combined),
+        combined[0]["source_time_s"],
+        combined[-1]["source_time_s"],
+    )
 
 
 if __name__ == "__main__":

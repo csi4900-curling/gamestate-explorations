@@ -14,33 +14,41 @@ from evidence_game_state_handoff import build_evidence_handoff  # noqa: E402
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    for key in ("candidates", "screen", "motion", "source-motion", "boards", "comparisons",
-                "output"):
+    for key in (
+        "candidates",
+        "screen",
+        "motion",
+        "source-motion",
+        "boards",
+        "comparisons",
+        "output",
+    ):
         parser.add_argument(f"--{key}", type=Path, required=True)
     args = parser.parse_args()
     if args.output.exists():
         parser.error("Evidence handoff already exists")
-    inputs = {key: json.loads(getattr(args, key.replace('-', '_')).read_text())
-              for key in ("candidates", "screen", "motion", "source-motion",
-                          "boards", "comparisons")}
-    digests = {key: file_sha256(getattr(args, key.replace('-', '_')))
-               for key in inputs}
+    inputs = {
+        key: json.loads(getattr(args, key.replace("-", "_")).read_text())
+        for key in ("candidates", "screen", "motion", "source-motion", "boards", "comparisons")
+    }
+    digests = {key: file_sha256(getattr(args, key.replace("-", "_"))) for key in inputs}
     candidates, screen, motion, boards, comparisons = (
-        inputs[key] for key in ("candidates", "screen", "motion", "boards",
-                               "comparisons"))
-    if (screen["candidates_sha256"] != digests["candidates"] or
-            screen["motion_sha256"] != digests["motion"] or
-            motion["source_motion_sha256"] != digests["source-motion"] or
-            inputs["source-motion"]["candidates_sha256"] != digests["candidates"] or
-            boards["candidates_sha256"] != digests["candidates"] or
-            boards["screen_sha256"] != digests["screen"] or
-            boards["motion_sha256"] != digests["motion"] or
-            comparisons["boards_sha256"] != digests["boards"] or
-            comparisons["candidates_sha256"] != digests["candidates"] or
-            comparisons["screen_sha256"] != digests["screen"]):
+        inputs[key] for key in ("candidates", "screen", "motion", "boards", "comparisons")
+    )
+    if (
+        screen["candidates_sha256"] != digests["candidates"]
+        or screen["motion_sha256"] != digests["motion"]
+        or motion["source_motion_sha256"] != digests["source-motion"]
+        or inputs["source-motion"]["candidates_sha256"] != digests["candidates"]
+        or boards["candidates_sha256"] != digests["candidates"]
+        or boards["screen_sha256"] != digests["screen"]
+        or boards["motion_sha256"] != digests["motion"]
+        or comparisons["boards_sha256"] != digests["boards"]
+        or comparisons["candidates_sha256"] != digests["candidates"]
+        or comparisons["screen_sha256"] != digests["screen"]
+    ):
         parser.error("Evidence input provenance chain differs")
-    timeline = build_evidence_handoff(candidates, screen, motion, boards,
-                                      comparisons)
+    timeline = build_evidence_handoff(candidates, screen, motion, boards, comparisons)
     status_counts = dict(Counter(row["event_status"] for row in timeline))
     output = {
         "status": "provisional_video_evidence_timeline_not_complete_game_state",
@@ -48,8 +56,7 @@ def main():
         "source_sha256": candidates["source_sha256"],
         "source_interval_s": candidates["source_interval_s"],
         "input_sha256": digests,
-        "model_code_sha256": file_sha256(ROOT / "prototype" /
-                                         "evidence_game_state_handoff.py"),
+        "model_code_sha256": file_sha256(ROOT / "prototype" / "evidence_game_state_handoff.py"),
         "runner_sha256": file_sha256(Path(__file__)),
         "event_status_counts": status_counts,
         "timeline": timeline,

@@ -26,20 +26,36 @@ def select_paths(samples, start_s, end_s, window_s=12.0, stride_s=5.0):
         chunk = [row for row in samples if start <= row["source_time_s"] <= start + window_s]
         for colour in ("red", "yellow"):
             selection = select_far_entry_motion_path(
-                chunk, colour, view="left", max_gap_s=0.6,
-                entry_y_threshold_m=-4.5, forward_direction=1,
-                min_samples=4, max_forward_speed_change_m_s=2.0)
+                chunk,
+                colour,
+                view="left",
+                max_gap_s=0.6,
+                entry_y_threshold_m=-4.5,
+                forward_direction=1,
+                min_samples=4,
+                max_forward_speed_change_m_s=2.0,
+            )
             if selection["status"] == "provisional_unique_far_entry_motion_path":
-                windows.append({"window_start_s": round(start, 3),
-                                "window_end_s": round(start + window_s, 3),
-                                "colour": colour, "selection": selection})
+                windows.append(
+                    {
+                        "window_start_s": round(start, 3),
+                        "window_end_s": round(start + window_s, 3),
+                        "colour": colour,
+                        "selection": selection,
+                    }
+                )
         start += stride_s
     groups = []
     for item in windows:
         path = item["selection"]["path"]
-        matching = [group for group in groups if group[0]["colour"] == item["colour"]
-                    and any(shared_timed_observations(path, other["selection"]["path"]) >= 4
-                            for other in group)]
+        matching = [
+            group
+            for group in groups
+            if group[0]["colour"] == item["colour"]
+            and any(
+                shared_timed_observations(path, other["selection"]["path"]) >= 4 for other in group
+            )
+        ]
         if matching:
             matching[0].append(item)
             for duplicate in matching[1:]:
@@ -48,19 +64,26 @@ def select_paths(samples, start_s, end_s, window_s=12.0, stride_s=5.0):
         else:
             groups.append([item])
     episodes = []
-    for index, group in enumerate(sorted(groups, key=lambda g: min(
-            x["selection"]["first_observation_s"] for x in g)), start=1):
-        representative = max(group, key=lambda row: (
-            row["selection"]["sample_count"],
-            row["selection"]["endpoint_displacement_m"]))
-        episodes.append({
-            "episode_id": f"G{index:02d}",
-            "colour": representative["colour"],
-            "window_count": len(group),
-            "window_starts_s": [row["window_start_s"] for row in group],
-            "representative": representative,
-            "physical_throw_verified": False,
-        })
+    for index, group in enumerate(
+        sorted(groups, key=lambda g: min(x["selection"]["first_observation_s"] for x in g)), start=1
+    ):
+        representative = max(
+            group,
+            key=lambda row: (
+                row["selection"]["sample_count"],
+                row["selection"]["endpoint_displacement_m"],
+            ),
+        )
+        episodes.append(
+            {
+                "episode_id": f"G{index:02d}",
+                "colour": representative["colour"],
+                "window_count": len(group),
+                "window_starts_s": [row["window_start_s"] for row in group],
+                "representative": representative,
+                "physical_throw_verified": False,
+            }
+        )
     return windows, episodes
 
 
@@ -82,8 +105,7 @@ def main():
     cal.H = np.array(json.loads(rect_path.read_text())["left"]["refined_H"])
     prior_H = cal.H.copy()
     clean_reference = cal.reference.copy()
-    capture = cv2.VideoCapture(str(a.video), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(a.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not capture.isOpened():
         p.error("Cannot open video")
     fps = capture.get(cv2.CAP_PROP_FPS)
@@ -101,18 +123,28 @@ def main():
             if H is not None:
                 A = np.linalg.inv(H) @ prior_H
                 background = cv2.warpPerspective(
-                    clean_reference, A, (frame.shape[1], frame.shape[0]))
+                    clean_reference, A, (frame.shape[1], frame.shape[0])
+                )
                 prior = transported_reference_camera(prior_H, H, cal.view["region"])
                 found, _ = detect_and_localize(frame, H, cal.view, background, prior)
-            samples.append({
-                "source_time_s": t,
-                "registration_status": registration["status"],
-                "views": {"left": {"proposals": [{
-                    "colour": row["colour"],
-                    "pixel_center": row["pixel_center"],
-                    "ground_position_m": row["ground_position_m"],
-                } for row in found]}},
-            })
+            samples.append(
+                {
+                    "source_time_s": t,
+                    "registration_status": registration["status"],
+                    "views": {
+                        "left": {
+                            "proposals": [
+                                {
+                                    "colour": row["colour"],
+                                    "pixel_center": row["pixel_center"],
+                                    "ground_position_m": row["ground_position_m"],
+                                }
+                                for row in found
+                            ]
+                        }
+                    },
+                }
+            )
             if (index + 1) % 25 == 0:
                 print(f"sampled {index + 1}/{count + 1}", flush=True)
     finally:
@@ -146,8 +178,7 @@ def main():
     }
     a.output.parent.mkdir(parents=True, exist_ok=True)
     a.output.write_text(json.dumps(output, indent=2) + "\n")
-    print(len(samples), "samples;", len(windows), "selected windows;",
-          len(episodes), "episodes")
+    print(len(samples), "samples;", len(windows), "selected windows;", len(episodes), "episodes")
 
 
 if __name__ == "__main__":

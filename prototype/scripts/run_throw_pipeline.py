@@ -35,15 +35,27 @@ def attach_source_activity(video, source_sha256, interval, output_dir, timeline_
     overlay_path = output_dir / "source-activity-coverage.json"
     if audit_path.exists():
         audit = json.loads(audit_path.read_text())
-        if (audit.get("source_sha256") != source_sha256 or
-                audit.get("source_interval_s") != list(interval) or
-                audit.get("runner_sha256") != file_sha256(
-                    ROOT / "prototype/scripts/audit_split_panel_freeze.py")):
-            raise ValueError("Existing source-activity audit does not match source, interval or code")
+        if (
+            audit.get("source_sha256") != source_sha256
+            or audit.get("source_interval_s") != list(interval)
+            or audit.get("runner_sha256")
+            != file_sha256(ROOT / "prototype/scripts/audit_split_panel_freeze.py")
+        ):
+            raise ValueError(
+                "Existing source-activity audit does not match source, interval or code"
+            )
     else:
-        run_child("audit_split_panel_freeze.py", "--video", video,
-                  "--start", interval[0], "--end", interval[1],
-                  "--output", audit_path)
+        run_child(
+            "audit_split_panel_freeze.py",
+            "--video",
+            video,
+            "--start",
+            interval[0],
+            "--end",
+            interval[1],
+            "--output",
+            audit_path,
+        )
     if overlay_path.exists():
         overlay = json.loads(overlay_path.read_text())
         expected = {
@@ -51,13 +63,21 @@ def attach_source_activity(video, source_sha256, interval, output_dir, timeline_
             "activity_audit_sha256": file_sha256(audit_path),
             "overlay_code_sha256": file_sha256(ROOT / "prototype/source_activity_coverage.py"),
             "runner_sha256": file_sha256(
-                ROOT / "prototype/scripts/overlay_source_activity_coverage.py"),
+                ROOT / "prototype/scripts/overlay_source_activity_coverage.py"
+            ),
         }
         if any(overlay.get(key) != value for key, value in expected.items()):
             raise ValueError("Existing source-activity coverage uses different inputs or code")
     else:
-        run_child("overlay_source_activity_coverage.py", "--timeline", timeline_path,
-                  "--activity-audit", audit_path, "--output", overlay_path)
+        run_child(
+            "overlay_source_activity_coverage.py",
+            "--timeline",
+            timeline_path,
+            "--activity-audit",
+            audit_path,
+            "--output",
+            overlay_path,
+        )
     return json.loads(overlay_path.read_text())
 
 
@@ -78,29 +98,36 @@ def attach_right_view_review(video, source_sha256, output_dir):
             "overlay_sha256": file_sha256(overlay_path),
             "tracker_code_sha256": file_sha256(ROOT / "prototype/stone_motion_fallback.py"),
             "frame_normalization_code_sha256": file_sha256(
-                ROOT / "prototype/scripts/audit_split_panel_freeze.py"),
+                ROOT / "prototype/scripts/audit_split_panel_freeze.py"
+            ),
             "runner_sha256": file_sha256(
-                ROOT / "prototype/scripts/probe_static_left_right_cap_motion.py"),
+                ROOT / "prototype/scripts/probe_static_left_right_cap_motion.py"
+            ),
         }
         if any(probe.get(key) != value for key, value in expected.items()):
             raise ValueError("Existing blind-span right-view probe uses different inputs or code")
     else:
-        run_child("probe_static_left_right_cap_motion.py", "--video", video,
-                  "--overlay", overlay_path, "--output", probe_path)
+        run_child(
+            "probe_static_left_right_cap_motion.py",
+            "--video",
+            video,
+            "--overlay",
+            overlay_path,
+            "--output",
+            probe_path,
+        )
     if triage_path.exists():
         triage = json.loads(triage_path.read_text())
         expected = {
             "source_sha256": source_sha256,
             "probe_sha256": file_sha256(probe_path),
             "triage_code_sha256": file_sha256(ROOT / "prototype/right_view_entry_triage.py"),
-            "runner_sha256": file_sha256(
-                ROOT / "prototype/scripts/triage_right_static_entries.py"),
+            "runner_sha256": file_sha256(ROOT / "prototype/scripts/triage_right_static_entries.py"),
         }
         if any(triage.get(key) != value for key, value in expected.items()):
             raise ValueError("Existing blind-span right-entry triage uses different inputs or code")
     else:
-        run_child("triage_right_static_entries.py", "--probe", probe_path,
-                  "--output", triage_path)
+        run_child("triage_right_static_entries.py", "--probe", probe_path, "--output", triage_path)
     return json.loads(triage_path.read_text())
 
 
@@ -117,16 +144,25 @@ def attach_camera_aware_fusion(output_dir, source_sha256, timeline_path):
         "partial_state_sha256": None,
         "fusion_code_sha256": file_sha256(ROOT / "prototype/camera_aware_right_fusion.py"),
         "runner_sha256": file_sha256(
-            ROOT / "prototype/scripts/export_camera_aware_right_fusion.py"),
+            ROOT / "prototype/scripts/export_camera_aware_right_fusion.py"
+        ),
     }
     if fusion_path.exists():
         fusion = json.loads(fusion_path.read_text())
         if any(fusion.get(key) != value for key, value in expected.items()):
             raise ValueError("Existing camera-aware fusion uses different inputs or code")
     else:
-        run_child("export_camera_aware_right_fusion.py", "--right", right_path,
-                  "--left", timeline_path, "--coverage", coverage_path,
-                  "--output", fusion_path)
+        run_child(
+            "export_camera_aware_right_fusion.py",
+            "--right",
+            right_path,
+            "--left",
+            timeline_path,
+            "--coverage",
+            coverage_path,
+            "--output",
+            fusion_path,
+        )
     return json.loads(fusion_path.read_text())
 
 
@@ -138,8 +174,7 @@ def attach_candidate_review_union(output_dir, timeline_path):
     if output_path.exists():
         union = json.loads(output_path.read_text())
         timeline = json.loads(timeline_path.read_text())
-        _, triage_hashes, reconstructed, raw_hashes = load_left_sources(
-            timeline_path, timeline)
+        _, triage_hashes, reconstructed, raw_hashes = load_left_sources(timeline_path, timeline)
         expected_inputs = {
             "timeline": file_sha256(timeline_path),
             "fusion": file_sha256(fusion_path),
@@ -149,16 +184,26 @@ def attach_candidate_review_union(output_dir, timeline_path):
         }
         if reconstructed:
             expected_inputs["left_reconstructed_by_run"] = reconstructed
-        if (union.get("input_sha256") != expected_inputs or
-                union.get("model_code_sha256") != file_sha256(
-                    ROOT / "prototype/candidate_review_union.py") or
-                union.get("runner_sha256") != file_sha256(
-                    ROOT / "prototype/scripts/export_candidate_review_union.py")):
+        if (
+            union.get("input_sha256") != expected_inputs
+            or union.get("model_code_sha256")
+            != file_sha256(ROOT / "prototype/candidate_review_union.py")
+            or union.get("runner_sha256")
+            != file_sha256(ROOT / "prototype/scripts/export_candidate_review_union.py")
+        ):
             raise ValueError("Existing candidate review union uses different inputs or code")
     else:
-        run_child("export_candidate_review_union.py", "--timeline", timeline_path,
-                  "--fusion", fusion_path, "--coverage", coverage_path,
-                  "--output", output_path)
+        run_child(
+            "export_candidate_review_union.py",
+            "--timeline",
+            timeline_path,
+            "--fusion",
+            fusion_path,
+            "--coverage",
+            coverage_path,
+            "--output",
+            output_path,
+        )
     return json.loads(output_path.read_text())
 
 
@@ -170,23 +215,31 @@ def attach_right_partial_boards(video, source_sha256, output_dir):
         "source_sha256": source_sha256,
         "fusion_sha256": file_sha256(fusion_path),
         "proposal_code_sha256": file_sha256(
-            ROOT / "prototype/scripts/probe_static_left_right_cap_motion.py"),
+            ROOT / "prototype/scripts/probe_static_left_right_cap_motion.py"
+        ),
         "frame_normalization_code_sha256": file_sha256(
-            ROOT / "prototype/scripts/audit_split_panel_freeze.py"),
-        "stable_cap_code_sha256": file_sha256(
-            ROOT / "prototype/right_view_partial_board.py"),
+            ROOT / "prototype/scripts/audit_split_panel_freeze.py"
+        ),
+        "stable_cap_code_sha256": file_sha256(ROOT / "prototype/right_view_partial_board.py"),
         "cap_set_comparison_code_sha256": file_sha256(
-            ROOT / "prototype/right_view_cap_sequence.py"),
-        "runner_sha256": file_sha256(
-            ROOT / "prototype/scripts/export_right_only_partial_caps.py"),
+            ROOT / "prototype/right_view_cap_sequence.py"
+        ),
+        "runner_sha256": file_sha256(ROOT / "prototype/scripts/export_right_only_partial_caps.py"),
     }
     if output_path.exists():
         boards = json.loads(output_path.read_text())
         if any(boards.get(key) != value for key, value in expected.items()):
             raise ValueError("Existing right-only partial boards use different inputs or code")
     else:
-        run_child("export_right_only_partial_caps.py", "--video", video,
-                  "--fusion", fusion_path, "--output", output_path)
+        run_child(
+            "export_right_only_partial_caps.py",
+            "--video",
+            video,
+            "--fusion",
+            fusion_path,
+            "--output",
+            output_path,
+        )
     return json.loads(output_path.read_text())
 
 
@@ -201,16 +254,22 @@ def attach_candidate_state_handoff(output_dir):
             "right_only_partial_caps": file_sha256(boards_path),
         },
         "model_code_sha256": file_sha256(ROOT / "prototype/candidate_state_handoff.py"),
-        "runner_sha256": file_sha256(
-            ROOT / "prototype/scripts/export_candidate_state_handoff.py"),
+        "runner_sha256": file_sha256(ROOT / "prototype/scripts/export_candidate_state_handoff.py"),
     }
     if output_path.exists():
         handoff = json.loads(output_path.read_text())
         if any(handoff.get(key) != value for key, value in expected.items()):
             raise ValueError("Existing candidate state handoff uses different inputs or code")
     else:
-        run_child("export_candidate_state_handoff.py", "--union", union_path,
-                  "--right-boards", boards_path, "--output", output_path)
+        run_child(
+            "export_candidate_state_handoff.py",
+            "--union",
+            union_path,
+            "--right-boards",
+            boards_path,
+            "--output",
+            output_path,
+        )
     return json.loads(output_path.read_text())
 
 
@@ -226,23 +285,31 @@ def attach_right_board_sequence(video, source_sha256, output_dir):
             "right_only_partial_caps": file_sha256(boards_path),
         },
         "model_code_sha256": file_sha256(ROOT / "prototype/right_board_sequence.py"),
-        "alignment_code_sha256": file_sha256(
-            ROOT / "prototype/right_view_house_alignment.py"),
+        "alignment_code_sha256": file_sha256(ROOT / "prototype/right_view_house_alignment.py"),
         "cap_set_comparison_code_sha256": file_sha256(
-            ROOT / "prototype/right_view_cap_sequence.py"),
+            ROOT / "prototype/right_view_cap_sequence.py"
+        ),
         "frame_normalization_code_sha256": file_sha256(
-            ROOT / "prototype/scripts/audit_split_panel_freeze.py"),
-        "runner_sha256": file_sha256(
-            ROOT / "prototype/scripts/export_right_board_sequence.py"),
+            ROOT / "prototype/scripts/audit_split_panel_freeze.py"
+        ),
+        "runner_sha256": file_sha256(ROOT / "prototype/scripts/export_right_board_sequence.py"),
     }
     if output_path.exists():
         sequence = json.loads(output_path.read_text())
         if any(sequence.get(key) != value for key, value in expected.items()):
             raise ValueError("Existing right-board sequence uses different inputs or code")
     else:
-        run_child("export_right_board_sequence.py", "--video", video,
-                  "--union", union_path, "--right-boards", boards_path,
-                  "--output", output_path)
+        run_child(
+            "export_right_board_sequence.py",
+            "--video",
+            video,
+            "--union",
+            union_path,
+            "--right-boards",
+            boards_path,
+            "--output",
+            output_path,
+        )
     return json.loads(output_path.read_text())
 
 
@@ -258,26 +325,38 @@ def attach_left_candidate_boards(video, source_sha256, output_dir):
             "timeline": file_sha256(timeline_path),
         },
         "runner_sha256": file_sha256(
-            ROOT / "prototype/scripts/export_left_candidate_partial_caps.py"),
+            ROOT / "prototype/scripts/export_left_candidate_partial_caps.py"
+        ),
         "right_sampler_code_sha256": file_sha256(
-            ROOT / "prototype/scripts/export_right_only_partial_caps.py"),
+            ROOT / "prototype/scripts/export_right_only_partial_caps.py"
+        ),
         "proposal_code_sha256": file_sha256(
-            ROOT / "prototype/scripts/probe_static_left_right_cap_motion.py"),
+            ROOT / "prototype/scripts/probe_static_left_right_cap_motion.py"
+        ),
         "frame_normalization_code_sha256": file_sha256(
-            ROOT / "prototype/scripts/audit_split_panel_freeze.py"),
-        "stable_cap_code_sha256": file_sha256(
-            ROOT / "prototype/right_view_partial_board.py"),
+            ROOT / "prototype/scripts/audit_split_panel_freeze.py"
+        ),
+        "stable_cap_code_sha256": file_sha256(ROOT / "prototype/right_view_partial_board.py"),
         "cap_set_comparison_code_sha256": file_sha256(
-            ROOT / "prototype/right_view_cap_sequence.py"),
+            ROOT / "prototype/right_view_cap_sequence.py"
+        ),
     }
     if output_path.exists():
         boards = json.loads(output_path.read_text())
         if any(boards.get(key) != value for key, value in expected.items()):
             raise ValueError("Existing left candidate boards use different inputs or code")
     else:
-        run_child("export_left_candidate_partial_caps.py", "--video", video,
-                  "--union", union_path, "--timeline", timeline_path,
-                  "--output", output_path)
+        run_child(
+            "export_left_candidate_partial_caps.py",
+            "--video",
+            video,
+            "--union",
+            union_path,
+            "--timeline",
+            timeline_path,
+            "--output",
+            output_path,
+        )
     return json.loads(output_path.read_text())
 
 
@@ -291,18 +370,25 @@ def attach_candidate_state_handoff_v2(output_dir):
             "candidate_state_handoff": file_sha256(handoff_path),
             "left_candidate_partial_caps": file_sha256(boards_path),
         },
-        "model_code_sha256": file_sha256(
-            ROOT / "prototype/candidate_state_handoff_v2.py"),
+        "model_code_sha256": file_sha256(ROOT / "prototype/candidate_state_handoff_v2.py"),
         "runner_sha256": file_sha256(
-            ROOT / "prototype/scripts/export_candidate_state_handoff_v2.py"),
+            ROOT / "prototype/scripts/export_candidate_state_handoff_v2.py"
+        ),
     }
     if output_path.exists():
         handoff = json.loads(output_path.read_text())
         if any(handoff.get(key) != value for key, value in expected.items()):
             raise ValueError("Existing candidate state handoff v2 uses different inputs or code")
     else:
-        run_child("export_candidate_state_handoff_v2.py", "--handoff", handoff_path,
-                  "--left-boards", boards_path, "--output", output_path)
+        run_child(
+            "export_candidate_state_handoff_v2.py",
+            "--handoff",
+            handoff_path,
+            "--left-boards",
+            boards_path,
+            "--output",
+            output_path,
+        )
     return json.loads(output_path.read_text())
 
 
@@ -313,24 +399,34 @@ def attach_candidate_image_board_sequence(video, source_sha256, output_dir):
     expected = {
         "source_sha256": source_sha256,
         "handoff_sha256": file_sha256(handoff_path),
-        "model_code_sha256": file_sha256(
-            ROOT / "prototype/candidate_image_board_sequence.py"),
-        "alignment_code_sha256": file_sha256(
-            ROOT / "prototype/right_view_house_alignment.py"),
+        "model_code_sha256": file_sha256(ROOT / "prototype/candidate_image_board_sequence.py"),
+        "alignment_code_sha256": file_sha256(ROOT / "prototype/right_view_house_alignment.py"),
         "cap_set_comparison_code_sha256": file_sha256(
-            ROOT / "prototype/right_view_cap_sequence.py"),
+            ROOT / "prototype/right_view_cap_sequence.py"
+        ),
         "frame_normalization_code_sha256": file_sha256(
-            ROOT / "prototype/scripts/audit_split_panel_freeze.py"),
+            ROOT / "prototype/scripts/audit_split_panel_freeze.py"
+        ),
         "runner_sha256": file_sha256(
-            ROOT / "prototype/scripts/export_candidate_image_board_sequence.py"),
+            ROOT / "prototype/scripts/export_candidate_image_board_sequence.py"
+        ),
     }
     if output_path.exists():
         sequence = json.loads(output_path.read_text())
         if any(sequence.get(key) != value for key, value in expected.items()):
-            raise ValueError("Existing candidate image board sequence uses different inputs or code")
+            raise ValueError(
+                "Existing candidate image board sequence uses different inputs or code"
+            )
     else:
-        run_child("export_candidate_image_board_sequence.py", "--video", video,
-                  "--handoff", handoff_path, "--output", output_path)
+        run_child(
+            "export_candidate_image_board_sequence.py",
+            "--video",
+            video,
+            "--handoff",
+            handoff_path,
+            "--output",
+            output_path,
+        )
     return json.loads(output_path.read_text())
 
 
@@ -341,22 +437,27 @@ def attach_candidate_house_ellipse(video, source_sha256, output_dir):
     expected = {
         "source_sha256": source_sha256,
         "handoff_sha256": file_sha256(handoff_path),
-        "paint_mask_code_sha256": file_sha256(
-            ROOT / "prototype/split_house_reference.py"),
-        "model_code_sha256": file_sha256(
-            ROOT / "prototype/split_house_ellipse_v2.py"),
+        "paint_mask_code_sha256": file_sha256(ROOT / "prototype/split_house_reference.py"),
+        "model_code_sha256": file_sha256(ROOT / "prototype/split_house_ellipse_v2.py"),
         "frame_normalization_code_sha256": file_sha256(
-            ROOT / "prototype/scripts/audit_split_panel_freeze.py"),
-        "runner_sha256": file_sha256(
-            ROOT / "prototype/scripts/export_candidate_house_ellipse.py"),
+            ROOT / "prototype/scripts/audit_split_panel_freeze.py"
+        ),
+        "runner_sha256": file_sha256(ROOT / "prototype/scripts/export_candidate_house_ellipse.py"),
     }
     if output_path.exists():
         result = json.loads(output_path.read_text())
         if any(result.get(key) != value for key, value in expected.items()):
             raise ValueError("Existing candidate house ellipse uses different inputs or code")
     else:
-        run_child("export_candidate_house_ellipse.py", "--video", video,
-                  "--handoff", handoff_path, "--output", output_path)
+        run_child(
+            "export_candidate_house_ellipse.py",
+            "--video",
+            video,
+            "--handoff",
+            handoff_path,
+            "--output",
+            output_path,
+        )
     return json.loads(output_path.read_text())
 
 
@@ -414,8 +515,9 @@ def sample_layout(video, start_s, end_s, chunk_s=300):
     return summarize_evidence(samples, start_s, end_s, chunk_s=chunk_s), samples, duration
 
 
-def run_adapter(video, source_id, digest, layout, start, end, output_dir, *,
-                resume=False, preflight_path=None):
+def run_adapter(
+    video, source_id, digest, layout, start, end, output_dir, *, resume=False, preflight_path=None
+):
     """Run the existing layout-specific adapter in one distinct output directory."""
     output_dir.mkdir(parents=True, exist_ok=True)
     if layout == "split_2024":
@@ -522,14 +624,15 @@ def run_adapter(video, source_id, digest, layout, start, end, output_dir, *,
         triage_text = json.dumps(triage_document, indent=2) + "\n"
         if triage_path.exists():
             if triage_path.read_text() != triage_text:
-                raise ValueError("Existing triage differs from verified proposal and confirmation artifacts")
+                raise ValueError(
+                    "Existing triage differs from verified proposal and confirmation artifacts"
+                )
         else:
             triage_path.write_text(triage_text)
         if preflight_path is not None:
             camera_motion = output_dir / "candidate-camera-motion.json"
             if resume and camera_motion.exists():
-                sidecar = read_matching_artifact(
-                    camera_motion, source_id, digest, [start, end])
+                sidecar = read_matching_artifact(camera_motion, source_id, digest, [start, end])
                 if sidecar.get("input_sha256") != {
                     "raw": file_sha256(raw),
                     "preflight": file_sha256(preflight_path),
@@ -548,9 +651,14 @@ def run_adapter(video, source_id, digest, layout, start, end, output_dir, *,
             else:
                 run_child(
                     "measure_candidate_camera_motion.py",
-                    "--video", video, "--raw", raw,
-                    "--preflight", preflight_path,
-                    "--output", camera_motion,
+                    "--video",
+                    video,
+                    "--raw",
+                    raw,
+                    "--preflight",
+                    preflight_path,
+                    "--output",
+                    camera_motion,
                 )
     elif layout == "beijing_2022":
         if int(start) != start or int(end) != end:
@@ -614,31 +722,38 @@ def main():
         help="Process supported runs and emit a gap-aware timeline when the full interval is mixed",
     )
     parser.add_argument(
-        "--audit-source-activity", action="store_true",
+        "--audit-source-activity",
+        action="store_true",
         help="For split-view runs, report long active-right/static-left detector-blind spans",
     )
     parser.add_argument(
-        "--probe-blind-right", action="store_true",
+        "--probe-blind-right",
+        action="store_true",
         help="Also save unconfirmed right-view motion and entry proposals in blind spans",
     )
     parser.add_argument(
-        "--observe-blind-right-boards", action="store_true",
+        "--observe-blind-right-boards",
+        action="store_true",
         help="Also sample timing-bracket-aware partial caps after right-only entries",
     )
     parser.add_argument(
-        "--compare-blind-right-boards", action="store_true",
+        "--compare-blind-right-boards",
+        action="store_true",
         help="Also compare adjacent partial caps with sampled house alignment",
     )
     parser.add_argument(
-        "--observe-left-candidate-boards", action="store_true",
+        "--observe-left-candidate-boards",
+        action="store_true",
         help="Also sample guarded receiving-view caps after all split-view left proposals",
     )
     parser.add_argument(
-        "--compare-all-candidate-boards", action="store_true",
+        "--compare-all-candidate-boards",
+        action="store_true",
         help="Also compare adjacent all-candidate partial boards when image alignment supports it",
     )
     parser.add_argument(
-        "--fit-candidate-house-ellipse", action="store_true",
+        "--fit-candidate-house-ellipse",
+        action="store_true",
         help="Also fit guarded image-relative receiving-house ellipses for usable caps",
     )
     args = parser.parse_args()
@@ -725,13 +840,15 @@ def main():
         right_review = None
         if args.audit_source_activity and route["layout"] == "split_2024":
             timeline, timeline_path = write_timeline(
-                preflight, [(route["runs"][0], result,
-                             artifact.relative_to(args.output_dir))], args.output_dir)
+                preflight,
+                [(route["runs"][0], result, artifact.relative_to(args.output_dir))],
+                args.output_dir,
+            )
             activity = attach_source_activity(
-                args.video, digest, [args.start, args.end], args.output_dir, timeline_path)
+                args.video, digest, [args.start, args.end], args.output_dir, timeline_path
+            )
             if args.probe_blind_right:
-                right_review = attach_right_view_review(
-                    args.video, digest, args.output_dir)
+                right_review = attach_right_view_review(args.video, digest, args.output_dir)
                 if right_review is not None:
                     attach_camera_aware_fusion(args.output_dir, digest, timeline_path)
                     attach_candidate_review_union(args.output_dir, timeline_path)
@@ -739,24 +856,32 @@ def main():
                         attach_right_partial_boards(args.video, digest, args.output_dir)
                         attach_candidate_state_handoff(args.output_dir)
                         if args.compare_blind_right_boards:
-                            attach_right_board_sequence(args.video, digest,
-                                                        args.output_dir)
+                            attach_right_board_sequence(args.video, digest, args.output_dir)
                         if args.observe_left_candidate_boards:
-                            attach_left_candidate_boards(args.video, digest,
-                                                         args.output_dir)
+                            attach_left_candidate_boards(args.video, digest, args.output_dir)
                             attach_candidate_state_handoff_v2(args.output_dir)
                             if args.compare_all_candidate_boards:
                                 attach_candidate_image_board_sequence(
-                                    args.video, digest, args.output_dir)
+                                    args.video, digest, args.output_dir
+                                )
                             if args.fit_candidate_house_ellipse:
-                                attach_candidate_house_ellipse(
-                                    args.video, digest, args.output_dir)
-        print(json.dumps({"layout": route["layout"], "events": len(result["events"]),
-                          "detector_blind_seconds": activity["newly_unsupported_seconds"]
-                          if activity else None,
-                          "right_entry_review_proposals": sum(
-                              row["entry_review_count"] for row in right_review["intervals"])
-                          if right_review else None}))
+                                attach_candidate_house_ellipse(args.video, digest, args.output_dir)
+        print(
+            json.dumps(
+                {
+                    "layout": route["layout"],
+                    "events": len(result["events"]),
+                    "detector_blind_seconds": activity["newly_unsupported_seconds"]
+                    if activity
+                    else None,
+                    "right_entry_review_proposals": sum(
+                        row["entry_review_count"] for row in right_review["intervals"]
+                    )
+                    if right_review
+                    else None,
+                }
+            )
+        )
         return
     if not args.allow_partial:
         print(json.dumps({"layout": "unknown", "events": None}))
@@ -781,13 +906,12 @@ def main():
     timeline, timeline_path = write_timeline(preflight, completed, args.output_dir)
     activity = None
     right_review = None
-    if args.audit_source_activity and any(run["layout"] == "split_2024"
-                                          for run in route["runs"]):
+    if args.audit_source_activity and any(run["layout"] == "split_2024" for run in route["runs"]):
         activity = attach_source_activity(
-            args.video, digest, [args.start, args.end], args.output_dir, timeline_path)
+            args.video, digest, [args.start, args.end], args.output_dir, timeline_path
+        )
         if args.probe_blind_right:
-            right_review = attach_right_view_review(
-                args.video, digest, args.output_dir)
+            right_review = attach_right_view_review(args.video, digest, args.output_dir)
             if right_review is not None:
                 attach_camera_aware_fusion(args.output_dir, digest, timeline_path)
                 attach_candidate_review_union(args.output_dir, timeline_path)
@@ -795,18 +919,16 @@ def main():
                     attach_right_partial_boards(args.video, digest, args.output_dir)
                     attach_candidate_state_handoff(args.output_dir)
                     if args.compare_blind_right_boards:
-                        attach_right_board_sequence(args.video, digest,
-                                                    args.output_dir)
+                        attach_right_board_sequence(args.video, digest, args.output_dir)
                     if args.observe_left_candidate_boards:
-                        attach_left_candidate_boards(args.video, digest,
-                                                     args.output_dir)
+                        attach_left_candidate_boards(args.video, digest, args.output_dir)
                         attach_candidate_state_handoff_v2(args.output_dir)
                         if args.compare_all_candidate_boards:
                             attach_candidate_image_board_sequence(
-                                args.video, digest, args.output_dir)
+                                args.video, digest, args.output_dir
+                            )
                         if args.fit_candidate_house_ellipse:
-                            attach_candidate_house_ellipse(
-                                args.video, digest, args.output_dir)
+                            attach_candidate_house_ellipse(args.video, digest, args.output_dir)
     print(
         json.dumps(
             {
@@ -815,10 +937,13 @@ def main():
                 "observed_events": timeline["observed_event_count"],
                 "coverage_gaps": len(timeline["coverage_gaps_s"]),
                 "detector_blind_seconds": activity["newly_unsupported_seconds"]
-                if activity else None,
+                if activity
+                else None,
                 "right_entry_review_proposals": sum(
-                    row["entry_review_count"] for row in right_review["intervals"])
-                if right_review else None,
+                    row["entry_review_count"] for row in right_review["intervals"]
+                )
+                if right_review
+                else None,
             }
         )
     )

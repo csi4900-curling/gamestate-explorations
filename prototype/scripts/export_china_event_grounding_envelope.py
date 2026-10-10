@@ -30,11 +30,16 @@ def main():
     if OUTPUT.exists():
         raise SystemExit("Output exists; preserve first grounding envelope")
     plan = json.loads(PLAN.read_text())
-    hashes = {name: digest(path) for name, path in
-              (("events", EVENTS), ("possible_edit_overlap", OVERLAP),
-               ("temporal_edit_tier", TEMPORAL),
-               ("grounding_code", ROOT / "prototype/event_grounding_envelope.py"),
-               ("runner", __file__))}
+    hashes = {
+        name: digest(path)
+        for name, path in (
+            ("events", EVENTS),
+            ("possible_edit_overlap", OVERLAP),
+            ("temporal_edit_tier", TEMPORAL),
+            ("grounding_code", ROOT / "prototype/event_grounding_envelope.py"),
+            ("runner", __file__),
+        )
+    }
     if hashes != plan["sha256"]:
         raise ValueError("Frozen grounding plan changed")
     events = json.loads(EVENTS.read_text())
@@ -43,22 +48,28 @@ def main():
     if len(events["events"]) != plan["expected_event_count"]:
         raise ValueError("Frozen event count changed")
     source_hash = events["source_sha256"]
-    if source_hash != overlap["source_sha256"] or source_hash != temporal[
-        "source_sha256"
-    ]:
+    if source_hash != overlap["source_sha256"] or source_hash != temporal["source_sha256"]:
         raise ValueError("Source fingerprint mismatch")
     reserved = json.loads((ROOT / "validation/unseen-end/reservation.json").read_text())
     if source_hash == reserved["source_sha256"]:
         raise ValueError("Reserved independent source selected")
-    grounded = ground_event_candidates(events["events"], overlap["rows"],
-                                       temporal["rows"])
-    if [{key: value for key, value in row.items()
-         if key not in ("camera_boundary_evidence", "simulation_handoff")}
-            for row in grounded] != events["events"]:
+    grounded = ground_event_candidates(events["events"], overlap["rows"], temporal["rows"])
+    if [
+        {
+            key: value
+            for key, value in row.items()
+            if key not in ("camera_boundary_evidence", "simulation_handoff")
+        }
+        for row in grounded
+    ] != events["events"]:
         raise ValueError("Grounding envelope modified frozen event fields")
-    continuity_counts = dict(sorted(Counter(
-        row["camera_boundary_evidence"]["continuity_status"]
-        for row in grounded).items()))
+    continuity_counts = dict(
+        sorted(
+            Counter(
+                row["camera_boundary_evidence"]["continuity_status"] for row in grounded
+            ).items()
+        )
+    )
     output = {
         "status": "source_scoped_china_event_grounding_envelope_not_simulation_ready",
         "source_sha256": source_hash,

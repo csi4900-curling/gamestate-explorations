@@ -11,8 +11,7 @@ import cv2
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "prototype"))
-from right_view_house_alignment import (ROI_XYXY, alignment_probe,
-                                        blue_house_mask)
+from right_view_house_alignment import ROI_XYXY, alignment_probe, blue_house_mask
 
 
 def digest(path):
@@ -35,8 +34,7 @@ def main():
     source_hash = digest(args.video)
     if entries["source_sha256"] != source_hash:
         parser.error("Source fingerprints differ")
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         parser.error("Cannot open video")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -55,26 +53,33 @@ def main():
                 raise RuntimeError(f"Cannot decode frame {frame_index}")
             mask = blue_house_mask(frame)
             masks.append(mask)
-            frames.append({"right_raw_track_id": entry["raw_track_id"],
-                           "entry_time_s": entry["entry_crossing"]["time_s"],
-                           "sample_time_s": round(time_s, 3),
-                           "decoded_frame_index": frame_index,
-                           "blue_house_mask_px": int(mask.sum())})
+            frames.append(
+                {
+                    "right_raw_track_id": entry["raw_track_id"],
+                    "entry_time_s": entry["entry_crossing"]["time_s"],
+                    "sample_time_s": round(time_s, 3),
+                    "decoded_frame_index": frame_index,
+                    "blue_house_mask_px": int(mask.sum()),
+                }
+            )
     finally:
         cap.release()
     pairs = []
     for before, after, a, b in zip(frames, frames[1:], masks, masks[1:]):
         probe = alignment_probe(a, b)
-        pairs.append({
-            "before_right_track_id": before["right_raw_track_id"],
-            "after_right_track_id": after["right_raw_track_id"],
-            "sample_interval_s": [before["sample_time_s"], after["sample_time_s"]],
-            **probe,
-            "latvia_gate_passes": bool(
-                probe["zero_translation_is_best"] and
-                probe["best_translation_second_to_first_px"] == [0, 0] and
-                probe["best_mask_iou"] >= 0.7),
-        })
+        pairs.append(
+            {
+                "before_right_track_id": before["right_raw_track_id"],
+                "after_right_track_id": after["right_raw_track_id"],
+                "sample_interval_s": [before["sample_time_s"], after["sample_time_s"]],
+                **probe,
+                "latvia_gate_passes": bool(
+                    probe["zero_translation_is_best"]
+                    and probe["best_translation_second_to_first_px"] == [0, 0]
+                    and probe["best_mask_iou"] >= 0.7
+                ),
+            }
+        )
     output = {
         "status": "source_only_painted_house_transfer_not_board_or_event_validation",
         "source_sha256": source_hash,
@@ -86,8 +91,9 @@ def main():
         "latvia_development_gate": "zero best shift within 8px and blue-mask IoU >= 0.7",
         "sample_count": len(frames),
         "adjacent_pair_count": len(pairs),
-        "gate_counts": dict(Counter("pass" if row["latvia_gate_passes"] else "abstain"
-                                    for row in pairs)),
+        "gate_counts": dict(
+            Counter("pass" if row["latvia_gate_passes"] else "abstain" for row in pairs)
+        ),
         "frames": frames,
         "adjacent_pairs": pairs,
         "limitations": [
@@ -100,8 +106,11 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(output, indent=2) + "\n")
-    print(json.dumps({"frames": len(frames), "pairs": len(pairs),
-                      "gate_counts": output["gate_counts"]}))
+    print(
+        json.dumps(
+            {"frames": len(frames), "pairs": len(pairs), "gate_counts": output["gate_counts"]}
+        )
+    )
 
 
 if __name__ == "__main__":

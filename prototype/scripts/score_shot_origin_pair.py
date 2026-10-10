@@ -40,8 +40,7 @@ def main():
         video = ROOT / VIDEOS[source]
         if file_sha256(video) != manifest["source_sha256"]:
             raise ValueError(f"Source mismatch: {source}")
-        capture = cv2.VideoCapture(str(video), cv2.CAP_FFMPEG,
-                                   [cv2.CAP_PROP_N_THREADS, 1])
+        capture = cv2.VideoCapture(str(video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
         fps = capture.get(cv2.CAP_PROP_FPS)
         shot_rows = []
         for shot in manifest["shots"]:
@@ -52,25 +51,35 @@ def main():
                 if not ok:
                     raise RuntimeError(f"Decode failed: {source} {t}")
                 frames.append(frame)
-            shot_rows.append({"source": source, "shot_id": shot["id"],
-                              "interval_s": shot["interval_s"],
-                              "label": spec["labels"][shot["id"]],
-                              "feature": shot_features(frames),
-                              "overlay_fraction": sum(compact_overlay_visible(frame)
-                                                      for frame in frames) / 3})
+            shot_rows.append(
+                {
+                    "source": source,
+                    "shot_id": shot["id"],
+                    "interval_s": shot["interval_s"],
+                    "label": spec["labels"][shot["id"]],
+                    "feature": shot_features(frames),
+                    "overlay_fraction": sum(compact_overlay_visible(frame) for frame in frames) / 3,
+                }
+            )
         capture.release()
         blank = np.zeros_like(shot_rows[0]["feature"])
         for index, row in enumerate(shot_rows):
             following = shot_rows[index + 1] if index + 1 < len(shot_rows) else None
             following_feature = following["feature"] if following else blank
             next_live = following["overlay_fraction"] if following else 0
-            row["pair_feature"] = np.concatenate((row["feature"], following_feature,
-                                                   [row["overlay_fraction"], next_live]))
+            row["pair_feature"] = np.concatenate(
+                (row["feature"], following_feature, [row["overlay_fraction"], next_live])
+            )
             row["phase_supported"] = row["overlay_fraction"] >= 2 / 3 or next_live >= 2 / 3
             del row["feature"]
             rows.append(row)
-        inputs.append({"source": source, "manifest_sha256": file_sha256(manifest_path),
-                       "video_sha256": file_sha256(video)})
+        inputs.append(
+            {
+                "source": source,
+                "manifest_sha256": file_sha256(manifest_path),
+                "video_sha256": file_sha256(video),
+            }
+        )
     args.output.mkdir(parents=True)
     folds = []
     for heldout in labels["sources"]:
@@ -79,28 +88,49 @@ def main():
         x_fit = np.stack([row["pair_feature"] for row in fit])
         y_fit = np.asarray([row["label"] for row in fit])
         scaler = StandardScaler().fit(x_fit)
-        model = LogisticRegression(C=0.05, class_weight="balanced", max_iter=5000,
-                                   random_state=9031).fit(scaler.transform(x_fit), y_fit)
-        p = model.predict_proba(scaler.transform(
-            np.stack([row["pair_feature"] for row in test])))[:, 1]
-        evaluated = [{"source": heldout, "shot_id": row["shot_id"],
-                      "interval_s": row["interval_s"], "label": row["label"],
-                      "probability": float(probability),
-                      "phase_supported": row["phase_supported"],
-                      "predicted": int(probability >= 0.5 and row["phase_supported"])}
-                     for row, probability in zip(test, p)]
+        model = LogisticRegression(
+            C=0.05, class_weight="balanced", max_iter=5000, random_state=9031
+        ).fit(scaler.transform(x_fit), y_fit)
+        p = model.predict_proba(scaler.transform(np.stack([row["pair_feature"] for row in test])))[
+            :, 1
+        ]
+        evaluated = [
+            {
+                "source": heldout,
+                "shot_id": row["shot_id"],
+                "interval_s": row["interval_s"],
+                "label": row["label"],
+                "probability": float(probability),
+                "phase_supported": row["phase_supported"],
+                "predicted": int(probability >= 0.5 and row["phase_supported"]),
+            }
+            for row, probability in zip(test, p)
+        ]
         model_path = args.output / f"model-excluding-{heldout}.npz"
-        np.savez_compressed(model_path, mean=scaler.mean_, scale=scaler.scale_,
-                            weights=model.coef_, intercept=model.intercept_)
-        folds.append({"heldout": heldout, "score": score(evaluated),
-                      "model_sha256": file_sha256(model_path), "rows": evaluated})
+        np.savez_compressed(
+            model_path,
+            mean=scaler.mean_,
+            scale=scaler.scale_,
+            weights=model.coef_,
+            intercept=model.intercept_,
+        )
+        folds.append(
+            {
+                "heldout": heldout,
+                "score": score(evaluated),
+                "model_sha256": file_sha256(model_path),
+                "rows": evaluated,
+            }
+        )
     result = {
         "status": "postscore_development_shot_pair_and_phase_transfer_probe",
-        "labels_sha256": file_sha256(args.labels), "inputs": inputs,
+        "labels_sha256": file_sha256(args.labels),
+        "inputs": inputs,
         "feature_code_sha256": file_sha256(ROOT / "prototype/shot_origin_model.py"),
         "runner_sha256": file_sha256(__file__),
         "model_specification": "Current and following three-frame shot features, balanced logistic regression C=0.05, 0.5 probability threshold, then live overlay in either shot",
-        "folds": folds, "pooled": score([row for fold in folds for row in fold["rows"]]),
+        "folds": folds,
+        "pooled": score([row for fold in folds for row in fold["rows"]]),
         "limitations": [
             "Pairing and phase condition were designed after inspecting the first three-fold failure, including Swiss break errors.",
             "No independent held-out shot or throw-event score follows from this postscore probe.",

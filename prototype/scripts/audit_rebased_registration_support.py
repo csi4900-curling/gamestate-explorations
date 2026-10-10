@@ -34,22 +34,22 @@ def main():
         parser.error("Video differs from motion-scan source")
     cfg_path = ROOT / "prototype/vision/annotations/calibration.json"
     rect_path = ROOT / "prototype/rectification/calibration.json"
-    if file_sha256(cfg_path) != motion["vision_calibration_sha256"] or \
-            file_sha256(rect_path) != motion["rectification_sha256"]:
+    if (
+        file_sha256(cfg_path) != motion["vision_calibration_sha256"]
+        or file_sha256(rect_path) != motion["rectification_sha256"]
+    ):
         parser.error("Calibration differs from motion scan")
     view = dict(json.loads(cfg_path.read_text())["views"]["right"])
     view["world_bounds"] = [-2.375, -1.975, 2.375, 22.0]
     base = ViewCalibrator(view, ROOT / "prototype/vision/frames")
     base.H = np.array(json.loads(rect_path.read_text())["right"]["refined_H"])
-    capture = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not capture.isOpened():
         parser.error("Cannot open video")
     fps = capture.get(cv2.CAP_PROP_FPS)
 
     def read_time(t):
-        capture.set(cv2.CAP_PROP_POS_FRAMES,
-                    round((t - motion["source_offset_s"]) * fps))
+        capture.set(cv2.CAP_PROP_POS_FRAMES, round((t - motion["source_offset_s"]) * fps))
         ok, frame = capture.read()
         if not ok:
             raise RuntimeError(f"Cannot decode source time {t}")
@@ -58,25 +58,33 @@ def main():
     try:
         anchor_time = motion["right_reference_anchor_time_s"]
         local, anchor_registration = rebase_view_calibrator(
-            base, read_time(anchor_time),
-            max_corner_displacement_px=motion["max_corner_displacement_px"])
+            base,
+            read_time(anchor_time),
+            max_corner_displacement_px=motion["max_corner_displacement_px"],
+        )
         rows = []
         for candidate in motion["rows"]:
             if candidate["receiving_view"] != "right":
                 continue
-            for sample in candidate["samples"][:args.first_samples]:
+            for sample in candidate["samples"][: args.first_samples]:
                 time = sample["source_time_s"]
                 frame = read_time(time)
                 _, old = base.register(
-                    frame, max_corner_displacement_px=motion["max_corner_displacement_px"])
+                    frame, max_corner_displacement_px=motion["max_corner_displacement_px"]
+                )
                 _, new = local.register(
-                    frame, max_corner_displacement_px=motion["max_corner_displacement_px"])
-                rows.append({"candidate_id": candidate["candidate_id"],
-                             "source_time_s": time,
-                             "frozen_status": old["status"],
-                             "frozen_reason": old.get("reason"),
-                             "local_status": new["status"],
-                             "local_reason": new.get("reason")})
+                    frame, max_corner_displacement_px=motion["max_corner_displacement_px"]
+                )
+                rows.append(
+                    {
+                        "candidate_id": candidate["candidate_id"],
+                        "source_time_s": time,
+                        "frozen_status": old["status"],
+                        "frozen_reason": old.get("reason"),
+                        "local_status": new["status"],
+                        "local_reason": new.get("reason"),
+                    }
+                )
     finally:
         capture.release()
     counts = Counter((r["frozen_status"], r["local_status"]) for r in rows)
@@ -106,8 +114,12 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(result["frame_count"], result["frozen_registered"],
-          result["local_registered"], result["status_pairs"])
+    print(
+        result["frame_count"],
+        result["frozen_registered"],
+        result["local_registered"],
+        result["status_pairs"],
+    )
 
 
 if __name__ == "__main__":

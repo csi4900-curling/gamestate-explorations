@@ -23,13 +23,14 @@ def main():
     boards = json.loads(a.boards.read_text())
     screen = json.loads(a.screen.read_text())
     screen_hash = file_sha256(a.screen)
-    if (timeline["input_sha256"]["screen"] != screen_hash or
-            boards["screen_sha256"] != screen_hash or
-            boards["source_sha256"] != timeline["source_sha256"]):
+    if (
+        timeline["input_sha256"]["screen"] != screen_hash
+        or boards["screen_sha256"] != screen_hash
+        or boards["source_sha256"] != timeline["source_sha256"]
+    ):
         p.error("Timeline, board and screen provenance differs")
     rows = boards["rows"]
-    accepted = [row["candidate_id"] for row in screen["decisions"]
-                if row["accepted"]]
+    accepted = [row["candidate_id"] for row in screen["decisions"] if row["accepted"]]
     if [row["candidate_id"] for row in rows] != accepted:
         p.error("Board observations do not cover all screened candidate IDs")
     by_id = {row["candidate_id"]: row for row in rows}
@@ -38,17 +39,18 @@ def main():
         item = dict(entry)
         board = by_id.get(entry["candidate_id"])
         if board:
-            if (entry["event_status"] not in
-                    ("provisional_unreviewed_candidate",
-                     "source_reviewed_false_positive") or
-                    board["crossing_time_s"] != entry["passage_time_s"] or
-                    board["receiving_view"] != entry["receiving_view"]):
+            if (
+                entry["event_status"]
+                not in ("provisional_unreviewed_candidate", "source_reviewed_false_positive")
+                or board["crossing_time_s"] != entry["passage_time_s"]
+                or board["receiving_view"] != entry["receiving_view"]
+            ):
                 p.error(f"Board does not match candidate {entry['candidate_id']}")
             item["post_event_board"] = {
                 "status": board["board"]["status"],
-                "tail_interval_s": [board["tail"]["start_s"],
-                                    board["tail"]["stop_s"]]
-                if board["tail"]["eligible"] else None,
+                "tail_interval_s": [board["tail"]["start_s"], board["tail"]["stop_s"]]
+                if board["tail"]["eligible"]
+                else None,
                 "coordinate_frame": board["coordinate_frame"],
                 "stones": board["board"]["stones"],
                 "registered_frame_count": board["registered_frame_count"],

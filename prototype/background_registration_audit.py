@@ -24,37 +24,62 @@ def registration_support(before, after, *, exclude_bbox=None, margin_px=30):
         y1 = min(360, int(y + height + margin_px))
         mask[y0:y1, x0:x1] = 0
     features = cv2.goodFeaturesToTrack(
-        gray_before, maxCorners=700, qualityLevel=.01,
-        minDistance=6, mask=mask)
+        gray_before, maxCorners=700, qualityLevel=0.01, minDistance=6, mask=mask
+    )
     if features is None:
-        return {"detected_features": 0, "tracked_features": 0, "inliers": 0,
-                "inlier_fraction": 0, "inlier_bbox_px": None,
-                "reliable_by_existing_rule": False}
+        return {
+            "detected_features": 0,
+            "tracked_features": 0,
+            "inliers": 0,
+            "inlier_fraction": 0,
+            "inlier_bbox_px": None,
+            "reliable_by_existing_rule": False,
+        }
     tracked, status, _ = cv2.calcOpticalFlowPyrLK(
-        gray_before, gray_after, features, None, winSize=(21, 21), maxLevel=3)
+        gray_before, gray_after, features, None, winSize=(21, 21), maxLevel=3
+    )
     valid = status.ravel() == 1
     first = features[valid].reshape(-1, 2)
     second = tracked[valid].reshape(-1, 2)
     if len(first) < 10:
-        return {"detected_features": len(features), "tracked_features": len(first),
-                "inliers": 0, "inlier_fraction": 0, "inlier_bbox_px": None,
-                "reliable_by_existing_rule": False}
+        return {
+            "detected_features": len(features),
+            "tracked_features": len(first),
+            "inliers": 0,
+            "inlier_fraction": 0,
+            "inlier_bbox_px": None,
+            "reliable_by_existing_rule": False,
+        }
     _, inlier_mask = cv2.estimateAffinePartial2D(
-        first, second, method=cv2.RANSAC, ransacReprojThreshold=3)
+        first, second, method=cv2.RANSAC, ransacReprojThreshold=3
+    )
     if inlier_mask is None:
-        return {"detected_features": len(features), "tracked_features": len(first),
-                "inliers": 0, "inlier_fraction": 0, "inlier_bbox_px": None,
-                "reliable_by_existing_rule": False}
+        return {
+            "detected_features": len(features),
+            "tracked_features": len(first),
+            "inliers": 0,
+            "inlier_fraction": 0,
+            "inlier_bbox_px": None,
+            "reliable_by_existing_rule": False,
+        }
     inlier_points = first[inlier_mask.ravel() == 1]
     count = len(inlier_points)
     fraction = count / len(first)
-    bounds = ([round(float(inlier_points[:, 0].min()), 2),
-               round(float(inlier_points[:, 1].min()), 2),
-               round(float(inlier_points[:, 0].max()), 2),
-               round(float(inlier_points[:, 1].max()), 2)] if count else None)
-    return {"detected_features": len(features),
-            "tracked_features": len(first),
-            "inliers": count,
-            "inlier_fraction": round(fraction, 4),
-            "inlier_bbox_px": bounds,
-            "reliable_by_existing_rule": count >= 30 and fraction >= .25}
+    bounds = (
+        [
+            round(float(inlier_points[:, 0].min()), 2),
+            round(float(inlier_points[:, 1].min()), 2),
+            round(float(inlier_points[:, 0].max()), 2),
+            round(float(inlier_points[:, 1].max()), 2),
+        ]
+        if count
+        else None
+    )
+    return {
+        "detected_features": len(features),
+        "tracked_features": len(first),
+        "inliers": count,
+        "inlier_fraction": round(fraction, 4),
+        "inlier_bbox_px": bounds,
+        "reliable_by_existing_rule": count >= 30 and fraction >= 0.25,
+    }

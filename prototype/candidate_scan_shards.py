@@ -16,7 +16,7 @@ def partition_candidates(parent, parent_sha256, size):
         shard["status"] = "candidate_scan_partition_of_frozen_corridor"
         shard["parent_candidates_sha256"] = parent_sha256
         shard["partition_range"] = [offset, min(offset + size, len(events))]
-        shard["events"] = events[offset:offset + size]
+        shard["events"] = events[offset : offset + size]
         shard["withheld_events"] = []
         shard["screened_events"] = []
         partitions.append(shard)
@@ -42,24 +42,36 @@ def merge_candidate_motion(parent, parent_sha256, partitions, scans, scan_hashes
         rows.extend(scan["rows"])
     if observed_ids != expected_ids:
         raise ValueError("Merged candidate order or coverage differs")
-    keys = ("candidate_source_id", "candidate_source_sha256",
-            "high_resolution_source_sha256", "source_offset_s", "lookahead_s",
-            "sample_period_s", "max_corner_displacement_px",
-            "vision_calibration_sha256", "rectification_sha256",
-            "registration_code_sha256", "detector_code_sha256",
-            "selector_sha256", "runner_sha256")
+    keys = (
+        "candidate_source_id",
+        "candidate_source_sha256",
+        "high_resolution_source_sha256",
+        "source_offset_s",
+        "lookahead_s",
+        "sample_period_s",
+        "max_corner_displacement_px",
+        "vision_calibration_sha256",
+        "rectification_sha256",
+        "registration_code_sha256",
+        "detector_code_sha256",
+        "selector_sha256",
+        "runner_sha256",
+    )
     for scan in scans[1:]:
         if any(scan[key] != scans[0][key] for key in keys):
             raise ValueError("Scan settings or source differ across partitions")
     merged = {key: scans[0][key] for key in keys}
-    merged.update({
-        "status": "losslessly_merged_candidate_centric_motion_shards",
-        "candidates_sha256": parent_sha256,
-        "candidate_count": len(rows),
-        "selection_status_counts": dict(Counter(
-            row["selection"]["status"] for row in rows)),
-        "rows": rows,
-        "limitations": scans[0]["limitations"] + [
-            "Inference was executed in bounded partitions; each partition and its input hash are retained."],
-    })
+    merged.update(
+        {
+            "status": "losslessly_merged_candidate_centric_motion_shards",
+            "candidates_sha256": parent_sha256,
+            "candidate_count": len(rows),
+            "selection_status_counts": dict(Counter(row["selection"]["status"] for row in rows)),
+            "rows": rows,
+            "limitations": scans[0]["limitations"]
+            + [
+                "Inference was executed in bounded partitions; each partition and its input hash are retained."
+            ],
+        }
+    )
     return merged

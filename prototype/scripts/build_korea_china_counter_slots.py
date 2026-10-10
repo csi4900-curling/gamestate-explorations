@@ -15,7 +15,9 @@ COUNTERS = BASE / "counter-audit.json"
 CANDIDATES = BASE / "candidate-event-ledger.json"
 OFFICIAL = ROOT / "validation/official-shot-sequence/pwg2022-korea-china-official-ledger.json"
 BOARDS = ROOT / "validation/official-shot-sequence/pwg2022-korea-china-official-boards.json"
-OUTPUT = ROOT / "validation/official-shot-sequence/korea-china-official-counter-slot-handoff-first.json"
+OUTPUT = (
+    ROOT / "validation/official-shot-sequence/korea-china-official-counter-slot-handoff-first.json"
+)
 
 
 def digest(path):
@@ -29,13 +31,23 @@ def main():
     candidates = json.loads(CANDIDATES.read_text())
     official = json.loads(OFFICIAL.read_text())
     boards = json.loads(BOARDS.read_text())
-    if len({counters["source_sha256"], candidates["source_sha256"],
-            official["source_video_sha256"], boards["source_video_sha256"]}) != 1:
+    if (
+        len(
+            {
+                counters["source_sha256"],
+                candidates["source_sha256"],
+                official["source_video_sha256"],
+                boards["source_video_sha256"],
+            }
+        )
+        != 1
+    ):
         raise ValueError("Source-video hash conflict")
     if boards["shot_ledger_sha256"] != digest(OFFICIAL):
         raise ValueError("Official diagram/shot ledger conflict")
-    aligned = align_counter_slots(counters["counter_events"], official["ends"],
-                                  official["team_handle_colours"])
+    aligned = align_counter_slots(
+        counters["counter_events"], official["ends"], official["team_handle_colours"]
+    )
     by_counter = {}
     for candidate in candidates["events"]:
         cid = candidate["counter_id"]
@@ -52,48 +64,60 @@ def main():
         shot_id = slot["official_shot_id"]
         candidate = by_counter.get(slot["counter_id"])
         board = by_board[shot_id]
-        rows.append({
-            **slot,
-            "official_reference": {
-                "shooter": by_shot[shot_id]["shooter"],
-                "shot_type": by_shot[shot_id]["shot_type"],
-                "turn_direction": by_shot[shot_id]["rotation"],
-                "turn_revolution_count": None,
-                "post_shot_diagram_stones": [
-                    {"colour": stone["colour"],
-                     "house_radius_coordinates": stone["house_radius_coordinates"]}
-                    for stone in board["stones"]],
-                "diagram_review_flags": board["review_flags"],
-                "diagram_scope": "official schematic area around house, not full rink",
-            },
-            "video_event_evidence": {
-                "candidate_id": candidate["candidate_id"] if candidate else None,
-                "candidate_camera_shot_id": candidate["shot_id"] if candidate else None,
-                "candidate_evidence_class": candidate["evidence_class"] if candidate else None,
-                "candidate_release_window_s": candidate["release_window_s"] if candidate else None,
-                "candidate_colour": candidate["colour"] if candidate else None,
-                "candidate_colour_status": candidate["colour_status"] if candidate else None,
-                "physical_throw_identity_verified": False,
-                "exact_release_time_s": None,
-                "exact_settle_time_s": None,
-            },
-            "video_post_shot_board_status": "unobserved",
-            "video_physics_simulation_ready": False,
-        })
+        rows.append(
+            {
+                **slot,
+                "official_reference": {
+                    "shooter": by_shot[shot_id]["shooter"],
+                    "shot_type": by_shot[shot_id]["shot_type"],
+                    "turn_direction": by_shot[shot_id]["rotation"],
+                    "turn_revolution_count": None,
+                    "post_shot_diagram_stones": [
+                        {
+                            "colour": stone["colour"],
+                            "house_radius_coordinates": stone["house_radius_coordinates"],
+                        }
+                        for stone in board["stones"]
+                    ],
+                    "diagram_review_flags": board["review_flags"],
+                    "diagram_scope": "official schematic area around house, not full rink",
+                },
+                "video_event_evidence": {
+                    "candidate_id": candidate["candidate_id"] if candidate else None,
+                    "candidate_camera_shot_id": candidate["shot_id"] if candidate else None,
+                    "candidate_evidence_class": candidate["evidence_class"] if candidate else None,
+                    "candidate_release_window_s": candidate["release_window_s"]
+                    if candidate
+                    else None,
+                    "candidate_colour": candidate["colour"] if candidate else None,
+                    "candidate_colour_status": candidate["colour_status"] if candidate else None,
+                    "physical_throw_identity_verified": False,
+                    "exact_release_time_s": None,
+                    "exact_settle_time_s": None,
+                },
+                "video_post_shot_board_status": "unobserved",
+                "video_physics_simulation_ready": False,
+            }
+        )
     if len(rows) != 96 or len(by_counter) != aligned["aligned_counter_count"]:
         raise ValueError("Slot/counter/candidate count conflict")
     result = {
         "status": "official_order_diagrams_and_counter_proxy_video_candidates_not_complete_video_state",
         "source_video_sha256": official["source_video_sha256"],
-        "input_sha256": {"counter_audit": digest(COUNTERS), "candidate_ledger": digest(CANDIDATES),
-                         "official_shots": digest(OFFICIAL), "official_boards": digest(BOARDS)},
+        "input_sha256": {
+            "counter_audit": digest(COUNTERS),
+            "candidate_ledger": digest(CANDIDATES),
+            "official_shots": digest(OFFICIAL),
+            "official_boards": digest(BOARDS),
+        },
         "alignment_code_sha256": digest(ROOT / "prototype/counter_slot_alignment.py"),
         "runner_sha256": digest(Path(__file__)),
         "official_slot_count": len(rows),
         "counter_linked_slot_count": aligned["aligned_counter_count"],
         "missing_counter_slot_count": aligned["missing_counter_slot_count"],
-        "candidate_evidence_class_counts": dict(Counter(
-            row["video_event_evidence"]["candidate_evidence_class"] for row in rows)),
+        "candidate_evidence_class_counts": dict(
+            Counter(row["video_event_evidence"]["candidate_evidence_class"] for row in rows)
+        ),
         "end_summaries": aligned["end_summaries"],
         "slots": rows,
         "limitations": [
@@ -104,9 +128,20 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({k: result[k] for k in
-                      ("official_slot_count", "counter_linked_slot_count",
-                       "missing_counter_slot_count", "candidate_evidence_class_counts")}, indent=2))
+    print(
+        json.dumps(
+            {
+                k: result[k]
+                for k in (
+                    "official_slot_count",
+                    "counter_linked_slot_count",
+                    "missing_counter_slot_count",
+                    "candidate_evidence_class_counts",
+                )
+            },
+            indent=2,
+        )
+    )
 
 
 if __name__ == "__main__":

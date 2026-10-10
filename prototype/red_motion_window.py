@@ -18,18 +18,18 @@ def split_moving_prefix(points, *, stable_step_px=4, stable_steps=3):
         raise ValueError("Invalid stillness rule")
     streak = 0
     for index in range(1, len(points)):
-        before, after = points[index-1], points[index]
+        before, after = points[index - 1], points[index]
         gap = after["time_s"] - before["time_s"]
         if gap <= 0:
             raise ValueError("Image observations must increase in time")
-        distance = hypot(*(after["center_1080p_px"][axis] -
-                           before["center_1080p_px"][axis]
-                           for axis in (0, 1)))
+        distance = hypot(
+            *(after["center_1080p_px"][axis] - before["center_1080p_px"][axis] for axis in (0, 1))
+        )
         if gap == 1 and distance <= stable_step_px:
             streak += 1
             if streak == stable_steps:
-                first_stable_index = index-stable_steps+1
-                last_moving = points[first_stable_index-1]["time_s"]
+                first_stable_index = index - stable_steps + 1
+                last_moving = points[first_stable_index - 1]["time_s"]
                 first_stable = points[first_stable_index]["time_s"]
                 return {
                     "status": "visual_stop_candidate_identity_unverified",
@@ -37,7 +37,7 @@ def split_moving_prefix(points, *, stable_step_px=4, stable_steps=3):
                     "observed_moving_prefix_last_s": last_moving,
                     "visual_stop_bracket_s": [last_moving, first_stable],
                     "stable_confirmation_last_s": points[index]["time_s"],
-                    "post_stop_tracker_tail_excluded": len(points)-index-1,
+                    "post_stop_tracker_tail_excluded": len(points) - index - 1,
                 }
         else:
             streak = 0

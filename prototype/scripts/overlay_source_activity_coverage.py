@@ -34,9 +34,16 @@ def main():
     ]
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
-    print({key: result[key] for key in ("newly_unsupported_seconds",
-                                          "revised_supported_seconds",
-                                          "revised_unknown_seconds")})
+    print(
+        {
+            key: result[key]
+            for key in (
+                "newly_unsupported_seconds",
+                "revised_supported_seconds",
+                "revised_unknown_seconds",
+            )
+        }
+    )
 
 
 if __name__ == "__main__":

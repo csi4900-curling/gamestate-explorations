@@ -23,24 +23,27 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("timeline", "inventory", "context", "left_review", "output"):
         parser.add_argument(f"--{name.replace('_', '-')}", type=Path, required=True)
-    parser.add_argument("--right-review", nargs=2, action="append", required=True,
-                        metavar=("RUN_ID", "REVIEW_JSON"))
+    parser.add_argument(
+        "--right-review", nargs=2, action="append", required=True, metavar=("RUN_ID", "REVIEW_JSON")
+    )
     parser.add_argument("--rescue", type=Path)
     parser.add_argument("--rescue-source-probe", type=Path)
     parser.add_argument("--rescue-review", type=Path)
     args = parser.parse_args()
     if args.output.exists():
         parser.error("Output already exists")
-    timeline, inventory, context = [read(path) for path in
-                                    (args.timeline, args.inventory, args.context)]
+    timeline, inventory, context = [
+        read(path) for path in (args.timeline, args.inventory, args.context)
+    ]
     if inventory["timeline_sha256"] != digest(args.timeline):
         parser.error("Inventory timeline provenance differs")
     if context["inventory_sha256"] != digest(args.inventory):
         parser.error("Context inventory provenance differs")
     if args.rescue:
         rescue = read(args.rescue)
-        if (rescue["timeline_sha256"] != digest(args.timeline)
-                or rescue["inventory_sha256"] != digest(args.inventory)):
+        if rescue["timeline_sha256"] != digest(args.timeline) or rescue[
+            "inventory_sha256"
+        ] != digest(args.inventory):
             parser.error("Targeted raw-motion provenance differs")
     else:
         rescue = None
@@ -58,14 +61,21 @@ def main():
         if not args.rescue or not args.rescue_source_probe:
             parser.error("Rescue review requires rescue and flattened source probe")
         source_probe = read(args.rescue_source_probe)
-        if (source_probe["targeted_probe_sha256"] != digest(args.rescue)
-                or read(args.rescue_review)["probe_sha256"] != digest(args.rescue_source_probe)):
+        if source_probe["targeted_probe_sha256"] != digest(args.rescue) or read(args.rescue_review)[
+            "probe_sha256"
+        ] != digest(args.rescue_source_probe):
             parser.error("Rescue source review provenance differs")
     elif args.rescue_source_probe:
         parser.error("Rescue source probe requires its source review")
-    result = build_sequence(timeline, inventory, context, reviews,
-                            read(args.left_review), rescue,
-                            read(args.rescue_review) if args.rescue_review else None)
+    result = build_sequence(
+        timeline,
+        inventory,
+        context,
+        reviews,
+        read(args.left_review),
+        rescue,
+        read(args.rescue_review) if args.rescue_review else None,
+    )
     payload = {
         "status": "ordered_full_match_candidate_evidence_not_verified_throw_sequence",
         "source_id": timeline["source_id"],
@@ -76,7 +86,9 @@ def main():
             "left_review": digest(args.left_review),
             "right_reviews_by_run": {key: digest(path) for key, path in review_paths.items()},
             "targeted_rescue": digest(args.rescue) if args.rescue else None,
-            "targeted_rescue_source_probe": digest(args.rescue_source_probe) if args.rescue_source_probe else None,
+            "targeted_rescue_source_probe": digest(args.rescue_source_probe)
+            if args.rescue_source_probe
+            else None,
             "targeted_rescue_review": digest(args.rescue_review) if args.rescue_review else None,
         },
         "model_code_sha256": digest(ROOT / "prototype/full_match_evidence_sequence.py"),
@@ -92,10 +104,16 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(payload, indent=2) + "\n")
-    print(json.dumps({"rows": result["sequence_row_count"],
-                      "left": result["left_candidate_count"],
-                      "right_only": result["right_only_count"],
-                      "tiers": result["evidence_tier_counts"]}))
+    print(
+        json.dumps(
+            {
+                "rows": result["sequence_row_count"],
+                "left": result["left_candidate_count"],
+                "right_only": result["right_only_count"],
+                "tiers": result["evidence_tier_counts"],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

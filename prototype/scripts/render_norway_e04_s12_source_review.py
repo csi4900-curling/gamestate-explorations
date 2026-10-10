@@ -34,8 +34,15 @@ def main():
             if not ok:
                 raise RuntimeError(f"Cannot read frame at {time_s}")
             frame = cv2.resize(frame, (640, 360), interpolation=cv2.INTER_AREA)
-            cv2.putText(frame, f"{time_s:.1f} s", (8, 340),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.75, (255, 255, 255), 2)
+            cv2.putText(
+                frame,
+                f"{time_s:.1f} s",
+                (8, 340),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                0.75,
+                (255, 255, 255),
+                2,
+            )
             frames.append(frame)
     finally:
         cap.release()
@@ -51,8 +58,13 @@ def main():
         "candidate_camera_shot_id": "S281",
         "proposed_official_shot_id": "PREL001501-E04-S12",
         "source_observation": "Red-handled stone moves away from the Canadian wheelchair player while the delivery stick is in contact at sampled early frames; by 3898.0 s the stick is visibly separated. The fourth-end label is visible in the sampled frames.",
-        "unverified": ["exact_release_time", "continuous_moving_stone_identity_across_camera_cut",
-                       "settled_board", "independent_event_annotation", "metric_trajectory"],
+        "unverified": [
+            "exact_release_time",
+            "continuous_moving_stone_identity_across_camera_cut",
+            "settled_board",
+            "independent_event_annotation",
+            "metric_trajectory",
+        ],
     }
     MANIFEST.write_text(json.dumps(result, indent=2) + "\n")
     print(result["contact_sheet_sha256"])

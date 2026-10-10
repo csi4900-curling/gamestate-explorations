@@ -29,17 +29,17 @@ def main():
     baseline = json.loads(args.baseline_review.read_text())
     novel = json.loads(args.novel_review.read_text())
     source_hash = expanded["source_sha256"]
-    if (baseline_scan["source_sha256"] != source_hash or
-            digest(args.baseline) != expanded["baseline_sha256"] or
-            baseline["source_sha256"] != source_hash or
-            novel["source_sha256"] != source_hash):
+    if (
+        baseline_scan["source_sha256"] != source_hash
+        or digest(args.baseline) != expanded["baseline_sha256"]
+        or baseline["source_sha256"] != source_hash
+        or novel["source_sha256"] != source_hash
+    ):
         parser.error("Review sources differ")
-    labels = {row["raw_track_id"]: row["sampled_prefix_class"]
-              for row in baseline["review"]}
+    labels = {row["raw_track_id"]: row["sampled_prefix_class"] for row in baseline["review"]}
     if len(labels) != len(baseline["review"]):
         parser.error("Duplicate baseline source review ID")
-    baseline_by_id = {row["raw_track_id"]: row
-                      for row in baseline_scan["entry_review_proposals"]}
+    baseline_by_id = {row["raw_track_id"]: row for row in baseline_scan["entry_review_proposals"]}
     if len(baseline_by_id) != len(baseline_scan["entry_review_proposals"]):
         parser.error("Duplicate baseline proposal ID")
     review = []
@@ -48,17 +48,25 @@ def main():
             parser.error("Loose baseline comparison pair")
         if pair["baseline_id"] not in baseline_by_id or pair["baseline_id"] not in labels:
             parser.error("Baseline pair lacks reviewed source proposal")
-        review.append({"raw_track_id": pair["expanded_id"],
-                       "sampled_prefix_class": labels[pair["baseline_id"]],
-                       "class_provenance": "conditional_time_colour_baseline_review_transfer",
-                       "baseline_raw_track_id": pair["baseline_id"],
-                       "physical_throw_verified": False})
+        review.append(
+            {
+                "raw_track_id": pair["expanded_id"],
+                "sampled_prefix_class": labels[pair["baseline_id"]],
+                "class_provenance": "conditional_time_colour_baseline_review_transfer",
+                "baseline_raw_track_id": pair["baseline_id"],
+                "physical_throw_verified": False,
+            }
+        )
     for row in novel["review"]:
-        review.append({"raw_track_id": row["raw_track_id"],
-                       "sampled_prefix_class": row["sampled_prefix_class"],
-                       "class_provenance": "same_agent_selected_source_strip_review",
-                       "baseline_raw_track_id": None,
-                       "physical_throw_verified": False})
+        review.append(
+            {
+                "raw_track_id": row["raw_track_id"],
+                "sampled_prefix_class": row["sampled_prefix_class"],
+                "class_provenance": "same_agent_selected_source_strip_review",
+                "baseline_raw_track_id": None,
+                "physical_throw_verified": False,
+            }
+        )
     expected = {row["raw_track_id"] for row in expanded["entry_review_proposals"]}
     actual = [row["raw_track_id"] for row in review]
     if len(set(actual)) != len(actual) or set(actual) != expected:
@@ -67,9 +75,11 @@ def main():
         "status": "conditional_development_prefix_classes_not_independent_throw_labels",
         "source_sha256": source_hash,
         "variant_sha256": digest(args.expanded),
-        "input_sha256": {"baseline": digest(args.baseline),
-                         "baseline_review": digest(args.baseline_review),
-                         "novel_review": digest(args.novel_review)},
+        "input_sha256": {
+            "baseline": digest(args.baseline),
+            "baseline_review": digest(args.baseline_review),
+            "novel_review": digest(args.novel_review),
+        },
         "runner_sha256": digest(Path(__file__)),
         "review_count": len(review),
         "review": sorted(review, key=lambda row: row["raw_track_id"]),

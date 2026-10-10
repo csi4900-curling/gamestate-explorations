@@ -45,8 +45,11 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"same_colour": len(rows),
-                      "nearby_priority": result["nearby_review_priority_count"]}))
+    print(
+        json.dumps(
+            {"same_colour": len(rows), "nearby_priority": result["nearby_review_priority_count"]}
+        )
+    )
 
 
 if __name__ == "__main__":

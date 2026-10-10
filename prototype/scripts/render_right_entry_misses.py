@@ -32,12 +32,18 @@ def main():
     if source_hash != transfer["source_sha256"] or source_hash != reference["source_sha256"]:
         parser.error("Source fingerprints differ")
     entries = transfer["entry_review_proposals"]
-    misses = [event for event in reference["events"]
-              if not any(event["colour"] == row["colour_claim"] and
-                         event["delivery_interval_s"][0] <= row["entry_crossing"]["time_s"] <=
-                         event["delivery_interval_s"][1] for row in entries)]
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    misses = [
+        event
+        for event in reference["events"]
+        if not any(
+            event["colour"] == row["colour_claim"]
+            and event["delivery_interval_s"][0]
+            <= row["entry_crossing"]["time_s"]
+            <= event["delivery_interval_s"][1]
+            for row in entries
+        )
+    ]
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         parser.error("Unreadable video")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -45,7 +51,7 @@ def main():
     sheets = []
     try:
         for group_start in range(0, len(misses), 4):
-            group = misses[group_start:group_start + 4]
+            group = misses[group_start : group_start + 4]
             sheet = np.full((270 * len(group), 1600, 3), 25, dtype=np.uint8)
             for row_index, event in enumerate(group):
                 lo, hi = event["delivery_interval_s"]
@@ -58,15 +64,27 @@ def main():
                         raise RuntimeError(f"Could not decode split view at {t:.1f} s")
                     crop = frame[120:360, 320:640]
                     top, left = row_index * 270, col * 320
-                    sheet[top + 30:top + 270, left:left + 320] = crop
-                    cv2.putText(sheet, f"{event['id']} {event['colour']} {t:.1f}s",
-                                (left + 5, top + 21), cv2.FONT_HERSHEY_SIMPLEX,
-                                .48, (255, 255, 255), 1, cv2.LINE_AA)
+                    sheet[top + 30 : top + 270, left : left + 320] = crop
+                    cv2.putText(
+                        sheet,
+                        f"{event['id']} {event['colour']} {t:.1f}s",
+                        (left + 5, top + 21),
+                        cv2.FONT_HERSHEY_SIMPLEX,
+                        0.48,
+                        (255, 255, 255),
+                        1,
+                        cv2.LINE_AA,
+                    )
             path = args.output_dir / f"sheet-{group_start // 4 + 1:02}.jpg"
             if not cv2.imwrite(str(path), sheet):
                 raise RuntimeError(f"Could not write {path}")
-            sheets.append({"file": path.name, "sha256": digest(path),
-                           "event_ids": [event["id"] for event in group]})
+            sheets.append(
+                {
+                    "file": path.name,
+                    "sha256": digest(path),
+                    "event_ids": [event["id"] for event in group],
+                }
+            )
     finally:
         cap.release()
     manifest = {

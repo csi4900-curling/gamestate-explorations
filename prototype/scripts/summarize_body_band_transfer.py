@@ -25,21 +25,26 @@ def main():
             parser.error(f"Threshold differs: {path}")
         accepted = [row for row in result["decisions"] if row["accepted"]]
         if len(accepted) != result["development_accepted_count"] or (
-                result["frozen_accepted_count"] - len(accepted) !=
-                len(result["flagged_candidate_ids"])):
+            result["frozen_accepted_count"] - len(accepted) != len(result["flagged_candidate_ids"])
+        ):
             parser.error(f"Decision counts differ: {path}")
-        fractions = [row["max_neutral_gray_fraction"] for row in result["decisions"]
-                     if row.get("max_neutral_gray_fraction") is not None]
-        rows.append({
-            "source_id": result["source_id"],
-            "source_sha256": result["source_sha256"],
-            "input_file": str(path),
-            "input_sha256": file_sha256(path),
-            "frozen_accepted_count": result["frozen_accepted_count"],
-            "development_accepted_count": result["development_accepted_count"],
-            "flagged_candidate_ids": result["flagged_candidate_ids"],
-            "minimum_measured_candidate_fraction": min(fractions) if fractions else None,
-        })
+        fractions = [
+            row["max_neutral_gray_fraction"]
+            for row in result["decisions"]
+            if row.get("max_neutral_gray_fraction") is not None
+        ]
+        rows.append(
+            {
+                "source_id": result["source_id"],
+                "source_sha256": result["source_sha256"],
+                "input_file": str(path),
+                "input_sha256": file_sha256(path),
+                "frozen_accepted_count": result["frozen_accepted_count"],
+                "development_accepted_count": result["development_accepted_count"],
+                "flagged_candidate_ids": result["flagged_candidate_ids"],
+                "minimum_measured_candidate_fraction": min(fractions) if fractions else None,
+            }
+        )
     if len({row["source_sha256"] for row in rows}) != len(rows):
         parser.error("Input recordings are not distinct")
     output = {
@@ -59,9 +64,14 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(output, indent=2) + "\n")
-    print(output["recording_count"], "recordings;",
-          output["frozen_accepted_total"], "->",
-          output["development_accepted_total"], "accepted")
+    print(
+        output["recording_count"],
+        "recordings;",
+        output["frozen_accepted_total"],
+        "->",
+        output["development_accepted_total"],
+        "accepted",
+    )
 
 
 if __name__ == "__main__":

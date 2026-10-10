@@ -49,9 +49,15 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(output, indent=2) + "\n")
-    print(json.dumps({"raw": joined["raw_trigger_count"],
-                      "context_statuses": joined["context_status_counts"],
-                      "ends": joined["bracketed_candidate_tiers_by_displayed_end"]}))
+    print(
+        json.dumps(
+            {
+                "raw": joined["raw_trigger_count"],
+                "context_statuses": joined["context_status_counts"],
+                "ends": joined["bracketed_candidate_tiers_by_displayed_end"],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

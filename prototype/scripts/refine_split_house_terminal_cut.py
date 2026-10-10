@@ -14,7 +14,7 @@ from prototype.split_house_alignment import paint_reference_overlap, sample_stat
 
 TAIL_WINDOW_S = 60
 STEP_S = 1
-THRESHOLD = .25
+THRESHOLD = 0.25
 MIN_SUSTAINED_LOW_SAMPLES = 5
 
 
@@ -50,14 +50,23 @@ def main():
     alignment = json.loads(args.alignment.read_text())
     source_hash = digest(args.video)
     run_id = args.run_id
-    runs = {row["id"]: row for row in timeline["supported_runs"]
-            if row["layout"] == "split_2024"}
-    if (run_id not in runs or len({source_hash, timeline["source_sha256"],
-                                  reference["source_sha256"], alignment["source_sha256"]}) != 1
-            or reference["run_id"] != run_id
-            or reference["timeline_sha256"] != digest(args.timeline)
-            or alignment["timeline_sha256"] != digest(args.timeline)
-            or alignment["reference_sha256_by_run"][run_id] != digest(args.reference)):
+    runs = {row["id"]: row for row in timeline["supported_runs"] if row["layout"] == "split_2024"}
+    if (
+        run_id not in runs
+        or len(
+            {
+                source_hash,
+                timeline["source_sha256"],
+                reference["source_sha256"],
+                alignment["source_sha256"],
+            }
+        )
+        != 1
+        or reference["run_id"] != run_id
+        or reference["timeline_sha256"] != digest(args.timeline)
+        or alignment["timeline_sha256"] != digest(args.timeline)
+        or alignment["reference_sha256_by_run"][run_id] != digest(args.reference)
+    ):
         parser.error("Source, timeline, or house-reference lineage differs")
     mask_path = args.reference.parent / reference["paint_mask_image"]
     if digest(mask_path) != reference["paint_mask_sha256"]:
@@ -65,29 +74,41 @@ def main():
     mask = cv2.imread(str(mask_path), cv2.IMREAD_GRAYSCALE)
     start, end = runs[run_id]["interval_s"]
     first = max(int(start), int(end) - TAIL_WINDOW_S)
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         parser.error("Unreadable source video")
     rows = []
     try:
         for t in range(first, int(end), STEP_S):
-            sample_t = t + .5
+            sample_t = t + 0.5
             cap.set(cv2.CAP_PROP_POS_MSEC, sample_t * 1000)
             ok, frame = cap.read()
             if not ok or frame.shape != (360, 640, 3):
                 raise RuntimeError(f"Cannot decode {sample_t}")
             overlap = paint_reference_overlap(frame, mask)
-            rows.append({"source_time_s": sample_t,
-                         "paint_reference_overlap": round(overlap, 4),
-                         "status": sample_status(overlap, threshold=THRESHOLD)})
+            rows.append(
+                {
+                    "source_time_s": sample_t,
+                    "paint_reference_overlap": round(overlap, 4),
+                    "status": sample_status(overlap, threshold=THRESHOLD),
+                }
+            )
     finally:
         cap.release()
     cut = sustained_tail_start(rows)
-    last_aligned = next((row["source_time_s"] for row in reversed(rows)
-                         if row["status"] == "house_paint_aligned_sample"), None)
-    near_events = [event["id"] for event in timeline["observed_events"]
-                   if cut is not None and cut - 10 <= event["crossing_time_s"] < end]
+    last_aligned = next(
+        (
+            row["source_time_s"]
+            for row in reversed(rows)
+            if row["status"] == "house_paint_aligned_sample"
+        ),
+        None,
+    )
+    near_events = [
+        event["id"]
+        for event in timeline["observed_events"]
+        if cut is not None and cut - 10 <= event["crossing_time_s"] < end
+    ]
     result = {
         "status": "source_sampled_terminal_no_house_paint_tail_not_frame_exact_layout_truth",
         "source_sha256": source_hash,
@@ -114,9 +135,16 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"run": run_id, "last_aligned": last_aligned,
-                      "first_sustained_low": cut,
-                      "near_left_events": near_events}))
+    print(
+        json.dumps(
+            {
+                "run": run_id,
+                "last_aligned": last_aligned,
+                "first_sustained_low": cut,
+                "near_left_events": near_events,
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

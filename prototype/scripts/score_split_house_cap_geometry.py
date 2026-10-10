@@ -21,8 +21,9 @@ def digest(path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--context", type=Path, required=True)
-    parser.add_argument("--reference", nargs=2, action="append", required=True,
-                        metavar=("RUN_ID", "REFERENCE_JSON"))
+    parser.add_argument(
+        "--reference", nargs=2, action="append", required=True, metavar=("RUN_ID", "REFERENCE_JSON")
+    )
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     if args.output.exists():
@@ -33,8 +34,11 @@ def main():
     for run_id, raw_path in args.reference:
         path = Path(raw_path)
         item = json.loads(path.read_text())
-        if (run_id in refs or item["run_id"] != run_id
-                or item["source_sha256"] != context["source_sha256"]):
+        if (
+            run_id in refs
+            or item["run_id"] != run_id
+            or item["source_sha256"] != context["source_sha256"]
+        ):
             parser.error("Duplicate or mismatched house reference")
         refs[run_id] = item["temporal_median_house_ellipse"]
         paths[run_id] = path
@@ -44,20 +48,24 @@ def main():
         if run_id not in refs:
             parser.error("Cap belongs to a run without a house reference")
         distance = normalized_house_distance(refs[run_id], item["pixel_center"])
-        rows.append({
-            "candidate_id": item["candidate_id"],
-            "run_id": run_id,
-            "phase": item["phase"],
-            "local_observation_id": item["local_observation_id"],
-            "colour": item["colour"],
-            "pixel_center": item["pixel_center"],
-            "normalized_paint_ellipse_distance": round(distance, 4)
-            if distance is not None else None,
-            "house_location_tier": house_location_tier(
-                distance, near_distance=NEAR_HOUSE_DISTANCE),
-            "ice_context_tier": item["context_tier"],
-            "physical_stone_identity_verified": False,
-        })
+        rows.append(
+            {
+                "candidate_id": item["candidate_id"],
+                "run_id": run_id,
+                "phase": item["phase"],
+                "local_observation_id": item["local_observation_id"],
+                "colour": item["colour"],
+                "pixel_center": item["pixel_center"],
+                "normalized_paint_ellipse_distance": round(distance, 4)
+                if distance is not None
+                else None,
+                "house_location_tier": house_location_tier(
+                    distance, near_distance=NEAR_HOUSE_DISTANCE
+                ),
+                "ice_context_tier": item["context_tier"],
+                "physical_stone_identity_verified": False,
+            }
+        )
     counts = Counter((r["house_location_tier"], r["ice_context_tier"]) for r in rows)
     output = {
         "status": "source_derived_house_image_location_review_not_physical_board_geometry",
@@ -68,12 +76,21 @@ def main():
         "runner_sha256": digest(Path(__file__)),
         "near_house_normalized_distance": NEAR_HOUSE_DISTANCE,
         "cap_count": len(rows),
-        "tier_counts": {house: {ice: counts[house, ice] for ice in
-                                ("clear_context_review", "context_cluttered_review",
-                                 "context_unavailable_review")}
-                        for house in ("near_painted_house_review",
-                                      "outside_painted_house_review",
-                                      "house_geometry_unavailable_review")},
+        "tier_counts": {
+            house: {
+                ice: counts[house, ice]
+                for ice in (
+                    "clear_context_review",
+                    "context_cluttered_review",
+                    "context_unavailable_review",
+                )
+            }
+            for house in (
+                "near_painted_house_review",
+                "outside_painted_house_review",
+                "house_geometry_unavailable_review",
+            )
+        },
         "rows": rows,
         "limitations": [
             "The 1.4-radius review band was chosen after exposed 2024 source probing.",

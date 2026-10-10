@@ -4,8 +4,9 @@ from departure_gate_decision import decide_gate_colour
 
 
 def motion_points(row):
-    return sum(track["point_count"] for colour in ("red", "yellow")
-               for track in row["transits"][colour])
+    return sum(
+        track["point_count"] for colour in ("red", "yellow") for track in row["transits"][colour]
+    )
 
 
 def route_gate_sides(paired_rows):
@@ -33,18 +34,28 @@ def route_gate_sides(paired_rows):
             if left_count == right_count:
                 side, route = None, "orientation_abstention"
             else:
-                side, route = ("left" if left_count > right_count else "right",
-                               "initial_count_selected_side")
-        choice = decide_gate_colour(pair[side]) if side else {
-            "colour": None, "route": "orientation_abstention", "anchor_s": None}
-        output.append({"shot_id": pair["shot_id"],
-                       "interval_s": pair["interval_s"],
-                       "side": side, "side_route": route,
-                       "left_motion_points": left_points,
-                       "right_motion_points": right_points,
-                       "left_gate_count": sum(left["gate_counts"].values()),
-                       "right_gate_count": sum(right["gate_counts"].values()),
-                       "colour": choice["colour"],
-                       "colour_route": choice["route"],
-                       "early_gate_anchor_s": choice["anchor_s"]})
+                side, route = (
+                    "left" if left_count > right_count else "right",
+                    "initial_count_selected_side",
+                )
+        choice = (
+            decide_gate_colour(pair[side])
+            if side
+            else {"colour": None, "route": "orientation_abstention", "anchor_s": None}
+        )
+        output.append(
+            {
+                "shot_id": pair["shot_id"],
+                "interval_s": pair["interval_s"],
+                "side": side,
+                "side_route": route,
+                "left_motion_points": left_points,
+                "right_motion_points": right_points,
+                "left_gate_count": sum(left["gate_counts"].values()),
+                "right_gate_count": sum(right["gate_counts"].values()),
+                "colour": choice["colour"],
+                "colour_route": choice["route"],
+                "early_gate_anchor_s": choice["anchor_s"],
+            }
+        )
     return output

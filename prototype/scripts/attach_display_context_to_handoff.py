@@ -23,14 +23,16 @@ def main():
     handoff = json.loads(args.handoff.read_text())
     context = json.loads(args.display_context.read_text())
     corridor = json.loads(args.corridor.read_text())
-    if (handoff["source_id"] != context["source_id"] or
-            handoff["source_sha256"] != context["source_sha256"] or
-            handoff["source_interval_s"] != context["source_interval_s"] or
-            corridor["source_id"] != context["source_id"] or
-            corridor["source_interval_s"] != context["source_interval_s"] or
-            corridor["source_sha256"] != context["source_sha256"] or
-            file_sha256(args.corridor) != handoff["input_sha256"]["candidates"] or
-            corridor["input_sha256"] != context["raw_sha256"]):
+    if (
+        handoff["source_id"] != context["source_id"]
+        or handoff["source_sha256"] != context["source_sha256"]
+        or handoff["source_interval_s"] != context["source_interval_s"]
+        or corridor["source_id"] != context["source_id"]
+        or corridor["source_interval_s"] != context["source_interval_s"]
+        or corridor["source_sha256"] != context["source_sha256"]
+        or file_sha256(args.corridor) != handoff["input_sha256"]["candidates"]
+        or corridor["input_sha256"] != context["raw_sha256"]
+    ):
         parser.error("Handoff and display context provenance differs")
     joined = attach_display_context(handoff, context)
     output = {
@@ -41,7 +43,8 @@ def main():
         "display_join_code_sha256": file_sha256(ROOT / "prototype/display_context_handoff.py"),
         "display_join_runner_sha256": file_sha256(Path(__file__)),
         "timeline": joined,
-        "limitations": handoff["limitations"] + [
+        "limitations": handoff["limitations"]
+        + [
             "Broadcast displayed ends are observational context, not physical end assignments.",
         ],
     }

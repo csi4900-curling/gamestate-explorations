@@ -4,8 +4,12 @@ from prototype.cut_effect_audit import audit_cut_effects
 
 
 def origin(shot, start, end, predicted, probability):
-    return {"shot_id": shot, "interval_s": [start, end],
-            "predicted": predicted, "probability": probability}
+    return {
+        "shot_id": shot,
+        "interval_s": [start, end],
+        "predicted": predicted,
+        "probability": probability,
+    }
 
 
 def test_origin_rescue_pattern_uses_time_mapping():
@@ -19,5 +23,6 @@ def test_origin_rescue_pattern_uses_time_mapping():
 
 def test_missing_boundary_rejected():
     with pytest.raises(ValueError, match="unique"):
-        audit_cut_effects([{"time_s": 5, "isolated_spike": True}],
-                          [origin("S1", 0, 10, 0, 0.3)], [])
+        audit_cut_effects(
+            [{"time_s": 5, "isolated_spike": True}], [origin("S1", 0, 10, 0, 0.3)], []
+        )

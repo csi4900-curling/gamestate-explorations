@@ -37,8 +37,7 @@ def main():
     args = parser.parse_args()
     if args.output.exists() or args.start < 0 or args.stop <= args.start:
         parser.error("Invalid interval or output already exists")
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         parser.error("Cannot open video")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -59,13 +58,17 @@ def main():
     tracks = []
     for colour, samples in observations.items():
         for path in moving_cap_tracks(samples, max_gap_s=2, max_step_px=25):
-            tracks.append({"colour": colour,
-                           "first_observed_s": path["points"][0]["time_s"],
-                           "last_observed_s": path["points"][-1]["time_s"],
-                           "observation_count": len(path["points"]),
-                           "span_px": path["span_px"],
-                           "points": path["points"],
-                           "physical_throw_verified": False})
+            tracks.append(
+                {
+                    "colour": colour,
+                    "first_observed_s": path["points"][0]["time_s"],
+                    "last_observed_s": path["points"][-1]["time_s"],
+                    "observation_count": len(path["points"]),
+                    "span_px": path["span_px"],
+                    "points": path["points"],
+                    "physical_throw_verified": False,
+                }
+            )
     tracks.sort(key=lambda row: (row["first_observed_s"], row["colour"]))
     for index, row in enumerate(tracks, 1):
         row["track_id"] = f"R{index:03d}"
@@ -79,14 +82,18 @@ def main():
         "sample_period_s": 1,
         "raw_proposal_count_by_colour": {
             colour: sum(len(candidates) for _, candidates in samples)
-            for colour, samples in observations.items()},
+            for colour, samples in observations.items()
+        },
         "raw_track_count": len(tracks),
         "entry_review_count": len(entries),
         "raw_tracks": tracks,
         "entry_review_proposals": entries,
-        "unpromoted_raw_track_ids": [row["track_id"] for row in tracks
-                                     if row["track_id"] not in selected],
-        "proposal_code_sha256": digest(ROOT / "prototype/scripts/probe_static_left_right_cap_motion.py"),
+        "unpromoted_raw_track_ids": [
+            row["track_id"] for row in tracks if row["track_id"] not in selected
+        ],
+        "proposal_code_sha256": digest(
+            ROOT / "prototype/scripts/probe_static_left_right_cap_motion.py"
+        ),
         "tracker_code_sha256": digest(ROOT / "prototype/stone_motion_fallback.py"),
         "triage_code_sha256": digest(ROOT / "prototype/right_view_entry_triage.py"),
         "runner_sha256": digest(Path(__file__)),

@@ -57,17 +57,28 @@ def main():
                 flags.append("edge_symbol_play_status_uncertain")
             if any(row["low_fill_margin"] for row in stones):
                 flags.append("low_fill_margin_needs_review")
-            rows.append({"official_shot_id": shot["official_shot_id"],
-                         "diagram_image_xref": xref,
-                         "diagram_image_sha256": hashlib.sha256(raw).hexdigest(),
-                         "diagram_pdf_rect": [round(value, 3) for value in rect],
-                         "house_center_px": [150, house_y],
-                         "delivery_side": "top" if house_y == 440 else "bottom",
-                         "stone_counts": {colour: counts[colour] for colour in ("red", "yellow")},
-                         "stones": stones, "review_flags": flags})
+            rows.append(
+                {
+                    "official_shot_id": shot["official_shot_id"],
+                    "diagram_image_xref": xref,
+                    "diagram_image_sha256": hashlib.sha256(raw).hexdigest(),
+                    "diagram_pdf_rect": [round(value, 3) for value in rect],
+                    "house_center_px": [150, house_y],
+                    "delivery_side": "top" if house_y == 440 else "bottom",
+                    "stone_counts": {colour: counts[colour] for colour in ("red", "yellow")},
+                    "stones": stones,
+                    "review_flags": flags,
+                }
+            )
             previous_strict = strict
-        ends.append({"end": end["end"], "pdf_page": end["pdf_page"],
-                     "diagram_count": len(rows), "shots": rows})
+        ends.append(
+            {
+                "end": end["end"],
+                "pdf_page": end["pdf_page"],
+                "diagram_count": len(rows),
+                "shots": rows,
+            }
+        )
     all_shots = [shot for end in ends for shot in end["shots"]]
     flags = Counter(flag for shot in all_shots for flag in shot["review_flags"])
     output = {
@@ -81,11 +92,16 @@ def main():
         "detected_stone_symbol_count": sum(len(shot["stones"]) for shot in all_shots),
         "review_flag_counts": dict(flags),
         "ends": ends,
-        "limitations": ["PDF diagrams provide post-shot 2D positions only; they are not tracked video states or physical throw timestamps."],
+        "limitations": [
+            "PDF diagrams provide post-shot 2D positions only; they are not tracked video states or physical throw timestamps."
+        ],
     }
     OUTPUT.write_text(json.dumps(output, indent=2) + "\n")
-    print(output["shot_diagram_count"], output["detected_stone_symbol_count"],
-          output["review_flag_counts"])
+    print(
+        output["shot_diagram_count"],
+        output["detected_stone_symbol_count"],
+        output["review_flag_counts"],
+    )
 
 
 if __name__ == "__main__":

@@ -40,13 +40,15 @@ def load_rows(packet, manifest):
             features.append(patch_features(image, [0, 0, 48, 48]))
         if len(features) != manifest["samples_per_event"]:
             raise ValueError("Unexpected sample count")
-        rows.append({
-            "source_id": event["source_id"],
-            "event_id": event["event_id"],
-            "review": event["source_review"],
-            "label": int(event["source_review"] == "real"),
-            "features": np.stack(features),
-        })
+        rows.append(
+            {
+                "source_id": event["source_id"],
+                "event_id": event["event_id"],
+                "review": event["source_review"],
+                "label": int(event["source_review"] == "real"),
+                "features": np.stack(features),
+            }
+        )
     return rows
 
 
@@ -55,15 +57,17 @@ def score_rows(rows, scaler, model):
     for row in rows:
         scores = model.decision_function(scaler.transform(row["features"]))
         mean_score = float(np.mean(scores))
-        scored.append({
-            "source_id": row["source_id"],
-            "event_id": row["event_id"],
-            "source_review": row["review"],
-            "sample_scores": [round(float(value), 6) for value in scores],
-            "mean_score": round(mean_score, 6),
-            "predicted_stone_like": bool(mean_score >= 0),
-            "agrees_with_source_review": bool((mean_score >= 0) == bool(row["label"])),
-        })
+        scored.append(
+            {
+                "source_id": row["source_id"],
+                "event_id": row["event_id"],
+                "source_review": row["review"],
+                "sample_scores": [round(float(value), 6) for value in scores],
+                "mean_score": round(mean_score, 6),
+                "predicted_stone_like": bool(mean_score >= 0),
+                "agrees_with_source_review": bool((mean_score >= 0) == bool(row["label"])),
+            }
+        )
     return scored
 
 
@@ -84,15 +88,21 @@ def main():
     x = np.concatenate([row["features"] for row in train])
     y = np.concatenate([np.repeat(row["label"], len(row["features"])) for row in train])
     scaler = StandardScaler().fit(x)
-    model = LinearSVC(C=0.1, class_weight="balanced", max_iter=5000,
-                      random_state=9031).fit(scaler.transform(x), y)
+    model = LinearSVC(C=0.1, class_weight="balanced", max_iter=5000, random_state=9031).fit(
+        scaler.transform(x), y
+    )
     train_scored = score_rows(train, scaler, model)
     holdout_scored = score_rows(holdout, scaler, model)
     args.output.mkdir(parents=True)
     model_path = args.output / "model.npz"
-    np.savez_compressed(model_path, mean=scaler.mean_, scale=scaler.scale_,
-                        weights=model.coef_, intercept=model.intercept_,
-                        threshold=np.asarray(0.0))
+    np.savez_compressed(
+        model_path,
+        mean=scaler.mean_,
+        scale=scaler.scale_,
+        weights=model.coef_,
+        intercept=model.intercept_,
+        threshold=np.asarray(0.0),
+    )
     result = {
         "status": "development_frozen_cross_match_patch_probe",
         "packet_manifest_sha256": file_sha256(manifest_path),
@@ -118,8 +128,11 @@ def main():
         ],
     }
     (args.output / "results.json").write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"holdout_agreements": result["holdout_agreements"],
-                      "holdout_events": len(holdout)}))
+    print(
+        json.dumps(
+            {"holdout_agreements": result["holdout_agreements"], "holdout_events": len(holdout)}
+        )
+    )
 
 
 if __name__ == "__main__":

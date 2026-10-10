@@ -29,8 +29,7 @@ def main():
     source_hash = digest(args.video)
     if probe["source_sha256"] != source_hash:
         parser.error("Source fingerprints differ")
-    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                           [cv2.CAP_PROP_N_THREADS, 1])
+    cap = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not cap.isOpened():
         parser.error("Cannot open source video")
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -50,21 +49,31 @@ def main():
                 x, y = point["pixel"]
                 cv2.circle(crop, (round(x - 320), round(y - 110)), 8, (0, 255, 0), 2)
                 cv2.rectangle(crop, (0, 0), (100, 24), (0, 0, 0), -1)
-                cv2.putText(crop, f"{t:.1f} s", (6, 18),
-                            cv2.FONT_HERSHEY_SIMPLEX, .52, (255, 255, 255), 1)
+                cv2.putText(
+                    crop, f"{t:.1f} s", (6, 18), cv2.FONT_HERSHEY_SIMPLEX, 0.52, (255, 255, 255), 1
+                )
                 tiles.append(crop)
-                frames.append({"source_time_s": t, "decoded_frame_index": frame_index,
-                               "tracked_pixel": point["pixel"]})
+                frames.append(
+                    {
+                        "source_time_s": t,
+                        "decoded_frame_index": frame_index,
+                        "tracked_pixel": point["pixel"],
+                    }
+                )
             while len(tiles) % 2:
                 tiles.append(np.zeros_like(tiles[0]))
-            sheet = np.vstack([np.hstack(tiles[i:i + 2])
-                               for i in range(0, len(tiles), 2)])
+            sheet = np.vstack([np.hstack(tiles[i : i + 2]) for i in range(0, len(tiles), 2)])
             path = args.output_dir / f"{proposal['raw_track_id'].lower()}-span.jpg"
             if not cv2.imwrite(str(path), sheet):
                 raise RuntimeError(f"Could not write {path}")
-            sheets.append({"raw_track_id": proposal["raw_track_id"],
-                           "sheet": path.name, "sheet_sha256": digest(path),
-                           "frames": frames})
+            sheets.append(
+                {
+                    "raw_track_id": proposal["raw_track_id"],
+                    "sheet": path.name,
+                    "sheet_sha256": digest(path),
+                    "frames": frames,
+                }
+            )
     finally:
         cap.release()
     result = {

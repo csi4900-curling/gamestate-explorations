@@ -13,8 +13,9 @@ def route_split_post_board_views(sequence):
     by_right = {row["proposal_id"]: row for row in right_rows}
     if len(by_right) != len(right_rows):
         raise ValueError("Duplicate right proposal ID")
-    left_rows = [row for row in sequence["rows"]
-                 if row["observation_kind"] == "left_tracked_passage"]
+    left_rows = [
+        row for row in sequence["rows"] if row["observation_kind"] == "left_tracked_passage"
+    ]
     if len(left_rows) != sequence["left_candidate_count"]:
         raise ValueError("Left candidate count differs from sequence")
     if len({row["candidate_id"] for row in left_rows}) != len(left_rows):
@@ -42,33 +43,43 @@ def route_split_post_board_views(sequence):
             else:
                 status, view = "abstain_direction_order_conflict", None
         observed_board = row.get("post_candidate_partial_cap_observation")
-        routed.append({
-            "candidate_id": row["candidate_id"],
-            "observation_time_s": row["observation_time_s"],
-            "colour_claim": row["colour_claim"],
-            "right_proposal_id": proposal,
-            "right_minus_left_passage_lag_s": lag,
-            "routing_status": status,
-            "conditional_receiving_view": view,
-            "existing_post_candidate_scan_view": "right" if observed_board is not None else None,
-            "existing_post_candidate_scan_status": observed_board["status"] if observed_board else None,
-            "existing_scan_samples_conditional_receiving_view":
-                (view == "right") if observed_board is not None and view else None,
-            "physical_throw_verified": False,
-            "complete_board_verified": False,
-            "simulation_ready": False,
-        })
+        routed.append(
+            {
+                "candidate_id": row["candidate_id"],
+                "observation_time_s": row["observation_time_s"],
+                "colour_claim": row["colour_claim"],
+                "right_proposal_id": proposal,
+                "right_minus_left_passage_lag_s": lag,
+                "routing_status": status,
+                "conditional_receiving_view": view,
+                "existing_post_candidate_scan_view": "right"
+                if observed_board is not None
+                else None,
+                "existing_post_candidate_scan_status": observed_board["status"]
+                if observed_board
+                else None,
+                "existing_scan_samples_conditional_receiving_view": (view == "right")
+                if observed_board is not None and view
+                else None,
+                "physical_throw_verified": False,
+                "complete_board_verified": False,
+                "simulation_ready": False,
+            }
+        )
     counts = Counter(row["routing_status"] for row in routed)
-    views = Counter(row["conditional_receiving_view"] for row in routed
-                    if row["conditional_receiving_view"])
+    views = Counter(
+        row["conditional_receiving_view"] for row in routed if row["conditional_receiving_view"]
+    )
     return {
         "source_sha256": sequence["source_sha256"],
         "left_candidate_count": len(left_rows),
         "routing_status_counts": dict(counts),
         "conditional_receiving_view_counts": dict(views),
         "existing_right_scan_wrong_view_count_conditional": sum(
-            row["existing_post_candidate_scan_view"] == "right" and
-            row["conditional_receiving_view"] == "left" for row in routed),
+            row["existing_post_candidate_scan_view"] == "right"
+            and row["conditional_receiving_view"] == "left"
+            for row in routed
+        ),
         "rows": routed,
         "limitations": [
             "View is conditional on a provisional right/left event link, not physical stone identity.",

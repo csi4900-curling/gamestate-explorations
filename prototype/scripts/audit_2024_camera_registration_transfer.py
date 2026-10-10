@@ -23,10 +23,14 @@ def main():
     parser.add_argument("--source-offset", type=float, required=True)
     parser.add_argument("--max-corner-displacement-px", type=float, default=120)
     parser.add_argument("--ids", nargs="*", help="Optional reference event IDs")
-    parser.add_argument("--sample-period-s", type=float,
-                        help="Sample each selected interval at this period instead of three frames")
-    parser.add_argument("--extend-end-s", type=float,
-                        help="Extend a single selected window to this source time")
+    parser.add_argument(
+        "--sample-period-s",
+        type=float,
+        help="Sample each selected interval at this period instead of three frames",
+    )
+    parser.add_argument(
+        "--extend-end-s", type=float, help="Extend a single selected window to this source time"
+    )
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     if args.output.exists():
@@ -55,8 +59,7 @@ def main():
         calibrator = ViewCalibrator(views[name], ROOT / "prototype/vision/frames")
         calibrator.H = np.array(refined[name]["refined_H"])
         calibrators[name] = calibrator
-    capture = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(args.video), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     if not capture.isOpened():
         parser.error("Cannot open video")
     fps = capture.get(cv2.CAP_PROP_FPS)
@@ -72,26 +75,31 @@ def main():
                 times = (start, (start + end) / 2, end)
             else:
                 period = args.sample_period_s
-                times = sorted({start, end} | {
-                    round(tick * period, 6)
-                    for tick in range(ceil(start / period), floor(end / period) + 1)})
+                times = sorted(
+                    {start, end}
+                    | {
+                        round(tick * period, 6)
+                        for tick in range(ceil(start / period), floor(end / period) + 1)
+                    }
+                )
             for source_time in times:
                 clip_time = source_time - args.source_offset
                 capture.set(cv2.CAP_PROP_POS_FRAMES, round(clip_time * fps))
                 ok, frame = capture.read()
                 if not ok:
                     raise RuntimeError(f"Cannot decode source time {source_time}")
-                row = {"reference_event_id": event["id"],
-                       "source_time_s": source_time, "views": {}}
+                row = {"reference_event_id": event["id"], "source_time_s": source_time, "views": {}}
                 for name, calibrator in calibrators.items():
                     _, registration = calibrator.register(
-                        frame, max_corner_displacement_px=args.max_corner_displacement_px)
+                        frame, max_corner_displacement_px=args.max_corner_displacement_px
+                    )
                     row["views"][name] = registration
                 rows.append(row)
     finally:
         capture.release()
-    counts = {name: dict(Counter(row["views"][name]["status"]
-                                 for row in rows)) for name in calibrators}
+    counts = {
+        name: dict(Counter(row["views"][name]["status"] for row in rows)) for name in calibrators
+    }
     result = {
         "status": "development_calibration_registration_transfer_not_metric_validation",
         "source_video_sha256": source_hash,

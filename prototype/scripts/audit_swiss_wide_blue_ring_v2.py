@@ -20,7 +20,10 @@ from prototype.wide_view_ground_contact import contact_below_cap
 
 BASE = ROOT / "validation/official-shot-sequence"
 VIDEO = ROOT / "validation/throw-event-benchmark/paralympics-2022-sweden-switzerland/source.mp4"
-MODEL = ROOT / "validation/curlobserver-learned-probe/cap-patch-crossmatch-v1/model-excluding-swiss-transfer.npz"
+MODEL = (
+    ROOT
+    / "validation/curlobserver-learned-probe/cap-patch-crossmatch-v1/model-excluding-swiss-transfer.npz"
+)
 FIRST = BASE / "swiss-end2-wide-contact-first-transfer.json"
 OUTPUT = BASE / "swiss-end2-wide-blue-ring-v2-development.json"
 MIN_PATCH_SCORE = -0.7
@@ -45,8 +48,7 @@ def main():
     if source_hash == reserved["source_sha256"]:
         raise ValueError("Reserved source selected")
     model = load_model(MODEL)
-    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                               [cv2.CAP_PROP_N_THREADS, 1])
+    capture = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     fps = capture.get(cv2.CAP_PROP_FPS)
     rows = []
     for previous in first["rows"]:
@@ -68,19 +70,30 @@ def main():
                     if candidate["patch_score"] < MIN_PATCH_SCORE:
                         continue
                     contact = contact_below_cap(frame, candidate["pixel"])
-                    candidates.append({"colour": colour,
-                                       "cap_pixel": candidate["pixel"],
-                                       "patch_score": round(candidate["patch_score"], 3),
-                                       "contact": contact})
-            frames.append({"time_s": time_s, "ellipse": ellipse,
-                           "candidates": candidates})
-        accepted = [{"time_s": row["time_s"],
-                     "candidates": [{"colour": item["colour"],
-                                     "pixel": item["contact"]["pixel"],
-                                     "patch_score": item["patch_score"]}
-                                    for item in row["candidates"]
-                                    if item["contact"] is not None]}
-                    for row in frames]
+                    candidates.append(
+                        {
+                            "colour": colour,
+                            "cap_pixel": candidate["pixel"],
+                            "patch_score": round(candidate["patch_score"], 3),
+                            "contact": contact,
+                        }
+                    )
+            frames.append({"time_s": time_s, "ellipse": ellipse, "candidates": candidates})
+        accepted = [
+            {
+                "time_s": row["time_s"],
+                "candidates": [
+                    {
+                        "colour": item["colour"],
+                        "pixel": item["contact"]["pixel"],
+                        "patch_score": item["patch_score"],
+                    }
+                    for item in row["candidates"]
+                    if item["contact"] is not None
+                ],
+            }
+            for row in frames
+        ]
         stable = stable_image_caps(accepted) if accepted else []
         alternatives = []
         if stable and previous["overhead_partial_board"]:
@@ -91,23 +104,38 @@ def main():
             ry = median(min(row["axis_lengths_px"]) / 2 for row in ellipses)
             for lateral_sign in (-1, 1):
                 for longitudinal_sign in (-1, 1):
-                    points = [{"colour": item["colour"],
-                               "canonical_lateral_house_radii": round(
-                                   lateral_sign * (item["pixel_center"][0] - cx) / rx, 4),
-                               "longitudinal_house_radii": round(
-                                   longitudinal_sign * (item["pixel_center"][1] - cy) / ry, 4)}
-                              for item in stable]
-                    alternatives.append({"lateral_sign": lateral_sign,
-                                         "longitudinal_sign": longitudinal_sign,
-                                         "wide_points": points,
-                                         "source_overlap": compare_source_boards(
-                                             points, previous["overhead_partial_board"])})
-        rows.append({"shot_id": previous["shot_id"],
-                     "wide_ellipse_frame_count": len(frames),
-                     "wide_frames": frames,
-                     "stable_contact_tracks": stable,
-                     "overhead_partial_board": previous["overhead_partial_board"],
-                     "source_only_orientation_alternatives": alternatives})
+                    points = [
+                        {
+                            "colour": item["colour"],
+                            "canonical_lateral_house_radii": round(
+                                lateral_sign * (item["pixel_center"][0] - cx) / rx, 4
+                            ),
+                            "longitudinal_house_radii": round(
+                                longitudinal_sign * (item["pixel_center"][1] - cy) / ry, 4
+                            ),
+                        }
+                        for item in stable
+                    ]
+                    alternatives.append(
+                        {
+                            "lateral_sign": lateral_sign,
+                            "longitudinal_sign": longitudinal_sign,
+                            "wide_points": points,
+                            "source_overlap": compare_source_boards(
+                                points, previous["overhead_partial_board"]
+                            ),
+                        }
+                    )
+        rows.append(
+            {
+                "shot_id": previous["shot_id"],
+                "wide_ellipse_frame_count": len(frames),
+                "wide_frames": frames,
+                "stable_contact_tracks": stable,
+                "overhead_partial_board": previous["overhead_partial_board"],
+                "source_only_orientation_alternatives": alternatives,
+            }
+        )
     capture.release()
     output = {
         "status": "post_first_transfer_blue_ring_proposal_development_not_frozen_score",
@@ -127,11 +155,23 @@ def main():
         ],
     }
     OUTPUT.write_text(json.dumps(output, indent=2) + "\n")
-    print([(row["shot_id"], len(row["stable_contact_tracks"]),
-            [(alt["lateral_sign"], alt["longitudinal_sign"],
-              alt["source_overlap"]["matched_count"])
-             for alt in row["source_only_orientation_alternatives"]])
-           for row in rows])
+    print(
+        [
+            (
+                row["shot_id"],
+                len(row["stable_contact_tracks"]),
+                [
+                    (
+                        alt["lateral_sign"],
+                        alt["longitudinal_sign"],
+                        alt["source_overlap"]["matched_count"],
+                    )
+                    for alt in row["source_only_orientation_alternatives"]
+                ],
+            )
+            for row in rows
+        ]
+    )
 
 
 if __name__ == "__main__":

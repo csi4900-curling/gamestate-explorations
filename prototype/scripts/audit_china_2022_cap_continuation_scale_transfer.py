@@ -34,15 +34,13 @@ def digest(path):
 
 def reconstructed_tracks(video, fps, shot):
     observations = {"red": [], "yellow": []}
-    for second in range(ceil(shot["interval_s"][0]),
-                        ceil(shot["interval_s"][1])):
+    for second in range(ceil(shot["interval_s"][0]), ceil(shot["interval_s"][1])):
         video.set(cv2.CAP_PROP_POS_FRAMES, round(second * fps))
         ok, frame = video.read()
         if not ok or frame.shape[:2] != (360, 640):
             raise ValueError(f"Source frame unreadable: {second}")
         for colour in observations:
-            observations[colour].append((float(second),
-                                         stone_cap_candidates(frame, colour)))
+            observations[colour].append((float(second), stone_cap_candidates(frame, colour)))
     rows = {}
     summaries = []
     for colour in ("red", "yellow"):
@@ -52,7 +50,9 @@ def reconstructed_tracks(video, fps, shot):
             rows[info["episode_id"]] = track["points"]
             summaries.append(info)
     if summaries != shot["tracks"]:
-        raise ValueError(f"Shot-scoped source track reconstruction differs: {shot['camera_shot_id']}")
+        raise ValueError(
+            f"Shot-scoped source track reconstruction differs: {shot['camera_shot_id']}"
+        )
     return rows
 
 
@@ -61,14 +61,14 @@ def main():
         raise ValueError("2022 scale-transfer audit already exists")
     catalog = json.loads(CATALOG.read_text())
     video_hash = digest(VIDEO)
-    if (catalog["source_video_sha256"] != video_hash or
-            catalog["motion_detector_sha256"] != digest(ROOT /
-                                                      "prototype/stone_motion_fallback.py") or
-            catalog["shared_shot_track_code_sha256"] != digest(ROOT /
-                "prototype/scripts/build_norway_global_cap_motion_catalog.py")):
+    if (
+        catalog["source_video_sha256"] != video_hash
+        or catalog["motion_detector_sha256"] != digest(ROOT / "prototype/stone_motion_fallback.py")
+        or catalog["shared_shot_track_code_sha256"]
+        != digest(ROOT / "prototype/scripts/build_norway_global_cap_motion_catalog.py")
+    ):
         raise ValueError("2022 source or frozen track lineage differs")
-    video = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG,
-                             [cv2.CAP_PROP_N_THREADS, 1])
+    video = cv2.VideoCapture(str(VIDEO), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 1])
     fps = video.get(cv2.CAP_PROP_FPS)
     if not video.isOpened() or abs(fps - 30) > 0.01:
         raise ValueError("2022 source unreadable or FPS changed")
@@ -91,8 +91,7 @@ def main():
                     "source_catalog_last_pixel_360": track["last_pixel"],
                     "last_two_reconstructed_points_360": points[-2:],
                     "next_sample_time_s": next_time,
-                    "shot_boundary_abstention": next_time >= shot[
-                        "interval_s"][1],
+                    "shot_boundary_abstention": next_time >= shot["interval_s"][1],
                     "decision": None,
                     "raw_colour_components": [],
                     "area_scaled_components": [],
@@ -102,50 +101,53 @@ def main():
                     previous = [v * SCALE for v in points[-2]["pixel"]]
                     current = [v * SCALE for v in points[-1]["pixel"]]
                     ratio = 0.5 / (last_time - points[-2]["time_s"])
-                    predicted = [current[i] +
-                                 (current[i] - previous[i]) * ratio
-                                 for i in (0, 1)]
-                    roi = search_roi([v / SCALE for v in predicted],
-                                     shape=(360, 640), radius=30)
+                    predicted = [current[i] + (current[i] - previous[i]) * ratio for i in (0, 1)]
+                    roi = search_roi([v / SCALE for v in predicted], shape=(360, 640), radius=30)
                     frame_index = round(next_time * fps)
                     video.set(cv2.CAP_PROP_POS_FRAMES, frame_index)
                     ok, frame = video.read()
                     if not ok or frame.shape[:2] != (360, 640):
                         raise ValueError(f"2022 source frame unreadable: {frame_index}")
-                    raw = local_cap_components(frame, roi, track["colour"],
-                                               minimum_area_px2=20 / SCALE**2)
-                    eligible = [c for c in raw if c["area_px2"] <=
-                                700 / SCALE**2]
-                    scaled = [{**c, "centroid_px_1080": [
-                        round(v * SCALE, 3) for v in c[
-                            "centroid_px_1080"]]} for c in eligible]
+                    raw = local_cap_components(
+                        frame, roi, track["colour"], minimum_area_px2=20 / SCALE**2
+                    )
+                    eligible = [c for c in raw if c["area_px2"] <= 700 / SCALE**2]
+                    scaled = [
+                        {
+                            **c,
+                            "centroid_px_1080": [
+                                round(v * SCALE, 3) for v in c["centroid_px_1080"]
+                            ],
+                        }
+                        for c in eligible
+                    ]
                     decision = choose_next_cap(current, previous, ratio, scaled)
-                    row.update({
-                        "decoded_frame_index": frame_index,
-                        "search_roi_xyxy_px_360": list(roi),
-                        "raw_colour_components": raw,
-                        "area_scaled_components": eligible,
-                        "decision": decision,
-                    })
+                    row.update(
+                        {
+                            "decoded_frame_index": frame_index,
+                            "search_roi_xyxy_px_360": list(roi),
+                            "raw_colour_components": raw,
+                            "area_scaled_components": eligible,
+                            "decision": decision,
+                        }
+                    )
                 rows.append(row)
     finally:
         video.release()
-    if (len(rows) != catalog["episode_count"] or
-            len({r["episode_id"] for r in rows}) != len(rows)):
+    if len(rows) != catalog["episode_count"] or len({r["episode_id"] for r in rows}) != len(rows):
         raise ValueError("2022 cap track inventory not conserved")
-    statuses = Counter("camera_shot_boundary" if r[
-        "shot_boundary_abstention"] else r["decision"]["status"] for r in rows)
+    statuses = Counter(
+        "camera_shot_boundary" if r["shot_boundary_abstention"] else r["decision"]["status"]
+        for r in rows
+    )
     result = {
         "status": "2022_china_one_step_scale_transfer_development_not_identity_truth",
         "source_video_sha256": video_hash,
         "input_sha256": {"shot_scoped_cap_catalog": digest(CATALOG)},
         "runner_sha256": digest(Path(__file__)),
-        "selector_code_sha256": digest(ROOT /
-                                       "prototype/causal_cap_continuation.py"),
-        "component_code_sha256": digest(ROOT /
-                                        "prototype/local_colour_cap_probe.py"),
-        "source_track_code_sha256": digest(ROOT /
-                                         "prototype/stone_motion_fallback.py"),
+        "selector_code_sha256": digest(ROOT / "prototype/causal_cap_continuation.py"),
+        "component_code_sha256": digest(ROOT / "prototype/local_colour_cap_probe.py"),
+        "source_track_code_sha256": digest(ROOT / "prototype/stone_motion_fallback.py"),
         "method": {
             "source_resolution_px": [640, 360],
             "czech_reference_resolution_px": [1920, 1080],
