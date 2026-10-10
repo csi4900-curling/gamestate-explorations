@@ -311,6 +311,7 @@
         tierLabel: "Tier A · Calibrated Overhead",
         status: "accepted",
         header: "End 1 · Shot 11 (CAN vs SWE)",
+        collision: { hasCollision: false },
         metrics: {
           line: "14.5 cm",
           weight: "8.0 cm",
@@ -325,8 +326,8 @@
         },
         commentary: "In End 1, Shot 11, Canada (Red) delivered with hammer advantage. Canada currently holds a 2-point lead over Sweden. The sheet shows 2 Red and 1 Yellow stones in play. Delivery telemetry registered a line error of 14.5 cm, weight error of 8.0 cm, lateral curl of 68.2 cm, release speed of 2.45 m/s. Kinematic modeling estimates 3.3 revolutions (95% CI: [2.8, 3.7] revs). The reasoning model estimates Canada win probability at 65.0% (+5.0% shift). Projected end outcome stands at +1.25 expected points for Team 1.",
         stones: [
-          { colour: 'red', x: 0.15, y: -0.10, isThrow: false },
-          { colour: 'yellow', x: -0.65, y: 0.85, isThrow: false },
+          { colour: 'red', x: 0.15, y: -0.10 },
+          { colour: 'yellow', x: -0.65, y: 0.85 },
           { colour: 'red', x: -0.05, y: 0.08, isThrow: true, startX: 0.35, startY: 3.5 }
         ],
         json: {
@@ -344,6 +345,13 @@
         tierLabel: "Tier A · Calibrated Overhead",
         status: "accepted",
         header: "End 3 · Shot 07 (SWE vs CAN)",
+        collision: {
+          hasCollision: true,
+          tImpact: 0.65,
+          impactX: -0.25,
+          impactY: -0.15,
+          type: "takeout"
+        },
         metrics: {
           line: "18.2 cm",
           weight: "12.4 cm",
@@ -356,15 +364,34 @@
           revSub: "95% CI: [1.7, 2.5] · Kinematic",
           expScore: "-0.45 pts"
         },
-        commentary: "In End 3, Shot 7, Sweden (Yellow) delivered without hammer. Team 1 currently trails by 1 point. The sheet shows 3 Red and 2 Yellow stones in play. Delivery telemetry registered a line error of 18.2 cm, weight error of 12.4 cm, lateral curl of 42.0 cm, release speed of 3.10 m/s. Kinematic modeling estimates 2.1 revolutions (95% CI: [1.7, 2.5] revs). The reasoning model estimates Sweden win probability at 52.3% (+8.4% shift). Projected end outcome stands at -0.45 expected points for Team 1.",
+        commentary: "In End 3, Shot 7, Sweden (Yellow) executed a heavy takeout on Canada's counting stone. Delivery registered a line error of 18.2 cm, weight error of 12.4 cm, and lateral curl of 42.0 cm at 3.10 m/s. Kinetic impact successfully removed Canada (Red) from the house, while shooter Yellow rolled to the side. Kinematic modeling estimates 2.1 revolutions (95% CI: [1.7, 2.5] revs). Post-shot win probability shifted +8.4% to 52.3%.",
         stones: [
-          { colour: 'red', x: -0.25, y: -0.30, isThrow: false },
-          { colour: 'red', x: 0.70, y: 0.50, isThrow: false },
-          { colour: 'yellow', x: -0.85, y: 1.10, isThrow: false },
-          { colour: 'yellow', x: -0.20, y: -0.25, isThrow: true, startX: -0.10, startY: 3.5 }
+          // Target stone (Canada Red): Starts at (-0.25, -0.15), knocked back to (-0.85, -1.75) out of rings
+          {
+            colour: 'red',
+            x: -0.25,
+            y: -0.15,
+            isTarget: true,
+            postX: -0.85,
+            postY: -1.75
+          },
+          { colour: 'red', x: 0.70, y: 0.50 },
+          { colour: 'yellow', x: -0.85, y: 1.10 },
+          // Delivered stone (Sweden Yellow): strikes Red at contact, rolls to (-0.05, -0.25)
+          {
+            colour: 'yellow',
+            isThrow: true,
+            startX: -0.05,
+            startY: 3.5,
+            impactX: -0.25,
+            impactY: 0.13, // touching Red at distance = 0.28m
+            x: -0.05,
+            y: -0.25
+          }
         ],
         json: {
           shot_num: 7, end: 3, to_move: 2, team_1: "CAN", team_2: "SWE", score_diff: -1.0, has_hammer: 0,
+          collision_event: { type: "kinetic_takeout", impulse_mps: 2.85, target_ejected: true },
           metrics: { line_error_cm: 18.2, weight_error_cm: 12.4, curl_cm: 42.0, release_speed_mps: 3.10 },
           estimated_revolutions: { mean_revolutions: 2.1, ci_95: [1.7, 2.5], method: "kinematic_curl_decay_model" },
           win_probability: { team_1: 0.477, delta_from_prev_shot: -0.084 },
@@ -378,6 +405,13 @@
         tierLabel: "Tier B · Slanted End-Zone",
         status: "accepted",
         header: "End 5 · Shot 14 (LAT vs CAN)",
+        collision: {
+          hasCollision: true,
+          tImpact: 0.60,
+          impactX: 0.05,
+          impactY: 1.80,
+          type: "raise"
+        },
         metrics: {
           line: "26.4 cm",
           weight: "15.8 cm",
@@ -390,14 +424,33 @@
           revSub: "95% CI: [2.9, 3.9] · Kinematic",
           expScore: "+0.70 pts"
         },
-        commentary: "In End 5, Shot 14, Latvia (Yellow) delivered with hammer advantage. Team 1 currently holds a 3-point lead over Team 2. The sheet shows 2 Red and 2 Yellow stones in play. Delivery telemetry registered a line error of 26.4 cm, weight error of 15.8 cm, lateral curl of 74.5 cm, release speed of 2.35 m/s. Kinematic modeling estimates 3.4 revolutions (95% CI: [2.9, 3.9] revs). The reasoning model estimates Team 1 win probability at 61.8% (-3.1% shift). Projected end outcome stands at +0.70 expected points for Team 1.",
+        commentary: "In End 5, Shot 14, Latvia (Yellow) executed an angle raise on the center guard. Delivery registered a line error of 26.4 cm and lateral curl of 74.5 cm at 2.35 m/s. Kinetic impulse promoted the yellow guard into the 4-foot scoring circle, while the shooter settled behind. Kinematic modeling estimates 3.4 revolutions (95% CI: [2.9, 3.9] revs). Win probability stands at 61.8% for Team 1.",
         stones: [
-          { colour: 'red', x: 0.40, y: 0.20, isThrow: false },
-          { colour: 'yellow', x: 0.05, y: 1.80, isThrow: false },
-          { colour: 'yellow', x: 0.12, y: 0.45, isThrow: true, startX: -0.30, startY: 3.5 }
+          { colour: 'red', x: 0.40, y: 0.20 },
+          // Target guard (Yellow): starts at (0.05, 1.80), pushed forward to (0.10, 0.45)
+          {
+            colour: 'yellow',
+            x: 0.05,
+            y: 1.80,
+            isTarget: true,
+            postX: 0.10,
+            postY: 0.45
+          },
+          // Delivered stone: strikes guard at (0.05, 2.08), settles at (0.05, 1.70)
+          {
+            colour: 'yellow',
+            isThrow: true,
+            startX: -0.25,
+            startY: 3.5,
+            impactX: 0.05,
+            impactY: 2.08,
+            x: 0.05,
+            y: 1.70
+          }
         ],
         json: {
           shot_num: 14, end: 5, to_move: 2, team_1: "CAN", team_2: "LAT", score_diff: 3.0, has_hammer: 1,
+          collision_event: { type: "guard_raise", impulse_mps: 1.65, promoted_to_house: true },
           metrics: { line_error_cm: 26.4, weight_error_cm: 15.8, curl_cm: 74.5, release_speed_mps: 2.35 },
           estimated_revolutions: { mean_revolutions: 3.4, ci_95: [2.9, 3.9], method: "kinematic_curl_decay_model" },
           win_probability: { team_1: 0.618, delta_from_prev_shot: -0.031 },
@@ -411,6 +464,7 @@
         tierLabel: "Tier C · Uncalibrated View (Refused)",
         status: "rejected",
         header: "End 4 · Shot 09 (Sweeper Low-Angle)",
+        collision: { hasCollision: false },
         metrics: {
           line: "REFUSED",
           weight: "REFUSED",
@@ -439,7 +493,6 @@
     const canvas = document.getElementById('rinkCanvas');
     const ctx = canvas.getContext('2d');
 
-    // Drawing parameters (House center is at canvas center x, and y = 200)
     const CX = canvas.width / 2;
     const CY = 240;
     const SCALE = 70; // 1 metre = 70 pixels
@@ -466,7 +519,7 @@
       ctx.lineTo(canvas.width, CY);
       ctx.stroke();
 
-      // Hog Line (near y = 460)
+      // Hog Line
       ctx.strokeStyle = '#dc2626';
       ctx.lineWidth = 4;
       ctx.beginPath();
@@ -507,34 +560,94 @@
       ctx.arc(CX, CY, 3, 0, Math.PI * 2);
       ctx.fill();
 
-      // Draw Stones
+      // Draw Stones & Dynamic Collisions
       if (currentScenario.status === 'accepted') {
+        const t = animProgress;
+        const col = currentScenario.collision;
+
         currentScenario.stones.forEach(st => {
           let px, py;
+
           if (st.isThrow) {
-            // Animate along bezier curve
-            const t = animProgress;
             const startX = CX + (st.startX || 0) * SCALE;
             const startY = CY + (st.startY || 3.5) * SCALE;
-            const targetX = CX + st.x * SCALE;
-            const targetY = CY + st.y * SCALE;
-            
-            // Curved curl trajectory
-            const ctrlX = startX + 0.4 * SCALE;
-            const ctrlY = (startY + targetY) / 2;
 
-            px = Math.pow(1-t, 2) * startX + 2 * (1-t) * t * ctrlX + Math.pow(t, 2) * targetX;
-            py = Math.pow(1-t, 2) * startY + 2 * (1-t) * t * ctrlY + Math.pow(t, 2) * targetY;
+            if (col && col.hasCollision) {
+              const impX = CX + (st.impactX || col.impactX) * SCALE;
+              const impY = CY + (st.impactY || col.impactY) * SCALE;
+              const finalX = CX + st.x * SCALE;
+              const finalY = CY + st.y * SCALE;
 
-            // Draw faint trajectory path
-            ctx.strokeStyle = st.colour === 'red' ? 'rgba(239, 68, 68, 0.4)' : 'rgba(245, 158, 11, 0.4)';
-            ctx.setLineDash([4, 4]);
+              if (t <= col.tImpact) {
+                // Pre-impact delivery trajectory
+                const subT = t / col.tImpact;
+                const ctrlX = startX + 0.3 * SCALE;
+                const ctrlY = (startY + impY) / 2;
+                px = Math.pow(1-subT, 2) * startX + 2 * (1-subT) * subT * ctrlX + Math.pow(subT, 2) * impX;
+                py = Math.pow(1-subT, 2) * startY + 2 * (1-subT) * subT * ctrlY + Math.pow(subT, 2) * impY;
+              } else {
+                // Post-impact roll / deflection
+                const postT = (t - col.tImpact) / (1.0 - col.tImpact);
+                // Ease-out deceleration
+                const ease = Math.sin(postT * Math.PI / 2);
+                px = impX + (finalX - impX) * ease;
+                py = impY + (finalY - impY) * ease;
+              }
+
+              // Draw trajectory curve
+              ctx.strokeStyle = st.colour === 'red' ? 'rgba(239, 68, 68, 0.4)' : 'rgba(245, 158, 11, 0.4)';
+              ctx.setLineDash([4, 4]);
+              ctx.beginPath();
+              ctx.moveTo(startX, startY);
+              ctx.lineTo(impX, impY);
+              ctx.lineTo(finalX, finalY);
+              ctx.stroke();
+              ctx.setLineDash([]);
+            } else {
+              // Non-collision draw shot
+              const targetX = CX + st.x * SCALE;
+              const targetY = CY + st.y * SCALE;
+              const ctrlX = startX + 0.4 * SCALE;
+              const ctrlY = (startY + targetY) / 2;
+              px = Math.pow(1-t, 2) * startX + 2 * (1-t) * t * ctrlX + Math.pow(t, 2) * targetX;
+              py = Math.pow(1-t, 2) * startY + 2 * (1-t) * t * ctrlY + Math.pow(t, 2) * targetY;
+
+              ctx.strokeStyle = st.colour === 'red' ? 'rgba(239, 68, 68, 0.4)' : 'rgba(245, 158, 11, 0.4)';
+              ctx.setLineDash([4, 4]);
+              ctx.beginPath();
+              ctx.moveTo(startX, startY);
+              ctx.quadraticCurveTo(ctrlX, ctrlY, targetX, targetY);
+              ctx.stroke();
+              ctx.setLineDash([]);
+            }
+          } else if (st.isTarget && col && col.hasCollision) {
+            // Target stone: struck and deflected
+            const preX = CX + st.x * SCALE;
+            const preY = CY + st.y * SCALE;
+            const postX = CX + (st.postX || st.x) * SCALE;
+            const postY = CY + (st.postY || st.y) * SCALE;
+
+            if (t <= col.tImpact) {
+              px = preX;
+              py = preY;
+            } else {
+              const postT = (t - col.tImpact) / (1.0 - col.tImpact);
+              // Elastic impulse slide
+              const ease = Math.sin(postT * Math.PI / 2);
+              px = preX + (postX - preX) * ease;
+              py = preY + (postY - preY) * ease;
+            }
+
+            // Deflection direction trail
+            ctx.strokeStyle = 'rgba(239, 68, 68, 0.5)';
+            ctx.setLineDash([2, 3]);
             ctx.beginPath();
-            ctx.moveTo(startX, startY);
-            ctx.quadraticCurveTo(ctrlX, ctrlY, targetX, targetY);
+            ctx.moveTo(preX, preY);
+            ctx.lineTo(postX, postY);
             ctx.stroke();
             ctx.setLineDash([]);
           } else {
+            // Unaffected stationary stone
             px = CX + st.x * SCALE;
             py = CY + st.y * SCALE;
           }
@@ -554,6 +667,23 @@
           ctx.arc(px, py, STONE_R * 0.55, 0, Math.PI * 2);
           ctx.fill();
         });
+
+        // Draw impact shockwave ripple at collision instant
+        if (col && col.hasCollision && t >= col.tImpact - 0.02 && t <= col.tImpact + 0.18) {
+          const ripT = (t - (col.tImpact - 0.02)) / 0.20;
+          const r = Math.max(STONE_R, ripT * 40);
+          ctx.save();
+          ctx.strokeStyle = `rgba(245, 158, 11, ${1.0 - ripT})`;
+          ctx.lineWidth = 3;
+          ctx.beginPath();
+          ctx.arc(CX + col.impactX * SCALE, CY + col.impactY * SCALE, r, 0, Math.PI * 2);
+          ctx.stroke();
+
+          ctx.fillStyle = '#f59e0b';
+          ctx.font = 'bold 11px sans-serif';
+          ctx.fillText(`💥 KINETIC IMPACT (${col.type.toUpperCase()})`, CX + col.impactX * SCALE + 20, CY + col.impactY * SCALE - 10);
+          ctx.restore();
+        }
       }
     }
 
