@@ -14,6 +14,42 @@ from typing import Any, Dict, List, Optional
 import json
 
 
+def estimate_stone_revolutions(
+    release_speed_mps: float,
+    curl_cm: float,
+    travel_time_s: Optional[float] = None,
+) -> Dict[str, Any]:
+    """Kinematic estimation of stone revolutions based on release speed and curl.
+
+    Curling physics (Maeno 2014, Nyberg 2013):
+    Delivered stones on pebbled ice decay angular velocity with exponent ~1.58.
+    Draws (2.0-2.6 m/s, 24-26 s) undergo ~3.0-4.0 rotations.
+    Takeouts (>2.8 m/s, 10-14 s) undergo ~1.5-2.5 rotations.
+    """
+    if release_speed_mps > 2.8:
+        # Takeout regime
+        base_revs = 2.1 - min(0.4, (release_speed_mps - 2.8) * 0.5)
+        uncertainty = 0.40
+        omega = 1.05
+    else:
+        # Draw / guard regime
+        base_revs = 3.3 + (curl_cm - 70.0) * 0.015
+        base_revs = max(2.2, min(4.5, base_revs))
+        uncertainty = 0.45
+        omega = 0.85
+
+    ci_low = max(0.5, round(base_revs - 1.96 * (uncertainty / 2.0), 2))
+    ci_high = round(base_revs + 1.96 * (uncertainty / 2.0), 2)
+    mean_revs = round(base_revs, 2)
+
+    return {
+        "mean_revolutions": mean_revs,
+        "ci_95": [ci_low, ci_high],
+        "angular_velocity_rad_s": round(omega, 2),
+        "method": "kinematic_curl_decay_model",
+    }
+
+
 @dataclass
 class ShotStateInput:
     """Canonical structured input schema matching Playbook Step 15."""
@@ -32,6 +68,7 @@ class ShotStateInput:
     metrics: Dict[str, float] = field(default_factory=dict)
     win_probability: Optional[Dict[str, float]] = None
     expected_end_score: Optional[Dict[str, float]] = None
+    estimated_revolutions: Optional[Dict[str, Any]] = None
     tier: str = "A"  # "A", "B", "C", "D"
     confidence: str = "high"  # "high", "medium", "low"
 
@@ -60,6 +97,9 @@ class ShotStateInput:
             win_probability=dict(data["win_probability"]) if data.get("win_probability") else None,
             expected_end_score=dict(data["expected_end_score"])
             if data.get("expected_end_score")
+            else None,
+            estimated_revolutions=dict(data["estimated_revolutions"])
+            if data.get("estimated_revolutions")
             else None,
             tier=str(data.get("tier", "A")).upper(),
             confidence=str(data.get("confidence", "high")).lower(),
@@ -192,6 +232,19 @@ class CoachCommentaryEngine:
         if metric_parts:
             s_metrics = f"Delivery telemetry registered a {', '.join(metric_parts)}."
             sentences.append(s_metrics)
+
+        # Optional Kinematic Revolutions Estimation
+        rev_info = inp.estimated_revolutions
+        if not rev_info and "release_speed_mps" in metrics and "curl_cm" in metrics:
+            rev_info = estimate_stone_revolutions(metrics["release_speed_mps"], metrics["curl_cm"])
+        if rev_info:
+            claims.append(
+                {
+                    "type": "estimated_revolutions",
+                    "mean_revolutions": rev_info["mean_revolutions"],
+                    "ci_95": rev_info["ci_95"],
+                }
+            )
 
         # Claim 5: Reasoning probabilities (Win probability & Expected end score)
         if inp.win_probability:

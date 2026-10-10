@@ -272,12 +272,22 @@
         <div class="metric-box">
           <div class="metric-label">Observed Curl</div>
           <div class="metric-val" id="curlVal">68.2 cm</div>
-          <div class="metric-sub">Turn: In-Turn (CW)</div>
+          <div class="metric-sub" id="turnSub">Turn: In-Turn (CW)</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">Est. Revolutions</div>
+          <div class="metric-val green" id="revVal">3.3 revs</div>
+          <div class="metric-sub" id="revSub">95% CI: [2.8, 3.7] · Kinematic</div>
         </div>
         <div class="metric-box">
           <div class="metric-label">Win Probability</div>
           <div class="metric-val cyan" id="wpVal">65.0%</div>
           <div class="metric-sub" id="wpSub">+5.0% post-shot shift</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">Expected Score</div>
+          <div class="metric-val" id="expScoreVal">+1.25 pts</div>
+          <div class="metric-sub">End margin projection</div>
         </div>
       </div>
 
@@ -301,8 +311,19 @@
         tierLabel: "Tier A · Calibrated Overhead",
         status: "accepted",
         header: "End 1 · Shot 11 (CAN vs SWE)",
-        metrics: { line: "14.5 cm", weight: "8.0 cm", curl: "68.2 cm", speed: "2.45 m/s", wp: "65.0%", wpSub: "+5.0% post-shot shift" },
-        commentary: "In End 1, Shot 11, Canada (Red) delivered with hammer advantage. Canada currently holds a 2-point lead over Sweden. The sheet shows 2 Red and 1 Yellow stones in play. Delivery telemetry registered a line error of 14.5 cm, weight error of 8.0 cm, lateral curl of 68.2 cm, release speed of 2.45 m/s. The reasoning model estimates Canada win probability at 65.0% (+5.0% shift). Projected end outcome stands at +1.25 expected points for Team 1.",
+        metrics: {
+          line: "14.5 cm",
+          weight: "8.0 cm",
+          curl: "68.2 cm",
+          turn: "In-Turn (CW)",
+          speed: "2.45 m/s",
+          wp: "65.0%",
+          wpSub: "+5.0% post-shot shift",
+          revs: "3.3 revs",
+          revSub: "95% CI: [2.8, 3.7] · Kinematic",
+          expScore: "+1.25 pts"
+        },
+        commentary: "In End 1, Shot 11, Canada (Red) delivered with hammer advantage. Canada currently holds a 2-point lead over Sweden. The sheet shows 2 Red and 1 Yellow stones in play. Delivery telemetry registered a line error of 14.5 cm, weight error of 8.0 cm, lateral curl of 68.2 cm, release speed of 2.45 m/s. Kinematic modeling estimates 3.3 revolutions (95% CI: [2.8, 3.7] revs). The reasoning model estimates Canada win probability at 65.0% (+5.0% shift). Projected end outcome stands at +1.25 expected points for Team 1.",
         stones: [
           { colour: 'red', x: 0.15, y: -0.10, isThrow: false },
           { colour: 'yellow', x: -0.65, y: 0.85, isThrow: false },
@@ -311,6 +332,7 @@
         json: {
           shot_num: 11, end: 1, to_move: 1, team_1: "CAN", team_2: "SWE", score_diff: 2.0, has_hammer: 1,
           metrics: { line_error_cm: 14.5, weight_error_cm: 8.0, curl_cm: 68.2, release_speed_mps: 2.45 },
+          estimated_revolutions: { mean_revolutions: 3.3, ci_95: [2.8, 3.7], method: "kinematic_curl_decay_model" },
           win_probability: { team_1: 0.650, delta_from_prev_shot: 0.050 },
           expected_end_score: { expected_points: 1.25 },
           tier: "A", confidence: "high"
@@ -322,8 +344,19 @@
         tierLabel: "Tier A · Calibrated Overhead",
         status: "accepted",
         header: "End 3 · Shot 07 (SWE vs CAN)",
-        metrics: { line: "18.2 cm", weight: "12.4 cm", curl: "42.0 cm", speed: "3.10 m/s", wp: "52.3%", wpSub: "+8.4% post-shot shift" },
-        commentary: "In End 3, Shot 7, Sweden (Yellow) delivered without hammer. Team 1 currently trails by 1 point. The sheet shows 3 Red and 2 Yellow stones in play. Delivery telemetry registered a line error of 18.2 cm, weight error of 12.4 cm, lateral curl of 42.0 cm, release speed of 3.10 m/s. The reasoning model estimates Sweden win probability at 52.3% (+8.4% shift). Projected end outcome stands at -0.45 expected points for Team 1.",
+        metrics: {
+          line: "18.2 cm",
+          weight: "12.4 cm",
+          curl: "42.0 cm",
+          turn: "In-Turn (CW)",
+          speed: "3.10 m/s",
+          wp: "52.3%",
+          wpSub: "+8.4% post-shot shift",
+          revs: "2.1 revs",
+          revSub: "95% CI: [1.7, 2.5] · Kinematic",
+          expScore: "-0.45 pts"
+        },
+        commentary: "In End 3, Shot 7, Sweden (Yellow) delivered without hammer. Team 1 currently trails by 1 point. The sheet shows 3 Red and 2 Yellow stones in play. Delivery telemetry registered a line error of 18.2 cm, weight error of 12.4 cm, lateral curl of 42.0 cm, release speed of 3.10 m/s. Kinematic modeling estimates 2.1 revolutions (95% CI: [1.7, 2.5] revs). The reasoning model estimates Sweden win probability at 52.3% (+8.4% shift). Projected end outcome stands at -0.45 expected points for Team 1.",
         stones: [
           { colour: 'red', x: -0.25, y: -0.30, isThrow: false },
           { colour: 'red', x: 0.70, y: 0.50, isThrow: false },
@@ -333,6 +366,7 @@
         json: {
           shot_num: 7, end: 3, to_move: 2, team_1: "CAN", team_2: "SWE", score_diff: -1.0, has_hammer: 0,
           metrics: { line_error_cm: 18.2, weight_error_cm: 12.4, curl_cm: 42.0, release_speed_mps: 3.10 },
+          estimated_revolutions: { mean_revolutions: 2.1, ci_95: [1.7, 2.5], method: "kinematic_curl_decay_model" },
           win_probability: { team_1: 0.477, delta_from_prev_shot: -0.084 },
           expected_end_score: { expected_points: -0.45 },
           tier: "A", confidence: "high"
@@ -344,8 +378,19 @@
         tierLabel: "Tier B · Slanted End-Zone",
         status: "accepted",
         header: "End 5 · Shot 14 (LAT vs CAN)",
-        metrics: { line: "26.4 cm", weight: "15.8 cm", curl: "74.5 cm", speed: "2.35 m/s", wp: "38.2%", wpSub: "-3.1% shift" },
-        commentary: "In End 5, Shot 14, Latvia (Yellow) delivered with hammer advantage. Team 1 currently holds a 3-point lead over Team 2. The sheet shows 2 Red and 2 Yellow stones in play. Delivery telemetry registered a line error of 26.4 cm, weight error of 15.8 cm, lateral curl of 74.5 cm, release speed of 2.35 m/s. The reasoning model estimates Team 1 win probability at 61.8% (-3.1% shift). Projected end outcome stands at +0.70 expected points for Team 1.",
+        metrics: {
+          line: "26.4 cm",
+          weight: "15.8 cm",
+          curl: "74.5 cm",
+          turn: "Out-Turn (CCW)",
+          speed: "2.35 m/s",
+          wp: "38.2%",
+          wpSub: "-3.1% shift",
+          revs: "3.4 revs",
+          revSub: "95% CI: [2.9, 3.9] · Kinematic",
+          expScore: "+0.70 pts"
+        },
+        commentary: "In End 5, Shot 14, Latvia (Yellow) delivered with hammer advantage. Team 1 currently holds a 3-point lead over Team 2. The sheet shows 2 Red and 2 Yellow stones in play. Delivery telemetry registered a line error of 26.4 cm, weight error of 15.8 cm, lateral curl of 74.5 cm, release speed of 2.35 m/s. Kinematic modeling estimates 3.4 revolutions (95% CI: [2.9, 3.9] revs). The reasoning model estimates Team 1 win probability at 61.8% (-3.1% shift). Projected end outcome stands at +0.70 expected points for Team 1.",
         stones: [
           { colour: 'red', x: 0.40, y: 0.20, isThrow: false },
           { colour: 'yellow', x: 0.05, y: 1.80, isThrow: false },
@@ -354,6 +399,7 @@
         json: {
           shot_num: 14, end: 5, to_move: 2, team_1: "CAN", team_2: "LAT", score_diff: 3.0, has_hammer: 1,
           metrics: { line_error_cm: 26.4, weight_error_cm: 15.8, curl_cm: 74.5, release_speed_mps: 2.35 },
+          estimated_revolutions: { mean_revolutions: 3.4, ci_95: [2.9, 3.9], method: "kinematic_curl_decay_model" },
           win_probability: { team_1: 0.618, delta_from_prev_shot: -0.031 },
           expected_end_score: { expected_points: 0.70 },
           tier: "B", confidence: "medium"
@@ -365,7 +411,18 @@
         tierLabel: "Tier C · Uncalibrated View (Refused)",
         status: "rejected",
         header: "End 4 · Shot 09 (Sweeper Low-Angle)",
-        metrics: { line: "REFUSED", weight: "REFUSED", curl: "REFUSED", speed: "REFUSED", wp: "N/A", wpSub: "Abstaining by design" },
+        metrics: {
+          line: "REFUSED",
+          weight: "REFUSED",
+          curl: "REFUSED",
+          turn: "REFUSED",
+          speed: "REFUSED",
+          wp: "N/A",
+          wpSub: "Abstaining by design",
+          revs: "REFUSED",
+          revSub: "Uncalibrated optics",
+          expScore: "REFUSED"
+        },
         commentary: "OUTSIDE CONTRACT: Camera tier C with low tracking confidence. Measurement refused to prevent uncalibrated inference. No coach commentary produced.",
         stones: [],
         json: {
@@ -540,8 +597,12 @@
       document.getElementById('lineError').textContent = currentScenario.metrics.line;
       document.getElementById('weightError').textContent = currentScenario.metrics.weight;
       document.getElementById('curlVal').textContent = currentScenario.metrics.curl;
+      document.getElementById('turnSub').textContent = "Turn: " + (currentScenario.metrics.turn || "In-Turn (CW)");
+      document.getElementById('revVal').textContent = currentScenario.metrics.revs;
+      document.getElementById('revSub').textContent = currentScenario.metrics.revSub;
       document.getElementById('wpVal').textContent = currentScenario.metrics.wp;
       document.getElementById('wpSub').textContent = currentScenario.metrics.wpSub;
+      document.getElementById('expScoreVal').textContent = currentScenario.metrics.expScore;
 
       // Commentary
       const cBox = document.getElementById('commentaryText');
