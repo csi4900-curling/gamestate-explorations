@@ -1,0 +1,154 @@
+{
+  "status": "development_gap_candidate_score",
+  "source_id": "qn9tHfcimlQ",
+  "source_sha256": "c5254bb9103e32c6beac74cf269fc7bcec8ce2c2a710a7d4600c7ddb951f160e",
+  "raw_sha256": "8f4fb11d8cc6cd4babc43feaca1197184a7bd6d1624e35071a757765d304c5b4",
+  "screen_sha256": "3999c6c660f5d671ffe2c3ca35229f38749b4b401ab7e3aa857c056d2e35c667",
+  "scorer_sha256": "f5a76cc3ea8b37ff13d90fc919f7192753276873b603ef01d4ef5b6f743307f6",
+  "runner_sha256": "485674fddd10b7460266baf172514fcfb0aeca7a35a3099240a7ee1bbaf35b18",
+  "per_gap": [
+    {
+      "gap_id": "G01",
+      "reference_path": "validation/curlobserver-learned-probe/china-transfer/source-only-reference.json",
+      "reference_sha256": "ff0f9078b1ac7f6099400b9c44ccdf9dd1316f7c82ae21ffea1168d15a863c5d",
+      "scored_interval_s": [
+        3600,
+        3900
+      ],
+      "raw": {
+        "reference_count": 1,
+        "prediction_count": 41,
+        "true_positives": 1,
+        "false_positives": 40,
+        "false_negatives": 0,
+        "precision": 0.024390243902439025,
+        "recall": 1.0,
+        "f1": 0.047619047619047616,
+        "colour_errors_among_matches": 0,
+        "colour_aware_true_positives": 1,
+        "colour_aware_false_positives": 40,
+        "colour_aware_false_negatives": 0,
+        "colour_aware_precision": 0.024390243902439025,
+        "colour_aware_recall": 1.0,
+        "colour_aware_f1": 0.047619047619047616,
+        "matches": [
+          {
+            "reference_id": "CH-G01-Y01",
+            "prediction_id": "G01-Y04",
+            "colour_match": true
+          }
+        ],
+        "missed_reference_ids": [],
+        "extra_prediction_ids": [
+          "G01-R02",
+          "G01-R01",
+          "G01-Y02",
+          "G01-Y01",
+          "G01-R03",
+          "G01-Y03",
+          "G01-R04",
+          "G01-R22",
+          "G01-Y06",
+          "G01-Y07",
+          "G01-R07",
+          "G01-R08",
+          "G01-R06",
+          "G01-R05",
+          "G01-R09",
+          "G01-R21",
+          "G01-R11",
+          "G01-R17",
+          "G01-Y08",
+          "G01-Y05",
+          "G01-R18",
+          "G01-R29",
+          "G01-R31",
+          "G01-R16",
+          "G01-R19",
+          "G01-R25",
+          "G01-Y09",
+          "G01-R24",
+          "G01-R23",
+          "G01-R30",
+          "G01-R32",
+          "G01-R27",
+          "G01-R14",
+          "G01-R26",
+          "G01-R12",
+          "G01-R10",
+          "G01-R13",
+          "G01-R20",
+          "G01-R15",
+          "G01-R28"
+        ],
+        "scoring_tolerance_s": 0.0,
+        "prediction_time_mode": "point",
+        "max_prediction_interval_s": null,
+        "timing_interpretation": "Passage detection within a reference interval; no release-time error inferred."
+      },
+      "screen": {
+        "reference_count": 1,
+        "prediction_count": 2,
+        "true_positives": 1,
+        "false_positives": 1,
+        "false_negatives": 0,
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666,
+        "colour_errors_among_matches": 0,
+        "colour_aware_true_positives": 1,
+        "colour_aware_false_positives": 1,
+        "colour_aware_false_negatives": 0,
+        "colour_aware_precision": 0.5,
+        "colour_aware_recall": 1.0,
+        "colour_aware_f1": 0.6666666666666666,
+        "matches": [
+          {
+            "reference_id": "CH-G01-Y01",
+            "prediction_id": "G01-Y04",
+            "colour_match": true
+          }
+        ],
+        "missed_reference_ids": [],
+        "extra_prediction_ids": [
+          "G01-Y01"
+        ],
+        "scoring_tolerance_s": 0.0,
+        "prediction_time_mode": "point",
+        "max_prediction_interval_s": null,
+        "timing_interpretation": "Passage detection within a reference interval; no release-time error inferred."
+      }
+    }
+  ],
+  "totals": {
+    "raw": {
+      "true_positives": 1,
+      "false_positives": 40,
+      "false_negatives": 0,
+      "precision": 0.024390243902439025,
+      "recall": 1.0,
+      "f1": 0.047619047619047616,
+      "colour_aware_true_positives": 1,
+      "colour_aware_false_positives": 40,
+      "colour_aware_false_negatives": 0,
+      "colour_aware_f1": 0.047619047619047616
+    },
+    "screen": {
+      "true_positives": 1,
+      "false_positives": 1,
+      "false_negatives": 0,
+      "precision": 0.5,
+      "recall": 1.0,
+      "f1": 0.6666666666666666,
+      "colour_aware_true_positives": 1,
+      "colour_aware_false_positives": 1,
+      "colour_aware_false_negatives": 0,
+      "colour_aware_f1": 0.6666666666666666
+    }
+  },
+  "limitations": [
+    "References are coarse agent-authored development windows, not independent validation.",
+    "Only declared interior gap subintervals are scored; boundary portions are excluded.",
+    "Candidate F1 is not confirmed throw-event F1 or a complete-recording score."
+  ]
+}

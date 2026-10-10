@@ -1,0 +1,57 @@
+{
+  "status": "postreview_two_checkpoint_cross_resolution_alignment_not_global_sync_proof",
+  "full_source_sha256": "2e2b84bb2d9dffa497ee850ddbeaf0d5cae0d697377b6eee6a1ef481f449f3da",
+  "excerpt_sha256": "eaa88f73b56ea982808468a642ad5481428e758881f41cfaf812be58f949a533",
+  "runner_sha256": "b24ae91b31188af9dae229adae1da80bb33edb558453859fa3d13358253829cb",
+  "full_source_frame_size": [
+    640,
+    360
+  ],
+  "excerpt_frame_size": [
+    1920,
+    1080
+  ],
+  "excerpt_source_offset_s": 1650,
+  "search_offsets_frames": [
+    -30,
+    30
+  ],
+  "checkpoints": [
+    {
+      "source_time_s": 1759.5,
+      "best": {
+        "offset_frames": 0,
+        "mean_absolute_gray_difference": 2.3356
+      },
+      "second_best": {
+        "offset_frames": 1,
+        "mean_absolute_gray_difference": 3.1428
+      },
+      "zero_offset": {
+        "offset_frames": 0,
+        "mean_absolute_gray_difference": 2.3356
+      }
+    },
+    {
+      "source_time_s": 1779.5,
+      "best": {
+        "offset_frames": 0,
+        "mean_absolute_gray_difference": 2.4616
+      },
+      "second_best": {
+        "offset_frames": 1,
+        "mean_absolute_gray_difference": 3.0781
+      },
+      "zero_offset": {
+        "offset_frames": 0,
+        "mean_absolute_gray_difference": 2.4616
+      }
+    }
+  ],
+  "zero_offset_best_at_all_checkpoints": true,
+  "limitations": [
+    "Only two checkpoints near the selected event and post-event board are tested.",
+    "Similar decoded frames support timeline correspondence, not physical object identity.",
+    "Other times in the full source may have separate edit or sync behavior."
+  ]
+}

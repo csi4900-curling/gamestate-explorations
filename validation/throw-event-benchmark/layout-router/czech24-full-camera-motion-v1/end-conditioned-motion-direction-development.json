@@ -1,0 +1,100 @@
+{
+  "status": "within_marker_direction_development_audit_not_throw_classification",
+  "source_sha256": "e63c9b063b5b11ad5173083dffe974d909c78e5d01312740b87bccc006402013",
+  "input_sha256": {
+    "inventory": "3640d88fd8a1fc1818f1b48c899a08a96df7f9c951e67a5b753fc6e0d9e1c49f",
+    "raw": "6742154c02b99c1c3c9b28b11d96a981959264d2cd5082562f09b6ec839048fe"
+  },
+  "runner_sha256": "dcb8e7ab4a835923eff71c9879fb008da6872be5cc8aee2f6ca95bfdaa3ede6d",
+  "rows": [
+    {
+      "end_marker": 1,
+      "stable_interval_s": [
+        120,
+        810
+      ],
+      "context_confirmed_candidate_count": 13,
+      "direction_counts": {
+        "negative_y": 12,
+        "positive_y": 1
+      },
+      "dominant_direction": "negative_y",
+      "opposite_direction_candidate_ids": [
+        "S18"
+      ]
+    },
+    {
+      "end_marker": 2,
+      "stable_interval_s": [
+        830,
+        1940
+      ],
+      "context_confirmed_candidate_count": 16,
+      "direction_counts": {
+        "positive_y": 16
+      },
+      "dominant_direction": "positive_y",
+      "opposite_direction_candidate_ids": []
+    },
+    {
+      "end_marker": 3,
+      "stable_interval_s": [
+        1970,
+        3090
+      ],
+      "context_confirmed_candidate_count": 15,
+      "direction_counts": {
+        "negative_y": 15
+      },
+      "dominant_direction": "negative_y",
+      "opposite_direction_candidate_ids": []
+    },
+    {
+      "end_marker": 4,
+      "stable_interval_s": [
+        3120,
+        4040
+      ],
+      "context_confirmed_candidate_count": 15,
+      "direction_counts": {
+        "positive_y": 15
+      },
+      "dominant_direction": "positive_y",
+      "opposite_direction_candidate_ids": []
+    },
+    {
+      "end_marker": 5,
+      "stable_interval_s": [
+        4060,
+        5260
+      ],
+      "context_confirmed_candidate_count": 17,
+      "direction_counts": {
+        "negative_y": 16,
+        "positive_y": 1
+      },
+      "dominant_direction": "negative_y",
+      "opposite_direction_candidate_ids": [
+        "S103"
+      ]
+    },
+    {
+      "end_marker": 6,
+      "stable_interval_s": [
+        5320,
+        6330
+      ],
+      "context_confirmed_candidate_count": 15,
+      "direction_counts": {
+        "positive_y": 15
+      },
+      "dominant_direction": "positive_y",
+      "opposite_direction_candidate_ids": []
+    }
+  ],
+  "limitations": [
+    "Dominance is calculated from context-confirmed candidates, which include false paths and may omit throws.",
+    "The stable broadcast end marker is intermittent and does not define exact physical end boundaries.",
+    "A genuine collision, replay, camera reversal, or other scene motion could contradict the dominant image direction; this is not an automatic event veto."
+  ]
+}

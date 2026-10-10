@@ -1,0 +1,128 @@
+{
+  "status": "postscore_development_shot_evidence_fusion_not_full_event_detection",
+  "source_sha256": "49429abdd3796e8240e66c201d37e94e71a7bb6225890b2492bea26d2f70d560",
+  "source_interval_s": [
+    1200,
+    1500
+  ],
+  "origins_sha256": "1d27adcca43c6c566e3cbe6d2a32c570fda26256c7f8a2556e196431fb4d74fb",
+  "two_shot_sha256": "8d64898241f0541f01ad8ea9f806b7ee9d1b211ef1d1c93b1608562f6b4764db",
+  "counter_alignment_sha256": "4cbd012cc0c2e022b9ee6db26e78446942ab6f9ed64aad384205e1e2db3c0681",
+  "fusion_code_sha256": "58c59a381d7cd412329d48f05d5e50c40561aca2406d47d4027bbbd2b72cfe85",
+  "runner_sha256": "d01b2de68e2ada9857523c1679cbebc60cac6d4f2ab87cf22d1278af155cf445",
+  "candidate_count": 6,
+  "resolved_shot_score": {
+    "tp": 6,
+    "fp": 0,
+    "fn": 0,
+    "tn": 17,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+  },
+  "events": [
+    {
+      "shot_id": "S02",
+      "delivery_window_s": [
+        1201.8,
+        1221.0
+      ],
+      "origin_probability": 0.8418227515898974,
+      "evidence_sources": [
+        "visual_origin_and_adjacent_motion",
+        "delayed_counter_and_adjacent_motion"
+      ],
+      "counter_id": "B01",
+      "colour": "yellow",
+      "colour_status": "resolved",
+      "status": "candidate"
+    },
+    {
+      "shot_id": "S06",
+      "delivery_window_s": [
+        1242.6,
+        1273.0
+      ],
+      "origin_probability": 0.9784775689621715,
+      "evidence_sources": [
+        "visual_origin_and_adjacent_motion",
+        "delayed_counter_and_adjacent_motion"
+      ],
+      "counter_id": "B02",
+      "colour": "red",
+      "colour_status": "resolved",
+      "status": "candidate"
+    },
+    {
+      "shot_id": "S08",
+      "delivery_window_s": [
+        1296.2,
+        1313.6
+      ],
+      "origin_probability": 0.9974386904562034,
+      "evidence_sources": [
+        "visual_origin_and_adjacent_motion",
+        "delayed_counter_and_adjacent_motion"
+      ],
+      "counter_id": "B03",
+      "colour": "yellow",
+      "colour_status": "resolved",
+      "status": "candidate"
+    },
+    {
+      "shot_id": "S13",
+      "delivery_window_s": [
+        1350.4,
+        1364.8
+      ],
+      "origin_probability": 0.9848207430280806,
+      "evidence_sources": [
+        "visual_origin_and_adjacent_motion",
+        "delayed_counter_and_adjacent_motion"
+      ],
+      "counter_id": "B04",
+      "colour": "red",
+      "colour_status": "resolved",
+      "status": "candidate"
+    },
+    {
+      "shot_id": "S17",
+      "delivery_window_s": [
+        1389.6,
+        1413.8
+      ],
+      "origin_probability": 0.9999991885098695,
+      "evidence_sources": [
+        "visual_origin_and_adjacent_motion"
+      ],
+      "counter_id": null,
+      "colour": "yellow",
+      "colour_status": "resolved",
+      "status": "candidate"
+    },
+    {
+      "shot_id": "S21",
+      "delivery_window_s": [
+        1445.4,
+        1466.8
+      ],
+      "origin_probability": 0.9473821988100741,
+      "evidence_sources": [
+        "visual_origin_and_adjacent_motion",
+        "delayed_counter_and_adjacent_motion"
+      ],
+      "counter_id": "B05",
+      "colour": "red",
+      "colour_status": "resolved",
+      "status": "candidate"
+    }
+  ],
+  "conflicts": [],
+  "unassociated_counter_events": [],
+  "limitations": [
+    "Postscore development fusion on exposed intervals; selection and rescue rules were shaped by prior errors.",
+    "Agent-authored shot labels are not exhaustive independent throw-event ground truth.",
+    "Delivery windows bound broadcast shots, not physical release or full stone travel.",
+    "Counter changes can be unreadable, delayed, or absent; unassociated changes remain unresolved."
+  ]
+}

@@ -1,0 +1,158 @@
+{
+  "status": "development_sequence_consistency_audit_not_throw_truth",
+  "source_id": "PXGfMeiTKMA",
+  "source_sha256": "2e2b84bb2d9dffa497ee850ddbeaf0d5cae0d697377b6eee6a1ef481f449f3da",
+  "source_interval_s": [
+    0.0,
+    8433.0
+  ],
+  "timeline_sha256": "0e7cc1110e1f1a9c43cd0f8fe05b9aefa3b8a437def873853cebb844bab1da2b",
+  "audit_code_sha256": "868fea62cec1f1a955b32c581190979ad78f73f9997b515231d2565259bb0edb",
+  "runner_sha256": "ca64ac789c4646c1b95c8a27a3d5bbe9f3805001aa3bbfccdff2d00cfe944b61",
+  "same_colour_adjacent_count": 12,
+  "nearby_review_priority_count": 2,
+  "rows": [
+    {
+      "previous_event_id": "R01-S03",
+      "current_event_id": "R01-S06",
+      "colour": "yellow",
+      "previous_time_s": 204.686,
+      "current_time_s": 293.966,
+      "separation_s": 89.28,
+      "same_supported_run": true,
+      "crossed_coverage_gaps_s": [],
+      "nearby_review_priority": false
+    },
+    {
+      "previous_event_id": "R01-S10",
+      "current_event_id": "R01-S11",
+      "colour": "yellow",
+      "previous_time_s": 521.503,
+      "current_time_s": 625.198,
+      "separation_s": 103.695,
+      "same_supported_run": true,
+      "crossed_coverage_gaps_s": [],
+      "nearby_review_priority": false
+    },
+    {
+      "previous_event_id": "R01-S12",
+      "current_event_id": "R01-S14",
+      "colour": "red",
+      "previous_time_s": 667.426,
+      "current_time_s": 678.654,
+      "separation_s": 11.228,
+      "same_supported_run": true,
+      "crossed_coverage_gaps_s": [],
+      "nearby_review_priority": true
+    },
+    {
+      "previous_event_id": "R01-S18",
+      "current_event_id": "R01-S23",
+      "colour": "red",
+      "previous_time_s": 857.08,
+      "current_time_s": 972.869,
+      "separation_s": 115.789,
+      "same_supported_run": true,
+      "crossed_coverage_gaps_s": [],
+      "nearby_review_priority": false
+    },
+    {
+      "previous_event_id": "R01-S40",
+      "current_event_id": "R01-S48",
+      "colour": "yellow",
+      "previous_time_s": 1943.219,
+      "current_time_s": 2057.227,
+      "separation_s": 114.008,
+      "same_supported_run": true,
+      "crossed_coverage_gaps_s": [],
+      "nearby_review_priority": false
+    },
+    {
+      "previous_event_id": "R01-S89",
+      "current_event_id": "R02-S02",
+      "colour": "yellow",
+      "previous_time_s": 3795.767,
+      "current_time_s": 4243.876,
+      "separation_s": 448.109,
+      "same_supported_run": false,
+      "crossed_coverage_gaps_s": [
+        [
+          3870.0,
+          3960.0
+        ]
+      ],
+      "nearby_review_priority": false
+    },
+    {
+      "previous_event_id": "R02-S22",
+      "current_event_id": "R02-S29",
+      "colour": "red",
+      "previous_time_s": 5040.034,
+      "current_time_s": 5161.117,
+      "separation_s": 121.083,
+      "same_supported_run": true,
+      "crossed_coverage_gaps_s": [],
+      "nearby_review_priority": false
+    },
+    {
+      "previous_event_id": "R02-S56",
+      "current_event_id": "R02-S61",
+      "colour": "red",
+      "previous_time_s": 6176.864,
+      "current_time_s": 6261.075,
+      "separation_s": 84.211,
+      "same_supported_run": true,
+      "crossed_coverage_gaps_s": [],
+      "nearby_review_priority": false
+    },
+    {
+      "previous_event_id": "R02-S61",
+      "current_event_id": "R02-S62",
+      "colour": "red",
+      "previous_time_s": 6261.075,
+      "current_time_s": 6280.083,
+      "separation_s": 19.008,
+      "same_supported_run": true,
+      "crossed_coverage_gaps_s": [],
+      "nearby_review_priority": true
+    },
+    {
+      "previous_event_id": "R02-S83",
+      "current_event_id": "R02-S87",
+      "colour": "red",
+      "previous_time_s": 7281.458,
+      "current_time_s": 7368.736,
+      "separation_s": 87.278,
+      "same_supported_run": true,
+      "crossed_coverage_gaps_s": [],
+      "nearby_review_priority": false
+    },
+    {
+      "previous_event_id": "R02-S88",
+      "current_event_id": "R02-S90",
+      "colour": "yellow",
+      "previous_time_s": 7389.005,
+      "current_time_s": 7445.55,
+      "separation_s": 56.545,
+      "same_supported_run": true,
+      "crossed_coverage_gaps_s": [],
+      "nearby_review_priority": false
+    },
+    {
+      "previous_event_id": "R02-S98",
+      "current_event_id": "R02-S101",
+      "colour": "red",
+      "previous_time_s": 7776.793,
+      "current_time_s": 7844.5,
+      "separation_s": 67.707,
+      "same_supported_run": true,
+      "crossed_coverage_gaps_s": [],
+      "nearby_review_priority": false
+    }
+  ],
+  "limitations": [
+    "Teams alternate within an end, but end boundaries and rare redeliveries are not verified here.",
+    "A same-colour pair can represent an extra event, missed opponent throw, colour error or new end.",
+    "This audit never inserts, removes or recolours event predictions."
+  ]
+}

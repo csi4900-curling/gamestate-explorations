@@ -1,0 +1,72 @@
+{
+  "status": "postscan_prediction_selected_source_sheet_not_independent_throw_labels",
+  "source_sha256": "e63c9b063b5b11ad5173083dffe974d909c78e5d01312740b87bccc006402013",
+  "right_tail_sha256": "9a74cdb6966f8dc435ab5d5355b4647547fb0be26db4565b132856c4f8db6e01",
+  "patches_sha256": "88f6a82caa0a0174e30c98b3cea817fd140c82b6713e54bfb96627f30a871481",
+  "runner_sha256": "500d314138d161571866112802d0c65161c121147584d3db951b769146044896",
+  "selection": "right-only track with three scored and three positive frozen-model patches",
+  "rows": [
+    {
+      "right_proposal_id": "R01:A035",
+      "source_times_s": [
+        804.0,
+        806.0,
+        807.0
+      ],
+      "boxes": [
+        [
+          344,
+          210,
+          10,
+          8
+        ],
+        [
+          338,
+          260,
+          14,
+          15
+        ],
+        [
+          360,
+          288,
+          6,
+          8
+        ]
+      ]
+    },
+    {
+      "right_proposal_id": "R01:A100",
+      "source_times_s": [
+        1675.0,
+        1677.0,
+        1678.0
+      ],
+      "boxes": [
+        [
+          502,
+          318,
+          14,
+          7
+        ],
+        [
+          508,
+          258,
+          6,
+          8
+        ],
+        [
+          516,
+          230,
+          6,
+          6
+        ]
+      ]
+    }
+  ],
+  "sheet": "three-positive-right-only.jpg",
+  "sheet_sha256": "edc61c3aa282a73ebfbfff47f79ad1b5b0bf1e3414ad08e181378d528087fa33",
+  "limitations": [
+    "Source review is targeted after model scoring and is not independent validation.",
+    "Three frames establish the marked image object only, not exhaustive event truth."
+  ]
+}

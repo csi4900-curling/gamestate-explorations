@@ -1,0 +1,15 @@
+.two-camera-live{margin:24px 0 30px;padding:22px;background:#fff;border:1px solid #d7e4e0;border-radius:14px}
+.two-camera-live h2{margin:0 0 8px}
+.two-camera-live p{margin:8px 0 14px}
+.two-camera-grid{display:grid;grid-template-columns:minmax(0,2fr) minmax(230px,1fr);gap:18px;align-items:start}
+.two-camera-video{position:relative;overflow:hidden;border-radius:10px;background:#172b2b}
+.two-camera-video video{display:block;width:100%;border-radius:0;background:#172b2b}
+.two-camera-video canvas{position:absolute;inset:0;width:100%;height:100%;background:transparent;pointer-events:none;border-radius:0}
+#two-camera-rink{display:block;max-height:680px;width:100%;object-fit:contain;border:1px solid #d7e4e0}
+.two-camera-controls{margin-top:12px}
+.two-camera-controls button{cursor:pointer}
+.two-camera-legend{display:flex;flex-wrap:wrap;gap:9px 18px;margin:10px 0;font-size:15px}
+.two-camera-legend span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:6px;background:var(--swatch)}
+.two-camera-note{font-size:14px;color:#47615d}
+#two-camera-status{font-weight:600}
+@media(max-width:700px){.two-camera-grid{grid-template-columns:1fr}#two-camera-rink{max-height:560px}}

@@ -1,0 +1,55 @@
+{
+  "source_id": "Ns12UZ5nlPk",
+  "reference_method": "agent_blind",
+  "source_interval_s": [
+    925,
+    1200
+  ],
+  "reference_sha256": "19ceec665a8f701f7e07df24d5139987b61e5d4728683e3d3c2e097ed1f7df4b",
+  "predictions_sha256": "b960fcc5ee5d7e5f179a65cb8323535909f8df9c248c3e2cc7ab9193fefe5c59",
+  "scorer_sha256": "f5a76cc3ea8b37ff13d90fc919f7192753276873b603ef01d4ef5b6f743307f6",
+  "score": {
+    "reference_count": 3,
+    "prediction_count": 3,
+    "true_positives": 2,
+    "false_positives": 1,
+    "false_negatives": 1,
+    "precision": 0.6666666666666666,
+    "recall": 0.6666666666666666,
+    "f1": 0.6666666666666666,
+    "colour_errors_among_matches": 0,
+    "colour_aware_true_positives": 2,
+    "colour_aware_false_positives": 1,
+    "colour_aware_false_negatives": 1,
+    "colour_aware_precision": 0.6666666666666666,
+    "colour_aware_recall": 0.6666666666666666,
+    "colour_aware_f1": 0.6666666666666666,
+    "matches": [
+      {
+        "reference_id": "G01-R2",
+        "prediction_id": "G01-R01",
+        "colour_match": true
+      },
+      {
+        "reference_id": "G01-R3",
+        "prediction_id": "G01-R02",
+        "colour_match": true
+      }
+    ],
+    "missed_reference_ids": [
+      "G01-Y"
+    ],
+    "extra_prediction_ids": [
+      "G01-Y02"
+    ],
+    "scoring_tolerance_s": 0.0,
+    "prediction_time_mode": "point",
+    "max_prediction_interval_s": null,
+    "timing_interpretation": "Passage detection within a reference interval; no release-time error inferred."
+  },
+  "limits": [
+    "An F1 score inherits the completeness and independence limits of its reference.",
+    "One-to-one interval agreement is not release-time accuracy.",
+    "Full-match accuracy requires exhaustive labels across direction and camera changes."
+  ]
+}

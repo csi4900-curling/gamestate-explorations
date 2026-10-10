@@ -1,0 +1,30 @@
+{
+  "source_sha256": "49429abdd3796e8240e66c201d37e94e71a7bb6225890b2492bea26d2f70d560",
+  "reviewer": "implementing agent",
+  "method": "Source video full-frame contact sheets at 5-second spacing; coarse delivery windows frozen before inspecting full-transfer candidate rows in these intervals.",
+  "independent_validation": false,
+  "sampled_intervals_seconds": [[2100, 2400], [6600, 6900], [2700, 3000]],
+  "events": [
+    {"id": "W1", "delivery_interval_seconds": [2125, 2145], "colour": "red", "status": "clear"},
+    {"id": "W2", "delivery_interval_seconds": [2175, 2200], "colour": "yellow", "status": "clear"},
+    {"id": "W3", "delivery_interval_seconds": [2230, 2265], "colour": "red", "status": "clear"},
+    {"id": "W4", "delivery_interval_seconds": [2295, 2315], "colour": "yellow", "status": "clear"},
+    {"id": "W5", "delivery_interval_seconds": [2345, 2365], "colour": "red", "status": "clear"},
+    {"id": "W6", "delivery_interval_seconds": [2385, 2400], "colour": "yellow", "status": "clear"},
+    {"id": "W7", "delivery_interval_seconds": [2725, 2750], "colour": "red", "status": "clear"},
+    {"id": "W8", "delivery_interval_seconds": [2790, 2815], "colour": "yellow", "status": "clear"},
+    {"id": "W9", "delivery_interval_seconds": [2845, 2870], "colour": "red", "status": "clear"},
+    {"id": "W10", "delivery_interval_seconds": [2960, 2980], "colour": "yellow", "status": "clear"},
+    {"id": "W11", "delivery_interval_seconds": [6625, 6665], "colour": "red", "status": "clear"},
+    {"id": "W12", "delivery_interval_seconds": [6690, 6720], "colour": "yellow", "status": "clear"},
+    {"id": "W13", "delivery_interval_seconds": [6740, 6770], "colour": "red", "status": "clear"},
+    {"id": "W14", "delivery_interval_seconds": [6785, 6825], "colour": "yellow", "status": "clear"},
+    {"id": "W15", "delivery_interval_seconds": [6855, 6890], "colour": "red", "status": "clear"}
+  ],
+  "uncertain_boundary_events": [
+    {"interval_seconds": [2100, 2125], "colour": "yellow", "reason": "Stone already travelling at interval start; release may precede 2100 seconds."},
+    {"interval_seconds": [2700, 2725], "colour": "unknown", "reason": "Board aftermath at interval start; delivery occurred earlier."},
+    {"interval_seconds": [2980, 3000], "colour": "red", "reason": "A player appears to begin the next delivery at the interval end; its release is not visible in the sampled window."},
+    {"interval_seconds": [6600, 6625], "colour": "yellow", "reason": "Stone already underway at interval start; release may precede 6600 seconds."}
+  ]
+}

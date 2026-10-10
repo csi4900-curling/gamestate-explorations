@@ -1,0 +1,63 @@
+{
+  "status": "first_source_only_partial_board_transition_evidence",
+  "source_sha256": "c5254bb9103e32c6beac74cf269fc7bcec8ce2c2a710a7d4600c7ddb951f160e",
+  "board_scan_sha256": "bdc24d488d507f5d63d08ca9de61711e46143fc9e6005cfe422865aa29a2e9e3",
+  "transition_code_sha256": "ec35c9bca183baaa4870709f1c9279ea383e592161a0207469a2630ea318f3a6",
+  "runner_sha256": "c637ea844dc48674c6d58853bee687c650da8c2e64423c1431ec7f0bcc5c7cf9",
+  "selected_shot_numbers": [
+    10,
+    11,
+    12,
+    13,
+    14
+  ],
+  "transition_count": 4,
+  "observed_transition_count": 1,
+  "transitions": [
+    {
+      "before_shot_id": "PREL000102-E02-S10",
+      "after_shot_id": "PREL000102-E02-S11",
+      "status": "one_or_both_video_boards_missing",
+      "simulation_ready": false
+    },
+    {
+      "status": "local_partial_board_comparison",
+      "before_shot_id": "PREL000102-E02-S11",
+      "after_shot_id": "PREL000102-E02-S12",
+      "counter_interval_s": [
+        1571.0,
+        1608.0
+      ],
+      "match_distance_house_radii": 0.1,
+      "locally_retained": [],
+      "no_longer_observed": [
+        "V01"
+      ],
+      "newly_observed": [
+        "V01"
+      ],
+      "unresolved_before": [],
+      "unresolved_after": [],
+      "physical_transition_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "before_shot_id": "PREL000102-E02-S12",
+      "after_shot_id": "PREL000102-E02-S13",
+      "status": "one_or_both_video_boards_missing",
+      "simulation_ready": false
+    },
+    {
+      "before_shot_id": "PREL000102-E02-S13",
+      "after_shot_id": "PREL000102-E02-S14",
+      "status": "one_or_both_video_boards_missing",
+      "simulation_ready": false
+    }
+  ],
+  "limitations": [
+    "Only locally repeated same-colour positions are associated across partial boards.",
+    "Newly/no-longer observed does not establish physical addition or removal.",
+    "No official diagram positions enter the source-only transition decisions.",
+    "No exact release, collision, settle time, metric calibration or trajectory is inferred."
+  ]
+}

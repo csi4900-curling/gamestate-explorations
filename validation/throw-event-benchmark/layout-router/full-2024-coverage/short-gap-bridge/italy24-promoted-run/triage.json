@@ -1,0 +1,38 @@
+{
+  "status": "candidate_triage_not_physical_event_validation",
+  "source_id": "Vp3TIdOAlrc",
+  "source_sha256": "aff12e78edeb5e108d142aed3e19b61c3956b4fddc8b2fd8b202713746771739",
+  "source_interval_s": [
+    8100.0,
+    8190.0
+  ],
+  "raw_sha256": "d08b9fc1af1fa1de4bfd37ce04be93790863d9294e3ae61cdcd360fcbc90155a",
+  "confirmation_sha256": "ca0a480c3c674b5c67026050601e9c5688fef684efdcd0321d1df87e464e8993",
+  "triage_code_sha256": "a008d7e9a875561d23d2d55abba31765a2ae2c13f124b8fb6d396492441e6836",
+  "counts": {
+    "proposed": 1,
+    "auto_confirmed": 0,
+    "needs_review": 1
+  },
+  "proposals": [
+    {
+      "id": "S01",
+      "crossing_time_s": 8108.149,
+      "colour": "red",
+      "disposition": "needs_review",
+      "stage_evidence": [
+        {
+          "stage": "span_context",
+          "decision": "needs_review",
+          "reason": "large_surrounding_motion"
+        }
+      ],
+      "release_time_s": null
+    }
+  ],
+  "limitations": [
+    "Review proposals are not confirmed throws and must not be silently discarded.",
+    "The span-context gate is development-fitted and covers only the known 2024 split-screen layout.",
+    "First observed motion and passage times are not exact physical release times."
+  ]
+}

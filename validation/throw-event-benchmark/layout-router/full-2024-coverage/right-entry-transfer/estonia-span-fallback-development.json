@@ -1,0 +1,54 @@
+{
+  "status": "postreview_line_free_right_span_recall_probe_not_event_detector",
+  "source_id": "canada-estonia-2024",
+  "source_sha256": "2e2b84bb2d9dffa497ee850ddbeaf0d5cae0d697377b6eee6a1ef481f449f3da",
+  "source_interval_s": [
+    1650,
+    2760
+  ],
+  "transfer_sha256": "12008ded83a92ba0b8cb5109c064962d79cf53063f318b8074623ba3418198bb",
+  "variant_sha256": "cdeff1cc9f8830a67440dc823889c33872d56a2489e3092de024674c844603e0",
+  "coarse_reference_sha256": "d53b1a878c03134c328e83f0317c946c909e0c83d4395fb8a7d9c1433cc5c7fa",
+  "fallback_code_sha256": "a8efff2f6f5ff3d949045e65f816e2ae68f71ccae30a9333d9e55096bae4ea11",
+  "runner_sha256": "95d8e58496ae124e5580186a5d9dc5ff7ce780bc57b6087ec6a974d4d3ec2897",
+  "rule": {
+    "first_cap_area_at_least_px2": 12,
+    "first_bbox_width_at_least_height": true,
+    "upward_displacement_at_least_px": 60,
+    "maximum_observed_delay_s": 20,
+    "passage_time_semantics": "halfway_observed_upward_motion_span_not_fixed_line"
+  },
+  "existing_variant_prefix_count": 9,
+  "additional_span_prefix_count": 0,
+  "coarse_window_count": 17,
+  "coarse_windows_with_existing_variant_prefix": [
+    "E05",
+    "E06",
+    "E07",
+    "E08",
+    "E09",
+    "E10",
+    "E12",
+    "E13",
+    "E17"
+  ],
+  "coarse_windows_with_added_span_prefix": [],
+  "newly_covered_coarse_window_ids": [],
+  "still_uncovered_coarse_window_ids": [
+    "E01",
+    "E02",
+    "E03",
+    "E04",
+    "E11",
+    "E14",
+    "E15",
+    "E16"
+  ],
+  "additional_span_review_proposals": [],
+  "limitations": [
+    "This fallback was designed after inspecting missed development windows on these recordings.",
+    "A same-colour passage inside a coarse window can be a person or equipment; no source identity is inferred.",
+    "The five-second-still reference is not independently certified or exhaustive; window coverage is not recall.",
+    "This tier adds review proposals and does not change accepted events, precision, recall or F1."
+  ]
+}

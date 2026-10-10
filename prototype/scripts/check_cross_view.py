@@ -41,6 +41,10 @@ with sync_playwright() as p:
     page.locator("#buttons button").nth(7).click()
     page.locator("#arrival").click()
     page.wait_for_timeout(300)
+    page.locator("#buttons button").nth(10).click()
+    page.locator("#arrival").click()
+    page.wait_for_function('document.querySelector("#gap").textContent.includes("0.61 m")')
+    assert "29 observations" in page.locator("#coverage").inner_text()
     page.screenshot(path=str(out / "browser.png"), full_page=True)
     assert page.locator("#evidence details").count() == data["summary"]["provisional_links"]
     assert not errors, errors

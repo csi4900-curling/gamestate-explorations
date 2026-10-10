@@ -1,0 +1,111 @@
+{
+  "source_id": "qn9tHfcimlQ",
+  "reference_method": "agent_blind",
+  "source_interval_s": [
+    1650,
+    2760
+  ],
+  "reference_sha256": "c897a508df776e1a0f29b1b5b58b2e3ba1baa8d9b7b64c683d2dbe8535d1ff97",
+  "predictions_sha256": "cfd026866d1c3c4e5eb4874feb16a694307289eaf049f3721d3d94edfa063e3e",
+  "scorer_sha256": "9a5bfaa7b9506038cee64e1290106fdca60a9107ecc8e5d6b404f02ab3eacbd7",
+  "score": {
+    "reference_count": 20,
+    "prediction_count": 17,
+    "true_positives": 11,
+    "false_positives": 6,
+    "false_negatives": 9,
+    "precision": 0.6470588235294118,
+    "recall": 0.55,
+    "f1": 0.5945945945945946,
+    "colour_errors_among_matches": 0,
+    "colour_aware_true_positives": 11,
+    "colour_aware_false_positives": 6,
+    "colour_aware_false_negatives": 9,
+    "colour_aware_precision": 0.6470588235294118,
+    "colour_aware_recall": 0.55,
+    "colour_aware_f1": 0.5945945945945946,
+    "matches": [
+      {
+        "reference_id": "P06",
+        "prediction_id": "B04",
+        "colour_match": true
+      },
+      {
+        "reference_id": "P08",
+        "prediction_id": "B06",
+        "colour_match": true
+      },
+      {
+        "reference_id": "P11",
+        "prediction_id": "B09",
+        "colour_match": true
+      },
+      {
+        "reference_id": "P12",
+        "prediction_id": "B10",
+        "colour_match": true
+      },
+      {
+        "reference_id": "P13",
+        "prediction_id": "B11",
+        "colour_match": true
+      },
+      {
+        "reference_id": "P14",
+        "prediction_id": "B12",
+        "colour_match": true
+      },
+      {
+        "reference_id": "P15",
+        "prediction_id": "B13",
+        "colour_match": true
+      },
+      {
+        "reference_id": "P16",
+        "prediction_id": "B14",
+        "colour_match": true
+      },
+      {
+        "reference_id": "P17",
+        "prediction_id": "B15",
+        "colour_match": true
+      },
+      {
+        "reference_id": "P18",
+        "prediction_id": "B16",
+        "colour_match": true
+      },
+      {
+        "reference_id": "P19",
+        "prediction_id": "B17",
+        "colour_match": true
+      }
+    ],
+    "missed_reference_ids": [
+      "P01",
+      "P02",
+      "P03",
+      "P04",
+      "P05",
+      "P07",
+      "P09",
+      "P10",
+      "P20"
+    ],
+    "extra_prediction_ids": [
+      "B01",
+      "B02",
+      "B03",
+      "B05",
+      "B07",
+      "B08"
+    ],
+    "scoring_tolerance_s": 0.0,
+    "timing_interpretation": "Passage detection within a reference interval; no release-time error inferred."
+  },
+  "limits": [
+    "An F1 score inherits the completeness and independence limits of its reference.",
+    "One-to-one interval agreement is not release-time accuracy.",
+    "Full-match accuracy requires exhaustive labels across direction and camera changes."
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "status": "retrospective_visual_diagnostic_not_independent_throw_labels",
+  "source_sha256": "780186549f4330f0e381d533af9815d21525495ae53db8a4c48048d3d9d8347e",
+  "source_offset_s": 1650,
+  "source_frame_rate_fps": 30,
+  "panel_xyxy": [
+    960,
+    0,
+    1920,
+    1080
+  ],
+  "tile_size_px": [
+    480,
+    540
+  ],
+  "sample_interval_s": 1,
+  "rows": [
+    {
+      "candidate_ids": [
+        "S05",
+        "S07"
+      ],
+      "source_times_s": [
+        1874,
+        1875,
+        1876,
+        1877,
+        1878,
+        1879,
+        1880,
+        1881,
+        1882,
+        1883,
+        1884,
+        1885,
+        1886,
+        1887,
+        1888
+      ],
+      "right_view_contact_sheet": "s05_s07-right-1s.jpg",
+      "image_sha256": "db4559f6d308c5c1920fa7c34aac301c68373d06418f1274c3f8afdb7836f6b5"
+    },
+    {
+      "candidate_ids": [
+        "S14"
+      ],
+      "source_times_s": [
+        2032,
+        2033,
+        2034,
+        2035,
+        2036,
+        2037,
+        2038,
+        2039,
+        2040,
+        2041,
+        2042
+      ],
+      "right_view_contact_sheet": "s14-right-1s.jpg",
+      "image_sha256": "9be84e063a5ac36e4dd95da33e1f3f3ca24042d3b9f44c8ee7e93a59fb7e7763"
+    },
+    {
+      "candidate_ids": [
+        "S21",
+        "S22"
+      ],
+      "source_times_s": [
+        2353,
+        2354,
+        2355,
+        2356,
+        2357,
+        2358,
+        2359,
+        2360,
+        2361,
+        2362,
+        2363,
+        2364,
+        2365,
+        2366,
+        2367,
+        2368,
+        2369,
+        2370
+      ],
+      "right_view_contact_sheet": "s21_s22-right-1s.jpg",
+      "image_sha256": "3fcc9ef7fa269ee64ce1c2a3b26bde88ef63601ae0c217a9e85a1a368bb1be1b"
+    }
+  ],
+  "observations": {
+    "S05_S07": "At sampled times 1874\u20131888, red-clad athletes and sticks move through the view; no traveling stone is visible in the right-view panels. The one-second sampling cannot exclude a brief unseen event.",
+    "S14": "The previously accepted yellow stone remains visible in transit around 2035\u20132042 while a red-clad athlete moves across the house. S14 is a red candidate; these frames do not support a distinct red-stone transit.",
+    "S21_S22": "A red stone is visibly in transit from about 2361\u20132368. S21 and S22 occur within this same visible episode; the images alone do not independently establish exact onset or identity."
+  },
+  "limitations": [
+    "Chosen after viewing detector abstentions; cannot score precision, recall or F1.",
+    "One-second source frames can miss faster or occluded motions.",
+    "Visual review by the pipeline author is not an independent reference."
+  ],
+  "rebuild_runner_sha256": "973b2cd535bae2d37fa507692e7ab73d41db53a7919d4d0546f2f764a340b82f",
+  "rebuild_command": "feasibility/scripts/python.sh prototype/scripts/render_fixed_right_contact_windows.py --video validation/throw-event-benchmark/canada-latvia-2024/source-1080p-1650-2760.mp4 --manifest validation/curlobserver-learned-probe/canada-latvia-2024-abstention-review-development/manifest.json --verify"
+}

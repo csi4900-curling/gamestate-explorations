@@ -1,3 +1,7 @@
+test_adjacent_partial_board (unittest.loader._FailedTest.test_adjacent_partial_board) ... ERROR
+test_ambiguous_counter_ice_tiebreak (unittest.loader._FailedTest.test_ambiguous_counter_ice_tiebreak) ... ERROR
+test_background_registration_audit (unittest.loader._FailedTest.test_background_registration_audit) ... ERROR
+test_incoming_passage_is_restored_to_original_coordinates (test_bidirectional_detection.BidirectionalDetectionTests.test_incoming_passage_is_restored_to_original_coordinates) ... ok
 test_ambiguous_low_angle_affine_camera_abstains (test_body_localization.BodyLocalizationTests.test_ambiguous_low_angle_affine_camera_abstains) ... ok
 test_blank_frame_emits_no_body_detections (test_body_localization.BodyLocalizationTests.test_blank_frame_emits_no_body_detections) ... ok
 test_frontoparallel_pose_is_not_invented (test_body_localization.BodyLocalizationTests.test_frontoparallel_pose_is_not_invented) ... ok
@@ -6,9 +10,40 @@ test_known_height_projection_recovers_ground_location (test_body_localization.Bo
 test_missing_calibration_never_outputs_position (test_body_localization.BodyLocalizationTests.test_missing_calibration_never_outputs_position) ... ok
 test_reference_camera_transport_preserves_known_ground_point (test_body_localization.BodyLocalizationTests.test_reference_camera_transport_preserves_known_ground_point) ... ok
 test_zero_height_is_original_plane_projection (test_body_localization.BodyLocalizationTests.test_zero_height_is_original_plane_projection) ... ok
+test_colour_error_misses_reference (test_box_evaluation.BoxEvaluationTests.test_colour_error_misses_reference) ... ok
+test_duplicate_prediction_is_extra (test_box_evaluation.BoxEvaluationTests.test_duplicate_prediction_is_extra) ... ok
+test_empty_predictions (test_box_evaluation.BoxEvaluationTests.test_empty_predictions) ... ok
+test_overlap (test_box_evaluation.BoxEvaluationTests.test_overlap) ... ok
+test_flicker_is_ignored_but_stable_single_decrement_is_emitted (test_broadcast_scoreboard.ScoreboardStateTests.test_flicker_is_ignored_but_stable_single_decrement_is_emitted) ... ok
+test_one_row_spurious_count_rise_is_not_an_end_reset (test_broadcast_scoreboard.ScoreboardStateTests.test_one_row_spurious_count_rise_is_not_an_end_reset) ... ok
+test_reset_and_multi_throw_gap_do_not_invent_event_times (test_broadcast_scoreboard.ScoreboardStateTests.test_reset_and_multi_throw_gap_do_not_invent_event_times) ... ok
+test_reset_blink_does_not_hide_first_throw_of_new_end (test_broadcast_scoreboard.ScoreboardStateTests.test_reset_blink_does_not_hide_first_throw_of_new_end) ... ok
+test_reset_grace_does_not_count_one_blinking_slot_twice (test_broadcast_scoreboard.ScoreboardStateTests.test_reset_grace_does_not_count_one_blinking_slot_twice) ... ok
+test_single_two_row_spurious_rise_cannot_reset_the_end (test_broadcast_scoreboard.ScoreboardStateTests.test_single_two_row_spurious_rise_cannot_reset_the_end) ... ok
+test_stable_one_row_rise_does_not_become_a_false_throw_on_return (test_broadcast_scoreboard.ScoreboardStateTests.test_stable_one_row_rise_does_not_become_a_false_throw_on_return) ... ok
+test_overlapping_spans_are_rejected (test_candidate_multiview_observation.CandidateMultiviewObservationTests.test_overlapping_spans_are_rejected) ... ok
+test_source_or_colour_disagreement_is_rejected (test_candidate_multiview_observation.CandidateMultiviewObservationTests.test_source_or_colour_disagreement_is_rejected) ... ok
+test_two_view_seam_is_explicit_and_unverified (test_candidate_multiview_observation.CandidateMultiviewObservationTests.test_two_view_seam_is_explicit_and_unverified) ... ok
 test_missing_not_emitted_and_expired_identity_not_reused (test_continuous_tracker.TrackingTests.test_missing_not_emitted_and_expired_identity_not_reused) ... ok
 test_one_to_one_and_colour (test_continuous_tracker.TrackingTests.test_one_to_one_and_colour) ... ok
 test_stability_requires_temporal_evidence (test_continuous_tracker.TrackingTests.test_stability_requires_temporal_evidence) ... ok
+test_invalid_evidence_order_rejected (test_counter_gap_evidence.CounterGapEvidenceTests.test_invalid_evidence_order_rejected) ... ok
+test_straddling_interval_is_boundary_ambiguous (test_counter_gap_evidence.CounterGapEvidenceTests.test_straddling_interval_is_boundary_ambiguous) ... ok
+test_supported_interval_stays_outside (test_counter_gap_evidence.CounterGapEvidenceTests.test_supported_interval_stays_outside) ... ok
+test_whole_interval_inside_gap_is_candidate (test_counter_gap_evidence.CounterGapEvidenceTests.test_whole_interval_inside_gap_is_candidate) ... ok
+test_abstains_when_motion_candidates_are_too_close (test_counter_shot_alignment.CounterShotAlignmentTest.test_abstains_when_motion_candidates_are_too_close) ... ok
+test_delayed_update_recovers_low_probability_delivery (test_counter_shot_alignment.CounterShotAlignmentTest.test_delayed_update_recovers_low_probability_delivery) ... ok
+test_existing_visual_candidate_takes_counter_without_new_event (test_counter_shot_alignment.CounterShotAlignmentTest.test_existing_visual_candidate_takes_counter_without_new_event) ... ok
+test_existing_visual_link_abstains_if_two_candidates_fit (test_counter_shot_alignment.CounterShotAlignmentTest.test_existing_visual_link_abstains_if_two_candidates_fit) ... ok
+test_following_motion_must_start_near_cut_in_both_channels (test_counter_shot_alignment.CounterShotAlignmentTest.test_following_motion_must_start_near_cut_in_both_channels) ... ok
+test_immediate_following_motion_rescues_short_delivery_shot (test_counter_shot_alignment.CounterShotAlignmentTest.test_immediate_following_motion_rescues_short_delivery_shot) ... ok
+test_narrow_counter_change_can_lag_delivery_by_thirty_seconds (test_counter_shot_alignment.CounterShotAlignmentTest.test_narrow_counter_change_can_lag_delivery_by_thirty_seconds) ... ok
+test_requires_same_colour_motion_and_live_phase (test_counter_shot_alignment.CounterShotAlignmentTest.test_requires_same_colour_motion_and_live_phase) ... ok
+test_zero_scores_do_not_break_an_ambiguous_tie (test_counter_shot_alignment.CounterShotAlignmentTest.test_zero_scores_do_not_break_an_ambiguous_tie) ... ok
+test_counter_update_before_receiving_view_track_keeps_release_broad (test_counter_travel_fallback.CounterTravelFallbackTest.test_counter_update_before_receiving_view_track_keeps_release_broad) ... ok
+test_dual_channel_travel_keeps_release_uncertain (test_counter_travel_fallback.CounterTravelFallbackTest.test_dual_channel_travel_keeps_release_uncertain) ... ok
+test_motion_far_before_counter_does_not_match (test_counter_travel_fallback.CounterTravelFallbackTest.test_motion_far_before_counter_does_not_match) ... ok
+test_wrong_colour_or_occupied_shot_abstains (test_counter_travel_fallback.CounterTravelFallbackTest.test_wrong_colour_or_occupied_shot_abstains) ... ok
 test_ambiguous_abstains (test_cross_view.CrossViewTests.test_ambiguous_abstains) ... ok
 test_collision_track_no_hog_crossing (test_cross_view.CrossViewTests.test_collision_track_no_hog_crossing) ... ok
 test_common_coordinates (test_cross_view.CrossViewTests.test_common_coordinates) ... ok
@@ -18,6 +53,42 @@ test_reverse_time_rejected (test_cross_view.CrossViewTests.test_reverse_time_rej
 test_stop_before_late_reassociation (test_cross_view.CrossViewTests.test_stop_before_late_reassociation) ... ok
 test_unique_crossing (test_cross_view.CrossViewTests.test_unique_crossing) ... ok
 test_wrong_colour (test_cross_view.CrossViewTests.test_wrong_colour) ... ok
+test_abstained_identity_cannot_pass_board (test_end_evaluation.EndEvaluationTests.test_abstained_identity_cannot_pass_board) ... ok
+test_correct_outputs (test_end_evaluation.EndEvaluationTests.test_correct_outputs) ... ok
+test_duplicate_event_counts_extra (test_end_evaluation.EndEvaluationTests.test_duplicate_event_counts_extra) ... ok
+test_every_throw_needs_reference_board (test_end_evaluation.EndEvaluationTests.test_every_throw_needs_reference_board) ... ok
+test_incomplete_board_scores_only_observed_stones (test_end_evaluation.EndEvaluationTests.test_incomplete_board_scores_only_observed_stones) ... ok
+test_incomplete_end_review_cannot_claim_f1 (test_end_evaluation.EndEvaluationTests.test_incomplete_end_review_cannot_claim_f1) ... ok
+test_invalid_identity_mapping_rejected (test_end_evaluation.EndEvaluationTests.test_invalid_identity_mapping_rejected) ... ok
+test_known_complete_empty_board_is_valid (test_end_evaluation.EndEvaluationTests.test_known_complete_empty_board_is_valid) ... ok
+test_matching_maximizes_valid_pairs_before_distance (test_end_evaluation.EndEvaluationTests.test_matching_maximizes_valid_pairs_before_distance) ... ok
+test_matching_track_id_without_reviewed_link_does_not_validate_identity (test_end_evaluation.EndEvaluationTests.test_matching_track_id_without_reviewed_link_does_not_validate_identity) ... ok
+test_missing_outputs_are_failures (test_end_evaluation.EndEvaluationTests.test_missing_outputs_are_failures) ... ok
+test_missing_prediction_misses_visible_stones_on_incomplete_board (test_end_evaluation.EndEvaluationTests.test_missing_prediction_misses_visible_stones_on_incomplete_board) ... ok
+test_nonindependent_labels_rejected (test_end_evaluation.EndEvaluationTests.test_nonindependent_labels_rejected) ... ok
+test_overlapping_delivery_intervals_rejected (test_end_evaluation.EndEvaluationTests.test_overlapping_delivery_intervals_rejected) ... ok
+test_position_outlier_is_miss_and_extra (test_end_evaluation.EndEvaluationTests.test_position_outlier_is_miss_and_extra) ... ok
+test_practice_labels_rejected (test_end_evaluation.EndEvaluationTests.test_practice_labels_rejected) ... ok
+test_reviewed_mapping_allows_different_track_and_reference_ids (test_end_evaluation.EndEvaluationTests.test_reviewed_mapping_allows_different_track_and_reference_ids) ... ok
+test_source_or_coordinate_mismatch_rejected (test_end_evaluation.EndEvaluationTests.test_source_or_coordinate_mismatch_rejected) ... ok
+test_unobservable_reference_not_assumed_correct (test_end_evaluation.EndEvaluationTests.test_unobservable_reference_not_assumed_correct) ... ok
+test_wrong_colour_not_hidden_by_matching (test_end_evaluation.EndEvaluationTests.test_wrong_colour_not_hidden_by_matching) ... ok
+test_wrong_identity_cannot_pass_board (test_end_evaluation.EndEvaluationTests.test_wrong_identity_cannot_pass_board) ... ok
+test_wrong_timestamp_rejected (test_end_evaluation.EndEvaluationTests.test_wrong_timestamp_rejected) ... ok
+test_agent_reference_scores_but_cannot_validate (test_event_acceptance.EventAcceptanceTests.test_agent_reference_scores_but_cannot_validate) ... ok
+test_both_precision_and_recall_must_clear_target (test_event_acceptance.EventAcceptanceTests.test_both_precision_and_recall_must_clear_target) ... ok
+test_complete_independent_recording_can_pass (test_event_acceptance.EventAcceptanceTests.test_complete_independent_recording_can_pass) ... ok
+test_declared_excerpt_duration_cannot_stand_in_for_full_video (test_event_acceptance.EventAcceptanceTests.test_declared_excerpt_duration_cannot_stand_in_for_full_video) ... ok
+test_matching_partial_intervals_cannot_claim_full_recording (test_event_acceptance.EventAcceptanceTests.test_matching_partial_intervals_cannot_claim_full_recording) ... ok
+test_missing_or_different_source_file_cannot_pass (test_event_acceptance.EventAcceptanceTests.test_missing_or_different_source_file_cannot_pass) ... ok
+test_partial_timeline_cannot_pass_even_if_observed_event_matches (test_event_acceptance.EventAcceptanceTests.test_partial_timeline_cannot_pass_even_if_observed_event_matches) ... ok
+test_unverified_source_duration_cannot_pass (test_event_acceptance.EventAcceptanceTests.test_unverified_source_duration_cannot_pass) ... ok
+test_counter_bracket_is_included_with_context_and_unknown_physical_bounds (test_event_review_windows.EventReviewWindowTests.test_counter_bracket_is_included_with_context_and_unknown_physical_bounds) ... ok
+test_evidence_outside_source_is_rejected (test_event_review_windows.EventReviewWindowTests.test_evidence_outside_source_is_rejected) ... ok
+test_overlapping_context_windows_do_not_merge_distinct_events (test_event_review_windows.EventReviewWindowTests.test_overlapping_context_windows_do_not_merge_distinct_events) ... ok
+test_near_camera_larger_cap_is_only_in_diagnostic_roi (test_expanded_right_colour.ExpandedRightColourTests.test_near_camera_larger_cap_is_only_in_diagnostic_roi) ... ok
+test_preserves_candidate_order_and_marks_outside_edges (test_passage_corridor.PassageCorridorTests.test_preserves_candidate_order_and_marks_outside_edges) ... ok
+test_refuses_missing_geometry (test_passage_corridor.PassageCorridorTests.test_refuses_missing_geometry) ... ok
 test_odd_width_panels_cover_frame_without_overlap (test_pipeline.ObservationContractTests.test_odd_width_panels_cover_frame_without_overlap) ... ok
 test_reject_bad_sampling (test_pipeline.ObservationContractTests.test_reject_bad_sampling) ... ok
 test_sampling_never_requests_past_end (test_pipeline.ObservationContractTests.test_sampling_never_requests_past_end) ... ok
@@ -40,16 +111,49 @@ test_metric_canvas_has_equal_axis_scale (test_rectification.RectificationTests.t
 test_other_panel_pixels_cannot_leak_into_rectification (test_rectification.RectificationTests.test_other_panel_pixels_cannot_leak_into_rectification) ... ok
 test_reference_ring_geometry_supported (test_rectification.RectificationTests.test_reference_ring_geometry_supported) ... ok
 test_unavailable_transform_not_rendered (test_rectification.RectificationTests.test_unavailable_transform_not_rendered) ... ok
+test_ambiguous_or_wrong_direction_abstains (test_right_backward_seam.RightBackwardSeamTests.test_ambiguous_or_wrong_direction_abstains) ... ok
+test_large_area_change_abstains (test_right_backward_seam.RightBackwardSeamTests.test_large_area_change_abstains) ... ok
+test_unique_directional_chain_extends_only_to_observed_frames (test_right_backward_seam.RightBackwardSeamTests.test_unique_directional_chain_extends_only_to_observed_frames) ... ok
+test_video_probe_rejects_a_matching_excerpt_declared_full (test_score_throw_events_cli.ScoreThrowEventsCliTests.test_video_probe_rejects_a_matching_excerpt_declared_full) ... ok
+test_stale_screen_rejected (test_segment_passages.ScreenedSegmentationTests.test_stale_screen_rejected) ... ok
+test_withheld_candidate_is_retained_and_not_used_as_boundary (test_segment_passages.ScreenedSegmentationTests.test_withheld_candidate_is_retained_and_not_used_as_boundary) ... ok
 test_invalid_range (test_server.ServerTests.test_invalid_range) ... ok
 test_invalid_upload_metadata (test_server.ServerTests.test_invalid_upload_metadata) ... ok
 test_range_and_suffix (test_server.ServerTests.test_range_and_suffix) ... ok
 test_unknown_endpoint (test_server.ServerTests.test_unknown_endpoint) ... ok
+test_counter_colour_conflict_keeps_event_but_withholds_colour (test_shot_event_fusion.ShotEventFusionTest.test_counter_colour_conflict_keeps_event_but_withholds_colour) ... ok
+test_counter_recovers_low_origin_with_explicit_provenance (test_shot_event_fusion.ShotEventFusionTest.test_counter_recovers_low_origin_with_explicit_provenance) ... ok
+test_duplicate_counter_association_is_rejected (test_shot_event_fusion.ShotEventFusionTest.test_duplicate_counter_association_is_rejected) ... ok
+test_existing_visual_counter_link_preserves_colour_conflict (test_shot_event_fusion.ShotEventFusionTest.test_existing_visual_counter_link_preserves_colour_conflict) ... ok
+test_following_only_counter_keeps_its_distinct_provenance (test_shot_event_fusion.ShotEventFusionTest.test_following_only_counter_keeps_its_distinct_provenance) ... ok
+test_visual_candidate_survives_missing_counter (test_shot_event_fusion.ShotEventFusionTest.test_visual_candidate_survives_missing_counter) ... ok
+test_rejects_misaligned_cap_decisions (test_shot_motion_selection.ShotMotionSelectionTest.test_rejects_misaligned_cap_decisions) ... ok
+test_scans_unmatched_counter_window_and_following_shots (test_shot_motion_selection.ShotMotionSelectionTest.test_scans_unmatched_counter_window_and_following_shots) ... ok
+test_full_activity_sidecar_marks_static_left_and_resume_checks_hashes (test_source_activity_runner.SourceActivityRunnerTests.test_full_activity_sidecar_marks_static_left_and_resume_checks_hashes) ... Traceback (most recent call last):
+  File "/home/user/curling-project/prototype/scripts/audit_split_panel_freeze.py", line 12, in <module>
+    import cv2
+  File "/home/user/curling-project/.venv/lib/python3.13/site-packages/cv2/__init__.py", line 181, in <module>
+    bootstrap()
+    ~~~~~~~~~^^
+  File "/home/user/curling-project/.venv/lib/python3.13/site-packages/cv2/__init__.py", line 153, in bootstrap
+    native_module = importlib.import_module("cv2")
+  File "/home/user/.nix-profile/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: libz.so.1: cannot open shared object file: No such file or directory
+ERROR
+test_split_frame_normalization_handles_hd (test_source_activity_runner.SourceActivityRunnerTests.test_split_frame_normalization_handles_hd) ... ok
 test_colour_and_distance_gates_keep_misses (test_stone_accuracy.StoneAccuracyTests.test_colour_and_distance_gates_keep_misses) ... ok
 test_large_errors_are_preserved (test_stone_accuracy.StoneAccuracyTests.test_large_errors_are_preserved) ... ok
 test_matching_maximizes_valid_pairs_in_crowded_case (test_stone_accuracy.StoneAccuracyTests.test_matching_maximizes_valid_pairs_in_crowded_case) ... ok
 test_metric_error_does_not_change_image_match (test_stone_accuracy.StoneAccuracyTests.test_metric_error_does_not_change_image_match) ... ok
 test_no_matches_means_unknown_error_not_zero (test_stone_accuracy.StoneAccuracyTests.test_no_matches_means_unknown_error_not_zero) ... ok
 test_two_predictions_cannot_claim_one_reference (test_stone_accuracy.StoneAccuracyTests.test_two_predictions_cannot_claim_one_reference) ... ok
+test_granite_surround_and_motion_reject_static_red_paint (test_stone_motion_fallback.StoneMotionFallbackTests.test_granite_surround_and_motion_reject_static_red_paint) ... ok
+test_hard_cut_splits_pixel_continuous_track (test_stone_motion_fallback.StoneMotionFallbackTests.test_hard_cut_splits_pixel_continuous_track) ... ok
+test_interval_verification_requires_a_unique_moving_stone (test_stone_motion_fallback.StoneMotionFallbackTests.test_interval_verification_requires_a_unique_moving_stone) ... ok
+test_nearby_stone_does_not_join_track_after_large_jump (test_stone_motion_fallback.StoneMotionFallbackTests.test_nearby_stone_does_not_join_track_after_large_jump) ... ok
+test_stationary_stone_is_not_a_moving_delivery (test_stone_motion_fallback.StoneMotionFallbackTests.test_stationary_stone_is_not_a_moving_delivery) ... ok
 test_colour_error_not_hidden (test_throw_analysis.EventEvaluationTests.test_colour_error_not_hidden) ... ok
 test_duplicate_is_false_positive (test_throw_analysis.EventEvaluationTests.test_duplicate_is_false_positive) ... ok
 test_late_prediction_miss_and_false_positive (test_throw_analysis.EventEvaluationTests.test_late_prediction_miss_and_false_positive) ... ok
@@ -64,12 +168,31 @@ test_one_passage_emits_once (test_throw_analysis.PassageTests.test_one_passage_e
 test_reverse_direction_not_outgoing (test_throw_analysis.PassageTests.test_reverse_direction_not_outgoing) ... ok
 test_stationary_not_throw (test_throw_analysis.PassageTests.test_stationary_not_throw) ... ok
 test_teleport_not_throw (test_throw_analysis.PassageTests.test_teleport_not_throw) ... ok
+test_colour_aware_match_uses_correct_candidate_even_when_wrong_one_is_closer (test_throw_event_benchmark.ThrowBenchmarkTests.test_colour_aware_match_uses_correct_candidate_even_when_wrong_one_is_closer) ... ok
+test_duplicate_near_one_throw_counts_as_false_positive (test_throw_event_benchmark.ThrowBenchmarkTests.test_duplicate_near_one_throw_counts_as_false_positive) ... ok
+test_duplicate_prediction_id_is_rejected (test_throw_event_benchmark.ThrowBenchmarkTests.test_duplicate_prediction_id_is_rejected) ... ok
+test_empty_limits (test_throw_event_benchmark.ThrowBenchmarkTests.test_empty_limits) ... ok
+test_evidence_interval_can_match_later_confirmation_without_claiming_exact_time (test_throw_event_benchmark.ThrowBenchmarkTests.test_evidence_interval_can_match_later_confirmation_without_claiming_exact_time) ... ok
+test_evidence_interval_width_is_bounded (test_throw_event_benchmark.ThrowBenchmarkTests.test_evidence_interval_width_is_bounded) ... ok
+test_missed_event_and_extra_event (test_throw_event_benchmark.ThrowBenchmarkTests.test_missed_event_and_extra_event) ... ok
+test_overlapping_reference_is_not_a_valid_benchmark (test_throw_event_benchmark.ThrowBenchmarkTests.test_overlapping_reference_is_not_a_valid_benchmark) ... ok
+test_wrong_colour_is_visible_after_temporal_match (test_throw_event_benchmark.ThrowBenchmarkTests.test_wrong_colour_is_visible_after_temporal_match) ... ok
+test_marks_counter_gap_without_interpolating_state (test_throw_event_ledger.ThrowEventLedgerTest.test_marks_counter_gap_without_interpolating_state) ... ok
+test_orders_origin_and_travel_without_inventing_board_state (test_throw_event_ledger.ThrowEventLedgerTest.test_orders_origin_and_travel_without_inventing_board_state) ... ok
+test_rejects_counter_update_before_proposed_release (test_throw_event_ledger.ThrowEventLedgerTest.test_rejects_counter_update_before_proposed_release) ... ok
+test_rejects_duplicate_counter_assignment (test_throw_event_ledger.ThrowEventLedgerTest.test_rejects_duplicate_counter_assignment) ... ok
+test_bright_and_dark_candidate_evidence (test_throw_event_screening.AppearanceScreeningTests.test_bright_and_dark_candidate_evidence) ... ok
+test_unreadable_video_does_not_create_a_stone_event (test_throw_event_screening.AppearanceScreeningTests.test_unreadable_video_does_not_create_a_stone_event) ... ok
 test_contiguous (test_throw_segmentation.SegmentationTests.test_contiguous) ... ok
 test_geometry_gap (test_throw_segmentation.SegmentationTests.test_geometry_gap) ... ok
 test_invalid (test_throw_segmentation.SegmentationTests.test_invalid) ... ok
 test_missing_stone_not_settled (test_throw_segmentation.SegmentationTests.test_missing_stone_not_settled) ... ok
 test_other_stone_moving (test_throw_segmentation.SegmentationTests.test_other_stone_moving) ... ok
 test_stable (test_throw_segmentation.SegmentationTests.test_stable) ... ok
+test_time_colour_pairing_preserves_both_unpaired_sides (test_transfer_expanded_right_entry_full.ExpandedRightEntryTransferTests.test_time_colour_pairing_preserves_both_unpaired_sides) ... ok
+test_preserves_every_proposal_and_withheld_reason (test_two_stage_throw_triage.TwoStageTriageTests.test_preserves_every_proposal_and_withheld_reason) ... ok
+test_rejects_a_stage_that_drops_evidence (test_two_stage_throw_triage.TwoStageTriageTests.test_rejects_a_stage_that_drops_evidence) ... ok
+test_requires_unique_ids_and_stages (test_two_stage_throw_triage.TwoStageTriageTests.test_requires_unique_ids_and_stages) ... ok
 test_cache_requires_matching_inputs (test_validation_guards.AuditGuards.test_cache_requires_matching_inputs) ... ok
 test_crossing_after_segment_boundary_not_used (test_validation_guards.AuditGuards.test_crossing_after_segment_boundary_not_used) ... ok
 test_duplicate_times_rejected (test_validation_guards.AuditGuards.test_duplicate_times_rejected) ... ok
@@ -85,11 +208,89 @@ test_collinear_calibration_rejected (test_vision.GeometryAndEvidenceTests.test_c
 test_experimental_projections_never_export_as_game_state (test_vision.GeometryAndEvidenceTests.test_experimental_projections_never_export_as_game_state) ... ok
 test_invalid_projection_rejected (test_vision.GeometryAndEvidenceTests.test_invalid_projection_rejected) ... ok
 test_known_camera_translation_preserves_coordinates (test_vision.GeometryAndEvidenceTests.test_known_camera_translation_preserves_coordinates) ... ok
+test_motion_limit_can_be_widened_without_changing_default (test_vision.GeometryAndEvidenceTests.test_motion_limit_can_be_widened_without_changing_default) ... ok
 test_planar_roundtrip (test_vision.GeometryAndEvidenceTests.test_planar_roundtrip) ... ok
 test_reference_paint_is_not_a_new_stone (test_vision.GeometryAndEvidenceTests.test_reference_paint_is_not_a_new_stone) ... ok
 test_resolution_mismatch_rejected (test_vision.GeometryAndEvidenceTests.test_resolution_mismatch_rejected) ... ok
 
+======================================================================
+ERROR: test_adjacent_partial_board (unittest.loader._FailedTest.test_adjacent_partial_board)
 ----------------------------------------------------------------------
-Ran 90 tests in 5.172s
+ImportError: Failed to import test module: test_adjacent_partial_board
+Traceback (most recent call last):
+  File "/home/user/.nix-profile/lib/python3.13/unittest/loader.py", line 403, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/home/user/.nix-profile/lib/python3.13/unittest/loader.py", line 346, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/user/curling-project/prototype/tests/test_adjacent_partial_board.py", line 3, in <module>
+    from adjacent_partial_board import compare_adjacent_rows, compare_partial_boards
+ModuleNotFoundError: No module named 'adjacent_partial_board'
 
-OK
+
+======================================================================
+ERROR: test_ambiguous_counter_ice_tiebreak (unittest.loader._FailedTest.test_ambiguous_counter_ice_tiebreak)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_ambiguous_counter_ice_tiebreak
+Traceback (most recent call last):
+  File "/home/user/.nix-profile/lib/python3.13/unittest/loader.py", line 403, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/home/user/.nix-profile/lib/python3.13/unittest/loader.py", line 346, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/user/curling-project/prototype/tests/test_ambiguous_counter_ice_tiebreak.py", line 1, in <module>
+    from scripts.audit_2022_ambiguous_counter_ice_tiebreak import (
+        select_unique_ice_supported,
+    )
+ModuleNotFoundError: No module named 'scripts.audit_2022_ambiguous_counter_ice_tiebreak'
+
+
+======================================================================
+ERROR: test_background_registration_audit (unittest.loader._FailedTest.test_background_registration_audit)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_background_registration_audit
+Traceback (most recent call last):
+  File "/home/user/.nix-profile/lib/python3.13/unittest/loader.py", line 403, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/home/user/.nix-profile/lib/python3.13/unittest/loader.py", line 346, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/user/curling-project/prototype/tests/test_background_registration_audit.py", line 4, in <module>
+    from background_registration_audit import registration_support
+ModuleNotFoundError: No module named 'background_registration_audit'
+
+
+======================================================================
+ERROR: test_full_activity_sidecar_marks_static_left_and_resume_checks_hashes (test_source_activity_runner.SourceActivityRunnerTests.test_full_activity_sidecar_marks_static_left_and_resume_checks_hashes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/user/curling-project/prototype/tests/test_source_activity_runner.py", line 75, in test_full_activity_sidecar_marks_static_left_and_resume_checks_hashes
+    first = attach_source_activity(video, timeline["source_sha256"],
+                                   [0, 70], root, timeline_path)
+  File "/home/user/curling-project/prototype/scripts/run_throw_pipeline.py", line 44, in attach_source_activity
+    run_child("audit_split_panel_freeze.py", "--video", video,
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              "--start", interval[0], "--end", interval[1],
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              "--output", audit_path)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/curling-project/prototype/scripts/run_throw_pipeline.py", line 25, in run_child
+    subprocess.run(
+    ~~~~~~~~~~~~~~^
+        [sys.executable, str(ROOT / "prototype/scripts" / script), *map(str, args)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        cwd=ROOT,
+        ^^^^^^^^^
+        check=True,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "/home/user/.nix-profile/lib/python3.13/subprocess.py", line 577, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/home/user/curling-project/.venv/bin/python', '/home/user/curling-project/prototype/scripts/audit_split_panel_freeze.py', '--video', '/tmp/tmpaj8s42af/source.avi', '--start', '0', '--end', '70', '--output', '/tmp/tmpaj8s42af/source-activity-audit.json']' returned non-zero exit status 1.
+
+----------------------------------------------------------------------
+Ran 202 tests in 7.556s
+
+FAILED (errors=4)

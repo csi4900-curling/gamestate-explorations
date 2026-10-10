@@ -1,0 +1,9 @@
+# Frozen right-context development transfer on Canada–USA 2024
+
+Before running the new right-view proposal scanner on this recording, fix the source interval to 1650–2760 s in the on-disk full 640×360 video `source.mp4`, SHA-256 `18f4fe4ac910e2da7e1ed453ade9d291363ab7e01f8d0d207634a3d589efe0da`. This match was used previously for another detector and source-only coarse review; it is **not unseen independent validation** of the full pipeline. It was not used to choose the newer below-point feature.
+
+Sample one frame per source second. Keep the existing 2024 right-colour proposals, consecutive 40 px/s linking and bidirectional 60-pixel vertical-span review rule. Render **every** proposed short path at its first, passage-nearest and last observed source frame; save same-agent source-visible stone versus person/equipment classes for every proposal **before** measuring context features. Preserve uncertain identities as uncertain, and retain every proposed path.
+
+Use the frozen surrounding ring (outer 28×40 px, central 12-px half-extent excluded) and below-point band (horizontal half-width 20 px, vertical offsets 22–60 px) on 640×360 frames. Ice is HSV saturation <90 and value >150. A median non-ice fraction >0.25 in either region sends a path to cluttered review; a missing below-point band sends it to unavailable review; otherwise it remains clear-context review. This is a review tier, not a physical stone identity or accepted throw. Report the complete source-class × combined-tier table and every failure; do not retune after seeing outcomes.
+
+No physical throw precision, recall, F1, settled-board completeness, or simulation parameter is established by this source-prefix transfer. Those require independently reviewed exhaustive deliveries and validated cross-view/board evidence.

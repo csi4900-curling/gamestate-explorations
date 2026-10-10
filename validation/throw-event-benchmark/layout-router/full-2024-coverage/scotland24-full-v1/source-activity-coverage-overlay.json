@@ -1,0 +1,119 @@
+{
+  "status": "development_source_activity_coverage_overlay_not_throw_truth",
+  "source_id": "mKtmFW-B5UI",
+  "source_sha256": "6007ff0d33771aec1aa45f26b5e9271f151e77bcbb6c85a4b613e3aaf3163eae",
+  "source_interval_s": [
+    0.0,
+    7347.0
+  ],
+  "original_supported_seconds": 6570.0,
+  "original_unknown_seconds": 777.0,
+  "newly_unsupported_seconds": 0,
+  "revised_supported_seconds": 6570.0,
+  "revised_unknown_seconds": 777.0,
+  "revised_supported_runs": [
+    {
+      "source_run_id": "R01",
+      "layout": "split_2024",
+      "interval_s": [
+        90.0,
+        2070.0
+      ]
+    },
+    {
+      "source_run_id": "R02",
+      "layout": "split_2024",
+      "interval_s": [
+        2160.0,
+        2250.0
+      ]
+    },
+    {
+      "source_run_id": "R03",
+      "layout": "split_2024",
+      "interval_s": [
+        2340.0,
+        3870.0
+      ]
+    },
+    {
+      "source_run_id": "R04",
+      "layout": "split_2024",
+      "interval_s": [
+        3960.0,
+        4500.0
+      ]
+    },
+    {
+      "source_run_id": "R05",
+      "layout": "split_2024",
+      "interval_s": [
+        4590.0,
+        6120.0
+      ]
+    },
+    {
+      "source_run_id": "R06",
+      "layout": "split_2024",
+      "interval_s": [
+        6210.0,
+        7020.0
+      ]
+    },
+    {
+      "source_run_id": "R07",
+      "layout": "split_2024",
+      "interval_s": [
+        7110.0,
+        7200.0
+      ]
+    }
+  ],
+  "newly_unsupported_intervals": [],
+  "original_coverage_gaps_s": [
+    [
+      0.0,
+      90.0
+    ],
+    [
+      2070.0,
+      2160.0
+    ],
+    [
+      2250.0,
+      2340.0
+    ],
+    [
+      3870.0,
+      3960.0
+    ],
+    [
+      4500.0,
+      4590.0
+    ],
+    [
+      6120.0,
+      6210.0
+    ],
+    [
+      7020.0,
+      7110.0
+    ],
+    [
+      7200.0,
+      7347.0
+    ]
+  ],
+  "original_event_count_unchanged": 112,
+  "minimum_right_panel_median_mae": 5.0,
+  "timeline_sha256": "947dbc060baa88f358911596507fa1cf0834f23415808c3589649f5c79b4db53",
+  "activity_audit_sha256": "4773b132198ab2884b20a23263c209b0f93002e8a469f59cca0c676a189369ee",
+  "overlay_code_sha256": "5cd0b92a740ff5ea405310af52d3f43fd0873ae04a2b08f6c886c4d246b2f4e9",
+  "runner_sha256": "6383a1d9a2cfddbfe34230cb6b28942588410b005697c9ccc881e4efc6809165",
+  "limitations": [
+    "The active-static thresholds were chosen after inspecting Latvia and Italy source frames.",
+    "A static left panel can be a still camera view or frozen feed; this audit does not distinguish them.",
+    "Source-image activity does not label individual delivered stones or estimate throw F1.",
+    "Original candidate events are preserved, including any that fall inside a newly unsupported interval."
+  ]
+}

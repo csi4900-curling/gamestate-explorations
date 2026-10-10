@@ -1,0 +1,19 @@
+# End-three far receiving-view observation handoff
+
+The original 2024 Canada–Korea end-three two-camera result links 16 departure tracks to receiving tracks, but its bounded receiving processing starts **5.2–9.4 s** after the last accepted departure point. The T11 range probe showed that this was largely a processing boundary, not necessarily an invisible stone. This development audit applies the same expanded right-camera calibration to **all 16** provisional throw links, sampling the full-resolution source at 0.5 s plus each gap endpoint.
+
+The [candidate scan](end3-all-far-receiving-corridors-development.json) records every same-colour detection in a wide corridor between each existing departure and arrival endpoint: **216 samples have one candidate, two have multiple candidates, and 13 have none**. A [forward-path check](end3-far-receiving-paths-development.json) selects a unique maximum-coverage path for **15/16** throws and abstains on T10. Its loose continuity limits reject a T12 far candidate that jumps backwards by about 5 m before the apparent moving stone arrives. T10 retains two plausible path histories around 2251 s; no path is forced. These are source-video model observations, not independently verified stone identities.
+
+For the 15 selected paths, the first far receiving observation appears **0–1.5 s** after the last departure observation (median 0 s), versus a median **6.1 s** in the original bounded result. The [observation handoff](end3-cross-view-observation-handoff-development.json) preserves the departure, far receiving and bounded receiving segments separately, including simultaneous disagreements. Eight throws have a far receiving point at exactly the last departure timestamp; their projected position differences range from about **0.42 to 1.38 m**. T11 differs by about **0.63 m**, consistent with the earlier targeted probe. These disagreements mean the far-range homography and camera timing still require calibration before any continuous metric trajectory or 3D replay can be trusted.
+
+The handoff contains **observed points only**. It does not interpolate across missing samples, merge camera points by averaging, declare physical stone identity, infer exact release or settle time, or mark any event simulation-ready. The 16 event IDs and their original links were already selected on this exposed development end; a corridor around those endpoints is therefore a postscore test, not independent recall or F1 validation. This procedure has not yet been transferred to a different 2024 recording or the changing-view 2022 broadcasts.
+
+Reproduce in order:
+
+```sh
+feasibility/scripts/python.sh prototype/scripts/audit_all_far_receiving_handoffs.py --output validation/curlobserver-learned-probe/end3-all-far-receiving-corridors-development.json
+feasibility/scripts/python.sh prototype/scripts/select_far_receiving_paths.py --scan validation/curlobserver-learned-probe/end3-all-far-receiving-corridors-development.json --output validation/curlobserver-learned-probe/end3-far-receiving-paths-development.json
+feasibility/scripts/python.sh prototype/scripts/export_end3_observation_handoff.py --cross-view prototype/cross-view/results.json --far-paths validation/curlobserver-learned-probe/end3-far-receiving-paths-development.json --output validation/curlobserver-learned-probe/end3-cross-view-observation-handoff-development.json
+```
+
+Move existing output files aside before rerunning; the scripts preserve the first artifacts and record source and code hashes. The source is `prototype/throw-analysis/end3.mp4`, offset 1650 s in the full recording. A separate T11 pilot on the 90-second `prototype/continuous/clip.mp4` agrees with the full-resolution source within about 0.032 m at the 13 sampled positions, but that agreement is between two copies of the same broadcast, not an independent metric calibration.

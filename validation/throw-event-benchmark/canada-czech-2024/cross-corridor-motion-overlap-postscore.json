@@ -1,0 +1,74 @@
+{
+  "status": "postscore_cross_corridor_path_overlap_not_event_truth",
+  "source_id": "yu_YoFrFd20",
+  "source_sha256": "e63c9b063b5b11ad5173083dffe974d909c78e5d01312740b87bccc006402013",
+  "high_resolution_source_sha256": "490b8703b2fcfaa2fbd61f8b45ebc45fd3281f0e9453bb4721f56e64056cd620",
+  "input_sha256": {
+    "corridor": "9176ac5934ce3729e2a7281d954d9b4f968cc6804c0686d9ca4fcc5f0aa02768",
+    "selected_motion": "48554aa471eaf36cf6bf9f39f2fbb662ed3cfa304dc601c7e82fe17089487f94",
+    "withheld_motion": "9341852615d624715538ce3e359d40e829c53558e829d6b1ec067fb471c83939",
+    "screen": "405c5bd19fd555d3b9a13acc59f22c92bb543c055cf2298193ac35d80115c096"
+  },
+  "dedup_code_sha256": "e43acfc10db0d0e4deaff578887244cbe51e1d08a2e7d7be8f44ad81bdde0c31",
+  "runner_sha256": "b3f67744f29076af7c39fabad426d945abeece01b8b30631c8bab0cbc10a2883",
+  "selected_candidate_count": 116,
+  "withheld_candidate_count": 31,
+  "minimum_shared_timed_observations": 5,
+  "position_tolerance_m_conditional": 0.15,
+  "pair_count": 5,
+  "selected_candidate_count_with_pair": 3,
+  "accepted_selected_candidate_ids_with_pair": [
+    "S96"
+  ],
+  "pair_acceptance_counts": {
+    "abstained": 2,
+    "accepted": 3
+  },
+  "pairs": [
+    {
+      "selected_candidate_id": "S25",
+      "withheld_candidate_id": "S26",
+      "shared_timed_observation_count": 6,
+      "selected_screen_accepted": false,
+      "selected_view": "right",
+      "colour": "red"
+    },
+    {
+      "selected_candidate_id": "S27",
+      "withheld_candidate_id": "S26",
+      "shared_timed_observation_count": 6,
+      "selected_screen_accepted": false,
+      "selected_view": "right",
+      "colour": "red"
+    },
+    {
+      "selected_candidate_id": "S96",
+      "withheld_candidate_id": "S93",
+      "shared_timed_observation_count": 7,
+      "selected_screen_accepted": true,
+      "selected_view": "left",
+      "colour": "red"
+    },
+    {
+      "selected_candidate_id": "S96",
+      "withheld_candidate_id": "S94",
+      "shared_timed_observation_count": 7,
+      "selected_screen_accepted": true,
+      "selected_view": "left",
+      "colour": "red"
+    },
+    {
+      "selected_candidate_id": "S96",
+      "withheld_candidate_id": "S95",
+      "shared_timed_observation_count": 7,
+      "selected_screen_accepted": true,
+      "selected_view": "left",
+      "colour": "red"
+    }
+  ],
+  "limitations": [
+    "A shared candidate-local path does not prove a physical stone or false positive.",
+    "The fixed corridor's withheld IDs were inspected on this exposed match; this is development evidence.",
+    "The threshold uses conditional view-local projected positions, not independently validated metric geometry."
+  ]
+}

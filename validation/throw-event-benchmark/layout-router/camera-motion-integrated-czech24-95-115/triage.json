@@ -1,0 +1,38 @@
+{
+  "status": "candidate_triage_not_physical_event_validation",
+  "source_id": "canada-czech-2024",
+  "source_sha256": "e63c9b063b5b11ad5173083dffe974d909c78e5d01312740b87bccc006402013",
+  "source_interval_s": [
+    95.0,
+    115.0
+  ],
+  "raw_sha256": "ad47bbfb7d39aca981bfdc7fa796481a9c32a563398c5582c8d4975acf81307d",
+  "confirmation_sha256": "a7eedf729be2d89efaa5a1621faae40ac9107707f7665a24391bf8ded0f5d4e4",
+  "triage_code_sha256": "a008d7e9a875561d23d2d55abba31765a2ae2c13f124b8fb6d396492441e6836",
+  "counts": {
+    "proposed": 1,
+    "auto_confirmed": 1,
+    "needs_review": 0
+  },
+  "proposals": [
+    {
+      "id": "S01",
+      "crossing_time_s": 96.892,
+      "colour": "red",
+      "disposition": "auto_confirmed_candidate",
+      "stage_evidence": [
+        {
+          "stage": "span_context",
+          "decision": "supported",
+          "reason": "compact_tracked_motion"
+        }
+      ],
+      "release_time_s": null
+    }
+  ],
+  "limitations": [
+    "Review proposals are not confirmed throws and must not be silently discarded.",
+    "The span-context gate is development-fitted and covers only the known 2024 split-screen layout.",
+    "First observed motion and passage times are not exact physical release times."
+  ]
+}

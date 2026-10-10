@@ -1,0 +1,178 @@
+{
+  "status": "postscore_exposed_development_dropout_rescue_not_transfer_validation",
+  "base_sha256": "08278e03644dfbae91dfa5891501e1f4e49c216080e1119edf30461060da2b33",
+  "observations_sha256": "224b6e71000f83e1bba31abf267a5463f0bd84028624d22331f1d325530cc292",
+  "source_motion_sha256": "5f24a8066fb58bba86c2f6892d184d49822dbeddba1a93e3b79435b9c22eca9a",
+  "high_resolution_source_sha256": "490b8703b2fcfaa2fbd61f8b45ebc45fd3281f0e9453bb4721f56e64056cd620",
+  "source_offset_s": 0.0,
+  "max_corner_displacement_px": 160.0,
+  "rescue_code_sha256": "1e893842e9e57fa0e709cd5fddc375013f722f0fff7a20c7ccea26cbdc532918",
+  "runner_sha256": "1b97fac7cf14a74307fefbd0e029e3b2be10b1023a55e8a8607c7eeb4b99d494",
+  "parameters": {
+    "left_entry_y_m": -4.5,
+    "right_entry_y_m": 11.5,
+    "far_band_y_m": 2.0,
+    "max_gap_s": 4.1,
+    "min_prefix_samples": 5,
+    "min_prefix_fraction": 0.7,
+    "min_prefix_travel_m": 2.0
+  },
+  "rescue_status_counts": {
+    "baseline_path_preserved": 79,
+    "rescue_abstained": 32,
+    "unique_dropout_rescue": 2,
+    "shared_prefix_only_after_ambiguity": 3
+  },
+  "rows": [
+    {
+      "candidate_id": "S38",
+      "colour": "yellow",
+      "receiving_view": "left",
+      "base_selection_status": "no_supported_far_entry_motion_path",
+      "selection": {
+        "status": "no_supported_far_entry_motion_path",
+        "path": [],
+        "sample_count": 24,
+        "same_colour_proposal_count": 14
+      },
+      "rescue_status": "rescue_abstained"
+    },
+    {
+      "candidate_id": "S39",
+      "colour": "red",
+      "receiving_view": "left",
+      "base_selection_status": "ambiguous_far_entry_motion_paths",
+      "selection": {
+        "status": "provisional_shared_prefix_motion_evidence",
+        "path": [
+          {
+            "source_time_s": 1409.5,
+            "pixel_center": [
+              590.24,
+              350.11
+            ],
+            "ground_position_m": [
+              0.5725541559506048,
+              -5.483749581529839
+            ],
+            "same_colour_candidate_count": 3
+          },
+          {
+            "source_time_s": 1410.0,
+            "pixel_center": [
+              586.41,
+              373.1
+            ],
+            "ground_position_m": [
+              0.5441047615146686,
+              -4.981499346319908
+            ],
+            "same_colour_candidate_count": 4
+          },
+          {
+            "source_time_s": 1410.5,
+            "pixel_center": [
+              580.5,
+              395.93
+            ],
+            "ground_position_m": [
+              0.505642907589222,
+              -4.500644543580377
+            ],
+            "same_colour_candidate_count": 4
+          },
+          {
+            "source_time_s": 1411.0,
+            "pixel_center": [
+              574.53,
+              418.24
+            ],
+            "ground_position_m": [
+              0.46341909602722026,
+              -4.029354262942621
+            ],
+            "same_colour_candidate_count": 4
+          },
+          {
+            "source_time_s": 1411.5,
+            "pixel_center": [
+              569.13,
+              436.23
+            ],
+            "ground_position_m": [
+              0.43141072814483206,
+              -3.6724032867130725
+            ],
+            "same_colour_candidate_count": 4
+          },
+          {
+            "source_time_s": 1412.0,
+            "pixel_center": [
+              562.42,
+              458.74
+            ],
+            "ground_position_m": [
+              0.3900431729061036,
+              -3.235811572662079
+            ],
+            "same_colour_candidate_count": 4
+          },
+          {
+            "source_time_s": 1412.5,
+            "pixel_center": [
+              555.16,
+              480.18
+            ],
+            "ground_position_m": [
+              0.34992039352028526,
+              -2.830619390846388
+            ],
+            "same_colour_candidate_count": 4
+          }
+        ],
+        "sample_count": 7,
+        "best_path_sample_count": 8,
+        "shared_prefix_fraction": 0.875,
+        "endpoint_displacement_m": 2.6624548072953056,
+        "first_ambiguity_time_s": 1413.0,
+        "observation_after_prefix_verified": false,
+        "release_time_observed": false,
+        "physical_identity_verified": false,
+        "metric_accuracy_verified": false,
+        "simulation_ready": false
+      },
+      "rescue_status": "shared_prefix_only_after_ambiguity"
+    },
+    {
+      "candidate_id": "S40",
+      "colour": "yellow",
+      "receiving_view": "left",
+      "base_selection_status": "ambiguous_far_entry_motion_paths",
+      "selection": {
+        "status": "ambiguous_far_entry_motion_paths",
+        "path": [],
+        "reason": "Candidate path enumeration limit exceeded"
+      },
+      "rescue_status": "rescue_abstained"
+    },
+    {
+      "candidate_id": "S41",
+      "colour": "red",
+      "receiving_view": "left",
+      "base_selection_status": "no_supported_far_entry_motion_path",
+      "selection": {
+        "status": "no_supported_far_entry_motion_path",
+        "path": [],
+        "sample_count": 24,
+        "same_colour_proposal_count": 87
+      },
+      "rescue_status": "rescue_abstained"
+    }
+  ],
+  "limitations": [
+    "Dropout and prefix rules were selected after inspecting Italy, Estonia and China development outcomes.",
+    "A shared path prefix is event evidence only; identity after ambiguity is unverified.",
+    "Absent cap proposals do not establish absent stones or a continuous physical path."
+  ],
+  "hold_sha256": "6201bae48b9991e80871fb9a9ce34334769e43a60df0626e09c18c9a318ecd9f"
+}

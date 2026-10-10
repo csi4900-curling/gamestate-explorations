@@ -1,0 +1,106 @@
+{
+  "status": "postscore_selected_internal_edit_origin_probe_not_event_validation",
+  "source_video_sha256": "b779f017ff450293d13f589e3eb64816b3620fee81081e06c9a4b368e90ccbb9",
+  "input_sha256": {
+    "shot_manifest": "6e2c9ee711f02800aba44f2259bf2a4c00b27f13b717d0c1cc48cf33a68e677c",
+    "frozen_origin_predictions": "299625950eb30d492b3cf421c8b86c3589915349dd20622bbea77430cc987492",
+    "frozen_origin_model": "9586973ae7cbc632c65e3b757015f30d1d2fcf38190d50c39bb43c4ed827661a"
+  },
+  "scene_cut_code_sha256": "5c4049a0e82853cb36e0eee4fd7e1bb009babc08318b3ce8b53566f309b883e9",
+  "origin_feature_code_sha256": "f5b28fc761aca84a2721f971afdf62370a1d2732479eece4574bb68ba9dfd54c",
+  "runner_sha256": "f6614d157468579783da9be610021232dc85552da2a12f1132ed1e838c9102e9",
+  "original_shot_id": "S372",
+  "original_interval_s": [
+    5170.8,
+    5206.2
+  ],
+  "original_probability": 0.8946463948689914,
+  "proposed_internal_edits": [
+    {
+      "time_s": 5180.6,
+      "gray_change": 53.411,
+      "hist_distance": 0.3429,
+      "hard_cut": false,
+      "passes_bounded_0_30_hist_probe": true
+    },
+    {
+      "time_s": 5195.6,
+      "gray_change": 68.783,
+      "hist_distance": 0.3157,
+      "hard_cut": false,
+      "passes_bounded_0_30_hist_probe": true
+    }
+  ],
+  "subshot_origin_scores": [
+    {
+      "interval_s": [
+        5170.8,
+        5180.6
+      ],
+      "frame_times_s": [
+        5171.4,
+        5175.7,
+        5180.0
+      ],
+      "overlay_fraction": 0.0,
+      "following_overlay_fraction": 0.6666666666666666,
+      "origin_probability": 0.062713,
+      "phase_supported": true,
+      "predicted_origin": false
+    },
+    {
+      "interval_s": [
+        5180.6,
+        5195.6
+      ],
+      "frame_times_s": [
+        5181.2,
+        5188.1,
+        5195.0
+      ],
+      "overlay_fraction": 0.6666666666666666,
+      "following_overlay_fraction": 1.0,
+      "origin_probability": 0.005086,
+      "phase_supported": true,
+      "predicted_origin": false
+    },
+    {
+      "interval_s": [
+        5195.6,
+        5206.2
+      ],
+      "frame_times_s": [
+        5196.2,
+        5200.9,
+        5205.6
+      ],
+      "overlay_fraction": 1.0,
+      "following_overlay_fraction": 1.0,
+      "origin_probability": 0.95802,
+      "phase_supported": true,
+      "predicted_origin": true
+    },
+    {
+      "interval_s": [
+        5206.2,
+        5229.0
+      ],
+      "frame_times_s": [
+        5206.8,
+        5217.6,
+        5228.4
+      ],
+      "overlay_fraction": 1.0,
+      "following_overlay_fraction": 0,
+      "origin_probability": 0.027679,
+      "phase_supported": true,
+      "predicted_origin": false
+    }
+  ],
+  "limitations": [
+    "Internal edit times were selected after inspecting this exposed event gap; they are not independent cut labels.",
+    "A lower 0.30 histogram threshold is only a bounded diagnostic, not a validated full-source cut rule.",
+    "Origin probability is a view classifier, not physical release or throw identity.",
+    "No first-pass event candidate or official-slot mapping is changed."
+  ]
+}

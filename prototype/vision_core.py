@@ -30,7 +30,8 @@ class ViewCalibrator:
   x0,y0,x1,y1=view['region'];self.mask=np.zeros(self.reference.shape[:2],np.uint8)
   self.mask[max(y0,int(.35*y1)):int(.97*y1),x0+15:x1-15]=255
   self.kp,self.desc=self.sift.detectAndCompute(cv2.cvtColor(self.reference,cv2.COLOR_BGR2GRAY),self.mask)
- def register(self,image,is_reference=False):
+ def register(self,image,is_reference=False,max_corner_displacement_px=120):
+  if max_corner_displacement_px<=0:raise ValueError('Invalid registration motion limit')
   if image.shape!=self.reference.shape:return None,{'status':'rejected','reason':'Resolution differs from calibration reference'}
   if is_reference:return self.H.copy(),{'status':'reference','inliers':None,'rmse_px':0.0}
   kp,desc=self.sift.detectAndCompute(cv2.cvtColor(image,cv2.COLOR_BGR2GRAY),self.mask)
@@ -46,7 +47,7 @@ class ViewCalibrator:
   try:movement=np.linalg.norm(project(A,corners)-corners,axis=1);H=self.H@np.linalg.inv(A)
   except (ValueError,np.linalg.LinAlgError):return None,{'status':'rejected','reason':'Invalid transform'}
   error=np.linalg.norm(project(A,a[inside])-b[inside],axis=1);rmse=float(np.sqrt(np.mean(error**2)))
-  if movement.max()>120 or rmse>2:return None,{'status':'rejected','reason':'Excessive registration motion/error','inliers':n,'rmse_px':rmse}
+  if movement.max()>max_corner_displacement_px or rmse>2:return None,{'status':'rejected','reason':'Excessive registration motion/error','inliers':n,'rmse_px':rmse,'max_corner_displacement_px':float(movement.max())}
   return H,{'status':'registered','inliers':n,'matches':len(good),'rmse_px':rmse,'max_corner_displacement_px':float(movement.max()),'reference_to_current':A.tolist(),'note':'Feature consistency only; not proof of correct camera identity or metric accuracy.'}
 def in_bounds(xy,bounds):
  x,y=xy;x0,y0,x1,y1=bounds;return x0<=x<=x1 and y0<=y<=y1

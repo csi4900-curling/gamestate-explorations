@@ -1,0 +1,26 @@
+{
+  "status": "agent_source_only_shot_origin_labels_before_model_inference",
+  "source_sha256": "49429abdd3796e8240e66c201d37e94e71a7bb6225890b2492bea26d2f70d560",
+  "source_interval_s": [1800, 2100],
+  "review": "validation/curlobserver-learned-probe/swiss-phase-transfer/shot-review",
+  "meaning": "1 = throwing-side action of a live delivered stone visible; 0 = no such action; null = uncertain action/boundary from source-only sheets",
+  "labels": {
+    "S01": null, "S02": 0, "S03": 0, "S04": 0, "S05": 1,
+    "S06": 0, "S07": 1, "S08": 0, "S09": 0, "S10": 0,
+    "S11": 0, "S12": 0, "S13": 0, "S14": 0, "S15": 0,
+    "S16": 0, "S17": 0, "S18": 0, "S19": 0, "S20": 0,
+    "S21": 0, "S22": 0, "S23": 0, "S24": 1, "S25": 0,
+    "S26": null, "S27": 0, "S28": 1, "S29": 0, "S30": null,
+    "S31": 0, "S32": 1, "S33": 0
+  },
+  "ambiguous_notes": {
+    "S01": "Subsecond closeup at interval start; red stone already in subsequent travel shot.",
+    "S26": "Red player prepares with stone before a brief house view and a later delivery-side shot.",
+    "S30": "Yellow player prepares with stone before a brief house view and a later delivery-side shot."
+  },
+  "limitations": [
+    "Single-agent source-only review from three frames per detected shot.",
+    "The long 1933–1988 s phase is a broadcast graphic/replay montage; visible stone closeups there are not live deliveries.",
+    "These labels are not independent full-video throw-event ground truth."
+  ]
+}

@@ -1,0 +1,819 @@
+{
+  "status": "postscore_rebased_partial_board_observations_not_game_states",
+  "source_id": "yu_YoFrFd20",
+  "source_sha256": "e63c9b063b5b11ad5173083dffe974d909c78e5d01312740b87bccc006402013",
+  "high_resolution_source_sha256": "490b8703b2fcfaa2fbd61f8b45ebc45fd3281f0e9453bb4721f56e64056cd620",
+  "source_interval_s": [
+    0.0,
+    6683.0
+  ],
+  "candidates_sha256": "9176ac5934ce3729e2a7281d954d9b4f968cc6804c0686d9ca4fcc5f0aa02768",
+  "screen_sha256": "6b918d976778f3fbf802bdc63c39123202bc6d86cc04fb707d3823ecf458e37d",
+  "motion_sha256": "48554aa471eaf36cf6bf9f39f2fbb662ed3cfa304dc601c7e82fe17089487f94",
+  "hold_sha256": "224b6e71000f83e1bba31abf267a5463f0bd84028624d22331f1d325530cc292",
+  "source_motion_sha256": "5f24a8066fb58bba86c2f6892d184d49822dbeddba1a93e3b79435b9c22eca9a",
+  "right_reference_anchor_time_s": 6525.0,
+  "right_reference_anchor_registration": {
+    "status": "registered",
+    "inliers": 39,
+    "matches": 59,
+    "rmse_px": 1.0726771652157872,
+    "max_corner_displacement_px": 90.02350488819164,
+    "reference_to_current": [
+      [
+        1.1141360242253953,
+        0.08979434438406485,
+        -195.68106569114437
+      ],
+      [
+        -0.005874037539324768,
+        1.0912579823239008,
+        -2.3774273820660925
+      ],
+      [
+        4.258787514731362e-06,
+        1.9325571868452738e-05,
+        1.0
+      ]
+    ],
+    "note": "Feature consistency only; not proof of correct camera identity or metric accuracy."
+  },
+  "rebase_code_sha256": "6d917ae47e3dfaef45ab5def54f4c5b5ea15c3e82f3d79181e3ac17900904ff9",
+  "vision_calibration_sha256": "03e164c0f26c0b2e3ebca7e85577c5874dbb83128aab52569776e60cd293103b",
+  "rectification_sha256": "fe7c6c832c2bc6b5095ce932ffd7905a59f9fdf8c0b4e029816e1108d1238402",
+  "board_code_sha256": "c6c8c24986b946381b3ab90ee8dc514d0cfde0cae52554ba04157a56835e7ffe",
+  "runner_sha256": "8b660cee94bab313963b30c46ff5491c1f50ac69bc2c0efea36c7d09a667c168",
+  "board_status_counts": {
+    "partial_stable_view_local_board": 1
+  },
+  "rows": [
+    {
+      "candidate_id": "S86",
+      "colour": "red",
+      "crossing_time_s": 3667.875,
+      "receiving_view": "left",
+      "receiving_path_last_observed_s": 3673.0,
+      "next_passage_candidate_time_s": 3725.075,
+      "tail": {
+        "start_s": 3673.5,
+        "stop_s": 3702.875,
+        "eligible": true,
+        "reason": "bounded_quiet_tail"
+      },
+      "registered_frame_count": 29,
+      "registration_abstention_count": 0,
+      "board": {
+        "status": "partial_stable_view_local_board",
+        "stones": [
+          {
+            "colour": "red",
+            "view_local_ground_position_m": [
+              -0.8309401675176367,
+              -1.0070985963207824
+            ],
+            "first_seen_s": 3674.0,
+            "last_seen_s": 3702.0,
+            "supporting_frame_count": 23,
+            "max_position_spread_m": 0.022600582735335207,
+            "persistent_stone_identity": null,
+            "local_observation_id": "V01"
+          }
+        ],
+        "last_registered_s": 3702.0
+      },
+      "coordinate_frame": {
+        "name": "receiving_camera_view_local_ice_plane",
+        "origin": "target_house_button",
+        "unit": "metres_conditional_projection",
+        "orientation_shared_across_views": false,
+        "metric_accuracy_verified": false
+      },
+      "completeness": "unknown_from_video",
+      "post_throw_settle_verified": false,
+      "persistent_stone_ids_verified": false,
+      "simulation_ready": false,
+      "frames": [
+        {
+          "source_time_s": 3674.0,
+          "status": "registered",
+          "stones": [
+            {
+              "colour": "yellow",
+              "pixel_center": [
+                496.7,
+                678.85
+              ],
+              "view_local_ground_position_m": [
+                0.0557394204096977,
+                0.3649166814404808
+              ],
+              "localization_status": "conditional_height_corrected"
+            },
+            {
+              "colour": "red",
+              "pixel_center": [
+                576.82,
+                620.55
+              ],
+              "view_local_ground_position_m": [
+                0.39925040779618637,
+                -0.4990682850150251
+              ],
+              "localization_status": "conditional_height_corrected"
+            },
+            {
+              "colour": "red",
+              "pixel_center": [
+                287.82,
+                584.03
+              ],
+              "view_local_ground_position_m": [
+                -0.8339331890479311,
+                -1.0087060468342106
+              ],
+              "localization_status": "conditional_height_corrected"
+            },
+            {
+              "colour": "red",
+              "pixel_center": [
+                325.01,
+                428.18
+              ],
+              "view_local_ground_position_m": [
+                -0.7395003284543304,
+                -3.771943546102362
+              ],
+              "localization_status": "conditional_height_corrected"
+            }
+          ]
+        },
+        {
+          "source_time_s": 3675.0,
+          "status": "registered",
+          "stones": [
+            {
+              "colour": "yellow",
+              "pixel_center": [
+                516.84,
+                754.22
+              ],
+              "view_local_ground_position_m": [
+                0.13220293160051658,
+                1.3735996755041577
+              ],
+              "localization_status": "conditional_height_corrected"
+            },
+            {
+              "colour": "red",
+              "pixel_center": [
+                425.95,
+                818.56
+              ],
+              "view_local_ground_position_m": [
+                -0.2103232763451249,
+                2.1741336290602975
+              ],
+              "localization_status": "conditional_height_corrected"
+            },
+            {
+              "colour": "red",
+              "pixel_center": [
+                738.47,
+                620.47
+              ],
+              "view_local_ground_position_m": [
+                1.0776729986957883,
+                -0.5216698004787458
+              ],
+              "localization_status": "conditional_height_corrected"
+            },
+            {
+              "colour": "red",
+              "pixel_center": [
+                287.15,
+                584.03
+              ],
+              "view_local_ground_position_m": [
+                -0.8319003602446419,
+                -1.0002438038917811
+              ],
+              "localization_status": "conditional_height_corrected"
+            },
+            {
+              "colour": "red",
+              "pixel_center": [
+                325.39,
+                427.83
+              ],
+              "view_local_ground_position_m": [
+                -0.7431800947522901,
+                -3.7830132974199437
+              ],
+              "localization_status": "conditional_height_corrected"
+            }
+          ]
+        },
+        {
+          "source_time_s": 3676.0,
+          "status": "registered",
+          "stones": [
+            {
+              "colour": "red",
+              "pixel_center": [
+                874.81,
+                622.12
+              ],
+              "view_local_ground_position_m": [
+                1.6478156234165056,
+                -0.5272908308538033
+              ],
+              "localization_status": "conditional_height_corrected"
+            },
+            {
+              "colour": "red",
+              "pixel_center": [
+                286.22,
+                584.4
+              ],
+              "view_local_ground_position_m": [
+                -0.8359885437372322,
+                -0.9954954400265361
+              ],
+              "localization_status": "conditional_height_corrected"
+            },
+            {
+              "colour": "red",
+              "pixel_center": [
+                325.53,
+                427.83
+              ],
+              "view_local_ground_position_m": [
+                -0.740781271779454,
+                -3.778529590611937
+              ],
+              "localization_status": "conditional_height_corrected"
+            }
+          ]
+        },
+        {
+          "source_time_s": 3677.0,
+          "status": "registered",
+          "stones": [
+            {
+              "colour": "red",
+              "pixel_center": [
+                286.12,
+                584.16
+              ],
+              "view_local_ground_position_m": [
+                -0.8379489315617029,
+                -0.9978327150688079
+              ],
+              "localization_status": "conditional_height_corrected"
+            },
+            {
+              "colour": "red",
+              "pixel_center": [
+                325.14,
+                427.7
+              ],
+              "view_local_ground_position_m": [
+                -0.744733740198322,
+                -3.78067741469292
+              ],
+              "localization_status": "conditional_height_corrected"
+            }
+          ]
+        },
+        {
+          "source_time_s": 3678.0,
+          "status": "registered",
+          "stones": [
+            {
+              "colour": "red",
+              "pixel_center": [
+                325.14,
+                427.7
+              ],
+              "view_local_ground_position_m": [
+                -0.7411836774097735,
+                -3.781191664865997
+              ],
+              "localization_status": "conditional_height_corrected"
+            }
+          ]
+        },
+        {
+          "source_time_s": 3679.0,
+          "status": "registered",
+          "stones": [
+            {
+              "colour": "red",
+              "pixel_center": [
+                303.44,
+                624.91
+              ],
+              "view_local_ground_position_m": [
+                -0.7476341369514644,
+                -0.3792689945908155
+              ],
+              "localization_status": "conditional_height_corrected"
+            },
+            {
+              "colour": "red",
+              "pixel_center": [
+                325.14,
+                427.6
+              ],
+              "view_local_ground_position_m": [
+                -0.7406407392170358,
+                -3.784906398868144
+              ],
+              "localization_status": "conditional_height_corrected"
+            }
+          ]
+        },
+        {
+          "source_time_s": 3680.0,
+          "status": "registered",
+          "stones": [
+            {
+              "colour": "red",
+              "pixel_center": [
+                325.51,
+                428.15
+              ],
+              "view_local_ground_position_m": [
+                -0.7362374385800222,
+                -3.7776637242540607
+              ],
+              "localization_status": "conditional_height_corrected"
+            }
+          ]
+        },
+        {
+          "source_time_s": 3681.0,
+          "status": "registered",
+          "stones": [
+            {
+              "colour": "red",
+              "pixel_center": [
+                325.32,
+                428.3
+              ],
+              "view_local_ground_position_m": [
+                -0.7406546099175875,
+                -3.7763619345763937
+              ],
+              "localization_status": "conditional_height_corrected"
+            }
+          ]
+        },
+        {
+          "source_time_s": 3682.0,
+          "status": "registered",
+          "stones": [
+            {
+              "colour": "red",
+              "pixel_center": [
+                159.44,
+                673.72
+              ],
+              "view_local_ground_position_m": [
+                -1.314490514627055,
+                0.36185934469599396
+              ],
+              "localization_status": "conditional_height_corrected"
+            },
+            {
+              "colour": "red",
+              "pixel_center": [
+                324.73,
+                427.09
+              ],
+              "view_local_ground_position_m": [
+                -0.7409279210463401,
+                -3.798259365470241
+              ],
+              "localization_status": "conditional_height_corrected"
+            }
+          ]
+        },
+        {
+          "source_time_s": 3683.0,
+          "status": "registered",
+          "stones": [
+            {
+              "colour": "red",
+              "pixel_center": [
+                216.52,
+                656.43
+              ],
+              "view_local_ground_position_m": [
+                -1.0920561306122218,
+                0.10123507486401662
+              ],
+              "localization_status": "conditional_height_corrected"
+            }
+          ]
+        },
+        {
+          "source_time_s": 3684.0,
+          "status": "registered",
+          "stones": [
+            {
+              "colour": "red",
+              "pixel_center": [
+                290.04,
+                584.09
+              ],
+              "view_local_ground_position_m": [
+                -0.8260607670593754,
+                -1.0063072787417033
+              ],
+              "localization_status": "conditional_height_corrected"
+            }
+          ]
+        },
+        {
+          "source_time_s": 3685.0,
+          "status": "registered",
+          "stones": [
+            {
+              "colour": "red",
+              "pixel_center": [
+                288.89,
+                585.28
+              ],
+              "view_local_ground_position_m": [
+                -0.8284721392224932,
+                -0.9878617595167887
+              ],
+              "localization_status": "conditional_height_corrected"
+            },
+            {
+              "colour": "red",
+              "pixel_center": [
+                326.67,
+                427.94
+              ],
+              "view_local_ground_position_m": [
+                -0.7303289199067936,
+                -3.7813788330763063
+              ],
+              "localization_status": "conditional_height_corrected"
+            }
+          ]
+        },
+        {
+          "source_time_s": 3686.0,
+          "status": "registered",
+          "stones": [
+            {
+              "colour": "red",
+              "pixel_center": [
+                286.22,
+                585.33
+              ],
+              "view_local_ground_position_m": [
+                -0.8396062782456445,
+                -0.9862255307858246
+              ],
+              "localization_status": "conditional_height_corrected"
+            },
+            {
+              "colour": "red",
+              "pixel_center": [
+                324.93,
+                427.71
+              ],
+              "view_local_ground_position_m": [
+                -0.739963937207368,
+                -3.785042920429899
+              ],
+              "localization_status": "conditional_height_corrected"
+            }
+          ]
+        },
+        {
+          "source_time_s": 3687.0,
+          "status": "registered",
+          "stones": [
+            {
+              "colour": "red",
+              "pixel_center": [
+                287.66,
+                584.01
+              ],
+              "view_local_ground_position_m": [
+                -0.8343457775598994,
+                -1.0108164886140976
+              ],
+              "localization_status": "conditional_height_corrected"
+            }
+          ]
+        },
+        {
+          "source_time_s": 3688.0,
+          "status": "registered",
+          "stones": [
+            {
+              "colour": "red",
+              "pixel_center": [
+                289.6,
+                583.89
+              ],
+              "view_local_ground_position_m": [
+                -0.8232946347209231,
+                -1.012120816206143
+              ],
+              "localization_status": "conditional_height_corrected"
+            }
+          ]
+        },
+        {
+          "source_time_s": 3689.0,
+          "status": "registered",
+          "stones": [
+            {
+              "colour": "red",
+              "pixel_center": [
+                289.72,
+                583.97
+              ],
+              "view_local_ground_position_m": [
+                -0.8246523234021427,
+                -1.0097637690329158
+              ],
+              "localization_status": "conditional_height_corrected"
+            }
+          ]
+        },
+        {
+          "source_time_s": 3690.0,
+          "status": "registered",
+          "stones": [
+            {
+              "colour": "red",
+              "pixel_center": [
+                290.32,
+                583.96
+              ],
+              "view_local_ground_position_m": [
+                -0.821940316961957,
+                -1.0097630867565408
+              ],
+              "localization_status": "conditional_height_corrected"
+            }
+          ]
+        },
+        {
+          "source_time_s": 3691.0,
+          "status": "registered",
+          "stones": [
+            {
+              "colour": "red",
+              "pixel_center": [
+                287.25,
+                583.67
+              ],
+              "view_local_ground_position_m": [
+                -0.830615280300894,
+                -1.0058667740718783
+              ],
+              "localization_status": "conditional_height_corrected"
+            }
+          ]
+        },
+        {
+          "source_time_s": 3692.0,
+          "status": "registered",
+          "stones": [
+            {
+              "colour": "red",
+              "pixel_center": [
+                287.25,
+                583.67
+              ],
+              "view_local_ground_position_m": [
+                -0.8348295790151101,
+                -1.0128623416171239
+              ],
+              "localization_status": "conditional_height_corrected"
+            }
+          ]
+        },
+        {
+          "source_time_s": 3693.0,
+          "status": "registered",
+          "stones": [
+            {
+              "colour": "red",
+              "pixel_center": [
+                287.25,
+                583.67
+              ],
+              "view_local_ground_position_m": [
+                -0.8309401675176367,
+                -1.0070985963207824
+              ],
+              "localization_status": "conditional_height_corrected"
+            }
+          ]
+        },
+        {
+          "source_time_s": 3694.0,
+          "status": "registered",
+          "stones": [
+            {
+              "colour": "red",
+              "pixel_center": [
+                361.72,
+                657.11
+              ],
+              "view_local_ground_position_m": [
+                -0.49448071944215644,
+                0.08325136671600028
+              ],
+              "localization_status": "conditional_height_corrected"
+            },
+            {
+              "colour": "red",
+              "pixel_center": [
+                287.25,
+                583.67
+              ],
+              "view_local_ground_position_m": [
+                -0.8351263859846001,
+                -1.013679713649482
+              ],
+              "localization_status": "conditional_height_corrected"
+            }
+          ]
+        },
+        {
+          "source_time_s": 3695.0,
+          "status": "registered",
+          "stones": [
+            {
+              "colour": "red",
+              "pixel_center": [
+                359.17,
+                652.62
+              ],
+              "view_local_ground_position_m": [
+                -0.5061706402486517,
+                0.01821248387162962
+              ],
+              "localization_status": "conditional_height_corrected"
+            },
+            {
+              "colour": "red",
+              "pixel_center": [
+                287.25,
+                583.67
+              ],
+              "view_local_ground_position_m": [
+                -0.8351348113198825,
+                -1.0147233041176746
+              ],
+              "localization_status": "conditional_height_corrected"
+            }
+          ]
+        },
+        {
+          "source_time_s": 3696.0,
+          "status": "registered",
+          "stones": [
+            {
+              "colour": "red",
+              "pixel_center": [
+                287.25,
+                583.67
+              ],
+              "view_local_ground_position_m": [
+                -0.8310124260434734,
+                -1.007302489554914
+              ],
+              "localization_status": "conditional_height_corrected"
+            }
+          ]
+        },
+        {
+          "source_time_s": 3697.0,
+          "status": "registered",
+          "stones": [
+            {
+              "colour": "red",
+              "pixel_center": [
+                289.84,
+                583.96
+              ],
+              "view_local_ground_position_m": [
+                -0.8198174081738439,
+                -1.0027466859692837
+              ],
+              "localization_status": "conditional_height_corrected"
+            }
+          ]
+        },
+        {
+          "source_time_s": 3698.0,
+          "status": "registered",
+          "stones": [
+            {
+              "colour": "red",
+              "pixel_center": [
+                289.65,
+                583.88
+              ],
+              "view_local_ground_position_m": [
+                -0.8245465954338163,
+                -1.010727102286998
+              ],
+              "localization_status": "conditional_height_corrected"
+            }
+          ]
+        },
+        {
+          "source_time_s": 3699.0,
+          "status": "registered",
+          "stones": [
+            {
+              "colour": "red",
+              "pixel_center": [
+                289.65,
+                583.88
+              ],
+              "view_local_ground_position_m": [
+                -0.8249415988531281,
+                -1.0087349305098965
+              ],
+              "localization_status": "conditional_height_corrected"
+            }
+          ]
+        },
+        {
+          "source_time_s": 3700.0,
+          "status": "registered",
+          "stones": [
+            {
+              "colour": "red",
+              "pixel_center": [
+                286.93,
+                584.06
+              ],
+              "view_local_ground_position_m": [
+                -0.8327846176225898,
+                -1.0034783613779865
+              ],
+              "localization_status": "conditional_height_corrected"
+            }
+          ]
+        },
+        {
+          "source_time_s": 3701.0,
+          "status": "registered",
+          "stones": [
+            {
+              "colour": "red",
+              "pixel_center": [
+                289.49,
+                584.25
+              ],
+              "view_local_ground_position_m": [
+                -0.8251543610023426,
+                -1.0050143945856889
+              ],
+              "localization_status": "conditional_height_corrected"
+            }
+          ]
+        },
+        {
+          "source_time_s": 3702.0,
+          "status": "registered",
+          "stones": [
+            {
+              "colour": "red",
+              "pixel_center": [
+                289.62,
+                584.17
+              ],
+              "view_local_ground_position_m": [
+                -0.8216051941902183,
+                -1.0005412797325441
+              ],
+              "localization_status": "conditional_height_corrected"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "All boards are partial view-local observations of stable proposals, never complete game states.",
+    "The quiet tail ends before the next passage candidate, even when that candidate may be false.",
+    "A stable cap proposal can be a false object; physical stone identity and metric error are unverified.",
+    "No exact stone settle time, complete sheet coverage, release time, or simulation-ready input is inferred."
+  ]
+}

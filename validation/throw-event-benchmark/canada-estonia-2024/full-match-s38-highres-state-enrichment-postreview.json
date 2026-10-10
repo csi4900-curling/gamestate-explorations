@@ -1,0 +1,427 @@
+{
+  "status": "postreview_highres_single_candidate_full_match_enrichment_not_game_truth",
+  "full_match_source_sha256": "2e2b84bb2d9dffa497ee850ddbeaf0d5cae0d697377b6eee6a1ef481f449f3da",
+  "highres_excerpt_sha256": "eaa88f73b56ea982808468a642ad5481428e758881f41cfaf812be58f949a533",
+  "full_match_sequence_id": "P034",
+  "next_full_match_candidate_time_s": 1881.732,
+  "input_sha256": {
+    "full_sequence": "90e241ab1acbd0eef21302c3a769ee28ce146138e9af4fbafb998d4126ec6079",
+    "highres_bridge": "049f194548197cfe83e37f5efcae5d1bb3531e0ef2b254e61a99d8648c62382c",
+    "left_partial_caps": "49c47752e7af31cb317df8e048ce18cd9ccd83ce79edd7ae57b7dd31bae593fb",
+    "cross_resolution_alignment": "d581352fd60944de973b5fd97fd4bf0874d231336d173c710e30733c05ac4c62"
+  },
+  "runner_sha256": "a65b61f69061784df586e90b17a7a4b3dabfe87d5725473e08617736e593d88d",
+  "candidate_row": {
+    "candidate_id": "left:R01-S38",
+    "observation_time_s": 1759.52,
+    "observation_kind": "left_tracked_passage",
+    "colour_claim": "yellow",
+    "left_event_id": "R01-S38",
+    "left_source_pixel_class": null,
+    "right_temporal_candidate_ids": [
+      "R01:A079"
+    ],
+    "right_temporal_candidate_count": 1,
+    "right_targeted_relaxed_raw_ids": [],
+    "right_targeted_relaxed_source_classes": {},
+    "evidence_tier": "one_right_time_colour_candidate",
+    "sequence_id": "P034",
+    "physical_throw_verified": false,
+    "game_state_after": {
+      "end_identity": null,
+      "official_shot_identity": null,
+      "release_time_s": null,
+      "settle_time_s": null,
+      "complete_board": null,
+      "persistent_stone_ids": null,
+      "metric_trajectory": null,
+      "spin_revolution_count": null,
+      "simulation_ready": false
+    },
+    "post_candidate_partial_cap_observation": {
+      "status": "no_stable_colour_cap_proposals",
+      "sample_times_s": [
+        1774.52,
+        1779.52,
+        1784.52
+      ],
+      "scene_mae_between_samples": [
+        19.021,
+        13.892
+      ],
+      "coordinate_frame": "source_right_camera_pixels_not_metric",
+      "stable_cap_proposals": [],
+      "complete_board_verified": false,
+      "physical_settle_verified": false,
+      "persistent_stone_identity_verified": false,
+      "simulation_ready": false
+    },
+    "pre_candidate_partial_cap_observation": {
+      "status": "no_stable_colour_cap_proposals",
+      "sample_times_s": [
+        1734.52,
+        1739.52,
+        1744.52
+      ],
+      "scene_mae_between_samples": [
+        2.977,
+        7.015
+      ],
+      "coordinate_frame": "source_right_camera_pixels_not_metric",
+      "stable_cap_proposals": [],
+      "complete_board_verified": false
+    },
+    "partial_cap_image_transition": {
+      "candidate_id": "left:R01-S38",
+      "pre_observation_status": "no_stable_colour_cap_proposals",
+      "post_observation_status": "no_stable_colour_cap_proposals",
+      "cross_window_scene_mae": 15.149,
+      "comparison_status": "partial_cap_image_comparison",
+      "image_cap_delta": {
+        "locally_retained": [],
+        "no_longer_observed": [],
+        "newly_observed": [],
+        "unresolved_before": [],
+        "unresolved_after": [],
+        "physical_transition_verified": false,
+        "simulation_ready": false
+      },
+      "physical_transition_verified": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    "high_resolution_evidence": {
+      "source_video_sha256": "eaa88f73b56ea982808468a642ad5481428e758881f41cfaf812be58f949a533",
+      "source_time_alignment": "zero_offset_best_at_1759.5_and_1779.5_s_only",
+      "right_moving_path": {
+        "coordinate_frame": "source_1080p_full_frame_pixels",
+        "observed_motion_onset_bracket_s": [
+          1753,
+          1754
+        ],
+        "direction_image_y": "positive_y",
+        "pre_onset_prefix_excluded": 22,
+        "samples": [
+          {
+            "source_time_s": 1753,
+            "pixel_center": [
+              1424,
+              627
+            ]
+          },
+          {
+            "source_time_s": 1754,
+            "pixel_center": [
+              1414,
+              699
+            ]
+          },
+          {
+            "source_time_s": 1755,
+            "pixel_center": [
+              1404,
+              775
+            ]
+          },
+          {
+            "source_time_s": 1756,
+            "pixel_center": [
+              1396,
+              857
+            ]
+          },
+          {
+            "source_time_s": 1757,
+            "pixel_center": [
+              1394,
+              945
+            ]
+          },
+          {
+            "source_time_s": 1758,
+            "pixel_center": [
+              1384.5,
+              1026.0
+            ]
+          }
+        ],
+        "end_status": "right_panel_exit_no_observed_stop"
+      },
+      "cross_view_handoff": {
+        "simultaneous_yellow_edge_frame_count": 23,
+        "simultaneous_yellow_edge_interval_s": [
+          1758.16667,
+          1758.9
+        ],
+        "edge_rois_xyxy_1080p": {
+          "left_entry": [
+            400,
+            0,
+            560,
+            180
+          ],
+          "right_exit": [
+            1300,
+            920,
+            1500,
+            1080
+          ]
+        },
+        "edge_pixel_threshold": 50,
+        "roi_selected_after_source_review": true,
+        "physical_stone_identity_verified": false
+      },
+      "left_receiving_path": {
+        "coordinate_frame": "source_1080p_full_frame_pixels",
+        "samples": [
+          {
+            "source_time_s": 1758.5,
+            "yellow_cap_pixel_center": [
+              472.0,
+              9.0
+            ]
+          },
+          {
+            "source_time_s": 1759.0,
+            "yellow_cap_pixel_center": [
+              473.0,
+              27.5
+            ]
+          },
+          {
+            "source_time_s": 1759.5,
+            "yellow_cap_pixel_center": [
+              474.0,
+              48.0
+            ]
+          },
+          {
+            "source_time_s": 1760.0,
+            "yellow_cap_pixel_center": [
+              475.0,
+              67.0
+            ]
+          },
+          {
+            "source_time_s": 1760.5,
+            "yellow_cap_pixel_center": [
+              477.0,
+              87.0
+            ]
+          },
+          {
+            "source_time_s": 1761.0,
+            "yellow_cap_pixel_center": [
+              478.0,
+              108.0
+            ]
+          },
+          {
+            "source_time_s": 1761.5,
+            "yellow_cap_pixel_center": [
+              479.0,
+              128.0
+            ]
+          },
+          {
+            "source_time_s": 1762.0,
+            "yellow_cap_pixel_center": [
+              481.5,
+              152.0
+            ]
+          },
+          {
+            "source_time_s": 1762.5,
+            "yellow_cap_pixel_center": [
+              484.0,
+              173.0
+            ]
+          },
+          {
+            "source_time_s": 1763.0,
+            "yellow_cap_pixel_center": [
+              487.0,
+              196.0
+            ]
+          },
+          {
+            "source_time_s": 1763.5,
+            "yellow_cap_pixel_center": [
+              492.0,
+              220.0
+            ]
+          },
+          {
+            "source_time_s": 1764.0,
+            "yellow_cap_pixel_center": [
+              496.0,
+              243.0
+            ]
+          },
+          {
+            "source_time_s": 1764.5,
+            "yellow_cap_pixel_center": [
+              501.0,
+              267.0
+            ]
+          },
+          {
+            "source_time_s": 1765.0,
+            "yellow_cap_pixel_center": [
+              505.5,
+              291.0
+            ]
+          },
+          {
+            "source_time_s": 1765.5,
+            "yellow_cap_pixel_center": [
+              510.0,
+              316.0
+            ]
+          },
+          {
+            "source_time_s": 1766.0,
+            "yellow_cap_pixel_center": [
+              515.0,
+              341.0
+            ]
+          },
+          {
+            "source_time_s": 1766.5,
+            "yellow_cap_pixel_center": [
+              523.0,
+              367.0
+            ]
+          },
+          {
+            "source_time_s": 1767.0,
+            "yellow_cap_pixel_center": [
+              529.0,
+              393.0
+            ]
+          },
+          {
+            "source_time_s": 1767.5,
+            "yellow_cap_pixel_center": [
+              536.0,
+              418.0
+            ]
+          },
+          {
+            "source_time_s": 1768.0,
+            "yellow_cap_pixel_center": [
+              543.0,
+              443.0
+            ]
+          },
+          {
+            "source_time_s": 1768.5,
+            "yellow_cap_pixel_center": [
+              551.0,
+              469.0
+            ]
+          },
+          {
+            "source_time_s": 1769.0,
+            "yellow_cap_pixel_center": [
+              561.0,
+              493.5
+            ]
+          },
+          {
+            "source_time_s": 1769.5,
+            "yellow_cap_pixel_center": [
+              570.0,
+              520.0
+            ]
+          },
+          {
+            "source_time_s": 1770.0,
+            "yellow_cap_pixel_center": [
+              581.0,
+              545.0
+            ]
+          },
+          {
+            "source_time_s": 1770.5,
+            "yellow_cap_pixel_center": [
+              591.0,
+              571.0
+            ]
+          },
+          {
+            "source_time_s": 1771.0,
+            "yellow_cap_pixel_center": [
+              600.5,
+              594.0
+            ]
+          },
+          {
+            "source_time_s": 1771.5,
+            "yellow_cap_pixel_center": [
+              613.0,
+              615.0
+            ]
+          }
+        ],
+        "prior_candidate_path_overlap_count": 11,
+        "prior_candidate_path_mean_center_difference_px": 1.981,
+        "prior_candidate_path_max_center_difference_px": 4.312,
+        "prior_candidate_path_metric_accuracy_verified": false
+      },
+      "post_event_left_partial_image_board": {
+        "status": "postreview_left_view_partial_image_caps_not_complete_board",
+        "selected_times_s": [
+          1784.5,
+          1789.5,
+          1794.5
+        ],
+        "repeated_caps": [
+          {
+            "colour": "yellow",
+            "median_pixel_center": [
+              253.0,
+              576.0
+            ],
+            "max_center_shift_px": 1.118,
+            "supporting_times_s": [
+              1784.5,
+              1789.5,
+              1794.5
+            ],
+            "physical_stone_identity": null
+          },
+          {
+            "colour": "yellow",
+            "median_pixel_center": [
+              710.0,
+              777.0
+            ],
+            "max_center_shift_px": 0.0,
+            "supporting_times_s": [
+              1784.5,
+              1789.5,
+              1794.5
+            ],
+            "physical_stone_identity": null
+          }
+        ],
+        "complete_board_verified": false,
+        "delivered_stone_identity_verified": false,
+        "physical_settle_verified": false,
+        "camera_registration_verified": false,
+        "simulation_ready": false
+      },
+      "preexisting_right_post_candidate_status": "no_stable_colour_cap_proposals",
+      "view_selection_note": "The post-event left panel shows the receiving house; the preexisting right post-candidate scan is not evidence that this left house lacks stones."
+    }
+  },
+  "complete_throw_sequence_verified": false,
+  "simulation_ready": false,
+  "limitations": [
+    "The high-resolution excerpt and full source agree at two selected checkpoints, not globally.",
+    "The full-match time/colour link and two-view identity were examined after the source was exposed.",
+    "Repeated yellow image caps form a partial observation, not a complete physical board or delivered-stone ID.",
+    "Only S38 is enriched; this does not solve full-match state reconstruction or event F1."
+  ]
+}

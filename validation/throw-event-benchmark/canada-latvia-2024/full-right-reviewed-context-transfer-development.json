@@ -1,0 +1,937 @@
+{
+  "status": "development_transfer_of_existing_context_cues_not_event_filter",
+  "source_video_sha256": "a7431b68ba6fb0df407383973a525a01eadbee2490caa0438a5a11d2df1dba13",
+  "input_sha256": {
+    "queue": "2625e8cabed673437e3682d9f04702e58386e21be4c8ddf2773189638558453a",
+    "singleton_audit": "4167884646336062d1b2508985b508563ad1ae57b643bc5725e75f948c662a3c",
+    "two_variant_audit": "f242b59ab4d77a8df2fe23b6035ba791853e731d1714a36f310a8b1659a7f2e9",
+    "one_second_greedy": "9036741e5c53e9cb9d5960e51abce5f440eb2a9cfa5cc3e17a7ab29c4805b4e2",
+    "two_second_greedy": "593cb32454c08883b30b5dc40330a90ce26478ee9a7cc7c365c6c5681e80407e",
+    "two_second_global": "512105bc6353f40c589a437b273bacbe71335fcece605573d659a7460b51504b",
+    "two_second_global_later": "ffd8581a8a7cc567ebd0b7e785ddab83926e058616e1b11cff7aebbec3d7079e"
+  },
+  "feature_code_sha256": {
+    "ring": "4e7ea73e5d460f779d84dbe98c71811cd1a12891d9915d1435224e6e0ebd1d86",
+    "underpoint": "f5bc302786c2e0e31bdcb8a9cab7e9982648bffec464407b88b39cbccbf6b7a9",
+    "paired_tier": "6316de56e54b3ecaabf3a3adf09d1a8ea7b31243b13ec768ba760f2a96133edf"
+  },
+  "runner_sha256": "9b43f4688eb3a76d9d27ab8c271397a3058ae160ea8f7d34a2e0c3a2ca78321e",
+  "prior_ring_threshold": 0.44,
+  "frozen_paired_threshold": 0.25,
+  "reviewed_proposal_count": 33,
+  "counts_by_class_and_prior_ring_tier": {
+    "mixed_or_identity_uncertain": {
+      "isolated": 4,
+      "cluttered": 1
+    },
+    "mixed_stone_person_or_equipment_pixels_identity_uncertain": {
+      "isolated": 2,
+      "cluttered": 4
+    },
+    "person_or_equipment_pixels": {
+      "isolated": 4,
+      "cluttered": 6
+    },
+    "person_or_equipment_pixels_in_sampled_prefix": {
+      "isolated": 3,
+      "cluttered": 2
+    },
+    "stone_pixels": {
+      "isolated": 7,
+      "cluttered": 0
+    }
+  },
+  "counts_by_class_and_frozen_paired_tier": {
+    "mixed_or_identity_uncertain": {
+      "clear": 1,
+      "cluttered": 4,
+      "unavailable": 0
+    },
+    "mixed_stone_person_or_equipment_pixels_identity_uncertain": {
+      "clear": 1,
+      "cluttered": 5,
+      "unavailable": 0
+    },
+    "person_or_equipment_pixels": {
+      "clear": 0,
+      "cluttered": 10,
+      "unavailable": 0
+    },
+    "person_or_equipment_pixels_in_sampled_prefix": {
+      "clear": 1,
+      "cluttered": 4,
+      "unavailable": 0
+    },
+    "stone_pixels": {
+      "clear": 7,
+      "cluttered": 0,
+      "unavailable": 0
+    }
+  },
+  "rows": [
+    {
+      "proposal_id": "one_second_greedy:A046:1",
+      "source_pixel_class": "person_or_equipment_pixels_in_sampled_prefix",
+      "passage_time_s": 987.692,
+      "sample_times_s": [
+        987.0,
+        988.0,
+        989.0
+      ],
+      "sampling_policy": "nearest_three_prefix_points",
+      "median_nonice_ring_fraction": 0.4324,
+      "sample_nonice_ring_fractions": [
+        0.475,
+        0.4226,
+        0.4324
+      ],
+      "median_underpoint_nonice_fraction": 0.477,
+      "sample_underpoint_nonice_fractions": [
+        0.4625,
+        0.477,
+        0.7533
+      ],
+      "prior_isolated_ice_context": true,
+      "frozen_paired_context_tier": "context_cluttered_review",
+      "physical_throw_verified": false
+    },
+    {
+      "proposal_id": "one_second_greedy:A374:1",
+      "source_pixel_class": "person_or_equipment_pixels",
+      "passage_time_s": 5586.333,
+      "sample_times_s": [
+        5585.0,
+        5586.0,
+        5587.0
+      ],
+      "sampling_policy": "nearest_three_prefix_points",
+      "median_nonice_ring_fraction": 0.4732,
+      "sample_nonice_ring_fractions": [
+        0.6052,
+        0.4379,
+        0.4732
+      ],
+      "median_underpoint_nonice_fraction": 0.2586,
+      "sample_underpoint_nonice_fractions": [
+        0.302,
+        0.2164,
+        0.2586
+      ],
+      "prior_isolated_ice_context": false,
+      "frozen_paired_context_tier": "context_cluttered_review",
+      "physical_throw_verified": false
+    },
+    {
+      "proposal_id": "two_second_global:A083:1",
+      "source_pixel_class": "person_or_equipment_pixels_in_sampled_prefix",
+      "passage_time_s": 1194.379,
+      "sample_times_s": [
+        1193.0,
+        1194.0,
+        1196.0
+      ],
+      "sampling_policy": "nearest_three_prefix_points",
+      "median_nonice_ring_fraction": 0.5053,
+      "sample_nonice_ring_fractions": [
+        0.5686,
+        0.5053,
+        0.4885
+      ],
+      "median_underpoint_nonice_fraction": 0.2895,
+      "sample_underpoint_nonice_fractions": [
+        0.2895,
+        0.0296,
+        0.2987
+      ],
+      "prior_isolated_ice_context": false,
+      "frozen_paired_context_tier": "context_cluttered_review",
+      "physical_throw_verified": false
+    },
+    {
+      "proposal_id": "two_second_global:A184:1",
+      "source_pixel_class": "stone_pixels",
+      "passage_time_s": 2363.212,
+      "sample_times_s": [
+        2362.0,
+        2363.0,
+        2364.0
+      ],
+      "sampling_policy": "nearest_three_prefix_points",
+      "median_nonice_ring_fraction": 0.0171,
+      "sample_nonice_ring_fractions": [
+        0.0171,
+        0.0049,
+        0.0236
+      ],
+      "median_underpoint_nonice_fraction": 0.0,
+      "sample_underpoint_nonice_fractions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "prior_isolated_ice_context": true,
+      "frozen_paired_context_tier": "clear_context_review",
+      "physical_throw_verified": false
+    },
+    {
+      "proposal_id": "two_second_global:A217:1",
+      "source_pixel_class": "person_or_equipment_pixels_in_sampled_prefix",
+      "passage_time_s": 2835.844,
+      "sample_times_s": [
+        2834.0,
+        2835.0,
+        2837.0
+      ],
+      "sampling_policy": "nearest_three_prefix_points",
+      "median_nonice_ring_fraction": 0.6983,
+      "sample_nonice_ring_fractions": [
+        0.8695,
+        0.6962,
+        0.6983
+      ],
+      "median_underpoint_nonice_fraction": 0.9053,
+      "sample_underpoint_nonice_fractions": [
+        0.9053,
+        0.9757,
+        0.2276
+      ],
+      "prior_isolated_ice_context": false,
+      "frozen_paired_context_tier": "context_cluttered_review",
+      "physical_throw_verified": false
+    },
+    {
+      "proposal_id": "two_second_global:A315:1",
+      "source_pixel_class": "person_or_equipment_pixels",
+      "passage_time_s": 3597.828,
+      "sample_times_s": [
+        3597.0,
+        3599.0,
+        3600.0
+      ],
+      "sampling_policy": "nearest_three_raw_track_points",
+      "median_nonice_ring_fraction": 0.5396,
+      "sample_nonice_ring_fractions": [
+        0.3601,
+        0.5396,
+        0.5409
+      ],
+      "median_underpoint_nonice_fraction": 0.1474,
+      "sample_underpoint_nonice_fractions": [
+        0.0263,
+        0.1474,
+        0.2151
+      ],
+      "prior_isolated_ice_context": false,
+      "frozen_paired_context_tier": "context_cluttered_review",
+      "physical_throw_verified": false
+    },
+    {
+      "proposal_id": "two_second_global:A323:1",
+      "source_pixel_class": "stone_pixels",
+      "passage_time_s": 3730.245,
+      "sample_times_s": [
+        3729.0,
+        3730.0,
+        3731.0
+      ],
+      "sampling_policy": "nearest_three_prefix_points",
+      "median_nonice_ring_fraction": 0.1655,
+      "sample_nonice_ring_fractions": [
+        0.2602,
+        0.1655,
+        0.0176
+      ],
+      "median_underpoint_nonice_fraction": 0.0,
+      "sample_underpoint_nonice_fractions": [
+        0.0,
+        0.0079,
+        0.0
+      ],
+      "prior_isolated_ice_context": true,
+      "frozen_paired_context_tier": "clear_context_review",
+      "physical_throw_verified": false
+    },
+    {
+      "proposal_id": "two_second_global:A358:1",
+      "source_pixel_class": "person_or_equipment_pixels",
+      "passage_time_s": 4108.0,
+      "sample_times_s": [
+        4107.0,
+        4108.0,
+        4110.0
+      ],
+      "sampling_policy": "nearest_three_prefix_points",
+      "median_nonice_ring_fraction": 0.5211,
+      "sample_nonice_ring_fractions": [
+        0.4802,
+        0.5211,
+        0.6726
+      ],
+      "median_underpoint_nonice_fraction": 0.3329,
+      "sample_underpoint_nonice_fractions": [
+        0.3086,
+        0.3566,
+        0.3329
+      ],
+      "prior_isolated_ice_context": false,
+      "frozen_paired_context_tier": "context_cluttered_review",
+      "physical_throw_verified": false
+    },
+    {
+      "proposal_id": "two_second_global:A391:1",
+      "source_pixel_class": "stone_pixels",
+      "passage_time_s": 4912.765,
+      "sample_times_s": [
+        4912.0,
+        4913.0,
+        4914.0
+      ],
+      "sampling_policy": "nearest_three_prefix_points",
+      "median_nonice_ring_fraction": 0.0171,
+      "sample_nonice_ring_fractions": [
+        0.007,
+        0.0197,
+        0.0171
+      ],
+      "median_underpoint_nonice_fraction": 0.0,
+      "sample_underpoint_nonice_fractions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "prior_isolated_ice_context": true,
+      "frozen_paired_context_tier": "clear_context_review",
+      "physical_throw_verified": false
+    },
+    {
+      "proposal_id": "two_second_global:A399:1",
+      "source_pixel_class": "stone_pixels",
+      "passage_time_s": 5116.556,
+      "sample_times_s": [
+        5116.0,
+        5117.0,
+        5118.0
+      ],
+      "sampling_policy": "nearest_three_prefix_points",
+      "median_nonice_ring_fraction": 0.0508,
+      "sample_nonice_ring_fractions": [
+        0.0508,
+        0.0322,
+        0.0633
+      ],
+      "median_underpoint_nonice_fraction": 0.0,
+      "sample_underpoint_nonice_fractions": [
+        0.0,
+        0.0,
+        0.0033
+      ],
+      "prior_isolated_ice_context": true,
+      "frozen_paired_context_tier": "clear_context_review",
+      "physical_throw_verified": false
+    },
+    {
+      "proposal_id": "two_second_global:A429:1",
+      "source_pixel_class": "person_or_equipment_pixels",
+      "passage_time_s": 5587.16,
+      "sample_times_s": [
+        5586.0,
+        5587.0,
+        5588.0
+      ],
+      "sampling_policy": "nearest_three_prefix_points",
+      "median_nonice_ring_fraction": 0.4236,
+      "sample_nonice_ring_fractions": [
+        0.4137,
+        0.4236,
+        0.4392
+      ],
+      "median_underpoint_nonice_fraction": 0.9895,
+      "sample_underpoint_nonice_fractions": [
+        0.998,
+        0.9895,
+        0.9776
+      ],
+      "prior_isolated_ice_context": true,
+      "frozen_paired_context_tier": "context_cluttered_review",
+      "physical_throw_verified": false
+    },
+    {
+      "proposal_id": "two_second_global:A434:1",
+      "source_pixel_class": "person_or_equipment_pixels",
+      "passage_time_s": 5605.984,
+      "sample_times_s": [
+        5605.0,
+        5606.0,
+        5607.0
+      ],
+      "sampling_policy": "nearest_three_prefix_points",
+      "median_nonice_ring_fraction": 0.2781,
+      "sample_nonice_ring_fractions": [
+        0.2405,
+        0.2781,
+        0.3372
+      ],
+      "median_underpoint_nonice_fraction": 0.7342,
+      "sample_underpoint_nonice_fractions": [
+        0.6546,
+        0.7342,
+        0.8079
+      ],
+      "prior_isolated_ice_context": true,
+      "frozen_paired_context_tier": "context_cluttered_review",
+      "physical_throw_verified": false
+    },
+    {
+      "proposal_id": "two_second_global:A440:1",
+      "source_pixel_class": "mixed_or_identity_uncertain",
+      "passage_time_s": 5660.056,
+      "sample_times_s": [
+        5659.0,
+        5660.0,
+        5661.0
+      ],
+      "sampling_policy": "nearest_three_prefix_points",
+      "median_nonice_ring_fraction": 0.4607,
+      "sample_nonice_ring_fractions": [
+        0.5863,
+        0.4607,
+        0.3795
+      ],
+      "median_underpoint_nonice_fraction": 0.0211,
+      "sample_underpoint_nonice_fractions": [
+        0.2388,
+        0.0211,
+        0.0
+      ],
+      "prior_isolated_ice_context": false,
+      "frozen_paired_context_tier": "context_cluttered_review",
+      "physical_throw_verified": false
+    },
+    {
+      "proposal_id": "two_second_global:A484:1",
+      "source_pixel_class": "person_or_equipment_pixels",
+      "passage_time_s": 6027.791,
+      "sample_times_s": [
+        6026.0,
+        6028.0,
+        6029.0
+      ],
+      "sampling_policy": "nearest_three_prefix_points",
+      "median_nonice_ring_fraction": 0.3492,
+      "sample_nonice_ring_fractions": [
+        0.4649,
+        0.3492,
+        0.3492
+      ],
+      "median_underpoint_nonice_fraction": 0.0,
+      "sample_underpoint_nonice_fractions": [
+        0.6336,
+        0.0,
+        0.0
+      ],
+      "prior_isolated_ice_context": true,
+      "frozen_paired_context_tier": "context_cluttered_review",
+      "physical_throw_verified": false
+    },
+    {
+      "proposal_id": "two_second_global:A497:1",
+      "source_pixel_class": "mixed_stone_person_or_equipment_pixels_identity_uncertain",
+      "passage_time_s": 6143.296,
+      "sample_times_s": [
+        6141.0,
+        6142.0,
+        6144.0
+      ],
+      "sampling_policy": "nearest_three_prefix_points",
+      "median_nonice_ring_fraction": 0.4553,
+      "sample_nonice_ring_fractions": [
+        0.5603,
+        0.4553,
+        0.1818
+      ],
+      "median_underpoint_nonice_fraction": 0.552,
+      "sample_underpoint_nonice_fractions": [
+        0.6151,
+        0.552,
+        0.0316
+      ],
+      "prior_isolated_ice_context": false,
+      "frozen_paired_context_tier": "context_cluttered_review",
+      "physical_throw_verified": false
+    },
+    {
+      "proposal_id": "two_second_global:A530:1",
+      "source_pixel_class": "mixed_stone_person_or_equipment_pixels_identity_uncertain",
+      "passage_time_s": 6376.131,
+      "sample_times_s": [
+        6375.0,
+        6377.0,
+        6378.0
+      ],
+      "sampling_policy": "nearest_three_prefix_points",
+      "median_nonice_ring_fraction": 0.4122,
+      "sample_nonice_ring_fractions": [
+        0.6449,
+        0.4122,
+        0.3429
+      ],
+      "median_underpoint_nonice_fraction": 0.0039,
+      "sample_underpoint_nonice_fractions": [
+        0.6638,
+        0.0039,
+        0.0039
+      ],
+      "prior_isolated_ice_context": true,
+      "frozen_paired_context_tier": "context_cluttered_review",
+      "physical_throw_verified": false
+    },
+    {
+      "proposal_id": "two_second_global_later:A269:2",
+      "source_pixel_class": "mixed_stone_person_or_equipment_pixels_identity_uncertain",
+      "passage_time_s": 3294.788,
+      "sample_times_s": [
+        3294.0,
+        3295.0,
+        3296.0
+      ],
+      "sampling_policy": "nearest_three_prefix_points",
+      "median_nonice_ring_fraction": 0.5152,
+      "sample_nonice_ring_fractions": [
+        0.5198,
+        0.5152,
+        0.4739
+      ],
+      "median_underpoint_nonice_fraction": 0.2704,
+      "sample_underpoint_nonice_fractions": [
+        0.2553,
+        0.2704,
+        0.2836
+      ],
+      "prior_isolated_ice_context": false,
+      "frozen_paired_context_tier": "context_cluttered_review",
+      "physical_throw_verified": false
+    },
+    {
+      "proposal_id": "two_second_global_later:A420:2",
+      "source_pixel_class": "mixed_or_identity_uncertain",
+      "passage_time_s": 5589.0,
+      "sample_times_s": [
+        5588.0,
+        5589.0,
+        5590.0
+      ],
+      "sampling_policy": "nearest_three_prefix_points",
+      "median_nonice_ring_fraction": 0.2853,
+      "sample_nonice_ring_fractions": [
+        0.213,
+        0.2853,
+        0.4565
+      ],
+      "median_underpoint_nonice_fraction": 0.4349,
+      "sample_underpoint_nonice_fractions": [
+        0.4349,
+        0.327,
+        0.9408
+      ],
+      "prior_isolated_ice_context": true,
+      "frozen_paired_context_tier": "context_cluttered_review",
+      "physical_throw_verified": false
+    },
+    {
+      "proposal_id": "two_second_greedy:A156:1",
+      "source_pixel_class": "person_or_equipment_pixels_in_sampled_prefix",
+      "passage_time_s": 1867.028,
+      "sample_times_s": [
+        1866.0,
+        1868.0,
+        1869.0
+      ],
+      "sampling_policy": "nearest_three_prefix_points",
+      "median_nonice_ring_fraction": 0.3139,
+      "sample_nonice_ring_fractions": [
+        0.2778,
+        0.4122,
+        0.3139
+      ],
+      "median_underpoint_nonice_fraction": 0.2461,
+      "sample_underpoint_nonice_fractions": [
+        0.2605,
+        0.1697,
+        0.2461
+      ],
+      "prior_isolated_ice_context": true,
+      "frozen_paired_context_tier": "context_cluttered_review",
+      "physical_throw_verified": false
+    },
+    {
+      "proposal_id": "two_second_greedy:A176:1",
+      "source_pixel_class": "stone_pixels",
+      "passage_time_s": 2363.212,
+      "sample_times_s": [
+        2362.0,
+        2363.0,
+        2364.0
+      ],
+      "sampling_policy": "nearest_three_prefix_points",
+      "median_nonice_ring_fraction": 0.0171,
+      "sample_nonice_ring_fractions": [
+        0.0171,
+        0.0049,
+        0.0236
+      ],
+      "median_underpoint_nonice_fraction": 0.0,
+      "sample_underpoint_nonice_fractions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "prior_isolated_ice_context": true,
+      "frozen_paired_context_tier": "clear_context_review",
+      "physical_throw_verified": false
+    },
+    {
+      "proposal_id": "two_second_greedy:A244:1",
+      "source_pixel_class": "mixed_stone_person_or_equipment_pixels_identity_uncertain",
+      "passage_time_s": 3151.008,
+      "sample_times_s": [
+        3149.0,
+        3150.0,
+        3152.0
+      ],
+      "sampling_policy": "nearest_three_prefix_points",
+      "median_nonice_ring_fraction": 0.5401,
+      "sample_nonice_ring_fractions": [
+        0.5401,
+        0.5279,
+        0.5694
+      ],
+      "median_underpoint_nonice_fraction": 0.9342,
+      "sample_underpoint_nonice_fractions": [
+        0.9342,
+        0.9342,
+        0.3184
+      ],
+      "prior_isolated_ice_context": false,
+      "frozen_paired_context_tier": "context_cluttered_review",
+      "physical_throw_verified": false
+    },
+    {
+      "proposal_id": "two_second_greedy:A282:1",
+      "source_pixel_class": "mixed_stone_person_or_equipment_pixels_identity_uncertain",
+      "passage_time_s": 3396.881,
+      "sample_times_s": [
+        3395.0,
+        3396.0,
+        3398.0
+      ],
+      "sampling_policy": "nearest_three_prefix_points",
+      "median_nonice_ring_fraction": 0.6895,
+      "sample_nonice_ring_fractions": [
+        0.7437,
+        0.6895,
+        0.2739
+      ],
+      "median_underpoint_nonice_fraction": 0.2737,
+      "sample_underpoint_nonice_fractions": [
+        0.3053,
+        0.2737,
+        0.0
+      ],
+      "prior_isolated_ice_context": false,
+      "frozen_paired_context_tier": "context_cluttered_review",
+      "physical_throw_verified": false
+    },
+    {
+      "proposal_id": "two_second_greedy:A303:1",
+      "source_pixel_class": "person_or_equipment_pixels",
+      "passage_time_s": 3597.828,
+      "sample_times_s": [
+        3597.0,
+        3599.0,
+        3600.0
+      ],
+      "sampling_policy": "nearest_three_raw_track_points",
+      "median_nonice_ring_fraction": 0.5396,
+      "sample_nonice_ring_fractions": [
+        0.3601,
+        0.5396,
+        0.5409
+      ],
+      "median_underpoint_nonice_fraction": 0.1474,
+      "sample_underpoint_nonice_fractions": [
+        0.0263,
+        0.1474,
+        0.2151
+      ],
+      "prior_isolated_ice_context": false,
+      "frozen_paired_context_tier": "context_cluttered_review",
+      "physical_throw_verified": false
+    },
+    {
+      "proposal_id": "two_second_greedy:A312:1",
+      "source_pixel_class": "mixed_or_identity_uncertain",
+      "passage_time_s": 3730.245,
+      "sample_times_s": [
+        3729.0,
+        3730.0,
+        3731.0
+      ],
+      "sampling_policy": "nearest_three_prefix_points",
+      "median_nonice_ring_fraction": 0.1655,
+      "sample_nonice_ring_fractions": [
+        0.2602,
+        0.1655,
+        0.0176
+      ],
+      "median_underpoint_nonice_fraction": 0.0,
+      "sample_underpoint_nonice_fractions": [
+        0.0,
+        0.0079,
+        0.0
+      ],
+      "prior_isolated_ice_context": true,
+      "frozen_paired_context_tier": "clear_context_review",
+      "physical_throw_verified": false
+    },
+    {
+      "proposal_id": "two_second_greedy:A353:1",
+      "source_pixel_class": "person_or_equipment_pixels",
+      "passage_time_s": 4108.0,
+      "sample_times_s": [
+        4107.0,
+        4108.0,
+        4110.0
+      ],
+      "sampling_policy": "nearest_three_prefix_points",
+      "median_nonice_ring_fraction": 0.5211,
+      "sample_nonice_ring_fractions": [
+        0.4802,
+        0.5211,
+        0.7543
+      ],
+      "median_underpoint_nonice_fraction": 0.3566,
+      "sample_underpoint_nonice_fractions": [
+        0.3086,
+        0.3566,
+        0.6289
+      ],
+      "prior_isolated_ice_context": false,
+      "frozen_paired_context_tier": "context_cluttered_review",
+      "physical_throw_verified": false
+    },
+    {
+      "proposal_id": "two_second_greedy:A388:1",
+      "source_pixel_class": "stone_pixels",
+      "passage_time_s": 4912.765,
+      "sample_times_s": [
+        4912.0,
+        4913.0,
+        4914.0
+      ],
+      "sampling_policy": "nearest_three_prefix_points",
+      "median_nonice_ring_fraction": 0.0171,
+      "sample_nonice_ring_fractions": [
+        0.007,
+        0.0197,
+        0.0171
+      ],
+      "median_underpoint_nonice_fraction": 0.0,
+      "sample_underpoint_nonice_fractions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "prior_isolated_ice_context": true,
+      "frozen_paired_context_tier": "clear_context_review",
+      "physical_throw_verified": false
+    },
+    {
+      "proposal_id": "two_second_greedy:A398:1",
+      "source_pixel_class": "stone_pixels",
+      "passage_time_s": 5116.556,
+      "sample_times_s": [
+        5116.0,
+        5117.0,
+        5118.0
+      ],
+      "sampling_policy": "nearest_three_prefix_points",
+      "median_nonice_ring_fraction": 0.0508,
+      "sample_nonice_ring_fractions": [
+        0.0508,
+        0.0322,
+        0.0633
+      ],
+      "median_underpoint_nonice_fraction": 0.0,
+      "sample_underpoint_nonice_fractions": [
+        0.0,
+        0.0,
+        0.0033
+      ],
+      "prior_isolated_ice_context": true,
+      "frozen_paired_context_tier": "clear_context_review",
+      "physical_throw_verified": false
+    },
+    {
+      "proposal_id": "two_second_greedy:A425:1",
+      "source_pixel_class": "person_or_equipment_pixels",
+      "passage_time_s": 5586.333,
+      "sample_times_s": [
+        5585.0,
+        5586.0,
+        5587.0
+      ],
+      "sampling_policy": "nearest_three_prefix_points",
+      "median_nonice_ring_fraction": 0.4732,
+      "sample_nonice_ring_fractions": [
+        0.6052,
+        0.4379,
+        0.4732
+      ],
+      "median_underpoint_nonice_fraction": 0.2586,
+      "sample_underpoint_nonice_fractions": [
+        0.302,
+        0.2164,
+        0.2586
+      ],
+      "prior_isolated_ice_context": false,
+      "frozen_paired_context_tier": "context_cluttered_review",
+      "physical_throw_verified": false
+    },
+    {
+      "proposal_id": "two_second_greedy:A431:1",
+      "source_pixel_class": "person_or_equipment_pixels",
+      "passage_time_s": 5605.984,
+      "sample_times_s": [
+        5605.0,
+        5606.0,
+        5607.0
+      ],
+      "sampling_policy": "nearest_three_prefix_points",
+      "median_nonice_ring_fraction": 0.2781,
+      "sample_nonice_ring_fractions": [
+        0.2405,
+        0.2781,
+        0.3372
+      ],
+      "median_underpoint_nonice_fraction": 0.7342,
+      "sample_underpoint_nonice_fractions": [
+        0.6546,
+        0.7342,
+        0.8079
+      ],
+      "prior_isolated_ice_context": true,
+      "frozen_paired_context_tier": "context_cluttered_review",
+      "physical_throw_verified": false
+    },
+    {
+      "proposal_id": "two_second_greedy:A437:1",
+      "source_pixel_class": "mixed_or_identity_uncertain",
+      "passage_time_s": 5660.545,
+      "sample_times_s": [
+        5660.0,
+        5661.0,
+        5662.0
+      ],
+      "sampling_policy": "nearest_three_prefix_points",
+      "median_nonice_ring_fraction": 0.3795,
+      "sample_nonice_ring_fractions": [
+        0.6026,
+        0.3795,
+        0.3357
+      ],
+      "median_underpoint_nonice_fraction": 0.0,
+      "sample_underpoint_nonice_fractions": [
+        0.2737,
+        0.0,
+        0.0
+      ],
+      "prior_isolated_ice_context": true,
+      "frozen_paired_context_tier": "context_cluttered_review",
+      "physical_throw_verified": false
+    },
+    {
+      "proposal_id": "two_second_greedy:A481:1",
+      "source_pixel_class": "mixed_or_identity_uncertain",
+      "passage_time_s": 6027.791,
+      "sample_times_s": [
+        6026.0,
+        6028.0,
+        6029.0
+      ],
+      "sampling_policy": "nearest_three_prefix_points",
+      "median_nonice_ring_fraction": 0.3492,
+      "sample_nonice_ring_fractions": [
+        0.4649,
+        0.3492,
+        0.3492
+      ],
+      "median_underpoint_nonice_fraction": 0.0,
+      "sample_underpoint_nonice_fractions": [
+        0.6336,
+        0.0,
+        0.0
+      ],
+      "prior_isolated_ice_context": true,
+      "frozen_paired_context_tier": "context_cluttered_review",
+      "physical_throw_verified": false
+    },
+    {
+      "proposal_id": "two_second_greedy:A518:1",
+      "source_pixel_class": "mixed_stone_person_or_equipment_pixels_identity_uncertain",
+      "passage_time_s": 6374.931,
+      "sample_times_s": [
+        6373.0,
+        6374.0,
+        6376.0
+      ],
+      "sampling_policy": "nearest_three_prefix_points",
+      "median_nonice_ring_fraction": 0.234,
+      "sample_nonice_ring_fractions": [
+        0.1953,
+        0.234,
+        0.8744
+      ],
+      "median_underpoint_nonice_fraction": 0.0026,
+      "sample_underpoint_nonice_fractions": [
+        0.002,
+        0.0026,
+        0.5849
+      ],
+      "prior_isolated_ice_context": true,
+      "frozen_paired_context_tier": "clear_context_review",
+      "physical_throw_verified": false
+    },
+    {
+      "proposal_id": "two_second_greedy:A553:1",
+      "source_pixel_class": "person_or_equipment_pixels_in_sampled_prefix",
+      "passage_time_s": 6687.244,
+      "sample_times_s": [
+        6686.0,
+        6688.0,
+        6689.0
+      ],
+      "sampling_policy": "nearest_three_prefix_points",
+      "median_nonice_ring_fraction": 0.1331,
+      "sample_nonice_ring_fractions": [
+        0.4249,
+        0.1331,
+        0.1243
+      ],
+      "median_underpoint_nonice_fraction": 0.1763,
+      "sample_underpoint_nonice_fractions": [
+        0.3038,
+        0.1651,
+        0.1763
+      ],
+      "prior_isolated_ice_context": true,
+      "frozen_paired_context_tier": "clear_context_review",
+      "physical_throw_verified": false
+    }
+  ],
+  "limitations": [
+    "These 33 selected proposal prefixes are not an independent or exhaustive physical-throw test set.",
+    "A source-visible stone can have a cluttered context near players or painted rings.",
+    "The prior 0.44 ring and 0.25 paired thresholds were chosen on other development recordings, not calibrated here.",
+    "No cue here decides a complete same-stone track, throw identity or game state."
+  ]
+}

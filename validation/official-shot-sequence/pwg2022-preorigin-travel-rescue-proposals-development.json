@@ -1,0 +1,126 @@
+{
+  "status": "development_preorigin_receiving_travel_rescue_not_physical_f1",
+  "selection_rule": "Among frozen model-negative ice-supported unassigned shots, require an unassigned origin-predicted immediately preceding shot, verified cut, one same-colour substantial receiving cap track, and one same-colour unassigned delayed counter update within five seconds of the receiving shot end.",
+  "input_sha256": {
+    "full_scan_summary": "d16814a5f04740dad1a466d33b75d7f9942127f4bdf7fe998bab26a25a04cd8c",
+    "union_v2": "4c20f6c9cb6651f02b840dc63957fad237053fd89663a0b4d84c7923562fe64e",
+    "sources": {
+      "PREL000101": {
+        "origins": "c436693b5586aef1baa77f43d9e0a3fe3b26139fba0c3c39158c774bbc3ef8bb",
+        "motion": "bff17c272b4621b9a37d177a2a0658c78da4f86290124e06558740c83429a31a",
+        "counter": "32dddd3948892869cf98da8292526951c9ecf18518b5f4f4659693c2ed674d72",
+        "video": "49429abdd3796e8240e66c201d37e94e71a7bb6225890b2492bea26d2f70d560"
+      },
+      "PREL000102": {
+        "origins": "ba685f6822de05e32efe8458a6cd6b6ef46150fedcfe93bd7e05a6a22d0d37db",
+        "motion": "6cd943d780350ce120c0520a528b45f473339862a87dec73bcbabad75d2591ae",
+        "counter": "0bb04af57bc705feeb556982131f3bb1efb35fe4087ee7adeb903237f7e302a8",
+        "video": "c5254bb9103e32c6beac74cf269fc7bcec8ce2c2a710a7d4600c7ddb951f160e"
+      },
+      "PREL000103": {
+        "origins": "1a93d01e0aeb399177e3de08f13c56554e06955994d2c2302999d5ea3ab87b38",
+        "motion": "91f4db5dd26eff408e7ee8c1b35421bb39e1cb0bbf6410c087d315a2d97b6e15",
+        "counter": "c77c3d4d5e4158df2dc99f246e5a80fbde7e44b703290ce82b0e1fce7fd90a36",
+        "video": "eba1d86944a2f4278b6e5e2c7549d12b47e5e8a51bf0c680b2db372c6ec12420"
+      }
+    },
+    "cut_check_code": "4916e3e77d7fd25fb8c977f4882a6a4b7ce2930b3873d30ada6c885a12afb4da",
+    "runner": "fe497ded314b4bf966eb10d03e908efdcb58569815cf28f283f3a6cf29c0860a"
+  },
+  "triaged_candidate_count": 4,
+  "proposal_count": 1,
+  "triage": [
+    {
+      "recording_code": "PREL000101",
+      "receiving_shot_id": "S97",
+      "receiving_shot_interval_s": [
+        1342.2,
+        1350.4
+      ],
+      "raw_cue_interpreted_as_release": false,
+      "previous_shot_id": "S96",
+      "previous_shot_origin_predicted": false,
+      "status": "no_unassigned_predicted_origin_predecessor"
+    },
+    {
+      "recording_code": "PREL000101",
+      "receiving_shot_id": "S221",
+      "receiving_shot_interval_s": [
+        2847.2,
+        2851.6
+      ],
+      "raw_cue_interpreted_as_release": false,
+      "previous_shot_id": "S220",
+      "previous_shot_origin_predicted": false,
+      "status": "no_unassigned_predicted_origin_predecessor"
+    },
+    {
+      "recording_code": "PREL000101",
+      "receiving_shot_id": "S332",
+      "receiving_shot_interval_s": [
+        4144.8,
+        4264.2
+      ],
+      "raw_cue_interpreted_as_release": false,
+      "previous_shot_id": "S331",
+      "previous_shot_origin_predicted": false,
+      "status": "no_unassigned_predicted_origin_predecessor"
+    },
+    {
+      "recording_code": "PREL000102",
+      "receiving_shot_id": "S28",
+      "receiving_shot_interval_s": [
+        365.4,
+        382.2
+      ],
+      "raw_cue_interpreted_as_release": false,
+      "previous_shot_id": "S27",
+      "previous_shot_origin_predicted": true,
+      "status": "source_counter_travel_rescue_proposal",
+      "counter_id": "B02"
+    }
+  ],
+  "proposals": [
+    {
+      "proposal_id": "TRAVEL-B02",
+      "recording_code": "PREL000102",
+      "source_sha256": "c5254bb9103e32c6beac74cf269fc7bcec8ce2c2a710a7d4600c7ddb951f160e",
+      "origin_shot_id": "S27",
+      "origin_shot_interval_s": [
+        356.0,
+        365.4
+      ],
+      "origin_probability": 0.8292615336602079,
+      "receiving_shot_id": "S28",
+      "receiving_shot_interval_s": [
+        365.4,
+        382.2
+      ],
+      "receiving_track": {
+        "id": "S28-R01",
+        "colour": "red",
+        "interval_s": [
+          365.4,
+          380.2
+        ],
+        "span_px": 223.46,
+        "point_count": 65
+      },
+      "counter_id": "B02",
+      "counter_colour": "red",
+      "counter_time_s": 383.0,
+      "counter_evidence_interval_s": [
+        362.0,
+        383.0
+      ],
+      "visible_release_cue_s": null,
+      "physical_stone_identity_verified": false,
+      "simulation_ready": false
+    }
+  ],
+  "limitations": [
+    "The rule was developed after viewing exposed source cases; this is not a frozen transfer or independent event F1.",
+    "The ice-supported cue in a receiving view is classified as travel evidence, never as a release instant.",
+    "Origin view and receiving track colour, delayed counter and timing do not establish persistent physical stone identity."
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "status": "prerun_after_source_classes_frozen_feature_transfer_not_independent_throw_validation",
+  "source_sha256": "a7431b68ba6fb0df407383973a525a01eadbee2490caa0438a5a11d2df1dba13",
+  "probe_sha256": "9036741e5c53e9cb9d5960e51abce5f440eb2a9cfa5cc3e17a7ab29c4805b4e2",
+  "episodes_sha256": "63ab09daee4eb95c60658df533587073f94d0971d30a459c9fdd16c675fce115",
+  "source_review_sha256": "4ca1f49f8654235095527a6cfd2ace391c8f46ae8d29a244b31714e9b8380fdc",
+  "ring_feature_code_sha256": "4e7ea73e5d460f779d84dbe98c71811cd1a12891d9915d1435224e6e0ebd1d86",
+  "underpoint_feature_code_sha256": "f5bc302786c2e0e31bdcb8a9cab7e9982648bffec464407b88b39cbccbf6b7a9",
+  "sampling": "first, passage-nearest, last source frame of every right proposal",
+  "review_rule": "clear if both median non-ice fractions <= 0.25; otherwise cluttered; fewer than three distinct frames or no underpoint score remains unavailable",
+  "feature_scope": "all 100 full-source right proposals, including the 20 right-only proposals source-classified at 5670–6670 s",
+  "event_decision": "none",
+  "limitations": [
+    "The source classes are postproposal same-agent reviews of three frames, not independent physical throw labels.",
+    "The threshold and feature geometry were developed on earlier 2024 recordings, with Czechia among those sources; this Latvia score is a code transfer but not camera-family transfer.",
+    "A context score cannot recover a missed proposal or verify full cross-frame stone identity."
+  ]
+}

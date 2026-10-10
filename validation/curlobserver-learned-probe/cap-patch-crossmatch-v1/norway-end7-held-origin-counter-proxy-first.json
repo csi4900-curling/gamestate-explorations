@@ -1,0 +1,110 @@
+{
+  "status": "first_end7_held_origin_to_delayed_counter_proxy_not_physical_f1",
+  "source_sha256": "c49fb90959c13b690447dccb87a0b78e0bba8537aa961339a92f934226baf2b3",
+  "source_only_event_sha256": "7492d99033335cc7bf17aa6ceaadeac80d911c54c4b3ee1872f9fcc1c914397d",
+  "first_transfer_sha256": "22cf96576fae262df6d6974448924fdd385e27087db73473c6cefa6c70b9c427",
+  "scorer_sha256": "25d034dc4b3716656c7ff621e35f21ef7790d2b1f3c51467f77c58ee09c5d656",
+  "runner_sha256": "e7145d4b880bb4df356f8940f53a52aa8a122bea3ea550280160564d1d9af13b",
+  "end": 7,
+  "official_shot_count": 16,
+  "clean_counter_count": 12,
+  "score": {
+    "visual_candidate_count": 14,
+    "clean_counter_count": 12,
+    "matched_count": 10,
+    "unmatched_visual_ids": [
+      "S460-held-origin",
+      "S492-held-origin",
+      "S495-held-origin",
+      "S519-held-origin"
+    ],
+    "unmatched_official_shot_ids": [
+      "PREL001501-E07-S02",
+      "PREL001501-E07-S03"
+    ],
+    "matches": [
+      {
+        "visual_id": "S467-held-origin",
+        "official_shot_id": "PREL001501-E07-S04",
+        "visual_colour": "yellow",
+        "counter_colour": "yellow",
+        "counter_minus_visual_end_s": 19.0
+      },
+      {
+        "visual_id": "S469-held-origin",
+        "official_shot_id": "PREL001501-E07-S05",
+        "visual_colour": "red",
+        "counter_colour": "red",
+        "counter_minus_visual_end_s": -3.8
+      },
+      {
+        "visual_id": "S471-held-origin",
+        "official_shot_id": "PREL001501-E07-S06",
+        "visual_colour": "yellow",
+        "counter_colour": "yellow",
+        "counter_minus_visual_end_s": 13.2
+      },
+      {
+        "visual_id": "S473-held-origin",
+        "official_shot_id": "PREL001501-E07-S07",
+        "visual_colour": "red",
+        "counter_colour": "red",
+        "counter_minus_visual_end_s": 17.2
+      },
+      {
+        "visual_id": "S475-held-origin",
+        "official_shot_id": "PREL001501-E07-S08",
+        "visual_colour": "yellow",
+        "counter_colour": "yellow",
+        "counter_minus_visual_end_s": -4.4
+      },
+      {
+        "visual_id": "S479-held-origin",
+        "official_shot_id": "PREL001501-E07-S09",
+        "visual_colour": "red",
+        "counter_colour": "red",
+        "counter_minus_visual_end_s": 17.6
+      },
+      {
+        "visual_id": "S481-held-origin",
+        "official_shot_id": "PREL001501-E07-S10",
+        "visual_colour": "yellow",
+        "counter_colour": "yellow",
+        "counter_minus_visual_end_s": 9.4
+      },
+      {
+        "visual_id": "S486-held-origin",
+        "official_shot_id": "PREL001501-E07-S11",
+        "visual_colour": "red",
+        "counter_colour": "red",
+        "counter_minus_visual_end_s": 17.0
+      },
+      {
+        "visual_id": "S490-held-origin",
+        "official_shot_id": "PREL001501-E07-S12",
+        "visual_colour": "yellow",
+        "counter_colour": "yellow",
+        "counter_minus_visual_end_s": -3.8
+      },
+      {
+        "visual_id": "S512-held-origin",
+        "official_shot_id": "PREL001501-E07-S14",
+        "visual_colour": "yellow",
+        "counter_colour": "yellow",
+        "counter_minus_visual_end_s": 28.2
+      }
+    ],
+    "counter_proxy_precision": 0.7143,
+    "counter_proxy_recall": 0.8333,
+    "counter_proxy_f1": 0.7692,
+    "known_colour_match_count": 10,
+    "known_colour_conflict_count": 0,
+    "unknown_colour_match_count": 0
+  },
+  "limitations": [
+    "Delayed counter updates are weak references, with only 12 of 16 official shots covered.",
+    "Held-cap arbitration was fixed after exposed end six, before this end-seven transfer.",
+    "Monotone timing can pair a visual cue with the wrong physical delivery.",
+    "This is not complete-end or full-match physical throw precision, recall, F1, or exact release timing."
+  ]
+}

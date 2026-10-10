@@ -1,1 +1,269 @@
-All checks passed!
+F401 [*] `numpy` imported but unused
+ --> prototype/highres_underpoint_context.py:8:17
+  |
+7 | import cv2
+8 | import numpy as np
+  |                 ^^
+help: Remove unused import: `numpy`
+  |
+7 | import cv2
+  - import numpy as np
+8 |
+  |
+
+F401 [*] `numpy` imported but unused
+  --> prototype/right_track_underpoint_context.py:10:17
+   |
+ 9 | import cv2
+10 | import numpy as np
+   |                 ^^
+help: Remove unused import: `numpy`
+   |
+9  | import cv2
+   - import numpy as np
+10 |
+   |
+
+F401 [*] `sys` imported but unused
+ --> prototype/scripts/audit_candidate_ice_coverage.py:7:8
+  |
+5 | import json
+6 | from pathlib import Path
+7 | import sys
+  |        ^^^
+8 |
+9 | import cv2
+  |
+help: Remove unused import: `sys`
+  |
+6 | from pathlib import Path
+  - import sys
+7 |
+  |
+
+F401 [*] `numpy` imported but unused
+  --> prototype/scripts/audit_korea_t11_learned_boxes.py:14:17
+   |
+13 | import cv2
+14 | import numpy as np
+   |                 ^^
+15 |
+16 | ROOT = Path(__file__).resolve().parents[2]
+   |
+help: Remove unused import: `numpy`
+   |
+13 | import cv2
+   - import numpy as np
+14 |
+   |
+
+F401 [*] `sys` imported but unused
+  --> prototype/scripts/audit_norway_counterless_end_display.py:12:8
+   |
+10 | import re
+11 | import subprocess
+12 | import sys
+   |        ^^^
+13 |
+14 | import cv2
+   |
+help: Remove unused import: `sys`
+   |
+11 | import subprocess
+   - import sys
+12 |
+   |
+
+F401 [*] `sys` imported but unused
+  --> prototype/scripts/audit_norway_counterless_end_display_v2.py:12:8
+   |
+10 | import re
+11 | import subprocess
+12 | import sys
+   |        ^^^
+13 |
+14 | import cv2
+   |
+help: Remove unused import: `sys`
+   |
+11 | import subprocess
+   - import sys
+12 |
+   |
+
+F401 [*] `sys` imported but unused
+ --> prototype/scripts/audit_norway_end8_far_geometry.py:7:8
+  |
+5 | from math import hypot
+6 | from pathlib import Path
+7 | import sys
+  |        ^^^
+8 |
+9 | import cv2
+  |
+help: Remove unused import: `sys`
+  |
+6 | from pathlib import Path
+  - import sys
+7 |
+  |
+
+F541 [*] f-string without any placeholders
+  --> prototype/scripts/audit_official_game_results.py:77:48
+   |
+75 |     rows = []
+76 |     for source_id, (opponent, page_number) in MATCHES.items():
+77 |         matches = list(args.timelines_dir.glob(f"*/timeline.json"))
+   |                                                ^^^^^^^^^^^^^^^^^^
+78 |         selected = [p for p in matches if json.loads(p.read_text())["source_id"] == source_id]
+79 |         if len(selected) != 1:
+   |
+help: Remove extraneous `f` prefix
+   |
+76 |     for source_id, (opponent, page_number) in MATCHES.items():
+   -         matches = list(args.timelines_dir.glob(f"*/timeline.json"))
+77 +         matches = list(args.timelines_dir.glob("*/timeline.json"))
+78 |         selected = [p for p in matches if json.loads(p.read_text())["source_id"] == source_id]
+   |
+
+F401 [*] `collections.Counter` imported but unused
+ --> prototype/scripts/audit_pwg2022_temporal_boards.py:3:25
+  |
+1 | """Build source-only partial boards from repeated overhead frames, then audit."""
+2 |
+3 | from collections import Counter
+  |                         ^^^^^^^
+4 | import hashlib
+5 | import json
+  |
+help: Remove unused import: `collections.Counter`
+  |
+2 |
+  - from collections import Counter
+3 | import hashlib
+  |
+
+F841 Local variable `gap` is assigned to but never used
+  --> prototype/scripts/probe_czech_later_board_onsets.py:60:13
+   |
+58 |     try:
+59 |         for first in caps["rows"]:
+60 |             gap = gap_by_id[first["episode_id"]]
+   |             ^^^
+61 |             board = board_by_id[first["left_motion_candidate_id"]]
+62 |             first_time = first["evaluation_horizon_first_board_time_s"]
+   |
+help: Remove assignment to unused variable `gap`
+
+F401 [*] `numpy` imported but unused
+  --> prototype/scripts/probe_latvia_1080p_body_paths.py:14:17
+   |
+13 | import cv2
+14 | import numpy as np
+   |                 ^^
+15 |
+16 | ROOT = Path(__file__).resolve().parents[2]
+   |
+help: Remove unused import: `numpy`
+   |
+13 | import cv2
+   - import numpy as np
+14 |
+   |
+
+F401 [*] `sys` imported but unused
+  --> prototype/scripts/probe_t11_handle_periodicity.py:10:8
+   |
+ 8 | import json
+ 9 | from pathlib import Path
+10 | import sys
+   |        ^^^
+11 |
+12 | import cv2
+   |
+help: Remove unused import: `sys`
+   |
+9  | from pathlib import Path
+   - import sys
+10 |
+   |
+
+F401 [*] `hashlib.sha256` imported but unused
+ --> prototype/scripts/scan_full_match_split_pre_event_caps.py:5:21
+  |
+3 | import argparse
+4 | from collections import Counter
+5 | from hashlib import sha256
+  |                     ^^^^^^
+6 | import json
+7 | from pathlib import Path
+  |
+help: Remove unused import: `hashlib.sha256`
+  |
+4 | from collections import Counter
+  - from hashlib import sha256
+5 | import json
+  |
+
+F401 [*] `numpy` imported but unused
+  --> prototype/scripts/screen_latvia_body_with_handle.py:13:17
+   |
+12 | import cv2
+13 | import numpy as np
+   |                 ^^
+14 |
+15 | ROOT = Path(__file__).resolve().parents[2]
+   |
+help: Remove unused import: `numpy`
+   |
+12 | import cv2
+   - import numpy as np
+13 |
+   |
+
+F841 Local variable `candidate_ledger` is assigned to but never used
+  --> prototype/scripts/transfer_latvia_body_handle_early.py:49:5
+   |
+47 |     body = json.loads(BODY.read_text())
+48 |     screen = json.loads(SCREEN.read_text())
+49 |     candidate_ledger = json.loads(CANDIDATES.read_text())
+   |     ^^^^^^^^^^^^^^^^
+50 |     video_hash = digest(VIDEO)
+51 |     if body["positive_video_sha256"] != video_hash or \
+   |
+help: Remove assignment to unused variable `candidate_ledger`
+
+F401 [*] `cv2` imported but unused
+ --> prototype/subframe_camera_registration.py:3:8
+  |
+1 | """Compose short source-frame camera transforms without bridging failures."""
+2 |
+3 | import cv2
+  |        ^^^
+4 | import numpy as np
+  |
+help: Remove unused import: `cv2`
+  |
+2 |
+  - import cv2
+3 | import numpy as np
+  |
+
+F401 [*] `prototype.video_board_observation.detect_board_stones` imported but unused
+  --> prototype/video_board_observation_v2.py:12:38
+   |
+11 | from prototype.video_board_observation import (
+12 |     annulus_support, blue_ring_mask, detect_board_stones,
+   |                                      ^^^^^^^^^^^^^^^^^^^
+13 | )
+   |
+help: Remove unused import: `prototype.video_board_observation.detect_board_stones`
+   |
+11 | from prototype.video_board_observation import (
+   -     annulus_support, blue_ring_mask, detect_board_stones,
+12 +     annulus_support, blue_ring_mask,
+13 | )
+   |
+
+Found 17 errors.
+[*] 15 fixable with the `--fix` option (2 hidden fixes can be enabled with the `--unsafe-fixes` option).

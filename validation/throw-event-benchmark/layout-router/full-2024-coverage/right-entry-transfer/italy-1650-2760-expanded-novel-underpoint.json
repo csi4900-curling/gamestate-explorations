@@ -1,0 +1,54 @@
+{
+  "status": "development_underpoint_review_cue_not_physical_stone_classifier",
+  "source_sha256": "aff12e78edeb5e108d142aed3e19b61c3956b4fddc8b2fd8b202713746771739",
+  "recording": "italy_expanded_novel",
+  "proposal_kind": "entry",
+  "proposals_sha256": "4f97c50fd8dc9d28e910875ded24ab95829bd74096dfa271d97f8c92bd53d0b0",
+  "source_review_sha256": "e1e7306929083da7b8d75865177ee846b901cccf7989c87ba21f84e85c2ae637",
+  "feature_code_sha256": "f5bc302786c2e0e31bdcb8a9cab7e9982648bffec464407b88b39cbccbf6b7a9",
+  "runner_sha256": "73585d4d158d338d3531bfc4e65890e3fcd243a7ea75e2de1f04cb78ecfd2664",
+  "sample_geometry_640x360": {
+    "half_width": 20,
+    "top_offset": 22,
+    "bottom_offset": 60
+  },
+  "ice_hsv_rule": {
+    "saturation_less_than": 90,
+    "value_greater_than": 150
+  },
+  "nonice_review_threshold": 0.25,
+  "counts_by_source_class_and_tier": {
+    "moving_stone": {
+      "underpoint_clear_review": 1,
+      "underpoint_cluttered_review": 0,
+      "underpoint_unavailable": 0
+    }
+  },
+  "rows": [
+    {
+      "raw_track_id": "E025",
+      "source_prefix_class": "moving_stone",
+      "sample_source_times_s": [
+        2589.0,
+        2589.0,
+        2592.0
+      ],
+      "sample_underpoint_nonice_fractions": [
+        0.0,
+        0.0,
+        0.0184
+      ],
+      "median_underpoint_nonice_fraction": 0.0,
+      "available_sample_count": 3,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "underpoint_clear_review"
+    }
+  ],
+  "limitations": [
+    "Band geometry and threshold were chosen after inspecting Slovakia failures.",
+    "Same-agent source classes are not independent physical throw labels.",
+    "Ice markings, equipment and overlap can clutter the band under a stone.",
+    "A clear band cannot by itself establish stone identity."
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "status": "exposed_development_short_prefix_diagnostic_not_event_accuracy",
+  "ring_review_threshold": 0.25,
+  "underpoint_review_threshold": 0.25,
+  "pairs": [
+    {
+      "recording": "estonia_full_r01_disagreement",
+      "ring_score_sha256": "b31161723364e765bb3659c20eb6bdfe55eec0647674e3a22700db2eb36b9728",
+      "underpoint_score_sha256": "7743fa3825b73fa12817c522a6ec338247df984af840e76d6dd664b7e54d159c"
+    }
+  ],
+  "counts_by_source_class_and_tier": {
+    "moving_stone_prefix": {
+      "clear_context_review": 4,
+      "cluttered_review": 0,
+      "unavailable_review": 0
+    },
+    "person_or_equipment_prefix": {
+      "clear_context_review": 0,
+      "cluttered_review": 4,
+      "unavailable_review": 0
+    }
+  },
+  "rows": [
+    {
+      "recording": "estonia_full_r01_disagreement",
+      "raw_track_id": "A001",
+      "source_prefix_class": "moving_stone_prefix",
+      "ring_nonice_fraction": 0.0187,
+      "underpoint_nonice_fraction": 0.0,
+      "combined_review_tier": "clear_context_review"
+    },
+    {
+      "recording": "estonia_full_r01_disagreement",
+      "raw_track_id": "A006",
+      "source_prefix_class": "moving_stone_prefix",
+      "ring_nonice_fraction": 0.0166,
+      "underpoint_nonice_fraction": 0.0,
+      "combined_review_tier": "clear_context_review"
+    },
+    {
+      "recording": "estonia_full_r01_disagreement",
+      "raw_track_id": "A017",
+      "source_prefix_class": "moving_stone_prefix",
+      "ring_nonice_fraction": 0.0278,
+      "underpoint_nonice_fraction": 0.0,
+      "combined_review_tier": "clear_context_review"
+    },
+    {
+      "recording": "estonia_full_r01_disagreement",
+      "raw_track_id": "A029",
+      "source_prefix_class": "person_or_equipment_prefix",
+      "ring_nonice_fraction": 0.447,
+      "underpoint_nonice_fraction": 0.9678,
+      "combined_review_tier": "cluttered_review"
+    },
+    {
+      "recording": "estonia_full_r01_disagreement",
+      "raw_track_id": "A034",
+      "source_prefix_class": "person_or_equipment_prefix",
+      "ring_nonice_fraction": 0.3097,
+      "underpoint_nonice_fraction": 0.8233,
+      "combined_review_tier": "cluttered_review"
+    },
+    {
+      "recording": "estonia_full_r01_disagreement",
+      "raw_track_id": "A075",
+      "source_prefix_class": "person_or_equipment_prefix",
+      "ring_nonice_fraction": 0.4911,
+      "underpoint_nonice_fraction": 0.9454,
+      "combined_review_tier": "cluttered_review"
+    },
+    {
+      "recording": "estonia_full_r01_disagreement",
+      "raw_track_id": "A113",
+      "source_prefix_class": "person_or_equipment_prefix",
+      "ring_nonice_fraction": 0.5499,
+      "underpoint_nonice_fraction": 0.9638,
+      "combined_review_tier": "cluttered_review"
+    },
+    {
+      "recording": "estonia_full_r01_disagreement",
+      "raw_track_id": "A180",
+      "source_prefix_class": "moving_stone_prefix",
+      "ring_nonice_fraction": 0.0332,
+      "underpoint_nonice_fraction": 0.0,
+      "combined_review_tier": "clear_context_review"
+    }
+  ],
+  "limitations": [
+    "The underpoint geometry and threshold were selected after viewing Slovakia head-track failures.",
+    "All classes are same-agent source-visible prefixes, not physical throw truth.",
+    "Selected prefixes do not provide an exhaustive delivery denominator.",
+    "Clear context is a review cue, not an accepted stone or throw."
+  ]
+}

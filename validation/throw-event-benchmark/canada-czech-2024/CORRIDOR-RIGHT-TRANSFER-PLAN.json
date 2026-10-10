@@ -1,0 +1,40 @@
+{
+  "status": "prerun_prediction_only_transfer",
+  "source_id": "yu_YoFrFd20",
+  "candidate_interval_s": [
+    1650.0,
+    2760.0
+  ],
+  "right_scan_interval_s": [
+    1625,
+    2785
+  ],
+  "input_and_code_sha256": {
+    "video": "e63c9b063b5b11ad5173083dffe974d909c78e5d01312740b87bccc006402013",
+    "left": "8295ac26dd4735923a73a1f84d33657ce024a66ed972ef04d585071673148cf7",
+    "right_probe_runner": "6a9cbb81b585ca0837d06878ce13a779d5880f592df4ce8edc852eba5f81ed81",
+    "right_proposal_code": "0f1588b4eb3de2a5d9c732c0a0264f03a41933821a0a943845df2dc0a4ba1645",
+    "right_association_code": "fd57618be239344c6d5e7795a3b0e97720fc7ccd5944791210a200b2cd848b9e",
+    "right_span_code": "be45207245e5f0c88dc9720810a4be44075affd8b5cbcbd8b3ade70f9fe55335",
+    "tail_runner": "b59e9fcbdb13477dd2033fc0e99c168f10544d5205cc1f987343b1cdeae98062",
+    "tail_code": "5266fcf009bf74c309aef6a810a8414d45456987b8aefde3cba3447983077007",
+    "join_runner": "95eb269e4222880c18e2fcac3f873bd00da5691cc10a4c3ef59282fc868bf083",
+    "join_code": "796a5e3ccd485b64449668608cd713b53041f8b0502cb80320eae3ee1138dd14",
+    "patch_runner": "aeb4aac25234e925337819a4938933fcf3fb94ba4526f56c12f83f22d47e5ba9",
+    "patch_model": "395ebfd0b23db3c1faa90cfb71af2b33d0774e70dc05e7db8f6cb7924e1bcb47"
+  },
+  "rules": {
+    "right_sample_period_s": 1,
+    "moving_tail": "unchanged",
+    "corroboration_max_view_order_lag_s": 20,
+    "match_same_colour_and_direction": true,
+    "patch_samples": "first/middle/last observed right prefix point",
+    "patch_model_threshold": "frozen model threshold",
+    "event_decision": "none; no independent throw labels available"
+  },
+  "limitations": [
+    "Source-only sheets exist but do not form exhaustive timestamped event truth.",
+    "This is candidate coverage and appearance evidence only, not precision/recall/F1.",
+    "Camera layout and shot presentation may differ from Estonia/Italy/China."
+  ]
+}

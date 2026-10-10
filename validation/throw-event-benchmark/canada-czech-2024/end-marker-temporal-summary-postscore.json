@@ -1,0 +1,106 @@
+{
+  "status": "development_repeated_graphic_evidence_not_end_truth",
+  "summarizer_sha256": "96a535fd6b58ce39aaf01bccf69005c16d9d1bba242386d9a7ea9b3550d7596d",
+  "runner_sha256": "ec77bcf4adb401eb97e175df7fcd797866f1f3ba703db66353a4352435267040",
+  "games": [
+    {
+      "video_path": "validation/throw-event-benchmark/canada-czech-2024/source-360p.mp4",
+      "video_sha256": "e63c9b063b5b11ad5173083dffe974d909c78e5d01312740b87bccc006402013",
+      "scan_path": "validation/throw-event-benchmark/canada-czech-2024/end-marker-full-postscore.json",
+      "scan_sha256": "92744a2552324fa0c212224ca7a5f025e1aa004485ef346839600e94e5d916bb",
+      "calibrated_header_geometry": {
+        "header_base_x_px": 418.5,
+        "arrow_origin_x_px": 416,
+        "slot_pitch_px": 9.5,
+        "edge_score": 32.6
+      },
+      "sample_count": 669,
+      "recognized_count": 335,
+      "minimum_hits_per_run": 2,
+      "stable_runs": [
+        {
+          "end": 1,
+          "first_hit_s": 120,
+          "last_hit_s": 810,
+          "hit_count": 58
+        },
+        {
+          "end": 2,
+          "first_hit_s": 830,
+          "last_hit_s": 1940,
+          "hit_count": 34
+        },
+        {
+          "end": 3,
+          "first_hit_s": 1970,
+          "last_hit_s": 3090,
+          "hit_count": 100
+        },
+        {
+          "end": 4,
+          "first_hit_s": 3120,
+          "last_hit_s": 4040,
+          "hit_count": 36
+        },
+        {
+          "end": 5,
+          "first_hit_s": 4060,
+          "last_hit_s": 5260,
+          "hit_count": 66
+        },
+        {
+          "end": 6,
+          "first_hit_s": 5320,
+          "last_hit_s": 6330,
+          "hit_count": 40
+        }
+      ],
+      "discarded_short_runs": [
+        {
+          "end": 4,
+          "first_hit_s": 4870,
+          "last_hit_s": 4870,
+          "hit_count": 1
+        }
+      ],
+      "stable_marker_changes": [
+        {
+          "from_end": 1,
+          "to_end": 2,
+          "last_old_hit_s": 810,
+          "first_new_hit_s": 830
+        },
+        {
+          "from_end": 2,
+          "to_end": 3,
+          "last_old_hit_s": 1940,
+          "first_new_hit_s": 1970
+        },
+        {
+          "from_end": 3,
+          "to_end": 4,
+          "last_old_hit_s": 3090,
+          "first_new_hit_s": 3120
+        },
+        {
+          "from_end": 4,
+          "to_end": 5,
+          "last_old_hit_s": 4040,
+          "first_new_hit_s": 4060
+        },
+        {
+          "from_end": 5,
+          "to_end": 6,
+          "last_old_hit_s": 5260,
+          "first_new_hit_s": 5320
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "A two-hit run removes isolated optical false reads but can miss a briefly visible real marker.",
+    "The active-end graphic can lag play; its transition interval is not a physical end boundary.",
+    "An X in official results may still coexist with a displayed next-end marker; play status requires separate source evidence.",
+    "All three recordings have been exposed during model development; this is not an independent validation score."
+  ]
+}

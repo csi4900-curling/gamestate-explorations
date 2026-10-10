@@ -1,0 +1,107 @@
+{
+  "status": "e019_original_source_settle_gap_probe_not_identity_truth",
+  "source_video_sha256": "490b8703b2fcfaa2fbd61f8b45ebc45fd3281f0e9453bb4721f56e64056cd620",
+  "input_sha256": {
+    "motion": "5f24a8066fb58bba86c2f6892d184d49822dbeddba1a93e3b79435b9c22eca9a",
+    "board": "19e45eea532d0d74728b6c2d8b931bebc9f2b16f1812504ea3224e1c26a3fb03"
+  },
+  "runner_sha256": "1bf3649f780e63926d17d7c1b6c64b6c2ec145eed13bf004dd45bbc531edbc4c",
+  "crop_full_frame_1080": [
+    1270,
+    350,
+    1450,
+    530
+  ],
+  "marker_legend": {
+    "lime": "stored S20 moving-path center",
+    "magenta": "stored S20 board-frame red detection"
+  },
+  "samples": [
+    {
+      "source_time_s_requested": 686.0,
+      "decoded_frame_index": 20580,
+      "source_time_s_frame": 686.0,
+      "markers": [
+        {
+          "kind": "moving_path_center",
+          "pixel_1080": [
+            1368.14,
+            493.64
+          ]
+        }
+      ]
+    },
+    {
+      "source_time_s_requested": 686.25,
+      "decoded_frame_index": 20588,
+      "source_time_s_frame": 686.266667,
+      "markers": []
+    },
+    {
+      "source_time_s_requested": 686.5,
+      "decoded_frame_index": 20595,
+      "source_time_s_frame": 686.5,
+      "markers": [
+        {
+          "kind": "moving_path_center",
+          "pixel_1080": [
+            1366.44,
+            467.15
+          ]
+        }
+      ]
+    },
+    {
+      "source_time_s_requested": 686.75,
+      "decoded_frame_index": 20602,
+      "source_time_s_frame": 686.733333,
+      "markers": []
+    },
+    {
+      "source_time_s_requested": 687.0,
+      "decoded_frame_index": 20610,
+      "source_time_s_frame": 687.0,
+      "markers": [
+        {
+          "kind": "board_red_detection",
+          "pixel_1080": [
+            1361.3,
+            454.87
+          ]
+        }
+      ]
+    },
+    {
+      "source_time_s_requested": 687.25,
+      "decoded_frame_index": 20618,
+      "source_time_s_frame": 687.266667,
+      "markers": []
+    },
+    {
+      "source_time_s_requested": 687.5,
+      "decoded_frame_index": 20625,
+      "source_time_s_frame": 687.5,
+      "markers": []
+    },
+    {
+      "source_time_s_requested": 688.0,
+      "decoded_frame_index": 20640,
+      "source_time_s_frame": 688.0,
+      "markers": [
+        {
+          "kind": "board_red_detection",
+          "pixel_1080": [
+            1361.91,
+            456.51
+          ]
+        }
+      ]
+    }
+  ],
+  "sheet_sha256": "d2bcfccfd679c0397e73081c31f431c6f5dc19e90c145d072358c0b57de0ee81",
+  "limitations": [
+    "The quarter-second requested times round to the nearest 30 fps source frame; manifest records the exact frame used.",
+    "Markers come from different processing stages and do not establish one persistent physical stone identity.",
+    "The crop omits other stones and players outside this local image region; collision context requires the full frame."
+  ]
+}

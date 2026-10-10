@@ -1,0 +1,32 @@
+{
+  "status": "postscore_area_aware_right_proposals_not_physical_throw_labels",
+  "source_sha256": "aff12e78edeb5e108d142aed3e19b61c3956b4fddc8b2fd8b202713746771739",
+  "source_interval_s": [
+    8190,
+    8279
+  ],
+  "source_time_offset_s": 0,
+  "sample_period_s": 1,
+  "maximum_colour_contour_area_px2": 180,
+  "maximum_inter_sample_gap_s": 2,
+  "maximum_step_px_per_s": 40,
+  "area_change_weight_px": 15,
+  "minimum_supported_track_points": 3,
+  "minimum_supported_track_duration_s": 2,
+  "review_span_displacement_px": 60,
+  "colour_proposal_code_sha256": "0f1588b4eb3de2a5d9c732c0a0264f03a41933821a0a943845df2dc0a4ba1645",
+  "association_code_sha256": "fd57618be239344c6d5e7795a3b0e97720fc7ccd5944791210a200b2cd848b9e",
+  "late_seed_code_sha256": "be45207245e5f0c88dc9720810a4be44075affd8b5cbcbd8b3ade70f9fe55335",
+  "runner_sha256": "6a9cbb81b585ca0837d06878ce13a779d5880f592df4ce8edc852eba5f81ed81",
+  "raw_track_count": 0,
+  "directional_proposal_count": 0,
+  "raw_tracks": [],
+  "directional_review_proposals": [],
+  "limitations": [
+    "The 180 px2 cap limit was chosen after inspecting Estonia E15 rejected contours.",
+    "Global frame assignment was added after inspecting the Estonia E11 greedy-claim failure.",
+    "The two-second gap was chosen after inspecting Italy I04/I16 misses.",
+    "A global cost can still switch identities and lose short tracks.",
+    "No path is an accepted physical throw without source and cross-view checks."
+  ]
+}

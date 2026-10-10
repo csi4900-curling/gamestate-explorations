@@ -1,0 +1,135 @@
+{
+  "status": "fixed_ice_context_clip_transfer_not_physical_throw_classifier",
+  "source_sha256": "aff12e78edeb5e108d142aed3e19b61c3956b4fddc8b2fd8b202713746771739",
+  "probe_sha256": "35692cf31a6a175434bf6243afdc9343abd1790cc0a9287f5da21f68492dc00c",
+  "source_review_sha256": "d6797ce8b888582c198536456b29bfe97d0738aae1e1cfcf1ad42bebe984180f",
+  "feature_code_sha256": "4e7ea73e5d460f779d84dbe98c71811cd1a12891d9915d1435224e6e0ebd1d86",
+  "runner_sha256": "96ce8a6e0e59bb69d03d5b013719414a8ed96fcee375493883d89be92e991736",
+  "nonice_review_threshold": 0.25,
+  "counts_by_source_class_and_tier": {
+    "moving_stone": {
+      "isolated_ice_context": 4,
+      "context_cluttered_review": 1
+    },
+    "stone_pixels_identity_uncertain": {
+      "isolated_ice_context": 0,
+      "context_cluttered_review": 1
+    }
+  },
+  "rows": [
+    {
+      "raw_track_id": "A043",
+      "source_prefix_class": "moving_stone",
+      "sample_source_times_s": [
+        912.0,
+        913.0,
+        914.0
+      ],
+      "sample_nonice_ring_fractions": [
+        0.0244,
+        0.0057,
+        0.022
+      ],
+      "median_nonice_ring_fraction": 0.022,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "isolated_ice_context"
+    },
+    {
+      "raw_track_id": "A041",
+      "source_prefix_class": "moving_stone",
+      "sample_source_times_s": [
+        909.0,
+        910.0,
+        911.0
+      ],
+      "sample_nonice_ring_fractions": [
+        0.339,
+        0.2913,
+        0.0288
+      ],
+      "median_nonice_ring_fraction": 0.2913,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "context_cluttered_review"
+    },
+    {
+      "raw_track_id": "A069",
+      "source_prefix_class": "moving_stone",
+      "sample_source_times_s": [
+        1471.0,
+        1472.0,
+        1473.0
+      ],
+      "sample_nonice_ring_fractions": [
+        0.2278,
+        0.014,
+        0.0145
+      ],
+      "median_nonice_ring_fraction": 0.0145,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "isolated_ice_context"
+    },
+    {
+      "raw_track_id": "A132",
+      "source_prefix_class": "moving_stone",
+      "sample_source_times_s": [
+        3258.0,
+        3259.0,
+        3260.0
+      ],
+      "sample_nonice_ring_fractions": [
+        0.0109,
+        0.0132,
+        0.0205
+      ],
+      "median_nonice_ring_fraction": 0.0132,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "isolated_ice_context"
+    },
+    {
+      "raw_track_id": "A166",
+      "source_prefix_class": "stone_pixels_identity_uncertain",
+      "sample_source_times_s": [
+        3878.0,
+        3879.0,
+        3880.0
+      ],
+      "sample_nonice_ring_fractions": [
+        0.2908,
+        0.2661,
+        0.0371
+      ],
+      "median_nonice_ring_fraction": 0.2661,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "context_cluttered_review"
+    },
+    {
+      "raw_track_id": "A169",
+      "source_prefix_class": "moving_stone",
+      "sample_source_times_s": [
+        3947.0,
+        3948.0,
+        3950.0
+      ],
+      "sample_nonice_ring_fractions": [
+        0.0734,
+        0.0272,
+        0.0029
+      ],
+      "median_nonice_ring_fraction": 0.0272,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "isolated_ice_context"
+    }
+  ],
+  "limitations": [
+    "The source classes are same-agent short-prefix reviews, not physical-delivery truth.",
+    "The 0.25 threshold came from exposed 2024 recordings before this clip was scored, but this is not an independent end evaluation.",
+    "A low non-ice score may still belong to clothing or equipment over the rink.",
+    "No event is accepted or rejected by this review cue."
+  ]
+}

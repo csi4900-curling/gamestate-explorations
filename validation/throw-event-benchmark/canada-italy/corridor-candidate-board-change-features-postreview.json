@@ -1,0 +1,788 @@
+{
+  "status": "postreview_prediction_only_board_change_features_not_event_truth",
+  "source_id": "Vp3TIdOAlrc",
+  "source_sha256": "aff12e78edeb5e108d142aed3e19b61c3956b4fddc8b2fd8b202713746771739",
+  "source_interval_s": [
+    1650.0,
+    2760.0
+  ],
+  "candidates_sha256": "10b4166a2275ced86d4fa4c8d4395a42a46e83aa36430567b60d0aab1bd5fa5d",
+  "proposal_code_sha256": {
+    "left": "f0e2bf8062191b0f306e6f000893464c39b7993061267c90f6e8563c859ef3d6",
+    "right": "3481045f6544f24e880dc0df1aedc3ef3ddca4f53d1862b41f2d6742904c95e1"
+  },
+  "stability_code_sha256": "3bd7257c2f07bb46bda2d2531d950f4fbb7e23e3121224e0a9459af1acaa068b",
+  "transition_code_sha256": "502a5c84eba1584944974e45b99de2a268160a4db9b691dceefe198249226c42",
+  "runner_sha256": "84008948b0b4d7a7980f3e54717b2a0670f2dddf397b59cf267d9de89a5a1aca",
+  "pre_offsets_s": [
+    -35,
+    -30,
+    -25
+  ],
+  "post_offsets_s": [
+    25,
+    30,
+    35
+  ],
+  "adjacent_candidate_guard_s": 1,
+  "left_cap_roi_xyxy_360p": [
+    0,
+    120,
+    320,
+    335
+  ],
+  "scene_rois_xyxy_360p": {
+    "left": [
+      0,
+      70,
+      320,
+      130
+    ],
+    "right": [
+      330,
+      155,
+      630,
+      245
+    ]
+  },
+  "max_scene_mae": {
+    "left": 10,
+    "right": 20
+  },
+  "status_counts": {
+    "partial_cap_image_comparison": 11,
+    "abstain_adjacent_candidate_or_interval_boundary": 13
+  },
+  "rows": [
+    {
+      "candidate_id": "S01",
+      "crossing_time_s": 1691.45,
+      "colour_claim": "red",
+      "source_motion_direction": "positive_y",
+      "conditional_receiving_view": "left",
+      "previous_candidate_time_s": 1650.0,
+      "next_candidate_time_s": 1793.1,
+      "physical_throw_verified": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "partial_cap_image_comparison",
+      "pre_sample_times_s": [
+        1656.45,
+        1661.45,
+        1666.45
+      ],
+      "post_sample_times_s": [
+        1716.45,
+        1721.45,
+        1726.45
+      ],
+      "pre_repeated_cap_count": 5,
+      "post_repeated_cap_count": 6,
+      "cross_window_scene_mae": 7.507,
+      "image_cap_delta": {
+        "locally_retained": [
+          {
+            "before_local_id": "C02",
+            "after_local_id": "C03",
+            "colour": "red",
+            "pixel_shift": 1.414
+          },
+          {
+            "before_local_id": "C03",
+            "after_local_id": "C04",
+            "colour": "red",
+            "pixel_shift": 0.5
+          },
+          {
+            "before_local_id": "C05",
+            "after_local_id": "C06",
+            "colour": "yellow",
+            "pixel_shift": 0.0
+          }
+        ],
+        "no_longer_observed": [
+          "C01",
+          "C04"
+        ],
+        "newly_observed": [
+          "C01",
+          "C02",
+          "C05"
+        ],
+        "unresolved_before": [],
+        "unresolved_after": [],
+        "physical_transition_verified": false,
+        "simulation_ready": false
+      }
+    },
+    {
+      "candidate_id": "S03",
+      "crossing_time_s": 1793.1,
+      "colour_claim": "yellow",
+      "source_motion_direction": "positive_y",
+      "conditional_receiving_view": "left",
+      "previous_candidate_time_s": 1691.45,
+      "next_candidate_time_s": 1824.95,
+      "physical_throw_verified": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_adjacent_candidate_or_interval_boundary"
+    },
+    {
+      "candidate_id": "S07",
+      "crossing_time_s": 1824.95,
+      "colour_claim": "red",
+      "source_motion_direction": "positive_y",
+      "conditional_receiving_view": "left",
+      "previous_candidate_time_s": 1793.1,
+      "next_candidate_time_s": 1841.095,
+      "physical_throw_verified": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_adjacent_candidate_or_interval_boundary"
+    },
+    {
+      "candidate_id": "S08",
+      "crossing_time_s": 1841.095,
+      "colour_claim": "red",
+      "source_motion_direction": "positive_y",
+      "conditional_receiving_view": "left",
+      "previous_candidate_time_s": 1824.95,
+      "next_candidate_time_s": 1843.268,
+      "physical_throw_verified": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_adjacent_candidate_or_interval_boundary"
+    },
+    {
+      "candidate_id": "S10",
+      "crossing_time_s": 1843.268,
+      "colour_claim": "red",
+      "source_motion_direction": "positive_y",
+      "conditional_receiving_view": "left",
+      "previous_candidate_time_s": 1841.095,
+      "next_candidate_time_s": 1903.233,
+      "physical_throw_verified": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_adjacent_candidate_or_interval_boundary"
+    },
+    {
+      "candidate_id": "S12",
+      "crossing_time_s": 1903.233,
+      "colour_claim": "yellow",
+      "source_motion_direction": "negative_y",
+      "conditional_receiving_view": "right",
+      "previous_candidate_time_s": 1843.268,
+      "next_candidate_time_s": 1948.142,
+      "physical_throw_verified": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "partial_cap_image_comparison",
+      "pre_sample_times_s": [
+        1868.233,
+        1873.233,
+        1878.233
+      ],
+      "post_sample_times_s": [
+        1928.233,
+        1933.233,
+        1938.233
+      ],
+      "pre_repeated_cap_count": 0,
+      "post_repeated_cap_count": 2,
+      "cross_window_scene_mae": 3.001,
+      "image_cap_delta": {
+        "locally_retained": [],
+        "no_longer_observed": [],
+        "newly_observed": [
+          "C01",
+          "C02"
+        ],
+        "unresolved_before": [],
+        "unresolved_after": [],
+        "physical_transition_verified": false,
+        "simulation_ready": false
+      }
+    },
+    {
+      "candidate_id": "S13",
+      "crossing_time_s": 1948.142,
+      "colour_claim": "red",
+      "source_motion_direction": "negative_y",
+      "conditional_receiving_view": "right",
+      "previous_candidate_time_s": 1903.233,
+      "next_candidate_time_s": 1956.317,
+      "physical_throw_verified": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_adjacent_candidate_or_interval_boundary"
+    },
+    {
+      "candidate_id": "S14",
+      "crossing_time_s": 1956.317,
+      "colour_claim": "red",
+      "source_motion_direction": "negative_y",
+      "conditional_receiving_view": "right",
+      "previous_candidate_time_s": 1948.142,
+      "next_candidate_time_s": 1998.66,
+      "physical_throw_verified": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_adjacent_candidate_or_interval_boundary"
+    },
+    {
+      "candidate_id": "S15",
+      "crossing_time_s": 1998.66,
+      "colour_claim": "yellow",
+      "source_motion_direction": "negative_y",
+      "conditional_receiving_view": "right",
+      "previous_candidate_time_s": 1956.317,
+      "next_candidate_time_s": 2001.711,
+      "physical_throw_verified": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_adjacent_candidate_or_interval_boundary"
+    },
+    {
+      "candidate_id": "S16",
+      "crossing_time_s": 2001.711,
+      "colour_claim": "red",
+      "source_motion_direction": "negative_y",
+      "conditional_receiving_view": "right",
+      "previous_candidate_time_s": 1998.66,
+      "next_candidate_time_s": 2053.042,
+      "physical_throw_verified": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_adjacent_candidate_or_interval_boundary"
+    },
+    {
+      "candidate_id": "S17",
+      "crossing_time_s": 2053.042,
+      "colour_claim": "red",
+      "source_motion_direction": "negative_y",
+      "conditional_receiving_view": "right",
+      "previous_candidate_time_s": 2001.711,
+      "next_candidate_time_s": 2133.157,
+      "physical_throw_verified": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "partial_cap_image_comparison",
+      "pre_sample_times_s": [
+        2018.042,
+        2023.042,
+        2028.042
+      ],
+      "post_sample_times_s": [
+        2078.042,
+        2083.042,
+        2088.042
+      ],
+      "pre_repeated_cap_count": 2,
+      "post_repeated_cap_count": 2,
+      "cross_window_scene_mae": 3.399,
+      "image_cap_delta": {
+        "locally_retained": [
+          {
+            "before_local_id": "C01",
+            "after_local_id": "C01",
+            "colour": "red",
+            "pixel_shift": 2.062
+          },
+          {
+            "before_local_id": "C02",
+            "after_local_id": "C02",
+            "colour": "yellow",
+            "pixel_shift": 0.0
+          }
+        ],
+        "no_longer_observed": [],
+        "newly_observed": [],
+        "unresolved_before": [],
+        "unresolved_after": [],
+        "physical_transition_verified": false,
+        "simulation_ready": false
+      }
+    },
+    {
+      "candidate_id": "S18",
+      "crossing_time_s": 2133.157,
+      "colour_claim": "yellow",
+      "source_motion_direction": "negative_y",
+      "conditional_receiving_view": "right",
+      "previous_candidate_time_s": 2053.042,
+      "next_candidate_time_s": 2181.55,
+      "physical_throw_verified": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "partial_cap_image_comparison",
+      "pre_sample_times_s": [
+        2098.157,
+        2103.157,
+        2108.157
+      ],
+      "post_sample_times_s": [
+        2158.157,
+        2163.157,
+        2168.157
+      ],
+      "pre_repeated_cap_count": 2,
+      "post_repeated_cap_count": 2,
+      "cross_window_scene_mae": 3.649,
+      "image_cap_delta": {
+        "locally_retained": [
+          {
+            "before_local_id": "C01",
+            "after_local_id": "C01",
+            "colour": "red",
+            "pixel_shift": 1.118
+          }
+        ],
+        "no_longer_observed": [
+          "C02"
+        ],
+        "newly_observed": [
+          "C02"
+        ],
+        "unresolved_before": [],
+        "unresolved_after": [],
+        "physical_transition_verified": false,
+        "simulation_ready": false
+      }
+    },
+    {
+      "candidate_id": "S19",
+      "crossing_time_s": 2181.55,
+      "colour_claim": "red",
+      "source_motion_direction": "negative_y",
+      "conditional_receiving_view": "right",
+      "previous_candidate_time_s": 2133.157,
+      "next_candidate_time_s": 2235.305,
+      "physical_throw_verified": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "partial_cap_image_comparison",
+      "pre_sample_times_s": [
+        2146.55,
+        2151.55,
+        2156.55
+      ],
+      "post_sample_times_s": [
+        2206.55,
+        2211.55,
+        2216.55
+      ],
+      "pre_repeated_cap_count": 1,
+      "post_repeated_cap_count": 3,
+      "cross_window_scene_mae": 3.355,
+      "image_cap_delta": {
+        "locally_retained": [
+          {
+            "before_local_id": "C01",
+            "after_local_id": "C02",
+            "colour": "red",
+            "pixel_shift": 1.0
+          }
+        ],
+        "no_longer_observed": [],
+        "newly_observed": [
+          "C01",
+          "C03"
+        ],
+        "unresolved_before": [],
+        "unresolved_after": [],
+        "physical_transition_verified": false,
+        "simulation_ready": false
+      }
+    },
+    {
+      "candidate_id": "S20",
+      "crossing_time_s": 2235.305,
+      "colour_claim": "yellow",
+      "source_motion_direction": "negative_y",
+      "conditional_receiving_view": "right",
+      "previous_candidate_time_s": 2181.55,
+      "next_candidate_time_s": 2291.629,
+      "physical_throw_verified": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "partial_cap_image_comparison",
+      "pre_sample_times_s": [
+        2200.305,
+        2205.305,
+        2210.305
+      ],
+      "post_sample_times_s": [
+        2260.305,
+        2265.305,
+        2270.305
+      ],
+      "pre_repeated_cap_count": 3,
+      "post_repeated_cap_count": 4,
+      "cross_window_scene_mae": 3.12,
+      "image_cap_delta": {
+        "locally_retained": [
+          {
+            "before_local_id": "C02",
+            "after_local_id": "C01",
+            "colour": "red",
+            "pixel_shift": 0.0
+          },
+          {
+            "before_local_id": "C03",
+            "after_local_id": "C04",
+            "colour": "yellow",
+            "pixel_shift": 0.0
+          }
+        ],
+        "no_longer_observed": [
+          "C01"
+        ],
+        "newly_observed": [
+          "C02",
+          "C03"
+        ],
+        "unresolved_before": [],
+        "unresolved_after": [],
+        "physical_transition_verified": false,
+        "simulation_ready": false
+      }
+    },
+    {
+      "candidate_id": "S21",
+      "crossing_time_s": 2291.629,
+      "colour_claim": "red",
+      "source_motion_direction": "negative_y",
+      "conditional_receiving_view": "right",
+      "previous_candidate_time_s": 2235.305,
+      "next_candidate_time_s": 2298.847,
+      "physical_throw_verified": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_adjacent_candidate_or_interval_boundary"
+    },
+    {
+      "candidate_id": "S22",
+      "crossing_time_s": 2298.847,
+      "colour_claim": "red",
+      "source_motion_direction": "negative_y",
+      "conditional_receiving_view": "right",
+      "previous_candidate_time_s": 2291.629,
+      "next_candidate_time_s": 2345.525,
+      "physical_throw_verified": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_adjacent_candidate_or_interval_boundary"
+    },
+    {
+      "candidate_id": "S23",
+      "crossing_time_s": 2345.525,
+      "colour_claim": "yellow",
+      "source_motion_direction": "negative_y",
+      "conditional_receiving_view": "right",
+      "previous_candidate_time_s": 2298.847,
+      "next_candidate_time_s": 2396.92,
+      "physical_throw_verified": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "partial_cap_image_comparison",
+      "pre_sample_times_s": [
+        2310.525,
+        2315.525,
+        2320.525
+      ],
+      "post_sample_times_s": [
+        2370.525,
+        2375.525,
+        2380.525
+      ],
+      "pre_repeated_cap_count": 3,
+      "post_repeated_cap_count": 4,
+      "cross_window_scene_mae": 3.666,
+      "image_cap_delta": {
+        "locally_retained": [
+          {
+            "before_local_id": "C01",
+            "after_local_id": "C01",
+            "colour": "red",
+            "pixel_shift": 1.0
+          },
+          {
+            "before_local_id": "C02",
+            "after_local_id": "C02",
+            "colour": "yellow",
+            "pixel_shift": 0.0
+          },
+          {
+            "before_local_id": "C03",
+            "after_local_id": "C04",
+            "colour": "yellow",
+            "pixel_shift": 0.0
+          }
+        ],
+        "no_longer_observed": [],
+        "newly_observed": [
+          "C03"
+        ],
+        "unresolved_before": [],
+        "unresolved_after": [],
+        "physical_transition_verified": false,
+        "simulation_ready": false
+      }
+    },
+    {
+      "candidate_id": "S24",
+      "crossing_time_s": 2396.92,
+      "colour_claim": "red",
+      "source_motion_direction": "negative_y",
+      "conditional_receiving_view": "right",
+      "previous_candidate_time_s": 2345.525,
+      "next_candidate_time_s": 2463.137,
+      "physical_throw_verified": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "partial_cap_image_comparison",
+      "pre_sample_times_s": [
+        2361.92,
+        2366.92,
+        2371.92
+      ],
+      "post_sample_times_s": [
+        2421.92,
+        2426.92,
+        2431.92
+      ],
+      "pre_repeated_cap_count": 3,
+      "post_repeated_cap_count": 3,
+      "cross_window_scene_mae": 3.434,
+      "image_cap_delta": {
+        "locally_retained": [
+          {
+            "before_local_id": "C01",
+            "after_local_id": "C02",
+            "colour": "red",
+            "pixel_shift": 0.5
+          },
+          {
+            "before_local_id": "C03",
+            "after_local_id": "C03",
+            "colour": "yellow",
+            "pixel_shift": 0.0
+          }
+        ],
+        "no_longer_observed": [
+          "C02"
+        ],
+        "newly_observed": [
+          "C01"
+        ],
+        "unresolved_before": [],
+        "unresolved_after": [],
+        "physical_transition_verified": false,
+        "simulation_ready": false
+      }
+    },
+    {
+      "candidate_id": "S26",
+      "crossing_time_s": 2463.137,
+      "colour_claim": "yellow",
+      "source_motion_direction": "negative_y",
+      "conditional_receiving_view": "right",
+      "previous_candidate_time_s": 2396.92,
+      "next_candidate_time_s": 2515.76,
+      "physical_throw_verified": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "partial_cap_image_comparison",
+      "pre_sample_times_s": [
+        2428.137,
+        2433.137,
+        2438.137
+      ],
+      "post_sample_times_s": [
+        2488.137,
+        2493.137,
+        2498.137
+      ],
+      "pre_repeated_cap_count": 4,
+      "post_repeated_cap_count": 4,
+      "cross_window_scene_mae": 3.093,
+      "image_cap_delta": {
+        "locally_retained": [
+          {
+            "before_local_id": "C02",
+            "after_local_id": "C01",
+            "colour": "red",
+            "pixel_shift": 1.118
+          },
+          {
+            "before_local_id": "C04",
+            "after_local_id": "C04",
+            "colour": "yellow",
+            "pixel_shift": 0.0
+          }
+        ],
+        "no_longer_observed": [
+          "C01",
+          "C03"
+        ],
+        "newly_observed": [
+          "C02",
+          "C03"
+        ],
+        "unresolved_before": [],
+        "unresolved_after": [],
+        "physical_transition_verified": false,
+        "simulation_ready": false
+      }
+    },
+    {
+      "candidate_id": "S27",
+      "crossing_time_s": 2515.76,
+      "colour_claim": "red",
+      "source_motion_direction": "negative_y",
+      "conditional_receiving_view": "right",
+      "previous_candidate_time_s": 2463.137,
+      "next_candidate_time_s": 2554.893,
+      "physical_throw_verified": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "partial_cap_image_comparison",
+      "pre_sample_times_s": [
+        2480.76,
+        2485.76,
+        2490.76
+      ],
+      "post_sample_times_s": [
+        2540.76,
+        2545.76,
+        2550.76
+      ],
+      "pre_repeated_cap_count": 3,
+      "post_repeated_cap_count": 3,
+      "cross_window_scene_mae": 10.186,
+      "image_cap_delta": {
+        "locally_retained": [
+          {
+            "before_local_id": "C01",
+            "after_local_id": "C01",
+            "colour": "red",
+            "pixel_shift": 0.707
+          },
+          {
+            "before_local_id": "C03",
+            "after_local_id": "C03",
+            "colour": "yellow",
+            "pixel_shift": 0.0
+          }
+        ],
+        "no_longer_observed": [
+          "C02"
+        ],
+        "newly_observed": [
+          "C02"
+        ],
+        "unresolved_before": [],
+        "unresolved_after": [],
+        "physical_transition_verified": false,
+        "simulation_ready": false
+      }
+    },
+    {
+      "candidate_id": "S29",
+      "crossing_time_s": 2554.893,
+      "colour_claim": "red",
+      "source_motion_direction": "positive_y",
+      "conditional_receiving_view": "left",
+      "previous_candidate_time_s": 2515.76,
+      "next_candidate_time_s": 2582.302,
+      "physical_throw_verified": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_adjacent_candidate_or_interval_boundary"
+    },
+    {
+      "candidate_id": "S30",
+      "crossing_time_s": 2582.302,
+      "colour_claim": "yellow",
+      "source_motion_direction": "negative_y",
+      "conditional_receiving_view": "right",
+      "previous_candidate_time_s": 2554.893,
+      "next_candidate_time_s": 2676.3,
+      "physical_throw_verified": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_adjacent_candidate_or_interval_boundary"
+    },
+    {
+      "candidate_id": "S31",
+      "crossing_time_s": 2676.3,
+      "colour_claim": "red",
+      "source_motion_direction": "negative_y",
+      "conditional_receiving_view": "right",
+      "previous_candidate_time_s": 2582.302,
+      "next_candidate_time_s": 2729.529,
+      "physical_throw_verified": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "partial_cap_image_comparison",
+      "pre_sample_times_s": [
+        2641.3,
+        2646.3,
+        2651.3
+      ],
+      "post_sample_times_s": [
+        2701.3,
+        2706.3,
+        2711.3
+      ],
+      "pre_repeated_cap_count": 3,
+      "post_repeated_cap_count": 2,
+      "cross_window_scene_mae": 2.846,
+      "image_cap_delta": {
+        "locally_retained": [
+          {
+            "before_local_id": "C01",
+            "after_local_id": "C01",
+            "colour": "red",
+            "pixel_shift": 1.0
+          },
+          {
+            "before_local_id": "C03",
+            "after_local_id": "C02",
+            "colour": "yellow",
+            "pixel_shift": 0.0
+          }
+        ],
+        "no_longer_observed": [
+          "C02"
+        ],
+        "newly_observed": [],
+        "unresolved_before": [],
+        "unresolved_after": [],
+        "physical_transition_verified": false,
+        "simulation_ready": false
+      }
+    },
+    {
+      "candidate_id": "S32",
+      "crossing_time_s": 2729.529,
+      "colour_claim": "yellow",
+      "source_motion_direction": "negative_y",
+      "conditional_receiving_view": "right",
+      "previous_candidate_time_s": 2676.3,
+      "next_candidate_time_s": 2760.0,
+      "physical_throw_verified": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_adjacent_candidate_or_interval_boundary"
+    }
+  ],
+  "limitations": [
+    "The view and sampling rules were developed after inspecting exposed 2024 recordings.",
+    "Close candidate fragments are deliberately left unscored, which may remove hard false positives.",
+    "Stable colour blobs include markings and people; image delta is not a physical stone transition.",
+    "No reference labels were read by this feature runner."
+  ]
+}

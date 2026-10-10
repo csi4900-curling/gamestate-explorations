@@ -1,0 +1,94 @@
+{
+  "status": "development_selected_postscore_receiving_only_recall_lead_not_physical_f1",
+  "official_gap_id_for_selection_only": "PREL000102-E01-S14",
+  "source_sha256": "c5254bb9103e32c6beac74cf269fc7bcec8ce2c2a710a7d4600c7ddb951f160e",
+  "input_sha256": {
+    "sequence_queue": "622265f20851c96a7f2c83e870f158551e7958c8afe156af5cc733ca7b34fe5f",
+    "unassigned_shot_scan": "729126009ff2ec3738e63c98d7c38302de39361b3303fc757cc20803995b1e99",
+    "sequential_cap_motion": "6cd943d780350ce120c0520a528b45f473339862a87dec73bcbabad75d2591ae",
+    "shot_manifest": "af0c4a53d45f60e82e6f81b607b741ee01139e21a5cd5b8d7f76d8bf8cf1abae",
+    "postcut_scanner": "64a83a0acba9933c176b136f190b65fc3e32487ea875c37489b99c86e08160fc",
+    "cut_check": "4916e3e77d7fd25fb8c977f4882a6a4b7ce2930b3873d30ada6c885a12afb4da",
+    "runner": "a067760770f7e7e449667bc5d4ebfcd4cc5ed432dd16e3826e9dbcdd31fc6a1d"
+  },
+  "bracketing_candidates": [
+    "VISUAL-S58",
+    "VISUAL-S66"
+  ],
+  "camera_shots": [
+    {
+      "shot_id": "S63",
+      "interval_s": [
+        905.4,
+        915.4
+      ]
+    },
+    {
+      "shot_id": "S64",
+      "interval_s": [
+        915.4,
+        928.4
+      ]
+    },
+    {
+      "shot_id": "S65",
+      "interval_s": [
+        928.4,
+        932.2
+      ]
+    }
+  ],
+  "origin_scan": [
+    {
+      "shot_id": "S63",
+      "origin_model_predicted": true,
+      "raw_passage_count": 0
+    },
+    {
+      "shot_id": "S64",
+      "origin_model_predicted": false,
+      "raw_passage_count": 0
+    }
+  ],
+  "cut_at_915_4_s_verified": true,
+  "s64_red_cap_track_summaries": [
+    {
+      "id": "S64-R01",
+      "colour": "red",
+      "interval_s": [
+        915.4,
+        928.2
+      ],
+      "span_px": 47.51,
+      "point_count": 61
+    },
+    {
+      "id": "S64-R02",
+      "colour": "red",
+      "interval_s": [
+        916.8,
+        920.0
+      ],
+      "span_px": 200.88,
+      "point_count": 4
+    }
+  ],
+  "postcut_scan_window_s": [
+    915.6,
+    927.4
+  ],
+  "postcut_strict_track_counts": {
+    "red": 0,
+    "yellow": 0
+  },
+  "postcut_relaxed_track_counts": {
+    "red": 0,
+    "yellow": 0
+  },
+  "limitations": [
+    "Official E01-S14 selected this postscore audit; it did not enter any video-only detector decision.",
+    "The source frames show a red stone traveling in S64, but the release itself is hidden by a close-up and cut.",
+    "A cap track or visual travel does not establish physical identity across views or prove an official-shot match.",
+    "The current receiving-view scanner accepts no track here; camera following, cap fragmentation, and association ambiguity need separate diagnosis."
+  ]
+}

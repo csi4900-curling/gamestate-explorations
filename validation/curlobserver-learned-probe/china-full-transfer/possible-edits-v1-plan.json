@@ -1,0 +1,22 @@
+{
+  "status": "frozen_source_only_possible_edit_scan_plan",
+  "source_id": "qn9tHfcimlQ",
+  "video_relative_path": "validation/throw-event-benchmark/paralympics-2022-canada-china/source.mp4",
+  "hard_cuts_relative_path": "validation/curlobserver-learned-probe/china-full-transfer/hard-cuts.json",
+  "source_interval_s": [
+    0,
+    8356
+  ],
+  "sample_rate_hz": 5,
+  "minimum_gray_change": 60.0,
+  "minimum_hist_distance": 0.25,
+  "hard_cut_exclusion_s": 0.3,
+  "sha256": {
+    "video": "c5254bb9103e32c6beac74cf269fc7bcec8ce2c2a710a7d4600c7ddb951f160e",
+    "hard_cuts": "ce21faaa3af080ea232d55e83648b8c4696d0d1c7d78e4636aa0703cbaa764ee",
+    "scene_code": "5c4049a0e82853cb36e0eee4fd7e1bb009babc08318b3ce8b53566f309b883e9",
+    "runner": "8fad71b9e087d51f93ac10491968e074818d117e694e6744926d968004affb2e"
+  },
+  "rule": "At 5 Hz, flag frame pairs with mean greyscale change at least 60 and HSV histogram distance at least 0.25; report candidates more than 0.3 s from an existing hard cut. These are possible edits only, not event detections or validated cuts.",
+  "provenance": "Thresholds fixed after selected China S123/S519 diagnostics, before full China and Swiss scans."
+}

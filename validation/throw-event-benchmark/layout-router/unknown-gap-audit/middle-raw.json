@@ -1,0 +1,88 @@
+{
+  "status": "development_after_canada_estonia_first_score",
+  "source_id": "Z1yEOv__bDc",
+  "source_sha256": "18f4fe4ac910e2da7e1ed453ade9d291363ab7e01f8d0d207634a3d589efe0da",
+  "source_interval_s": [
+    7650.0,
+    7740.0
+  ],
+  "model_sha256": "45a14f710e6523f1036f939b90fb196c0c6e7a636c47ab443000eb20340d42e4",
+  "baseline_sha256": "40678c23b117f527c80375ff7d7fbe3a1119fb94c4650b05698cd2c76be9628f",
+  "runner_sha256": "35f3062165aac099e9b9337fbd7614f98e865c248774872ef89c2034b03b8653",
+  "config": {
+    "roi": [
+      40,
+      4,
+      280,
+      116
+    ],
+    "gate_y": 60.0,
+    "min_span_px": 24.0,
+    "min_observations": 6,
+    "max_gap_s": 0.55,
+    "association_px": 13.0,
+    "min_speed_px_s": 8.0,
+    "max_speed_px_s": 65.0
+  },
+  "events": [
+    {
+      "id": "S01",
+      "track_id": 81,
+      "colour": "red",
+      "crossing_time_s": 7704.193,
+      "time_semantics": "observed_track_midpoint",
+      "confirmed_at_s": 7705.2,
+      "first_observed_s": 7702.5,
+      "evidence_kind": "early_roi_motion_span",
+      "release_time_s": null,
+      "gate_y_px": null,
+      "crossing_x_px": 190.0340909090909,
+      "passage_y_px": 74.5,
+      "velocity_px_s": [
+        -4.0539252039414535,
+        -9.892260832715746
+      ],
+      "observations_at_confirmation": 25,
+      "observed_span_px": 27.0,
+      "median_candidate_bbox_width_px": 10.0,
+      "median_candidate_bbox_height_px": 11.0,
+      "mean_body_support": 0.849607697857698,
+      "recent_track_duration_s": 2.699999999999818,
+      "direction_consistency": 1.0,
+      "view_motion": "negative_y"
+    },
+    {
+      "id": "S02",
+      "track_id": 104,
+      "colour": "red",
+      "crossing_time_s": 7708.07,
+      "time_semantics": "observed_track_midpoint",
+      "confirmed_at_s": 7708.9,
+      "first_observed_s": 7707.4,
+      "evidence_kind": "early_roi_motion_span",
+      "release_time_s": null,
+      "gate_y_px": null,
+      "crossing_x_px": 127.53125,
+      "passage_y_px": 56.349999999999994,
+      "velocity_px_s": [
+        0.5171740827480091,
+        -16.58024980484105
+      ],
+      "observations_at_confirmation": 11,
+      "observed_span_px": 26.339999999999996,
+      "median_candidate_bbox_width_px": 18.0,
+      "median_candidate_bbox_height_px": 13.0,
+      "mean_body_support": 0.4206310301898537,
+      "recent_track_duration_s": 1.5,
+      "direction_consistency": 1.0,
+      "view_motion": "negative_y"
+    }
+  ],
+  "samples": 900,
+  "processing_seconds": 1.2951254330000666,
+  "limitations": [
+    "Candidates are motion spans in the 2024 fixed left-panel ROI, not confirmed throws.",
+    "Passage timestamps are observed track midpoints, not release times.",
+    "Any score on the three exposed 2024 recordings is post-score development fitting."
+  ]
+}

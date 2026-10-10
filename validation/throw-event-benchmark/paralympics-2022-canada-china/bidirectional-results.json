@@ -1,0 +1,73 @@
+{
+  "status": "development_diagnostic_after_canada_italy_first_score",
+  "source_id": "qn9tHfcimlQ",
+  "source_sha256": "c5254bb9103e32c6beac74cf269fc7bcec8ce2c2a710a7d4600c7ddb951f160e",
+  "source_interval_s": [
+    1650.0,
+    2760.0
+  ],
+  "model_sha256": "eb83336a159e04f8deb3fe053f698d90cf22c5cbd549a4a28ea455255a99d293",
+  "baseline_sha256": "40678c23b117f527c80375ff7d7fbe3a1119fb94c4650b05698cd2c76be9628f",
+  "runner_sha256": "fb943230e3f820b2f0373329e159af4617c220dcccc6f65369bb80d61123ad26",
+  "config": {
+    "roi": [
+      40,
+      4,
+      280,
+      116
+    ],
+    "gate_y": 60.0,
+    "min_span_px": 24.0,
+    "min_observations": 6,
+    "max_gap_s": 0.55,
+    "association_px": 13.0,
+    "min_speed_px_s": 8.0,
+    "max_speed_px_s": 65.0
+  },
+  "events": [
+    {
+      "id": "D01",
+      "track_id": 1194,
+      "colour": "red",
+      "crossing_time_s": 2286.842,
+      "confirmed_at_s": 2287.0,
+      "first_observed_s": 2286.5,
+      "evidence_kind": "outgoing_stone_passage",
+      "release_time_s": null,
+      "gate_y_px": 60.0,
+      "velocity_px_s": [
+        -18.57142857142168,
+        50.51428571427135
+      ],
+      "observations_at_confirmation": 6,
+      "direction_consistency": 1.0,
+      "crossing_x_px": 218.1600000000009,
+      "view_motion": "positive_y"
+    },
+    {
+      "id": "D02",
+      "track_id": 1910,
+      "colour": "red",
+      "crossing_time_s": 2736.675,
+      "confirmed_at_s": 2736.9,
+      "first_observed_s": 2736.3,
+      "evidence_kind": "outgoing_stone_passage",
+      "release_time_s": null,
+      "gate_y_px": 60.0,
+      "velocity_px_s": [
+        -6.4285714285705176,
+        43.36428571429026
+      ],
+      "observations_at_confirmation": 7,
+      "direction_consistency": 1.0,
+      "crossing_x_px": 44.0,
+      "view_motion": "positive_y"
+    }
+  ],
+  "samples": 11100,
+  "processing_seconds": 15.974158692000856,
+  "limitations": [
+    "Both motion directions are pooled without camera-role or end-phase selection.",
+    "This source revealed the direction failure and is development data, not held-out validation."
+  ]
+}

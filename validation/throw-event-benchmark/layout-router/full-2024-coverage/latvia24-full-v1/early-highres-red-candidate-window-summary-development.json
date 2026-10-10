@@ -1,0 +1,126 @@
+{
+  "status": "prediction_targeted_nine_red_window_development_summary_not_event_recall",
+  "candidate_ledger_sha256": "3242a4d322d07aa2ae5f319b4616e9ee13de3b1617ae29c211d138cea837ae8e",
+  "source_review_sha256": "262ad8e05e6bf29e1de44ddcfed3303b0c413c277ac42b12346b8aa51cfbf2fe",
+  "joiner_sha256": "2c7f1b9439ec54d8140308362848c442f51273b144098107482d70661aae4db0",
+  "window_count": 9,
+  "windows_with_upward_path": 6,
+  "windows_with_source_visible_moving_red_prefix": 6,
+  "template_source_window": "left:R01-S49",
+  "windows": [
+    {
+      "candidate_id": "left:R01-S40",
+      "window_sha256": "6eb6a062e77812834328c5d1632a5939ebed5419e779d686372aeec2db6750a5",
+      "source_interval_s": [
+        1717,
+        1743
+      ],
+      "body_proposal_count": 13,
+      "red_handle_supported_count": 1,
+      "upward_path_count": 0,
+      "same_agent_moving_red_source_review": false
+    },
+    {
+      "candidate_id": "left:R01-S42",
+      "window_sha256": "401ec3cdefab2d21ff8cbf7c7eeb61ab007847799c4dcf674edec782d1f2043e",
+      "source_interval_s": [
+        1860,
+        1886
+      ],
+      "body_proposal_count": 23,
+      "red_handle_supported_count": 3,
+      "upward_path_count": 0,
+      "same_agent_moving_red_source_review": false
+    },
+    {
+      "candidate_id": "left:R01-S45",
+      "window_sha256": "7e4c291737a3c054ea6683022815f295f4c5f1fec39c04dadb53a3e8c80c4e3f",
+      "source_interval_s": [
+        1883,
+        1909
+      ],
+      "body_proposal_count": 20,
+      "red_handle_supported_count": 0,
+      "upward_path_count": 0,
+      "same_agent_moving_red_source_review": false
+    },
+    {
+      "candidate_id": "left:R01-S49",
+      "window_sha256": "3f7d35d9d5cc2a009880a25a8f38b2c3416f8248120adcfe4bdde517fb15f118",
+      "source_interval_s": [
+        1981,
+        2007
+      ],
+      "body_proposal_count": 34,
+      "red_handle_supported_count": 19,
+      "upward_path_count": 1,
+      "same_agent_moving_red_source_review": true
+    },
+    {
+      "candidate_id": "left:R01-S53",
+      "window_sha256": "483ffab027bc138b6659b07055c28aed2bff627f0683e19eb10f9e674b359b45",
+      "source_interval_s": [
+        2071,
+        2097
+      ],
+      "body_proposal_count": 46,
+      "red_handle_supported_count": 34,
+      "upward_path_count": 1,
+      "same_agent_moving_red_source_review": true
+    },
+    {
+      "candidate_id": "left:R01-S56",
+      "window_sha256": "93d84c32d7a346e9e8aa796857f21ce6425ea83021bcb0d02c1d2af286eed71e",
+      "source_interval_s": [
+        2174,
+        2200
+      ],
+      "body_proposal_count": 92,
+      "red_handle_supported_count": 61,
+      "upward_path_count": 1,
+      "same_agent_moving_red_source_review": true
+    },
+    {
+      "candidate_id": "left:R01-S59",
+      "window_sha256": "e85ff3836c4758d9bd0a7c59a5e3af0d35d6942fce53631ec4757937fcd13f3a",
+      "source_interval_s": [
+        2357,
+        2383
+      ],
+      "body_proposal_count": 93,
+      "red_handle_supported_count": 59,
+      "upward_path_count": 1,
+      "same_agent_moving_red_source_review": true
+    },
+    {
+      "candidate_id": "left:R01-S63",
+      "window_sha256": "4c555fae87d7a7e7f31a300ff148eec4817b01c1335a2623076108979c4e7342",
+      "source_interval_s": [
+        2532,
+        2558
+      ],
+      "body_proposal_count": 49,
+      "red_handle_supported_count": 33,
+      "upward_path_count": 1,
+      "same_agent_moving_red_source_review": true
+    },
+    {
+      "candidate_id": "left:R01-S65",
+      "window_sha256": "7434ebaa0695b4a8aa69dbe0bb2282ab6c53b52243be211ad437010d399d2ff9",
+      "source_interval_s": [
+        2681,
+        2707
+      ],
+      "body_proposal_count": 52,
+      "red_handle_supported_count": 33,
+      "upward_path_count": 1,
+      "same_agent_moving_red_source_review": true
+    }
+  ],
+  "limitations": [
+    "Windows are selected from provisional model candidates rather than exhaustive source labels.",
+    "The source-template event S49 is included in the six supported windows.",
+    "A moving prefix does not verify persistent identity or settled board state.",
+    "No full-excerpt false-positive rate, independent throw precision or recall is measured."
+  ]
+}

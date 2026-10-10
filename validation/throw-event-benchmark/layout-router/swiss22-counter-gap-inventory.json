@@ -1,0 +1,60 @@
+{
+  "status": "counter_gap_evidence_inventory_not_confirmed_throws",
+  "source_id": "ZJAMdkERdpE",
+  "source_sha256": "49429abdd3796e8240e66c201d37e94e71a7bb6225890b2492bea26d2f70d560",
+  "source_interval_s": [
+    0.0,
+    7734.0
+  ],
+  "coverage_gaps_s": [
+    [
+      0.0,
+      300.0
+    ],
+    [
+      3900.0,
+      4200.0
+    ],
+    [
+      7200.0,
+      7734.0
+    ]
+  ],
+  "preflight_sha256": "5c88008a4cd019c27e4be95199b14ef9fda54cba20899cd3ae84c06e61f30cbd",
+  "counter_replay_sha256": "1719ca0fc6e3eb981075a3efdcca3cecc2ba303a55a08d73fd2c853398a5a613",
+  "model_sha256": "5f6e62d1f45a4a7e16ddb9a9a24ab8c824c6f10a5c018100029c1bbbf9b2f4d4",
+  "runner_sha256": "38f66a6e35458d4e6434badc506787d20cc9e0a8ef2c8b9e348cd6bd64402460",
+  "counter_event_count": 98,
+  "interior_gap_candidate_count": 1,
+  "boundary_ambiguous_count": 0,
+  "interior_gap_candidates": [
+    {
+      "counter_id": "B58",
+      "colour": "red",
+      "counter_update_s": 3907.0,
+      "counter_evidence_interval_s": [
+        3906.0,
+        3907.0
+      ],
+      "remaining_before": [
+        1,
+        0
+      ],
+      "remaining_after": [
+        0,
+        0
+      ],
+      "classification": "counter_evidence_inside_gap",
+      "gap_interval_s": [
+        3900.0,
+        4200.0
+      ]
+    }
+  ],
+  "boundary_ambiguous": [],
+  "limitations": [
+    "Counter updates are delayed broadcast evidence, not observed release times.",
+    "No counter evidence in a gap does not establish that no throw occurred.",
+    "Route gaps remain gaps; these candidates are not confirmed timeline events."
+  ]
+}

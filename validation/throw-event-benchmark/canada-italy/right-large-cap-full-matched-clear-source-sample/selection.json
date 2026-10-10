@@ -1,0 +1,79 @@
+{
+  "status": "preselected_time_spread_matched_clear_source_review_not_random_accuracy_sample",
+  "source_sha256": "aff12e78edeb5e108d142aed3e19b61c3956b4fddc8b2fd8b202713746771739",
+  "inventory_sha256": "3333f33677b77fb5c1526f500d74c99ca1b5f883dc827375e259e0d55b7c7008",
+  "context_sha256": "e301473715ca396a39ee85f79cbbdb7a189e1e7e3e37c2d2a39443173036b674",
+  "probe_sha256_by_run": {
+    "R01": "1b405070982267ae6d5496208c842258ee62a120146069de23fe574acb9be22e",
+    "R02": "6180ee5a8ade13f5d25f5c3a460020317774f0d44f3ea231dc034f242ec381df"
+  },
+  "eligible_count": 100,
+  "sample_count": 12,
+  "sampling_rule": "Sort by right passage time; select floor((i+0.5)*N/n) for i=0..n-1.",
+  "rows": [
+    {
+      "proposal_id": "R01:A010",
+      "passage_time_s": 333.811,
+      "matched_left_event_id": "R01-S05"
+    },
+    {
+      "proposal_id": "R01:A029",
+      "passage_time_s": 775.238,
+      "matched_left_event_id": "R01-S15"
+    },
+    {
+      "proposal_id": "R01:A065",
+      "passage_time_s": 1359.857,
+      "matched_left_event_id": "R01-S25"
+    },
+    {
+      "proposal_id": "R01:A091",
+      "passage_time_s": 2060.341,
+      "matched_left_event_id": "R01-S46"
+    },
+    {
+      "proposal_id": "R01:A105",
+      "passage_time_s": 2520.938,
+      "matched_left_event_id": "R01-S56"
+    },
+    {
+      "proposal_id": "R01:A142",
+      "passage_time_s": 3462.034,
+      "matched_left_event_id": "R01-S70"
+    },
+    {
+      "proposal_id": "R01:A184",
+      "passage_time_s": 4588.267,
+      "matched_left_event_id": "R01-S83"
+    },
+    {
+      "proposal_id": "R01:A205",
+      "passage_time_s": 5069.178,
+      "matched_left_event_id": "R01-S93"
+    },
+    {
+      "proposal_id": "R01:A253",
+      "passage_time_s": 5849.17,
+      "matched_left_event_id": "R01-S110"
+    },
+    {
+      "proposal_id": "R01:A289",
+      "passage_time_s": 6503.107,
+      "matched_left_event_id": "R01-S120"
+    },
+    {
+      "proposal_id": "R01:A333",
+      "passage_time_s": 7291.22,
+      "matched_left_event_id": "R01-S139"
+    },
+    {
+      "proposal_id": "R01:A349",
+      "passage_time_s": 7757.882,
+      "matched_left_event_id": "R01-S148"
+    }
+  ],
+  "limitations": [
+    "Time-spread selection is not an independent random sample or precision estimator.",
+    "Source review can discover counterexamples but cannot prove all eligible paths are stones."
+  ]
+}

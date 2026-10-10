@@ -1,0 +1,111 @@
+{
+  "status": "development_paired_event_to_delayed_counter_proxy_not_physical_f1",
+  "source_sha256": "c49fb90959c13b690447dccb87a0b78e0bba8537aa961339a92f934226baf2b3",
+  "source_only_event_sha256": "b6cab752f3cee5764bd36a27623c3168e17fdf53a276f9e72c4f3587d6ba3ff7",
+  "first_transfer_sha256": "22cf96576fae262df6d6974448924fdd385e27087db73473c6cefa6c70b9c427",
+  "score_code_sha256": "25d034dc4b3716656c7ff621e35f21ef7790d2b1f3c51467f77c58ee09c5d656",
+  "runner_sha256": "a33653f3737114a1948b1ec0e3311e03309177a92378fc40a4bface71b480b45",
+  "end": 4,
+  "official_shot_count": 16,
+  "clean_counter_count": 12,
+  "score": {
+    "visual_candidate_count": 15,
+    "clean_counter_count": 12,
+    "matched_count": 10,
+    "unmatched_visual_ids": [
+      "S234-paired",
+      "S281-paired",
+      "S290-paired",
+      "S295-paired",
+      "S297-paired"
+    ],
+    "unmatched_official_shot_ids": [
+      "PREL001501-E04-S02",
+      "PREL001501-E04-S11"
+    ],
+    "matches": [
+      {
+        "visual_id": "S243-paired",
+        "official_shot_id": "PREL001501-E04-S01",
+        "visual_colour": "yellow",
+        "counter_colour": "yellow",
+        "counter_minus_visual_end_s": 19.8
+      },
+      {
+        "visual_id": "S251-paired",
+        "official_shot_id": "PREL001501-E04-S03",
+        "visual_colour": "red",
+        "counter_colour": "yellow",
+        "counter_minus_visual_end_s": 1.2
+      },
+      {
+        "visual_id": "S255-paired",
+        "official_shot_id": "PREL001501-E04-S04",
+        "visual_colour": "yellow",
+        "counter_colour": "red",
+        "counter_minus_visual_end_s": 18.2
+      },
+      {
+        "visual_id": "S259-paired",
+        "official_shot_id": "PREL001501-E04-S05",
+        "visual_colour": "yellow",
+        "counter_colour": "yellow",
+        "counter_minus_visual_end_s": 19.2
+      },
+      {
+        "visual_id": "S263-paired",
+        "official_shot_id": "PREL001501-E04-S06",
+        "visual_colour": "red",
+        "counter_colour": "red",
+        "counter_minus_visual_end_s": 10.6
+      },
+      {
+        "visual_id": "S265-paired",
+        "official_shot_id": "PREL001501-E04-S07",
+        "visual_colour": "yellow",
+        "counter_colour": "yellow",
+        "counter_minus_visual_end_s": 12.4
+      },
+      {
+        "visual_id": "S269-paired",
+        "official_shot_id": "PREL001501-E04-S08",
+        "visual_colour": "red",
+        "counter_colour": "red",
+        "counter_minus_visual_end_s": 14.8
+      },
+      {
+        "visual_id": "S271-paired",
+        "official_shot_id": "PREL001501-E04-S09",
+        "visual_colour": "red",
+        "counter_colour": "yellow",
+        "counter_minus_visual_end_s": 11.2
+      },
+      {
+        "visual_id": "S273-paired",
+        "official_shot_id": "PREL001501-E04-S10",
+        "visual_colour": "red",
+        "counter_colour": "red",
+        "counter_minus_visual_end_s": 10.8
+      },
+      {
+        "visual_id": "S285-paired",
+        "official_shot_id": "PREL001501-E04-S13",
+        "visual_colour": "red",
+        "counter_colour": "yellow",
+        "counter_minus_visual_end_s": 31.2
+      }
+    ],
+    "counter_proxy_precision": 0.6667,
+    "counter_proxy_recall": 0.8333,
+    "counter_proxy_f1": 0.7407,
+    "known_colour_match_count": 6,
+    "known_colour_conflict_count": 4,
+    "unknown_colour_match_count": 0
+  },
+  "limitations": [
+    "The pairing rule was fixed after exposed end three, before this end-four visual transfer.",
+    "Delayed counters are weak references with only 12 of 16 official shots covered.",
+    "Broad origin windows and monotone timing can pair the wrong physical delivery.",
+    "This does not establish complete-end precision, recall, F1 or cross-cut identity."
+  ]
+}

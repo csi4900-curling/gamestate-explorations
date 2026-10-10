@@ -1,0 +1,5921 @@
+{
+  "status": "postscore_development_rebased_gap_patch_not_event_score",
+  "source_motion_sha256": "5f24a8066fb58bba86c2f6892d184d49822dbeddba1a93e3b79435b9c22eca9a",
+  "video_sha256": "490b8703b2fcfaa2fbd61f8b45ebc45fd3281f0e9453bb4721f56e64056cd620",
+  "model_sha256": "10036a8b13e7e35f0be3cfd7280e9e0afaa3cf5b5da6cecc5623fb79695e0670",
+  "runner_sha256": "49320497b85df99e0712f7f62fce17cb88c9130bc83f3edcaed7b98cb04a7ef6",
+  "rebase_code_sha256": "6d917ae47e3dfaef45ab5def54f4c5b5ea15c3e82f3d79181e3ac17900904ff9",
+  "right_reference_anchor_time_s": 6525.0,
+  "right_reference_anchor_registration": {
+    "status": "registered",
+    "inliers": 39,
+    "matches": 59,
+    "rmse_px": 1.0726771652157872,
+    "max_corner_displacement_px": 90.02350488819164,
+    "reference_to_current": [
+      [
+        1.1141360242253953,
+        0.08979434438406485,
+        -195.68106569114437
+      ],
+      [
+        -0.005874037539324768,
+        1.0912579823239008,
+        -2.3774273820660925
+      ],
+      [
+        4.258787514731362e-06,
+        1.9325571868452738e-05,
+        1.0
+      ]
+    ],
+    "note": "Feature consistency only; not proof of correct camera identity or metric accuracy."
+  },
+  "detection_background": "original_clean_reference_transported_to_current_frame",
+  "patch_code_sha256": "828a84a14930266c83afea41526f1e4800163e2c41c3462195c96a3551116169",
+  "sample_strategy": "First, midpoint, and last path node, or shared-prefix node",
+  "limitations": [
+    "The model comes from small handpicked, agent-labelled 2022 clips and is not an independent 2024 event classifier.",
+    "A stone-like patch does not prove delivery, and a weak patch does not disprove a stone.",
+    "Only three path points are sampled; appearance may change between them."
+  ],
+  "motion_sha256": "5a4bb24cbce803010980370c7059d5d68097c91e40560e4b326c93aa775f01f3",
+  "hold_sha256": "224b6e71000f83e1bba31abf267a5463f0bd84028624d22331f1d325530cc292",
+  "rows": [
+    {
+      "candidate_id": "S01",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 99.5,
+          "pixel_center": [
+            1369.72,
+            1050.97
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.5397578767362934,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1344,
+            1035,
+            52,
+            28
+          ]
+        },
+        {
+          "source_time_s": 104.0,
+          "pixel_center": [
+            1398.33,
+            658.77
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 2.821586875942208,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1381,
+            646,
+            34,
+            21
+          ]
+        },
+        {
+          "source_time_s": 108.0,
+          "pixel_center": [
+            1474.7,
+            463.42
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.3755842447693053,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1454,
+            452,
+            38,
+            19
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S02",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 149.0,
+          "pixel_center": [
+            1646.09,
+            1032.23
+          ],
+          "registration_status": "rejected",
+          "appearance_geometry_source": "borrowed_anchor",
+          "anchor_time_s": 148.5,
+          "status": "scored",
+          "patch_score": 0.09926186439228571,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1618,
+            1016,
+            58,
+            30
+          ]
+        },
+        {
+          "source_time_s": 153.0,
+          "pixel_center": [
+            1658.76,
+            672.13
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 2.7550007057192105,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1636,
+            658,
+            48,
+            26
+          ]
+        },
+        {
+          "source_time_s": 156.5,
+          "pixel_center": [
+            1632.21,
+            480.44
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.34800102781657827,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1612,
+            468,
+            42,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S04",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 197.0,
+          "pixel_center": [
+            1507.35,
+            1024.8
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.131163899523281,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1484,
+            1007,
+            53,
+            28
+          ]
+        },
+        {
+          "source_time_s": 200.0,
+          "pixel_center": [
+            1484.8,
+            820.93
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.6912619876072945,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1462,
+            806,
+            42,
+            24
+          ]
+        },
+        {
+          "source_time_s": 203.5,
+          "pixel_center": [
+            1430.14,
+            663.0
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 2.095919553911625,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1412,
+            650,
+            42,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S06",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 245.5,
+          "pixel_center": [
+            1602.44,
+            1072.19
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.9916775987602884,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1584,
+            1066,
+            40,
+            14
+          ]
+        },
+        {
+          "source_time_s": 249.5,
+          "pixel_center": [
+            1662.36,
+            684.99
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.6262958416041777,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1638,
+            672,
+            50,
+            26
+          ]
+        },
+        {
+          "source_time_s": 253.5,
+          "pixel_center": [
+            1716.52,
+            450.03
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.2652964168521708,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1698,
+            438,
+            40,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S07",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 289.0,
+          "pixel_center": [
+            1536.21,
+            1047.44
+          ],
+          "registration_status": "rejected",
+          "appearance_geometry_source": "borrowed_anchor",
+          "anchor_time_s": 288.5,
+          "status": "scored",
+          "patch_score": -0.17340329510557698,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            1516,
+            1032,
+            44,
+            24
+          ]
+        },
+        {
+          "source_time_s": 293.5,
+          "pixel_center": [
+            1615.97,
+            626.96
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.205403564611716,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1599,
+            615,
+            39,
+            22
+          ]
+        },
+        {
+          "source_time_s": 297.0,
+          "pixel_center": [
+            1700.35,
+            448.37
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.4370910755063738,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            1684,
+            438,
+            32,
+            16
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S08",
+      "status": "no_selected_motion_path",
+      "samples": []
+    },
+    {
+      "candidate_id": "S09",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 340.0,
+          "pixel_center": [
+            1723.08,
+            949.24
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.0232897106277434,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1696,
+            932,
+            58,
+            32
+          ]
+        },
+        {
+          "source_time_s": 343.5,
+          "pixel_center": [
+            1790.69,
+            657.83
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 4.776644168649844,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1768,
+            640,
+            48,
+            28
+          ]
+        },
+        {
+          "source_time_s": 347.0,
+          "pixel_center": [
+            1852.88,
+            467.61
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.0166812255557702,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1832,
+            456,
+            40,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S10",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 394.0,
+          "pixel_center": [
+            1099.23,
+            1028.48
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.5013625527824893,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1074,
+            1014,
+            55,
+            27
+          ]
+        },
+        {
+          "source_time_s": 398.0,
+          "pixel_center": [
+            1103.82,
+            748.41
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 2.497137726308467,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1088,
+            734,
+            38,
+            22
+          ]
+        },
+        {
+          "source_time_s": 401.5,
+          "pixel_center": [
+            1144.72,
+            594.35
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 2.423197333191554,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1129,
+            582,
+            38,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S11",
+      "status": "no_selected_motion_path",
+      "samples": []
+    },
+    {
+      "candidate_id": "S12",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 454.0,
+          "pixel_center": [
+            1483.38,
+            1032.29
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.40329822454261466,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1458,
+            1014,
+            56,
+            32
+          ]
+        },
+        {
+          "source_time_s": 458.0,
+          "pixel_center": [
+            1424.24,
+            693.35
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.5455287920597542,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1402,
+            680,
+            46,
+            26
+          ]
+        },
+        {
+          "source_time_s": 461.5,
+          "pixel_center": [
+            1360.12,
+            509.97
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.703362423357631,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1336,
+            498,
+            48,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S13",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 492.5,
+          "pixel_center": [
+            1428.44,
+            1054.42
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.18314720260227693,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            1408,
+            1038,
+            52,
+            27
+          ]
+        },
+        {
+          "source_time_s": 496.0,
+          "pixel_center": [
+            1396.99,
+            753.94
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.555697590280269,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1376,
+            739,
+            40,
+            23
+          ]
+        },
+        {
+          "source_time_s": 499.0,
+          "pixel_center": [
+            1352.46,
+            583.98
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 2.3660129983397433,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1340,
+            570,
+            32,
+            21
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S14",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 540.5,
+          "pixel_center": [
+            1514.74,
+            1038.26
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.3230308252875466,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1490,
+            1018,
+            54,
+            34
+          ]
+        },
+        {
+          "source_time_s": 544.5,
+          "pixel_center": [
+            1561.39,
+            671.69
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.9470140152728257,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1540,
+            656,
+            46,
+            24
+          ]
+        },
+        {
+          "source_time_s": 548.0,
+          "pixel_center": [
+            1638.09,
+            481.71
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.5512737304346683,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1616,
+            470,
+            44,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S15",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 577.5,
+          "pixel_center": [
+            1429.19,
+            1061.26
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.3099220893735537,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            1404,
+            1045,
+            52,
+            28
+          ]
+        },
+        {
+          "source_time_s": 581.0,
+          "pixel_center": [
+            1403.6,
+            695.46
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.517972812627604,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1388,
+            682,
+            30,
+            21
+          ]
+        },
+        {
+          "source_time_s": 584.5,
+          "pixel_center": [
+            1359.94,
+            465.91
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.5611576764880588,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1347,
+            456,
+            33,
+            18
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S16",
+      "status": "no_selected_motion_path",
+      "samples": []
+    },
+    {
+      "candidate_id": "S17",
+      "status": "no_selected_motion_path",
+      "samples": []
+    },
+    {
+      "candidate_id": "S18",
+      "motion_status": "provisional_unique_dropout_rescue_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 600.5,
+          "pixel_center": [
+            416.58,
+            333.82
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.8239808203893116,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            404,
+            324,
+            26,
+            18
+          ]
+        },
+        {
+          "source_time_s": 603.5,
+          "pixel_center": [
+            432.72,
+            594.72
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -1.2101736083466084,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            400,
+            574,
+            64,
+            40
+          ]
+        },
+        {
+          "source_time_s": 604.5,
+          "pixel_center": [
+            441.42,
+            622.35
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -2.1351676557942296,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            408,
+            596,
+            66,
+            46
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S19",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 622.5,
+          "pixel_center": [
+            1368.26,
+            1010.52
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.557725143150837,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1344,
+            994,
+            54,
+            30
+          ]
+        },
+        {
+          "source_time_s": 626.5,
+          "pixel_center": [
+            1390.14,
+            650.34
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 2.6116793988682394,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1370,
+            638,
+            46,
+            24
+          ]
+        },
+        {
+          "source_time_s": 630.0,
+          "pixel_center": [
+            1430.21,
+            457.85
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.5717501126048433,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1408,
+            446,
+            44,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S20",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 679.0,
+          "pixel_center": [
+            1427.98,
+            1065.57
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.052523484571109974,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            1402,
+            1049,
+            52,
+            28
+          ]
+        },
+        {
+          "source_time_s": 683.0,
+          "pixel_center": [
+            1396.04,
+            674.23
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.8684992692888343,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1380,
+            661,
+            41,
+            22
+          ]
+        },
+        {
+          "source_time_s": 686.5,
+          "pixel_center": [
+            1366.44,
+            467.15
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.07110455344040997,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1356,
+            456,
+            28,
+            18
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S21",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 725.0,
+          "pixel_center": [
+            1315.58,
+            1069.21
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.3962440986798855,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            1296,
+            1060,
+            44,
+            20
+          ]
+        },
+        {
+          "source_time_s": 729.5,
+          "pixel_center": [
+            1336.3,
+            661.42
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 2.3573434948253436,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1312,
+            648,
+            50,
+            26
+          ]
+        },
+        {
+          "source_time_s": 733.5,
+          "pixel_center": [
+            1390.35,
+            461.5
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.3296785963134008,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            1368,
+            448,
+            44,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S22",
+      "status": "no_selected_motion_path",
+      "samples": []
+    },
+    {
+      "candidate_id": "S23",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 779.0,
+          "pixel_center": [
+            1380.01,
+            1025.7
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.4249720869856082,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1358,
+            1010,
+            47,
+            25
+          ]
+        },
+        {
+          "source_time_s": 783.0,
+          "pixel_center": [
+            1411.42,
+            656.28
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.2761408545386392,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1400,
+            642,
+            30,
+            22
+          ]
+        },
+        {
+          "source_time_s": 786.5,
+          "pixel_center": [
+            1471.68,
+            464.24
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.08727530843417744,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            1454,
+            452,
+            34,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S25",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 800.5,
+          "pixel_center": [
+            1768.7,
+            918.6
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.5018186061114579,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            1748,
+            899,
+            42,
+            35
+          ]
+        },
+        {
+          "source_time_s": 802.0,
+          "pixel_center": [
+            1777.59,
+            810.21
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.27223563590844435,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            1758,
+            792,
+            40,
+            32
+          ]
+        },
+        {
+          "source_time_s": 803.0,
+          "pixel_center": [
+            1778.06,
+            738.03
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.0779470970388261,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            1760,
+            720,
+            38,
+            32
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S27",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 800.5,
+          "pixel_center": [
+            1768.7,
+            918.6
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.5018186061114579,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            1748,
+            899,
+            42,
+            35
+          ]
+        },
+        {
+          "source_time_s": 802.0,
+          "pixel_center": [
+            1777.59,
+            810.21
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.27223563590844435,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            1758,
+            792,
+            40,
+            32
+          ]
+        },
+        {
+          "source_time_s": 803.0,
+          "pixel_center": [
+            1778.06,
+            738.03
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.0779470970388261,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            1760,
+            720,
+            38,
+            32
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S29",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 882.5,
+          "pixel_center": [
+            538.59,
+            347.28
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 4.299115584257918,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            526,
+            340,
+            29,
+            14
+          ]
+        },
+        {
+          "source_time_s": 885.0,
+          "pixel_center": [
+            503.77,
+            433.28
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.7075051271676243,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            490,
+            422,
+            32,
+            18
+          ]
+        },
+        {
+          "source_time_s": 887.0,
+          "pixel_center": [
+            467.07,
+            482.31
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 2.724657661451254,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            452,
+            471,
+            36,
+            18
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S30",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 924.5,
+          "pixel_center": [
+            544.28,
+            354.05
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.5972934220392756,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            530,
+            342,
+            34,
+            22
+          ]
+        },
+        {
+          "source_time_s": 926.5,
+          "pixel_center": [
+            579.5,
+            454.54
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.5068789033536873,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            562,
+            442,
+            40,
+            22
+          ]
+        },
+        {
+          "source_time_s": 928.5,
+          "pixel_center": [
+            635.87,
+            549.31
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.28755007306778646,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            624,
+            534,
+            30,
+            24
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S31",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 970.5,
+          "pixel_center": [
+            605.91,
+            338.7
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.3657834269942755,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            592,
+            330,
+            36,
+            16
+          ]
+        },
+        {
+          "source_time_s": 972.5,
+          "pixel_center": [
+            665.02,
+            502.62
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.988656786900617,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            644,
+            491,
+            44,
+            21
+          ]
+        },
+        {
+          "source_time_s": 974.5,
+          "pixel_center": [
+            743.03,
+            684.59
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -1.037328205451951,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            723,
+            672,
+            41,
+            24
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S32",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 1024.0,
+          "pixel_center": [
+            636.08,
+            370.25
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 5.364308504806814,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            618,
+            360,
+            38,
+            20
+          ]
+        },
+        {
+          "source_time_s": 1025.0,
+          "pixel_center": [
+            665.0,
+            453.53
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 5.256595100333416,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            646,
+            442,
+            40,
+            24
+          ]
+        },
+        {
+          "source_time_s": 1026.0,
+          "pixel_center": [
+            701.92,
+            547.4
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.066149455272938,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            682,
+            530,
+            46,
+            26
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S33",
+      "motion_status": "ambiguous_far_entry_motion_paths",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 1076.0,
+          "pixel_center": [
+            681.44,
+            383.14
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 2.9049191763755577,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            664,
+            370,
+            34,
+            19
+          ]
+        },
+        {
+          "source_time_s": 1077.0,
+          "pixel_center": [
+            723.41,
+            482.92
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.7174930394175871,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            704,
+            471,
+            38,
+            20
+          ]
+        },
+        {
+          "source_time_s": 1077.5,
+          "pixel_center": [
+            746.31,
+            535.42
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.9239506294839385,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            726,
+            523,
+            42,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S34",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 1130.0,
+          "pixel_center": [
+            737.27,
+            341.69
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.3294735994232054,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            720,
+            332,
+            38,
+            20
+          ]
+        },
+        {
+          "source_time_s": 1131.5,
+          "pixel_center": [
+            803.08,
+            465.8
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.2800084553596207,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            784,
+            454,
+            40,
+            24
+          ]
+        },
+        {
+          "source_time_s": 1132.5,
+          "pixel_center": [
+            852.78,
+            559.45
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.2562520852341811,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            836,
+            544,
+            32,
+            26
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S35",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 1182.5,
+          "pixel_center": [
+            613.83,
+            347.61
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 4.994668119880819,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            600,
+            340,
+            31,
+            13
+          ]
+        },
+        {
+          "source_time_s": 1185.5,
+          "pixel_center": [
+            589.2,
+            514.57
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 2.701571643265879,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            572,
+            502,
+            38,
+            21
+          ]
+        },
+        {
+          "source_time_s": 1188.5,
+          "pixel_center": [
+            537.71,
+            676.36
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.3092691937311405,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            521,
+            666,
+            32,
+            19
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S36",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 1255.5,
+          "pixel_center": [
+            318.87,
+            350.42
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 4.4517373550621215,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            300,
+            340,
+            36,
+            22
+          ]
+        },
+        {
+          "source_time_s": 1258.5,
+          "pixel_center": [
+            336.0,
+            519.29
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.9443416570418905,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            314,
+            508,
+            46,
+            22
+          ]
+        },
+        {
+          "source_time_s": 1261.0,
+          "pixel_center": [
+            368.17,
+            659.4
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.576195448975075,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            348,
+            645,
+            36,
+            25
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S37",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 1297.5,
+          "pixel_center": [
+            583.61,
+            338.39
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.529549816646523,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            570,
+            334,
+            30,
+            9
+          ]
+        },
+        {
+          "source_time_s": 1300.5,
+          "pixel_center": [
+            551.88,
+            497.31
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.558914778156536,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            536,
+            485,
+            38,
+            20
+          ]
+        },
+        {
+          "source_time_s": 1303.5,
+          "pixel_center": [
+            493.34,
+            643.01
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.27149430379463335,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            476,
+            632,
+            40,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S38",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 1366.5,
+          "pixel_center": [
+            321.76,
+            337.15
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.1699092184497792,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            306,
+            328,
+            32,
+            16
+          ]
+        },
+        {
+          "source_time_s": 1369.0,
+          "pixel_center": [
+            342.39,
+            426.29
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 5.543744529408709,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            322,
+            414,
+            41,
+            24
+          ]
+        },
+        {
+          "source_time_s": 1371.5,
+          "pixel_center": [
+            379.65,
+            500.05
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.9524476647968128,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            362,
+            486,
+            40,
+            24
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S39",
+      "motion_status": "provisional_shared_prefix_motion_evidence",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 1409.5,
+          "pixel_center": [
+            590.24,
+            350.11
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 4.156634999529118,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            576,
+            337,
+            34,
+            21
+          ]
+        },
+        {
+          "source_time_s": 1411.0,
+          "pixel_center": [
+            574.53,
+            418.24
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 4.663812479375196,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            558,
+            406,
+            37,
+            20
+          ]
+        },
+        {
+          "source_time_s": 1412.5,
+          "pixel_center": [
+            555.16,
+            480.18
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.692207047644266,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            538,
+            468,
+            38,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S40",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 1518.5,
+          "pixel_center": [
+            505.92,
+            367.08
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.887183924121563,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            488,
+            356,
+            38,
+            20
+          ]
+        },
+        {
+          "source_time_s": 1521.5,
+          "pixel_center": [
+            679.39,
+            557.73
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.3511151405393229,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            660,
+            542,
+            42,
+            26
+          ]
+        },
+        {
+          "source_time_s": 1524.0,
+          "pixel_center": [
+            920.39,
+            649.43
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.26259334500324405,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            896,
+            632,
+            50,
+            28
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S41",
+      "status": "no_selected_motion_path",
+      "samples": []
+    },
+    {
+      "candidate_id": "S42",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 1655.0,
+          "pixel_center": [
+            355.07,
+            370.5
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 4.498114469552349,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            336,
+            360,
+            42,
+            20
+          ]
+        },
+        {
+          "source_time_s": 1657.0,
+          "pixel_center": [
+            233.76,
+            549.25
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.013021194233672984,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            212,
+            534,
+            44,
+            26
+          ]
+        },
+        {
+          "source_time_s": 1658.5,
+          "pixel_center": [
+            152.68,
+            690.45
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -1.0437353351115821,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            128,
+            676,
+            50,
+            26
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S43",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 1755.0,
+          "pixel_center": [
+            292.2,
+            336.36
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.4918258364751238,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            282,
+            329,
+            28,
+            13
+          ]
+        },
+        {
+          "source_time_s": 1757.5,
+          "pixel_center": [
+            302.35,
+            449.13
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 2.8210293479967894,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            286,
+            439,
+            35,
+            19
+          ]
+        },
+        {
+          "source_time_s": 1760.0,
+          "pixel_center": [
+            329.0,
+            555.43
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.32837669172038175,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            312,
+            544,
+            38,
+            19
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S44",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 1877.0,
+          "pixel_center": [
+            411.25,
+            356.18
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 4.136397912112337,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            392,
+            344,
+            38,
+            20
+          ]
+        },
+        {
+          "source_time_s": 1878.5,
+          "pixel_center": [
+            417.18,
+            480.54
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 2.306867278449149,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            396,
+            468,
+            44,
+            22
+          ]
+        },
+        {
+          "source_time_s": 1880.0,
+          "pixel_center": [
+            408.5,
+            612.68
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -1.6604747399971567,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            392,
+            598,
+            40,
+            26
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S45",
+      "status": "no_selected_motion_path",
+      "samples": []
+    },
+    {
+      "candidate_id": "S46",
+      "status": "no_selected_motion_path",
+      "samples": []
+    },
+    {
+      "candidate_id": "S47",
+      "status": "no_selected_motion_path",
+      "samples": []
+    },
+    {
+      "candidate_id": "S51",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 1971.5,
+          "pixel_center": [
+            1231.09,
+            1050.79
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.7856469054167374,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1202,
+            1034,
+            54,
+            28
+          ]
+        },
+        {
+          "source_time_s": 1976.0,
+          "pixel_center": [
+            1280.03,
+            771.0
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.31587858530914,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1265,
+            756,
+            41,
+            24
+          ]
+        },
+        {
+          "source_time_s": 1980.0,
+          "pixel_center": [
+            1372.49,
+            627.09
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 2.997478890189753,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1356,
+            616,
+            36,
+            18
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S52",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 2031.0,
+          "pixel_center": [
+            1421.88,
+            1057.15
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.14977643025373366,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1394,
+            1040,
+            58,
+            31
+          ]
+        },
+        {
+          "source_time_s": 2034.5,
+          "pixel_center": [
+            1370.36,
+            817.91
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 2.945161710177143,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1348,
+            804,
+            48,
+            28
+          ]
+        },
+        {
+          "source_time_s": 2037.5,
+          "pixel_center": [
+            1314.58,
+            686.86
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 2.879960144610124,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1296,
+            672,
+            42,
+            26
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S53",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 2078.5,
+          "pixel_center": [
+            1222.74,
+            1025.83
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.253052776845871,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1200,
+            1010,
+            50,
+            28
+          ]
+        },
+        {
+          "source_time_s": 2082.5,
+          "pixel_center": [
+            1259.19,
+            766.75
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.4543206910192024,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1242,
+            752,
+            38,
+            22
+          ]
+        },
+        {
+          "source_time_s": 2086.5,
+          "pixel_center": [
+            1332.57,
+            608.23
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.864358406732055,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1315,
+            596,
+            35,
+            19
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S54",
+      "motion_status": "provisional_shared_prefix_motion_evidence",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 2079.0,
+          "pixel_center": [
+            1223.06,
+            984.93
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.617048798699832,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1198,
+            968,
+            50,
+            28
+          ]
+        },
+        {
+          "source_time_s": 2084.0,
+          "pixel_center": [
+            1285.41,
+            695.43
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.1645231188590173,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1272,
+            682,
+            34,
+            22
+          ]
+        },
+        {
+          "source_time_s": 2089.0,
+          "pixel_center": [
+            1376.62,
+            544.98
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.645380353020148,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1362,
+            532,
+            36,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S55",
+      "motion_status": "provisional_unique_dropout_rescue_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 2139.0,
+          "pixel_center": [
+            1651.98,
+            811.24
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.7556423082991137,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1628,
+            796,
+            54,
+            28
+          ]
+        },
+        {
+          "source_time_s": 2140.5,
+          "pixel_center": [
+            1630.92,
+            731.37
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.107489666398075,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1608,
+            716,
+            50,
+            28
+          ]
+        },
+        {
+          "source_time_s": 2142.0,
+          "pixel_center": [
+            1600.93,
+            663.87
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.90669225323869,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1580,
+            650,
+            48,
+            26
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S57",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 2200.5,
+          "pixel_center": [
+            1696.19,
+            1065.65
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.8427544344439626,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            1678,
+            1048,
+            44,
+            27
+          ]
+        },
+        {
+          "source_time_s": 2203.5,
+          "pixel_center": [
+            1676.08,
+            855.96
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 2.1108500478197123,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1655,
+            840,
+            46,
+            24
+          ]
+        },
+        {
+          "source_time_s": 2206.5,
+          "pixel_center": [
+            1632.11,
+            712.81
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 4.273660144793925,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1621,
+            700,
+            29,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S58",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 2275.5,
+          "pixel_center": [
+            1759.76,
+            1065.69
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.598430659854508,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1728,
+            1048,
+            62,
+            32
+          ]
+        },
+        {
+          "source_time_s": 2279.0,
+          "pixel_center": [
+            1774.63,
+            799.57
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 4.169533289145673,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1750,
+            784,
+            52,
+            28
+          ]
+        },
+        {
+          "source_time_s": 2282.0,
+          "pixel_center": [
+            1746.23,
+            651.06
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.6912454999401385,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1724,
+            636,
+            46,
+            24
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S59",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 2322.0,
+          "pixel_center": [
+            1680.19,
+            1040.21
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.766501782154905,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1660,
+            1021,
+            50,
+            29
+          ]
+        },
+        {
+          "source_time_s": 2326.5,
+          "pixel_center": [
+            1657.5,
+            718.14
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.3618843296525074,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1640,
+            703,
+            44,
+            23
+          ]
+        },
+        {
+          "source_time_s": 2330.0,
+          "pixel_center": [
+            1609.37,
+            564.24
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.4547783362988098,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1590,
+            553,
+            40,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S60",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 2405.0,
+          "pixel_center": [
+            1698.23,
+            1061.35
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.3165816828272481,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1666,
+            1044,
+            64,
+            32
+          ]
+        },
+        {
+          "source_time_s": 2408.5,
+          "pixel_center": [
+            1713.71,
+            800.52
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.452399480762924,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1690,
+            784,
+            50,
+            30
+          ]
+        },
+        {
+          "source_time_s": 2411.5,
+          "pixel_center": [
+            1684.23,
+            653.08
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.4128284448526753,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1660,
+            640,
+            48,
+            26
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S61",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 2465.0,
+          "pixel_center": [
+            1723.44,
+            1041.5
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.8392061090180104,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1702,
+            1022,
+            52,
+            28
+          ]
+        },
+        {
+          "source_time_s": 2468.0,
+          "pixel_center": [
+            1723.81,
+            813.44
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.0569141787708447,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1702,
+            798,
+            48,
+            24
+          ]
+        },
+        {
+          "source_time_s": 2471.5,
+          "pixel_center": [
+            1688.22,
+            635.95
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.2169247187686874,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1666,
+            622,
+            42,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S62",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 2547.5,
+          "pixel_center": [
+            1709.42,
+            1065.97
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.29983112265979,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1684,
+            1048,
+            60,
+            30
+          ]
+        },
+        {
+          "source_time_s": 2551.0,
+          "pixel_center": [
+            1724.02,
+            808.13
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.702627990237372,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1700,
+            794,
+            52,
+            28
+          ]
+        },
+        {
+          "source_time_s": 2554.5,
+          "pixel_center": [
+            1696.31,
+            644.53
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 4.108365819518162,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1674,
+            630,
+            50,
+            26
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S63",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 2615.0,
+          "pixel_center": [
+            1747.97,
+            1050.05
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.2076083525204167,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1725,
+            1032,
+            53,
+            29
+          ]
+        },
+        {
+          "source_time_s": 2617.5,
+          "pixel_center": [
+            1746.08,
+            879.09
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 2.035026448884842,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1721,
+            864,
+            47,
+            25
+          ]
+        },
+        {
+          "source_time_s": 2620.5,
+          "pixel_center": [
+            1712.18,
+            735.42
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.625433428085296,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1695,
+            722,
+            45,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S64",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 2685.0,
+          "pixel_center": [
+            1537.82,
+            1026.16
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.11974130725550636,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            1516,
+            1006,
+            52,
+            32
+          ]
+        },
+        {
+          "source_time_s": 2688.0,
+          "pixel_center": [
+            1523.28,
+            730.01
+          ],
+          "registration_status": "rejected",
+          "appearance_geometry_source": "borrowed_anchor",
+          "anchor_time_s": 2688.5,
+          "status": "scored",
+          "patch_score": 4.761488119342974,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1504,
+            716,
+            47,
+            26
+          ]
+        },
+        {
+          "source_time_s": 2691.0,
+          "pixel_center": [
+            1509.52,
+            544.04
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.961971851484054,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1488,
+            532,
+            46,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S66",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 2789.5,
+          "pixel_center": [
+            1202.85,
+            1070.94
+          ],
+          "registration_status": "rejected",
+          "appearance_geometry_source": "borrowed_anchor",
+          "anchor_time_s": 2789.0,
+          "status": "scored",
+          "patch_score": -0.4315463365121949,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            1182,
+            1054,
+            50,
+            26
+          ]
+        },
+        {
+          "source_time_s": 2793.0,
+          "pixel_center": [
+            1253.29,
+            863.73
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.4486883475715824,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1232,
+            848,
+            42,
+            25
+          ]
+        },
+        {
+          "source_time_s": 2796.5,
+          "pixel_center": [
+            1321.74,
+            733.1
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 2.615108793815759,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1306,
+            718,
+            38,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S67",
+      "motion_status": "provisional_shared_prefix_motion_evidence",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 2855.0,
+          "pixel_center": [
+            1428.58,
+            887.46
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.2540249980854827,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1408,
+            870,
+            50,
+            32
+          ]
+        },
+        {
+          "source_time_s": 2857.0,
+          "pixel_center": [
+            1446.08,
+            713.38
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 4.63025529420274,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1424,
+            696,
+            47,
+            26
+          ]
+        },
+        {
+          "source_time_s": 2859.0,
+          "pixel_center": [
+            1465.17,
+            575.02
+          ],
+          "registration_status": "rejected",
+          "appearance_geometry_source": "borrowed_anchor",
+          "anchor_time_s": 2858.0,
+          "status": "scored",
+          "patch_score": 2.510142413386147,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1444,
+            562,
+            44,
+            24
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S68",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 2938.5,
+          "pixel_center": [
+            1214.19,
+            1054.52
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.13522066275813857,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1194,
+            1036,
+            45,
+            28
+          ]
+        },
+        {
+          "source_time_s": 2943.5,
+          "pixel_center": [
+            1262.91,
+            720.72
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.7479273902183885,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1248,
+            708,
+            34,
+            21
+          ]
+        },
+        {
+          "source_time_s": 2948.0,
+          "pixel_center": [
+            1353.05,
+            557.03
+          ],
+          "registration_status": "rejected",
+          "appearance_geometry_source": "borrowed_anchor",
+          "anchor_time_s": 2947.5,
+          "status": "scored",
+          "patch_score": 1.445840618519024,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1335,
+            544,
+            33,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S69",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 3005.5,
+          "pixel_center": [
+            1388.72,
+            1061.82
+          ],
+          "registration_status": "rejected",
+          "appearance_geometry_source": "borrowed_anchor",
+          "anchor_time_s": 3005.0,
+          "status": "scored",
+          "patch_score": -0.1608138233837477,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            1364,
+            1044,
+            56,
+            32
+          ]
+        },
+        {
+          "source_time_s": 3009.5,
+          "pixel_center": [
+            1419.75,
+            663.68
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.8739045486218286,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1400,
+            650,
+            42,
+            26
+          ]
+        },
+        {
+          "source_time_s": 3013.0,
+          "pixel_center": [
+            1450.08,
+            447.32
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.33313745512396287,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1422,
+            428,
+            70,
+            41
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S70",
+      "status": "no_selected_motion_path",
+      "samples": []
+    },
+    {
+      "candidate_id": "S71",
+      "status": "no_selected_motion_path",
+      "samples": []
+    },
+    {
+      "candidate_id": "S76",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 3121.0,
+          "pixel_center": [
+            359.24,
+            343.8
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.6586080126176515,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            344,
+            334,
+            32,
+            18
+          ]
+        },
+        {
+          "source_time_s": 3123.0,
+          "pixel_center": [
+            380.59,
+            438.85
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 4.777094469989283,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            364,
+            426,
+            36,
+            22
+          ]
+        },
+        {
+          "source_time_s": 3125.0,
+          "pixel_center": [
+            412.38,
+            525.01
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.1605212802802785,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            390,
+            512,
+            44,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S77",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 3171.0,
+          "pixel_center": [
+            401.1,
+            331.71
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 2.8663698213653337,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            388,
+            322,
+            28,
+            17
+          ]
+        },
+        {
+          "source_time_s": 3172.5,
+          "pixel_center": [
+            375.43,
+            370.34
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 4.5740702232953945,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            356,
+            361,
+            40,
+            18
+          ]
+        },
+        {
+          "source_time_s": 3173.5,
+          "pixel_center": [
+            359.47,
+            393.27
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 4.449436802663201,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            340,
+            383,
+            38,
+            19
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S78",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 3219.0,
+          "pixel_center": [
+            568.68,
+            357.03
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 5.106539426060469,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            552,
+            344,
+            36,
+            20
+          ]
+        },
+        {
+          "source_time_s": 3221.5,
+          "pixel_center": [
+            533.05,
+            482.18
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 2.9560324305331562,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            515,
+            470,
+            40,
+            22
+          ]
+        },
+        {
+          "source_time_s": 3224.0,
+          "pixel_center": [
+            506.98,
+            651.81
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.8805232939025575,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            482,
+            636,
+            50,
+            26
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S80",
+      "motion_status": "ambiguous_far_entry_motion_paths",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 3283.0,
+          "pixel_center": [
+            439.94,
+            349.27
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 4.690128409799714,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            426,
+            342,
+            32,
+            13
+          ]
+        },
+        {
+          "source_time_s": 3284.0,
+          "pixel_center": [
+            423.91,
+            390.32
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 4.704068278825219,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            410,
+            381,
+            32,
+            17
+          ]
+        },
+        {
+          "source_time_s": 3284.5,
+          "pixel_center": [
+            414.85,
+            411.03
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 4.225910802127375,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            398,
+            399,
+            34,
+            19
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S81",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 3340.0,
+          "pixel_center": [
+            581.25,
+            357.83
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.839152828014981,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            566,
+            348,
+            36,
+            20
+          ]
+        },
+        {
+          "source_time_s": 3342.0,
+          "pixel_center": [
+            556.72,
+            446.46
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 4.0352396147142295,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            540,
+            434,
+            38,
+            24
+          ]
+        },
+        {
+          "source_time_s": 3343.5,
+          "pixel_center": [
+            531.88,
+            509.04
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.4854772136599717,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            512,
+            496,
+            42,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S82",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 3409.5,
+          "pixel_center": [
+            516.57,
+            353.61
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 4.517422415482834,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            502,
+            344,
+            28,
+            15
+          ]
+        },
+        {
+          "source_time_s": 3411.0,
+          "pixel_center": [
+            500.79,
+            512.67
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 2.936731025367504,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            482,
+            501,
+            41,
+            19
+          ]
+        },
+        {
+          "source_time_s": 3412.5,
+          "pixel_center": [
+            618.85,
+            652.1
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.08959586872893419,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            598,
+            642,
+            43,
+            18
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S83",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 3481.5,
+          "pixel_center": [
+            597.25,
+            351.72
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 4.747280166585996,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            582,
+            342,
+            34,
+            20
+          ]
+        },
+        {
+          "source_time_s": 3484.0,
+          "pixel_center": [
+            567.6,
+            468.54
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 4.133062255091485,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            548,
+            456,
+            42,
+            22
+          ]
+        },
+        {
+          "source_time_s": 3486.0,
+          "pixel_center": [
+            529.43,
+            554.39
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.5974700560545779,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            514,
+            542,
+            30,
+            24
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S84",
+      "motion_status": "ambiguous_far_entry_motion_paths",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 3580.5,
+          "pixel_center": [
+            420.18,
+            342.53
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.0438162266347795,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            406,
+            338,
+            28,
+            10
+          ]
+        },
+        {
+          "source_time_s": 3581.0,
+          "pixel_center": [
+            419.12,
+            390.69
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.7136704848869972,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            404,
+            382,
+            32,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S85",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 3630.5,
+          "pixel_center": [
+            408.03,
+            372.2
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 4.968448240179819,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            392,
+            360,
+            36,
+            20
+          ]
+        },
+        {
+          "source_time_s": 3632.0,
+          "pixel_center": [
+            372.3,
+            514.67
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.8071296624671799,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            350,
+            504,
+            46,
+            21
+          ]
+        },
+        {
+          "source_time_s": 3633.5,
+          "pixel_center": [
+            482.55,
+            636.83
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.35972718252339875,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            464,
+            624,
+            42,
+            24
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S86",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 3671.5,
+          "pixel_center": [
+            450.98,
+            378.04
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.870786524829884,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            433,
+            367,
+            37,
+            18
+          ]
+        },
+        {
+          "source_time_s": 3672.5,
+          "pixel_center": [
+            436.26,
+            501.22
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 2.5638469575214504,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            420,
+            486,
+            36,
+            24
+          ]
+        },
+        {
+          "source_time_s": 3673.0,
+          "pixel_center": [
+            429.04,
+            567.78
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.6757633423995375,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            412,
+            553,
+            38,
+            23
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S87",
+      "status": "no_selected_motion_path",
+      "samples": []
+    },
+    {
+      "candidate_id": "S88",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 3771.0,
+          "pixel_center": [
+            511.96,
+            340.1
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 4.3943320953495455,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            498,
+            336,
+            30,
+            10
+          ]
+        },
+        {
+          "source_time_s": 3772.5,
+          "pixel_center": [
+            530.41,
+            397.39
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 5.923025940386461,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            520,
+            389,
+            28,
+            15
+          ]
+        },
+        {
+          "source_time_s": 3774.0,
+          "pixel_center": [
+            561.32,
+            451.45
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.9124345533835214,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            548,
+            441,
+            32,
+            17
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S89",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 3830.5,
+          "pixel_center": [
+            370.41,
+            358.08
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 4.834858058312366,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            352,
+            348,
+            38,
+            20
+          ]
+        },
+        {
+          "source_time_s": 3832.0,
+          "pixel_center": [
+            339.54,
+            484.02
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.6936103400566878,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            318,
+            472,
+            44,
+            24
+          ]
+        },
+        {
+          "source_time_s": 3833.0,
+          "pixel_center": [
+            330.84,
+            570.27
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.2377637507983323,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            314,
+            558,
+            38,
+            24
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S90",
+      "status": "no_selected_motion_path",
+      "samples": []
+    },
+    {
+      "candidate_id": "S91",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 3958.0,
+          "pixel_center": [
+            444.04,
+            335.59
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 2.6166676074190165,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            430,
+            324,
+            32,
+            20
+          ]
+        },
+        {
+          "source_time_s": 3959.5,
+          "pixel_center": [
+            424.3,
+            473.37
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.1998537589726035,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            406,
+            460,
+            40,
+            22
+          ]
+        },
+        {
+          "source_time_s": 3960.5,
+          "pixel_center": [
+            409.87,
+            575.69
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.07776774236933315,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            394,
+            562,
+            40,
+            26
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S92",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 4015.5,
+          "pixel_center": [
+            476.74,
+            366.25
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 4.247396636810407,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            460,
+            355,
+            36,
+            19
+          ]
+        },
+        {
+          "source_time_s": 4017.0,
+          "pixel_center": [
+            493.02,
+            521.11
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 2.0595138150727004,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            474,
+            509,
+            41,
+            21
+          ]
+        },
+        {
+          "source_time_s": 4018.0,
+          "pixel_center": [
+            511.79,
+            636.8
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.6900448866007571,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            494,
+            620,
+            38,
+            26
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S96",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 4037.5,
+          "pixel_center": [
+            121.46,
+            340.46
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.3766368671561372,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            106,
+            330,
+            40,
+            22
+          ]
+        },
+        {
+          "source_time_s": 4039.0,
+          "pixel_center": [
+            76.63,
+            441.67
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.2373559030962791,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            60,
+            430,
+            46,
+            24
+          ]
+        },
+        {
+          "source_time_s": 4040.5,
+          "pixel_center": [
+            46.83,
+            548.23
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.604356041077171,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            33,
+            544,
+            27,
+            12
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S98",
+      "status": "no_selected_motion_path",
+      "samples": []
+    },
+    {
+      "candidate_id": "S102",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 4341.0,
+          "pixel_center": [
+            1223.95,
+            1044.54
+          ],
+          "registration_status": "rejected",
+          "appearance_geometry_source": "borrowed_anchor",
+          "anchor_time_s": 4338.0,
+          "status": "scored",
+          "patch_score": -0.14154718032398214,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            1204,
+            1027,
+            50,
+            27
+          ]
+        },
+        {
+          "source_time_s": 4347.0,
+          "pixel_center": [
+            1294.15,
+            670.16
+          ],
+          "registration_status": "rejected",
+          "appearance_geometry_source": "borrowed_anchor",
+          "anchor_time_s": 4349.5,
+          "status": "scored",
+          "patch_score": 1.6529851005867506,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1280,
+            657,
+            36,
+            21
+          ]
+        },
+        {
+          "source_time_s": 4349.5,
+          "pixel_center": [
+            1350.05,
+            582.14
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.8517423418922434,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1336,
+            570,
+            30,
+            19
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S103",
+      "status": "no_selected_motion_path",
+      "samples": []
+    },
+    {
+      "candidate_id": "S104",
+      "status": "no_selected_motion_path",
+      "samples": []
+    },
+    {
+      "candidate_id": "S105",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 4418.0,
+          "pixel_center": [
+            1434.39,
+            1055.01
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.5640203010437609,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            1412,
+            1038,
+            52,
+            30
+          ]
+        },
+        {
+          "source_time_s": 4421.5,
+          "pixel_center": [
+            1396.63,
+            807.49
+          ],
+          "registration_status": "rejected",
+          "appearance_geometry_source": "borrowed_anchor",
+          "anchor_time_s": 4421.0,
+          "status": "scored",
+          "patch_score": 2.8712425689806618,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1376,
+            794,
+            48,
+            26
+          ]
+        },
+        {
+          "source_time_s": 4424.5,
+          "pixel_center": [
+            1355.36,
+            669.14
+          ],
+          "registration_status": "rejected",
+          "appearance_geometry_source": "borrowed_anchor",
+          "anchor_time_s": 4424.0,
+          "status": "scored",
+          "patch_score": 2.1071854155745804,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1338,
+            654,
+            40,
+            26
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S106",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 4466.0,
+          "pixel_center": [
+            1197.46,
+            1021.94
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.2277021019573842,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1178,
+            1006,
+            40,
+            26
+          ]
+        },
+        {
+          "source_time_s": 4471.5,
+          "pixel_center": [
+            1254.03,
+            689.47
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.101964609110993,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1238,
+            676,
+            34,
+            20
+          ]
+        },
+        {
+          "source_time_s": 4475.0,
+          "pixel_center": [
+            1318.43,
+            573.26
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 2.0818066109668347,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1304,
+            560,
+            35,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S107",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 4511.0,
+          "pixel_center": [
+            1316.52,
+            941.32
+          ],
+          "registration_status": "rejected",
+          "appearance_geometry_source": "borrowed_anchor",
+          "anchor_time_s": 4510.0,
+          "status": "scored",
+          "patch_score": 0.41678598779979803,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1292,
+            924,
+            53,
+            29
+          ]
+        },
+        {
+          "source_time_s": 4514.5,
+          "pixel_center": [
+            1349.98,
+            668.02
+          ],
+          "registration_status": "rejected",
+          "appearance_geometry_source": "borrowed_anchor",
+          "anchor_time_s": 4514.0,
+          "status": "scored",
+          "patch_score": 2.130566196628657,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1330,
+            652,
+            43,
+            26
+          ]
+        },
+        {
+          "source_time_s": 4518.0,
+          "pixel_center": [
+            1411.13,
+            490.62
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.16889872826421812,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1388,
+            478,
+            44,
+            24
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S109",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 4575.5,
+          "pixel_center": [
+            1241.56,
+            1054.88
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.6270395289362843,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            1222,
+            1035,
+            47,
+            30
+          ]
+        },
+        {
+          "source_time_s": 4579.5,
+          "pixel_center": [
+            1273.01,
+            782.34
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 2.105129194171498,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1260,
+            768,
+            32,
+            22
+          ]
+        },
+        {
+          "source_time_s": 4583.0,
+          "pixel_center": [
+            1336.73,
+            632.36
+          ],
+          "registration_status": "rejected",
+          "appearance_geometry_source": "borrowed_anchor",
+          "anchor_time_s": 4582.5,
+          "status": "scored",
+          "patch_score": 2.357410413203174,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1322,
+            620,
+            32,
+            21
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S110",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 4625.5,
+          "pixel_center": [
+            1378.16,
+            1066.76
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.6214725295683979,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1354,
+            1048,
+            54,
+            32
+          ]
+        },
+        {
+          "source_time_s": 4630.0,
+          "pixel_center": [
+            1425.89,
+            703.59
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.811525902261366,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1412,
+            688,
+            37,
+            26
+          ]
+        },
+        {
+          "source_time_s": 4634.0,
+          "pixel_center": [
+            1483.74,
+            511.7
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.2308085293173558,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1458,
+            500,
+            49,
+            24
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S111",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 4692.5,
+          "pixel_center": [
+            1285.91,
+            1043.39
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -1.6088392960132705,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            1268,
+            1024,
+            42,
+            29
+          ]
+        },
+        {
+          "source_time_s": 4696.0,
+          "pixel_center": [
+            1220.22,
+            696.79
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.123080436483058,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1206,
+            684,
+            30,
+            20
+          ]
+        },
+        {
+          "source_time_s": 4699.0,
+          "pixel_center": [
+            1167.93,
+            505.32
+          ],
+          "registration_status": "rejected",
+          "appearance_geometry_source": "borrowed_anchor",
+          "anchor_time_s": 4699.5,
+          "status": "scored",
+          "patch_score": 0.4115370440278511,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1150,
+            494,
+            34,
+            18
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S112",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 4741.5,
+          "pixel_center": [
+            1632.29,
+            1056.76
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.0787108189068175,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1608,
+            1040,
+            58,
+            31
+          ]
+        },
+        {
+          "source_time_s": 4745.5,
+          "pixel_center": [
+            1701.25,
+            688.64
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.8477758057104885,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1678,
+            674,
+            50,
+            28
+          ]
+        },
+        {
+          "source_time_s": 4749.0,
+          "pixel_center": [
+            1753.51,
+            493.64
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.02592819720426362,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            1734,
+            480,
+            42,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S113",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 4796.0,
+          "pixel_center": [
+            1667.67,
+            945.86
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.4873954312426052,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1646,
+            928,
+            44,
+            26
+          ]
+        },
+        {
+          "source_time_s": 4799.0,
+          "pixel_center": [
+            1679.37,
+            646.09
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.163714558168368,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1662,
+            631,
+            36,
+            23
+          ]
+        },
+        {
+          "source_time_s": 4802.0,
+          "pixel_center": [
+            1660.73,
+            448.63
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.1031089670334788,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1653,
+            438,
+            23,
+            16
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S114",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 4854.0,
+          "pixel_center": [
+            1287.31,
+            1071.47
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.19967632343355637,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1266,
+            1066,
+            46,
+            14
+          ]
+        },
+        {
+          "source_time_s": 4858.0,
+          "pixel_center": [
+            1330.55,
+            755.45
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 2.580927619558628,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1310,
+            740,
+            44,
+            28
+          ]
+        },
+        {
+          "source_time_s": 4861.5,
+          "pixel_center": [
+            1385.07,
+            578.42
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 2.4629636018223935,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1362,
+            566,
+            44,
+            24
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S115",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 4904.0,
+          "pixel_center": [
+            1250.95,
+            1052.78
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.8914837178799088,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1227,
+            1036,
+            49,
+            26
+          ]
+        },
+        {
+          "source_time_s": 4909.0,
+          "pixel_center": [
+            1289.93,
+            732.51
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 2.545264038911117,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1274,
+            720,
+            36,
+            20
+          ]
+        },
+        {
+          "source_time_s": 4912.0,
+          "pixel_center": [
+            1340.9,
+            614.74
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 2.3249175759145784,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1328,
+            602,
+            36,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S116",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 4973.5,
+          "pixel_center": [
+            1346.46,
+            1047.04
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.057225995248919026,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1322,
+            1026,
+            54,
+            34
+          ]
+        },
+        {
+          "source_time_s": 4977.5,
+          "pixel_center": [
+            1367.12,
+            678.41
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 2.6981453066522603,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1350,
+            664,
+            40,
+            26
+          ]
+        },
+        {
+          "source_time_s": 4981.0,
+          "pixel_center": [
+            1525.35,
+            487.56
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.5054785125579562,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1504,
+            476,
+            44,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S117",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 5037.5,
+          "pixel_center": [
+            1751.5,
+            1062.25
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.7433230167182062,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1737,
+            1057,
+            33,
+            11
+          ]
+        },
+        {
+          "source_time_s": 5041.0,
+          "pixel_center": [
+            1742.69,
+            781.93
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.269746197258262,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1724,
+            767,
+            46,
+            24
+          ]
+        },
+        {
+          "source_time_s": 5044.5,
+          "pixel_center": [
+            1708.11,
+            603.74
+          ],
+          "registration_status": "rejected",
+          "appearance_geometry_source": "borrowed_anchor",
+          "anchor_time_s": 5043.5,
+          "status": "scored",
+          "patch_score": 2.0876680525798337,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1688,
+            592,
+            40,
+            21
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S118",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 5099.5,
+          "pixel_center": [
+            1740.1,
+            1070.78
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.1069235460965252,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1718,
+            1064,
+            48,
+            16
+          ]
+        },
+        {
+          "source_time_s": 5102.5,
+          "pixel_center": [
+            1764.6,
+            852.6
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.062173618443437,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1740,
+            836,
+            52,
+            28
+          ]
+        },
+        {
+          "source_time_s": 5106.0,
+          "pixel_center": [
+            1744.04,
+            673.74
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.3816488935546323,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1720,
+            656,
+            48,
+            28
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S119",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 5145.0,
+          "pixel_center": [
+            1750.69,
+            1049.93
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.2378217447242625,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1730,
+            1032,
+            50,
+            28
+          ]
+        },
+        {
+          "source_time_s": 5148.5,
+          "pixel_center": [
+            1763.44,
+            779.45
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.4453052407279667,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1744,
+            765,
+            46,
+            23
+          ]
+        },
+        {
+          "source_time_s": 5151.5,
+          "pixel_center": [
+            1742.47,
+            624.68
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.0201408156420524,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1722,
+            612,
+            38,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S120",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 5198.0,
+          "pixel_center": [
+            1733.46,
+            1028.9
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.5003496100390044,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1706,
+            1012,
+            58,
+            32
+          ]
+        },
+        {
+          "source_time_s": 5201.0,
+          "pixel_center": [
+            1738.97,
+            812.45
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.479458053590926,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1712,
+            796,
+            54,
+            28
+          ]
+        },
+        {
+          "source_time_s": 5204.0,
+          "pixel_center": [
+            1712.53,
+            667.35
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 2.9703496731504138,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            1688,
+            652,
+            48,
+            24
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S124",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 5312.5,
+          "pixel_center": [
+            379.82,
+            335.65
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 2.973696613861884,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            364,
+            326,
+            35,
+            18
+          ]
+        },
+        {
+          "source_time_s": 5315.0,
+          "pixel_center": [
+            406.52,
+            454.8
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 4.062358354108462,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            386,
+            442,
+            43,
+            22
+          ]
+        },
+        {
+          "source_time_s": 5317.0,
+          "pixel_center": [
+            436.74,
+            539.19
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.5039491415072622,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            416,
+            526,
+            44,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S125",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 5364.5,
+          "pixel_center": [
+            386.22,
+            345.81
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.954745339537018,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            370,
+            336,
+            34,
+            16
+          ]
+        },
+        {
+          "source_time_s": 5366.0,
+          "pixel_center": [
+            359.34,
+            382.18
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 4.144813321843399,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            344,
+            370,
+            33,
+            19
+          ]
+        },
+        {
+          "source_time_s": 5367.5,
+          "pixel_center": [
+            330.37,
+            409.31
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 5.227880281252791,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            310,
+            398,
+            41,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S126",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 5409.5,
+          "pixel_center": [
+            614.93,
+            356.36
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 4.583271386219037,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            598,
+            346,
+            36,
+            20
+          ]
+        },
+        {
+          "source_time_s": 5411.5,
+          "pixel_center": [
+            590.16,
+            442.5
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 5.59741685941981,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            572,
+            430,
+            40,
+            22
+          ]
+        },
+        {
+          "source_time_s": 5413.5,
+          "pixel_center": [
+            555.18,
+            516.97
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 1.3012015077393695,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            536,
+            504,
+            42,
+            24
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S127",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 5477.0,
+          "pixel_center": [
+            430.71,
+            336.11
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.3281559741587405,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            418,
+            326,
+            28,
+            16
+          ]
+        },
+        {
+          "source_time_s": 5479.0,
+          "pixel_center": [
+            395.7,
+            391.63
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.924863676860705,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            376,
+            382,
+            40,
+            19
+          ]
+        },
+        {
+          "source_time_s": 5480.5,
+          "pixel_center": [
+            371.28,
+            424.82
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 4.021734831902164,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            350,
+            414,
+            42,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S128",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 5528.5,
+          "pixel_center": [
+            544.18,
+            340.66
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.2744018354060067,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            526,
+            330,
+            36,
+            18
+          ]
+        },
+        {
+          "source_time_s": 5530.5,
+          "pixel_center": [
+            516.0,
+            396.92
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 5.805051263149897,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            500,
+            384,
+            38,
+            22
+          ]
+        },
+        {
+          "source_time_s": 5532.0,
+          "pixel_center": [
+            493.77,
+            424.84
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 4.017711759025931,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            476,
+            414,
+            40,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S129",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 5606.0,
+          "pixel_center": [
+            496.28,
+            346.14
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.4960518956055826,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            481,
+            336,
+            33,
+            16
+          ]
+        },
+        {
+          "source_time_s": 5607.0,
+          "pixel_center": [
+            477.81,
+            396.41
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.9375132082506936,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            460,
+            386,
+            39,
+            19
+          ]
+        },
+        {
+          "source_time_s": 5608.0,
+          "pixel_center": [
+            361.56,
+            446.85
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.2252331202731144,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            340,
+            433,
+            42,
+            21
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S130",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 5662.0,
+          "pixel_center": [
+            618.11,
+            340.46
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.945856185789798,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            600,
+            328,
+            37,
+            22
+          ]
+        },
+        {
+          "source_time_s": 5663.5,
+          "pixel_center": [
+            602.3,
+            391.96
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 4.720323136536326,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            585,
+            382,
+            39,
+            20
+          ]
+        },
+        {
+          "source_time_s": 5665.0,
+          "pixel_center": [
+            583.25,
+            441.81
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 5.353971075547229,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            564,
+            430,
+            40,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S131",
+      "motion_status": "ambiguous_far_entry_motion_paths",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 5724.0,
+          "pixel_center": [
+            569.22,
+            348.23
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.8405550732746194,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            554,
+            344,
+            33,
+            10
+          ]
+        },
+        {
+          "source_time_s": 5724.5,
+          "pixel_center": [
+            569.51,
+            395.91
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 5.520079312973289,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            553,
+            384,
+            37,
+            19
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S132",
+      "motion_status": "ambiguous_far_entry_motion_paths",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 5724.0,
+          "pixel_center": [
+            569.22,
+            348.23
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.8405550732746194,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            554,
+            344,
+            33,
+            10
+          ]
+        },
+        {
+          "source_time_s": 5724.5,
+          "pixel_center": [
+            569.51,
+            395.91
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 5.520079312973289,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            553,
+            384,
+            37,
+            19
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S133",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 5782.5,
+          "pixel_center": [
+            572.94,
+            347.91
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 4.181930075644877,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            558,
+            336,
+            34,
+            20
+          ]
+        },
+        {
+          "source_time_s": 5784.0,
+          "pixel_center": [
+            552.62,
+            383.47
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 5.39116139427178,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            536,
+            374,
+            38,
+            20
+          ]
+        },
+        {
+          "source_time_s": 5785.0,
+          "pixel_center": [
+            539.79,
+            403.86
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 4.782042785703717,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            522,
+            391,
+            40,
+            21
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S134",
+      "status": "no_selected_motion_path",
+      "samples": []
+    },
+    {
+      "candidate_id": "S135",
+      "status": "no_selected_motion_path",
+      "samples": []
+    },
+    {
+      "candidate_id": "S136",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 5938.5,
+          "pixel_center": [
+            577.24,
+            340.82
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.186288971594485,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            562,
+            329,
+            31,
+            18
+          ]
+        },
+        {
+          "source_time_s": 5940.0,
+          "pixel_center": [
+            617.1,
+            454.86
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 4.313383804035318,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            599,
+            442,
+            38,
+            20
+          ]
+        },
+        {
+          "source_time_s": 5941.0,
+          "pixel_center": [
+            699.5,
+            527.01
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.31925271427148194,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            670,
+            506,
+            55,
+            36
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S137",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 5993.0,
+          "pixel_center": [
+            648.0,
+            340.61
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 2.6556956044041073,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            632,
+            330,
+            36,
+            22
+          ]
+        },
+        {
+          "source_time_s": 5995.0,
+          "pixel_center": [
+            628.85,
+            395.9
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 4.732295858191319,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            612,
+            384,
+            38,
+            22
+          ]
+        },
+        {
+          "source_time_s": 5996.5,
+          "pixel_center": [
+            609.67,
+            425.18
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.3159746651976567,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            592,
+            412,
+            40,
+            24
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S138",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 6092.5,
+          "pixel_center": [
+            530.64,
+            347.56
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.525904612733434,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            518,
+            340,
+            30,
+            13
+          ]
+        },
+        {
+          "source_time_s": 6093.5,
+          "pixel_center": [
+            528.26,
+            461.34
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.4882366982640627,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            510,
+            451,
+            40,
+            19
+          ]
+        },
+        {
+          "source_time_s": 6094.5,
+          "pixel_center": [
+            508.29,
+            585.28
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.5644809774373216,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            487,
+            572,
+            41,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S139",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 6147.0,
+          "pixel_center": [
+            296.28,
+            365.84
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 2.433162260808007,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            276,
+            356,
+            42,
+            20
+          ]
+        },
+        {
+          "source_time_s": 6149.0,
+          "pixel_center": [
+            231.32,
+            553.73
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.0727465347822879,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            206,
+            539,
+            48,
+            24
+          ]
+        },
+        {
+          "source_time_s": 6151.0,
+          "pixel_center": [
+            388.58,
+            680.11
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.5815760391983233,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            362,
+            666,
+            52,
+            28
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S140",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 6330.0,
+          "pixel_center": [
+            547.32,
+            341.49
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 3.5935133761536533,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            532,
+            332,
+            33,
+            18
+          ]
+        },
+        {
+          "source_time_s": 6332.0,
+          "pixel_center": [
+            338.18,
+            490.12
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 2.1845075805733165,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            316,
+            480,
+            42,
+            19
+          ]
+        },
+        {
+          "source_time_s": 6334.0,
+          "pixel_center": [
+            15.89,
+            589.22
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.7759544128831216,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            0,
+            578,
+            30,
+            19
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S143",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 6380.5,
+          "pixel_center": [
+            252.6,
+            346.09
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.30038507129336167,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            236,
+            334,
+            40,
+            25
+          ]
+        },
+        {
+          "source_time_s": 6383.0,
+          "pixel_center": [
+            66.69,
+            517.67
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.6493525262903018,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            57,
+            514,
+            25,
+            10
+          ]
+        },
+        {
+          "source_time_s": 6385.0,
+          "pixel_center": [
+            21.02,
+            642.4
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.48845022986821063,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            0,
+            639,
+            44,
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "S144",
+      "motion_status": "provisional_unique_far_entry_motion_path",
+      "status": "sampled_motion_path",
+      "samples": [
+        {
+          "source_time_s": 6380.5,
+          "pixel_center": [
+            252.6,
+            346.09
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": 0.30038507129336167,
+          "patch_accepted": true,
+          "cap_bbox_1080p": [
+            236,
+            334,
+            40,
+            25
+          ]
+        },
+        {
+          "source_time_s": 6383.0,
+          "pixel_center": [
+            66.69,
+            517.67
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.6493525262903018,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            57,
+            514,
+            25,
+            10
+          ]
+        },
+        {
+          "source_time_s": 6385.0,
+          "pixel_center": [
+            21.02,
+            642.4
+          ],
+          "registration_status": "registered",
+          "status": "scored",
+          "patch_score": -0.48845022986821063,
+          "patch_accepted": false,
+          "cap_bbox_1080p": [
+            0,
+            639,
+            44,
+            9
+          ]
+        }
+      ]
+    }
+  ],
+  "partition_manifest_sha256": "57817c66f45f8fa135b2b649a80608df284862729bfc4cdd8d62f430c7e9994f",
+  "partition_outputs": [
+    {
+      "index": 1,
+      "patch_sha256": "9240c1c70a6699871c13b239b6159fe6aa0b668be5b70575e8a773fff0f9a7de"
+    },
+    {
+      "index": 2,
+      "patch_sha256": "c6fa80c5de13123230a380ac4570e7434be0b0cb2529880d3d1880f0b548f3d8"
+    },
+    {
+      "index": 3,
+      "patch_sha256": "2e076a9c8137aa42cf888583a2d4bcc80513967a63d97588674cfd2ed4378831"
+    },
+    {
+      "index": 4,
+      "patch_sha256": "e42a86c88dcac8847eba13670e4e478fa1dca2fd7ff3cba1e0fe372d5782210a"
+    },
+    {
+      "index": 5,
+      "patch_sha256": "24a76a1448b94a12029ce3cb986a35f7a999a06f90252eaecfad86ec11171841"
+    },
+    {
+      "index": 6,
+      "patch_sha256": "9a96e79a56ba4a880be2fa4596488d859fa0f515a2c016f4a973360e0d5866d4"
+    },
+    {
+      "index": 7,
+      "patch_sha256": "5a0903418c5768070e074f13fc134a2d78eec02cdacf3b7022101ae80f23e7d3"
+    },
+    {
+      "index": 8,
+      "patch_sha256": "c32251fbfb3704154a829963248f3207b8e4d15826a5d2f48dd8a83a58b598ba"
+    },
+    {
+      "index": 9,
+      "patch_sha256": "350e70c134fbd392422175e6fd23b482dc85162dda73c442adb4ddc6a04eae35"
+    },
+    {
+      "index": 10,
+      "patch_sha256": "4a1a98747f11f96c6d66e62d94ea1899da2efe4a2858373bd8cc6b62b11bfdba"
+    },
+    {
+      "index": 11,
+      "patch_sha256": "fe8bb3137833a482c7b2df1436a7b5c19ae2416fb109f2297cbf2d68d8978079"
+    },
+    {
+      "index": 12,
+      "patch_sha256": "10bac8fd36390d34a90c3a1694aa1ec97beab305548b4e0e48d35b008aaaa990"
+    },
+    {
+      "index": 13,
+      "patch_sha256": "2b770a4c1afe9dc8d1bcaf46bf51e43092433adcc39a68a392e35b687b11785a"
+    },
+    {
+      "index": 14,
+      "patch_sha256": "aeb9f0600d954ea9f031ac206efa053d30182e4247229d532b147d21ff5ff302"
+    },
+    {
+      "index": 15,
+      "patch_sha256": "1b39060ec4e4cc5bb684cb644505cd180539c904b3a3236fcfd28f242fffd80f"
+    },
+    {
+      "index": 16,
+      "patch_sha256": "c9ec6f99085261579d9bf2288cceb9a190b1dd31c45bd27889b79a6fdf32f725"
+    },
+    {
+      "index": 17,
+      "patch_sha256": "5358c3ab257bea3dbe15a22e2fd76af76f0f51c2ecf571220507c9ab8bf4785c"
+    },
+    {
+      "index": 18,
+      "patch_sha256": "31eece8af76435bd114e7a2eab93b506f1fa9a2bd6ebb6a014fbb58400bd0085"
+    },
+    {
+      "index": 19,
+      "patch_sha256": "2aefa0aaf40580d5a8e98ac40bac687da7ee11322b03129e1e56bf95827373b4"
+    },
+    {
+      "index": 20,
+      "patch_sha256": "ac03a06b423d564e041b36651f8d93356a84f214d3d814f188cc6be4873cfc7d"
+    },
+    {
+      "index": 21,
+      "patch_sha256": "67b65d3b1c8eec421dbbf7767726570d8373e6fcc7cb688dc9dbda98761e6205"
+    },
+    {
+      "index": 22,
+      "patch_sha256": "144c9e9dc884d2ff642154fcabfd497581a51bdea60c9e6ccf6bde15466cd9e0"
+    },
+    {
+      "index": 23,
+      "patch_sha256": "52c45bf7b6158eed7fa3e6601156dd0c1d46dfb6835750af1b64433dea91293e"
+    },
+    {
+      "index": 24,
+      "patch_sha256": "bdcf0e9c3edb8bead8760db399edbe1bd7fe54154591de977426b8151242fd4c"
+    },
+    {
+      "index": 25,
+      "patch_sha256": "0366706877d3f32b82b6013a70468be352cf0e0f5a4356a9df571afb18b79881"
+    },
+    {
+      "index": 26,
+      "patch_sha256": "ef7ee9927b4332a6759174c4ec0eaf16acf87558dba4e2507112de55093d407f"
+    },
+    {
+      "index": 27,
+      "patch_sha256": "3afee9b0f7e40912babcb329554b811312344f8b5e0d6a875791ec050cb39ed7"
+    },
+    {
+      "index": 28,
+      "patch_sha256": "25cae26093760a09f72e949fa78c3041f6209bf74f50077d0af1ccc6cacbc7b2"
+    },
+    {
+      "index": 29,
+      "patch_sha256": "5244f00d8f58c8ac8978eb9596f33b89fe5a006fde36773c356941fe8c739a91"
+    }
+  ],
+  "merge_runner_sha256": "b21ea2eb28c31aaf1727d3fec8bfd2cfdcff5abfa3d1fc06eef6cf6bfae76f77"
+}

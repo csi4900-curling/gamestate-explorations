@@ -1,0 +1,55 @@
+{
+  "status": "development_fitted_2024_split_screen_candidate",
+  "source_id": "Vp3TIdOAlrc",
+  "source_sha256": "aff12e78edeb5e108d142aed3e19b61c3956b4fddc8b2fd8b202713746771739",
+  "source_interval_s": [
+    8100.0,
+    8190.0
+  ],
+  "input_sha256": "d08b9fc1af1fa1de4bfd37ce04be93790863d9294e3ae61cdcd360fcbc90155a",
+  "motion_sha256": "a69e7a381122795bfc821c6f4c7879cb8780f17567d489fe6fd836dfccfbec11",
+  "model_sha256": "f53813d594ed2f820c14d5dac79a4490234e99c3dff28c267ded99b7541f704c",
+  "runner_sha256": "44ccc5d1fc494acaf7f0eadb09f4d9b3eb1349ee1a1492e8baf01cb244a2451b",
+  "events": [],
+  "withheld_events": [
+    {
+      "id": "S01",
+      "track_id": 16,
+      "colour": "red",
+      "crossing_time_s": 8108.149,
+      "time_semantics": "observed_track_midpoint",
+      "confirmed_at_s": 8109.2,
+      "first_observed_s": 8106.8,
+      "evidence_kind": "early_roi_motion_span",
+      "release_time_s": null,
+      "gate_y_px": null,
+      "crossing_x_px": 138.23295454545456,
+      "passage_y_px": 83.75,
+      "velocity_px_s": [
+        -0.5548302872062638,
+        9.68250652741523
+      ],
+      "observations_at_confirmation": 16,
+      "observed_span_px": 25.5,
+      "median_candidate_bbox_width_px": 9.0,
+      "median_candidate_bbox_height_px": 11.5,
+      "mean_body_support": 0.8065064709595959,
+      "recent_track_duration_s": 2.399999999999636,
+      "direction_consistency": 0.8666666666666667,
+      "view_motion": "positive_y"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "S01",
+      "status": "unconfirmed",
+      "reason": "large_surrounding_motion",
+      "changed_px_80x80": 2843
+    }
+  ],
+  "limitations": [
+    "Motion-area cutoff was chosen after observing three 2024 development recordings.",
+    "The 2024 fixed split-screen left panel is the only supported camera layout.",
+    "Observed passage time is a track midpoint, not exact release time."
+  ]
+}

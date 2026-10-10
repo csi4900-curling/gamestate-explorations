@@ -1,0 +1,86 @@
+{
+  "status": "postscore_isolated_bound_path_patch_not_full_event_screen",
+  "candidate_id": "S03",
+  "case": "extended",
+  "probe_sha256": "602dfb384cce9b0104b335d9174eef84322e73eb9107864ee384acceb121a3ea",
+  "video_sha256": "b5235f955c7f23084bbee543ccd2720db98957c2b69826fd0909fd6e35107a62",
+  "model_sha256": "10036a8b13e7e35f0be3cfd7280e9e0afaa3cf5b5da6cecc5623fb79695e0670",
+  "calibration_sha256": "03e164c0f26c0b2e3ebca7e85577c5874dbb83128aab52569776e60cd293103b",
+  "rectification_sha256": "fe7c6c832c2bc6b5095ce932ffd7905a59f9fdf8c0b4e029816e1108d1238402",
+  "patch_code_sha256": "828a84a14930266c83afea41526f1e4800163e2c41c3462195c96a3551116169",
+  "screen_code_sha256": "4689d5cc657736417fe73404a4fec5faec0392cdb7cd6b28f3a12e95c560a52f",
+  "runner_sha256": "45f2891de0d17ba6e1fb9b5a7ff2c3d0a69559ba89a96d4ddd178cea0b3f183d",
+  "world_bounds_m": [
+    -2.375,
+    -18.0,
+    2.375,
+    1.975
+  ],
+  "samples": [
+    {
+      "source_time_s": 1793.5,
+      "pixel_center": [
+        369.56,
+        64.27
+      ],
+      "registration_status": "registered",
+      "status": "scored",
+      "patch_score": 0.44567634904772135,
+      "patch_accepted": true,
+      "cap_bbox_1080p": [
+        358,
+        58,
+        26,
+        12
+      ]
+    },
+    {
+      "source_time_s": 1796.5,
+      "pixel_center": [
+        341.64,
+        203.92
+      ],
+      "registration_status": "registered",
+      "status": "scored",
+      "patch_score": 0.21993059888445896,
+      "patch_accepted": true,
+      "cap_bbox_1080p": [
+        326,
+        195,
+        31,
+        15
+      ]
+    },
+    {
+      "source_time_s": 1799.0,
+      "pixel_center": [
+        339.43,
+        333.05
+      ],
+      "registration_status": "registered",
+      "status": "scored",
+      "patch_score": -0.27072506933172213,
+      "patch_accepted": false,
+      "cap_bbox_1080p": [
+        330,
+        324,
+        22,
+        18
+      ]
+    }
+  ],
+  "decision": {
+    "candidate_id": "S03",
+    "status": "provisional_motion_and_patch_support",
+    "accepted": true,
+    "scored_patch_count": 3,
+    "accepted_patch_count": 2,
+    "motion_sample_count": 12,
+    "physical_identity_verified": false
+  },
+  "limitations": [
+    "The model was trained on small handpicked agent-labelled crops, not independent throw truth.",
+    "One positive patch can provisionally accept a path but does not prove stone identity throughout it.",
+    "This isolated check omits cross-candidate duplicate suppression and full-match scoring."
+  ]
+}

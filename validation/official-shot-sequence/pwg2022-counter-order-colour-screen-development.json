@@ -1,0 +1,91 @@
+{
+  "status": "development_source_colour_screen_no_counter_or_event_mutation",
+  "input_sha256": {
+    "order_audit": "e32c6d22f4324e2814986a67cc16b17b54504ed41c544dd7238ca013bc9bbd18",
+    "visual_only_postcut": "ef20c37741167dd226490e06e601cd7fa8cd5ba897349bafc518d8283fe3ef09"
+  },
+  "code_sha256": "dcd2ad950636cdbc91d1bd77a34152059c403d70fc40262abc8805c76bfc0820",
+  "runner_sha256": "c826ebc84c449ed0dc0da98dea0c86623afdca9ba52512d65b28d08ed17f49cc",
+  "games": [
+    {
+      "recording_code": "PREL000101",
+      "source_sha256": "49429abdd3796e8240e66c201d37e94e71a7bb6225890b2492bea26d2f70d560",
+      "sidecar_available": true,
+      "screened_unique_order_proposal_count": 1,
+      "visual_colour_conflict_count": 0,
+      "visual_colour_abstention_count": 0,
+      "rows": [
+        {
+          "counter_id": "B01",
+          "shot_id": "S25",
+          "counter_colour": "yellow",
+          "postcut_colour": null,
+          "postcut_status": null,
+          "screen_status": "not_in_visual_only_sidecar",
+          "safe_to_auto_link": false
+        }
+      ]
+    },
+    {
+      "recording_code": "PREL000102",
+      "source_sha256": "c5254bb9103e32c6beac74cf269fc7bcec8ce2c2a710a7d4600c7ddb951f160e",
+      "sidecar_available": true,
+      "screened_unique_order_proposal_count": 0,
+      "visual_colour_conflict_count": 0,
+      "visual_colour_abstention_count": 0,
+      "rows": []
+    },
+    {
+      "recording_code": "PREL000103",
+      "source_sha256": "eba1d86944a2f4278b6e5e2c7549d12b47e5e8a51bf0c680b2db372c6ec12420",
+      "sidecar_available": true,
+      "screened_unique_order_proposal_count": 3,
+      "visual_colour_conflict_count": 1,
+      "visual_colour_abstention_count": 1,
+      "rows": [
+        {
+          "counter_id": "B61",
+          "shot_id": "S286",
+          "counter_colour": "red",
+          "postcut_colour": null,
+          "postcut_status": null,
+          "screen_status": "not_in_visual_only_sidecar",
+          "safe_to_auto_link": false
+        },
+        {
+          "counter_id": "B80",
+          "shot_id": "S372",
+          "counter_colour": "red",
+          "postcut_colour": null,
+          "postcut_status": "ambiguous_or_absent_postcut_motion",
+          "screen_status": "visual_colour_abstained",
+          "safe_to_auto_link": false
+        },
+        {
+          "counter_id": "B86",
+          "shot_id": "S411",
+          "counter_colour": "red",
+          "postcut_colour": "yellow",
+          "postcut_status": "unique_strict_postcut_motion",
+          "screen_status": "visual_colour_conflict",
+          "safe_to_auto_link": false
+        }
+      ]
+    },
+    {
+      "recording_code": "CAN-NOR-2022",
+      "source_sha256": "c49fb90959c13b690447dccb87a0b78e0bba8537aa961339a92f934226baf2b3",
+      "sidecar_available": false,
+      "screened_unique_order_proposal_count": 0,
+      "visual_colour_conflict_count": 0,
+      "visual_colour_abstention_count": 0,
+      "rows": []
+    }
+  ],
+  "limitations": [
+    "The post-cut sidecar covers visual-only candidates in three exposed 2022 recordings, not Norway.",
+    "A post-cut moving stone need not be the delivered stone from the preceding view.",
+    "Unknown or conflicting colour blocks automatic linking; matching colour still does not prove identity.",
+    "This is a source-only development screen, not independent event precision or recall."
+  ]
+}

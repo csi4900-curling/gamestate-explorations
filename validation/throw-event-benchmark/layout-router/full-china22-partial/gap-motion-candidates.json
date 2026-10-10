@@ -1,0 +1,113 @@
+{
+  "status": "unconfirmed_gap_motion_probe",
+  "source_id": "qn9tHfcimlQ",
+  "source_sha256": "c5254bb9103e32c6beac74cf269fc7bcec8ce2c2a710a7d4600c7ddb951f160e",
+  "source_interval_s": [
+    0.0,
+    8356.0
+  ],
+  "timeline_sha256": "12e8f169a5ffeb1b741aa0ad8699c7cb6267a6d694702ea85cb1b845f8ed9a91",
+  "model_sha256": "24ff5cb8b972b280fec5fda629cceb98466ff08609a488aec1dc4406361d2500",
+  "visual_code_sha256": "c6ebacf8c46e50b08f5ab02ee4a206fec6e247d35393ad7439be3b21bf4a3522",
+  "runner_sha256": "570b7f9969b2940ba8dc080ba3d51cbc3d0df91492c814a0b3ff6856a834ea51",
+  "scanned_gaps": [
+    {
+      "id": "G01",
+      "interval_s": [
+        3600.0,
+        3900.0
+      ],
+      "samples": 300,
+      "candidate_count": 1
+    }
+  ],
+  "motion_candidates": [
+    {
+      "id": "G01-Y01",
+      "gap_id": "G01",
+      "colour": "yellow",
+      "crossing_time_s": 3668.0,
+      "evidence_interval_s": [
+        3668.0,
+        3671.0
+      ],
+      "evidence_kind": "visual_stone_cap_motion_in_unsupported_layout",
+      "status": "unconfirmed_gap_motion_candidate",
+      "release_time_s": null,
+      "visual_track_span_px": 40.0,
+      "visual_track_points": [
+        {
+          "pixel": [
+            420.0,
+            167.0
+          ],
+          "bbox": [
+            408,
+            156,
+            24,
+            22
+          ],
+          "cap_area_px2": 357.5,
+          "neutral_surround_fraction": 0.492816091954023,
+          "white_ice_fraction": 0.6422413793103449,
+          "time_s": 3668.0
+        },
+        {
+          "pixel": [
+            430.0,
+            165.0
+          ],
+          "bbox": [
+            418,
+            154,
+            24,
+            22
+          ],
+          "cap_area_px2": 375.0,
+          "neutral_surround_fraction": 0.4396551724137931,
+          "white_ice_fraction": 0.5545977011494253,
+          "time_s": 3669.0
+        },
+        {
+          "pixel": [
+            437.0,
+            155.0
+          ],
+          "bbox": [
+            426,
+            144,
+            22,
+            22
+          ],
+          "cap_area_px2": 331.0,
+          "neutral_surround_fraction": 0.33779761904761907,
+          "white_ice_fraction": 0.8690476190476191,
+          "time_s": 3670.0
+        },
+        {
+          "pixel": [
+            444.0,
+            135.0
+          ],
+          "bbox": [
+            434,
+            124,
+            20,
+            22
+          ],
+          "cap_area_px2": 331.0,
+          "neutral_surround_fraction": 0.30864197530864196,
+          "white_ice_fraction": 0.8179012345679012,
+          "time_s": 3671.0
+        }
+      ]
+    }
+  ],
+  "candidate_count": 1,
+  "limitations": [
+    "These are unconfirmed visual candidates and are not added to the event timeline or F1 score.",
+    "Only unknown spans bracketed by Beijing-supported runs are scanned; opening and closing gaps are excluded.",
+    "Camera cuts, occlusion and tracker fragmentation can miss or duplicate delivered stones.",
+    "Observed visual track onset is not exact release time."
+  ]
+}

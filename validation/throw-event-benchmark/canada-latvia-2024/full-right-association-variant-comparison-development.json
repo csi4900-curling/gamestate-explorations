@@ -1,0 +1,3145 @@
+{
+  "status": "development_temporal_proposal_inventory_comparison_not_throw_truth",
+  "source_video_sha256": "a7431b68ba6fb0df407383973a525a01eadbee2490caa0438a5a11d2df1dba13",
+  "scan_sha256": {
+    "one_second_greedy": "9036741e5c53e9cb9d5960e51abce5f440eb2a9cfa5cc3e17a7ab29c4805b4e2",
+    "two_second_greedy": "593cb32454c08883b30b5dc40330a90ce26478ee9a7cc7c365c6c5681e80407e",
+    "two_second_global": "512105bc6353f40c589a437b273bacbe71335fcece605573d659a7460b51504b"
+  },
+  "runner_sha256": "649ad397bcb0aad0bfeb929221f5d9922d4b25e998fb89e4c71408bb3a87da0d",
+  "comparison_rule": "global one-to-one maximum-cardinality match, then minimum passage-time difference, with identical colour/direction and <=8 s difference",
+  "window_s": 8,
+  "scan_counts": {
+    "one_second_greedy": {
+      "raw_tracks": 485,
+      "review_proposals": 100
+    },
+    "two_second_greedy": {
+      "raw_tracks": 555,
+      "review_proposals": 118
+    },
+    "two_second_global": {
+      "raw_tracks": 564,
+      "review_proposals": 114
+    }
+  },
+  "comparisons": {
+    "one_vs_greedy_two": {
+      "left_proposal_count": 100,
+      "right_proposal_count": 118,
+      "temporal_pair_count": 98,
+      "left_unpaired": [
+        {
+          "raw_track_id": "A046",
+          "time_s": 987.692,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "raw_track_id": "A424",
+          "time_s": 6156.133,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        }
+      ],
+      "right_unpaired": [
+        {
+          "raw_track_id": "A046",
+          "time_s": 981.87,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "raw_track_id": "A153",
+          "time_s": 1859.424,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "raw_track_id": "A156",
+          "time_s": 1867.028,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "raw_track_id": "A176",
+          "time_s": 2363.212,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "raw_track_id": "A244",
+          "time_s": 3151.008,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "raw_track_id": "A282",
+          "time_s": 3396.881,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "raw_track_id": "A303",
+          "time_s": 3597.828,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "raw_track_id": "A312",
+          "time_s": 3730.245,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "raw_track_id": "A353",
+          "time_s": 4108.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "raw_track_id": "A369",
+          "time_s": 4289.344,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "raw_track_id": "A388",
+          "time_s": 4912.765,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "raw_track_id": "A398",
+          "time_s": 5116.556,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "raw_track_id": "A431",
+          "time_s": 5605.984,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "raw_track_id": "A437",
+          "time_s": 5660.545,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "raw_track_id": "A481",
+          "time_s": 6027.791,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "raw_track_id": "A489",
+          "time_s": 6138.875,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "raw_track_id": "A488",
+          "time_s": 6140.381,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "raw_track_id": "A491",
+          "time_s": 6142.176,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "raw_track_id": "A518",
+          "time_s": 6374.931,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "raw_track_id": "A553",
+          "time_s": 6687.244,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        }
+      ],
+      "pairs": [
+        {
+          "left_raw_track_id": "A004",
+          "right_raw_track_id": "A005",
+          "left_time_s": 211.071,
+          "right_time_s": 211.071,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A006",
+          "right_raw_track_id": "A006",
+          "left_time_s": 257.714,
+          "right_time_s": 257.714,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A007",
+          "right_raw_track_id": "A008",
+          "left_time_s": 304.588,
+          "right_time_s": 304.588,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A008",
+          "right_raw_track_id": "A009",
+          "left_time_s": 348.636,
+          "right_time_s": 348.636,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A013",
+          "right_raw_track_id": "A012",
+          "left_time_s": 400.514,
+          "right_time_s": 400.514,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A015",
+          "right_raw_track_id": "A013",
+          "left_time_s": 443.163,
+          "right_time_s": 443.163,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A017",
+          "right_raw_track_id": "A015",
+          "left_time_s": 495.421,
+          "right_time_s": 495.421,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A018",
+          "right_raw_track_id": "A017",
+          "left_time_s": 548.143,
+          "right_time_s": 548.143,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A020",
+          "right_raw_track_id": "A021",
+          "left_time_s": 609.308,
+          "right_time_s": 609.308,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A022",
+          "right_raw_track_id": "A023",
+          "left_time_s": 658.952,
+          "right_time_s": 658.952,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A025",
+          "right_raw_track_id": "A028",
+          "left_time_s": 716.676,
+          "right_time_s": 716.676,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A026",
+          "right_raw_track_id": "A030",
+          "left_time_s": 778.611,
+          "right_time_s": 778.611,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A028",
+          "right_raw_track_id": "A034",
+          "left_time_s": 835.909,
+          "right_time_s": 835.909,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A033",
+          "right_raw_track_id": "A036",
+          "left_time_s": 893.486,
+          "right_time_s": 893.486,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A036",
+          "right_raw_track_id": "A039",
+          "left_time_s": 956.432,
+          "right_time_s": 956.432,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A042",
+          "right_raw_track_id": "A041",
+          "left_time_s": 979.909,
+          "right_time_s": 978.067,
+          "absolute_time_delta_s": 1.8419999999999845,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A054",
+          "right_raw_track_id": "A057",
+          "left_time_s": 1050.792,
+          "right_time_s": 1050.792,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A059",
+          "right_raw_track_id": "A063",
+          "left_time_s": 1093.1,
+          "right_time_s": 1093.1,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A063",
+          "right_raw_track_id": "A067",
+          "left_time_s": 1134.12,
+          "right_time_s": 1134.12,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A066",
+          "right_raw_track_id": "A071",
+          "left_time_s": 1174.879,
+          "right_time_s": 1174.879,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A075",
+          "right_raw_track_id": "A075",
+          "left_time_s": 1230.083,
+          "right_time_s": 1230.083,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A076",
+          "right_raw_track_id": "A080",
+          "left_time_s": 1269.652,
+          "right_time_s": 1269.652,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A082",
+          "right_raw_track_id": "A088",
+          "left_time_s": 1330.077,
+          "right_time_s": 1330.077,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A089",
+          "right_raw_track_id": "A086",
+          "left_time_s": 1370.686,
+          "right_time_s": 1370.686,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A094",
+          "right_raw_track_id": "A097",
+          "left_time_s": 1432.241,
+          "right_time_s": 1432.241,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A104",
+          "right_raw_track_id": "A109",
+          "left_time_s": 1481.814,
+          "right_time_s": 1481.814,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A106",
+          "right_raw_track_id": "A112",
+          "left_time_s": 1539.031,
+          "right_time_s": 1539.031,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A116",
+          "right_raw_track_id": "A118",
+          "left_time_s": 1597.015,
+          "right_time_s": 1597.015,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A115",
+          "right_raw_track_id": "A122",
+          "left_time_s": 1654.625,
+          "right_time_s": 1654.625,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A122",
+          "right_raw_track_id": "A131",
+          "left_time_s": 1709.172,
+          "right_time_s": 1709.172,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A127",
+          "right_raw_track_id": "A137",
+          "left_time_s": 1794.6,
+          "right_time_s": 1794.6,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A133",
+          "right_raw_track_id": "A142",
+          "left_time_s": 1852.407,
+          "right_time_s": 1852.407,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A143",
+          "right_raw_track_id": "A163",
+          "left_time_s": 2037.556,
+          "right_time_s": 2037.556,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A144",
+          "right_raw_track_id": "A165",
+          "left_time_s": 2080.529,
+          "right_time_s": 2080.529,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A147",
+          "right_raw_track_id": "A169",
+          "left_time_s": 2129.455,
+          "right_time_s": 2129.455,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A148",
+          "right_raw_track_id": "A170",
+          "left_time_s": 2182.35,
+          "right_time_s": 2182.35,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A153",
+          "right_raw_track_id": "A174",
+          "left_time_s": 2309.684,
+          "right_time_s": 2309.684,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A158",
+          "right_raw_track_id": "A178",
+          "left_time_s": 2421.525,
+          "right_time_s": 2421.525,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A167",
+          "right_raw_track_id": "A189",
+          "left_time_s": 2540.195,
+          "right_time_s": 2540.195,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A169",
+          "right_raw_track_id": "A193",
+          "left_time_s": 2603.447,
+          "right_time_s": 2603.447,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A172",
+          "right_raw_track_id": "A195",
+          "left_time_s": 2688.135,
+          "right_time_s": 2688.135,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A181",
+          "right_raw_track_id": "A204",
+          "left_time_s": 2785.667,
+          "right_time_s": 2785.667,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A182",
+          "right_raw_track_id": "A205",
+          "left_time_s": 2795.458,
+          "right_time_s": 2795.458,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A204",
+          "right_raw_track_id": "A227",
+          "left_time_s": 3074.75,
+          "right_time_s": 3074.75,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A228",
+          "right_raw_track_id": "A251",
+          "left_time_s": 3198.292,
+          "right_time_s": 3198.292,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A231",
+          "right_raw_track_id": "A255",
+          "left_time_s": 3269.4,
+          "right_time_s": 3269.4,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A235",
+          "right_raw_track_id": "A262",
+          "left_time_s": 3297.279,
+          "right_time_s": 3297.279,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A246",
+          "right_raw_track_id": "A273",
+          "left_time_s": 3384.423,
+          "right_time_s": 3384.423,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A255",
+          "right_raw_track_id": "A281",
+          "left_time_s": 3427.02,
+          "right_time_s": 3427.02,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A257",
+          "right_raw_track_id": "A284",
+          "left_time_s": 3462.04,
+          "right_time_s": 3462.04,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A259",
+          "right_raw_track_id": "A288",
+          "left_time_s": 3510.152,
+          "right_time_s": 3510.152,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A266",
+          "right_raw_track_id": "A298",
+          "left_time_s": 3580.226,
+          "right_time_s": 3580.226,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A272",
+          "right_raw_track_id": "A302",
+          "left_time_s": 3618.784,
+          "right_time_s": 3618.784,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A275",
+          "right_raw_track_id": "A308",
+          "left_time_s": 3682.702,
+          "right_time_s": 3682.702,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A283",
+          "right_raw_track_id": "A317",
+          "left_time_s": 3796.0,
+          "right_time_s": 3796.0,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A291",
+          "right_raw_track_id": "A320",
+          "left_time_s": 3892.452,
+          "right_time_s": 3892.452,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A297",
+          "right_raw_track_id": "A333",
+          "left_time_s": 3942.678,
+          "right_time_s": 3942.678,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A304",
+          "right_raw_track_id": "A336",
+          "left_time_s": 4000.508,
+          "right_time_s": 4000.508,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A308",
+          "right_raw_track_id": "A346",
+          "left_time_s": 4053.5,
+          "right_time_s": 4053.5,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A310",
+          "right_raw_track_id": "A347",
+          "left_time_s": 4135.405,
+          "right_time_s": 4135.405,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A313",
+          "right_raw_track_id": "A352",
+          "left_time_s": 4200.9,
+          "right_time_s": 4200.9,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A320",
+          "right_raw_track_id": "A360",
+          "left_time_s": 4270.138,
+          "right_time_s": 4270.138,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A333",
+          "right_raw_track_id": "A376",
+          "left_time_s": 4292.568,
+          "right_time_s": 4292.338,
+          "absolute_time_delta_s": 0.23000000000047294,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A332",
+          "right_raw_track_id": "A375",
+          "left_time_s": 4292.6,
+          "right_time_s": 4292.765,
+          "absolute_time_delta_s": 0.16499999999996362,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A338",
+          "right_raw_track_id": "A383",
+          "left_time_s": 4780.526,
+          "right_time_s": 4780.526,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A339",
+          "right_raw_track_id": "A384",
+          "left_time_s": 4815.759,
+          "right_time_s": 4815.759,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A340",
+          "right_raw_track_id": "A385",
+          "left_time_s": 4822.038,
+          "right_time_s": 4822.038,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A342",
+          "right_raw_track_id": "A387",
+          "left_time_s": 4854.421,
+          "right_time_s": 4854.421,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A346",
+          "right_raw_track_id": "A390",
+          "left_time_s": 4965.588,
+          "right_time_s": 4965.588,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A349",
+          "right_raw_track_id": "A394",
+          "left_time_s": 5065.093,
+          "right_time_s": 5065.093,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A356",
+          "right_raw_track_id": "A405",
+          "left_time_s": 5188.136,
+          "right_time_s": 5188.136,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A357",
+          "right_raw_track_id": "A406",
+          "left_time_s": 5253.583,
+          "right_time_s": 5253.583,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A360",
+          "right_raw_track_id": "A409",
+          "left_time_s": 5310.261,
+          "right_time_s": 5310.261,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A361",
+          "right_raw_track_id": "A413",
+          "left_time_s": 5379.694,
+          "right_time_s": 5376.125,
+          "absolute_time_delta_s": 3.5690000000004147,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A364",
+          "right_raw_track_id": "A417",
+          "left_time_s": 5442.0,
+          "right_time_s": 5442.0,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A367",
+          "right_raw_track_id": "A419",
+          "left_time_s": 5507.968,
+          "right_time_s": 5507.968,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A372",
+          "right_raw_track_id": "A423",
+          "left_time_s": 5564.167,
+          "right_time_s": 5564.167,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A374",
+          "right_raw_track_id": "A425",
+          "left_time_s": 5586.333,
+          "right_time_s": 5586.333,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A387",
+          "right_raw_track_id": "A433",
+          "left_time_s": 5671.148,
+          "right_time_s": 5671.148,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A393",
+          "right_raw_track_id": "A441",
+          "left_time_s": 5713.87,
+          "right_time_s": 5713.87,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A396",
+          "right_raw_track_id": "A448",
+          "left_time_s": 5760.24,
+          "right_time_s": 5760.24,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A398",
+          "right_raw_track_id": "A451",
+          "left_time_s": 5792.854,
+          "right_time_s": 5792.854,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A401",
+          "right_raw_track_id": "A457",
+          "left_time_s": 5843.333,
+          "right_time_s": 5843.333,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A406",
+          "right_raw_track_id": "A458",
+          "left_time_s": 5883.03,
+          "right_time_s": 5883.03,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A407",
+          "right_raw_track_id": "A465",
+          "left_time_s": 5929.788,
+          "right_time_s": 5929.788,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A408",
+          "right_raw_track_id": "A469",
+          "left_time_s": 6016.0,
+          "right_time_s": 6016.0,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A413",
+          "right_raw_track_id": "A478",
+          "left_time_s": 6074.778,
+          "right_time_s": 6074.778,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A422",
+          "right_raw_track_id": "A490",
+          "left_time_s": 6139.816,
+          "right_time_s": 6139.816,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A427",
+          "right_raw_track_id": "A493",
+          "left_time_s": 6160.579,
+          "right_time_s": 6158.846,
+          "absolute_time_delta_s": 1.7330000000001746,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A431",
+          "right_raw_track_id": "A498",
+          "left_time_s": 6224.083,
+          "right_time_s": 6224.083,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A441",
+          "right_raw_track_id": "A507",
+          "left_time_s": 6280.116,
+          "right_time_s": 6280.116,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A444",
+          "right_raw_track_id": "A504",
+          "left_time_s": 6349.5,
+          "right_time_s": 6349.5,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A452",
+          "right_raw_track_id": "A520",
+          "left_time_s": 6403.727,
+          "right_time_s": 6403.727,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A455",
+          "right_raw_track_id": "A524",
+          "left_time_s": 6465.52,
+          "right_time_s": 6465.52,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A462",
+          "right_raw_track_id": "A530",
+          "left_time_s": 6518.917,
+          "right_time_s": 6518.917,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A471",
+          "right_raw_track_id": "A535",
+          "left_time_s": 6584.346,
+          "right_time_s": 6584.346,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A478",
+          "right_raw_track_id": "A546",
+          "left_time_s": 6656.152,
+          "right_time_s": 6656.152,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A483",
+          "right_raw_track_id": "A552",
+          "left_time_s": 6686.73,
+          "right_time_s": 6685.917,
+          "absolute_time_delta_s": 0.8129999999991924,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        }
+      ]
+    },
+    "one_vs_global_two": {
+      "left_proposal_count": 100,
+      "right_proposal_count": 114,
+      "temporal_pair_count": 97,
+      "left_unpaired": [
+        {
+          "raw_track_id": "A046",
+          "time_s": 987.692,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "raw_track_id": "A374",
+          "time_s": 5586.333,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "raw_track_id": "A452",
+          "time_s": 6403.727,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        }
+      ],
+      "right_unpaired": [
+        {
+          "raw_track_id": "A041",
+          "time_s": 981.87,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "raw_track_id": "A083",
+          "time_s": 1194.379,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "raw_track_id": "A184",
+          "time_s": 2363.212,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "raw_track_id": "A217",
+          "time_s": 2835.844,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "raw_track_id": "A315",
+          "time_s": 3597.828,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "raw_track_id": "A323",
+          "time_s": 3730.245,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "raw_track_id": "A358",
+          "time_s": 4108.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "raw_track_id": "A375",
+          "time_s": 4289.344,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "raw_track_id": "A391",
+          "time_s": 4912.765,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "raw_track_id": "A399",
+          "time_s": 5116.556,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "raw_track_id": "A429",
+          "time_s": 5587.16,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "raw_track_id": "A434",
+          "time_s": 5605.984,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "raw_track_id": "A440",
+          "time_s": 5660.056,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "raw_track_id": "A484",
+          "time_s": 6027.791,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "raw_track_id": "A497",
+          "time_s": 6143.296,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "raw_track_id": "A530",
+          "time_s": 6376.131,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "raw_track_id": "A562",
+          "time_s": 6685.917,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        }
+      ],
+      "pairs": [
+        {
+          "left_raw_track_id": "A004",
+          "right_raw_track_id": "A005",
+          "left_time_s": 211.071,
+          "right_time_s": 211.071,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A006",
+          "right_raw_track_id": "A006",
+          "left_time_s": 257.714,
+          "right_time_s": 257.714,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A007",
+          "right_raw_track_id": "A008",
+          "left_time_s": 304.588,
+          "right_time_s": 304.588,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A008",
+          "right_raw_track_id": "A009",
+          "left_time_s": 348.636,
+          "right_time_s": 348.636,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A013",
+          "right_raw_track_id": "A012",
+          "left_time_s": 400.514,
+          "right_time_s": 400.514,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A015",
+          "right_raw_track_id": "A013",
+          "left_time_s": 443.163,
+          "right_time_s": 443.163,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A017",
+          "right_raw_track_id": "A015",
+          "left_time_s": 495.421,
+          "right_time_s": 495.421,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A018",
+          "right_raw_track_id": "A017",
+          "left_time_s": 548.143,
+          "right_time_s": 548.143,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A020",
+          "right_raw_track_id": "A019",
+          "left_time_s": 609.308,
+          "right_time_s": 609.308,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A022",
+          "right_raw_track_id": "A022",
+          "left_time_s": 658.952,
+          "right_time_s": 658.952,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A025",
+          "right_raw_track_id": "A026",
+          "left_time_s": 716.676,
+          "right_time_s": 716.676,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A026",
+          "right_raw_track_id": "A027",
+          "left_time_s": 778.611,
+          "right_time_s": 778.611,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A028",
+          "right_raw_track_id": "A031",
+          "left_time_s": 835.909,
+          "right_time_s": 835.909,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A033",
+          "right_raw_track_id": "A033",
+          "left_time_s": 893.486,
+          "right_time_s": 893.486,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A036",
+          "right_raw_track_id": "A036",
+          "left_time_s": 956.432,
+          "right_time_s": 956.432,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A042",
+          "right_raw_track_id": "A037",
+          "left_time_s": 979.909,
+          "right_time_s": 978.067,
+          "absolute_time_delta_s": 1.8419999999999845,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A054",
+          "right_raw_track_id": "A054",
+          "left_time_s": 1050.792,
+          "right_time_s": 1050.792,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A059",
+          "right_raw_track_id": "A061",
+          "left_time_s": 1093.1,
+          "right_time_s": 1093.1,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A063",
+          "right_raw_track_id": "A067",
+          "left_time_s": 1134.12,
+          "right_time_s": 1134.12,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A066",
+          "right_raw_track_id": "A073",
+          "left_time_s": 1174.879,
+          "right_time_s": 1174.879,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A075",
+          "right_raw_track_id": "A082",
+          "left_time_s": 1230.083,
+          "right_time_s": 1230.083,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A076",
+          "right_raw_track_id": "A085",
+          "left_time_s": 1269.652,
+          "right_time_s": 1269.652,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A082",
+          "right_raw_track_id": "A093",
+          "left_time_s": 1330.077,
+          "right_time_s": 1330.077,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A089",
+          "right_raw_track_id": "A100",
+          "left_time_s": 1370.686,
+          "right_time_s": 1370.686,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A094",
+          "right_raw_track_id": "A103",
+          "left_time_s": 1432.241,
+          "right_time_s": 1432.241,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A104",
+          "right_raw_track_id": "A115",
+          "left_time_s": 1481.814,
+          "right_time_s": 1481.814,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A106",
+          "right_raw_track_id": "A117",
+          "left_time_s": 1539.031,
+          "right_time_s": 1539.031,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A116",
+          "right_raw_track_id": "A123",
+          "left_time_s": 1597.015,
+          "right_time_s": 1597.015,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A115",
+          "right_raw_track_id": "A127",
+          "left_time_s": 1654.625,
+          "right_time_s": 1654.625,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A122",
+          "right_raw_track_id": "A138",
+          "left_time_s": 1709.172,
+          "right_time_s": 1709.172,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A127",
+          "right_raw_track_id": "A144",
+          "left_time_s": 1794.6,
+          "right_time_s": 1794.6,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A133",
+          "right_raw_track_id": "A149",
+          "left_time_s": 1852.407,
+          "right_time_s": 1852.407,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A143",
+          "right_raw_track_id": "A171",
+          "left_time_s": 2037.556,
+          "right_time_s": 2037.556,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A144",
+          "right_raw_track_id": "A173",
+          "left_time_s": 2080.529,
+          "right_time_s": 2080.529,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A147",
+          "right_raw_track_id": "A177",
+          "left_time_s": 2129.455,
+          "right_time_s": 2129.455,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A148",
+          "right_raw_track_id": "A178",
+          "left_time_s": 2182.35,
+          "right_time_s": 2182.35,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A153",
+          "right_raw_track_id": "A182",
+          "left_time_s": 2309.684,
+          "right_time_s": 2309.684,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A158",
+          "right_raw_track_id": "A186",
+          "left_time_s": 2421.525,
+          "right_time_s": 2421.525,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A167",
+          "right_raw_track_id": "A193",
+          "left_time_s": 2540.195,
+          "right_time_s": 2540.195,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A169",
+          "right_raw_track_id": "A197",
+          "left_time_s": 2603.447,
+          "right_time_s": 2603.447,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A172",
+          "right_raw_track_id": "A199",
+          "left_time_s": 2688.135,
+          "right_time_s": 2688.135,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A181",
+          "right_raw_track_id": "A207",
+          "left_time_s": 2785.667,
+          "right_time_s": 2785.667,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A182",
+          "right_raw_track_id": "A208",
+          "left_time_s": 2795.458,
+          "right_time_s": 2795.458,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A204",
+          "right_raw_track_id": "A233",
+          "left_time_s": 3074.75,
+          "right_time_s": 3074.75,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A228",
+          "right_raw_track_id": "A265",
+          "left_time_s": 3198.292,
+          "right_time_s": 3198.292,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A231",
+          "right_raw_track_id": "A269",
+          "left_time_s": 3269.4,
+          "right_time_s": 3269.4,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A235",
+          "right_raw_track_id": "A261",
+          "left_time_s": 3297.279,
+          "right_time_s": 3295.068,
+          "absolute_time_delta_s": 2.2109999999997854,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A246",
+          "right_raw_track_id": "A288",
+          "left_time_s": 3384.423,
+          "right_time_s": 3384.423,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A255",
+          "right_raw_track_id": "A296",
+          "left_time_s": 3427.02,
+          "right_time_s": 3427.02,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A257",
+          "right_raw_track_id": "A297",
+          "left_time_s": 3462.04,
+          "right_time_s": 3462.04,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A259",
+          "right_raw_track_id": "A303",
+          "left_time_s": 3510.152,
+          "right_time_s": 3510.152,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A266",
+          "right_raw_track_id": "A308",
+          "left_time_s": 3580.226,
+          "right_time_s": 3580.226,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A272",
+          "right_raw_track_id": "A314",
+          "left_time_s": 3618.784,
+          "right_time_s": 3618.784,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A275",
+          "right_raw_track_id": "A318",
+          "left_time_s": 3682.702,
+          "right_time_s": 3682.702,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A283",
+          "right_raw_track_id": "A328",
+          "left_time_s": 3796.0,
+          "right_time_s": 3796.0,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A291",
+          "right_raw_track_id": "A333",
+          "left_time_s": 3892.452,
+          "right_time_s": 3892.452,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A297",
+          "right_raw_track_id": "A335",
+          "left_time_s": 3942.678,
+          "right_time_s": 3942.678,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A304",
+          "right_raw_track_id": "A342",
+          "left_time_s": 4000.508,
+          "right_time_s": 4000.508,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A308",
+          "right_raw_track_id": "A345",
+          "left_time_s": 4053.5,
+          "right_time_s": 4053.5,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A310",
+          "right_raw_track_id": "A353",
+          "left_time_s": 4135.405,
+          "right_time_s": 4135.405,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A313",
+          "right_raw_track_id": "A357",
+          "left_time_s": 4200.9,
+          "right_time_s": 4200.9,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A320",
+          "right_raw_track_id": "A366",
+          "left_time_s": 4270.138,
+          "right_time_s": 4270.138,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A333",
+          "right_raw_track_id": "A379",
+          "left_time_s": 4292.568,
+          "right_time_s": 4292.568,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A332",
+          "right_raw_track_id": "A380",
+          "left_time_s": 4292.6,
+          "right_time_s": 4292.765,
+          "absolute_time_delta_s": 0.16499999999996362,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A338",
+          "right_raw_track_id": "A386",
+          "left_time_s": 4780.526,
+          "right_time_s": 4780.526,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A339",
+          "right_raw_track_id": "A387",
+          "left_time_s": 4815.759,
+          "right_time_s": 4815.759,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A340",
+          "right_raw_track_id": "A388",
+          "left_time_s": 4822.038,
+          "right_time_s": 4822.038,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A342",
+          "right_raw_track_id": "A390",
+          "left_time_s": 4854.421,
+          "right_time_s": 4854.421,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A346",
+          "right_raw_track_id": "A393",
+          "left_time_s": 4965.588,
+          "right_time_s": 4965.588,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A349",
+          "right_raw_track_id": "A397",
+          "left_time_s": 5065.093,
+          "right_time_s": 5065.093,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A356",
+          "right_raw_track_id": "A405",
+          "left_time_s": 5188.136,
+          "right_time_s": 5188.136,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A357",
+          "right_raw_track_id": "A407",
+          "left_time_s": 5253.583,
+          "right_time_s": 5253.583,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A360",
+          "right_raw_track_id": "A409",
+          "left_time_s": 5310.261,
+          "right_time_s": 5310.261,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A361",
+          "right_raw_track_id": "A412",
+          "left_time_s": 5379.694,
+          "right_time_s": 5376.125,
+          "absolute_time_delta_s": 3.5690000000004147,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A364",
+          "right_raw_track_id": "A416",
+          "left_time_s": 5442.0,
+          "right_time_s": 5442.0,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A367",
+          "right_raw_track_id": "A420",
+          "left_time_s": 5507.968,
+          "right_time_s": 5507.968,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A372",
+          "right_raw_track_id": "A424",
+          "left_time_s": 5564.167,
+          "right_time_s": 5564.167,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A387",
+          "right_raw_track_id": "A436",
+          "left_time_s": 5671.148,
+          "right_time_s": 5671.148,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A393",
+          "right_raw_track_id": "A445",
+          "left_time_s": 5713.87,
+          "right_time_s": 5713.87,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A396",
+          "right_raw_track_id": "A450",
+          "left_time_s": 5760.24,
+          "right_time_s": 5760.24,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A398",
+          "right_raw_track_id": "A455",
+          "left_time_s": 5792.854,
+          "right_time_s": 5792.854,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A401",
+          "right_raw_track_id": "A461",
+          "left_time_s": 5843.333,
+          "right_time_s": 5843.333,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A406",
+          "right_raw_track_id": "A470",
+          "left_time_s": 5883.03,
+          "right_time_s": 5883.03,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A407",
+          "right_raw_track_id": "A471",
+          "left_time_s": 5929.788,
+          "right_time_s": 5929.788,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A408",
+          "right_raw_track_id": "A477",
+          "left_time_s": 6016.0,
+          "right_time_s": 6016.0,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A413",
+          "right_raw_track_id": "A482",
+          "left_time_s": 6074.778,
+          "right_time_s": 6074.778,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A422",
+          "right_raw_track_id": "A493",
+          "left_time_s": 6139.816,
+          "right_time_s": 6139.791,
+          "absolute_time_delta_s": 0.024999999999636202,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A424",
+          "right_raw_track_id": "A492",
+          "left_time_s": 6156.133,
+          "right_time_s": 6156.133,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A427",
+          "right_raw_track_id": "A500",
+          "left_time_s": 6160.579,
+          "right_time_s": 6158.818,
+          "absolute_time_delta_s": 1.7609999999995125,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A431",
+          "right_raw_track_id": "A506",
+          "left_time_s": 6224.083,
+          "right_time_s": 6224.083,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A441",
+          "right_raw_track_id": "A515",
+          "left_time_s": 6280.116,
+          "right_time_s": 6280.116,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A444",
+          "right_raw_track_id": "A511",
+          "left_time_s": 6349.5,
+          "right_time_s": 6349.5,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A455",
+          "right_raw_track_id": "A532",
+          "left_time_s": 6465.52,
+          "right_time_s": 6465.52,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A462",
+          "right_raw_track_id": "A542",
+          "left_time_s": 6518.917,
+          "right_time_s": 6518.917,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A471",
+          "right_raw_track_id": "A549",
+          "left_time_s": 6584.346,
+          "right_time_s": 6584.346,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A478",
+          "right_raw_track_id": "A551",
+          "left_time_s": 6656.152,
+          "right_time_s": 6656.152,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A483",
+          "right_raw_track_id": "A563",
+          "left_time_s": 6686.73,
+          "right_time_s": 6686.73,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        }
+      ]
+    },
+    "greedy_two_vs_global_two": {
+      "left_proposal_count": 118,
+      "right_proposal_count": 114,
+      "temporal_pair_count": 107,
+      "left_unpaired": [
+        {
+          "raw_track_id": "A153",
+          "time_s": 1859.424,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "raw_track_id": "A156",
+          "time_s": 1867.028,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "raw_track_id": "A244",
+          "time_s": 3151.008,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "raw_track_id": "A282",
+          "time_s": 3396.881,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "raw_track_id": "A425",
+          "time_s": 5586.333,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "raw_track_id": "A489",
+          "time_s": 6138.875,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "raw_track_id": "A488",
+          "time_s": 6140.381,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "raw_track_id": "A491",
+          "time_s": 6142.176,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "raw_track_id": "A518",
+          "time_s": 6374.931,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "raw_track_id": "A520",
+          "time_s": 6403.727,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "raw_track_id": "A553",
+          "time_s": 6687.244,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        }
+      ],
+      "right_unpaired": [
+        {
+          "raw_track_id": "A083",
+          "time_s": 1194.379,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "raw_track_id": "A217",
+          "time_s": 2835.844,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "raw_track_id": "A429",
+          "time_s": 5587.16,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "raw_track_id": "A497",
+          "time_s": 6143.296,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "raw_track_id": "A492",
+          "time_s": 6156.133,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "raw_track_id": "A530",
+          "time_s": 6376.131,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "raw_track_id": "A563",
+          "time_s": 6686.73,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        }
+      ],
+      "pairs": [
+        {
+          "left_raw_track_id": "A005",
+          "right_raw_track_id": "A005",
+          "left_time_s": 211.071,
+          "right_time_s": 211.071,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A006",
+          "right_raw_track_id": "A006",
+          "left_time_s": 257.714,
+          "right_time_s": 257.714,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A008",
+          "right_raw_track_id": "A008",
+          "left_time_s": 304.588,
+          "right_time_s": 304.588,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A009",
+          "right_raw_track_id": "A009",
+          "left_time_s": 348.636,
+          "right_time_s": 348.636,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A012",
+          "right_raw_track_id": "A012",
+          "left_time_s": 400.514,
+          "right_time_s": 400.514,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A013",
+          "right_raw_track_id": "A013",
+          "left_time_s": 443.163,
+          "right_time_s": 443.163,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A015",
+          "right_raw_track_id": "A015",
+          "left_time_s": 495.421,
+          "right_time_s": 495.421,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A017",
+          "right_raw_track_id": "A017",
+          "left_time_s": 548.143,
+          "right_time_s": 548.143,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A021",
+          "right_raw_track_id": "A019",
+          "left_time_s": 609.308,
+          "right_time_s": 609.308,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A023",
+          "right_raw_track_id": "A022",
+          "left_time_s": 658.952,
+          "right_time_s": 658.952,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A028",
+          "right_raw_track_id": "A026",
+          "left_time_s": 716.676,
+          "right_time_s": 716.676,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A030",
+          "right_raw_track_id": "A027",
+          "left_time_s": 778.611,
+          "right_time_s": 778.611,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A034",
+          "right_raw_track_id": "A031",
+          "left_time_s": 835.909,
+          "right_time_s": 835.909,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A036",
+          "right_raw_track_id": "A033",
+          "left_time_s": 893.486,
+          "right_time_s": 893.486,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A039",
+          "right_raw_track_id": "A036",
+          "left_time_s": 956.432,
+          "right_time_s": 956.432,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A041",
+          "right_raw_track_id": "A037",
+          "left_time_s": 978.067,
+          "right_time_s": 978.067,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A046",
+          "right_raw_track_id": "A041",
+          "left_time_s": 981.87,
+          "right_time_s": 981.87,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A057",
+          "right_raw_track_id": "A054",
+          "left_time_s": 1050.792,
+          "right_time_s": 1050.792,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A063",
+          "right_raw_track_id": "A061",
+          "left_time_s": 1093.1,
+          "right_time_s": 1093.1,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A067",
+          "right_raw_track_id": "A067",
+          "left_time_s": 1134.12,
+          "right_time_s": 1134.12,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A071",
+          "right_raw_track_id": "A073",
+          "left_time_s": 1174.879,
+          "right_time_s": 1174.879,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A075",
+          "right_raw_track_id": "A082",
+          "left_time_s": 1230.083,
+          "right_time_s": 1230.083,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A080",
+          "right_raw_track_id": "A085",
+          "left_time_s": 1269.652,
+          "right_time_s": 1269.652,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A088",
+          "right_raw_track_id": "A093",
+          "left_time_s": 1330.077,
+          "right_time_s": 1330.077,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A086",
+          "right_raw_track_id": "A100",
+          "left_time_s": 1370.686,
+          "right_time_s": 1370.686,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A097",
+          "right_raw_track_id": "A103",
+          "left_time_s": 1432.241,
+          "right_time_s": 1432.241,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A109",
+          "right_raw_track_id": "A115",
+          "left_time_s": 1481.814,
+          "right_time_s": 1481.814,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A112",
+          "right_raw_track_id": "A117",
+          "left_time_s": 1539.031,
+          "right_time_s": 1539.031,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A118",
+          "right_raw_track_id": "A123",
+          "left_time_s": 1597.015,
+          "right_time_s": 1597.015,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A122",
+          "right_raw_track_id": "A127",
+          "left_time_s": 1654.625,
+          "right_time_s": 1654.625,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A131",
+          "right_raw_track_id": "A138",
+          "left_time_s": 1709.172,
+          "right_time_s": 1709.172,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A137",
+          "right_raw_track_id": "A144",
+          "left_time_s": 1794.6,
+          "right_time_s": 1794.6,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A142",
+          "right_raw_track_id": "A149",
+          "left_time_s": 1852.407,
+          "right_time_s": 1852.407,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A163",
+          "right_raw_track_id": "A171",
+          "left_time_s": 2037.556,
+          "right_time_s": 2037.556,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A165",
+          "right_raw_track_id": "A173",
+          "left_time_s": 2080.529,
+          "right_time_s": 2080.529,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A169",
+          "right_raw_track_id": "A177",
+          "left_time_s": 2129.455,
+          "right_time_s": 2129.455,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A170",
+          "right_raw_track_id": "A178",
+          "left_time_s": 2182.35,
+          "right_time_s": 2182.35,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A174",
+          "right_raw_track_id": "A182",
+          "left_time_s": 2309.684,
+          "right_time_s": 2309.684,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A176",
+          "right_raw_track_id": "A184",
+          "left_time_s": 2363.212,
+          "right_time_s": 2363.212,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A178",
+          "right_raw_track_id": "A186",
+          "left_time_s": 2421.525,
+          "right_time_s": 2421.525,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A189",
+          "right_raw_track_id": "A193",
+          "left_time_s": 2540.195,
+          "right_time_s": 2540.195,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A193",
+          "right_raw_track_id": "A197",
+          "left_time_s": 2603.447,
+          "right_time_s": 2603.447,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A195",
+          "right_raw_track_id": "A199",
+          "left_time_s": 2688.135,
+          "right_time_s": 2688.135,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A204",
+          "right_raw_track_id": "A207",
+          "left_time_s": 2785.667,
+          "right_time_s": 2785.667,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A205",
+          "right_raw_track_id": "A208",
+          "left_time_s": 2795.458,
+          "right_time_s": 2795.458,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A227",
+          "right_raw_track_id": "A233",
+          "left_time_s": 3074.75,
+          "right_time_s": 3074.75,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A251",
+          "right_raw_track_id": "A265",
+          "left_time_s": 3198.292,
+          "right_time_s": 3198.292,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A255",
+          "right_raw_track_id": "A269",
+          "left_time_s": 3269.4,
+          "right_time_s": 3269.4,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A262",
+          "right_raw_track_id": "A261",
+          "left_time_s": 3297.279,
+          "right_time_s": 3295.068,
+          "absolute_time_delta_s": 2.2109999999997854,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A273",
+          "right_raw_track_id": "A288",
+          "left_time_s": 3384.423,
+          "right_time_s": 3384.423,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A281",
+          "right_raw_track_id": "A296",
+          "left_time_s": 3427.02,
+          "right_time_s": 3427.02,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A284",
+          "right_raw_track_id": "A297",
+          "left_time_s": 3462.04,
+          "right_time_s": 3462.04,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A288",
+          "right_raw_track_id": "A303",
+          "left_time_s": 3510.152,
+          "right_time_s": 3510.152,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A298",
+          "right_raw_track_id": "A308",
+          "left_time_s": 3580.226,
+          "right_time_s": 3580.226,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A303",
+          "right_raw_track_id": "A315",
+          "left_time_s": 3597.828,
+          "right_time_s": 3597.828,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A302",
+          "right_raw_track_id": "A314",
+          "left_time_s": 3618.784,
+          "right_time_s": 3618.784,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A308",
+          "right_raw_track_id": "A318",
+          "left_time_s": 3682.702,
+          "right_time_s": 3682.702,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A312",
+          "right_raw_track_id": "A323",
+          "left_time_s": 3730.245,
+          "right_time_s": 3730.245,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A317",
+          "right_raw_track_id": "A328",
+          "left_time_s": 3796.0,
+          "right_time_s": 3796.0,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A320",
+          "right_raw_track_id": "A333",
+          "left_time_s": 3892.452,
+          "right_time_s": 3892.452,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A333",
+          "right_raw_track_id": "A335",
+          "left_time_s": 3942.678,
+          "right_time_s": 3942.678,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A336",
+          "right_raw_track_id": "A342",
+          "left_time_s": 4000.508,
+          "right_time_s": 4000.508,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A346",
+          "right_raw_track_id": "A345",
+          "left_time_s": 4053.5,
+          "right_time_s": 4053.5,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A353",
+          "right_raw_track_id": "A358",
+          "left_time_s": 4108.0,
+          "right_time_s": 4108.0,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A347",
+          "right_raw_track_id": "A353",
+          "left_time_s": 4135.405,
+          "right_time_s": 4135.405,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A352",
+          "right_raw_track_id": "A357",
+          "left_time_s": 4200.9,
+          "right_time_s": 4200.9,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A360",
+          "right_raw_track_id": "A366",
+          "left_time_s": 4270.138,
+          "right_time_s": 4270.138,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A369",
+          "right_raw_track_id": "A375",
+          "left_time_s": 4289.344,
+          "right_time_s": 4289.344,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A376",
+          "right_raw_track_id": "A379",
+          "left_time_s": 4292.338,
+          "right_time_s": 4292.568,
+          "absolute_time_delta_s": 0.23000000000047294,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A375",
+          "right_raw_track_id": "A380",
+          "left_time_s": 4292.765,
+          "right_time_s": 4292.765,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A383",
+          "right_raw_track_id": "A386",
+          "left_time_s": 4780.526,
+          "right_time_s": 4780.526,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A384",
+          "right_raw_track_id": "A387",
+          "left_time_s": 4815.759,
+          "right_time_s": 4815.759,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A385",
+          "right_raw_track_id": "A388",
+          "left_time_s": 4822.038,
+          "right_time_s": 4822.038,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A387",
+          "right_raw_track_id": "A390",
+          "left_time_s": 4854.421,
+          "right_time_s": 4854.421,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A388",
+          "right_raw_track_id": "A391",
+          "left_time_s": 4912.765,
+          "right_time_s": 4912.765,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A390",
+          "right_raw_track_id": "A393",
+          "left_time_s": 4965.588,
+          "right_time_s": 4965.588,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A394",
+          "right_raw_track_id": "A397",
+          "left_time_s": 5065.093,
+          "right_time_s": 5065.093,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A398",
+          "right_raw_track_id": "A399",
+          "left_time_s": 5116.556,
+          "right_time_s": 5116.556,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A405",
+          "right_raw_track_id": "A405",
+          "left_time_s": 5188.136,
+          "right_time_s": 5188.136,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A406",
+          "right_raw_track_id": "A407",
+          "left_time_s": 5253.583,
+          "right_time_s": 5253.583,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A409",
+          "right_raw_track_id": "A409",
+          "left_time_s": 5310.261,
+          "right_time_s": 5310.261,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A413",
+          "right_raw_track_id": "A412",
+          "left_time_s": 5376.125,
+          "right_time_s": 5376.125,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A417",
+          "right_raw_track_id": "A416",
+          "left_time_s": 5442.0,
+          "right_time_s": 5442.0,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A419",
+          "right_raw_track_id": "A420",
+          "left_time_s": 5507.968,
+          "right_time_s": 5507.968,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A423",
+          "right_raw_track_id": "A424",
+          "left_time_s": 5564.167,
+          "right_time_s": 5564.167,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A431",
+          "right_raw_track_id": "A434",
+          "left_time_s": 5605.984,
+          "right_time_s": 5605.984,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A437",
+          "right_raw_track_id": "A440",
+          "left_time_s": 5660.545,
+          "right_time_s": 5660.056,
+          "absolute_time_delta_s": 0.4890000000004875,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A433",
+          "right_raw_track_id": "A436",
+          "left_time_s": 5671.148,
+          "right_time_s": 5671.148,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A441",
+          "right_raw_track_id": "A445",
+          "left_time_s": 5713.87,
+          "right_time_s": 5713.87,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A448",
+          "right_raw_track_id": "A450",
+          "left_time_s": 5760.24,
+          "right_time_s": 5760.24,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A451",
+          "right_raw_track_id": "A455",
+          "left_time_s": 5792.854,
+          "right_time_s": 5792.854,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A457",
+          "right_raw_track_id": "A461",
+          "left_time_s": 5843.333,
+          "right_time_s": 5843.333,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A458",
+          "right_raw_track_id": "A470",
+          "left_time_s": 5883.03,
+          "right_time_s": 5883.03,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A465",
+          "right_raw_track_id": "A471",
+          "left_time_s": 5929.788,
+          "right_time_s": 5929.788,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A469",
+          "right_raw_track_id": "A477",
+          "left_time_s": 6016.0,
+          "right_time_s": 6016.0,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A481",
+          "right_raw_track_id": "A484",
+          "left_time_s": 6027.791,
+          "right_time_s": 6027.791,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A478",
+          "right_raw_track_id": "A482",
+          "left_time_s": 6074.778,
+          "right_time_s": 6074.778,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A490",
+          "right_raw_track_id": "A493",
+          "left_time_s": 6139.816,
+          "right_time_s": 6139.791,
+          "absolute_time_delta_s": 0.024999999999636202,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A493",
+          "right_raw_track_id": "A500",
+          "left_time_s": 6158.846,
+          "right_time_s": 6158.818,
+          "absolute_time_delta_s": 0.027999999999337888,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A498",
+          "right_raw_track_id": "A506",
+          "left_time_s": 6224.083,
+          "right_time_s": 6224.083,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "negative_y"
+        },
+        {
+          "left_raw_track_id": "A507",
+          "right_raw_track_id": "A515",
+          "left_time_s": 6280.116,
+          "right_time_s": 6280.116,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A504",
+          "right_raw_track_id": "A511",
+          "left_time_s": 6349.5,
+          "right_time_s": 6349.5,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A524",
+          "right_raw_track_id": "A532",
+          "left_time_s": 6465.52,
+          "right_time_s": 6465.52,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A530",
+          "right_raw_track_id": "A542",
+          "left_time_s": 6518.917,
+          "right_time_s": 6518.917,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A535",
+          "right_raw_track_id": "A549",
+          "left_time_s": 6584.346,
+          "right_time_s": 6584.346,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "yellow",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A546",
+          "right_raw_track_id": "A551",
+          "left_time_s": 6656.152,
+          "right_time_s": 6656.152,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        },
+        {
+          "left_raw_track_id": "A552",
+          "right_raw_track_id": "A562",
+          "left_time_s": 6685.917,
+          "right_time_s": 6685.917,
+          "absolute_time_delta_s": 0.0,
+          "colour_claim": "red",
+          "direction": "positive_y"
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "A temporal pair is not proof of same-stone identity or a physical delivery.",
+    "Track IDs are local to each scan; only source times, colour and image direction enter matching.",
+    "An unmatched proposal can reflect timestamp shifts, merged/split paths, people, or a source-visible stone; source review is required.",
+    "The two-second variants were evaluated after Latvia R008 was known, so this is development comparison, not a held-out event score."
+  ]
+}

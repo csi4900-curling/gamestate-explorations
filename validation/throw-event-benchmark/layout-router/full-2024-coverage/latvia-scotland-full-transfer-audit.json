@@ -1,0 +1,115 @@
+{
+  "status": "development_full_source_coverage_and_reproducibility_not_event_f1",
+  "sources": {
+    "latvia": {
+      "source_sha256": "a7431b68ba6fb0df407383973a525a01eadbee2490caa0438a5a11d2df1dba13",
+      "preflight_sha256": "908a4d9b2e776cf2c40186001fb4e907233a416e31b1accb5d113a0628ab1d03",
+      "timeline_sha256": "6dda6388abc2e8cf795fe9f5732fb9019d3e50ebb7ecb2b9d34a3a3a297202ff",
+      "source_interval_s": [
+        0.0,
+        7059.0
+      ],
+      "supported_seconds": 6840.0,
+      "coverage_gaps_s": [
+        [
+          0.0,
+          90.0
+        ],
+        [
+          6930.0,
+          7059.0
+        ]
+      ],
+      "raw_proposals": 119,
+      "auto_accepted_candidates": 72,
+      "review_proposals": 47,
+      "boundary_review_candidates": 0,
+      "accepted_colours": {
+        "red": 36,
+        "yellow": 36
+      },
+      "nominal_completed_end_deliveries": 96,
+      "accepted_minus_nominal": -24,
+      "fixed_interval_raw_replay": {
+        "earlier_eligible": 27,
+        "full_pass_eligible": 27,
+        "matched_same_colour_within_quarter_second": 27,
+        "maximum_matched_time_delta_s": 0.0,
+        "earlier_unmatched": [],
+        "full_pass_unmatched": []
+      }
+    },
+    "scotland": {
+      "source_sha256": "6007ff0d33771aec1aa45f26b5e9271f151e77bcbb6c85a4b613e3aaf3163eae",
+      "preflight_sha256": "33cabe50d006ad7a4ca742ffca13a49a822778e0fe2c727ca8f840929540f764",
+      "timeline_sha256": "947dbc060baa88f358911596507fa1cf0834f23415808c3589649f5c79b4db53",
+      "source_interval_s": [
+        0.0,
+        7347.0
+      ],
+      "supported_seconds": 6570.0,
+      "coverage_gaps_s": [
+        [
+          0.0,
+          90.0
+        ],
+        [
+          2070.0,
+          2160.0
+        ],
+        [
+          2250.0,
+          2340.0
+        ],
+        [
+          3870.0,
+          3960.0
+        ],
+        [
+          4500.0,
+          4590.0
+        ],
+        [
+          6120.0,
+          6210.0
+        ],
+        [
+          7020.0,
+          7110.0
+        ],
+        [
+          7200.0,
+          7347.0
+        ]
+      ],
+      "raw_proposals": 158,
+      "auto_accepted_candidates": 112,
+      "review_proposals": 46,
+      "boundary_review_candidates": 10,
+      "accepted_colours": {
+        "red": 61,
+        "yellow": 51
+      },
+      "nominal_completed_end_deliveries": 112,
+      "accepted_minus_nominal": 0,
+      "fixed_interval_raw_replay": {
+        "earlier_eligible": 27,
+        "full_pass_eligible": 28,
+        "matched_same_colour_within_quarter_second": 27,
+        "maximum_matched_time_delta_s": 0.0,
+        "earlier_unmatched": [],
+        "full_pass_unmatched": [
+          [
+            2759.737,
+            "red"
+          ]
+        ]
+      }
+    }
+  },
+  "limitations": [
+    "Nominal completed-end deliveries are count constraints, not timestamped event labels.",
+    "Routed support is sampled layout support, not continuous throw coverage.",
+    "Raw and accepted event candidates can include false positives and miss physical deliveries."
+  ]
+}

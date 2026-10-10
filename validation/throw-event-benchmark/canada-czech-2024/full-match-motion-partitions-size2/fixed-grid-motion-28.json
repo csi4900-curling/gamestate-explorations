@@ -1,0 +1,4528 @@
+{
+  "status": "postscore_development_rebased_right_reference_not_transfer_validation",
+  "candidate_source_id": "yu_YoFrFd20",
+  "candidate_source_sha256": "e63c9b063b5b11ad5173083dffe974d909c78e5d01312740b87bccc006402013",
+  "high_resolution_source_sha256": "490b8703b2fcfaa2fbd61f8b45ebc45fd3281f0e9453bb4721f56e64056cd620",
+  "source_offset_s": 0.0,
+  "lookahead_s": 12.0,
+  "sample_period_s": 0.5,
+  "max_corner_displacement_px": 160.0,
+  "candidates_sha256": "d1adae995be857218eb1456d7079ced3c19fd8f45c316bb280b0d0192f77db2e",
+  "vision_calibration_sha256": "03e164c0f26c0b2e3ebca7e85577c5874dbb83128aab52569776e60cd293103b",
+  "rectification_sha256": "fe7c6c832c2bc6b5095ce932ffd7905a59f9fdf8c0b4e029816e1108d1238402",
+  "registration_code_sha256": "648deed967ec5d64b68fdaeea90c202f4f25c689d1961711ac379ee06951d8d0",
+  "detector_code_sha256": "602010aba323a63401a8f7edfe7aee8ed2bd135dfdcb6c4d4308a41d29610dd6",
+  "selector_sha256": "8cae87a9b90904647ccb67cceec2473739ccf1d626b68e1305769b28107d63cd",
+  "runner_sha256": "2b2084161cab0c0671197623c5c9ae1b9322d9f0b0662cdcdbcc59b9e59e084c",
+  "rebase_code_sha256": "6d917ae47e3dfaef45ab5def54f4c5b5ea15c3e82f3d79181e3ac17900904ff9",
+  "right_reference_anchor_time_s": 6525.0,
+  "right_reference_anchor_registration": {
+    "status": "registered",
+    "inliers": 39,
+    "matches": 59,
+    "rmse_px": 1.0726771652157872,
+    "max_corner_displacement_px": 90.02350488819164,
+    "reference_to_current": [
+      [
+        1.1141360242253953,
+        0.08979434438406485,
+        -195.68106569114437
+      ],
+      [
+        -0.005874037539324768,
+        1.0912579823239008,
+        -2.3774273820660925
+      ],
+      [
+        4.258787514731362e-06,
+        1.9325571868452738e-05,
+        1.0
+      ]
+    ],
+    "note": "Feature consistency only; not proof of correct camera identity or metric accuracy."
+  },
+  "conditional_camera_prior": "original_calibration_transported_to_current_frame",
+  "detection_background": "original_clean_reference_transported_to_current_frame",
+  "candidate_count": 2,
+  "selection_status_counts": {
+    "no_supported_far_entry_motion_path": 1,
+    "provisional_unique_far_entry_motion_path": 1
+  },
+  "rows": [
+    {
+      "candidate_id": "S64",
+      "crossing_time_s": 2681.75,
+      "colour": "yellow",
+      "view_motion": "negative_y",
+      "receiving_view": "right",
+      "sample_count": 24,
+      "registration_abstentions": 6,
+      "selection": {
+        "status": "no_supported_far_entry_motion_path",
+        "path": [],
+        "sample_count": 24,
+        "same_colour_proposal_count": 88
+      },
+      "samples": [
+        {
+          "source_time_s": 2682.0,
+          "registration_status": "rejected",
+          "registration_reason": "Excessive registration motion/error",
+          "views": {
+            "right": {
+              "proposals": []
+            }
+          }
+        },
+        {
+          "source_time_s": 2682.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1151.43,
+                    535.37
+                  ],
+                  "ground_position_m": [
+                    -1.1761547915859278,
+                    3.2708333379997376
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1399.34,
+                    505.94
+                  ],
+                  "ground_position_m": [
+                    -0.16109710583381812,
+                    2.223133108353217
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1530.48,
+                    456.75
+                  ],
+                  "ground_position_m": [
+                    0.4016692137015332,
+                    0.33302834159610034
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1489.05,
+                    443.34
+                  ],
+                  "ground_position_m": [
+                    0.22551535939268266,
+                    -0.21727677594870812
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1454.52,
+                    538.94
+                  ],
+                  "ground_position_m": [
+                    0.06663776002776048,
+                    3.4480503737765065
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1543.36,
+                    536.9
+                  ],
+                  "ground_position_m": [
+                    0.43064473842257317,
+                    3.38844554218977
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1743.08,
+                    528.16
+                  ],
+                  "ground_position_m": [
+                    1.2556131218234194,
+                    3.1025892002972215
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1299.58,
+                    494.42
+                  ],
+                  "ground_position_m": [
+                    -0.581858474130177,
+                    1.7697785303335085
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1474.78,
+                    491.96
+                  ],
+                  "ground_position_m": [
+                    0.15611004082611168,
+                    1.7045660875458153
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 2683.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1587.76,
+                    545.24
+                  ],
+                  "ground_position_m": [
+                    0.6084213058175992,
+                    3.6884865141448477
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1151.32,
+                    535.37
+                  ],
+                  "ground_position_m": [
+                    -1.1772238815868448,
+                    3.266660797021846
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1399.23,
+                    505.86
+                  ],
+                  "ground_position_m": [
+                    -0.1621390144519123,
+                    2.2151071024147213
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1530.36,
+                    456.45
+                  ],
+                  "ground_position_m": [
+                    0.39989650691077766,
+                    0.3181058506116993
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1489.39,
+                    443.34
+                  ],
+                  "ground_position_m": [
+                    0.22570035823433351,
+                    -0.2188085917917073
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1454.38,
+                    539.08
+                  ],
+                  "ground_position_m": [
+                    0.06562553451658,
+                    3.447070614412495
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1543.54,
+                    537.04
+                  ],
+                  "ground_position_m": [
+                    0.43083150399543857,
+                    3.387007959375469
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1742.85,
+                    528.15
+                  ],
+                  "ground_position_m": [
+                    1.2536642578198123,
+                    3.0946338657327828
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1299.34,
+                    494.46
+                  ],
+                  "ground_position_m": [
+                    -0.583344770796518,
+                    1.7671890865177606
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1475.5,
+                    491.68
+                  ],
+                  "ground_position_m": [
+                    0.15837341813881883,
+                    1.6891314995691988
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 2683.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1597.86,
+                    547.88
+                  ],
+                  "ground_position_m": [
+                    0.6481917730099845,
+                    3.7847974957868593
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1151.43,
+                    535.34
+                  ],
+                  "ground_position_m": [
+                    -1.1738809639709122,
+                    3.26671176047669
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1399.3,
+                    505.85
+                  ],
+                  "ground_position_m": [
+                    -0.16133877196777718,
+                    2.215393412123145
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1530.12,
+                    456.41
+                  ],
+                  "ground_position_m": [
+                    0.397802654270696,
+                    0.31620108581550266
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1489.13,
+                    443.37
+                  ],
+                  "ground_position_m": [
+                    0.22355203371633237,
+                    -0.21789800799369408
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1454.19,
+                    538.96
+                  ],
+                  "ground_position_m": [
+                    0.06544017249831448,
+                    3.443382429292831
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1543.53,
+                    537.07
+                  ],
+                  "ground_position_m": [
+                    0.4307633131146051,
+                    3.3886248635145946
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1742.58,
+                    528.03
+                  ],
+                  "ground_position_m": [
+                    1.2514429510612506,
+                    3.0903500616902324
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1299.25,
+                    494.56
+                  ],
+                  "ground_position_m": [
+                    -0.5825891292678234,
+                    1.77188172373386
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1475.26,
+                    491.62
+                  ],
+                  "ground_position_m": [
+                    0.15715678725087084,
+                    1.6871457537031374
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 2684.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1630.07,
+                    555.55
+                  ],
+                  "ground_position_m": [
+                    0.7745915067258193,
+                    4.061394443219257
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1151.43,
+                    535.3
+                  ],
+                  "ground_position_m": [
+                    -1.1766909986875353,
+                    3.2651205210029017
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1399.46,
+                    505.97
+                  ],
+                  "ground_position_m": [
+                    -0.16204780323064316,
+                    2.218476234095921
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1530.23,
+                    456.37
+                  ],
+                  "ground_position_m": [
+                    0.39879365737965394,
+                    0.31022610542640594
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1489.18,
+                    443.36
+                  ],
+                  "ground_position_m": [
+                    0.2241570162429005,
+                    -0.22305482706924834
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1454.51,
+                    539.0
+                  ],
+                  "ground_position_m": [
+                    0.06517348503966967,
+                    3.4442214345353572
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1543.67,
+                    537.03
+                  ],
+                  "ground_position_m": [
+                    0.4304622393506651,
+                    3.38633481445065
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1742.75,
+                    528.81
+                  ],
+                  "ground_position_m": [
+                    1.2527245300460252,
+                    3.1172392749030986
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1299.2,
+                    494.47
+                  ],
+                  "ground_position_m": [
+                    -0.5845815389483227,
+                    1.7671206712152372
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1475.09,
+                    491.65
+                  ],
+                  "ground_position_m": [
+                    0.15581816768771192,
+                    1.6859432264547565
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 2684.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1638.08,
+                    555.07
+                  ],
+                  "ground_position_m": [
+                    0.8083377953539479,
+                    4.046613582457828
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1151.41,
+                    535.28
+                  ],
+                  "ground_position_m": [
+                    -1.1776029289715613,
+                    3.262404148906453
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1399.53,
+                    505.91
+                  ],
+                  "ground_position_m": [
+                    -0.16060665364492951,
+                    2.2186089338883623
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1530.21,
+                    456.38
+                  ],
+                  "ground_position_m": [
+                    0.39894285641837784,
+                    0.3213389096122801
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1489.34,
+                    443.31
+                  ],
+                  "ground_position_m": [
+                    0.2251618753512805,
+                    -0.21370617744694825
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1454.44,
+                    538.99
+                  ],
+                  "ground_position_m": [
+                    0.06643109703491423,
+                    3.4447420679350866
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1543.51,
+                    537.01
+                  ],
+                  "ground_position_m": [
+                    0.4311605296523098,
+                    3.387449550184019
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1743.08,
+                    526.98
+                  ],
+                  "ground_position_m": [
+                    1.2549161022669755,
+                    3.055360042164356
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1299.1,
+                    494.46
+                  ],
+                  "ground_position_m": [
+                    -0.5843773165940597,
+                    1.767988787451113
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1475.34,
+                    491.55
+                  ],
+                  "ground_position_m": [
+                    0.15786514057334744,
+                    1.6871735216464723
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 2685.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1537.82,
+                    1026.16
+                  ],
+                  "ground_position_m": [
+                    0.30184464179390896,
+                    16.911833619145735
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1667.07,
+                    560.67
+                  ],
+                  "ground_position_m": [
+                    0.922155356168482,
+                    4.2427183027722295
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1151.71,
+                    535.65
+                  ],
+                  "ground_position_m": [
+                    -1.1739133626144835,
+                    3.2761153237695635
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1399.26,
+                    505.87
+                  ],
+                  "ground_position_m": [
+                    -0.1624000576478397,
+                    2.211068464750285
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1529.97,
+                    456.66
+                  ],
+                  "ground_position_m": [
+                    0.3972278353041956,
+                    0.31644172720013547
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1489.09,
+                    443.4
+                  ],
+                  "ground_position_m": [
+                    0.22324932056353855,
+                    -0.2267861777438682
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1748.19,
+                    1060.4
+                  ],
+                  "ground_position_m": [
+                    0.9440751151438027,
+                    17.649330515237335
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1454.25,
+                    538.96
+                  ],
+                  "ground_position_m": [
+                    0.06496486215928488,
+                    3.4391895043908822
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1543.49,
+                    537.7
+                  ],
+                  "ground_position_m": [
+                    0.4302382576502392,
+                    3.406432704425712
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1744.55,
+                    525.98
+                  ],
+                  "ground_position_m": [
+                    1.2629211073056597,
+                    3.008395670493141
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1299.1,
+                    494.59
+                  ],
+                  "ground_position_m": [
+                    -0.5844637895144301,
+                    1.7686081114123815
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1474.3,
+                    492.05
+                  ],
+                  "ground_position_m": [
+                    0.15262949606398607,
+                    1.6968298845715424
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 2685.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1538.03,
+                    968.48
+                  ],
+                  "ground_position_m": [
+                    0.30806493521707246,
+                    15.685647765035954
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1672.82,
+                    565.6
+                  ],
+                  "ground_position_m": [
+                    0.9423289437232857,
+                    4.420760970916246
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1152.03,
+                    535.49
+                  ],
+                  "ground_position_m": [
+                    -1.1748257299913614,
+                    3.275313476611363
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1399.22,
+                    505.85
+                  ],
+                  "ground_position_m": [
+                    -0.16192887920935728,
+                    2.214889000129128
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1530.22,
+                    456.43
+                  ],
+                  "ground_position_m": [
+                    0.4000098570345329,
+                    0.3135830061172934
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1489.42,
+                    443.38
+                  ],
+                  "ground_position_m": [
+                    0.22656127097866002,
+                    -0.22130928995512544
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1455.51,
+                    538.3
+                  ],
+                  "ground_position_m": [
+                    0.07049594674537732,
+                    3.4205719611439407
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1543.25,
+                    537.43
+                  ],
+                  "ground_position_m": [
+                    0.42983320735650893,
+                    3.401635082174982
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1742.77,
+                    527.34
+                  ],
+                  "ground_position_m": [
+                    1.2544263157676945,
+                    3.063216714834102
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1299.21,
+                    494.39
+                  ],
+                  "ground_position_m": [
+                    -0.5838344625130876,
+                    1.7648379477980627
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1474.65,
+                    491.78
+                  ],
+                  "ground_position_m": [
+                    0.1552329728664144,
+                    1.6915367360343787
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 2686.0,
+          "registration_status": "rejected",
+          "registration_reason": "Insufficient spatial support",
+          "views": {
+            "right": {
+              "proposals": []
+            }
+          }
+        },
+        {
+          "source_time_s": 2686.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1536.23,
+                    862.35
+                  ],
+                  "ground_position_m": [
+                    0.3246448493867488,
+                    13.171211105532594
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1719.33,
+                    579.0
+                  ],
+                  "ground_position_m": [
+                    1.118837113096365,
+                    4.8863638580616735
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1151.5,
+                    535.43
+                  ],
+                  "ground_position_m": [
+                    -1.1768629889141093,
+                    3.2694979420764954
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1399.52,
+                    505.94
+                  ],
+                  "ground_position_m": [
+                    -0.16199557670416836,
+                    2.213389395318455
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1530.28,
+                    456.56
+                  ],
+                  "ground_position_m": [
+                    0.3979659160843022,
+                    0.3120779052324552
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1489.79,
+                    443.51
+                  ],
+                  "ground_position_m": [
+                    0.22576287031022987,
+                    -0.22252771895368376
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1455.46,
+                    538.52
+                  ],
+                  "ground_position_m": [
+                    0.0692111040712766,
+                    3.423725710041371
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1543.3,
+                    537.37
+                  ],
+                  "ground_position_m": [
+                    0.428839358372162,
+                    3.394314090861298
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1744.93,
+                    530.41
+                  ],
+                  "ground_position_m": [
+                    1.2595181119038898,
+                    3.169475134706668
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1299.43,
+                    494.34
+                  ],
+                  "ground_position_m": [
+                    -0.5840246924910512,
+                    1.7585777509877367
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1474.95,
+                    491.69
+                  ],
+                  "ground_position_m": [
+                    0.15481062437663956,
+                    1.6825106050027663
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 2687.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1532.71,
+                    817.87
+                  ],
+                  "ground_position_m": [
+                    0.3218345124359194,
+                    12.02102688775232
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1761.14,
+                    593.63
+                  ],
+                  "ground_position_m": [
+                    1.2740502841030612,
+                    5.383959557272698
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1151.49,
+                    535.79
+                  ],
+                  "ground_position_m": [
+                    -1.1752532230634944,
+                    3.2819353572550027
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1399.31,
+                    505.97
+                  ],
+                  "ground_position_m": [
+                    -0.16261669700749978,
+                    2.2111532710662107
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1529.93,
+                    456.78
+                  ],
+                  "ground_position_m": [
+                    0.39641003836932653,
+                    0.31462278351689776
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1489.31,
+                    443.47
+                  ],
+                  "ground_position_m": [
+                    0.2236441801974274,
+                    -0.23027168705359885
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1454.65,
+                    538.58
+                  ],
+                  "ground_position_m": [
+                    0.06616107055472044,
+                    3.421977202937396
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1543.35,
+                    537.74
+                  ],
+                  "ground_position_m": [
+                    0.42910058303255655,
+                    3.4029933989959473
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1742.86,
+                    528.65
+                  ],
+                  "ground_position_m": [
+                    1.2527996097985923,
+                    3.097949377641419
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1299.36,
+                    494.32
+                  ],
+                  "ground_position_m": [
+                    -0.5838667049866073,
+                    1.755686866096504
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1474.62,
+                    491.68
+                  ],
+                  "ground_position_m": [
+                    0.15352274854528597,
+                    1.6775823228709053
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 2687.5,
+          "registration_status": "rejected",
+          "registration_reason": "Excessive registration motion/error",
+          "views": {
+            "right": {
+              "proposals": []
+            }
+          }
+        },
+        {
+          "source_time_s": 2688.0,
+          "registration_status": "rejected",
+          "registration_reason": "Insufficient spatial support",
+          "views": {
+            "right": {
+              "proposals": []
+            }
+          }
+        },
+        {
+          "source_time_s": 2688.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1519.35,
+                    693.37
+                  ],
+                  "ground_position_m": [
+                    0.2952569480611401,
+                    8.534089472333257
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1840.05,
+                    619.53
+                  ],
+                  "ground_position_m": [
+                    1.5591586103006487,
+                    6.262384959314835
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1151.1,
+                    535.45
+                  ],
+                  "ground_position_m": [
+                    -1.1782930329229009,
+                    3.2728479877859864
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1399.39,
+                    505.88
+                  ],
+                  "ground_position_m": [
+                    -0.16234458397179444,
+                    2.214984563721168
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1452.97,
+                    539.84
+                  ],
+                  "ground_position_m": [
+                    0.058676816196453846,
+                    3.47400488281604
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1542.94,
+                    537.77
+                  ],
+                  "ground_position_m": [
+                    0.426973180556588,
+                    3.411865415771248
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1742.19,
+                    528.13
+                  ],
+                  "ground_position_m": [
+                    1.2500327398442492,
+                    3.089427058302609
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1298.35,
+                    494.06
+                  ],
+                  "ground_position_m": [
+                    -0.5882340103627616,
+                    1.7518626498154355
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1474.97,
+                    491.23
+                  ],
+                  "ground_position_m": [
+                    0.15530999693554987,
+                    1.6691673946438237
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 2689.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1514.23,
+                    659.1
+                  ],
+                  "ground_position_m": [
+                    0.2837485598219419,
+                    7.484680217386381
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1833.13,
+                    629.01
+                  ],
+                  "ground_position_m": [
+                    1.52498184710618,
+                    6.569494233411901
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1151.32,
+                    535.31
+                  ],
+                  "ground_position_m": [
+                    -1.177899892289751,
+                    3.2696655054905546
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1399.2,
+                    505.84
+                  ],
+                  "ground_position_m": [
+                    -0.1625985290773119,
+                    2.2139223784629105
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1453.16,
+                    539.71
+                  ],
+                  "ground_position_m": [
+                    0.06021547761784025,
+                    3.4702257274277217
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1543.06,
+                    537.71
+                  ],
+                  "ground_position_m": [
+                    0.4286091506516787,
+                    3.410261802040735
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1742.43,
+                    528.28
+                  ],
+                  "ground_position_m": [
+                    1.2529572604004788,
+                    3.0946479126860025
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1298.48,
+                    494.15
+                  ],
+                  "ground_position_m": [
+                    -0.5875915539425396,
+                    1.7558870629282999
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1474.47,
+                    491.29
+                  ],
+                  "ground_position_m": [
+                    0.1541113570815756,
+                    1.6712044058686295
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 2689.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1808.01,
+                    637.24
+                  ],
+                  "ground_position_m": [
+                    1.419898189904498,
+                    6.8328699192280515
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1507.32,
+                    624.05
+                  ],
+                  "ground_position_m": [
+                    0.26352464025118516,
+                    6.367157467662274
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1151.29,
+                    535.26
+                  ],
+                  "ground_position_m": [
+                    -1.1773134199037683,
+                    3.26835651086587
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1399.93,
+                    505.83
+                  ],
+                  "ground_position_m": [
+                    -0.15991676713841202,
+                    2.214619319800218
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1453.83,
+                    539.55
+                  ],
+                  "ground_position_m": [
+                    0.06242580436924618,
+                    3.4651089561987147
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1543.64,
+                    537.44
+                  ],
+                  "ground_position_m": [
+                    0.43039678582107227,
+                    3.4012082889391975
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1742.05,
+                    528.28
+                  ],
+                  "ground_position_m": [
+                    1.2508449081070274,
+                    3.095268400168575
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1299.14,
+                    494.05
+                  ],
+                  "ground_position_m": [
+                    -0.5848215221656635,
+                    1.7535301582068323
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1475.67,
+                    491.03
+                  ],
+                  "ground_position_m": [
+                    0.15867756496316668,
+                    1.6623784986734742
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 2690.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1763.86,
+                    641.44
+                  ],
+                  "ground_position_m": [
+                    1.2469868945813496,
+                    6.958087201098781
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1500.11,
+                    592.5
+                  ],
+                  "ground_position_m": [
+                    0.24176452632298176,
+                    5.318551600854397
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1151.07,
+                    535.38
+                  ],
+                  "ground_position_m": [
+                    -1.1779352514226007,
+                    3.272880850874723
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1399.1,
+                    505.85
+                  ],
+                  "ground_position_m": [
+                    -0.1637994476649883,
+                    2.2121220096419747
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1452.78,
+                    539.84
+                  ],
+                  "ground_position_m": [
+                    0.05810157946821938,
+                    3.473273298318631
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1543.62,
+                    538.06
+                  ],
+                  "ground_position_m": [
+                    0.4302588704658544,
+                    3.420682655952187
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1741.69,
+                    528.36
+                  ],
+                  "ground_position_m": [
+                    1.250216549228858,
+                    3.093084154115558
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1298.94,
+                    494.24
+                  ],
+                  "ground_position_m": [
+                    -0.5863031733872803,
+                    1.758043912497046
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1475.51,
+                    491.01
+                  ],
+                  "ground_position_m": [
+                    0.15764928069898737,
+                    1.6566793360277041
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 2690.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1707.81,
+                    640.23
+                  ],
+                  "ground_position_m": [
+                    1.0323781544542598,
+                    6.910953547764144
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1489.56,
+                    563.78
+                  ],
+                  "ground_position_m": [
+                    0.20510428013466753,
+                    4.329883204132338
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1151.07,
+                    535.23
+                  ],
+                  "ground_position_m": [
+                    -1.1796596357595897,
+                    3.2645596132931303
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1399.5,
+                    505.71
+                  ],
+                  "ground_position_m": [
+                    -0.1615918294854176,
+                    2.2095531883618538
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1453.41,
+                    539.84
+                  ],
+                  "ground_position_m": [
+                    0.06118088149402193,
+                    3.474693282981511
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1543.7,
+                    538.06
+                  ],
+                  "ground_position_m": [
+                    0.4307712634667087,
+                    3.42337014510539
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1741.8,
+                    528.37
+                  ],
+                  "ground_position_m": [
+                    1.2483951346156612,
+                    3.100101850976153
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1298.94,
+                    494.18
+                  ],
+                  "ground_position_m": [
+                    -0.5859633493606661,
+                    1.7568568889038687
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1475.64,
+                    490.9
+                  ],
+                  "ground_position_m": [
+                    0.15854862147305632,
+                    1.658442183922945
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 2691.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1629.77,
+                    632.35
+                  ],
+                  "ground_position_m": [
+                    0.7375564879512627,
+                    6.647669180893941
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1509.52,
+                    544.04
+                  ],
+                  "ground_position_m": [
+                    0.28985877892813433,
+                    3.6316765176927106
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1151.35,
+                    535.28
+                  ],
+                  "ground_position_m": [
+                    -1.1788206951074205,
+                    3.2651003723208802
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1399.15,
+                    505.69
+                  ],
+                  "ground_position_m": [
+                    -0.16350392602126962,
+                    2.2068904834265655
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1543.33,
+                    537.94
+                  ],
+                  "ground_position_m": [
+                    0.42956390183101684,
+                    3.4169257461324753
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1426.62,
+                    529.23
+                  ],
+                  "ground_position_m": [
+                    -0.048498181970329575,
+                    3.0839386384471137
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1739.66,
+                    527.82
+                  ],
+                  "ground_position_m": [
+                    1.2411846623414997,
+                    3.0771301040461414
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1298.86,
+                    494.07
+                  ],
+                  "ground_position_m": [
+                    -0.5870645998528383,
+                    1.7511662791235587
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1475.68,
+                    490.95
+                  ],
+                  "ground_position_m": [
+                    0.15832907257000944,
+                    1.6581394587019593
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 2691.5,
+          "registration_status": "rejected",
+          "registration_reason": "Insufficient spatial support",
+          "views": {
+            "right": {
+              "proposals": []
+            }
+          }
+        },
+        {
+          "source_time_s": 2692.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1639.94,
+                    613.56
+                  ],
+                  "ground_position_m": [
+                    0.7845398727318024,
+                    6.04200459557771
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1569.44,
+                    547.75
+                  ],
+                  "ground_position_m": [
+                    0.5320482656907436,
+                    3.775959153106616
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1151.74,
+                    535.43
+                  ],
+                  "ground_position_m": [
+                    -1.1754891678524793,
+                    3.2744243735670064
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1403.66,
+                    490.96
+                  ],
+                  "ground_position_m": [
+                    -0.14595496648780437,
+                    1.6506777347100046
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1529.76,
+                    456.24
+                  ],
+                  "ground_position_m": [
+                    0.39634374827244495,
+                    0.3046957417869592
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1489.77,
+                    443.27
+                  ],
+                  "ground_position_m": [
+                    0.22606408264953423,
+                    -0.22648759033425753
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1579.03,
+                    528.81
+                  ],
+                  "ground_position_m": [
+                    0.5786147792833811,
+                    3.0930361552978805
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1742.81,
+                    528.3
+                  ],
+                  "ground_position_m": [
+                    1.2542849039229778,
+                    3.0972680005121633
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1283.84,
+                    500.64
+                  ],
+                  "ground_position_m": [
+                    -0.647498235878624,
+                    2.003228638291871
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1488.08,
+                    490.93
+                  ],
+                  "ground_position_m": [
+                    0.2102523360120638,
+                    1.6612622381115352
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 2692.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1586.27,
+                    547.16
+                  ],
+                  "ground_position_m": [
+                    0.603760805252871,
+                    3.756944114664048
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1152.48,
+                    535.48
+                  ],
+                  "ground_position_m": [
+                    -1.1721513316931693,
+                    3.2835553894556955
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1371.18,
+                    483.58
+                  ],
+                  "ground_position_m": [
+                    -0.28267504099141105,
+                    1.3596912370438994
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1530.03,
+                    456.24
+                  ],
+                  "ground_position_m": [
+                    0.4021498616728721,
+                    0.2924985898060873
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1489.67,
+                    443.3
+                  ],
+                  "ground_position_m": [
+                    0.22973774857234328,
+                    -0.23895366212294805
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1742.76,
+                    528.24
+                  ],
+                  "ground_position_m": [
+                    1.2609419441763858,
+                    3.089763424605436
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1197.4,
+                    504.32
+                  ],
+                  "ground_position_m": [
+                    -1.0071209516198922,
+                    2.1355300476229133
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1297.83,
+                    494.38
+                  ],
+                  "ground_position_m": [
+                    -0.5904641306865662,
+                    1.7685528686200493
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1527.27,
+                    488.37
+                  ],
+                  "ground_position_m": [
+                    0.3800429638996253,
+                    1.562373035037111
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 2693.0,
+          "registration_status": "rejected",
+          "registration_reason": "Excessive registration motion/error",
+          "views": {
+            "right": {
+              "proposals": []
+            }
+          }
+        },
+        {
+          "source_time_s": 2693.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1605.29,
+                    548.22
+                  ],
+                  "ground_position_m": [
+                    0.6784876108818384,
+                    3.793338102113488
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1151.34,
+                    535.59
+                  ],
+                  "ground_position_m": [
+                    -1.1771378603033422,
+                    3.2774166753253904
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1314.85,
+                    472.3
+                  ],
+                  "ground_position_m": [
+                    -0.5271783534176909,
+                    0.9063795047692981
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1530.04,
+                    456.23
+                  ],
+                  "ground_position_m": [
+                    0.3982966023434,
+                    0.2906578054226965
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1489.68,
+                    443.17
+                  ],
+                  "ground_position_m": [
+                    0.22602917500945485,
+                    -0.24515731641179653
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1742.64,
+                    528.24
+                  ],
+                  "ground_position_m": [
+                    1.2568549010399062,
+                    3.087927034862928
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1584.74,
+                    528.11
+                  ],
+                  "ground_position_m": [
+                    0.6030927550477172,
+                    3.0622222479847028
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1069.85,
+                    494.16
+                  ],
+                  "ground_position_m": [
+                    -1.5492392762611251,
+                    1.725204473071233
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1297.09,
+                    491.79
+                  ],
+                  "ground_position_m": [
+                    -0.5960261439327855,
+                    1.662351901801016
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1564.71,
+                    485.49
+                  ],
+                  "ground_position_m": [
+                    0.5367189218519341,
+                    1.4519729956053704
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "candidate_id": "S66",
+      "crossing_time_s": 2784.762,
+      "colour": "red",
+      "view_motion": "negative_y",
+      "receiving_view": "right",
+      "sample_count": 24,
+      "registration_abstentions": 4,
+      "selection": {
+        "status": "provisional_unique_far_entry_motion_path",
+        "path": [
+          {
+            "source_time_s": 2790.5,
+            "pixel_center": [
+              1210.71,
+              1004.12
+            ],
+            "ground_position_m": [
+              -0.727846451618741,
+              16.39470096403017
+            ],
+            "same_colour_candidate_count": 5
+          },
+          {
+            "source_time_s": 2791.0,
+            "pixel_center": [
+              1215.47,
+              970.22
+            ],
+            "ground_position_m": [
+              -0.7383743398230169,
+              15.675240685092636
+            ],
+            "same_colour_candidate_count": 5
+          },
+          {
+            "source_time_s": 2791.5,
+            "pixel_center": [
+              1224.9,
+              942.14
+            ],
+            "ground_position_m": [
+              -0.7431470163932467,
+              15.132010310837664
+            ],
+            "same_colour_candidate_count": 5
+          },
+          {
+            "source_time_s": 2792.0,
+            "pixel_center": [
+              1234.47,
+              914.44
+            ],
+            "ground_position_m": [
+              -0.6766651282251328,
+              14.30295203065707
+            ],
+            "same_colour_candidate_count": 5
+          },
+          {
+            "source_time_s": 2792.5,
+            "pixel_center": [
+              1243.42,
+              887.84
+            ],
+            "ground_position_m": [
+              -0.6691338419190759,
+              13.75274809306199
+            ],
+            "same_colour_candidate_count": 5
+          },
+          {
+            "source_time_s": 2793.0,
+            "pixel_center": [
+              1253.29,
+              863.73
+            ],
+            "ground_position_m": [
+              -0.650202780071916,
+              13.237723557536096
+            ],
+            "same_colour_candidate_count": 5
+          },
+          {
+            "source_time_s": 2793.5,
+            "pixel_center": [
+              1262.15,
+              841.78
+            ],
+            "ground_position_m": [
+              -0.6122500207563488,
+              12.611715533551056
+            ],
+            "same_colour_candidate_count": 5
+          },
+          {
+            "source_time_s": 2794.0,
+            "pixel_center": [
+              1269.99,
+              819.96
+            ],
+            "ground_position_m": [
+              -0.5912307959837652,
+              12.048661620109971
+            ],
+            "same_colour_candidate_count": 5
+          },
+          {
+            "source_time_s": 2794.5,
+            "pixel_center": [
+              1279.24,
+              799.54
+            ],
+            "ground_position_m": [
+              -0.569669935410052,
+              11.524332114715275
+            ],
+            "same_colour_candidate_count": 5
+          },
+          {
+            "source_time_s": 2795.0,
+            "pixel_center": [
+              1286.54,
+              779.73
+            ],
+            "ground_position_m": [
+              -0.5489799623150456,
+              10.970550807994703
+            ],
+            "same_colour_candidate_count": 5
+          },
+          {
+            "source_time_s": 2795.5,
+            "pixel_center": [
+              1296.62,
+              762.26
+            ],
+            "ground_position_m": [
+              -0.5162630559396855,
+              10.483836231825743
+            ],
+            "same_colour_candidate_count": 5
+          },
+          {
+            "source_time_s": 2796.0,
+            "pixel_center": [
+              1309.94,
+              747.28
+            ],
+            "ground_position_m": [
+              -0.4744830527640147,
+              10.080235325335927
+            ],
+            "same_colour_candidate_count": 5
+          },
+          {
+            "source_time_s": 2796.5,
+            "pixel_center": [
+              1321.74,
+              733.1
+            ],
+            "ground_position_m": [
+              -0.4349268094528987,
+              9.678022964411065
+            ],
+            "same_colour_candidate_count": 5
+          }
+        ],
+        "sample_count": 13,
+        "first_observation_s": 2790.5,
+        "last_observation_s": 2796.5,
+        "endpoint_displacement_m": 6.723062194218784,
+        "frames_with_multiple_same_colour_candidates": 13,
+        "unobserved_gap_count": 0,
+        "unobserved_sample_count": 0,
+        "largest_observation_gap_s": 0.5,
+        "release_time_observed": false,
+        "physical_identity_verified": false,
+        "metric_accuracy_verified": false,
+        "simulation_ready": false
+      },
+      "samples": [
+        {
+          "source_time_s": 2785.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1606.48,
+                    546.27
+                  ],
+                  "ground_position_m": [
+                    0.6842842950232794,
+                    3.731933172552704
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1151.72,
+                    535.46
+                  ],
+                  "ground_position_m": [
+                    -1.17716605011484,
+                    3.2729103707250484
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1529.86,
+                    456.47
+                  ],
+                  "ground_position_m": [
+                    0.397023260091124,
+                    0.31520329253773144
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1489.47,
+                    443.0
+                  ],
+                  "ground_position_m": [
+                    0.22460756359944395,
+                    -0.2401235865303284
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1229.45,
+                    440.41
+                  ],
+                  "ground_position_m": [
+                    -0.9140244380483356,
+                    -0.39475771276014066
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1743.23,
+                    528.33
+                  ],
+                  "ground_position_m": [
+                    1.2549659570529226,
+                    3.1060250554986815
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1583.11,
+                    527.77
+                  ],
+                  "ground_position_m": [
+                    0.5966966899225727,
+                    3.0604000593733782
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1300.06,
+                    494.1
+                  ],
+                  "ground_position_m": [
+                    -0.5829403123316603,
+                    1.7541861486661512
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1565.1,
+                    485.21
+                  ],
+                  "ground_position_m": [
+                    0.5382453946200885,
+                    1.4564769608838932
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 2785.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1606.4,
+                    546.28
+                  ],
+                  "ground_position_m": [
+                    0.6840019916307342,
+                    3.7245906190864955
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1151.57,
+                    535.38
+                  ],
+                  "ground_position_m": [
+                    -1.1771787001948897,
+                    3.269482902100613
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1530.1,
+                    456.38
+                  ],
+                  "ground_position_m": [
+                    0.3983440625075252,
+                    0.3118723379156482
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1489.41,
+                    443.02
+                  ],
+                  "ground_position_m": [
+                    0.22540703236802148,
+                    -0.2350379588701417
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1229.91,
+                    440.45
+                  ],
+                  "ground_position_m": [
+                    -0.9059352457036493,
+                    -0.3840972556460099
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1742.99,
+                    528.24
+                  ],
+                  "ground_position_m": [
+                    1.2532128258429758,
+                    3.0920364256374535
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1583.12,
+                    527.68
+                  ],
+                  "ground_position_m": [
+                    0.596731222518035,
+                    3.049130993004725
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1300.0,
+                    494.08
+                  ],
+                  "ground_position_m": [
+                    -0.5808852261290325,
+                    1.7513760405117265
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1565.3,
+                    485.28
+                  ],
+                  "ground_position_m": [
+                    0.5388930158961611,
+                    1.4538538169556185
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 2786.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1606.31,
+                    546.26
+                  ],
+                  "ground_position_m": [
+                    0.6836218829341115,
+                    3.7228447540667196
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1151.58,
+                    535.51
+                  ],
+                  "ground_position_m": [
+                    -1.1769037278654815,
+                    3.2743826906901563
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1530.02,
+                    456.4
+                  ],
+                  "ground_position_m": [
+                    0.39873187405913246,
+                    0.3136429035162575
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1489.41,
+                    443.02
+                  ],
+                  "ground_position_m": [
+                    0.22624961937769522,
+                    -0.23336075189853153
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1229.9,
+                    440.55
+                  ],
+                  "ground_position_m": [
+                    -0.9047864789969714,
+                    -0.37608664957459204
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1742.81,
+                    528.37
+                  ],
+                  "ground_position_m": [
+                    1.2529882768975302,
+                    3.0956019996941215
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1583.61,
+                    527.89
+                  ],
+                  "ground_position_m": [
+                    0.5987606251840611,
+                    3.056147840639007
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1299.46,
+                    494.23
+                  ],
+                  "ground_position_m": [
+                    -0.5827917900547746,
+                    1.7581946796756884
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1565.42,
+                    485.26
+                  ],
+                  "ground_position_m": [
+                    0.5398980288976872,
+                    1.4531874745893925
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 2786.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1606.13,
+                    546.26
+                  ],
+                  "ground_position_m": [
+                    0.6828084551891919,
+                    3.7237529308594293
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1151.81,
+                    535.39
+                  ],
+                  "ground_position_m": [
+                    -1.1746188528940205,
+                    3.273728733908108
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1229.99,
+                    440.6
+                  ],
+                  "ground_position_m": [
+                    -0.9037102048235969,
+                    -0.3707039759356285
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1742.91,
+                    528.42
+                  ],
+                  "ground_position_m": [
+                    1.254666020954628,
+                    3.096833245130193
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1583.37,
+                    527.96
+                  ],
+                  "ground_position_m": [
+                    0.5977953427654594,
+                    3.059245287297993
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1299.56,
+                    494.12
+                  ],
+                  "ground_position_m": [
+                    -0.5821653138928549,
+                    1.7569924336388592
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1565.53,
+                    485.34
+                  ],
+                  "ground_position_m": [
+                    0.5408491493287189,
+                    1.4550708172661067
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 2787.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1606.33,
+                    546.28
+                  ],
+                  "ground_position_m": [
+                    0.6836897736217579,
+                    3.7245761939424664
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1151.59,
+                    535.38
+                  ],
+                  "ground_position_m": [
+                    -1.1757830305589396,
+                    3.2698066358712348
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1230.28,
+                    440.52
+                  ],
+                  "ground_position_m": [
+                    -0.9026324551984436,
+                    -0.3764396901387789
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1743.03,
+                    528.47
+                  ],
+                  "ground_position_m": [
+                    1.2550004744755678,
+                    3.100083366153453
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1583.14,
+                    527.71
+                  ],
+                  "ground_position_m": [
+                    0.5970006769898752,
+                    3.050153009784476
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1299.41,
+                    493.92
+                  ],
+                  "ground_position_m": [
+                    -0.5829117272844401,
+                    1.7471508295259872
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1565.38,
+                    485.42
+                  ],
+                  "ground_position_m": [
+                    0.5401440764324252,
+                    1.458622049259888
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 2787.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1606.42,
+                    546.32
+                  ],
+                  "ground_position_m": [
+                    0.6835893947323426,
+                    3.726145274980646
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1152.45,
+                    535.58
+                  ],
+                  "ground_position_m": [
+                    -1.1730562334562595,
+                    3.2780749927263195
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1230.39,
+                    440.42
+                  ],
+                  "ground_position_m": [
+                    -0.9032454474986699,
+                    -0.37912120926639703
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1743.05,
+                    528.39
+                  ],
+                  "ground_position_m": [
+                    1.254577198886587,
+                    3.097281783586256
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1582.95,
+                    527.71
+                  ],
+                  "ground_position_m": [
+                    0.5957008183425087,
+                    3.050470778842603
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1299.28,
+                    493.93
+                  ],
+                  "ground_position_m": [
+                    -0.5842561211145743,
+                    1.7484365550428749
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1565.74,
+                    485.55
+                  ],
+                  "ground_position_m": [
+                    0.5409398558053727,
+                    1.4645617895118233
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 2788.0,
+          "registration_status": "rejected",
+          "registration_reason": "Insufficient spatial support",
+          "views": {
+            "right": {
+              "proposals": []
+            }
+          }
+        },
+        {
+          "source_time_s": 2788.5,
+          "registration_status": "rejected",
+          "registration_reason": "Insufficient spatial support",
+          "views": {
+            "right": {
+              "proposals": []
+            }
+          }
+        },
+        {
+          "source_time_s": 2789.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1606.26,
+                    546.42
+                  ],
+                  "ground_position_m": [
+                    0.683538769396435,
+                    3.7286074466125148
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1151.33,
+                    535.52
+                  ],
+                  "ground_position_m": [
+                    -1.1765704309588527,
+                    3.274834997114722
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1530.41,
+                    456.61
+                  ],
+                  "ground_position_m": [
+                    0.4013929502408293,
+                    0.31944442059413103
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1489.51,
+                    443.08
+                  ],
+                  "ground_position_m": [
+                    0.22792270968544703,
+                    -0.23483107226002817
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1229.9,
+                    440.26
+                  ],
+                  "ground_position_m": [
+                    -0.9038439507872674,
+                    -0.39525469623087683
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1742.62,
+                    528.29
+                  ],
+                  "ground_position_m": [
+                    1.251186253230624,
+                    3.092640526913326
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1583.62,
+                    527.56
+                  ],
+                  "ground_position_m": [
+                    0.5993880258414042,
+                    3.04401076012327
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1298.81,
+                    493.71
+                  ],
+                  "ground_position_m": [
+                    -0.5842237846483834,
+                    1.736111812185633
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1566.49,
+                    485.25
+                  ],
+                  "ground_position_m": [
+                    0.5451614985554389,
+                    1.4518395553955188
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 2789.5,
+          "registration_status": "rejected",
+          "registration_reason": "Insufficient spatial support",
+          "views": {
+            "right": {
+              "proposals": []
+            }
+          }
+        },
+        {
+          "source_time_s": 2790.0,
+          "registration_status": "rejected",
+          "registration_reason": "Insufficient spatial support",
+          "views": {
+            "right": {
+              "proposals": []
+            }
+          }
+        },
+        {
+          "source_time_s": 2790.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1606.34,
+                    546.22
+                  ],
+                  "ground_position_m": [
+                    0.6833678274388092,
+                    3.724557087136564
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1152.4,
+                    535.64
+                  ],
+                  "ground_position_m": [
+                    -1.1728414247188008,
+                    3.2840412847919094
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1229.79,
+                    440.58
+                  ],
+                  "ground_position_m": [
+                    -0.9079821617516419,
+                    -0.3792369032366034
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1210.71,
+                    1004.12
+                  ],
+                  "ground_position_m": [
+                    -0.727846451618741,
+                    16.39470096403017
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1743.09,
+                    528.68
+                  ],
+                  "ground_position_m": [
+                    1.2539647540556416,
+                    3.1082681710424342
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1582.65,
+                    528.03
+                  ],
+                  "ground_position_m": [
+                    0.5942325154735861,
+                    3.0632829959206718
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1298.94,
+                    494.08
+                  ],
+                  "ground_position_m": [
+                    -0.5862170912524917,
+                    1.7538829117455264
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1565.93,
+                    485.22
+                  ],
+                  "ground_position_m": [
+                    0.5412421264317749,
+                    1.4497877870138884
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 2791.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1606.38,
+                    546.26
+                  ],
+                  "ground_position_m": [
+                    0.6825664658428774,
+                    3.723718711806643
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1152.24,
+                    535.65
+                  ],
+                  "ground_position_m": [
+                    -1.1751177974626486,
+                    3.2881389909149203
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1229.79,
+                    440.59
+                  ],
+                  "ground_position_m": [
+                    -0.9060468941352461,
+                    -0.36804509752894426
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1215.47,
+                    970.22
+                  ],
+                  "ground_position_m": [
+                    -0.7383743398230169,
+                    15.675240685092636
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1743.16,
+                    528.64
+                  ],
+                  "ground_position_m": [
+                    1.2551774205329342,
+                    3.1025522721080327
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1582.62,
+                    527.98
+                  ],
+                  "ground_position_m": [
+                    0.593452668307951,
+                    3.059453245396607
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1298.83,
+                    494.02
+                  ],
+                  "ground_position_m": [
+                    -0.587172980280603,
+                    1.7555605919809958
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1565.94,
+                    485.23
+                  ],
+                  "ground_position_m": [
+                    0.5416329477170827,
+                    1.4493176693251582
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 2791.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1606.52,
+                    546.27
+                  ],
+                  "ground_position_m": [
+                    0.6880655859231195,
+                    3.7353513860384515
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1151.84,
+                    535.61
+                  ],
+                  "ground_position_m": [
+                    -1.1769342628422885,
+                    3.283850776334128
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1230.01,
+                    440.63
+                  ],
+                  "ground_position_m": [
+                    -0.8931311229869352,
+                    -0.3405123552644645
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1554.21,
+                    430.28
+                  ],
+                  "ground_position_m": [
+                    0.524278665807634,
+                    -0.6925398944381201
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1224.9,
+                    942.14
+                  ],
+                  "ground_position_m": [
+                    -0.7431470163932467,
+                    15.132010310837664
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1742.72,
+                    528.73
+                  ],
+                  "ground_position_m": [
+                    1.255888514844757,
+                    3.1280067327060217
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1582.34,
+                    527.89
+                  ],
+                  "ground_position_m": [
+                    0.5982856995352689,
+                    3.0721542631933274
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1299.05,
+                    493.96
+                  ],
+                  "ground_position_m": [
+                    -0.5785047089987964,
+                    1.76545610905512
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1565.38,
+                    485.38
+                  ],
+                  "ground_position_m": [
+                    0.5472678043947615,
+                    1.487030549447053
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 2792.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1606.26,
+                    546.27
+                  ],
+                  "ground_position_m": [
+                    0.6835545641337878,
+                    3.728933827148971
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1151.86,
+                    535.62
+                  ],
+                  "ground_position_m": [
+                    -1.176239347004109,
+                    3.2822865772501126
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1229.99,
+                    440.6
+                  ],
+                  "ground_position_m": [
+                    -0.9101969452218203,
+                    -0.37767364015042865
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1234.47,
+                    914.44
+                  ],
+                  "ground_position_m": [
+                    -0.6766651282251328,
+                    14.30295203065707
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1742.73,
+                    528.72
+                  ],
+                  "ground_position_m": [
+                    1.2539273194605816,
+                    3.114606233305344
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1582.66,
+                    527.94
+                  ],
+                  "ground_position_m": [
+                    0.5947974397592684,
+                    3.0634740171786095
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1299.04,
+                    494.11
+                  ],
+                  "ground_position_m": [
+                    -0.587214194297218,
+                    1.7572023703707933
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1565.66,
+                    485.44
+                  ],
+                  "ground_position_m": [
+                    0.5405154884779677,
+                    1.4627162808822
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 2792.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1606.21,
+                    546.22
+                  ],
+                  "ground_position_m": [
+                    0.6828020215720669,
+                    3.720717685698669
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1151.43,
+                    535.61
+                  ],
+                  "ground_position_m": [
+                    -1.1778299240011776,
+                    3.2785581142574203
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1230.36,
+                    440.44
+                  ],
+                  "ground_position_m": [
+                    -0.9036550999898548,
+                    -0.3842692629703436
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1243.42,
+                    887.84
+                  ],
+                  "ground_position_m": [
+                    -0.6691338419190759,
+                    13.75274809306199
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1742.84,
+                    528.68
+                  ],
+                  "ground_position_m": [
+                    1.2544109467505073,
+                    3.104182442325752
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1582.63,
+                    527.68
+                  ],
+                  "ground_position_m": [
+                    0.594453122759291,
+                    3.046381546535086
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1298.87,
+                    494.23
+                  ],
+                  "ground_position_m": [
+                    -0.5863778831415316,
+                    1.756531423953348
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1565.27,
+                    485.29
+                  ],
+                  "ground_position_m": [
+                    0.5393612704232164,
+                    1.4485375899866642
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 2793.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1606.37,
+                    546.23
+                  ],
+                  "ground_position_m": [
+                    0.6845451545940272,
+                    3.716866198798111
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1151.52,
+                    535.66
+                  ],
+                  "ground_position_m": [
+                    -1.1740978790561671,
+                    3.275142389892948
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1230.25,
+                    440.43
+                  ],
+                  "ground_position_m": [
+                    -0.8962858373932424,
+                    -0.38633762199566074
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1253.29,
+                    863.73
+                  ],
+                  "ground_position_m": [
+                    -0.650202780071916,
+                    13.237723557536096
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1742.73,
+                    528.59
+                  ],
+                  "ground_position_m": [
+                    1.2533675072635486,
+                    3.096625167390849
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1582.74,
+                    527.67
+                  ],
+                  "ground_position_m": [
+                    0.5963334159991657,
+                    3.041421572845194
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1298.87,
+                    494.23
+                  ],
+                  "ground_position_m": [
+                    -0.5816087443157704,
+                    1.7510843144878903
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1565.53,
+                    485.23
+                  ],
+                  "ground_position_m": [
+                    0.5424105547970155,
+                    1.4431912153377626
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 2793.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1606.28,
+                    546.27
+                  ],
+                  "ground_position_m": [
+                    0.6843277041140367,
+                    3.726836696177498
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1151.66,
+                    535.61
+                  ],
+                  "ground_position_m": [
+                    -1.1771134265958905,
+                    3.2811617803848874
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1230.31,
+                    440.45
+                  ],
+                  "ground_position_m": [
+                    -0.9057460713117684,
+                    -0.3956537082605001
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1262.15,
+                    841.78
+                  ],
+                  "ground_position_m": [
+                    -0.6122500207563488,
+                    12.611715533551056
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1743.03,
+                    528.72
+                  ],
+                  "ground_position_m": [
+                    1.2546710269019363,
+                    3.1102346571190296
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1583.15,
+                    527.62
+                  ],
+                  "ground_position_m": [
+                    0.5978696400518512,
+                    3.0480627144161074
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1298.87,
+                    494.0
+                  ],
+                  "ground_position_m": [
+                    -0.5860495195353137,
+                    1.7462820937852668
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1565.55,
+                    485.45
+                  ],
+                  "ground_position_m": [
+                    0.5413519605299134,
+                    1.4562523650122718
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 2794.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1606.21,
+                    546.21
+                  ],
+                  "ground_position_m": [
+                    0.6842499014248626,
+                    3.7231422996145893
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1151.63,
+                    535.65
+                  ],
+                  "ground_position_m": [
+                    -1.1770022598639318,
+                    3.281908139125572
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1230.03,
+                    440.36
+                  ],
+                  "ground_position_m": [
+                    -0.9068128243659065,
+                    -0.3954262503861275
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1269.99,
+                    819.96
+                  ],
+                  "ground_position_m": [
+                    -0.5912307959837652,
+                    12.048661620109971
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1743.1,
+                    528.74
+                  ],
+                  "ground_position_m": [
+                    1.254977737954779,
+                    3.109884158327087
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1583.68,
+                    527.62
+                  ],
+                  "ground_position_m": [
+                    0.6001395625856337,
+                    3.047254811258824
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1298.98,
+                    493.92
+                  ],
+                  "ground_position_m": [
+                    -0.5854687408610139,
+                    1.7440686332051516
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1565.62,
+                    485.28
+                  ],
+                  "ground_position_m": [
+                    0.5415948022131222,
+                    1.4506565773666362
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 2794.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1606.08,
+                    546.18
+                  ],
+                  "ground_position_m": [
+                    0.6832790691979574,
+                    3.7206643393942618
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1151.44,
+                    535.62
+                  ],
+                  "ground_position_m": [
+                    -1.176541584557555,
+                    3.2779262281431363
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1230.1,
+                    440.34
+                  ],
+                  "ground_position_m": [
+                    -0.9026392009519449,
+                    -0.3856349722262025
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1279.24,
+                    799.54
+                  ],
+                  "ground_position_m": [
+                    -0.569669935410052,
+                    11.524332114715275
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1743.01,
+                    528.5
+                  ],
+                  "ground_position_m": [
+                    1.2542046527502295,
+                    3.1011963298410836
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1583.61,
+                    527.54
+                  ],
+                  "ground_position_m": [
+                    0.5995387128416251,
+                    3.043810453790797
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1298.83,
+                    493.97
+                  ],
+                  "ground_position_m": [
+                    -0.5845258755798715,
+                    1.7476522718998442
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1565.61,
+                    485.04
+                  ],
+                  "ground_position_m": [
+                    0.5415868526696926,
+                    1.4447979942197706
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 2795.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1606.17,
+                    546.18
+                  ],
+                  "ground_position_m": [
+                    0.6822886785230755,
+                    3.720000329231841
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1151.53,
+                    535.58
+                  ],
+                  "ground_position_m": [
+                    -1.1758304021409074,
+                    3.278238894074121
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1230.11,
+                    440.37
+                  ],
+                  "ground_position_m": [
+                    -0.904082579454902,
+                    -0.3819073596774658
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1286.54,
+                    779.73
+                  ],
+                  "ground_position_m": [
+                    -0.5489799623150456,
+                    10.970550807994703
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1743.16,
+                    528.45
+                  ],
+                  "ground_position_m": [
+                    1.2552140854089022,
+                    3.0969087555291948
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1583.54,
+                    527.57
+                  ],
+                  "ground_position_m": [
+                    0.5977958114145955,
+                    3.043566493814695
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1298.87,
+                    493.97
+                  ],
+                  "ground_position_m": [
+                    -0.5859603375968295,
+                    1.7489803117286287
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1565.46,
+                    484.96
+                  ],
+                  "ground_position_m": [
+                    0.5395634257945718,
+                    1.4380255234355042
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 2795.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1606.08,
+                    546.18
+                  ],
+                  "ground_position_m": [
+                    0.6812163270636745,
+                    3.721803817912997
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1151.53,
+                    535.58
+                  ],
+                  "ground_position_m": [
+                    -1.175838948415153,
+                    3.2796258722118994
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1230.1,
+                    440.33
+                  ],
+                  "ground_position_m": [
+                    -0.9056995364483817,
+                    -0.38244489515788366
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1296.62,
+                    762.26
+                  ],
+                  "ground_position_m": [
+                    -0.5162630559396855,
+                    10.483836231825743
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1743.1,
+                    528.63
+                  ],
+                  "ground_position_m": [
+                    1.2546564309766244,
+                    3.1050191280577777
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1583.11,
+                    527.74
+                  ],
+                  "ground_position_m": [
+                    0.5951212215125031,
+                    3.051227860863425
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1298.87,
+                    493.97
+                  ],
+                  "ground_position_m": [
+                    -0.5870698334038018,
+                    1.7504779787924303
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1565.58,
+                    484.93
+                  ],
+                  "ground_position_m": [
+                    0.5390254424385647,
+                    1.4372224863451912
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 2796.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1606.08,
+                    546.18
+                  ],
+                  "ground_position_m": [
+                    0.6828589162866496,
+                    3.719979508620175
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1151.53,
+                    535.58
+                  ],
+                  "ground_position_m": [
+                    -1.1760952419053934,
+                    3.277270676181138
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1230.1,
+                    440.33
+                  ],
+                  "ground_position_m": [
+                    -0.9023222060627815,
+                    -0.3834799616384086
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1309.94,
+                    747.28
+                  ],
+                  "ground_position_m": [
+                    -0.4744830527640147,
+                    10.080235325335927
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1743.07,
+                    528.47
+                  ],
+                  "ground_position_m": [
+                    1.2550404644564925,
+                    3.0987205600343803
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1583.17,
+                    527.67
+                  ],
+                  "ground_position_m": [
+                    0.597348257709149,
+                    3.047735080562898
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1298.84,
+                    494.13
+                  ],
+                  "ground_position_m": [
+                    -0.5846910668372114,
+                    1.7547891387925276
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1565.45,
+                    484.95
+                  ],
+                  "ground_position_m": [
+                    0.5409810556850104,
+                    1.440087969675751
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 2796.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1606.09,
+                    546.31
+                  ],
+                  "ground_position_m": [
+                    0.6839192755031626,
+                    3.722334880367858
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1151.84,
+                    535.86
+                  ],
+                  "ground_position_m": [
+                    -1.1753391333666383,
+                    3.2804410645549873
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1530.66,
+                    456.71
+                  ],
+                  "ground_position_m": [
+                    0.4043389079411332,
+                    0.3157801535370631
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1489.4,
+                    443.43
+                  ],
+                  "ground_position_m": [
+                    0.22913231741846168,
+                    -0.22875890988205227
+                  ]
+                },
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1229.7,
+                    440.49
+                  ],
+                  "ground_position_m": [
+                    -0.9039482716487462,
+                    -0.39236345182776244
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1321.74,
+                    733.1
+                  ],
+                  "ground_position_m": [
+                    -0.4349268094528987,
+                    9.678022964411065
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1742.85,
+                    528.33
+                  ],
+                  "ground_position_m": [
+                    1.2555273417175203,
+                    3.091799468440098
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1583.2,
+                    527.46
+                  ],
+                  "ground_position_m": [
+                    0.5988019774442168,
+                    3.03667437762026
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1298.04,
+                    494.05
+                  ],
+                  "ground_position_m": [
+                    -0.587700439230591,
+                    1.7427682070464101
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1565.85,
+                    485.31
+                  ],
+                  "ground_position_m": [
+                    0.5441561005544119,
+                    1.4479192455854883
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Anchor 2044.5 s was chosen after seeing this recording's frozen registration failures.",
+    "The new reference is transported from an old conditional calibration, not independently measured rink geometry.",
+    "A registered image and a selected cap path do not prove a physical throw."
+  ]
+}

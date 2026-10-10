@@ -104,4 +104,8 @@ if(v.currentTime>=15&&aim&&Math.abs(aim.time_s-v.currentTime)<=.26){mark(og,...a
 g.fillStyle='#173b38';g.font='14px system-ui';g.fillText('Repère local : origine au centre de la maison',12,25);g.fillText('Courbe : modèle · Croix : annotation',12,735);document.getElementById('time').textContent=v.currentTime.toFixed(1)+' s';requestAnimationFrame(draw)}v.currentTime=54;draw();</script></html>""".replace(
     "DATA", json.dumps(result)
 )
-(out / "index.html").write_text(html)
+from add_joined_trajectory_to_accuracy import augment_html
+
+(out / "index.html").write_text(augment_html(html))
+from build_two_camera_live import main as add_two_camera_live
+add_two_camera_live()

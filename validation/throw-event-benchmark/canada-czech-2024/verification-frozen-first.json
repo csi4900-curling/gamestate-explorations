@@ -1,0 +1,70 @@
+{
+  "status": "verified_artifact_chain_not_physical_event_validation",
+  "source_id": "yu_YoFrFd20",
+  "source_interval_s": [
+    1650,
+    2760
+  ],
+  "full_video_sha256": "e63c9b063b5b11ad5173083dffe974d909c78e5d01312740b87bccc006402013",
+  "interval_video_sha256": "6d3f489b7b908281bca9a52eb85470d95374f65f328c13e1e6daf6cbb8bf6623",
+  "artifact_sha256": {
+    "raw": "c12923797078edf7dca107f115177b75c893776510c766990397a0c8fbf93bca",
+    "corridor": "8295ac26dd4735923a73a1f84d33657ce024a66ed972ef04d585071673148cf7",
+    "anchor": "73fe16c9062f2769c8a1622475b32d47bc743bc0d06af353914676fc0601bff6",
+    "motion": "6f3b10d2f70f8adadfd971e500afe0c6de191d1481f08056f823c8b36a121de3",
+    "hold": "5493358733924eee07ed87ec62bdc9736cd0d6f9c5b5f2604f711b7262b1931c",
+    "gaps": "ecb3b036f3500df0f75becbb44d1aa3c39238b354477ff9f1eb762ad337d3cfb",
+    "rescue": "231f994cb6d129e22186ebd1bd1459dd6fc703258dcc847bbaed06b23f176c2b",
+    "patch": "3e2ccf06907b2c1f8913ea38756380eb1a0a69abc5c01d5b315ab52bf9a94dfb",
+    "screen": "aac4a9f3c42e3bda61c40edeeceb55e66e52949e701f1931b0e9ee1913711f0f"
+  },
+  "raw_candidate_count": 24,
+  "corridor_candidate_count": 19,
+  "withheld_candidate_count": 5,
+  "anchor_grid_sample_count": 111,
+  "anchor_grid_registered_count": 30,
+  "anchor_time_s": 1685.0,
+  "motion_status_counts": {
+    "provisional_unique_far_entry_motion_path": 12,
+    "no_supported_far_entry_motion_path": 7
+  },
+  "hold_borrowed_sample_count": 44,
+  "gap_status_counts": {
+    "provisional_unique_far_entry_motion_path": 15,
+    "no_supported_far_entry_motion_path": 3,
+    "ambiguous_far_entry_motion_paths": 1
+  },
+  "rescue_status_counts": {
+    "baseline_path_preserved": 15,
+    "rescue_abstained": 3,
+    "shared_prefix_only_after_ambiguity": 1
+  },
+  "screen_status_counts": {
+    "provisional_motion_and_patch_support": 15,
+    "abstain_no_supported_motion_path": 3,
+    "duplicate_shared_timed_motion_path": 1
+  },
+  "accepted_candidate_ids": [
+    "S01",
+    "S02",
+    "S03",
+    "S10",
+    "S11",
+    "S12",
+    "S14",
+    "S16",
+    "S17",
+    "S18",
+    "S19",
+    "S20",
+    "S21",
+    "S22",
+    "S23"
+  ],
+  "runner_sha256": "2cb80c360e24266d1263e6084bd4967ea39322b80ec8792cb52f05bc9a443dee",
+  "limitations": [
+    "Artifact provenance and candidate accounting do not validate physical throws.",
+    "There are no exhaustive independent labels or precision, recall, and F1 estimates.",
+    "Selected motion paths are provisional and not simulation-ready."
+  ]
+}

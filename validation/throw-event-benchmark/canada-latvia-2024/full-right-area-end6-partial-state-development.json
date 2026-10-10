@@ -1,0 +1,824 @@
+{
+  "status": "candidate_to_periodic_partial_image_state_not_settled_game_state",
+  "source_sha256": "a7431b68ba6fb0df407383973a525a01eadbee2490caa0438a5a11d2df1dba13",
+  "interval_s": [
+    5670,
+    6670
+  ],
+  "input_sha256": {
+    "episodes": "63ab09daee4eb95c60658df533587073f94d0971d30a459c9fdd16c675fce115",
+    "source_review": "4ca1f49f8654235095527a6cfd2ace391c8f46ae8d29a244b31714e9b8380fdc",
+    "manifest": "758549c8d521aa55cc8e240966c753f9ed49ad7baa4f4156e5a52f2ef310af65",
+    "periodic": "db4848694dd2676ebc3919bb2fa1a882e8da8bed2485c5e8ee45410c385d44d6"
+  },
+  "runner_sha256": "f16fbc028599613425723a5c5f69cb90f3f04e35854e09dbbc750ae8398acf74",
+  "following_window_rule": {
+    "minimum_lag_s": 15,
+    "maximum_lag_s": 35,
+    "stop_before_next_right_only_proposal_s": 5,
+    "selection": "first nonempty partial-stable-cap window in range",
+    "status": "postreview_development_selection_not_settle_validation"
+  },
+  "right_only_proposal_count": 20,
+  "state_status_counts": {
+    "no_usable_following_observation": 3,
+    "following_partial_image_observation": 13,
+    "not_applied_person_pixels": 4
+  },
+  "rows": [
+    {
+      "episode_id": "E126",
+      "right_proposal_id": "R01:A387",
+      "passage_time_s": 5671.148,
+      "colour_claim": "yellow",
+      "source_prefix_class": "moving_stone_pixels",
+      "next_right_only_proposal_time_s": 5713.87,
+      "eligible_window_anchor_times_s": [
+        5690,
+        5700
+      ],
+      "eligible_window_statuses": [
+        "abstain_scene_or_player_motion",
+        "abstain_scene_or_player_motion"
+      ],
+      "following_partial_image_observation": null,
+      "state_status": "no_usable_following_observation",
+      "physical_throw_verified": false,
+      "same_stone_identity_verified": false,
+      "settle_time_s": null,
+      "simulation_ready": false
+    },
+    {
+      "episode_id": "E127",
+      "right_proposal_id": "R01:A393",
+      "passage_time_s": 5713.87,
+      "colour_claim": "red",
+      "source_prefix_class": "moving_stone_pixels",
+      "next_right_only_proposal_time_s": 5760.24,
+      "eligible_window_anchor_times_s": [
+        5730,
+        5740
+      ],
+      "eligible_window_statuses": [
+        "abstain_scene_or_player_motion",
+        "partial_stable_colour_cap_proposals"
+      ],
+      "following_partial_image_observation": {
+        "anchor_time_s": 5740,
+        "stable_cap_proposals": [
+          {
+            "colour": "yellow",
+            "pixel_center": [
+              482.0,
+              208.0
+            ],
+            "sample_times_s": [
+              5740.0,
+              5742.0,
+              5744.0
+            ],
+            "supporting_frame_count": 3,
+            "max_position_spread_px": 0.0,
+            "median_cap_area_px2": 53.0,
+            "physical_stone_identity_verified": false,
+            "local_observation_id": "C01"
+          }
+        ],
+        "sample_times_s": [
+          5740,
+          5742,
+          5744
+        ],
+        "complete_board_verified": false
+      },
+      "state_status": "following_partial_image_observation",
+      "physical_throw_verified": false,
+      "same_stone_identity_verified": false,
+      "settle_time_s": null,
+      "simulation_ready": false
+    },
+    {
+      "episode_id": "E128",
+      "right_proposal_id": "R01:A396",
+      "passage_time_s": 5760.24,
+      "colour_claim": "yellow",
+      "source_prefix_class": "moving_stone_pixels",
+      "next_right_only_proposal_time_s": 5792.854,
+      "eligible_window_anchor_times_s": [
+        5780
+      ],
+      "eligible_window_statuses": [
+        "partial_stable_colour_cap_proposals"
+      ],
+      "following_partial_image_observation": {
+        "anchor_time_s": 5780,
+        "stable_cap_proposals": [
+          {
+            "colour": "red",
+            "pixel_center": [
+              479.0,
+              204.5
+            ],
+            "sample_times_s": [
+              5780.0,
+              5782.0,
+              5784.0
+            ],
+            "supporting_frame_count": 3,
+            "max_position_spread_px": 1.5,
+            "median_cap_area_px2": 45.0,
+            "physical_stone_identity_verified": false,
+            "local_observation_id": "C01"
+          }
+        ],
+        "sample_times_s": [
+          5780,
+          5782,
+          5784
+        ],
+        "complete_board_verified": false
+      },
+      "state_status": "following_partial_image_observation",
+      "physical_throw_verified": false,
+      "same_stone_identity_verified": false,
+      "settle_time_s": null,
+      "simulation_ready": false
+    },
+    {
+      "episode_id": "E129",
+      "right_proposal_id": "R01:A398",
+      "passage_time_s": 5792.854,
+      "colour_claim": "red",
+      "source_prefix_class": "moving_stone_pixels",
+      "next_right_only_proposal_time_s": 5843.333,
+      "eligible_window_anchor_times_s": [
+        5810,
+        5820
+      ],
+      "eligible_window_statuses": [
+        "abstain_scene_or_player_motion",
+        "abstain_scene_or_player_motion"
+      ],
+      "following_partial_image_observation": null,
+      "state_status": "no_usable_following_observation",
+      "physical_throw_verified": false,
+      "same_stone_identity_verified": false,
+      "settle_time_s": null,
+      "simulation_ready": false
+    },
+    {
+      "episode_id": "E130",
+      "right_proposal_id": "R01:A401",
+      "passage_time_s": 5843.333,
+      "colour_claim": "yellow",
+      "source_prefix_class": "moving_stone_pixels",
+      "next_right_only_proposal_time_s": 5883.03,
+      "eligible_window_anchor_times_s": [
+        5860,
+        5870
+      ],
+      "eligible_window_statuses": [
+        "abstain_scene_or_player_motion",
+        "partial_stable_colour_cap_proposals"
+      ],
+      "following_partial_image_observation": {
+        "anchor_time_s": 5870,
+        "stable_cap_proposals": [
+          {
+            "colour": "red",
+            "pixel_center": [
+              480.0,
+              208.0
+            ],
+            "sample_times_s": [
+              5870.0,
+              5872.0,
+              5874.0
+            ],
+            "supporting_frame_count": 3,
+            "max_position_spread_px": 4.61,
+            "median_cap_area_px2": 47.0,
+            "physical_stone_identity_verified": false,
+            "local_observation_id": "C01"
+          }
+        ],
+        "sample_times_s": [
+          5870,
+          5872,
+          5874
+        ],
+        "complete_board_verified": false
+      },
+      "state_status": "following_partial_image_observation",
+      "physical_throw_verified": false,
+      "same_stone_identity_verified": false,
+      "settle_time_s": null,
+      "simulation_ready": false
+    },
+    {
+      "episode_id": "E131",
+      "right_proposal_id": "R01:A406",
+      "passage_time_s": 5883.03,
+      "colour_claim": "red",
+      "source_prefix_class": "moving_stone_pixels",
+      "next_right_only_proposal_time_s": 5929.788,
+      "eligible_window_anchor_times_s": [
+        5900,
+        5910
+      ],
+      "eligible_window_statuses": [
+        "partial_stable_colour_cap_proposals",
+        "partial_stable_colour_cap_proposals"
+      ],
+      "following_partial_image_observation": {
+        "anchor_time_s": 5900,
+        "stable_cap_proposals": [
+          {
+            "colour": "yellow",
+            "pixel_center": [
+              482.0,
+              208.0
+            ],
+            "sample_times_s": [
+              5900.0,
+              5902.0,
+              5904.0
+            ],
+            "supporting_frame_count": 3,
+            "max_position_spread_px": 1.0,
+            "median_cap_area_px2": 48.0,
+            "physical_stone_identity_verified": false,
+            "local_observation_id": "C01"
+          }
+        ],
+        "sample_times_s": [
+          5900,
+          5902,
+          5904
+        ],
+        "complete_board_verified": false
+      },
+      "state_status": "following_partial_image_observation",
+      "physical_throw_verified": false,
+      "same_stone_identity_verified": false,
+      "settle_time_s": null,
+      "simulation_ready": false
+    },
+    {
+      "episode_id": "E132",
+      "right_proposal_id": "R01:A407",
+      "passage_time_s": 5929.788,
+      "colour_claim": "yellow",
+      "source_prefix_class": "moving_stone_pixels",
+      "next_right_only_proposal_time_s": 6016.0,
+      "eligible_window_anchor_times_s": [
+        5950,
+        5960
+      ],
+      "eligible_window_statuses": [
+        "abstain_scene_or_player_motion",
+        "partial_stable_colour_cap_proposals"
+      ],
+      "following_partial_image_observation": {
+        "anchor_time_s": 5960,
+        "stable_cap_proposals": [
+          {
+            "colour": "red",
+            "pixel_center": [
+              482.0,
+              208.0
+            ],
+            "sample_times_s": [
+              5960.0,
+              5962.0,
+              5964.0
+            ],
+            "supporting_frame_count": 3,
+            "max_position_spread_px": 0.0,
+            "median_cap_area_px2": 30.5,
+            "physical_stone_identity_verified": false,
+            "local_observation_id": "C01"
+          }
+        ],
+        "sample_times_s": [
+          5960,
+          5962,
+          5964
+        ],
+        "complete_board_verified": false
+      },
+      "state_status": "following_partial_image_observation",
+      "physical_throw_verified": false,
+      "same_stone_identity_verified": false,
+      "settle_time_s": null,
+      "simulation_ready": false
+    },
+    {
+      "episode_id": "E133",
+      "right_proposal_id": "R01:A408",
+      "passage_time_s": 6016.0,
+      "colour_claim": "red",
+      "source_prefix_class": "moving_stone_pixels",
+      "next_right_only_proposal_time_s": 6074.778,
+      "eligible_window_anchor_times_s": [
+        6040,
+        6050
+      ],
+      "eligible_window_statuses": [
+        "no_stable_colour_cap_proposals",
+        "partial_stable_colour_cap_proposals"
+      ],
+      "following_partial_image_observation": {
+        "anchor_time_s": 6050,
+        "stable_cap_proposals": [
+          {
+            "colour": "yellow",
+            "pixel_center": [
+              468.0,
+              208.0
+            ],
+            "sample_times_s": [
+              6050.0,
+              6052.0,
+              6054.0
+            ],
+            "supporting_frame_count": 3,
+            "max_position_spread_px": 0.0,
+            "median_cap_area_px2": 71.5,
+            "physical_stone_identity_verified": false,
+            "local_observation_id": "C01"
+          }
+        ],
+        "sample_times_s": [
+          6050,
+          6052,
+          6054
+        ],
+        "complete_board_verified": false
+      },
+      "state_status": "following_partial_image_observation",
+      "physical_throw_verified": false,
+      "same_stone_identity_verified": false,
+      "settle_time_s": null,
+      "simulation_ready": false
+    },
+    {
+      "episode_id": "E134",
+      "right_proposal_id": "R01:A413",
+      "passage_time_s": 6074.778,
+      "colour_claim": "yellow",
+      "source_prefix_class": "moving_stone_pixels",
+      "next_right_only_proposal_time_s": 6139.816,
+      "eligible_window_anchor_times_s": [
+        6090,
+        6100
+      ],
+      "eligible_window_statuses": [
+        "abstain_scene_or_player_motion",
+        "partial_stable_colour_cap_proposals"
+      ],
+      "following_partial_image_observation": {
+        "anchor_time_s": 6100,
+        "stable_cap_proposals": [
+          {
+            "colour": "red",
+            "pixel_center": [
+              481.5,
+              203.0
+            ],
+            "sample_times_s": [
+              6100.0,
+              6102.0,
+              6104.0
+            ],
+            "supporting_frame_count": 3,
+            "max_position_spread_px": 1.0,
+            "median_cap_area_px2": 34.5,
+            "physical_stone_identity_verified": false,
+            "local_observation_id": "C01"
+          }
+        ],
+        "sample_times_s": [
+          6100,
+          6102,
+          6104
+        ],
+        "complete_board_verified": false
+      },
+      "state_status": "following_partial_image_observation",
+      "physical_throw_verified": false,
+      "same_stone_identity_verified": false,
+      "settle_time_s": null,
+      "simulation_ready": false
+    },
+    {
+      "episode_id": "E135",
+      "right_proposal_id": "R01:A422",
+      "passage_time_s": 6139.816,
+      "colour_claim": "red",
+      "source_prefix_class": "person_or_clothing_pixels",
+      "next_right_only_proposal_time_s": 6156.133,
+      "eligible_window_anchor_times_s": [],
+      "eligible_window_statuses": [],
+      "following_partial_image_observation": null,
+      "state_status": "not_applied_person_pixels",
+      "physical_throw_verified": false,
+      "same_stone_identity_verified": false,
+      "settle_time_s": null,
+      "simulation_ready": false
+    },
+    {
+      "episode_id": "E136",
+      "right_proposal_id": "R01:A424",
+      "passage_time_s": 6156.133,
+      "colour_claim": "red",
+      "source_prefix_class": "person_or_clothing_pixels",
+      "next_right_only_proposal_time_s": 6160.579,
+      "eligible_window_anchor_times_s": [],
+      "eligible_window_statuses": [],
+      "following_partial_image_observation": null,
+      "state_status": "not_applied_person_pixels",
+      "physical_throw_verified": false,
+      "same_stone_identity_verified": false,
+      "settle_time_s": null,
+      "simulation_ready": false
+    },
+    {
+      "episode_id": "E137",
+      "right_proposal_id": "R01:A427",
+      "passage_time_s": 6160.579,
+      "colour_claim": "red",
+      "source_prefix_class": "person_or_clothing_pixels",
+      "next_right_only_proposal_time_s": 6224.083,
+      "eligible_window_anchor_times_s": [
+        6180,
+        6190
+      ],
+      "eligible_window_statuses": [
+        "no_stable_colour_cap_proposals",
+        "no_stable_colour_cap_proposals"
+      ],
+      "following_partial_image_observation": null,
+      "state_status": "not_applied_person_pixels",
+      "physical_throw_verified": false,
+      "same_stone_identity_verified": false,
+      "settle_time_s": null,
+      "simulation_ready": false
+    },
+    {
+      "episode_id": "E138",
+      "right_proposal_id": "R01:A431",
+      "passage_time_s": 6224.083,
+      "colour_claim": "red",
+      "source_prefix_class": "person_or_clothing_pixels",
+      "next_right_only_proposal_time_s": 6280.116,
+      "eligible_window_anchor_times_s": [
+        6240,
+        6250
+      ],
+      "eligible_window_statuses": [
+        "abstain_scene_or_player_motion",
+        "no_stable_colour_cap_proposals"
+      ],
+      "following_partial_image_observation": null,
+      "state_status": "not_applied_person_pixels",
+      "physical_throw_verified": false,
+      "same_stone_identity_verified": false,
+      "settle_time_s": null,
+      "simulation_ready": false
+    },
+    {
+      "episode_id": "E139",
+      "right_proposal_id": "R01:A441",
+      "passage_time_s": 6280.116,
+      "colour_claim": "red",
+      "source_prefix_class": "moving_stone_pixels",
+      "next_right_only_proposal_time_s": 6349.5,
+      "eligible_window_anchor_times_s": [
+        6300,
+        6310
+      ],
+      "eligible_window_statuses": [
+        "partial_stable_colour_cap_proposals",
+        "partial_stable_colour_cap_proposals"
+      ],
+      "following_partial_image_observation": {
+        "anchor_time_s": 6300,
+        "stable_cap_proposals": [
+          {
+            "colour": "red",
+            "pixel_center": [
+              505.0,
+              181.5
+            ],
+            "sample_times_s": [
+              6300.0,
+              6302.0,
+              6304.0
+            ],
+            "supporting_frame_count": 3,
+            "max_position_spread_px": 2.24,
+            "median_cap_area_px2": 13.5,
+            "physical_stone_identity_verified": false,
+            "local_observation_id": "C01"
+          },
+          {
+            "colour": "yellow",
+            "pixel_center": [
+              484.0,
+              208.0
+            ],
+            "sample_times_s": [
+              6300.0,
+              6302.0,
+              6304.0
+            ],
+            "supporting_frame_count": 3,
+            "max_position_spread_px": 0.5,
+            "median_cap_area_px2": 57.5,
+            "physical_stone_identity_verified": false,
+            "local_observation_id": "C02"
+          }
+        ],
+        "sample_times_s": [
+          6300,
+          6302,
+          6304
+        ],
+        "complete_board_verified": false
+      },
+      "state_status": "following_partial_image_observation",
+      "physical_throw_verified": false,
+      "same_stone_identity_verified": false,
+      "settle_time_s": null,
+      "simulation_ready": false
+    },
+    {
+      "episode_id": "E140",
+      "right_proposal_id": "R01:A444",
+      "passage_time_s": 6349.5,
+      "colour_claim": "yellow",
+      "source_prefix_class": "moving_stone_pixels",
+      "next_right_only_proposal_time_s": 6403.727,
+      "eligible_window_anchor_times_s": [
+        6370,
+        6380
+      ],
+      "eligible_window_statuses": [
+        "no_stable_colour_cap_proposals",
+        "partial_stable_colour_cap_proposals"
+      ],
+      "following_partial_image_observation": {
+        "anchor_time_s": 6380,
+        "stable_cap_proposals": [
+          {
+            "colour": "red",
+            "pixel_center": [
+              492.0,
+              200.0
+            ],
+            "sample_times_s": [
+              6380.0,
+              6382.0,
+              6384.0
+            ],
+            "supporting_frame_count": 3,
+            "max_position_spread_px": 1.0,
+            "median_cap_area_px2": 72.5,
+            "physical_stone_identity_verified": false,
+            "local_observation_id": "C01"
+          }
+        ],
+        "sample_times_s": [
+          6380,
+          6382,
+          6384
+        ],
+        "complete_board_verified": false
+      },
+      "state_status": "following_partial_image_observation",
+      "physical_throw_verified": false,
+      "same_stone_identity_verified": false,
+      "settle_time_s": null,
+      "simulation_ready": false
+    },
+    {
+      "episode_id": "E141",
+      "right_proposal_id": "R01:A452",
+      "passage_time_s": 6403.727,
+      "colour_claim": "red",
+      "source_prefix_class": "moving_stone_pixels",
+      "next_right_only_proposal_time_s": 6465.52,
+      "eligible_window_anchor_times_s": [
+        6420,
+        6430
+      ],
+      "eligible_window_statuses": [
+        "partial_stable_colour_cap_proposals",
+        "abstain_scene_or_player_motion"
+      ],
+      "following_partial_image_observation": {
+        "anchor_time_s": 6420,
+        "stable_cap_proposals": [
+          {
+            "colour": "yellow",
+            "pixel_center": [
+              482.0,
+              208.0
+            ],
+            "sample_times_s": [
+              6420.0,
+              6422.0,
+              6424.0
+            ],
+            "supporting_frame_count": 3,
+            "max_position_spread_px": 1.41,
+            "median_cap_area_px2": 54.5,
+            "physical_stone_identity_verified": false,
+            "local_observation_id": "C01"
+          }
+        ],
+        "sample_times_s": [
+          6420,
+          6422,
+          6424
+        ],
+        "complete_board_verified": false
+      },
+      "state_status": "following_partial_image_observation",
+      "physical_throw_verified": false,
+      "same_stone_identity_verified": false,
+      "settle_time_s": null,
+      "simulation_ready": false
+    },
+    {
+      "episode_id": "E142",
+      "right_proposal_id": "R01:A455",
+      "passage_time_s": 6465.52,
+      "colour_claim": "yellow",
+      "source_prefix_class": "moving_stone_pixels",
+      "next_right_only_proposal_time_s": 6518.917,
+      "eligible_window_anchor_times_s": [
+        6490,
+        6500
+      ],
+      "eligible_window_statuses": [
+        "abstain_scene_or_player_motion",
+        "partial_stable_colour_cap_proposals"
+      ],
+      "following_partial_image_observation": {
+        "anchor_time_s": 6500,
+        "stable_cap_proposals": [
+          {
+            "colour": "red",
+            "pixel_center": [
+              481.0,
+              208.0
+            ],
+            "sample_times_s": [
+              6500.0,
+              6502.0,
+              6504.0
+            ],
+            "supporting_frame_count": 3,
+            "max_position_spread_px": 1.8,
+            "median_cap_area_px2": 39.5,
+            "physical_stone_identity_verified": false,
+            "local_observation_id": "C01"
+          }
+        ],
+        "sample_times_s": [
+          6500,
+          6502,
+          6504
+        ],
+        "complete_board_verified": false
+      },
+      "state_status": "following_partial_image_observation",
+      "physical_throw_verified": false,
+      "same_stone_identity_verified": false,
+      "settle_time_s": null,
+      "simulation_ready": false
+    },
+    {
+      "episode_id": "E143",
+      "right_proposal_id": "R01:A462",
+      "passage_time_s": 6518.917,
+      "colour_claim": "red",
+      "source_prefix_class": "moving_stone_pixels",
+      "next_right_only_proposal_time_s": 6584.346,
+      "eligible_window_anchor_times_s": [
+        6540,
+        6550
+      ],
+      "eligible_window_statuses": [
+        "partial_stable_colour_cap_proposals",
+        "partial_stable_colour_cap_proposals"
+      ],
+      "following_partial_image_observation": {
+        "anchor_time_s": 6540,
+        "stable_cap_proposals": [
+          {
+            "colour": "yellow",
+            "pixel_center": [
+              482.0,
+              208.0
+            ],
+            "sample_times_s": [
+              6540.0,
+              6542.0,
+              6544.0
+            ],
+            "supporting_frame_count": 3,
+            "max_position_spread_px": 3.0,
+            "median_cap_area_px2": 53.5,
+            "physical_stone_identity_verified": false,
+            "local_observation_id": "C01"
+          }
+        ],
+        "sample_times_s": [
+          6540,
+          6542,
+          6544
+        ],
+        "complete_board_verified": false
+      },
+      "state_status": "following_partial_image_observation",
+      "physical_throw_verified": false,
+      "same_stone_identity_verified": false,
+      "settle_time_s": null,
+      "simulation_ready": false
+    },
+    {
+      "episode_id": "E144",
+      "right_proposal_id": "R01:A471",
+      "passage_time_s": 6584.346,
+      "colour_claim": "yellow",
+      "source_prefix_class": "moving_stone_pixels",
+      "next_right_only_proposal_time_s": 6656.152,
+      "eligible_window_anchor_times_s": [
+        6600,
+        6610
+      ],
+      "eligible_window_statuses": [
+        "abstain_scene_or_player_motion",
+        "partial_stable_colour_cap_proposals"
+      ],
+      "following_partial_image_observation": {
+        "anchor_time_s": 6610,
+        "stable_cap_proposals": [
+          {
+            "colour": "red",
+            "pixel_center": [
+              482.0,
+              209.0
+            ],
+            "sample_times_s": [
+              6610.0,
+              6612.0,
+              6614.0
+            ],
+            "supporting_frame_count": 3,
+            "max_position_spread_px": 1.0,
+            "median_cap_area_px2": 35.0,
+            "physical_stone_identity_verified": false,
+            "local_observation_id": "C01"
+          }
+        ],
+        "sample_times_s": [
+          6610,
+          6612,
+          6614
+        ],
+        "complete_board_verified": false
+      },
+      "state_status": "following_partial_image_observation",
+      "physical_throw_verified": false,
+      "same_stone_identity_verified": false,
+      "settle_time_s": null,
+      "simulation_ready": false
+    },
+    {
+      "episode_id": "E145",
+      "right_proposal_id": "R01:A478",
+      "passage_time_s": 6656.152,
+      "colour_claim": "red",
+      "source_prefix_class": "moving_stone_pixels",
+      "next_right_only_proposal_time_s": 6670,
+      "eligible_window_anchor_times_s": [],
+      "eligible_window_statuses": [],
+      "following_partial_image_observation": null,
+      "state_status": "no_usable_following_observation",
+      "physical_throw_verified": false,
+      "same_stone_identity_verified": false,
+      "settle_time_s": null,
+      "simulation_ready": false
+    }
+  ],
+  "limitations": [
+    "The 15\u201335 s follow-up rule was chosen after inspecting candidate and board coverage.",
+    "Periodic source frames can observe stones and foreground objects without a complete board.",
+    "A following partial observation does not verify a throw, its settlement, a board change, or physical stone identity.",
+    "A proposal outside the periodic 5670\u20136670 s coverage has no observation here."
+  ]
+}

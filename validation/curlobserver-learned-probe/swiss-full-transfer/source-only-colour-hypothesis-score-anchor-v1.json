@@ -1,0 +1,431 @@
+{
+  "status": "postscore_development_colour_hypothesis_diagnostic",
+  "method": "One-to-one maximum-cardinality matching where candidate release window overlaps a clear source-only delivery interval; candidates selected by anchor inside sampled interval, excluding uncertain boundaries. No colour gate.",
+  "clear_source_events": 15,
+  "eligible_candidates": 14,
+  "temporal_true_positives": 14,
+  "temporal_false_positives": 0,
+  "temporal_false_negatives": 1,
+  "temporal_precision": 1.0,
+  "temporal_recall": 0.9333333333333333,
+  "temporal_f1": 0.9655172413793104,
+  "colour_aware_true_positives": 13,
+  "colour_aware_false_positives": 1,
+  "colour_aware_false_negatives": 2,
+  "colour_aware_precision": 0.9285714285714286,
+  "colour_aware_recall": 0.8666666666666667,
+  "colour_aware_f1": 0.896551724137931,
+  "matches": [
+    {
+      "label_id": "W1",
+      "candidate_id": "T038",
+      "label_colour": "red",
+      "candidate_colour": "red",
+      "colour_relation": "match"
+    },
+    {
+      "label_id": "W2",
+      "candidate_id": "T039",
+      "label_colour": "yellow",
+      "candidate_colour": "yellow",
+      "colour_relation": "match"
+    },
+    {
+      "label_id": "W3",
+      "candidate_id": "T040",
+      "label_colour": "red",
+      "candidate_colour": "red",
+      "colour_relation": "match"
+    },
+    {
+      "label_id": "W4",
+      "candidate_id": "T041",
+      "label_colour": "yellow",
+      "candidate_colour": "yellow",
+      "colour_relation": "match"
+    },
+    {
+      "label_id": "W5",
+      "candidate_id": "T042",
+      "label_colour": "red",
+      "candidate_colour": "red",
+      "colour_relation": "match"
+    },
+    {
+      "label_id": "W6",
+      "candidate_id": "T043",
+      "label_colour": "yellow",
+      "candidate_colour": "yellow",
+      "colour_relation": "match"
+    },
+    {
+      "label_id": "W7",
+      "candidate_id": "T048",
+      "label_colour": "red",
+      "candidate_colour": null,
+      "colour_relation": "unknown"
+    },
+    {
+      "label_id": "W8",
+      "candidate_id": "T049",
+      "label_colour": "yellow",
+      "candidate_colour": "yellow",
+      "colour_relation": "match"
+    },
+    {
+      "label_id": "W9",
+      "candidate_id": "T050",
+      "label_colour": "red",
+      "candidate_colour": "red",
+      "colour_relation": "match"
+    },
+    {
+      "label_id": "W10",
+      "candidate_id": "T051",
+      "label_colour": "yellow",
+      "candidate_colour": "yellow",
+      "colour_relation": "match"
+    },
+    {
+      "label_id": "W12",
+      "candidate_id": "T112",
+      "label_colour": "yellow",
+      "candidate_colour": "yellow",
+      "colour_relation": "match"
+    },
+    {
+      "label_id": "W13",
+      "candidate_id": "T113",
+      "label_colour": "red",
+      "candidate_colour": "red",
+      "colour_relation": "match"
+    },
+    {
+      "label_id": "W14",
+      "candidate_id": "T114",
+      "label_colour": "yellow",
+      "candidate_colour": "yellow",
+      "colour_relation": "match"
+    },
+    {
+      "label_id": "W15",
+      "candidate_id": "T115",
+      "label_colour": "red",
+      "candidate_colour": "red",
+      "colour_relation": "match"
+    }
+  ],
+  "unmatched_candidate_ids": [],
+  "unmatched_label_ids": [
+    "W11"
+  ],
+  "colour_aware_matches": [
+    {
+      "label_id": "W1",
+      "candidate_id": "T038"
+    },
+    {
+      "label_id": "W2",
+      "candidate_id": "T039"
+    },
+    {
+      "label_id": "W3",
+      "candidate_id": "T040"
+    },
+    {
+      "label_id": "W4",
+      "candidate_id": "T041"
+    },
+    {
+      "label_id": "W5",
+      "candidate_id": "T042"
+    },
+    {
+      "label_id": "W6",
+      "candidate_id": "T043"
+    },
+    {
+      "label_id": "W8",
+      "candidate_id": "T049"
+    },
+    {
+      "label_id": "W9",
+      "candidate_id": "T050"
+    },
+    {
+      "label_id": "W10",
+      "candidate_id": "T051"
+    },
+    {
+      "label_id": "W12",
+      "candidate_id": "T112"
+    },
+    {
+      "label_id": "W13",
+      "candidate_id": "T113"
+    },
+    {
+      "label_id": "W14",
+      "candidate_id": "T114"
+    },
+    {
+      "label_id": "W15",
+      "candidate_id": "T115"
+    }
+  ],
+  "limitations": [
+    "Source labels were authored by the implementing agent from five-second samples and may miss off-camera deliveries.",
+    "Broad candidate release windows can inflate temporal overlap and do not establish release-time accuracy.",
+    "This is a small selected-window development check, not an independent full-match F1 estimate."
+  ],
+  "review_sha256": "1eb4065f8d626fd007e5c83707ff878920348fc3dbabc49863f30cb27f4af46f",
+  "ledger_sha256": "effde38cf0e70ee6fce2212a677c609777b77e77246915d8f5da9e24b6f9f96d",
+  "identity_audit_sha256": "1f72efb0ef16ce7efd191a15b9a874e083b6c5384c4cf105efb241471bf675f0",
+  "hypothesis_applied": [
+    {
+      "candidate_id": "T016",
+      "ledger_colour": null,
+      "hypothesis_colour": "red"
+    },
+    {
+      "candidate_id": "T033",
+      "ledger_colour": null,
+      "hypothesis_colour": "yellow"
+    },
+    {
+      "candidate_id": "T034",
+      "ledger_colour": null,
+      "hypothesis_colour": "red"
+    },
+    {
+      "candidate_id": "T048",
+      "ledger_colour": null,
+      "hypothesis_colour": "red"
+    },
+    {
+      "candidate_id": "T060",
+      "ledger_colour": null,
+      "hypothesis_colour": "red"
+    },
+    {
+      "candidate_id": "T067",
+      "ledger_colour": null,
+      "hypothesis_colour": "yellow"
+    },
+    {
+      "candidate_id": "T080",
+      "ledger_colour": "red",
+      "hypothesis_colour": "yellow"
+    },
+    {
+      "candidate_id": "T083",
+      "ledger_colour": null,
+      "hypothesis_colour": "red"
+    },
+    {
+      "candidate_id": "T084",
+      "ledger_colour": null,
+      "hypothesis_colour": "yellow"
+    },
+    {
+      "candidate_id": "T087",
+      "ledger_colour": null,
+      "hypothesis_colour": "yellow"
+    },
+    {
+      "candidate_id": "T088",
+      "ledger_colour": null,
+      "hypothesis_colour": "yellow"
+    },
+    {
+      "candidate_id": "T120",
+      "ledger_colour": null,
+      "hypothesis_colour": "yellow"
+    }
+  ],
+  "hypothesis_score": {
+    "status": "development_diagnostic_not_independent_validation",
+    "method": "One-to-one maximum-cardinality matching where candidate release window overlaps a clear source-only delivery interval; candidates selected by anchor inside sampled interval, excluding uncertain boundaries. No colour gate.",
+    "clear_source_events": 15,
+    "eligible_candidates": 14,
+    "temporal_true_positives": 14,
+    "temporal_false_positives": 0,
+    "temporal_false_negatives": 1,
+    "temporal_precision": 1.0,
+    "temporal_recall": 0.9333333333333333,
+    "temporal_f1": 0.9655172413793104,
+    "colour_aware_true_positives": 14,
+    "colour_aware_false_positives": 0,
+    "colour_aware_false_negatives": 1,
+    "colour_aware_precision": 1.0,
+    "colour_aware_recall": 0.9333333333333333,
+    "colour_aware_f1": 0.9655172413793104,
+    "matches": [
+      {
+        "label_id": "W1",
+        "candidate_id": "T038",
+        "label_colour": "red",
+        "candidate_colour": "red",
+        "colour_relation": "match"
+      },
+      {
+        "label_id": "W2",
+        "candidate_id": "T039",
+        "label_colour": "yellow",
+        "candidate_colour": "yellow",
+        "colour_relation": "match"
+      },
+      {
+        "label_id": "W3",
+        "candidate_id": "T040",
+        "label_colour": "red",
+        "candidate_colour": "red",
+        "colour_relation": "match"
+      },
+      {
+        "label_id": "W4",
+        "candidate_id": "T041",
+        "label_colour": "yellow",
+        "candidate_colour": "yellow",
+        "colour_relation": "match"
+      },
+      {
+        "label_id": "W5",
+        "candidate_id": "T042",
+        "label_colour": "red",
+        "candidate_colour": "red",
+        "colour_relation": "match"
+      },
+      {
+        "label_id": "W6",
+        "candidate_id": "T043",
+        "label_colour": "yellow",
+        "candidate_colour": "yellow",
+        "colour_relation": "match"
+      },
+      {
+        "label_id": "W7",
+        "candidate_id": "T048",
+        "label_colour": "red",
+        "candidate_colour": "red",
+        "colour_relation": "match"
+      },
+      {
+        "label_id": "W8",
+        "candidate_id": "T049",
+        "label_colour": "yellow",
+        "candidate_colour": "yellow",
+        "colour_relation": "match"
+      },
+      {
+        "label_id": "W9",
+        "candidate_id": "T050",
+        "label_colour": "red",
+        "candidate_colour": "red",
+        "colour_relation": "match"
+      },
+      {
+        "label_id": "W10",
+        "candidate_id": "T051",
+        "label_colour": "yellow",
+        "candidate_colour": "yellow",
+        "colour_relation": "match"
+      },
+      {
+        "label_id": "W12",
+        "candidate_id": "T112",
+        "label_colour": "yellow",
+        "candidate_colour": "yellow",
+        "colour_relation": "match"
+      },
+      {
+        "label_id": "W13",
+        "candidate_id": "T113",
+        "label_colour": "red",
+        "candidate_colour": "red",
+        "colour_relation": "match"
+      },
+      {
+        "label_id": "W14",
+        "candidate_id": "T114",
+        "label_colour": "yellow",
+        "candidate_colour": "yellow",
+        "colour_relation": "match"
+      },
+      {
+        "label_id": "W15",
+        "candidate_id": "T115",
+        "label_colour": "red",
+        "candidate_colour": "red",
+        "colour_relation": "match"
+      }
+    ],
+    "unmatched_candidate_ids": [],
+    "unmatched_label_ids": [
+      "W11"
+    ],
+    "colour_aware_matches": [
+      {
+        "label_id": "W1",
+        "candidate_id": "T038"
+      },
+      {
+        "label_id": "W2",
+        "candidate_id": "T039"
+      },
+      {
+        "label_id": "W3",
+        "candidate_id": "T040"
+      },
+      {
+        "label_id": "W4",
+        "candidate_id": "T041"
+      },
+      {
+        "label_id": "W5",
+        "candidate_id": "T042"
+      },
+      {
+        "label_id": "W6",
+        "candidate_id": "T043"
+      },
+      {
+        "label_id": "W7",
+        "candidate_id": "T048"
+      },
+      {
+        "label_id": "W8",
+        "candidate_id": "T049"
+      },
+      {
+        "label_id": "W9",
+        "candidate_id": "T050"
+      },
+      {
+        "label_id": "W10",
+        "candidate_id": "T051"
+      },
+      {
+        "label_id": "W12",
+        "candidate_id": "T112"
+      },
+      {
+        "label_id": "W13",
+        "candidate_id": "T113"
+      },
+      {
+        "label_id": "W14",
+        "candidate_id": "T114"
+      },
+      {
+        "label_id": "W15",
+        "candidate_id": "T115"
+      }
+    ],
+    "limitations": [
+      "Source labels were authored by the implementing agent from five-second samples and may miss off-camera deliveries.",
+      "Broad candidate release windows can inflate temporal overlap and do not establish release-time accuracy.",
+      "This is a small selected-window development check, not an independent full-match F1 estimate."
+    ]
+  }
+}

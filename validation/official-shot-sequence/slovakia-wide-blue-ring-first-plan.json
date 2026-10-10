@@ -1,0 +1,104 @@
+{
+  "status": "frozen_before_slovakia_wide_frame_inference",
+  "game_code": "PREL000103",
+  "source_video": "validation/throw-event-benchmark/paralympics-2022-slovakia-usa/source.mp4",
+  "frozen_sha256": {
+    "video": "eba1d86944a2f4278b6e5e2c7549d12b47e5e8a51bf0c680b2db372c6ec12420",
+    "model": "395ebfd0b23db3c1faa90cfb71af2b33d0774e70dc05e7db8f6cb7924e1bcb47",
+    "prior": "3b673a3ecdedb8842b8e59acd254531694e0f21601c645d75a1c8369ecc83352",
+    "proposal_code": "43b28a9f810d82531c438992e0ad5012bee0a5743424465b36143ac318261cd7",
+    "contact_code": "ec891e0b90616f7218d0ffe0a96dcf9fda32ba1ad10a3b609e2c88ff802ef5dd",
+    "runner": "5f9d38b48ff10f93eb34f5c8d96774dea85ea574cd62017446626f7c6c7e06a0"
+  },
+  "shot_ids": [
+    "PREL000103-E01-S05",
+    "PREL000103-E02-S15",
+    "PREL000103-E04-S09",
+    "PREL000103-E06-S06",
+    "PREL000103-E07-S16"
+  ],
+  "offsets_s_by_shot": [
+    [
+      4,
+      6,
+      8,
+      10,
+      12,
+      14,
+      16,
+      18,
+      20
+    ],
+    [
+      4,
+      6,
+      8,
+      10,
+      12,
+      14,
+      16,
+      18,
+      20,
+      22,
+      24,
+      26,
+      28,
+      30
+    ],
+    [
+      4,
+      6,
+      8,
+      10,
+      12,
+      14,
+      16,
+      18,
+      20,
+      22,
+      24,
+      26,
+      28,
+      30
+    ],
+    [
+      4,
+      6,
+      8,
+      10,
+      12,
+      14,
+      16,
+      18,
+      20,
+      22,
+      24,
+      26,
+      28,
+      30
+    ],
+    [
+      4,
+      6,
+      8,
+      10,
+      12,
+      14,
+      16,
+      18,
+      20,
+      22,
+      24,
+      26,
+      28,
+      30
+    ]
+  ],
+  "method": "At pre-existing counter offsets, detect wide ellipse; propose red/yellow caps over white or blue ring within 2.2 fitted ring radii; patch score at least -0.7; require neutral grey-body bottom; cluster at least three frames spanning four seconds. Compare source-only wide contacts to prior overhead observations under all four sign choices. Preserve zero-output windows.",
+  "score_rule": "No official diagram positions, physical throw labels, or reserved source are used. This is a five-shot coverage and orientation diagnostic, not full-video board or event F1.",
+  "limitations": [
+    "Slovakia was exposed in earlier project research; only this wide-contact route is frozen.",
+    "The prior temporal artifact contains official postscore fields but the runner accesses only shot times, offsets and source-only overhead stones.",
+    "A zero wide result is a measured coverage limit, not proof of no stones."
+  ]
+}

@@ -1,0 +1,554 @@
+{
+  "status": "cross_recording_onset_diagnostic_not_throw_accuracy",
+  "source_sha256": "18f4fe4ac910e2da7e1ed453ade9d291363ab7e01f8d0d207634a3d589efe0da",
+  "source_interval_s": [
+    1650,
+    2760
+  ],
+  "input_sha256": {
+    "probe": "2832ef8d0643608fc3b5b21c4e3123d94d4ab9bdf1f0e1d42678e1cbb5fe9bdd",
+    "source_review": "02127b1b7889e0f95806833b7a0a0c4ac42f0657faa5e200bda538c53f2ae3fc"
+  },
+  "onset_code_sha256": "b7f5d45c1018b9470cc1845b52adf914c153fb0733be08a873c710e7f85c8010",
+  "runner_sha256": "00b04dac218650f46288793e42aa933411e5c2f15ad316182d817dbc7189a722",
+  "fixed_parameters": {
+    "quiet_rate_px_s": 3,
+    "strong_rate_px_s": 12,
+    "quiet_steps": 3,
+    "strong_steps": 2,
+    "max_sample_gap_s": 1.5,
+    "max_quiet_to_strong_s": 5
+  },
+  "proposal_count": 25,
+  "counts_by_source_class_and_onset_status": {
+    "moving_stone": {
+      "insufficient_observations": 17
+    },
+    "person_or_wheelchair": {
+      "insufficient_observations": 3,
+      "no_supported_quiet_to_motion_transition": 1,
+      "observed_quiet_to_sustained_directional_motion": 1
+    },
+    "stone_pixels_identity_uncertain": {
+      "observed_quiet_to_sustained_directional_motion": 3
+    }
+  },
+  "rows": [
+    {
+      "raw_track_id": "A002",
+      "source_prefix_class": "moving_stone",
+      "direction": "positive_y",
+      "passage_time_s": 1651.03,
+      "observed_motion_onset": {
+        "status": "insufficient_observations"
+      },
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A003",
+      "source_prefix_class": "stone_pixels_identity_uncertain",
+      "direction": "positive_y",
+      "passage_time_s": 1704.911,
+      "observed_motion_onset": {
+        "status": "observed_quiet_to_sustained_directional_motion",
+        "onset_bracket_s": [
+          1704.0,
+          1705.0
+        ],
+        "first_strong_motion_time_s": 1705.0,
+        "last_observed_track_time_s": 1706.0,
+        "observed_moving_points": [
+          {
+            "pixel": [
+              473.0,
+              208.5
+            ],
+            "bbox": [
+              466,
+              204,
+              14,
+              9
+            ],
+            "cap_area_px2": 58.5,
+            "time_s": 1704.0
+          },
+          {
+            "pixel": [
+              474.0,
+              231.0
+            ],
+            "bbox": [
+              468,
+              228,
+              12,
+              6
+            ],
+            "cap_area_px2": 16.5,
+            "time_s": 1705.0
+          },
+          {
+            "pixel": [
+              473.0,
+              262.0
+            ],
+            "bbox": [
+              466,
+              258,
+              14,
+              8
+            ],
+            "cap_area_px2": 44.0,
+            "time_s": 1706.0
+          }
+        ],
+        "supporting_step_rates_px_s": [
+          22.5,
+          31.0
+        ],
+        "quiet_end_time_s": 1704.0,
+        "physical_release_time_s": null,
+        "physical_stone_identity_verified": false,
+        "physical_settle_time_s": null
+      },
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A010",
+      "source_prefix_class": "stone_pixels_identity_uncertain",
+      "direction": "positive_y",
+      "passage_time_s": 1751.143,
+      "observed_motion_onset": {
+        "status": "observed_quiet_to_sustained_directional_motion",
+        "onset_bracket_s": [
+          1750.0,
+          1751.0
+        ],
+        "first_strong_motion_time_s": 1751.0,
+        "last_observed_track_time_s": 1753.0,
+        "observed_moving_points": [
+          {
+            "pixel": [
+              486.0,
+              206.0
+            ],
+            "bbox": [
+              478,
+              202,
+              16,
+              8
+            ],
+            "cap_area_px2": 65.5,
+            "time_s": 1750.0
+          },
+          {
+            "pixel": [
+              491.0,
+              226.0
+            ],
+            "bbox": [
+              484,
+              222,
+              14,
+              8
+            ],
+            "cap_area_px2": 64.0,
+            "time_s": 1751.0
+          },
+          {
+            "pixel": [
+              496.0,
+              254.0
+            ],
+            "bbox": [
+              488,
+              250,
+              16,
+              8
+            ],
+            "cap_area_px2": 78.0,
+            "time_s": 1752.0
+          },
+          {
+            "pixel": [
+              501.0,
+              285.0
+            ],
+            "bbox": [
+              492,
+              280,
+              18,
+              10
+            ],
+            "cap_area_px2": 108.5,
+            "time_s": 1753.0
+          }
+        ],
+        "supporting_step_rates_px_s": [
+          20.0,
+          28.0
+        ],
+        "quiet_end_time_s": 1750.0,
+        "physical_release_time_s": null,
+        "physical_stone_identity_verified": false,
+        "physical_settle_time_s": null
+      },
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A018",
+      "source_prefix_class": "stone_pixels_identity_uncertain",
+      "direction": "positive_y",
+      "passage_time_s": 1810.265,
+      "observed_motion_onset": {
+        "status": "observed_quiet_to_sustained_directional_motion",
+        "onset_bracket_s": [
+          1809.0,
+          1810.0
+        ],
+        "first_strong_motion_time_s": 1810.0,
+        "last_observed_track_time_s": 1812.0,
+        "observed_moving_points": [
+          {
+            "pixel": [
+              489.0,
+              208.0
+            ],
+            "bbox": [
+              482,
+              204,
+              14,
+              8
+            ],
+            "cap_area_px2": 72.5,
+            "time_s": 1809.0
+          },
+          {
+            "pixel": [
+              495.0,
+              220.0
+            ],
+            "bbox": [
+              488,
+              214,
+              14,
+              12
+            ],
+            "cap_area_px2": 45.5,
+            "time_s": 1810.0
+          },
+          {
+            "pixel": [
+              508.5,
+              254.0
+            ],
+            "bbox": [
+              502,
+              250,
+              13,
+              8
+            ],
+            "cap_area_px2": 43.0,
+            "time_s": 1811.0
+          },
+          {
+            "pixel": [
+              521.0,
+              290.0
+            ],
+            "bbox": [
+              514,
+              286,
+              14,
+              8
+            ],
+            "cap_area_px2": 50.0,
+            "time_s": 1812.0
+          }
+        ],
+        "supporting_step_rates_px_s": [
+          12.0,
+          34.0
+        ],
+        "quiet_end_time_s": 1809.0,
+        "physical_release_time_s": null,
+        "physical_stone_identity_verified": false,
+        "physical_settle_time_s": null
+      },
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A027",
+      "source_prefix_class": "person_or_wheelchair",
+      "direction": "positive_y",
+      "passage_time_s": 1841.517,
+      "observed_motion_onset": {
+        "status": "no_supported_quiet_to_motion_transition"
+      },
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A028",
+      "source_prefix_class": "person_or_wheelchair",
+      "direction": "positive_y",
+      "passage_time_s": 1845.064,
+      "observed_motion_onset": {
+        "status": "insufficient_observations"
+      },
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A030",
+      "source_prefix_class": "person_or_wheelchair",
+      "direction": "negative_y",
+      "passage_time_s": 1882.0,
+      "observed_motion_onset": {
+        "status": "insufficient_observations"
+      },
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A032",
+      "source_prefix_class": "moving_stone",
+      "direction": "negative_y",
+      "passage_time_s": 1925.385,
+      "observed_motion_onset": {
+        "status": "insufficient_observations"
+      },
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A035",
+      "source_prefix_class": "moving_stone",
+      "direction": "negative_y",
+      "passage_time_s": 1967.125,
+      "observed_motion_onset": {
+        "status": "insufficient_observations"
+      },
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A037",
+      "source_prefix_class": "moving_stone",
+      "direction": "negative_y",
+      "passage_time_s": 2012.5,
+      "observed_motion_onset": {
+        "status": "insufficient_observations"
+      },
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A039",
+      "source_prefix_class": "moving_stone",
+      "direction": "negative_y",
+      "passage_time_s": 2060.0,
+      "observed_motion_onset": {
+        "status": "insufficient_observations"
+      },
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A041",
+      "source_prefix_class": "moving_stone",
+      "direction": "negative_y",
+      "passage_time_s": 2110.019,
+      "observed_motion_onset": {
+        "status": "insufficient_observations"
+      },
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A045",
+      "source_prefix_class": "moving_stone",
+      "direction": "negative_y",
+      "passage_time_s": 2157.083,
+      "observed_motion_onset": {
+        "status": "insufficient_observations"
+      },
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A046",
+      "source_prefix_class": "moving_stone",
+      "direction": "negative_y",
+      "passage_time_s": 2195.02,
+      "observed_motion_onset": {
+        "status": "insufficient_observations"
+      },
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A047",
+      "source_prefix_class": "moving_stone",
+      "direction": "negative_y",
+      "passage_time_s": 2237.12,
+      "observed_motion_onset": {
+        "status": "insufficient_observations"
+      },
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A052",
+      "source_prefix_class": "moving_stone",
+      "direction": "negative_y",
+      "passage_time_s": 2302.556,
+      "observed_motion_onset": {
+        "status": "insufficient_observations"
+      },
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A056",
+      "source_prefix_class": "moving_stone",
+      "direction": "negative_y",
+      "passage_time_s": 2352.163,
+      "observed_motion_onset": {
+        "status": "insufficient_observations"
+      },
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A058",
+      "source_prefix_class": "moving_stone",
+      "direction": "negative_y",
+      "passage_time_s": 2403.04,
+      "observed_motion_onset": {
+        "status": "insufficient_observations"
+      },
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A059",
+      "source_prefix_class": "moving_stone",
+      "direction": "negative_y",
+      "passage_time_s": 2464.0,
+      "observed_motion_onset": {
+        "status": "insufficient_observations"
+      },
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A064",
+      "source_prefix_class": "moving_stone",
+      "direction": "negative_y",
+      "passage_time_s": 2519.14,
+      "observed_motion_onset": {
+        "status": "insufficient_observations"
+      },
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A065",
+      "source_prefix_class": "person_or_wheelchair",
+      "direction": "positive_y",
+      "passage_time_s": 2532.704,
+      "observed_motion_onset": {
+        "status": "observed_quiet_to_sustained_directional_motion",
+        "onset_bracket_s": [
+          2530.0,
+          2535.0
+        ],
+        "first_strong_motion_time_s": 2535.0,
+        "last_observed_track_time_s": 2536.0,
+        "observed_moving_points": [
+          {
+            "pixel": [
+              424.0,
+              196.0
+            ],
+            "bbox": [
+              420,
+              190,
+              8,
+              12
+            ],
+            "cap_area_px2": 64.0,
+            "time_s": 2534.0
+          },
+          {
+            "pixel": [
+              426.0,
+              215.0
+            ],
+            "bbox": [
+              422,
+              208,
+              8,
+              14
+            ],
+            "cap_area_px2": 67.0,
+            "time_s": 2535.0
+          },
+          {
+            "pixel": [
+              427.0,
+              238.0
+            ],
+            "bbox": [
+              422,
+              230,
+              10,
+              16
+            ],
+            "cap_area_px2": 84.0,
+            "time_s": 2536.0
+          }
+        ],
+        "supporting_step_rates_px_s": [
+          19.0,
+          23.0
+        ],
+        "quiet_end_time_s": 2530.0,
+        "physical_release_time_s": null,
+        "physical_stone_identity_verified": false,
+        "physical_settle_time_s": null
+      },
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A069",
+      "source_prefix_class": "moving_stone",
+      "direction": "negative_y",
+      "passage_time_s": 2586.271,
+      "observed_motion_onset": {
+        "status": "insufficient_observations"
+      },
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A072",
+      "source_prefix_class": "moving_stone",
+      "direction": "negative_y",
+      "passage_time_s": 2644.531,
+      "observed_motion_onset": {
+        "status": "insufficient_observations"
+      },
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A074",
+      "source_prefix_class": "moving_stone",
+      "direction": "negative_y",
+      "passage_time_s": 2701.182,
+      "observed_motion_onset": {
+        "status": "insufficient_observations"
+      },
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A078",
+      "source_prefix_class": "person_or_wheelchair",
+      "direction": "negative_y",
+      "passage_time_s": 2721.512,
+      "observed_motion_onset": {
+        "status": "insufficient_observations"
+      },
+      "physical_throw_verified": false
+    }
+  ],
+  "limitations": [
+    "The onset thresholds were chosen after reviewing Latvia end-six, and USA was exposed during earlier tracker development.",
+    "The source classes are same-agent sampled-frame judgments, not independent physical throw labels.",
+    "Insufficient prefix duration is an abstention, not a missed physical throw.",
+    "People can also show a quiet-to-motion transition."
+  ]
+}

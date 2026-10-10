@@ -1,0 +1,83 @@
+{
+  "status": "candidate_scan_partition_of_frozen_corridor",
+  "source_id": "yu_YoFrFd20",
+  "source_sha256": "e63c9b063b5b11ad5173083dffe974d909c78e5d01312740b87bccc006402013",
+  "source_interval_s": [
+    0.0,
+    6683.0
+  ],
+  "input_sha256": "bebd660881bdf7d6d5bf55535247330cebdbe35a2a89d6c6f63d5ec89badfc90",
+  "model_sha256": "3f8829d965d8a62312d9016e6955d1cc2c8546ad4e19c47b2d3c7a934f5bd036",
+  "runner_sha256": "d73c529bd32a8e68b45cc05021be2d0d68e50fed22bd8305c2fc29032b5f1002",
+  "geometry": {
+    "center_x_px": 160.0,
+    "half_width_px": 60.0,
+    "coordinates": "normalized 640x360 full frame; left 320px panel"
+  },
+  "events": [
+    {
+      "id": "S19",
+      "track_id": 695,
+      "colour": "yellow",
+      "crossing_time_s": 619.14,
+      "time_semantics": "observed_track_midpoint",
+      "confirmed_at_s": 619.6,
+      "first_observed_s": 618.7,
+      "evidence_kind": "early_roi_motion_span",
+      "release_time_s": null,
+      "gate_y_px": null,
+      "crossing_x_px": 152.5952380952381,
+      "passage_y_px": 66.5,
+      "velocity_px_s": [
+        -2.9090909090909323,
+        -29.103030303030412
+      ],
+      "observations_at_confirmation": 10,
+      "observed_span_px": 25.0,
+      "median_candidate_bbox_width_px": 8.0,
+      "median_candidate_bbox_height_px": 10.0,
+      "mean_body_support": 0.905625,
+      "recent_track_duration_s": 0.8999999999999773,
+      "direction_consistency": 1.0,
+      "view_motion": "negative_y"
+    },
+    {
+      "id": "S20",
+      "track_id": 766,
+      "colour": "red",
+      "crossing_time_s": 675.851,
+      "time_semantics": "observed_track_midpoint",
+      "confirmed_at_s": 676.3,
+      "first_observed_s": 674.4,
+      "evidence_kind": "early_roi_motion_span",
+      "release_time_s": null,
+      "gate_y_px": null,
+      "crossing_x_px": 159.74739583333334,
+      "passage_y_px": 73.03,
+      "velocity_px_s": [
+        6.757912745936688,
+        -13.23358996293125
+      ],
+      "observations_at_confirmation": 18,
+      "observed_span_px": 25.060000000000002,
+      "median_candidate_bbox_width_px": 12.0,
+      "median_candidate_bbox_height_px": 13.0,
+      "mean_body_support": 0.583931295042406,
+      "recent_track_duration_s": 1.8999999999999773,
+      "direction_consistency": 0.8823529411764706,
+      "view_motion": "negative_y"
+    }
+  ],
+  "withheld_events": [],
+  "screened_events": [],
+  "limitations": [
+    "The geometry was selected after inspecting same-layout Canada\u2013Italy disagreements.",
+    "Off-corridor events are preserved as candidates, not silently deleted.",
+    "No independent performance or camera-family generalization claim follows."
+  ],
+  "parent_candidates_sha256": "9176ac5934ce3729e2a7281d954d9b4f968cc6804c0686d9ca4fcc5f0aa02768",
+  "partition_range": [
+    16,
+    18
+  ]
+}

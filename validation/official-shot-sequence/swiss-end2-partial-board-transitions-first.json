@@ -1,0 +1,97 @@
+{
+  "status": "first_source_only_partial_board_transition_evidence",
+  "source_sha256": "49429abdd3796e8240e66c201d37e94e71a7bb6225890b2492bea26d2f70d560",
+  "board_scan_sha256": "dff9e0a9be9c0bda915c709a99beefd2b0620bb82e413c22619b9f12514b307e",
+  "transition_code_sha256": "ec35c9bca183baaa4870709f1c9279ea383e592161a0207469a2630ea318f3a6",
+  "runner_sha256": "3f976f2afbe3812b676710d88b2ed6ff520544b3b08c4ad13086864d3ee971fb",
+  "selected_shot_numbers": [
+    10,
+    11,
+    12,
+    13,
+    14
+  ],
+  "transition_count": 4,
+  "observed_transition_count": 2,
+  "transitions": [
+    {
+      "before_shot_id": "PREL000101-E02-S10",
+      "after_shot_id": "PREL000101-E02-S11",
+      "status": "one_or_both_video_boards_missing",
+      "simulation_ready": false
+    },
+    {
+      "before_shot_id": "PREL000101-E02-S11",
+      "after_shot_id": "PREL000101-E02-S12",
+      "status": "one_or_both_video_boards_missing",
+      "simulation_ready": false
+    },
+    {
+      "status": "local_partial_board_comparison",
+      "before_shot_id": "PREL000101-E02-S12",
+      "after_shot_id": "PREL000101-E02-S13",
+      "counter_interval_s": [
+        1694.0,
+        1751.0
+      ],
+      "match_distance_house_radii": 0.1,
+      "locally_retained": [
+        {
+          "before_local_id": "V02",
+          "after_local_id": "V02",
+          "colour": "yellow",
+          "position_shift_house_radii": 0.0121,
+          "identity_status": "same_colour_nearby_observation_not_physical_identity"
+        }
+      ],
+      "no_longer_observed": [
+        "V01"
+      ],
+      "newly_observed": [
+        "V01"
+      ],
+      "unresolved_before": [],
+      "unresolved_after": [],
+      "physical_transition_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "status": "local_partial_board_comparison",
+      "before_shot_id": "PREL000101-E02-S13",
+      "after_shot_id": "PREL000101-E02-S14",
+      "counter_interval_s": [
+        1751.0,
+        1796.0
+      ],
+      "match_distance_house_radii": 0.1,
+      "locally_retained": [
+        {
+          "before_local_id": "V01",
+          "after_local_id": "V01",
+          "colour": "yellow",
+          "position_shift_house_radii": 0.0123,
+          "identity_status": "same_colour_nearby_observation_not_physical_identity"
+        },
+        {
+          "before_local_id": "V02",
+          "after_local_id": "V02",
+          "colour": "yellow",
+          "position_shift_house_radii": 0.0238,
+          "identity_status": "same_colour_nearby_observation_not_physical_identity"
+        }
+      ],
+      "no_longer_observed": [],
+      "newly_observed": [],
+      "unresolved_before": [],
+      "unresolved_after": [],
+      "physical_transition_verified": false,
+      "simulation_ready": false
+    }
+  ],
+  "limitations": [
+    "Only locally repeated same-colour positions are associated across partial boards.",
+    "Newly/no-longer observed does not establish physical addition or removal.",
+    "No official diagram positions enter the source-only transition decisions.",
+    "No exact release, collision, settle time, metric calibration or trajectory is inferred."
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "status": "first_end5_early_gate_to_delayed_counter_proxy_not_physical_f1",
+  "source_sha256": "c49fb90959c13b690447dccb87a0b78e0bba8537aa961339a92f934226baf2b3",
+  "source_only_event_sha256": "373ba5208e10a0ac3c3ef5ed640f5b2822cc61377de0cb6ac3e7994501b33173",
+  "first_transfer_sha256": "22cf96576fae262df6d6974448924fdd385e27087db73473c6cefa6c70b9c427",
+  "score_code_sha256": "25d034dc4b3716656c7ff621e35f21ef7790d2b1f3c51467f77c58ee09c5d656",
+  "runner_sha256": "af0576f59094c3d3cac9e02b99ee8b0c1410a30e717671da1c3a80a0c4621fc0",
+  "end": 5,
+  "official_shot_count": 16,
+  "clean_counter_count": 10,
+  "score": {
+    "visual_candidate_count": 2,
+    "clean_counter_count": 10,
+    "matched_count": 1,
+    "unmatched_visual_ids": [
+      "S349-early-gate"
+    ],
+    "unmatched_official_shot_ids": [
+      "PREL001501-E05-S01",
+      "PREL001501-E05-S02",
+      "PREL001501-E05-S03",
+      "PREL001501-E05-S04",
+      "PREL001501-E05-S05",
+      "PREL001501-E05-S06",
+      "PREL001501-E05-S07",
+      "PREL001501-E05-S08",
+      "PREL001501-E05-S09"
+    ],
+    "matches": [
+      {
+        "visual_id": "S359-early-gate",
+        "official_shot_id": "PREL001501-E05-S12",
+        "visual_colour": "red",
+        "counter_colour": "yellow",
+        "counter_minus_visual_end_s": 25.4
+      }
+    ],
+    "counter_proxy_precision": 0.5,
+    "counter_proxy_recall": 0.1,
+    "counter_proxy_f1": 0.1667,
+    "known_colour_match_count": 0,
+    "known_colour_conflict_count": 1,
+    "unknown_colour_match_count": 0
+  },
+  "limitations": [
+    "The early line and colour rule were frozen from exposed end four before this end-five score.",
+    "Delayed counters are weak references with only 10 of 16 official shots covered.",
+    "Broad origin windows and monotone timing can pair the wrong physical delivery.",
+    "This does not establish complete-end precision, recall, F1 or cross-cut identity."
+  ]
+}

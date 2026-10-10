@@ -1,0 +1,153 @@
+{
+  "status": "development_sequence_consistency_audit_not_throw_truth",
+  "source_id": "qn9tHfcimlQ",
+  "source_sha256": "c5254bb9103e32c6beac74cf269fc7bcec8ce2c2a710a7d4600c7ddb951f160e",
+  "source_interval_s": [
+    0.0,
+    8356.0
+  ],
+  "timeline_sha256": "12e8f169a5ffeb1b741aa0ad8699c7cb6267a6d694702ea85cb1b845f8ed9a91",
+  "audit_code_sha256": "868fea62cec1f1a955b32c581190979ad78f73f9997b515231d2565259bb0edb",
+  "runner_sha256": "05c5c2d2646cfd9bcf50631542c9faf801af11d07bf1182a384c380350403fd8",
+  "same_colour_adjacent_count": 12,
+  "nearby_review_priority_count": 3,
+  "rows": [
+    {
+      "previous_event_id": "R01-B09",
+      "current_event_id": "R01-B10",
+      "colour": "red",
+      "previous_time_s": 701.0,
+      "current_time_s": 829.0,
+      "separation_s": 128.0,
+      "same_supported_run": true,
+      "crossed_coverage_gaps_s": [],
+      "nearby_review_priority": false
+    },
+    {
+      "previous_event_id": "R01-B11",
+      "current_event_id": "R01-B12",
+      "colour": "yellow",
+      "previous_time_s": 880.0,
+      "current_time_s": 983.0,
+      "separation_s": 103.0,
+      "same_supported_run": true,
+      "crossed_coverage_gaps_s": [],
+      "nearby_review_priority": false
+    },
+    {
+      "previous_event_id": "R01-B13",
+      "current_event_id": "R01-B14",
+      "colour": "red",
+      "previous_time_s": 999.0,
+      "current_time_s": 1124.0,
+      "separation_s": 125.0,
+      "same_supported_run": true,
+      "crossed_coverage_gaps_s": [],
+      "nearby_review_priority": false
+    },
+    {
+      "previous_event_id": "R01-V01",
+      "current_event_id": "R01-B29",
+      "colour": "yellow",
+      "previous_time_s": 1811.0,
+      "current_time_s": 1950.0,
+      "separation_s": 139.0,
+      "same_supported_run": true,
+      "crossed_coverage_gaps_s": [],
+      "nearby_review_priority": false
+    },
+    {
+      "previous_event_id": "R01-V02",
+      "current_event_id": "R01-B44",
+      "colour": "red",
+      "previous_time_s": 2671.0,
+      "current_time_s": 2811.0,
+      "separation_s": 140.0,
+      "same_supported_run": true,
+      "crossed_coverage_gaps_s": [],
+      "nearby_review_priority": false
+    },
+    {
+      "previous_event_id": "R01-B44",
+      "current_event_id": "R01-B45",
+      "colour": "red",
+      "previous_time_s": 2811.0,
+      "current_time_s": 2825.0,
+      "separation_s": 14.0,
+      "same_supported_run": true,
+      "crossed_coverage_gaps_s": [],
+      "nearby_review_priority": true
+    },
+    {
+      "previous_event_id": "R02-B05",
+      "current_event_id": "R02-B06",
+      "colour": "red",
+      "previous_time_s": 4230.0,
+      "current_time_s": 4263.0,
+      "separation_s": 33.0,
+      "same_supported_run": true,
+      "crossed_coverage_gaps_s": [],
+      "nearby_review_priority": true
+    },
+    {
+      "previous_event_id": "R02-V02",
+      "current_event_id": "R02-B15",
+      "colour": "yellow",
+      "previous_time_s": 4719.0,
+      "current_time_s": 4922.0,
+      "separation_s": 203.0,
+      "same_supported_run": true,
+      "crossed_coverage_gaps_s": [],
+      "nearby_review_priority": false
+    },
+    {
+      "previous_event_id": "R02-B28",
+      "current_event_id": "R02-B29",
+      "colour": "yellow",
+      "previous_time_s": 5698.0,
+      "current_time_s": 5931.0,
+      "separation_s": 233.0,
+      "same_supported_run": true,
+      "crossed_coverage_gaps_s": [],
+      "nearby_review_priority": false
+    },
+    {
+      "previous_event_id": "R02-B42",
+      "current_event_id": "R02-B43",
+      "colour": "red",
+      "previous_time_s": 6967.0,
+      "current_time_s": 7084.0,
+      "separation_s": 117.0,
+      "same_supported_run": true,
+      "crossed_coverage_gaps_s": [],
+      "nearby_review_priority": false
+    },
+    {
+      "previous_event_id": "R02-V01",
+      "current_event_id": "R02-B44",
+      "colour": "yellow",
+      "previous_time_s": 7159.0,
+      "current_time_s": 7315.0,
+      "separation_s": 156.0,
+      "same_supported_run": true,
+      "crossed_coverage_gaps_s": [],
+      "nearby_review_priority": false
+    },
+    {
+      "previous_event_id": "R02-B44",
+      "current_event_id": "R02-B45",
+      "colour": "yellow",
+      "previous_time_s": 7315.0,
+      "current_time_s": 7327.0,
+      "separation_s": 12.0,
+      "same_supported_run": true,
+      "crossed_coverage_gaps_s": [],
+      "nearby_review_priority": true
+    }
+  ],
+  "limitations": [
+    "Teams alternate within an end, but end boundaries and rare redeliveries are not verified here.",
+    "A same-colour pair can represent an extra event, missed opponent throw, colour error or new end.",
+    "This audit never inserts, removes or recolours event predictions."
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "status": "candidate_camera_motion_evidence_not_throw_truth",
+  "source_id": "canada-czech-2024",
+  "source_sha256": "e63c9b063b5b11ad5173083dffe974d909c78e5d01312740b87bccc006402013",
+  "source_interval_s": [
+    95.0,
+    115.0
+  ],
+  "input_sha256": {
+    "raw": "efee68e15cc81e02071f6cca69b553debd717c7ec37470f9ff60bdc32058fbe5",
+    "preflight": "ee8a87605f135e924eb6d358f135791d689fd767e00a760c64dc1d7572a4fd90"
+  },
+  "code_sha256": {
+    "candidate": "86e38f573eabb38a3c753af21917b93d268812fe0753b4d99568c0d202cd97f2",
+    "router": "f7ee8f3c96ff5c246c7a82f16769daa0f1c0baeccafa0c79346cbdb8ab5c598e",
+    "lowres_adapter": "609cb4f6dace7407a5c769bda9dbce30004c076f6bdd6fe1d0ba4ccee450222f",
+    "split_registration": "856349b7edbd447ba4f6221dbec9c5d7fd583fc53f4749226c4ebab38d454aca",
+    "runner": "3c23966458dd80a05e2a098cb395792b5135fcc3b1babd34642830912e708da6"
+  },
+  "rows": [
+    {
+      "id": "S01",
+      "observed_interval_s": [
+        96.4,
+        97.4
+      ],
+      "source_pixels": [
+        [
+          154.0,
+          63.5
+        ],
+        [
+          151.5,
+          39.0
+        ]
+      ],
+      "observed_point_count": 11,
+      "status": "all_ice_region_subpairs_registered",
+      "camera_residual_px": 49.172,
+      "subpairs": [
+        {
+          "interval_s": [
+            96.4,
+            96.65
+          ],
+          "region_fraction": 0.7289,
+          "tracked_features": 700,
+          "inliers": 681,
+          "inlier_fraction": 0.9729,
+          "edge_sample_count": 5838,
+          "edge_identity_support": 0.9769,
+          "edge_transform_support": 0.9769,
+          "proposed_target_shift_px": 0.319,
+          "status": "registered"
+        },
+        {
+          "interval_s": [
+            96.65,
+            96.9
+          ],
+          "region_fraction": 0.7291,
+          "tracked_features": 700,
+          "inliers": 652,
+          "inlier_fraction": 0.9314,
+          "edge_sample_count": 5892,
+          "edge_identity_support": 0.9632,
+          "edge_transform_support": 0.9632,
+          "proposed_target_shift_px": 0.21,
+          "status": "registered"
+        },
+        {
+          "interval_s": [
+            96.9,
+            97.15
+          ],
+          "region_fraction": 0.7289,
+          "tracked_features": 700,
+          "inliers": 624,
+          "inlier_fraction": 0.8914,
+          "edge_sample_count": 5921,
+          "edge_identity_support": 0.9478,
+          "edge_transform_support": 0.9478,
+          "proposed_target_shift_px": 0.167,
+          "status": "registered"
+        },
+        {
+          "interval_s": [
+            97.15,
+            97.4
+          ],
+          "region_fraction": 0.729,
+          "tracked_features": 696,
+          "inliers": 598,
+          "inlier_fraction": 0.8592,
+          "edge_sample_count": 5976,
+          "edge_identity_support": 0.8966,
+          "edge_transform_support": 0.8966,
+          "proposed_target_shift_px": 0.02,
+          "status": "registered"
+        }
+      ],
+      "panel": "left",
+      "coordinate_frame": "640x720_upsampled_360p_split_panel_pixels",
+      "layout": "split_2024"
+    }
+  ],
+  "limitations": [
+    "Path pixels come from unverified raw cap tracks, not physical stone identities.",
+    "Camera-relative displacement is evidence only; this sidecar does not alter event decisions.",
+    "A path ending at candidate confirmation does not establish physical release or settle."
+  ]
+}

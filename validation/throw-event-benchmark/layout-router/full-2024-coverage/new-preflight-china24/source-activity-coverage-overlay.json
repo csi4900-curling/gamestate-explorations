@@ -1,0 +1,47 @@
+{
+  "status": "development_source_activity_coverage_overlay_not_throw_truth",
+  "source_id": "Y_U6gzqORUs",
+  "source_sha256": "2a0885f28b5496670f99ab159c37aeb270cc454e65b909ce8a37a0398f7771ac",
+  "source_interval_s": [
+    0.0,
+    8177.0
+  ],
+  "original_supported_seconds": 7830.0,
+  "original_unknown_seconds": 347.0,
+  "newly_unsupported_seconds": 0,
+  "revised_supported_seconds": 7830.0,
+  "revised_unknown_seconds": 347.0,
+  "revised_supported_runs": [
+    {
+      "source_run_id": "R01",
+      "layout": "split_2024",
+      "interval_s": [
+        90.0,
+        7920.0
+      ]
+    }
+  ],
+  "newly_unsupported_intervals": [],
+  "original_coverage_gaps_s": [
+    [
+      0.0,
+      90.0
+    ],
+    [
+      7920.0,
+      8177.0
+    ]
+  ],
+  "original_event_count_unchanged": 131,
+  "minimum_right_panel_median_mae": 5.0,
+  "timeline_sha256": "23b6d2c57f1a6ad774e07c8323a3690b904fd2d4cefe2af902bd8eddae09fb24",
+  "activity_audit_sha256": "fa1b1c17f8d3d5d7e4554c7ef58dee949df970c6e1895a61a2980084997ea4ca",
+  "overlay_code_sha256": "5cd0b92a740ff5ea405310af52d3f43fd0873ae04a2b08f6c886c4d246b2f4e9",
+  "runner_sha256": "6383a1d9a2cfddbfe34230cb6b28942588410b005697c9ccc881e4efc6809165",
+  "limitations": [
+    "The active-static thresholds were chosen after inspecting Latvia and Italy source frames.",
+    "A static left panel can be a still camera view or frozen feed; this audit does not distinguish them.",
+    "Source-image activity does not label individual delivered stones or estimate throw F1.",
+    "Original candidate events are preserved, including any that fall inside a newly unsupported interval."
+  ]
+}

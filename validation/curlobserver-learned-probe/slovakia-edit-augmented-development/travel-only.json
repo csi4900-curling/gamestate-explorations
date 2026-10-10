@@ -1,0 +1,142 @@
+{
+  "status": "postscore_development_counter_backed_travel_only_candidates",
+  "source_sha256": "eba1d86944a2f4278b6e5e2c7549d12b47e5e8a51bf0c680b2db372c6ec12420",
+  "source_interval_s": [
+    0,
+    7616
+  ],
+  "origins_sha256": "147d9773a7d30a1e0d66e396166abca12bb89e05ef2ecf4022ac01b859483ec7",
+  "counter_alignment_sha256": "3cc04ec1419886a05ca7b289b91a3e060113ffebc00878ee7b67811788440d55",
+  "cap_motion_sha256": "c97bd70dc6ee81c26151a11ad9b1e400483ec3c8af1262e0d47c8d7518423882",
+  "learned_motion_sha256": "d254a4601397a617ba4b4c267b284716dfc7e7121f3968e0edcd92a1f0465bef",
+  "fused_events_sha256": "a4481100f31b5a11009dc909905098ff9b64343d7606684363d922997c21be7e",
+  "fallback_code_sha256": "32d37ea3783719f8e50caeac3f177c042bbdd7087c653f60ecea4fe1013de049",
+  "runner_sha256": "3bdb4b5f0f34010db8b8f07df7162f222b05ada8a1c25f5755d3835c027ec07e",
+  "candidate_count": 1,
+  "rows": [
+    {
+      "counter_id": "B57",
+      "colour": "red",
+      "counter_update_s": 4428.0,
+      "candidate_shots": [
+        {
+          "shot_id": "S290",
+          "shot_interval_s": [
+            4422.2,
+            4452.6
+          ],
+          "channel_support": [
+            {
+              "channel": "cap",
+              "tracks": [
+                {
+                  "id": "S290-R01",
+                  "colour": "red",
+                  "interval_s": [
+                    4422.2,
+                    4452.4
+                  ],
+                  "span_px": 73.11,
+                  "point_count": 142
+                },
+                {
+                  "id": "S290-R02",
+                  "colour": "red",
+                  "interval_s": [
+                    4427.0,
+                    4438.0
+                  ],
+                  "span_px": 78.81,
+                  "point_count": 49
+                },
+                {
+                  "id": "S290-R03",
+                  "colour": "red",
+                  "interval_s": [
+                    4422.4,
+                    4427.2
+                  ],
+                  "span_px": 33.54,
+                  "point_count": 16
+                }
+              ]
+            },
+            {
+              "channel": "learned",
+              "tracks": [
+                {
+                  "id": "S290-R01",
+                  "colour": "red",
+                  "interval_s": [
+                    4427.4,
+                    4452.4
+                  ],
+                  "span_px": 335.03,
+                  "point_count": 80
+                },
+                {
+                  "id": "S290-R02",
+                  "colour": "red",
+                  "interval_s": [
+                    4422.2,
+                    4438.0
+                  ],
+                  "span_px": 102.04,
+                  "point_count": 57
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "status": "unlocalized_travel_candidate",
+      "travel_shot_id": "S290",
+      "release_window_s": [
+        4383.0,
+        4422.2
+      ],
+      "observed_travel_window_s": [
+        4422.2,
+        4452.4
+      ]
+    },
+    {
+      "counter_id": "B80",
+      "colour": "red",
+      "counter_update_s": 5832.0,
+      "candidate_shots": [],
+      "status": "abstained",
+      "travel_shot_id": null
+    },
+    {
+      "counter_id": "B86",
+      "colour": "red",
+      "counter_update_s": 6421.0,
+      "candidate_shots": [],
+      "status": "abstained",
+      "travel_shot_id": null
+    },
+    {
+      "counter_id": "B88",
+      "colour": "yellow",
+      "counter_update_s": 6458.0,
+      "candidate_shots": [],
+      "status": "abstained",
+      "travel_shot_id": null
+    },
+    {
+      "counter_id": "B92",
+      "colour": "yellow",
+      "counter_update_s": 6670.0,
+      "candidate_shots": [],
+      "status": "abstained",
+      "travel_shot_id": null
+    }
+  ],
+  "limitations": [
+    "The source broadcast may omit the physical release; the release window is broad.",
+    "Same-colour cap and learned tracks can depict a displaced old stone.",
+    "Counter updates can be delayed or missing; these are candidate events, not F1 truth.",
+    "This fallback was specified after full-source development misses and is not independent validation."
+  ]
+}

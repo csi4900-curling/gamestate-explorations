@@ -1,0 +1,150 @@
+{
+  "status": "prediction_targeted_development_diagnostic",
+  "model_sha256": "81421342467a0ab8d93f4e08829e5928eefbf98c655b2f3a436493ec002feb63",
+  "inference_sha256": "746e6f4e0c7c9c32d698573e9a14230321e6dd3e1789db642206cab44bd78f68",
+  "source_sha256": {
+    "estonia": "2e2b84bb2d9dffa497ee850ddbeaf0d5cae0d697377b6eee6a1ef481f449f3da",
+    "china": "2a0885f28b5496670f99ab159c37aeb270cc454e65b909ce8a37a0398f7771ac"
+  },
+  "right_view_rule": "normalized 640x360 box left x >= 320",
+  "model_training": "CurlObserver overhead public-box probe; not fitted on these cases",
+  "cases": [
+    {
+      "source": "estonia",
+      "event_id": "R02-S61",
+      "sample_time_s": 6268,
+      "right_boxes": []
+    },
+    {
+      "source": "estonia",
+      "event_id": "R02-S62",
+      "sample_time_s": 6280,
+      "right_boxes": []
+    },
+    {
+      "source": "china",
+      "event_id": "R01-S25",
+      "sample_time_s": 940,
+      "right_boxes": [
+        {
+          "colour": "yellow",
+          "bbox": [
+            479.0,
+            79.0,
+            30,
+            30
+          ],
+          "confidence": 6.008009716085863
+        },
+        {
+          "colour": "red",
+          "bbox": [
+            323.0,
+            94.0,
+            48,
+            48
+          ],
+          "confidence": 3.142305377041788
+        },
+        {
+          "colour": "red",
+          "bbox": [
+            338.0,
+            112.6,
+            18,
+            18
+          ],
+          "confidence": 3.009720019756369
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            487.0,
+            83.8,
+            14,
+            14
+          ],
+          "confidence": 3.001222688262009
+        },
+        {
+          "colour": "red",
+          "bbox": [
+            332.0,
+            103.0,
+            30,
+            30
+          ],
+          "confidence": 2.944683913721541
+        }
+      ]
+    },
+    {
+      "source": "china",
+      "event_id": "R01-S173",
+      "sample_time_s": 5882,
+      "right_boxes": [
+        {
+          "colour": "red",
+          "bbox": [
+            450.0,
+            38.0,
+            18,
+            18
+          ],
+          "confidence": 4.27569012275318
+        }
+      ]
+    },
+    {
+      "source": "china",
+      "event_id": "R01-S200",
+      "sample_time_s": 6498,
+      "right_boxes": [
+        {
+          "colour": "red",
+          "bbox": [
+            617.5,
+            94.0,
+            14,
+            14
+          ],
+          "confidence": 12.369332490627153
+        },
+        {
+          "colour": "red",
+          "bbox": [
+            612.5,
+            93.8,
+            24,
+            24
+          ],
+          "confidence": 4.694515820934676
+        },
+        {
+          "colour": "red",
+          "bbox": [
+            334.5,
+            116.6,
+            18,
+            18
+          ],
+          "confidence": 3.6605599116904037
+        },
+        {
+          "colour": "red",
+          "bbox": [
+            605.5,
+            89.6,
+            38,
+            38
+          ],
+          "confidence": 2.7594104871638545
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Single sampled frames do not measure track-level stone recall or false-positive rate.",
+    "Boxes were selected after predictions and source review; this is not independent validation."
+  ]
+}

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Blind throw review · Canada–Czechia interval</title>
+<style>
+  :root{color-scheme:dark;font:16px system-ui,sans-serif;background:#101922;color:#eef4f8}
+  *{box-sizing:border-box}body{max-width:1000px;margin:0 auto;padding:22px}
+  h1{font-size:1.55rem;margin:0 0 10px}h2{font-size:1.1rem}p{line-height:1.45}
+  .muted{color:#b6c8d3}.panel{background:#1a2a36;border:1px solid #385061;border-radius:12px;padding:16px;margin:14px 0}
+  video{width:100%;max-height:62vh;background:#000;border-radius:10px}button,input,select,textarea{font:inherit}
+  button{background:#315e7b;color:white;border:1px solid #8bb2ca;border-radius:7px;padding:8px 11px;margin:3px;cursor:pointer}
+  button:hover{background:#437c9e}button:disabled{opacity:.5;cursor:default}
+  input,select,textarea{background:#0e1a24;color:white;border:1px solid #6b8293;border-radius:6px;padding:7px}
+  input[type=number]{width:100px}input[type=text]{max-width:100%}.row{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:9px 0}
+  .clock{font-size:1.15rem;font-weight:700}.notice{border-left:4px solid #e3b563;padding-left:12px}
+  .sections{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:6px}
+  .section{margin:0;padding:7px;background:#243746}.section.done{background:#285c4a}.section.active{outline:2px solid #f2c26c}
+  table{width:100%;border-collapse:collapse}th,td{text-align:left;border-bottom:1px solid #3b5261;padding:8px 5px}td:last-child{text-align:right}
+  .error{color:#ffaaa0}.ok{color:#95dfb4}a{color:#9acdf0}
+</style>
+<h1>Blind throw review · 18.5-minute clip</h1>
+<p class="notice">Watch the whole clip without opening detector results. Mark each intentional stone delivery with a broad interval; exact release timing and stone boards are not needed. Mark uncertainty when the action is hidden. This page contains no model predictions.</p>
+<div class="panel">
+  <div class="row"><label>Reviewer <input id="reviewer" type="text" placeholder="Name or initials"></label><label><input id="independent" type="checkbox"> I have not seen predictions for this clip</label></div>
+  <p class="muted">The video starts at full-source second 1650. All controls use clip-local time. The exported JSON also includes full-source times.</p>
+  <video id="video" src="video.mp4" controls preload="metadata"></video>
+  <div class="row"><button id="back">−5 s</button><button id="forward">+5 s</button><label>Speed <select id="speed"><option value="1">1×</option><option value="1.5">1.5×</option><option value="2">2×</option></select></label><label>Seek local second <input id="seek" type="number" min="0" max="1110" step="0.1"></label><button id="go">Go</button><span class="clock" id="clock">0.0 s local · 1650.0 s source</span></div>
+</div>
+<div class="panel">
+  <h2>Mark a delivery</h2>
+  <p>Start just before the player sends a stone; finish after it is clearly travelling. A broad interval is enough. Do not count stone collection, repositioning, or a replay as a new delivery. If the colour or action is unclear, choose unknown or mark uncertain.</p>
+  <div class="row"><label>Stone colour <select id="colour"><option value="unknown">Unknown</option><option value="red">Red</option><option value="yellow">Yellow</option></select></label><label><input id="uncertain" type="checkbox"> Uncertain delivery</label><input id="notes" type="text" placeholder="Optional evidence note" size="35"></div>
+  <div class="row"><button id="start">Mark start</button><button id="finish">Mark finish and save</button><span id="pending" class="muted">No pending interval</span></div>
+  <h2>Recorded intervals</h2><table><thead><tr><th>ID</th><th>Local time</th><th>Colour</th><th>Review</th><th></th></tr></thead><tbody id="events"></tbody></table>
+</div>
+<div class="panel">
+  <h2>Coverage: review every minute</h2>
+  <p class="muted">Click a minute to seek to its start. Check it after watching through its end. This coverage grid catches long gaps that candidate-only review would miss.</p>
+  <div id="sections" class="sections"></div>
+  <div class="row"><label><input id="reviewed" type="checkbox"> I watched the selected minute through its end</label><span id="sectionstatus"></span></div>
+</div>
+<div class="panel">
+  <h2>Save and resume</h2>
+  <p>Changes are saved in this browser. Export a draft after each session; you can import it on another computer. Do not open the model report while reviewing.</p>
+  <p><label>Review notes or prior exposure to this clip<br><textarea id="reviewnotes" rows="2" cols="65" placeholder="Optional: prior viewing, uncertainty, interruptions"></textarea></label></p>
+  <div class="row"><button id="export">Export JSON</button><label>Import draft <input id="import" type="file" accept="application/json"></label><span id="status"></span></div>
+</div>
+<script>
+const sourceSha='6d3f489b7b908281bca9a52eb85470d95374f65f328c13e1e6daf6cbb8bf6623';
+const offset=1650, duration=1110, key='blind-czech-throw-review-v1-'+sourceSha;
+const $=id=>document.getElementById(id), video=$('video');
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const chunks=Array.from({length:Math.ceil(duration/60)},(_,i)=>[i*60,Math.min(duration,(i+1)*60)]);
+function fresh(){return {schema:'blind_throw_interval_v1',source_sha256:sourceSha,source_offset_s:offset,interval_local_s:[0,duration],reviewer:'',independent_confirmed:false,events:[],reviewed_minutes:chunks.map(()=>false),review_notes:''}}
+let data=fresh(), selected=0, pending=null;
+function validDraft(d){return d&&d.schema==='blind_throw_interval_v1'&&d.source_sha256===sourceSha&&d.source_offset_s===offset&&JSON.stringify(d.interval_local_s)===JSON.stringify([0,duration])&&Array.isArray(d.events)&&Array.isArray(d.reviewed_minutes)&&d.reviewed_minutes.length===chunks.length}
+try{const saved=JSON.parse(localStorage.getItem(key)||'null');if(validDraft(saved))data=saved}catch{}
+function save(){localStorage.setItem(key,JSON.stringify(data))}
+function message(s,bad=false){$('status').textContent=s;$('status').className=bad?'error':'ok'}
+function seek(t){video.currentTime=Math.max(0,Math.min(duration-.1,t));updateClock()}
+function updateClock(){const t=video.currentTime||0;$('clock').textContent=t.toFixed(1)+' s local · '+(t+offset).toFixed(1)+' s source'}
+function render(){
+ $('reviewer').value=data.reviewer||'';$('independent').checked=!!data.independent_confirmed;$('reviewnotes').value=data.review_notes||'';
+ $('events').innerHTML=data.events.map((e,i)=>'<tr><td>'+esc(e.id)+'</td><td>'+e.delivery_local_interval_s.map(x=>Number(x).toFixed(1)).join('–')+' s</td><td>'+esc(e.colour)+'</td><td>'+(e.uncertain?'uncertain':'clear')+'</td><td><button data-del="'+i+'">Delete</button></td></tr>').join('');
+ $('events').querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{if(confirm('Delete this interval?')){data.events.splice(Number(b.dataset.del),1);data.events.forEach((e,i)=>e.id='E'+String(i+1).padStart(3,'0'));save();render()}});
+ $('sections').innerHTML=chunks.map(([a,b],i)=>'<button class="section '+(data.reviewed_minutes[i]?'done ':'')+(i===selected?'active':'')+'" data-chunk="'+i+'">'+Math.floor(a/60).toString().padStart(2,'0')+':00–'+Math.floor(b/60).toString().padStart(2,'0')+':'+String(b%60).padStart(2,'0')+'</button>').join('');
+ $('sections').querySelectorAll('[data-chunk]').forEach(b=>b.onclick=()=>{selected=Number(b.dataset.chunk);seek(chunks[selected][0]);render()});
+ $('reviewed').checked=!!data.reviewed_minutes[selected];$('sectionstatus').textContent=data.reviewed_minutes.filter(Boolean).length+'/'+chunks.length+' minutes reviewed';
+ $('pending').textContent=pending===null?'No pending interval':'Start at '+pending.toFixed(1)+' s local';
+}
+$('reviewer').oninput=e=>{data.reviewer=e.target.value;save()};$('independent').onchange=e=>{data.independent_confirmed=e.target.checked;save()};$('reviewnotes').oninput=e=>{data.review_notes=e.target.value;save()};
+$('reviewed').onchange=e=>{data.reviewed_minutes[selected]=e.target.checked;save();render()};
+$('back').onclick=()=>seek(video.currentTime-5);$('forward').onclick=()=>seek(video.currentTime+5);
+$('speed').onchange=e=>video.playbackRate=Number(e.target.value);
+$('go').onclick=()=>seek(Number($('seek').value));video.ontimeupdate=updateClock;
+$('start').onclick=()=>{pending=video.currentTime;render()};
+$('finish').onclick=()=>{if(pending===null){message('Mark a start first.',true);return}let end=video.currentTime;if(end<=pending||end>duration){message('Finish after the start, inside the clip.',true);return}const e={id:'',delivery_local_interval_s:[pending,end],delivery_source_interval_s:[pending+offset,end+offset],colour:$('colour').value,uncertain:$('uncertain').checked,notes:$('notes').value.trim()};if(e.uncertain&&!e.notes){message('Add a short note explaining the uncertainty.',true);return}data.events.push(e);data.events.sort((a,b)=>a.delivery_local_interval_s[0]-b.delivery_local_interval_s[0]);if(data.events.some((x,i)=>i&&x.delivery_local_interval_s[0]<=data.events[i-1].delivery_local_interval_s[1])){data.events.splice(data.events.indexOf(e),1);message('Intervals overlap or touch. Adjust the markers.',true);return}data.events.forEach((x,i)=>x.id='E'+String(i+1).padStart(3,'0'));pending=null;save();render();message('Delivery saved.')};
+$('export').onclick=()=>{data.reviewer=$('reviewer').value.trim();data.independent_confirmed=$('independent').checked;save();let problems=[];if(!data.reviewer)problems.push('Enter reviewer name');if(!data.independent_confirmed)problems.push('Confirm independent review');if(data.reviewed_minutes.some(x=>!x))problems.push('Finish every minute');if(pending!==null)problems.push('Finish pending interval');if(problems.length){message(problems.join(' · '),true);return}const blob=new Blob([JSON.stringify(data,null,2)+'\n'],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='blind-throw-labels-draft.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);message('Draft exported. Send this JSON for sealing and scoring.')};
+$('import').onchange=async e=>{try{const file=e.target.files[0];if(!file)return;const draft=JSON.parse(await file.text());if(!validDraft(draft))throw Error('Draft does not match this exact clip.');data=draft;pending=null;save();render();message('Draft imported.')}catch(err){message(err.message,true)}};
+render();updateClock();
+</script>

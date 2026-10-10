@@ -1,0 +1,600 @@
+{
+  "status": "cross_recording_cap_tail_screen_development_not_event_accuracy",
+  "source_sha256": {
+    "lowres": "aff12e78edeb5e108d142aed3e19b61c3956b4fddc8b2fd8b202713746771739",
+    "highres": "b5235f955c7f23084bbee543ccd2720db98957c2b69826fd0909fd6e35107a62"
+  },
+  "source_interval_s": [
+    1650,
+    2760
+  ],
+  "input_sha256": {
+    "probe": "c2fc3bf2bb635debd933906919b6704d279fa9ca20b147e43a044546df385a96",
+    "source_review": "687377b37bce9a156d74e8cf38fc1ca540149bc05fbf35e6d11137dacedd9614"
+  },
+  "model_code_sha256": "751641a0e7372dab0258f6d7cd076a0dd6603e36cd569dd2b7798edfea1f20f4",
+  "runner_sha256": "9266346cc2386c5a970183b700a72cccbd262785024d6d5576d57da095d660b5",
+  "alignment_check": [
+    {
+      "source_time_s": 1700,
+      "resized_frame_correlation": 0.998184
+    },
+    {
+      "source_time_s": 2000,
+      "resized_frame_correlation": 0.996697
+    },
+    {
+      "source_time_s": 2300,
+      "resized_frame_correlation": 0.99642
+    },
+    {
+      "source_time_s": 2600,
+      "resized_frame_correlation": 0.995937
+    }
+  ],
+  "screen_rule": {
+    "sample_offset_s": 1,
+    "area_px2": [
+      200,
+      3500
+    ],
+    "maximum_prediction_distance_1080p_px": 30,
+    "source_cap_coordinate_scale": 3,
+    "ambiguity_policy": "abstain_unless_exactly_one_component"
+  },
+  "proposal_count": 17,
+  "status_by_source_prefix_class": {
+    "moving_stone": {
+      "unique_colour_component_provisional": 13
+    },
+    "person_or_wheelchair": {
+      "abstain_ambiguous_or_absent": 1,
+      "unique_colour_component_provisional": 1
+    },
+    "stone_pixels_identity_uncertain": {
+      "unique_colour_component_provisional": 2
+    }
+  },
+  "rows": [
+    {
+      "raw_track_id": "A001",
+      "source_prefix_class": "stone_pixels_identity_uncertain",
+      "colour_claim": "red",
+      "direction": "positive_y",
+      "last_saved_cap_time_s": 1684.0,
+      "last_saved_cap_center_360p_px": [
+        530.5,
+        265.0
+      ],
+      "next_source_time_s": 1685.0,
+      "predicted_cap_center_1080p_px": [
+        1629.0,
+        879.0
+      ],
+      "next_frame_screen": {
+        "status": "unique_colour_component_provisional",
+        "candidates": [
+          {
+            "center_1080p_px": [
+              1619.19,
+              877.34
+            ],
+            "colour_area_px2": 408,
+            "prediction_distance_px": 9.95,
+            "touches_frame_bottom": false
+          }
+        ]
+      },
+      "same_stone_identity_verified": false,
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A005",
+      "source_prefix_class": "stone_pixels_identity_uncertain",
+      "colour_claim": "yellow",
+      "direction": "positive_y",
+      "last_saved_cap_time_s": 1789.0,
+      "last_saved_cap_center_360p_px": [
+        439.0,
+        257.5
+      ],
+      "next_source_time_s": 1790.0,
+      "predicted_cap_center_1080p_px": [
+        1269.0,
+        858.0
+      ],
+      "next_frame_screen": {
+        "status": "unique_colour_component_provisional",
+        "candidates": [
+          {
+            "center_1080p_px": [
+              1268.57,
+              860.02
+            ],
+            "colour_area_px2": 889,
+            "prediction_distance_px": 2.07,
+            "touches_frame_bottom": false
+          }
+        ]
+      },
+      "same_stone_identity_verified": false,
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A006",
+      "source_prefix_class": "person_or_wheelchair",
+      "colour_claim": "red",
+      "direction": "positive_y",
+      "last_saved_cap_time_s": 1801.0,
+      "last_saved_cap_center_360p_px": [
+        333.0,
+        239.5
+      ],
+      "next_source_time_s": 1802.0,
+      "predicted_cap_center_1080p_px": [
+        975.0,
+        814.5
+      ],
+      "next_frame_screen": {
+        "status": "abstain_ambiguous_or_absent",
+        "candidates": []
+      },
+      "same_stone_identity_verified": false,
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A007",
+      "source_prefix_class": "person_or_wheelchair",
+      "colour_claim": "red",
+      "direction": "positive_y",
+      "last_saved_cap_time_s": 1820.0,
+      "last_saved_cap_center_360p_px": [
+        400.0,
+        240.5
+      ],
+      "next_source_time_s": 1821.0,
+      "predicted_cap_center_1080p_px": [
+        1174.5,
+        774.0
+      ],
+      "next_frame_screen": {
+        "status": "unique_colour_component_provisional",
+        "candidates": [
+          {
+            "center_1080p_px": [
+              1189.19,
+              796.63
+            ],
+            "colour_area_px2": 1225,
+            "prediction_distance_px": 26.98,
+            "touches_frame_bottom": false
+          }
+        ]
+      },
+      "same_stone_identity_verified": false,
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A010",
+      "source_prefix_class": "moving_stone",
+      "colour_claim": "yellow",
+      "direction": "negative_y",
+      "last_saved_cap_time_s": 1912.0,
+      "last_saved_cap_center_360p_px": [
+        430.0,
+        247.0
+      ],
+      "next_source_time_s": 1913.0,
+      "predicted_cap_center_1080p_px": [
+        1311.0,
+        690.0
+      ],
+      "next_frame_screen": {
+        "status": "unique_colour_component_provisional",
+        "candidates": [
+          {
+            "center_1080p_px": [
+              1310.98,
+              693.21
+            ],
+            "colour_area_px2": 816,
+            "prediction_distance_px": 3.21,
+            "touches_frame_bottom": false
+          }
+        ]
+      },
+      "same_stone_identity_verified": false,
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A013",
+      "source_prefix_class": "moving_stone",
+      "colour_claim": "yellow",
+      "direction": "negative_y",
+      "last_saved_cap_time_s": 2007.0,
+      "last_saved_cap_center_360p_px": [
+        425.0,
+        241.0
+      ],
+      "next_source_time_s": 2008.0,
+      "predicted_cap_center_1080p_px": [
+        1293.0,
+        669.0
+      ],
+      "next_frame_screen": {
+        "status": "unique_colour_component_provisional",
+        "candidates": [
+          {
+            "center_1080p_px": [
+              1293.19,
+              670.59
+            ],
+            "colour_area_px2": 1028,
+            "prediction_distance_px": 1.6,
+            "touches_frame_bottom": false
+          }
+        ]
+      },
+      "same_stone_identity_verified": false,
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A014",
+      "source_prefix_class": "moving_stone",
+      "colour_claim": "red",
+      "direction": "negative_y",
+      "last_saved_cap_time_s": 2062.0,
+      "last_saved_cap_center_360p_px": [
+        425.5,
+        245.0
+      ],
+      "next_source_time_s": 2063.0,
+      "predicted_cap_center_1080p_px": [
+        1291.5,
+        673.5
+      ],
+      "next_frame_screen": {
+        "status": "unique_colour_component_provisional",
+        "candidates": [
+          {
+            "center_1080p_px": [
+              1290.87,
+              687.0
+            ],
+            "colour_area_px2": 331,
+            "prediction_distance_px": 13.51,
+            "touches_frame_bottom": false
+          }
+        ]
+      },
+      "same_stone_identity_verified": false,
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A017",
+      "source_prefix_class": "moving_stone",
+      "colour_claim": "yellow",
+      "direction": "negative_y",
+      "last_saved_cap_time_s": 2141.0,
+      "last_saved_cap_center_360p_px": [
+        450.0,
+        240.0
+      ],
+      "next_source_time_s": 2142.0,
+      "predicted_cap_center_1080p_px": [
+        1362.0,
+        651.0
+      ],
+      "next_frame_screen": {
+        "status": "unique_colour_component_provisional",
+        "candidates": [
+          {
+            "center_1080p_px": [
+              1371.18,
+              666.29
+            ],
+            "colour_area_px2": 881,
+            "prediction_distance_px": 17.84,
+            "touches_frame_bottom": false
+          }
+        ]
+      },
+      "same_stone_identity_verified": false,
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A019",
+      "source_prefix_class": "moving_stone",
+      "colour_claim": "red",
+      "direction": "negative_y",
+      "last_saved_cap_time_s": 2190.0,
+      "last_saved_cap_center_360p_px": [
+        477.5,
+        199.0
+      ],
+      "next_source_time_s": 2191.0,
+      "predicted_cap_center_1080p_px": [
+        1438.5,
+        535.5
+      ],
+      "next_frame_screen": {
+        "status": "unique_colour_component_provisional",
+        "candidates": [
+          {
+            "center_1080p_px": [
+              1452.21,
+              541.68
+            ],
+            "colour_area_px2": 363,
+            "prediction_distance_px": 15.04,
+            "touches_frame_bottom": false
+          }
+        ]
+      },
+      "same_stone_identity_verified": false,
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A020",
+      "source_prefix_class": "moving_stone",
+      "colour_claim": "yellow",
+      "direction": "negative_y",
+      "last_saved_cap_time_s": 2242.0,
+      "last_saved_cap_center_360p_px": [
+        495.0,
+        200.0
+      ],
+      "next_source_time_s": 2243.0,
+      "predicted_cap_center_1080p_px": [
+        1500.0,
+        513.0
+      ],
+      "next_frame_screen": {
+        "status": "unique_colour_component_provisional",
+        "candidates": [
+          {
+            "center_1080p_px": [
+              1497.91,
+              521.97
+            ],
+            "colour_area_px2": 682,
+            "prediction_distance_px": 9.21,
+            "touches_frame_bottom": false
+          }
+        ]
+      },
+      "same_stone_identity_verified": false,
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A021",
+      "source_prefix_class": "moving_stone",
+      "colour_claim": "red",
+      "direction": "negative_y",
+      "last_saved_cap_time_s": 2298.0,
+      "last_saved_cap_center_360p_px": [
+        562.0,
+        252.0
+      ],
+      "next_source_time_s": 2299.0,
+      "predicted_cap_center_1080p_px": [
+        1692.0,
+        667.5
+      ],
+      "next_frame_screen": {
+        "status": "unique_colour_component_provisional",
+        "candidates": [
+          {
+            "center_1080p_px": [
+              1681.79,
+              670.32
+            ],
+            "colour_area_px2": 388,
+            "prediction_distance_px": 10.59,
+            "touches_frame_bottom": false
+          }
+        ]
+      },
+      "same_stone_identity_verified": false,
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A022",
+      "source_prefix_class": "moving_stone",
+      "colour_claim": "yellow",
+      "direction": "negative_y",
+      "last_saved_cap_time_s": 2351.0,
+      "last_saved_cap_center_360p_px": [
+        472.0,
+        235.0
+      ],
+      "next_source_time_s": 2352.0,
+      "predicted_cap_center_1080p_px": [
+        1410.0,
+        606.0
+      ],
+      "next_frame_screen": {
+        "status": "unique_colour_component_provisional",
+        "candidates": [
+          {
+            "center_1080p_px": [
+              1412.71,
+              620.87
+            ],
+            "colour_area_px2": 771,
+            "prediction_distance_px": 15.12,
+            "touches_frame_bottom": false
+          }
+        ]
+      },
+      "same_stone_identity_verified": false,
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A023",
+      "source_prefix_class": "moving_stone",
+      "colour_claim": "red",
+      "direction": "negative_y",
+      "last_saved_cap_time_s": 2403.0,
+      "last_saved_cap_center_360p_px": [
+        536.5,
+        255.0
+      ],
+      "next_source_time_s": 2404.0,
+      "predicted_cap_center_1080p_px": [
+        1608.0,
+        672.0
+      ],
+      "next_frame_screen": {
+        "status": "unique_colour_component_provisional",
+        "candidates": [
+          {
+            "center_1080p_px": [
+              1605.41,
+              690.74
+            ],
+            "colour_area_px2": 383,
+            "prediction_distance_px": 18.92,
+            "touches_frame_bottom": false
+          }
+        ]
+      },
+      "same_stone_identity_verified": false,
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A026",
+      "source_prefix_class": "moving_stone",
+      "colour_claim": "yellow",
+      "direction": "negative_y",
+      "last_saved_cap_time_s": 2469.0,
+      "last_saved_cap_center_360p_px": [
+        490.0,
+        225.0
+      ],
+      "next_source_time_s": 2470.0,
+      "predicted_cap_center_1080p_px": [
+        1470.0,
+        579.0
+      ],
+      "next_frame_screen": {
+        "status": "unique_colour_component_provisional",
+        "candidates": [
+          {
+            "center_1080p_px": [
+              1464.21,
+              596.16
+            ],
+            "colour_area_px2": 845,
+            "prediction_distance_px": 18.11,
+            "touches_frame_bottom": false
+          }
+        ]
+      },
+      "same_stone_identity_verified": false,
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A027",
+      "source_prefix_class": "moving_stone",
+      "colour_claim": "red",
+      "direction": "negative_y",
+      "last_saved_cap_time_s": 2522.0,
+      "last_saved_cap_center_360p_px": [
+        505.0,
+        258.0
+      ],
+      "next_source_time_s": 2523.0,
+      "predicted_cap_center_1080p_px": [
+        1506.0,
+        690.0
+      ],
+      "next_frame_screen": {
+        "status": "unique_colour_component_provisional",
+        "candidates": [
+          {
+            "center_1080p_px": [
+              1512.21,
+              703.99
+            ],
+            "colour_area_px2": 291,
+            "prediction_distance_px": 15.3,
+            "touches_frame_bottom": false
+          }
+        ]
+      },
+      "same_stone_identity_verified": false,
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A030",
+      "source_prefix_class": "moving_stone",
+      "colour_claim": "yellow",
+      "direction": "negative_y",
+      "last_saved_cap_time_s": 2593.0,
+      "last_saved_cap_center_360p_px": [
+        499.0,
+        175.0
+      ],
+      "next_source_time_s": 2594.0,
+      "predicted_cap_center_1080p_px": [
+        1482.0,
+        471.0
+      ],
+      "next_frame_screen": {
+        "status": "unique_colour_component_provisional",
+        "candidates": [
+          {
+            "center_1080p_px": [
+              1483.47,
+              476.27
+            ],
+            "colour_area_px2": 720,
+            "prediction_distance_px": 5.47,
+            "touches_frame_bottom": false
+          }
+        ]
+      },
+      "same_stone_identity_verified": false,
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A036",
+      "source_prefix_class": "moving_stone",
+      "colour_claim": "yellow",
+      "direction": "negative_y",
+      "last_saved_cap_time_s": 2739.0,
+      "last_saved_cap_center_360p_px": [
+        527.0,
+        193.0
+      ],
+      "next_source_time_s": 2740.0,
+      "predicted_cap_center_1080p_px": [
+        1596.0,
+        517.5
+      ],
+      "next_frame_screen": {
+        "status": "unique_colour_component_provisional",
+        "candidates": [
+          {
+            "center_1080p_px": [
+              1602.87,
+              517.91
+            ],
+            "colour_area_px2": 974,
+            "prediction_distance_px": 6.88,
+            "touches_frame_bottom": false
+          }
+        ]
+      },
+      "same_stone_identity_verified": false,
+      "physical_throw_verified": false
+    }
+  ],
+  "limitations": [
+    "Source classes were assigned by the detector developer on these exposed recordings.",
+    "A same-colour next-frame component is not proven to be the same physical stone or a throw.",
+    "The Latvia body-centered pilot and this cap-centered transfer use different seed coordinates.",
+    "This is a one-second observability screen, not full path tracking or settled-state reconstruction."
+  ]
+}

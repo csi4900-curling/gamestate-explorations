@@ -1,0 +1,113 @@
+{
+  "status": "development_same_view_motion_path_coverage_not_event_f1",
+  "source_video_sha256": "3ce37eff9e53026c64725a6b72f8e4b2eb42a8ae94245c2e75b62c2c59f5a919",
+  "proposals_sha256": "ead574c8f023afba4979dad9969eb1d86f542f9a0dd1a99f0f3b1dd901ea5257",
+  "reference_sha256": "28d6c004248c4ccc61e081f459d83f0e260d3c9dcad6cd360fdb09258fad068e",
+  "selector_sha256": "a4ab39c2893d281d6a38d1a94834e380367ab9c2d861c770dddd13cc4a706d21",
+  "runner_sha256": "2e024127ed623feb082d6fb87c400819de12e8b90e52ddb857ec1834e056b731",
+  "max_gap_s": 1.1,
+  "selected_reference_event_ids": [
+    "C03"
+  ],
+  "reference_window_count": 1,
+  "selection_status_counts": {
+    "no_supported_motion_run": 1
+  },
+  "far_entry_status_counts": {
+    "no_supported_far_entry_motion_path": 1
+  },
+  "left_reverse_status_counts": {
+    "provisional_unique_far_entry_motion_path": 1
+  },
+  "rows": [
+    {
+      "event_id": "C03",
+      "reference_colour": "red",
+      "reference_window_s": [
+        1765,
+        1790
+      ],
+      "sample_count": 51,
+      "right_registration_abstentions": 16,
+      "selection": {
+        "status": "no_supported_motion_run",
+        "path": [],
+        "candidate_run_count": 4
+      },
+      "far_entry_selection": {
+        "status": "no_supported_far_entry_motion_path",
+        "path": [],
+        "sample_count": 51,
+        "same_colour_proposal_count": 29
+      },
+      "left_reverse_selection": {
+        "status": "provisional_unique_far_entry_motion_path",
+        "path": [
+          {
+            "source_time_s": 1776.0,
+            "pixel_center": [
+              438.9,
+              377.16
+            ],
+            "ground_position_m": [
+              -0.29798872974406115,
+              -5.189674175833429
+            ],
+            "same_colour_candidate_count": 1
+          },
+          {
+            "source_time_s": 1776.5,
+            "pixel_center": [
+              429.18,
+              435.69
+            ],
+            "ground_position_m": [
+              -0.32422879617100026,
+              -3.9442208026416665
+            ],
+            "same_colour_candidate_count": 1
+          },
+          {
+            "source_time_s": 1777.0,
+            "pixel_center": [
+              416.81,
+              499.35
+            ],
+            "ground_position_m": [
+              -0.35985700691955885,
+              -2.7113015205924995
+            ],
+            "same_colour_candidate_count": 1
+          },
+          {
+            "source_time_s": 1777.5,
+            "pixel_center": [
+              402.49,
+              568.8
+            ],
+            "ground_position_m": [
+              -0.3984982774670121,
+              -1.4907278985513126
+            ],
+            "same_colour_candidate_count": 1
+          }
+        ],
+        "sample_count": 4,
+        "first_observation_s": 1776.0,
+        "last_observation_s": 1777.5,
+        "endpoint_displacement_m": 3.700311572206143,
+        "frames_with_multiple_same_colour_candidates": 0,
+        "release_time_observed": false,
+        "physical_identity_verified": false,
+        "metric_accuracy_verified": false,
+        "simulation_ready": false
+      }
+    }
+  ],
+  "limitations": [
+    "The same agent prepared the source-only coarse windows and develops this method.",
+    "This conditions on reference windows and colours; it does not detect all throws from an unseen full match.",
+    "A selected same-colour motion run may belong to a different stone or a false proposal.",
+    "No track here is independently validated for identity, metric accuracy, or simulation."
+  ]
+}

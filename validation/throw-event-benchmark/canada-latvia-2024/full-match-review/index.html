@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Canada–Latvia · Full-match evidence explorer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <p class="eyebrow">CURLING PROJECT · DEVELOPMENT EVIDENCE</p>
+    <h1>Canada–Latvia full-match explorer</h1>
+    <p>Follow provisional passages through the broadcast, including the right-camera evidence where the left trigger is blind.</p>
+    <div class="warning"><strong>Model evidence, not throw truth.</strong> Candidate counts are not physical throw counts. Image caps are partial observations; release, settle, spin, complete boards and simulation remain unknown.</div>
+  </header>
+  <main>
+    <section class="summary" id="summary" aria-label="Evidence summary"></section>
+    <section class="timeline-panel">
+      <div class="section-head"><h2>Recording coverage</h2><span>Source seconds · select a marker to inspect</span></div>
+      <div class="coverage" id="coverage" role="img" aria-label="Source coverage and candidate times"></div>
+      <div class="legend"><span><i class="key left"></i> Left passage</span><span><i class="key raw"></i> Left abstention</span><span><i class="key right"></i> Right-only review</span><span><i class="key blind"></i> Static left camera</span><span><i class="key gap"></i> Routed unknown</span></div>
+    </section>
+    <div class="workspace">
+      <aside class="panel rail">
+        <div class="section-head"><h2>Evidence rows</h2><span id="list-count"></span></div>
+        <label for="search">Find ID or sequence number</label><input id="search" type="search" placeholder="R005, S104 or P080">
+        <label for="filter">Show</label><select id="filter"><option value="all">All observations</option><option value="left_provisional_passage">Left provisional passages</option><option value="left_unconfirmed_raw_motion">Left screen abstentions</option><option value="right_only_review_entry">Right-only review entries</option><option value="reviewed_person">Source-reviewed person pixels</option></select>
+        <div class="candidate-list" id="candidate-list" role="list"></div>
+      </aside>
+      <div class="detail">
+        <section class="panel">
+          <div class="section-head"><div><p class="eyebrow">ORIGINAL BROADCAST</p><h2 id="selected-title">Select an observation</h2></div><span class="pill" id="selected-tier"></span></div>
+          <div class="video-wrap"><video id="video" controls preload="metadata" playsinline src="../source-360p.mp4" aria-label="Canada–Latvia broadcast source"></video><svg id="video-overlay" viewBox="0 0 640 360" aria-hidden="true"></svg></div>
+          <div class="actions"><button id="previous">← Previous</button><button id="seek">Jump to passage</button><button id="post">Jump to cap sample</button><button id="next">Next →</button></div>
+          <p class="hint" id="time-note"></p>
+        </section>
+        <div class="evidence-grid">
+          <section class="panel"><div class="section-head"><h2>Observed motion</h2></div><dl id="motion-details"></dl></section>
+          <section class="panel"><div class="section-head"><h2>Partial right-camera caps</h2></div><div class="board-wrap"><svg id="board" viewBox="0 120 320 240" role="img" aria-label="Right camera image coordinates"></svg></div><p class="hint" id="board-note"></p></section>
+        </div>
+        <section class="panel"><div class="section-head"><h2>State after this observation</h2></div><p id="state-note"></p><p class="invariant">Physical throw identity unverified · Exact release and settle unknown · Complete board unknown · Spin unknown · Simulation ready: no</p></section>
+      </div>
+    </div>
+    <p class="footer">Methods: <a href="../../layout-router/full-2024-coverage/LATVIA-FULL-CANDIDATE-HANDOFF.md">candidate handoff report</a> · <a href="provenance.json">viewer provenance</a>. This viewer shows predictions, so it must not be used to make independent validation labels.</p>
+  </main>
+  <script src="data.js"></script><script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+{
+  "status": "postscore_overlap_of_frozen_china_fallback_not_new_event_score",
+  "source_sha256": "c5254bb9103e32c6beac74cf269fc7bcec8ce2c2a710a7d4600c7ddb951f160e",
+  "first_transfer_sha256": "defa0f27d6c93d23df626307b9b59017b40d3b85492528db9df38fe0726cc0cd",
+  "existing_ledger_sha256": "44f8fad259004fd2efb57bc9f2136d85aaadad66b4761d21f0033468727dfd4d",
+  "runner_sha256": "e528499041dbb1651060dc1bd2045b1b01d69b084b5a083908ae77006f29ec11",
+  "fallback_candidate_count": 2,
+  "novel_camera_shot_count": 0,
+  "linked_counter_colour_conflict_count": 1,
+  "rows": [
+    {
+      "shot_id": "S123",
+      "fallback_colour": "red",
+      "fallback_interval_s": [
+        1602.8,
+        1611.8
+      ],
+      "existing_visual_candidates": [
+        {
+          "candidate_id": "T027",
+          "colour": null,
+          "colour_status": "conflict",
+          "counter_id": "B26",
+          "counter_colour": "yellow"
+        }
+      ],
+      "novel_camera_shot": false,
+      "contradicts_linked_counter_colour": true
+    },
+    {
+      "shot_id": "S519",
+      "fallback_colour": "red",
+      "fallback_interval_s": [
+        7009.6,
+        7036.8
+      ],
+      "existing_visual_candidates": [
+        {
+          "candidate_id": "T114",
+          "colour": "red",
+          "colour_status": "resolved",
+          "counter_id": null,
+          "counter_colour": null
+        }
+      ],
+      "novel_camera_shot": false,
+      "contradicts_linked_counter_colour": false
+    }
+  ],
+  "limitations": [
+    "The existing ledger and its counter links are weak, not independent physical throw labels.",
+    "A same-shot overlap proves the fallback adds no new shot window, not that the visual candidate is true or false.",
+    "The China fallback first output remains frozen and unpromoted."
+  ]
+}

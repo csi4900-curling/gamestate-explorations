@@ -1,0 +1,146 @@
+{
+  "status": "development_ice_context_review_score_not_accepted_event_filter",
+  "source_sha256": "2a0885f28b5496670f99ab159c37aeb270cc454e65b909ce8a37a0398f7771ac",
+  "recording": "china",
+  "proposal_kind": "bidirectional",
+  "proposals_sha256": "53524243d45f8bcb0c1ebf1d49fd5f54ee58e88c00bf65c4556bbf345d026daf",
+  "source_review_sha256": "556c3305b21e0cdee687c6fac6250a1838d74ad72e8b9137edbeafdd948d8c69",
+  "feature_code_sha256": "4e7ea73e5d460f779d84dbe98c71811cd1a12891d9915d1435224e6e0ebd1d86",
+  "runner_sha256": "209aac1719c7c801394b49320c28e12038819b26dc5afa4286a75d6c2ac87cce",
+  "outer_half_size_px": [
+    28,
+    40
+  ],
+  "excluded_inner_half_extent_px": 12,
+  "ice_hsv_rule": {
+    "saturation_less_than": 90,
+    "value_greater_than": 150
+  },
+  "nonice_review_threshold": 0.44,
+  "counts_by_source_class_and_tier": {
+    "moving_stone_short_path": {
+      "isolated_ice_context": 4,
+      "context_cluttered_review": 0
+    },
+    "person_wheelchair_or_clothing": {
+      "isolated_ice_context": 0,
+      "context_cluttered_review": 2
+    }
+  },
+  "rows": [
+    {
+      "raw_track_id": "B014",
+      "source_prefix_class": "person_wheelchair_or_clothing",
+      "sample_times_s": [
+        1784.0,
+        1786.0,
+        1788.0
+      ],
+      "sample_nonice_ring_fractions": [
+        0.4459,
+        0.4643,
+        0.4794
+      ],
+      "median_nonice_ring_fraction": 0.4643,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "context_cluttered_review"
+    },
+    {
+      "raw_track_id": "B015",
+      "source_prefix_class": "person_wheelchair_or_clothing",
+      "sample_times_s": [
+        1792.0,
+        1794.0,
+        1796.0
+      ],
+      "sample_nonice_ring_fractions": [
+        0.5824,
+        0.6853,
+        0.5875
+      ],
+      "median_nonice_ring_fraction": 0.5875,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "context_cluttered_review"
+    },
+    {
+      "raw_track_id": "B031",
+      "source_prefix_class": "moving_stone_short_path",
+      "sample_times_s": [
+        2230.0,
+        2231.0,
+        2232.0
+      ],
+      "sample_nonice_ring_fractions": [
+        0.0314,
+        0.0252,
+        0.0259
+      ],
+      "median_nonice_ring_fraction": 0.0259,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "isolated_ice_context"
+    },
+    {
+      "raw_track_id": "B034",
+      "source_prefix_class": "moving_stone_short_path",
+      "sample_times_s": [
+        2296.0,
+        2297.0,
+        2299.0
+      ],
+      "sample_nonice_ring_fractions": [
+        0.0641,
+        0.0402,
+        0.0719
+      ],
+      "median_nonice_ring_fraction": 0.0641,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "isolated_ice_context"
+    },
+    {
+      "raw_track_id": "B035",
+      "source_prefix_class": "moving_stone_short_path",
+      "sample_times_s": [
+        2335.0,
+        2336.0,
+        2337.0
+      ],
+      "sample_nonice_ring_fractions": [
+        0.0446,
+        0.0397,
+        0.0309
+      ],
+      "median_nonice_ring_fraction": 0.0397,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "isolated_ice_context"
+    },
+    {
+      "raw_track_id": "B046",
+      "source_prefix_class": "moving_stone_short_path",
+      "sample_times_s": [
+        2666.0,
+        2667.0,
+        2669.0
+      ],
+      "sample_nonice_ring_fractions": [
+        0.0202,
+        0.0163,
+        0.0485
+      ],
+      "median_nonice_ring_fraction": 0.0202,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "isolated_ice_context"
+    }
+  ],
+  "limitations": [
+    "The threshold was chosen after measuring the selected Italy/Estonia/China development paths.",
+    "Source classes are same-agent short-prefix reviews, not independent physical-throw labels.",
+    "Painted rings, players close to a stone, camera cuts and wheelchair objects can change local ice fraction.",
+    "A review tier cannot reject physical throws without independent recall validation."
+  ]
+}

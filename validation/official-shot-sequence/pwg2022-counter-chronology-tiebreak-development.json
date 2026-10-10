@@ -1,0 +1,523 @@
+{
+  "status": "development_counter_chronology_diagnostic_no_event_mutation",
+  "rule": "For a multi-option unassociated counter, keep options with origin probability >=0.2 and shot end >= the previous observed counter update. Choose only if exactly one survives.",
+  "code_sha256": "ad993b06f7eb02f3d3898182178ad3d361d0e4a61e9caf05eafd752b5f7a5c06",
+  "runner_sha256": "578b0b355fe62229b8861dc331a82364d90f7e444c3e6696c68454326c8d1d04",
+  "games": [
+    {
+      "recording_code": "PREL000101",
+      "source_sha256": "49429abdd3796e8240e66c201d37e94e71a7bb6225890b2492bea26d2f70d560",
+      "input_sha256": {
+        "counter_alignment": "a2bfe573a69804a49a9576baf835801b58cd8feb3d903333b2954e8dfcec2f07",
+        "shot_origins": "c436693b5586aef1baa77f43d9e0a3fe3b26139fba0c3c39158c774bbc3ef8bb"
+      },
+      "counter_update_count": 103,
+      "ambiguous_counter_count": 2,
+      "unique_chronological_choice_count": 0,
+      "existing_link_temporal_conflict_count": 1,
+      "ambiguous_rows": [
+        {
+          "counter_id": "B70",
+          "counter_colour": "red",
+          "previous_counter_id": "B69",
+          "previous_counter_update_s": 4768.0,
+          "counter_update_s": 4807.0,
+          "chosen_shot_id": null,
+          "status": "abstained",
+          "options": [
+            {
+              "shot_id": "S362",
+              "interval_s": [
+                4768.0,
+                4774.8
+              ],
+              "origin_probability": 0.9840780586340198,
+              "shot_end_minus_previous_update_s": 6.8,
+              "passes_tiebreak": true
+            },
+            {
+              "shot_id": "S364",
+              "interval_s": [
+                4782.2,
+                4789.4
+              ],
+              "origin_probability": 0.9364620973290142,
+              "shot_end_minus_previous_update_s": 21.4,
+              "passes_tiebreak": true
+            },
+            {
+              "shot_id": "S363",
+              "interval_s": [
+                4774.8,
+                4782.2
+              ],
+              "origin_probability": 0.04062496929600635,
+              "shot_end_minus_previous_update_s": 14.2,
+              "passes_tiebreak": false
+            },
+            {
+              "shot_id": "S361",
+              "interval_s": [
+                4750.2,
+                4768.0
+              ],
+              "origin_probability": 1.7831515159795495e-07,
+              "shot_end_minus_previous_update_s": 0.0,
+              "passes_tiebreak": false
+            }
+          ]
+        },
+        {
+          "counter_id": "B71",
+          "counter_colour": "yellow",
+          "previous_counter_id": "B70",
+          "previous_counter_update_s": 4807.0,
+          "counter_update_s": 4858.0,
+          "chosen_shot_id": null,
+          "status": "abstained",
+          "options": [
+            {
+              "shot_id": "S368",
+              "interval_s": [
+                4823.0,
+                4842.4
+              ],
+              "origin_probability": 0.999660165979428,
+              "shot_end_minus_previous_update_s": 35.4,
+              "passes_tiebreak": true
+            },
+            {
+              "shot_id": "S366",
+              "interval_s": [
+                4806.2,
+                4817.6
+              ],
+              "origin_probability": 0.9925861696966258,
+              "shot_end_minus_previous_update_s": 10.6,
+              "passes_tiebreak": true
+            },
+            {
+              "shot_id": "S367",
+              "interval_s": [
+                4817.6,
+                4823.0
+              ],
+              "origin_probability": 5.297249729372031e-06,
+              "shot_end_minus_previous_update_s": 16.0,
+              "passes_tiebreak": false
+            }
+          ]
+        }
+      ],
+      "existing_link_temporal_conflicts": [
+        {
+          "counter_id": "B87",
+          "shot_id": "S476",
+          "previous_counter_id": "B86",
+          "shot_end_before_previous_update_s": 28.6
+        }
+      ]
+    },
+    {
+      "recording_code": "PREL000102",
+      "source_sha256": "c5254bb9103e32c6beac74cf269fc7bcec8ce2c2a710a7d4600c7ddb951f160e",
+      "input_sha256": {
+        "counter_alignment": "80fce8b9f0aa8161b6a44d2c5a2076bbc71ad3ed2745524c94e48f1d5ddaa68c",
+        "shot_origins": "ba685f6822de05e32efe8458a6cd6b6ef46150fedcfe93bd7e05a6a22d0d37db"
+      },
+      "counter_update_count": 116,
+      "ambiguous_counter_count": 3,
+      "unique_chronological_choice_count": 1,
+      "existing_link_temporal_conflict_count": 3,
+      "ambiguous_rows": [
+        {
+          "counter_id": "B35",
+          "counter_colour": "red",
+          "previous_counter_id": "B34",
+          "previous_counter_update_s": 2131.0,
+          "counter_update_s": 2153.0,
+          "chosen_shot_id": "S173",
+          "status": "unique_chronological_option",
+          "options": [
+            {
+              "shot_id": "S169",
+              "interval_s": [
+                2109.2,
+                2119.8
+              ],
+              "origin_probability": 0.9167171255876136,
+              "shot_end_minus_previous_update_s": -11.2,
+              "passes_tiebreak": false
+            },
+            {
+              "shot_id": "S173",
+              "interval_s": [
+                2150.8,
+                2157.2
+              ],
+              "origin_probability": 0.9014772981295032,
+              "shot_end_minus_previous_update_s": 26.2,
+              "passes_tiebreak": true
+            }
+          ]
+        },
+        {
+          "counter_id": "B41",
+          "counter_colour": "red",
+          "previous_counter_id": "B40",
+          "previous_counter_update_s": 2374.0,
+          "counter_update_s": 2421.0,
+          "chosen_shot_id": null,
+          "status": "abstained",
+          "options": [
+            {
+              "shot_id": "S197",
+              "interval_s": [
+                2408.8,
+                2423.0
+              ],
+              "origin_probability": 0.9540847260693824,
+              "shot_end_minus_previous_update_s": 49.0,
+              "passes_tiebreak": true
+            },
+            {
+              "shot_id": "S193",
+              "interval_s": [
+                2350.0,
+                2377.2
+              ],
+              "origin_probability": 0.7767826684537498,
+              "shot_end_minus_previous_update_s": 3.2,
+              "passes_tiebreak": true
+            },
+            {
+              "shot_id": "S194",
+              "interval_s": [
+                2377.2,
+                2393.4
+              ],
+              "origin_probability": 0.16272813614612142,
+              "shot_end_minus_previous_update_s": 19.4,
+              "passes_tiebreak": false
+            }
+          ]
+        },
+        {
+          "counter_id": "B99",
+          "counter_colour": "red",
+          "previous_counter_id": "B98",
+          "previous_counter_update_s": 6522.0,
+          "counter_update_s": 6547.0,
+          "chosen_shot_id": null,
+          "status": "abstained",
+          "options": [
+            {
+              "shot_id": "S484",
+              "interval_s": [
+                6500.4,
+                6524.2
+              ],
+              "origin_probability": 0.09287186690326278,
+              "shot_end_minus_previous_update_s": 2.2,
+              "passes_tiebreak": false
+            },
+            {
+              "shot_id": "S485",
+              "interval_s": [
+                6524.2,
+                6528.8
+              ],
+              "origin_probability": 0.07033959531064678,
+              "shot_end_minus_previous_update_s": 6.8,
+              "passes_tiebreak": false
+            }
+          ]
+        }
+      ],
+      "existing_link_temporal_conflicts": [
+        {
+          "counter_id": "B06",
+          "shot_id": "S37",
+          "previous_counter_id": "B05",
+          "shot_end_before_previous_update_s": 0.6
+        },
+        {
+          "counter_id": "B14",
+          "shot_id": "S67",
+          "previous_counter_id": "B13",
+          "shot_end_before_previous_update_s": 4.6
+        },
+        {
+          "counter_id": "B21",
+          "shot_id": "S93",
+          "previous_counter_id": "B20",
+          "shot_end_before_previous_update_s": 0.6
+        }
+      ]
+    },
+    {
+      "recording_code": "PREL000103",
+      "source_sha256": "eba1d86944a2f4278b6e5e2c7549d12b47e5e8a51bf0c680b2db372c6ec12420",
+      "input_sha256": {
+        "counter_alignment": "daa5aef0683a5bb7ea59059035a50b7c4be6b795ba43da60526d3ecc56bb6a40",
+        "shot_origins": "1a93d01e0aeb399177e3de08f13c56554e06955994d2c2302999d5ea3ab87b38"
+      },
+      "counter_update_count": 98,
+      "ambiguous_counter_count": 4,
+      "unique_chronological_choice_count": 1,
+      "existing_link_temporal_conflict_count": 2,
+      "ambiguous_rows": [
+        {
+          "counter_id": "B61",
+          "counter_colour": "red",
+          "previous_counter_id": "B60",
+          "previous_counter_update_s": 4512.0,
+          "counter_update_s": 4577.0,
+          "chosen_shot_id": null,
+          "status": "abstained",
+          "options": [
+            {
+              "shot_id": "S287",
+              "interval_s": [
+                4562.6,
+                4602.0
+              ],
+              "origin_probability": 0.8275634025827557,
+              "shot_end_minus_previous_update_s": 90.0,
+              "passes_tiebreak": true
+            },
+            {
+              "shot_id": "S286",
+              "interval_s": [
+                4540.6,
+                4562.6
+              ],
+              "origin_probability": 0.7868909397813599,
+              "shot_end_minus_previous_update_s": 50.6,
+              "passes_tiebreak": true
+            },
+            {
+              "shot_id": "S285",
+              "interval_s": [
+                4515.2,
+                4540.6
+              ],
+              "origin_probability": 0.013630293560829843,
+              "shot_end_minus_previous_update_s": 28.6,
+              "passes_tiebreak": false
+            }
+          ]
+        },
+        {
+          "counter_id": "B80",
+          "counter_colour": "red",
+          "previous_counter_id": "B79",
+          "previous_counter_update_s": 5758.0,
+          "counter_update_s": 5832.0,
+          "chosen_shot_id": null,
+          "status": "abstained",
+          "options": [
+            {
+              "shot_id": "S374",
+              "interval_s": [
+                5814.2,
+                5843.4
+              ],
+              "origin_probability": 0.9075736098007787,
+              "shot_end_minus_previous_update_s": 85.4,
+              "passes_tiebreak": true
+            },
+            {
+              "shot_id": "S372",
+              "interval_s": [
+                5774.4,
+                5792.4
+              ],
+              "origin_probability": 0.814357902701917,
+              "shot_end_minus_previous_update_s": 34.4,
+              "passes_tiebreak": true
+            },
+            {
+              "shot_id": "S373",
+              "interval_s": [
+                5792.4,
+                5814.2
+              ],
+              "origin_probability": 0.015065245642514088,
+              "shot_end_minus_previous_update_s": 56.2,
+              "passes_tiebreak": false
+            }
+          ]
+        },
+        {
+          "counter_id": "B86",
+          "counter_colour": "red",
+          "previous_counter_id": "B85",
+          "previous_counter_update_s": 6364.0,
+          "counter_update_s": 6421.0,
+          "chosen_shot_id": null,
+          "status": "abstained",
+          "options": [
+            {
+              "shot_id": "S411",
+              "interval_s": [
+                6373.0,
+                6393.4
+              ],
+              "origin_probability": 0.9579426225653497,
+              "shot_end_minus_previous_update_s": 29.4,
+              "passes_tiebreak": true
+            },
+            {
+              "shot_id": "S414",
+              "interval_s": [
+                6421.0,
+                6437.6
+              ],
+              "origin_probability": 0.930826555867892,
+              "shot_end_minus_previous_update_s": 73.6,
+              "passes_tiebreak": true
+            },
+            {
+              "shot_id": "S413",
+              "interval_s": [
+                6412.4,
+                6421.0
+              ],
+              "origin_probability": 0.03727708259380277,
+              "shot_end_minus_previous_update_s": 57.0,
+              "passes_tiebreak": false
+            },
+            {
+              "shot_id": "S412",
+              "interval_s": [
+                6393.4,
+                6412.4
+              ],
+              "origin_probability": 0.006961336373666909,
+              "shot_end_minus_previous_update_s": 48.4,
+              "passes_tiebreak": false
+            }
+          ]
+        },
+        {
+          "counter_id": "B93",
+          "counter_colour": "red",
+          "previous_counter_id": "B92",
+          "previous_counter_update_s": 6670.0,
+          "counter_update_s": 6693.0,
+          "chosen_shot_id": "S438",
+          "status": "unique_chronological_option",
+          "options": [
+            {
+              "shot_id": "S434",
+              "interval_s": [
+                6637.0,
+                6651.6
+              ],
+              "origin_probability": 0.8798705281592972,
+              "shot_end_minus_previous_update_s": -18.4,
+              "passes_tiebreak": false
+            },
+            {
+              "shot_id": "S438",
+              "interval_s": [
+                6684.0,
+                6697.2
+              ],
+              "origin_probability": 0.8051014617396762,
+              "shot_end_minus_previous_update_s": 27.2,
+              "passes_tiebreak": true
+            },
+            {
+              "shot_id": "S437",
+              "interval_s": [
+                6675.6,
+                6684.0
+              ],
+              "origin_probability": 0.0554856553651657,
+              "shot_end_minus_previous_update_s": 14.0,
+              "passes_tiebreak": false
+            }
+          ]
+        }
+      ],
+      "existing_link_temporal_conflicts": [
+        {
+          "counter_id": "B57",
+          "shot_id": "S277",
+          "previous_counter_id": "B56",
+          "shot_end_before_previous_update_s": 5.0
+        },
+        {
+          "counter_id": "B59",
+          "shot_id": "S279",
+          "previous_counter_id": "B58",
+          "shot_end_before_previous_update_s": 35.8
+        }
+      ]
+    },
+    {
+      "recording_code": "CAN-NOR-2022",
+      "source_sha256": "c49fb90959c13b690447dccb87a0b78e0bba8537aa961339a92f934226baf2b3",
+      "input_sha256": {
+        "counter_alignment": "a4818431fd86e97f3dc084906067437357ed291a51701e87cb85c6296226a1ae",
+        "shot_origins": "477b7822f30af37f95e7665d346395e2ebe4f193af94ead1bc42a53df35997eb"
+      },
+      "counter_update_count": 100,
+      "ambiguous_counter_count": 1,
+      "unique_chronological_choice_count": 1,
+      "existing_link_temporal_conflict_count": 0,
+      "ambiguous_rows": [
+        {
+          "counter_id": "B69",
+          "counter_colour": "red",
+          "previous_counter_id": "B68",
+          "previous_counter_update_s": 5419.0,
+          "counter_update_s": 5448.0,
+          "chosen_shot_id": "S389",
+          "status": "unique_chronological_option",
+          "options": [
+            {
+              "shot_id": "S387",
+              "interval_s": [
+                5400.8,
+                5411.6
+              ],
+              "origin_probability": 0.9832260579198777,
+              "shot_end_minus_previous_update_s": -7.4,
+              "passes_tiebreak": false
+            },
+            {
+              "shot_id": "S389",
+              "interval_s": [
+                5438.8,
+                5451.8
+              ],
+              "origin_probability": 0.9594974600399613,
+              "shot_end_minus_previous_update_s": 32.8,
+              "passes_tiebreak": true
+            },
+            {
+              "shot_id": "S388",
+              "interval_s": [
+                5411.6,
+                5438.8
+              ],
+              "origin_probability": 0.002326027138963809,
+              "shot_end_minus_previous_update_s": 19.8,
+              "passes_tiebreak": false
+            }
+          ]
+        }
+      ],
+      "existing_link_temporal_conflicts": []
+    }
+  ],
+  "limitations": [
+    "The rule was proposed after inspecting Norway B69; all four recordings were already exposed for development.",
+    "A broadcast counter can update after the next physical delivery; six existing associated shots violate the proposed ordering condition.",
+    "A unique chronological option is not verified physical stone identity or event ground truth.",
+    "No candidate, counter link or full-match throw F1 is changed by this audit."
+  ]
+}

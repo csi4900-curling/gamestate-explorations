@@ -1,0 +1,7 @@
+# Fixed gap-two right-view development transfer
+
+Before running the post-Italy gap-two proposal on this match, fix the interval at source seconds 1650–2760 of `source.mp4`, SHA-256 `2e2b84bb2d9dffa497ee850ddbeaf0d5cae0d697377b6eee6a1ef481f449f3da` (640×360). Canada–Estonia has prior same-agent right-view development evidence, but this exact area-aware two-second-gap association has not been scored here. It is a **development transfer**, not independent physical-event validation.
+
+Use `probe_right_area_aware_gap2_interval.py` SHA-256 `daca685d6d0ad404c7babb1691dc927c1963c14a1902bba1832bddbb7076621a` and its unchanged colour proposal, area-aware linking, later valid seed, 1 Hz sampling, 40 px/s step bound, area-change weight 15, two-second maximum observation gap, three-point/two-second raw support and 60-pixel bidirectional review span. Render all proposed paths and assign same-agent source-pixel classes **before** ring/underpoint scoring. Explicitly preserve people, mixed paths and uncertain stone identities.
+
+Apply the already fixed 0.25 surrounding-ring-or-below-point context review rule. Report all source classes versus review tiers, any person remaining clear, any short stone sent to cluttered review, and same-colour overlap with the earlier coarse windows. Do not retune on this output or promote a path to a physical throw. Independent complete-end event truth and validated post-shot boards remain separate requirements.

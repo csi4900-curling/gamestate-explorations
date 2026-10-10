@@ -1,0 +1,22 @@
+{
+  "status": "postscore_development_possible_edit_scan_plan",
+  "source_id": "ia3HIF_4Bdo",
+  "video_relative_path": "validation/throw-event-benchmark/paralympics-2022-korea-china/source.mp4",
+  "hard_cuts_relative_path": "validation/curlobserver-learned-probe/korea-china-full-first-transfer/hard-cuts.json",
+  "source_interval_s": [
+    0,
+    6829
+  ],
+  "sample_rate_hz": 5,
+  "minimum_gray_change": 45.0,
+  "minimum_hist_distance": 0.3,
+  "hard_cut_exclusion_s": 0.3,
+  "sha256": {
+    "video": "b779f017ff450293d13f589e3eb64816b3620fee81081e06c9a4b368e90ccbb9",
+    "hard_cuts": "686aa24b658068c17b3b0d3d70a71847227bacf437184d8281fe811f1c0927aa",
+    "scene_code": "5c4049a0e82853cb36e0eee4fd7e1bb009babc08318b3ce8b53566f309b883e9",
+    "runner": "8fad71b9e087d51f93ac10491968e074818d117e694e6744926d968004affb2e"
+  },
+  "rule": "At 5 Hz, flag adjacent source frames with gray change at least 45 and histogram distance at least 0.30; retain proposals more than 0.3 seconds from frozen hard cuts. Possible edits only.",
+  "provenance": "Threshold selected after inspecting Korea-China S372 on exposed video; this is development, not a pre-registered transfer or verified cut test."
+}

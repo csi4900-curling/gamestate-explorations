@@ -1,0 +1,18 @@
+{
+  "status": "frozen_temporal_isolation_possible_edit_plan",
+  "source_id": "qn9tHfcimlQ",
+  "video_relative_path": "validation/throw-event-benchmark/paralympics-2022-canada-china/source.mp4",
+  "possible_edits_relative_path": "validation/curlobserver-learned-probe/china-full-transfer/possible-edits-v1.json",
+  "possible_scan_plan_relative_path": "validation/curlobserver-learned-probe/china-full-transfer/possible-edits-v1-plan.json",
+  "minimum_gray_isolation_ratio": 2.0,
+  "minimum_hist_isolation_ratio": 2.0,
+  "sha256": {
+    "video": "c5254bb9103e32c6beac74cf269fc7bcec8ce2c2a710a7d4600c7ddb951f160e",
+    "possible_scan_plan": "70b71fa9666816b7033408e861bd2a324aaa4dd41de005944a581fe0ce2d2c79",
+    "scene_code": "5c4049a0e82853cb36e0eee4fd7e1bb009babc08318b3ce8b53566f309b883e9",
+    "isolation_code": "6947a95a41940a3951f076ff6f6176afba8567c6cf22d58accb18b089ef6af06",
+    "runner": "688e5b2ff91df98c6e3a3751ce64f56e04f1316806dcb445c19e999e40b105a3"
+  },
+  "rule": "For each possible edit at time t, compare frame-change metrics at t-.4\u2192t-.2, t-.2\u2192t, and t\u2192t+.2. Call the central change an isolated spike only when both gray and histogram ratios to the larger flank are >=2. No event or cut labels enter this source-only calculation.",
+  "provenance": "Thresholds chosen after selected China/Swiss development inspection; Norway/Slovakia plans frozen before their full possible-edit and isolation scans."
+}

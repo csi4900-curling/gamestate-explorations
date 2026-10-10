@@ -1,0 +1,52 @@
+{
+  "status": "prerun_frozen_development_transfer",
+  "source_id": "Y_U6gzqORUs",
+  "source_interval_s": [
+    1650.0,
+    2760.0
+  ],
+  "input_and_code_sha256": {
+    "video": "2a0885f28b5496670f99ab159c37aeb270cc454e65b909ce8a37a0398f7771ac",
+    "left": "35768a3a635f38374211aa4e3ee5b7bb63d2faa92b04f32e60f7a38fa205dd78",
+    "reference": "28d6c004248c4ccc61e081f459d83f0e260d3c9dcad6cd360fdb09258fad068e",
+    "right_proposal_code": "0f1588b4eb3de2a5d9c732c0a0264f03a41933821a0a943845df2dc0a4ba1645",
+    "right_association_code": "fd57618be239344c6d5e7795a3b0e97720fc7ccd5944791210a200b2cd848b9e",
+    "right_span_code": "be45207245e5f0c88dc9720810a4be44075affd8b5cbcbd8b3ade70f9fe55335",
+    "right_probe_runner": "6a9cbb81b585ca0837d06878ce13a779d5880f592df4ce8edc852eba5f81ed81",
+    "right_tail_code": "5266fcf009bf74c309aef6a810a8414d45456987b8aefde3cba3447983077007",
+    "right_tail_runner": "b59e9fcbdb13477dd2033fc0e99c168f10544d5205cc1f987343b1cdeae98062",
+    "corroboration_code": "796a5e3ccd485b64449668608cd713b53041f8b0502cb80320eae3ee1138dd14",
+    "corroboration_runner": "95eb269e4222880c18e2fcac3f873bd00da5691cc10a4c3ef59282fc868bf083",
+    "patch_model": "395ebfd0b23db3c1faa90cfb71af2b33d0774e70dc05e7db8f6cb7924e1bcb47",
+    "patch_feature_code": "746e6f4e0c7c9c32d698573e9a14230321e6dd3e1789db642206cab44bd78f68",
+    "patch_verifier_code": "828a84a14930266c83afea41526f1e4800163e2c41c3462195c96a3551116169",
+    "patch_runner": "aeb4aac25234e925337819a4938933fcf3fb94ba4526f56c12f83f22d47e5ba9",
+    "score_runner": "1acca17fac057f762c8719c44b0ff4d4fff8541278773e7ba3cc2484e5a12613",
+    "event_scorer": "f5a76cc3ea8b37ff13d90fc919f7192753276873b603ef01d4ef5b6f743307f6"
+  },
+  "right_probe": {
+    "source_start": 1650,
+    "source_stop": 2760,
+    "source_offset": 0,
+    "sample_period_s": 1
+  },
+  "right_tail": "unchanged long-prefix moving-tail derivative",
+  "corroboration": {
+    "run_id": "R01",
+    "maximum_direction_aware_view_order_lag_s": 20,
+    "same_colour_and_direction": true,
+    "unique_right_required": true
+  },
+  "patch_gate": {
+    "model": "model-excluding-swiss-transfer.npz",
+    "track_samples": "first/middle/last prefix point",
+    "positive_patches_required": 3,
+    "scored_patches_required": 3
+  },
+  "evaluation": "score all 25 frozen corridor proposals against existing coarse same-agent reference after prediction-only artifacts are saved; no retuning",
+  "limitations": [
+    "Canada\u2013China and prior clips share the 2024 split-view production family.",
+    "The left detector and right tracker were developed with other recordings in this family.",
+    "Reference is same-agent coarse windows, not independent exhaustive labels."
+  ]
+}

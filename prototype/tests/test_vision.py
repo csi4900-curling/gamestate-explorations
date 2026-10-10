@@ -53,6 +53,20 @@ class GeometryAndEvidenceTests(unittest.TestCase):
             project(H, project(A, points)), project(self.cal.H, points), atol=0.015
         )
 
+    def test_motion_limit_can_be_widened_without_changing_default(self):
+        A = np.array([[1.0, 0.0, 130.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]])
+        frame = cv2.warpPerspective(self.cal.reference, A, (1920, 1080))
+        H_default, rejected = self.cal.register(frame)
+        self.assertIsNone(H_default)
+        self.assertEqual(rejected["reason"], "Excessive registration motion/error")
+        H_wide, accepted = self.cal.register(frame, max_corner_displacement_px=160)
+        self.assertIsNotNone(H_wide, accepted)
+        self.assertEqual(accepted["status"], "registered")
+        points = np.array([[479, 666], [335, 664], [481, 550]], float)
+        np.testing.assert_allclose(
+            project(H_wide, project(A, points)), project(self.cal.H, points), atol=0.015
+        )
+
     def test_reference_paint_is_not_a_new_stone(self):
         image = np.full((160, 160, 3), 240, np.uint8)
         cv2.rectangle(image, (75, 83), (85, 92), (130, 130, 130), -1)

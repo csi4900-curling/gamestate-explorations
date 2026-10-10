@@ -1,0 +1,161 @@
+{
+  "status": "fixed_ice_context_clip_transfer_not_physical_throw_classifier",
+  "source_sha256": "18f4fe4ac910e2da7e1ed453ade9d291363ab7e01f8d0d207634a3d589efe0da",
+  "probe_sha256": "65f77492cfe98370e3514a27fdebaceacee7fa19cba46d2bec44734c1fd7abe7",
+  "source_review_sha256": "76b3c3059377c373752fc1815b6865a3b1e5cd2746e5996c924bb1c46b482f8f",
+  "feature_code_sha256": "4e7ea73e5d460f779d84dbe98c71811cd1a12891d9915d1435224e6e0ebd1d86",
+  "runner_sha256": "96ce8a6e0e59bb69d03d5b013719414a8ed96fcee375493883d89be92e991736",
+  "nonice_review_threshold": 0.25,
+  "counts_by_source_class_and_tier": {
+    "mixed_stone_to_person_identity_switch": {
+      "isolated_ice_context": 0,
+      "context_cluttered_review": 1
+    },
+    "moving_stone": {
+      "isolated_ice_context": 2,
+      "context_cluttered_review": 0
+    },
+    "person_or_wheelchair": {
+      "isolated_ice_context": 0,
+      "context_cluttered_review": 3
+    },
+    "stone_pixels_identity_uncertain": {
+      "isolated_ice_context": 1,
+      "context_cluttered_review": 0
+    }
+  },
+  "rows": [
+    {
+      "raw_track_id": "B009",
+      "source_prefix_class": "stone_pixels_identity_uncertain",
+      "sample_source_times_s": [
+        1733.0,
+        1751.0,
+        1753.0
+      ],
+      "sample_nonice_ring_fractions": [
+        0.2848,
+        0.0996,
+        0.0143
+      ],
+      "median_nonice_ring_fraction": 0.0996,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "isolated_ice_context"
+    },
+    {
+      "raw_track_id": "B015",
+      "source_prefix_class": "mixed_stone_to_person_identity_switch",
+      "sample_source_times_s": [
+        1801.0,
+        1812.0,
+        1820.0
+      ],
+      "sample_nonice_ring_fractions": [
+        0.3619,
+        0.5569,
+        0.8335
+      ],
+      "median_nonice_ring_fraction": 0.5569,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "context_cluttered_review"
+    },
+    {
+      "raw_track_id": "B021",
+      "source_prefix_class": "person_or_wheelchair",
+      "sample_source_times_s": [
+        1839.0,
+        1842.0,
+        1844.0
+      ],
+      "sample_nonice_ring_fractions": [
+        0.5414,
+        0.4983,
+        0.4926
+      ],
+      "median_nonice_ring_fraction": 0.4983,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "context_cluttered_review"
+    },
+    {
+      "raw_track_id": "B022",
+      "source_prefix_class": "person_or_wheelchair",
+      "sample_source_times_s": [
+        1843.0,
+        1845.0,
+        1847.0
+      ],
+      "sample_nonice_ring_fractions": [
+        0.5554,
+        0.6052,
+        0.4685
+      ],
+      "median_nonice_ring_fraction": 0.5554,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "context_cluttered_review"
+    },
+    {
+      "raw_track_id": "B024",
+      "source_prefix_class": "person_or_wheelchair",
+      "sample_source_times_s": [
+        1881.0,
+        1882.0,
+        1884.0
+      ],
+      "sample_nonice_ring_fractions": [
+        0.5891,
+        0.5494,
+        0.544
+      ],
+      "median_nonice_ring_fraction": 0.5494,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "context_cluttered_review"
+    },
+    {
+      "raw_track_id": "B032",
+      "source_prefix_class": "moving_stone",
+      "sample_source_times_s": [
+        2059.0,
+        2060.0,
+        2062.0
+      ],
+      "sample_nonice_ring_fractions": [
+        0.015,
+        0.0075,
+        0.0498
+      ],
+      "median_nonice_ring_fraction": 0.015,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "isolated_ice_context"
+    },
+    {
+      "raw_track_id": "B034",
+      "source_prefix_class": "moving_stone",
+      "sample_source_times_s": [
+        2109.0,
+        2110.0,
+        2112.0
+      ],
+      "sample_nonice_ring_fractions": [
+        0.0431,
+        0.0246,
+        0.0153
+      ],
+      "median_nonice_ring_fraction": 0.0246,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "isolated_ice_context"
+    }
+  ],
+  "limitations": [
+    "The source classes are same-agent short-prefix reviews, not physical-delivery truth.",
+    "The 0.25 threshold came from exposed 2024 recordings before this clip was scored, but this is not an independent end evaluation.",
+    "A low non-ice score may still belong to clothing or equipment over the rink.",
+    "No event is accepted or rejected by this review cue."
+  ]
+}

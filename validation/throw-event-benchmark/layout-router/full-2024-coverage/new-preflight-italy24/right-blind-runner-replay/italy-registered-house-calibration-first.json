@@ -1,0 +1,1507 @@
+{
+  "status": "strict_same_route_house_calibration_reuse_not_metric_validation",
+  "source_sha256": "aff12e78edeb5e108d142aed3e19b61c3956b4fddc8b2fd8b202713746771739",
+  "input_sha256": {
+    "handoff": "062caf61191e04aedf985aadc84d83ac34a1adcc6afe1064796a9aa898364f0d",
+    "ellipses": "f788038946b599f391034e412694a48131386d33c7e56a380eecaa2fbb0c7fc6",
+    "calibrations": "71d59f5c8f302c2d1bd979be4615fdf71a16567aa46706bb2c548087d302b829"
+  },
+  "model_code_sha256": "48074d2229d96500be67c958484adf4f4d59c4f70d3340704e8863ef6eddcfff",
+  "source_fit_check_code_sha256": "6ba8100ee8aa0d5629d95e2d32fdcfc7fa485a3f9acd2346ed2796eff30166c9",
+  "house_alignment_code_sha256": "cf58aaa5efe55c1b64195e7b7f66fac213a58339e99c92235369655a24ca0f83",
+  "runner_sha256": "980f0c02ab0bb72c7d7add141a83561f8a7db5091da4a3cfe0e4517af9ec76ce",
+  "candidate_count": 48,
+  "status_counts": {
+    "abstain_house_image_alignment": 24,
+    "conditional_registered_donor_fit": 5,
+    "original_conditional_fit_retained": 11,
+    "abstain_target_geometry_checks_failed": 8
+  },
+  "rows": [
+    {
+      "candidate_id": "R01-S02",
+      "original_fit_status": "abstain_temporal_geometry_change",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_house_image_alignment",
+      "donor_candidate_id": "R01-S06",
+      "painted_house_alignment": {
+        "first_blue_px": 146,
+        "second_blue_px": 165,
+        "best_translation_second_to_first_px": [
+          -2,
+          0
+        ],
+        "best_mask_iou": 0.7374,
+        "zero_translation_mask_iou": 0.7374,
+        "zero_translation_is_best": false,
+        "full_camera_pose_verified": false
+      },
+      "conditional_plane_H": null
+    },
+    {
+      "candidate_id": "R01-S05",
+      "original_fit_status": "abstain_geometry_checks_failed",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "conditional_registered_donor_fit",
+      "donor_candidate_id": "R01-S06",
+      "painted_house_alignment": {
+        "first_blue_px": 146,
+        "second_blue_px": 130,
+        "best_translation_second_to_first_px": [
+          0,
+          0
+        ],
+        "best_mask_iou": 0.7468,
+        "zero_translation_mask_iou": 0.7468,
+        "zero_translation_is_best": true,
+        "full_camera_pose_verified": false
+      },
+      "three_target_frame_checks": [
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.1388710435963574,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3856,
+          "passes": true
+        },
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.14220920178868954,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3856,
+          "passes": true
+        },
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.16833844470899925,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3856,
+          "passes": true
+        }
+      ],
+      "conditional_plane_H": [
+        [
+          0.02166814799850334,
+          0.0009009208588023852,
+          -10.721149203433518
+        ],
+        [
+          0.00016962538280511456,
+          0.19284078434721488,
+          -29.657203104896777
+        ],
+        [
+          0.00012235121733624382,
+          0.0036042945606118604,
+          1.0
+        ]
+      ]
+    },
+    {
+      "candidate_id": "R01-S06",
+      "original_fit_status": "conditional_image_evidence_supported",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "original_conditional_fit_retained",
+      "donor_candidate_id": null,
+      "conditional_plane_H": [
+        [
+          0.02166814799850334,
+          0.0009009208588023852,
+          -10.721149203433518
+        ],
+        [
+          0.00016962538280511456,
+          0.19284078434721488,
+          -29.657203104896777
+        ],
+        [
+          0.00012235121733624382,
+          0.0036042945606118604,
+          1.0
+        ]
+      ]
+    },
+    {
+      "candidate_id": "R01-S13",
+      "original_fit_status": "abstain_geometry_checks_failed",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_house_image_alignment",
+      "donor_candidate_id": "R01-S06",
+      "painted_house_alignment": {
+        "first_blue_px": 146,
+        "second_blue_px": 134,
+        "best_translation_second_to_first_px": [
+          -2,
+          0
+        ],
+        "best_mask_iou": 0.7284,
+        "zero_translation_mask_iou": 0.7284,
+        "zero_translation_is_best": false,
+        "full_camera_pose_verified": false
+      },
+      "conditional_plane_H": null
+    },
+    {
+      "candidate_id": "R01-S14",
+      "original_fit_status": "abstain_geometry_checks_failed",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_target_geometry_checks_failed",
+      "donor_candidate_id": "R01-S06",
+      "painted_house_alignment": {
+        "first_blue_px": 146,
+        "second_blue_px": 151,
+        "best_translation_second_to_first_px": [
+          0,
+          0
+        ],
+        "best_mask_iou": 0.811,
+        "zero_translation_mask_iou": 0.811,
+        "zero_translation_is_best": true,
+        "full_camera_pose_verified": false
+      },
+      "three_target_frame_checks": [
+        {
+          "ring_status": "insufficient_or_inconsistent_ring_evidence",
+          "ring_p95_abs_radial_error_m": 0.18563990730633356,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3856,
+          "passes": false
+        },
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.17071436564104178,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3856,
+          "passes": true
+        },
+        {
+          "ring_status": "insufficient_or_inconsistent_ring_evidence",
+          "ring_p95_abs_radial_error_m": 0.18885574209974443,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3856,
+          "passes": false
+        }
+      ],
+      "conditional_plane_H": null
+    },
+    {
+      "candidate_id": "R01-S19",
+      "original_fit_status": "abstain_geometry_checks_failed",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_house_image_alignment",
+      "donor_candidate_id": "R01-S28",
+      "painted_house_alignment": {
+        "first_blue_px": 176,
+        "second_blue_px": 138,
+        "best_translation_second_to_first_px": [
+          1,
+          0
+        ],
+        "best_mask_iou": 0.7542,
+        "zero_translation_mask_iou": 0.7444,
+        "zero_translation_is_best": false,
+        "full_camera_pose_verified": false
+      },
+      "conditional_plane_H": null
+    },
+    {
+      "candidate_id": "R01-S21",
+      "original_fit_status": "abstain_temporal_geometry_change",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_house_image_alignment",
+      "donor_candidate_id": "R01-S28",
+      "painted_house_alignment": {
+        "first_blue_px": 176,
+        "second_blue_px": 149,
+        "best_translation_second_to_first_px": [
+          1,
+          0
+        ],
+        "best_mask_iou": 0.776,
+        "zero_translation_mask_iou": 0.7568,
+        "zero_translation_is_best": false,
+        "full_camera_pose_verified": false
+      },
+      "conditional_plane_H": null
+    },
+    {
+      "candidate_id": "R01-S22",
+      "original_fit_status": "abstain_geometry_checks_failed",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_house_image_alignment",
+      "donor_candidate_id": "R01-S28",
+      "painted_house_alignment": {
+        "first_blue_px": 176,
+        "second_blue_px": 142,
+        "best_translation_second_to_first_px": [
+          -2,
+          0
+        ],
+        "best_mask_iou": 0.7377,
+        "zero_translation_mask_iou": 0.7377,
+        "zero_translation_is_best": false,
+        "full_camera_pose_verified": false
+      },
+      "conditional_plane_H": null
+    },
+    {
+      "candidate_id": "R01-S24",
+      "original_fit_status": "abstain_geometry_checks_failed",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_house_image_alignment",
+      "donor_candidate_id": "R01-S28",
+      "painted_house_alignment": {
+        "first_blue_px": 176,
+        "second_blue_px": 171,
+        "best_translation_second_to_first_px": [
+          -2,
+          0
+        ],
+        "best_mask_iou": 0.6445,
+        "zero_translation_mask_iou": 0.6445,
+        "zero_translation_is_best": false,
+        "full_camera_pose_verified": false
+      },
+      "conditional_plane_H": null
+    },
+    {
+      "candidate_id": "R01-S28",
+      "original_fit_status": "conditional_image_evidence_supported",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "original_conditional_fit_retained",
+      "donor_candidate_id": null,
+      "conditional_plane_H": [
+        [
+          0.019415754091737614,
+          0.0011201763219527753,
+          -9.668696399256445
+        ],
+        [
+          -0.00011843767614228077,
+          0.17211384575604777,
+          -26.403446133987693
+        ],
+        [
+          2.284273065672304e-05,
+          0.0028533194204373204,
+          1.0
+        ]
+      ]
+    },
+    {
+      "candidate_id": "R01-S29",
+      "original_fit_status": "abstain_geometry_checks_failed",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_target_geometry_checks_failed",
+      "donor_candidate_id": "R01-S28",
+      "painted_house_alignment": {
+        "first_blue_px": 176,
+        "second_blue_px": 144,
+        "best_translation_second_to_first_px": [
+          0,
+          0
+        ],
+        "best_mask_iou": 0.7778,
+        "zero_translation_mask_iou": 0.7778,
+        "zero_translation_is_best": true,
+        "full_camera_pose_verified": false
+      },
+      "three_target_frame_checks": [
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.1757148654079186,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3947,
+          "passes": true
+        },
+        {
+          "ring_status": "insufficient_or_inconsistent_ring_evidence",
+          "ring_p95_abs_radial_error_m": 0.1874180067519006,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3947,
+          "passes": false
+        },
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.15239543906712197,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3947,
+          "passes": true
+        }
+      ],
+      "conditional_plane_H": null
+    },
+    {
+      "candidate_id": "R01-S45",
+      "original_fit_status": "abstain_temporal_geometry_change",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_house_image_alignment",
+      "donor_candidate_id": "R01-S28",
+      "painted_house_alignment": {
+        "first_blue_px": 176,
+        "second_blue_px": 140,
+        "best_translation_second_to_first_px": [
+          1,
+          0
+        ],
+        "best_mask_iou": 0.7654,
+        "zero_translation_mask_iou": 0.7556,
+        "zero_translation_is_best": false,
+        "full_camera_pose_verified": false
+      },
+      "conditional_plane_H": null
+    },
+    {
+      "candidate_id": "R01-S48",
+      "original_fit_status": "abstain_geometry_checks_failed",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_target_geometry_checks_failed",
+      "donor_candidate_id": "R01-S58",
+      "painted_house_alignment": {
+        "first_blue_px": 129,
+        "second_blue_px": 139,
+        "best_translation_second_to_first_px": [
+          0,
+          0
+        ],
+        "best_mask_iou": 0.7867,
+        "zero_translation_mask_iou": 0.7867,
+        "zero_translation_is_best": true,
+        "full_camera_pose_verified": false
+      },
+      "three_target_frame_checks": [
+        {
+          "ring_status": "insufficient_or_inconsistent_ring_evidence",
+          "ring_p95_abs_radial_error_m": 0.18733199514968782,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3947,
+          "passes": false
+        },
+        {
+          "ring_status": "insufficient_or_inconsistent_ring_evidence",
+          "ring_p95_abs_radial_error_m": 0.18910514613539225,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3947,
+          "passes": false
+        },
+        {
+          "ring_status": "insufficient_or_inconsistent_ring_evidence",
+          "ring_p95_abs_radial_error_m": 0.19819738385565328,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3947,
+          "passes": false
+        }
+      ],
+      "conditional_plane_H": null
+    },
+    {
+      "candidate_id": "R01-S49",
+      "original_fit_status": "abstain_geometry_checks_failed",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "conditional_registered_donor_fit",
+      "donor_candidate_id": "R01-S58",
+      "painted_house_alignment": {
+        "first_blue_px": 129,
+        "second_blue_px": 152,
+        "best_translation_second_to_first_px": [
+          0,
+          0
+        ],
+        "best_mask_iou": 0.8487,
+        "zero_translation_mask_iou": 0.8487,
+        "zero_translation_is_best": true,
+        "full_camera_pose_verified": false
+      },
+      "three_target_frame_checks": [
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.16615500267899813,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3947,
+          "passes": true
+        },
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.17020919098723114,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3947,
+          "passes": true
+        },
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.15707656205309525,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3947,
+          "passes": true
+        }
+      ],
+      "conditional_plane_H": [
+        [
+          0.0199526652812892,
+          0.0016487635019354727,
+          -10.008160548328833
+        ],
+        [
+          1.223803684129809e-05,
+          0.17613940038827441,
+          -27.087806826795788
+        ],
+        [
+          3.527038520708245e-05,
+          0.0030009853456866866,
+          1.0
+        ]
+      ]
+    },
+    {
+      "candidate_id": "R01-S52",
+      "original_fit_status": "abstain_geometry_checks_failed",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "conditional_registered_donor_fit",
+      "donor_candidate_id": "R01-S58",
+      "painted_house_alignment": {
+        "first_blue_px": 129,
+        "second_blue_px": 106,
+        "best_translation_second_to_first_px": [
+          0,
+          0
+        ],
+        "best_mask_iou": 0.8077,
+        "zero_translation_mask_iou": 0.8077,
+        "zero_translation_is_best": true,
+        "full_camera_pose_verified": false
+      },
+      "three_target_frame_checks": [
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.16602689297447915,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3947,
+          "passes": true
+        },
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.16399151065780965,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3947,
+          "passes": true
+        },
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.17533631648696374,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3947,
+          "passes": true
+        }
+      ],
+      "conditional_plane_H": [
+        [
+          0.0199526652812892,
+          0.0016487635019354727,
+          -10.008160548328833
+        ],
+        [
+          1.223803684129809e-05,
+          0.17613940038827441,
+          -27.087806826795788
+        ],
+        [
+          3.527038520708245e-05,
+          0.0030009853456866866,
+          1.0
+        ]
+      ]
+    },
+    {
+      "candidate_id": "R01-S54",
+      "original_fit_status": "abstain_geometry_checks_failed",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "conditional_registered_donor_fit",
+      "donor_candidate_id": "R01-S58",
+      "painted_house_alignment": {
+        "first_blue_px": 129,
+        "second_blue_px": 126,
+        "best_translation_second_to_first_px": [
+          0,
+          0
+        ],
+        "best_mask_iou": 0.7958,
+        "zero_translation_mask_iou": 0.7958,
+        "zero_translation_is_best": true,
+        "full_camera_pose_verified": false
+      },
+      "three_target_frame_checks": [
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.1583553392727492,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3947,
+          "passes": true
+        },
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.16386746053189888,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3947,
+          "passes": true
+        },
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.17917635801074958,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3947,
+          "passes": true
+        }
+      ],
+      "conditional_plane_H": [
+        [
+          0.0199526652812892,
+          0.0016487635019354727,
+          -10.008160548328833
+        ],
+        [
+          1.223803684129809e-05,
+          0.17613940038827441,
+          -27.087806826795788
+        ],
+        [
+          3.527038520708245e-05,
+          0.0030009853456866866,
+          1.0
+        ]
+      ]
+    },
+    {
+      "candidate_id": "R01-S56",
+      "original_fit_status": "abstain_geometry_checks_failed",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_house_image_alignment",
+      "donor_candidate_id": "R01-S58",
+      "painted_house_alignment": {
+        "first_blue_px": 129,
+        "second_blue_px": 88,
+        "best_translation_second_to_first_px": [
+          -2,
+          0
+        ],
+        "best_mask_iou": 0.6822,
+        "zero_translation_mask_iou": 0.6822,
+        "zero_translation_is_best": false,
+        "full_camera_pose_verified": false
+      },
+      "conditional_plane_H": null
+    },
+    {
+      "candidate_id": "R01-S58",
+      "original_fit_status": "conditional_image_evidence_supported",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "original_conditional_fit_retained",
+      "donor_candidate_id": null,
+      "conditional_plane_H": [
+        [
+          0.0199526652812892,
+          0.0016487635019354727,
+          -10.008160548328833
+        ],
+        [
+          1.223803684129809e-05,
+          0.17613940038827441,
+          -27.087806826795788
+        ],
+        [
+          3.527038520708245e-05,
+          0.0030009853456866866,
+          1.0
+        ]
+      ]
+    },
+    {
+      "candidate_id": "R01-S59",
+      "original_fit_status": "abstain_temporal_geometry_change",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_house_image_alignment",
+      "donor_candidate_id": "R01-S58",
+      "painted_house_alignment": {
+        "first_blue_px": 129,
+        "second_blue_px": 99,
+        "best_translation_second_to_first_px": [
+          0,
+          0
+        ],
+        "best_mask_iou": 0.6889,
+        "zero_translation_mask_iou": 0.6889,
+        "zero_translation_is_best": true,
+        "full_camera_pose_verified": false
+      },
+      "conditional_plane_H": null
+    },
+    {
+      "candidate_id": "R01-S60",
+      "original_fit_status": "abstain_geometry_checks_failed",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_house_image_alignment",
+      "donor_candidate_id": "R01-S61",
+      "painted_house_alignment": {
+        "first_blue_px": 60,
+        "second_blue_px": 139,
+        "best_translation_second_to_first_px": [
+          8,
+          -1
+        ],
+        "best_mask_iou": 0.4632,
+        "zero_translation_mask_iou": 0.4317,
+        "zero_translation_is_best": false,
+        "full_camera_pose_verified": false
+      },
+      "conditional_plane_H": null
+    },
+    {
+      "candidate_id": "R01-S61",
+      "original_fit_status": "conditional_image_evidence_supported",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "original_conditional_fit_retained",
+      "donor_candidate_id": null,
+      "conditional_plane_H": [
+        [
+          0.0176231206673492,
+          0.003312067082260001,
+          -9.116578726945425
+        ],
+        [
+          -0.00034395305252773366,
+          0.14710855866443698,
+          -22.391937806635998
+        ],
+        [
+          -0.00014240485355206263,
+          0.002180830760147367,
+          1.0
+        ]
+      ]
+    },
+    {
+      "candidate_id": "R01-S62",
+      "original_fit_status": "abstain_geometry_checks_failed",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_house_image_alignment",
+      "donor_candidate_id": "R01-S61",
+      "painted_house_alignment": {
+        "first_blue_px": 60,
+        "second_blue_px": 85,
+        "best_translation_second_to_first_px": [
+          2,
+          0
+        ],
+        "best_mask_iou": 0.7059,
+        "zero_translation_mask_iou": 0.6477,
+        "zero_translation_is_best": false,
+        "full_camera_pose_verified": false
+      },
+      "conditional_plane_H": null
+    },
+    {
+      "candidate_id": "R01-S70",
+      "original_fit_status": "abstain_geometry_checks_failed",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_house_image_alignment",
+      "donor_candidate_id": "R01-S61",
+      "painted_house_alignment": {
+        "first_blue_px": 60,
+        "second_blue_px": 159,
+        "best_translation_second_to_first_px": [
+          -4,
+          -2
+        ],
+        "best_mask_iou": 0.6349,
+        "zero_translation_mask_iou": 0.3774,
+        "zero_translation_is_best": false,
+        "full_camera_pose_verified": false
+      },
+      "conditional_plane_H": null
+    },
+    {
+      "candidate_id": "R01-S72",
+      "original_fit_status": "abstain_geometry_checks_failed",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_house_image_alignment",
+      "donor_candidate_id": "R01-S61",
+      "painted_house_alignment": {
+        "first_blue_px": 60,
+        "second_blue_px": 142,
+        "best_translation_second_to_first_px": [
+          8,
+          0
+        ],
+        "best_mask_iou": 0.4478,
+        "zero_translation_mask_iou": 0.4225,
+        "zero_translation_is_best": false,
+        "full_camera_pose_verified": false
+      },
+      "conditional_plane_H": null
+    },
+    {
+      "candidate_id": "R01-S73",
+      "original_fit_status": "abstain_geometry_checks_failed",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_house_image_alignment",
+      "donor_candidate_id": "R01-S61",
+      "painted_house_alignment": {
+        "first_blue_px": 60,
+        "second_blue_px": 157,
+        "best_translation_second_to_first_px": [
+          -2,
+          -2
+        ],
+        "best_mask_iou": 0.6667,
+        "zero_translation_mask_iou": 0.3822,
+        "zero_translation_is_best": false,
+        "full_camera_pose_verified": false
+      },
+      "conditional_plane_H": null
+    },
+    {
+      "candidate_id": "R01-S78",
+      "original_fit_status": "abstain_geometry_checks_failed",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_house_image_alignment",
+      "donor_candidate_id": "R01-S61",
+      "painted_house_alignment": {
+        "first_blue_px": 60,
+        "second_blue_px": 163,
+        "best_translation_second_to_first_px": [
+          6,
+          -2
+        ],
+        "best_mask_iou": 0.8824,
+        "zero_translation_mask_iou": 0.3681,
+        "zero_translation_is_best": false,
+        "full_camera_pose_verified": false
+      },
+      "conditional_plane_H": null
+    },
+    {
+      "candidate_id": "R01-S85",
+      "original_fit_status": "abstain_geometry_checks_failed",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_house_image_alignment",
+      "donor_candidate_id": "R01-S103",
+      "painted_house_alignment": {
+        "first_blue_px": 142,
+        "second_blue_px": 137,
+        "best_translation_second_to_first_px": [
+          1,
+          0
+        ],
+        "best_mask_iou": 0.6909,
+        "zero_translation_mask_iou": 0.6807,
+        "zero_translation_is_best": false,
+        "full_camera_pose_verified": false
+      },
+      "conditional_plane_H": null
+    },
+    {
+      "candidate_id": "R01-S89",
+      "original_fit_status": "abstain_geometry_checks_failed",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_house_image_alignment",
+      "donor_candidate_id": "R01-S103",
+      "painted_house_alignment": {
+        "first_blue_px": 142,
+        "second_blue_px": 136,
+        "best_translation_second_to_first_px": [
+          0,
+          0
+        ],
+        "best_mask_iou": 0.6353,
+        "zero_translation_mask_iou": 0.6353,
+        "zero_translation_is_best": true,
+        "full_camera_pose_verified": false
+      },
+      "conditional_plane_H": null
+    },
+    {
+      "candidate_id": "R01-S91",
+      "original_fit_status": "abstain_geometry_checks_failed",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_house_image_alignment",
+      "donor_candidate_id": "R01-S103",
+      "painted_house_alignment": {
+        "first_blue_px": 142,
+        "second_blue_px": 159,
+        "best_translation_second_to_first_px": [
+          0,
+          0
+        ],
+        "best_mask_iou": 0.6816,
+        "zero_translation_mask_iou": 0.6816,
+        "zero_translation_is_best": true,
+        "full_camera_pose_verified": false
+      },
+      "conditional_plane_H": null
+    },
+    {
+      "candidate_id": "R01-S92",
+      "original_fit_status": "abstain_geometry_checks_failed",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_house_image_alignment",
+      "donor_candidate_id": "R01-S103",
+      "painted_house_alignment": {
+        "first_blue_px": 142,
+        "second_blue_px": 140,
+        "best_translation_second_to_first_px": [
+          0,
+          0
+        ],
+        "best_mask_iou": 0.5843,
+        "zero_translation_mask_iou": 0.5843,
+        "zero_translation_is_best": true,
+        "full_camera_pose_verified": false
+      },
+      "conditional_plane_H": null
+    },
+    {
+      "candidate_id": "R01-S93",
+      "original_fit_status": "abstain_geometry_checks_failed",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_house_image_alignment",
+      "donor_candidate_id": "R01-S103",
+      "painted_house_alignment": {
+        "first_blue_px": 142,
+        "second_blue_px": 160,
+        "best_translation_second_to_first_px": [
+          0,
+          0
+        ],
+        "best_mask_iou": 0.6778,
+        "zero_translation_mask_iou": 0.6778,
+        "zero_translation_is_best": true,
+        "full_camera_pose_verified": false
+      },
+      "conditional_plane_H": null
+    },
+    {
+      "candidate_id": "R01-S94",
+      "original_fit_status": "abstain_geometry_checks_failed",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_house_image_alignment",
+      "donor_candidate_id": "R01-S103",
+      "painted_house_alignment": {
+        "first_blue_px": 142,
+        "second_blue_px": 152,
+        "best_translation_second_to_first_px": [
+          -2,
+          0
+        ],
+        "best_mask_iou": 0.6154,
+        "zero_translation_mask_iou": 0.6154,
+        "zero_translation_is_best": false,
+        "full_camera_pose_verified": false
+      },
+      "conditional_plane_H": null
+    },
+    {
+      "candidate_id": "R01-S99",
+      "original_fit_status": "abstain_temporal_geometry_change",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_target_geometry_checks_failed",
+      "donor_candidate_id": "R01-S103",
+      "painted_house_alignment": {
+        "first_blue_px": 142,
+        "second_blue_px": 132,
+        "best_translation_second_to_first_px": [
+          0,
+          0
+        ],
+        "best_mask_iou": 0.8514,
+        "zero_translation_mask_iou": 0.8514,
+        "zero_translation_is_best": true,
+        "full_camera_pose_verified": false
+      },
+      "three_target_frame_checks": [
+        {
+          "ring_status": "insufficient_or_inconsistent_ring_evidence",
+          "ring_p95_abs_radial_error_m": 0.1917508334693554,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3969,
+          "passes": false
+        },
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.17201816242802165,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3969,
+          "passes": true
+        },
+        {
+          "ring_status": "insufficient_or_inconsistent_ring_evidence",
+          "ring_p95_abs_radial_error_m": 0.19145892915672938,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3969,
+          "passes": false
+        }
+      ],
+      "conditional_plane_H": null
+    },
+    {
+      "candidate_id": "R01-S103",
+      "original_fit_status": "conditional_image_evidence_supported",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "original_conditional_fit_retained",
+      "donor_candidate_id": null,
+      "conditional_plane_H": [
+        [
+          0.02040267549191171,
+          0.0022840671149759245,
+          -10.348340078772155
+        ],
+        [
+          -7.233694680641836e-05,
+          0.18220415991229943,
+          -27.93653574348377
+        ],
+        [
+          -1.4274735809370508e-05,
+          0.003409660117084405,
+          1.0
+        ]
+      ]
+    },
+    {
+      "candidate_id": "R01-S104",
+      "original_fit_status": "abstain_geometry_checks_failed",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_target_geometry_checks_failed",
+      "donor_candidate_id": "R01-S103",
+      "painted_house_alignment": {
+        "first_blue_px": 142,
+        "second_blue_px": 157,
+        "best_translation_second_to_first_px": [
+          0,
+          0
+        ],
+        "best_mask_iou": 0.8457,
+        "zero_translation_mask_iou": 0.8457,
+        "zero_translation_is_best": true,
+        "full_camera_pose_verified": false
+      },
+      "three_target_frame_checks": [
+        {
+          "ring_status": "insufficient_or_inconsistent_ring_evidence",
+          "ring_p95_abs_radial_error_m": 0.1870256936743726,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3969,
+          "passes": false
+        },
+        {
+          "ring_status": "insufficient_or_inconsistent_ring_evidence",
+          "ring_p95_abs_radial_error_m": 0.2393455803633161,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3969,
+          "passes": false
+        },
+        {
+          "ring_status": "insufficient_or_inconsistent_ring_evidence",
+          "ring_p95_abs_radial_error_m": 0.1898739349657387,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3969,
+          "passes": false
+        }
+      ],
+      "conditional_plane_H": null
+    },
+    {
+      "candidate_id": "R01-S107",
+      "original_fit_status": "abstain_geometry_checks_failed",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "conditional_registered_donor_fit",
+      "donor_candidate_id": "R01-S103",
+      "painted_house_alignment": {
+        "first_blue_px": 142,
+        "second_blue_px": 138,
+        "best_translation_second_to_first_px": [
+          0,
+          0
+        ],
+        "best_mask_iou": 0.8543,
+        "zero_translation_mask_iou": 0.8543,
+        "zero_translation_is_best": true,
+        "full_camera_pose_verified": false
+      },
+      "three_target_frame_checks": [
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.1739665344360184,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3969,
+          "passes": true
+        },
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.1739665344360184,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3969,
+          "passes": true
+        },
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.14924723301817414,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3969,
+          "passes": true
+        }
+      ],
+      "conditional_plane_H": [
+        [
+          0.02040267549191171,
+          0.0022840671149759245,
+          -10.348340078772155
+        ],
+        [
+          -7.233694680641836e-05,
+          0.18220415991229943,
+          -27.93653574348377
+        ],
+        [
+          -1.4274735809370508e-05,
+          0.003409660117084405,
+          1.0
+        ]
+      ]
+    },
+    {
+      "candidate_id": "R01-S109",
+      "original_fit_status": "abstain_geometry_checks_failed",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_target_geometry_checks_failed",
+      "donor_candidate_id": "R01-S103",
+      "painted_house_alignment": {
+        "first_blue_px": 142,
+        "second_blue_px": 163,
+        "best_translation_second_to_first_px": [
+          0,
+          0
+        ],
+        "best_mask_iou": 0.7733,
+        "zero_translation_mask_iou": 0.7733,
+        "zero_translation_is_best": true,
+        "full_camera_pose_verified": false
+      },
+      "three_target_frame_checks": [
+        {
+          "ring_status": "insufficient_or_inconsistent_ring_evidence",
+          "ring_p95_abs_radial_error_m": 0.18087886713255358,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3969,
+          "passes": false
+        },
+        {
+          "ring_status": "insufficient_or_inconsistent_ring_evidence",
+          "ring_p95_abs_radial_error_m": 0.21089330658926672,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3969,
+          "passes": false
+        },
+        {
+          "ring_status": "insufficient_or_inconsistent_ring_evidence",
+          "ring_p95_abs_radial_error_m": 0.235178507029394,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3969,
+          "passes": false
+        }
+      ],
+      "conditional_plane_H": null
+    },
+    {
+      "candidate_id": "R01-S110",
+      "original_fit_status": "abstain_fit_did_not_converge",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_house_image_alignment",
+      "donor_candidate_id": "R01-S103",
+      "painted_house_alignment": {
+        "first_blue_px": 142,
+        "second_blue_px": 119,
+        "best_translation_second_to_first_px": [
+          0,
+          0
+        ],
+        "best_mask_iou": 0.5723,
+        "zero_translation_mask_iou": 0.5723,
+        "zero_translation_is_best": true,
+        "full_camera_pose_verified": false
+      },
+      "conditional_plane_H": null
+    },
+    {
+      "candidate_id": "R01-S116",
+      "original_fit_status": "abstain_temporal_geometry_change",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_target_geometry_checks_failed",
+      "donor_candidate_id": "R01-S103",
+      "painted_house_alignment": {
+        "first_blue_px": 142,
+        "second_blue_px": 179,
+        "best_translation_second_to_first_px": [
+          0,
+          0
+        ],
+        "best_mask_iou": 0.7074,
+        "zero_translation_mask_iou": 0.7074,
+        "zero_translation_is_best": true,
+        "full_camera_pose_verified": false
+      },
+      "three_target_frame_checks": [
+        {
+          "ring_status": "insufficient_or_inconsistent_ring_evidence",
+          "ring_p95_abs_radial_error_m": 0.2036484593953682,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3969,
+          "passes": false
+        },
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.15231663131357426,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3969,
+          "passes": true
+        },
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.12383364352364948,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3969,
+          "passes": true
+        }
+      ],
+      "conditional_plane_H": null
+    },
+    {
+      "candidate_id": "R01-S119",
+      "original_fit_status": "abstain_geometry_checks_failed",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_house_image_alignment",
+      "donor_candidate_id": "R01-S134",
+      "painted_house_alignment": {
+        "first_blue_px": 163,
+        "second_blue_px": 175,
+        "best_translation_second_to_first_px": [
+          1,
+          0
+        ],
+        "best_mask_iou": 0.7884,
+        "zero_translation_mask_iou": 0.7789,
+        "zero_translation_is_best": false,
+        "full_camera_pose_verified": false
+      },
+      "conditional_plane_H": null
+    },
+    {
+      "candidate_id": "R01-S134",
+      "original_fit_status": "conditional_image_evidence_supported",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "original_conditional_fit_retained",
+      "donor_candidate_id": null,
+      "conditional_plane_H": [
+        [
+          0.02076573117397024,
+          0.001930262596689763,
+          -10.458475720676718
+        ],
+        [
+          7.689232271815844e-05,
+          0.18603887128798569,
+          -28.658534181042572
+        ],
+        [
+          3.7337810354839646e-05,
+          0.0034183882227902117,
+          1.0
+        ]
+      ]
+    },
+    {
+      "candidate_id": "R01-S135",
+      "original_fit_status": "conditional_image_evidence_supported",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "original_conditional_fit_retained",
+      "donor_candidate_id": null,
+      "conditional_plane_H": [
+        [
+          0.02070468842008448,
+          0.0008956267654583507,
+          -10.257689103200235
+        ],
+        [
+          -0.00024295317847956166,
+          0.18660617284656156,
+          -28.572427979567365
+        ],
+        [
+          1.2172305391637163e-06,
+          0.0035384801109492117,
+          1.0
+        ]
+      ]
+    },
+    {
+      "candidate_id": "R01-S138",
+      "original_fit_status": "conditional_image_evidence_supported",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "original_conditional_fit_retained",
+      "donor_candidate_id": null,
+      "conditional_plane_H": [
+        [
+          0.01861021757643032,
+          0.003097189856401972,
+          -9.623484716218496
+        ],
+        [
+          -0.00031434796923688225,
+          0.16361123258397264,
+          -24.998029183510045
+        ],
+        [
+          -0.00012545557120270356,
+          0.0028202909956283797,
+          1.0
+        ]
+      ]
+    },
+    {
+      "candidate_id": "R01-S139",
+      "original_fit_status": "conditional_image_evidence_supported",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "original_conditional_fit_retained",
+      "donor_candidate_id": null,
+      "conditional_plane_H": [
+        [
+          0.02224684829833501,
+          -0.0007556434872278087,
+          -10.711919080134326
+        ],
+        [
+          0.0001274552890310228,
+          0.19837276892111444,
+          -30.55154911232682
+        ],
+        [
+          0.00020962043081587165,
+          0.00359224781390168,
+          1.0
+        ]
+      ]
+    },
+    {
+      "candidate_id": "R01-S140",
+      "original_fit_status": "conditional_image_evidence_supported",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "original_conditional_fit_retained",
+      "donor_candidate_id": null,
+      "conditional_plane_H": [
+        [
+          0.020629174844712515,
+          0.0008544574767928621,
+          -10.278993357104133
+        ],
+        [
+          2.9521339197828177e-06,
+          0.1773772059737196,
+          -27.26757215347235
+        ],
+        [
+          6.673210154371355e-05,
+          0.002976919324190722,
+          1.0
+        ]
+      ]
+    },
+    {
+      "candidate_id": "R01-S144",
+      "original_fit_status": "abstain_geometry_checks_failed",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_house_image_alignment",
+      "donor_candidate_id": "R01-S140",
+      "painted_house_alignment": {
+        "first_blue_px": 122,
+        "second_blue_px": 165,
+        "best_translation_second_to_first_px": [
+          2,
+          0
+        ],
+        "best_mask_iou": 0.7394,
+        "zero_translation_mask_iou": 0.6982,
+        "zero_translation_is_best": false,
+        "full_camera_pose_verified": false
+      },
+      "conditional_plane_H": null
+    },
+    {
+      "candidate_id": "R01-S153",
+      "original_fit_status": "abstain_geometry_checks_failed",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_target_geometry_checks_failed",
+      "donor_candidate_id": "R01-S154",
+      "painted_house_alignment": {
+        "first_blue_px": 165,
+        "second_blue_px": 172,
+        "best_translation_second_to_first_px": [
+          0,
+          0
+        ],
+        "best_mask_iou": 0.8516,
+        "zero_translation_mask_iou": 0.8516,
+        "zero_translation_is_best": true,
+        "full_camera_pose_verified": false
+      },
+      "three_target_frame_checks": [
+        {
+          "ring_status": "insufficient_or_inconsistent_ring_evidence",
+          "ring_p95_abs_radial_error_m": 0.22546961674042387,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3934,
+          "passes": false
+        },
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.15657140438171568,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3934,
+          "passes": true
+        },
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.15413776377438929,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3934,
+          "passes": true
+        }
+      ],
+      "conditional_plane_H": null
+    },
+    {
+      "candidate_id": "R01-S154",
+      "original_fit_status": "conditional_image_evidence_supported",
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "original_conditional_fit_retained",
+      "donor_candidate_id": null,
+      "conditional_plane_H": [
+        [
+          0.02116373063855317,
+          0.0015179702639078847,
+          -10.587559523808618
+        ],
+        [
+          -4.454034749759394e-05,
+          0.18882594826013144,
+          -28.99424855996455
+        ],
+        [
+          4.282957889615147e-05,
+          0.0035558102536096385,
+          1.0
+        ]
+      ]
+    }
+  ],
+  "limitations": [
+    "A donor is reused only within the same candidate origin and routed interval.",
+    "Three sampled frames cannot prove an unchanged camera between or beyond those frames.",
+    "The zero-shift house mask and ring/hog checks are image evidence, not surveyed metric accuracy.",
+    "No stone contact, complete board or simulation-ready event is inferred."
+  ]
+}

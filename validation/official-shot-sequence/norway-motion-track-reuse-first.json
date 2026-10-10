@@ -1,0 +1,146 @@
+{
+  "status": "source_only_exact_motion_track_reuse_audit",
+  "motion_transfer_sha256": "a39b498a8554006161db8ba5fdf157d9251da60e63ca3ac663ca30346c739fa8",
+  "runner_sha256": "7f3626d053ab9bb4b22fd9f3e19bfaf88f2a0f54c429aa7ca4ad7e7583261e20",
+  "track_attribution_count": 155,
+  "distinct_exact_track_count": 150,
+  "reused_exact_track_count": 5,
+  "candidate_events_in_reused_tracks": 10,
+  "rows": [
+    {
+      "colour": "red",
+      "motion_interval_s": [
+        683.0,
+        687.0
+      ],
+      "span_px": 44.29,
+      "candidate_events": [
+        {
+          "shot_id": "S43",
+          "counter_id": "B08",
+          "delivery_window_s": [
+            660.2,
+            676.0
+          ]
+        },
+        {
+          "shot_id": "S45",
+          "counter_id": null,
+          "delivery_window_s": [
+            687.4,
+            690.8
+          ]
+        }
+      ]
+    },
+    {
+      "colour": "red",
+      "motion_interval_s": [
+        986.0,
+        991.0
+      ],
+      "span_px": 50.6,
+      "candidate_events": [
+        {
+          "shot_id": "S63",
+          "counter_id": "B13",
+          "delivery_window_s": [
+            959.2,
+            986.0
+          ]
+        },
+        {
+          "shot_id": "S64",
+          "counter_id": null,
+          "delivery_window_s": [
+            986.0,
+            1003.6
+          ]
+        }
+      ]
+    },
+    {
+      "colour": "red",
+      "motion_interval_s": [
+        2881.0,
+        2886.0
+      ],
+      "span_px": 39.82,
+      "candidate_events": [
+        {
+          "shot_id": "S209",
+          "counter_id": "B42",
+          "delivery_window_s": [
+            2863.2,
+            2880.4
+          ]
+        },
+        {
+          "shot_id": "S210",
+          "counter_id": null,
+          "delivery_window_s": [
+            2880.4,
+            2898.2
+          ]
+        }
+      ]
+    },
+    {
+      "colour": "yellow",
+      "motion_interval_s": [
+        5506.0,
+        5512.0
+      ],
+      "span_px": 60.83,
+      "candidate_events": [
+        {
+          "shot_id": "S391",
+          "counter_id": null,
+          "delivery_window_s": [
+            5480.6,
+            5505.4
+          ]
+        },
+        {
+          "shot_id": "S392",
+          "counter_id": "B70",
+          "delivery_window_s": [
+            5505.4,
+            5524.4
+          ]
+        }
+      ]
+    },
+    {
+      "colour": "red",
+      "motion_interval_s": [
+        6184.0,
+        6198.0
+      ],
+      "span_px": 39.53,
+      "candidate_events": [
+        {
+          "shot_id": "S438",
+          "counter_id": null,
+          "delivery_window_s": [
+            6165.0,
+            6187.4
+          ]
+        },
+        {
+          "shot_id": "S439",
+          "counter_id": null,
+          "delivery_window_s": [
+            6187.4,
+            6212.4
+          ]
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Exact track equality is a lower bound on reuse; shifted search windows can fragment the same stone track.",
+    "A shared track proves candidate support is not independent, not which candidate is correct.",
+    "Neither candidate ledger nor tracks are independently labelled physical throws."
+  ]
+}

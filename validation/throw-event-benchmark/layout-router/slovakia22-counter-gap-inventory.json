@@ -1,0 +1,157 @@
+{
+  "status": "counter_gap_evidence_inventory_not_confirmed_throws",
+  "source_id": "Ns12UZ5nlPk",
+  "source_sha256": "eba1d86944a2f4278b6e5e2c7549d12b47e5e8a51bf0c680b2db372c6ec12420",
+  "source_interval_s": [
+    0.0,
+    7616.0
+  ],
+  "coverage_gaps_s": [
+    [
+      0.0,
+      300.0
+    ],
+    [
+      900.0,
+      1200.0
+    ],
+    [
+      3900.0,
+      4200.0
+    ],
+    [
+      6000.0,
+      6300.0
+    ],
+    [
+      7200.0,
+      7616.0
+    ]
+  ],
+  "preflight_sha256": "d7256d8632b49b37a80f971622b190729929b482c870920182f9409c36e07cd8",
+  "counter_replay_sha256": "9762fee14e4d0cd2e1c4e71ada036a894933c76f46c718c6f8e52294c9c3349c",
+  "model_sha256": "5f6e62d1f45a4a7e16ddb9a9a24ab8c824c6f10a5c018100029c1bbbf9b2f4d4",
+  "runner_sha256": "38f66a6e35458d4e6434badc506787d20cc9e0a8ef2c8b9e348cd6bd64402460",
+  "counter_event_count": 94,
+  "interior_gap_candidate_count": 3,
+  "boundary_ambiguous_count": 2,
+  "interior_gap_candidates": [
+    {
+      "counter_id": "B11",
+      "colour": "red",
+      "counter_update_s": 1163.0,
+      "counter_evidence_interval_s": [
+        1160.0,
+        1163.0
+      ],
+      "remaining_before": [
+        8,
+        8
+      ],
+      "remaining_after": [
+        7,
+        8
+      ],
+      "classification": "counter_evidence_inside_gap",
+      "gap_interval_s": [
+        900.0,
+        1200.0
+      ]
+    },
+    {
+      "counter_id": "B54",
+      "colour": "yellow",
+      "counter_update_s": 3973.0,
+      "counter_evidence_interval_s": [
+        3954.0,
+        3973.0
+      ],
+      "remaining_before": [
+        1,
+        1
+      ],
+      "remaining_after": [
+        1,
+        0
+      ],
+      "classification": "counter_evidence_inside_gap",
+      "gap_interval_s": [
+        3900.0,
+        4200.0
+      ]
+    },
+    {
+      "counter_id": "B81",
+      "colour": "yellow",
+      "counter_update_s": 6064.0,
+      "counter_evidence_interval_s": [
+        6044.0,
+        6064.0
+      ],
+      "remaining_before": [
+        1,
+        1
+      ],
+      "remaining_after": [
+        1,
+        0
+      ],
+      "classification": "counter_evidence_inside_gap",
+      "gap_interval_s": [
+        6000.0,
+        6300.0
+      ]
+    }
+  ],
+  "boundary_ambiguous": [
+    {
+      "counter_id": "B12",
+      "colour": "yellow",
+      "counter_update_s": 1213.0,
+      "counter_evidence_interval_s": [
+        1194.0,
+        1213.0
+      ],
+      "remaining_before": [
+        7,
+        8
+      ],
+      "remaining_after": [
+        7,
+        7
+      ],
+      "classification": "boundary_ambiguous_counter_evidence",
+      "gap_interval_s": [
+        900.0,
+        1200.0
+      ]
+    },
+    {
+      "counter_id": "B80",
+      "colour": "red",
+      "counter_update_s": 6029.0,
+      "counter_evidence_interval_s": [
+        5995.0,
+        6029.0
+      ],
+      "remaining_before": [
+        2,
+        1
+      ],
+      "remaining_after": [
+        1,
+        1
+      ],
+      "classification": "boundary_ambiguous_counter_evidence",
+      "gap_interval_s": [
+        6000.0,
+        6300.0
+      ]
+    }
+  ],
+  "limitations": [
+    "Counter updates are delayed broadcast evidence, not observed release times.",
+    "No counter evidence in a gap does not establish that no throw occurred.",
+    "Route gaps remain gaps; these candidates are not confirmed timeline events."
+  ]
+}

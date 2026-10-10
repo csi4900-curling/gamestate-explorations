@@ -1,0 +1,55 @@
+{
+  "status": "same_agent_full_match_disagreement_source_review_not_event_accuracy",
+  "source_sha256": "2e2b84bb2d9dffa497ee850ddbeaf0d5cae0d697377b6eee6a1ef481f449f3da",
+  "inventory_sha256": "26605e49cba13e52380d3af2908ed74e3a9113279370bb22c57b49d3cf302128",
+  "context_sha256": "132ae3fdb180a94ce9a6defc3356f56fc1979d0c3e12777b50c7a9a890d367a1",
+  "right_review_sha256_by_run": {
+    "R01": "7a9c3e30f5c909bf6a95cb5c4dc510097bafa8121b300e4b6e130975310684a0",
+    "R02": "9e65d1570391725963365e548a3e5409f516eefdf87e7ac313fbe2fc822009bf"
+  },
+  "other_review_sha256": {
+    "left_review": "9f30c1e5f3ae590ac3be2275f49cc2a3801d6c6025466c218cef3789b0cf13da",
+    "matched_cluttered_review": "566af7a9ae11854d7ae6130aaf8d6a3de5df083e0d3b0e4c065a2c738b62eceb",
+    "matched_clear_sample": "387a807901c271301ae765a622b188c550df594e5dc276f33d1672a9d00f687d"
+  },
+  "model_code_sha256": "1c039924939bde6d0aa5dccb4bc4aa0117175ff2fe69934a96f2e27624de98c8",
+  "runner_sha256": "5c7d02d0b841aa2e7160b80b5ca4f6ac4e14a75da0791d8fc718d24c817e2b59",
+  "right_only_source_class_counts": {
+    "moving_stone": 4,
+    "person_or_wheelchair_or_equipment": 23,
+    "stone_moved_by_person": 1
+  },
+  "right_only_class_by_context": {
+    "moving_stone": {
+      "clear_context_review": 4,
+      "context_cluttered_review": 0,
+      "context_unavailable_review": 0
+    },
+    "person_or_wheelchair_or_equipment": {
+      "clear_context_review": 0,
+      "context_cluttered_review": 23,
+      "context_unavailable_review": 0
+    },
+    "stone_moved_by_person": {
+      "clear_context_review": 1,
+      "context_cluttered_review": 0,
+      "context_unavailable_review": 0
+    }
+  },
+  "left_only_source_class_counts": {
+    "person_or_wheelchair": 1,
+    "moving_broom_or_equipment": 3
+  },
+  "matched_cluttered_source_class_counts": {
+    "person_or_wheelchair_or_equipment": 2
+  },
+  "matched_clear_sample_count": 12,
+  "matched_clear_sample_class_counts": {
+    "moving_stone": 12
+  },
+  "limitations": [
+    "The reviews were made by the developer from sparse source sheets, not independent exhaustive labels.",
+    "Time/colour matching and clear context are not physical throw or stone identity proof.",
+    "The matched-clear sample cannot estimate full-match precision."
+  ]
+}

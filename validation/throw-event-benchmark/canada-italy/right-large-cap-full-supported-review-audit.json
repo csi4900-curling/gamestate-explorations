@@ -1,0 +1,65 @@
+{
+  "status": "same_agent_full_match_disagreement_source_review_not_event_accuracy",
+  "source_sha256": "aff12e78edeb5e108d142aed3e19b61c3956b4fddc8b2fd8b202713746771739",
+  "inventory_sha256": "3333f33677b77fb5c1526f500d74c99ca1b5f883dc827375e259e0d55b7c7008",
+  "context_sha256": "e301473715ca396a39ee85f79cbbdb7a189e1e7e3e37c2d2a39443173036b674",
+  "right_review_sha256_by_run": {
+    "R01": "ebd94325ac8165dc79a2472f06a96ae6731e71e3f43f46fe68502ed17e4e40ad",
+    "R02": "9d2b4179a81b062fe572be772d64ccff0cf44a65250790adc7e9b5868d14fe7c"
+  },
+  "other_review_sha256": {
+    "left_review": "32f154ef6de8dd125374d1baf9c97187bb85ee48bad90cd82dc74f95a0f85ecf",
+    "matched_cluttered_review": "4ae51481475c34c77bea5de105ef4004c4f6f06f74cc8aa338aeab35841c8dc1",
+    "matched_clear_sample": "a173a9955de057a6a1599a16157a7a01af8181880c7b938c86b1c28527b16017"
+  },
+  "model_code_sha256": "1b5e9d4803cdb40a0edbb80f8f026c84a7859f281149764863422f3a77893d0a",
+  "runner_sha256": "5c7d02d0b841aa2e7160b80b5ca4f6ac4e14a75da0791d8fc718d24c817e2b59",
+  "reviewed_right_disagreement_count": 34,
+  "right_only_source_class_counts": {
+    "person_or_wheelchair_or_equipment": 22,
+    "moving_stone": 8
+  },
+  "right_only_class_by_context": {
+    "moving_stone": {
+      "clear_context_review": 7,
+      "context_cluttered_review": 1,
+      "context_unavailable_review": 0
+    },
+    "person_or_wheelchair_or_equipment": {
+      "clear_context_review": 2,
+      "context_cluttered_review": 20,
+      "context_unavailable_review": 0
+    }
+  },
+  "duplicate_right_source_class_counts": {
+    "moving_stone": 2,
+    "person_or_wheelchair_or_equipment": 2
+  },
+  "duplicate_right_class_by_context": {
+    "moving_stone": {
+      "clear_context_review": 2,
+      "context_cluttered_review": 0,
+      "context_unavailable_review": 0
+    },
+    "person_or_wheelchair_or_equipment": {
+      "clear_context_review": 0,
+      "context_cluttered_review": 2,
+      "context_unavailable_review": 0
+    }
+  },
+  "left_only_source_class_counts": {
+    "moving_stone": 6
+  },
+  "matched_cluttered_source_class_counts": {
+    "moving_stone": 1
+  },
+  "matched_clear_sample_count": 12,
+  "matched_clear_sample_class_counts": {
+    "moving_stone": 12
+  },
+  "limitations": [
+    "The reviews were made by the developer from sparse source sheets, not independent exhaustive labels.",
+    "Time/colour matching and clear context are not physical throw or stone identity proof.",
+    "The matched-clear sample cannot estimate full-match precision."
+  ]
+}

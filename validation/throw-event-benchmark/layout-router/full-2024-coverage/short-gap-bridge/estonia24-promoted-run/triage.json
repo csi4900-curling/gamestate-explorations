@@ -1,0 +1,150 @@
+{
+  "status": "candidate_triage_not_physical_event_validation",
+  "source_id": "PXGfMeiTKMA",
+  "source_sha256": "2e2b84bb2d9dffa497ee850ddbeaf0d5cae0d697377b6eee6a1ef481f449f3da",
+  "source_interval_s": [
+    3870.0,
+    3960.0
+  ],
+  "raw_sha256": "c45c7da1d830501fa98816bcfbf302d620c94e14e5293dabab20fc37a616ad90",
+  "confirmation_sha256": "396b2d7e7c3c4cfbe8436556c83e95e62a2555e2dbbffd28d25cbe3be83b255c",
+  "triage_code_sha256": "a008d7e9a875561d23d2d55abba31765a2ae2c13f124b8fb6d396492441e6836",
+  "counts": {
+    "proposed": 9,
+    "auto_confirmed": 1,
+    "needs_review": 8
+  },
+  "proposals": [
+    {
+      "id": "S01",
+      "crossing_time_s": 3870.625,
+      "colour": "red",
+      "disposition": "auto_confirmed_candidate",
+      "stage_evidence": [
+        {
+          "stage": "span_context",
+          "decision": "supported",
+          "reason": "compact_tracked_motion"
+        }
+      ],
+      "release_time_s": null
+    },
+    {
+      "id": "S02",
+      "crossing_time_s": 3872.287,
+      "colour": "red",
+      "disposition": "needs_review",
+      "stage_evidence": [
+        {
+          "stage": "span_context",
+          "decision": "needs_review",
+          "reason": "fragment_of_recent_passage"
+        }
+      ],
+      "release_time_s": null
+    },
+    {
+      "id": "S03",
+      "crossing_time_s": 3896.561,
+      "colour": "red",
+      "disposition": "needs_review",
+      "stage_evidence": [
+        {
+          "stage": "span_context",
+          "decision": "needs_review",
+          "reason": "outside_ice_corridor"
+        }
+      ],
+      "release_time_s": null
+    },
+    {
+      "id": "S04",
+      "crossing_time_s": 3897.506,
+      "colour": "red",
+      "disposition": "needs_review",
+      "stage_evidence": [
+        {
+          "stage": "span_context",
+          "decision": "needs_review",
+          "reason": "outside_ice_corridor"
+        }
+      ],
+      "release_time_s": null
+    },
+    {
+      "id": "S05",
+      "crossing_time_s": 3900.746,
+      "colour": "red",
+      "disposition": "needs_review",
+      "stage_evidence": [
+        {
+          "stage": "span_context",
+          "decision": "needs_review",
+          "reason": "outside_ice_corridor"
+        }
+      ],
+      "release_time_s": null
+    },
+    {
+      "id": "S06",
+      "crossing_time_s": 3901.05,
+      "colour": "red",
+      "disposition": "needs_review",
+      "stage_evidence": [
+        {
+          "stage": "span_context",
+          "decision": "needs_review",
+          "reason": "outside_ice_corridor"
+        }
+      ],
+      "release_time_s": null
+    },
+    {
+      "id": "S07",
+      "crossing_time_s": 3936.894,
+      "colour": "red",
+      "disposition": "needs_review",
+      "stage_evidence": [
+        {
+          "stage": "span_context",
+          "decision": "needs_review",
+          "reason": "outside_ice_corridor"
+        }
+      ],
+      "release_time_s": null
+    },
+    {
+      "id": "S08",
+      "crossing_time_s": 3938.435,
+      "colour": "red",
+      "disposition": "needs_review",
+      "stage_evidence": [
+        {
+          "stage": "span_context",
+          "decision": "needs_review",
+          "reason": "large_surrounding_motion"
+        }
+      ],
+      "release_time_s": null
+    },
+    {
+      "id": "S09",
+      "crossing_time_s": 3938.652,
+      "colour": "red",
+      "disposition": "needs_review",
+      "stage_evidence": [
+        {
+          "stage": "span_context",
+          "decision": "needs_review",
+          "reason": "outside_ice_corridor"
+        }
+      ],
+      "release_time_s": null
+    }
+  ],
+  "limitations": [
+    "Review proposals are not confirmed throws and must not be silently discarded.",
+    "The span-context gate is development-fitted and covers only the known 2024 split-screen layout.",
+    "First observed motion and passage times are not exact physical release times."
+  ]
+}

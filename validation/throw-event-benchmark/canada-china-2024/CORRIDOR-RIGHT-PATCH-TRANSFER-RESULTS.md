@@ -1,0 +1,17 @@
+# Canada–China corridor/right-camera transfer: appearance gate loses recall
+
+The [prerun plan](CORRIDOR-RIGHT-PATCH-TRANSFER-PLAN.json) fixed the 1 Hz right-cap tracker, moving-tail derivative, direction-aware 20 s same-colour join, previously trained patch model, first/middle/last sampling, and strict three-of-three patch rule before this right-camera scan. It records source, reference, model and code hashes. The source-only coarse reference and left corridor candidates were already saved; the prediction-only [right scan](corridor-right-r01-probe-first-transfer.json), [tail](corridor-right-r01-tail-first-transfer.json), [join](corridor-right-corrob-first-transfer.json) and [patch features](corridor-right-patch-evidence-first-transfer.json) were written before scoring.
+
+| Rule on 1650–2760 s | Predictions | TP | FP | FN | Precision | Recall | F1 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Saved high-recall left corridor | 25 | 18 | 7 | 0 | 0.720 | 1.000 | 0.837 |
+| Unique compatible right track | 18 | 18 | 0 | 0 | 1.000 | 1.000 | 1.000 |
+| Unique right track plus three positive patches | 5 | 5 | 0 | 13 | 1.000 | 0.278 | 0.435 |
+
+The [temporal score](corridor-right-corrob-score-first-transfer.json) and [frozen-rule patch score](corridor-right-patch-score-first-transfer.json) use the same 18 coarse delivery windows. The right scan found 24 directional proposals. All 18 baseline matched left candidates had a unique compatible right proposal. Among the seven baseline extras, four were ambiguous and three had no compatible right proposal. This is encouraging for temporal corroboration on this recording, but a temporal match still does not verify one physical stone and the reference is neither independent nor certified exhaustive.
+
+The later [prediction-only episode inventory](corridor-right-episodes-first-transfer.json) preserves **two right-only motion proposals**, near 1820 and 2559 s, as well as every left candidate. The 18/0/0 temporal score tests filtering of the *left* candidate set; it does not certify that right-only candidates are non-throws or that the full video contains only 18 deliveries. Both right-only proposals remain unresolved review items.
+
+The patch gate is the decisive failure. Of the 18 matched right tracks, only five scored stone-like in **all three** sampled frames; ten had two positives, two had one and one had none at the unchanged model threshold of zero. The previous Estonia/Italy diagnostic had three positives for every coarse-window matched track. Thus the three-of-three rule does not transfer even within the same 2024 split-view production family. The model/crop scores are visibly lower on this recording; there is no basis to attribute all 13 misses to false events. Relaxing the threshold or vote count after seeing these scores would be China-informed tuning, not this frozen result.
+
+The temporal-only 18/0/0 result is also limited to this previously exposed 1110 s interval and same-agent sparse source sheets. It does not establish full-match precision/recall, release or settle boundaries, reliable camera-family transfer, or game-state completeness. A next detector should retain high-recall candidates and the right-view corroboration as evidence, while learning a better calibrated object-level discriminator on match-separated examples. If right-view evidence is absent or shared, the output should abstain or route to another evidence path rather than silently drop the candidate.

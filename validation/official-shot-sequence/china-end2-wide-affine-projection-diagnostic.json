@@ -1,0 +1,116 @@
+{
+  "status": "postscore_naive_wide_ellipse_projection_failure_not_calibration",
+  "source_sha256": "c5254bb9103e32c6beac74cf269fc7bcec8ce2c2a710a7d4600c7ddb951f160e",
+  "wide_image_evidence_sha256": "5db9d092e60e9b2ad151227d59f8600feedfbc513d5325954f67130926b7fc70",
+  "official_diagrams_sha256": "e55890f1f1ca8d938b212626223408fd0ebe029577bc2da95d032130c78caf8c",
+  "comparator_sha256": "68ec2b456af65518a8eac4e7e5c88b3e8f1e1fcb035d3d8048252a932da82ae8",
+  "runner_sha256": "d04773c69f83c6f1d5dfa145da47972fd53e4163aad0a9cf468e7ea5747213f8",
+  "shot_id": "PREL000102-E02-S12",
+  "ellipse_frame_time_s": 1632,
+  "formula": "x=sign_x*(pixel_x-cx)/major_radius; y=sign_y*(pixel_y-cy)/minor_radius",
+  "match_tolerance_house_radii": 0.25,
+  "alternatives": [
+    {
+      "lateral_sign": -1,
+      "longitudinal_sign": -1,
+      "naive_ellipse_coordinates": [
+        {
+          "colour": "red",
+          "canonical_lateral_house_radii": 1.1565,
+          "longitudinal_house_radii": 1.4456
+        },
+        {
+          "colour": "red",
+          "canonical_lateral_house_radii": -0.8441,
+          "longitudinal_house_radii": 1.3567
+        },
+        {
+          "colour": "yellow",
+          "canonical_lateral_house_radii": 0.0102,
+          "longitudinal_house_radii": -0.5944
+        }
+      ],
+      "matched_within_0_25_house_radii": 1,
+      "forced_mean_error_house_radii": 0.4045,
+      "forced_max_error_house_radii": 0.4886
+    },
+    {
+      "lateral_sign": -1,
+      "longitudinal_sign": 1,
+      "naive_ellipse_coordinates": [
+        {
+          "colour": "red",
+          "canonical_lateral_house_radii": 1.1565,
+          "longitudinal_house_radii": -1.4456
+        },
+        {
+          "colour": "red",
+          "canonical_lateral_house_radii": -0.8441,
+          "longitudinal_house_radii": -1.3567
+        },
+        {
+          "colour": "yellow",
+          "canonical_lateral_house_radii": 0.0102,
+          "longitudinal_house_radii": 0.5944
+        }
+      ],
+      "matched_within_0_25_house_radii": 0,
+      "forced_mean_error_house_radii": 2.0337,
+      "forced_max_error_house_radii": 2.4242
+    },
+    {
+      "lateral_sign": 1,
+      "longitudinal_sign": -1,
+      "naive_ellipse_coordinates": [
+        {
+          "colour": "red",
+          "canonical_lateral_house_radii": -1.1565,
+          "longitudinal_house_radii": 1.4456
+        },
+        {
+          "colour": "red",
+          "canonical_lateral_house_radii": 0.8441,
+          "longitudinal_house_radii": 1.3567
+        },
+        {
+          "colour": "yellow",
+          "canonical_lateral_house_radii": -0.0102,
+          "longitudinal_house_radii": -0.5944
+        }
+      ],
+      "matched_within_0_25_house_radii": 1,
+      "forced_mean_error_house_radii": 0.4283,
+      "forced_max_error_house_radii": 0.6146
+    },
+    {
+      "lateral_sign": 1,
+      "longitudinal_sign": 1,
+      "naive_ellipse_coordinates": [
+        {
+          "colour": "red",
+          "canonical_lateral_house_radii": -1.1565,
+          "longitudinal_house_radii": -1.4456
+        },
+        {
+          "colour": "red",
+          "canonical_lateral_house_radii": 0.8441,
+          "longitudinal_house_radii": -1.3567
+        },
+        {
+          "colour": "yellow",
+          "canonical_lateral_house_radii": -0.0102,
+          "longitudinal_house_radii": 0.5944
+        }
+      ],
+      "matched_within_0_25_house_radii": 0,
+      "forced_mean_error_house_radii": 2.039,
+      "forced_max_error_house_radii": 2.3421
+    }
+  ],
+  "limitations": [
+    "Official positions are used only to score these four naive postscore alternatives.",
+    "Selecting the best sign from the official diagram would leak reference data.",
+    "A single fitted ellipse does not provide a validated planar homography.",
+    "No transformed coordinate is exported as video-derived game state."
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "status": "exposed_development_short_prefix_diagnostic_not_event_accuracy",
+  "ring_review_threshold": 0.25,
+  "underpoint_review_threshold": 0.25,
+  "pairs": [
+    {
+      "recording": "usa_late_seed",
+      "ring_score_sha256": "a6dc207517644d8ac5d3fb7829f0cfda589c669031ebb24497e5229105b2e777",
+      "underpoint_score_sha256": "14df1be25fdce1b369ae145c26c10bd29bba0b925e206b866edbabbb92097170"
+    }
+  ],
+  "counts_by_source_class_and_tier": {
+    "mixed_identity_prefix": {
+      "clear_context_review": 0,
+      "cluttered_review": 1,
+      "unavailable_review": 0
+    },
+    "moving_stone_prefix": {
+      "clear_context_review": 2,
+      "cluttered_review": 0,
+      "unavailable_review": 0
+    },
+    "person_or_equipment_prefix": {
+      "clear_context_review": 0,
+      "cluttered_review": 3,
+      "unavailable_review": 0
+    },
+    "stone_pixels_identity_uncertain": {
+      "clear_context_review": 1,
+      "cluttered_review": 0,
+      "unavailable_review": 0
+    }
+  },
+  "rows": [
+    {
+      "recording": "usa_late_seed",
+      "raw_track_id": "B009",
+      "source_prefix_class": "stone_pixels_identity_uncertain",
+      "ring_nonice_fraction": 0.0996,
+      "underpoint_nonice_fraction": 0.0,
+      "combined_review_tier": "clear_context_review"
+    },
+    {
+      "recording": "usa_late_seed",
+      "raw_track_id": "B015",
+      "source_prefix_class": "mixed_identity_prefix",
+      "ring_nonice_fraction": 0.5569,
+      "underpoint_nonice_fraction": 0.0145,
+      "combined_review_tier": "cluttered_review"
+    },
+    {
+      "recording": "usa_late_seed",
+      "raw_track_id": "B021",
+      "source_prefix_class": "person_or_equipment_prefix",
+      "ring_nonice_fraction": 0.4983,
+      "underpoint_nonice_fraction": 0.05,
+      "combined_review_tier": "cluttered_review"
+    },
+    {
+      "recording": "usa_late_seed",
+      "raw_track_id": "B022",
+      "source_prefix_class": "person_or_equipment_prefix",
+      "ring_nonice_fraction": 0.5554,
+      "underpoint_nonice_fraction": 0.3171,
+      "combined_review_tier": "cluttered_review"
+    },
+    {
+      "recording": "usa_late_seed",
+      "raw_track_id": "B024",
+      "source_prefix_class": "person_or_equipment_prefix",
+      "ring_nonice_fraction": 0.5494,
+      "underpoint_nonice_fraction": 0.0059,
+      "combined_review_tier": "cluttered_review"
+    },
+    {
+      "recording": "usa_late_seed",
+      "raw_track_id": "B032",
+      "source_prefix_class": "moving_stone_prefix",
+      "ring_nonice_fraction": 0.015,
+      "underpoint_nonice_fraction": 0.0,
+      "combined_review_tier": "clear_context_review"
+    },
+    {
+      "recording": "usa_late_seed",
+      "raw_track_id": "B034",
+      "source_prefix_class": "moving_stone_prefix",
+      "ring_nonice_fraction": 0.0246,
+      "underpoint_nonice_fraction": 0.0,
+      "combined_review_tier": "clear_context_review"
+    }
+  ],
+  "limitations": [
+    "The underpoint geometry and threshold were selected after viewing Slovakia head-track failures.",
+    "All classes are same-agent source-visible prefixes, not physical throw truth.",
+    "Selected prefixes do not provide an exhaustive delivery denominator.",
+    "Clear context is a review cue, not an accepted stone or throw."
+  ]
+}

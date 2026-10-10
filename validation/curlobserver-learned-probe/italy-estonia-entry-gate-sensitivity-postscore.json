@@ -1,0 +1,976 @@
+{
+  "status": "postscore_entry_gate_sensitivity_not_transfer_validation",
+  "selector_sha256": "8cae87a9b90904647ccb67cceec2473739ccf1d626b68e1305769b28107d63cd",
+  "scorer_sha256": "f5a76cc3ea8b37ff13d90fc919f7192753276873b603ef01d4ef5b6f743307f6",
+  "runner_sha256": "0005f67d1d4b0c668ecd8e204bffb142aa272f0dd1411370416fd29bdb9a43b6",
+  "cases": [
+    {
+      "name": "italy",
+      "source_id": "Vp3TIdOAlrc",
+      "input_sha256": {
+        "candidates": "10b4166a2275ced86d4fa4c8d4395a42a46e83aa36430567b60d0aab1bd5fa5d",
+        "reference": "a5886533fc79905a89efb913491b71262f3550a8b83239bf5f9d413a9ed5fb28",
+        "hold": "d795e8f486144f42a9d6633071e0c4d2752520151762a30a3c4f75edf0aa51fb"
+      },
+      "trials": [
+        {
+          "left_entry_y_m": -4.5,
+          "right_entry_y_m": 12.0,
+          "selected_candidate_ids": [
+            "S01",
+            "S12",
+            "S13",
+            "S15",
+            "S17",
+            "S20",
+            "S21",
+            "S23",
+            "S24",
+            "S26",
+            "S27",
+            "S30",
+            "S31",
+            "S32"
+          ],
+          "selection_status_by_candidate": {
+            "S01": "provisional_unique_far_entry_motion_path",
+            "S03": "no_supported_far_entry_motion_path",
+            "S07": "no_supported_far_entry_motion_path",
+            "S08": "no_supported_far_entry_motion_path",
+            "S10": "no_supported_far_entry_motion_path",
+            "S12": "provisional_unique_far_entry_motion_path",
+            "S13": "provisional_unique_far_entry_motion_path",
+            "S14": "no_supported_far_entry_motion_path",
+            "S15": "provisional_unique_far_entry_motion_path",
+            "S16": "no_supported_far_entry_motion_path",
+            "S17": "provisional_unique_far_entry_motion_path",
+            "S18": "no_supported_far_entry_motion_path",
+            "S19": "no_supported_far_entry_motion_path",
+            "S20": "provisional_unique_far_entry_motion_path",
+            "S21": "provisional_unique_far_entry_motion_path",
+            "S22": "no_supported_far_entry_motion_path",
+            "S23": "provisional_unique_far_entry_motion_path",
+            "S24": "provisional_unique_far_entry_motion_path",
+            "S26": "provisional_unique_far_entry_motion_path",
+            "S27": "provisional_unique_far_entry_motion_path",
+            "S29": "no_supported_far_entry_motion_path",
+            "S30": "provisional_unique_far_entry_motion_path",
+            "S31": "provisional_unique_far_entry_motion_path",
+            "S32": "provisional_unique_far_entry_motion_path"
+          },
+          "motion_only_score": {
+            "reference_count": 17,
+            "prediction_count": 14,
+            "true_positives": 14,
+            "false_positives": 0,
+            "false_negatives": 3,
+            "precision": 1.0,
+            "recall": 0.8235294117647058,
+            "f1": 0.9032258064516129,
+            "colour_errors_among_matches": 0,
+            "colour_aware_true_positives": 14,
+            "colour_aware_false_positives": 0,
+            "colour_aware_false_negatives": 3,
+            "colour_aware_precision": 1.0,
+            "colour_aware_recall": 0.8235294117647058,
+            "colour_aware_f1": 0.9032258064516129,
+            "matches": [
+              {
+                "reference_id": "I01",
+                "prediction_id": "S01",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I03",
+                "prediction_id": "S12",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I04",
+                "prediction_id": "S13",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I05",
+                "prediction_id": "S15",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I06",
+                "prediction_id": "S17",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I09",
+                "prediction_id": "S20",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I10",
+                "prediction_id": "S21",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I11",
+                "prediction_id": "S23",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I12",
+                "prediction_id": "S24",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I13",
+                "prediction_id": "S26",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I14",
+                "prediction_id": "S27",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I15",
+                "prediction_id": "S30",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I16",
+                "prediction_id": "S31",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I17",
+                "prediction_id": "S32",
+                "colour_match": true
+              }
+            ],
+            "missed_reference_ids": [
+              "I02",
+              "I07",
+              "I08"
+            ],
+            "extra_prediction_ids": [],
+            "scoring_tolerance_s": 0.0,
+            "prediction_time_mode": "point",
+            "max_prediction_interval_s": null,
+            "timing_interpretation": "Passage detection within a reference interval; no release-time error inferred."
+          }
+        },
+        {
+          "left_entry_y_m": -2.0,
+          "right_entry_y_m": 4.0,
+          "selected_candidate_ids": [
+            "S01",
+            "S03",
+            "S12",
+            "S13",
+            "S14",
+            "S15",
+            "S17",
+            "S18",
+            "S19",
+            "S20",
+            "S21",
+            "S23",
+            "S24",
+            "S26",
+            "S27",
+            "S30",
+            "S32"
+          ],
+          "selection_status_by_candidate": {
+            "S01": "provisional_unique_far_entry_motion_path",
+            "S03": "provisional_unique_far_entry_motion_path",
+            "S07": "no_supported_far_entry_motion_path",
+            "S08": "no_supported_far_entry_motion_path",
+            "S10": "no_supported_far_entry_motion_path",
+            "S12": "provisional_unique_far_entry_motion_path",
+            "S13": "provisional_unique_far_entry_motion_path",
+            "S14": "provisional_unique_far_entry_motion_path",
+            "S15": "provisional_unique_far_entry_motion_path",
+            "S16": "no_supported_far_entry_motion_path",
+            "S17": "provisional_unique_far_entry_motion_path",
+            "S18": "provisional_unique_far_entry_motion_path",
+            "S19": "provisional_unique_far_entry_motion_path",
+            "S20": "provisional_unique_far_entry_motion_path",
+            "S21": "provisional_unique_far_entry_motion_path",
+            "S22": "no_supported_far_entry_motion_path",
+            "S23": "provisional_unique_far_entry_motion_path",
+            "S24": "provisional_unique_far_entry_motion_path",
+            "S26": "provisional_unique_far_entry_motion_path",
+            "S27": "provisional_unique_far_entry_motion_path",
+            "S29": "no_supported_far_entry_motion_path",
+            "S30": "provisional_unique_far_entry_motion_path",
+            "S31": "ambiguous_far_entry_motion_paths",
+            "S32": "provisional_unique_far_entry_motion_path"
+          },
+          "motion_only_score": {
+            "reference_count": 17,
+            "prediction_count": 17,
+            "true_positives": 16,
+            "false_positives": 1,
+            "false_negatives": 1,
+            "precision": 0.9411764705882353,
+            "recall": 0.9411764705882353,
+            "f1": 0.9411764705882353,
+            "colour_errors_among_matches": 0,
+            "colour_aware_true_positives": 16,
+            "colour_aware_false_positives": 1,
+            "colour_aware_false_negatives": 1,
+            "colour_aware_precision": 0.9411764705882353,
+            "colour_aware_recall": 0.9411764705882353,
+            "colour_aware_f1": 0.9411764705882353,
+            "matches": [
+              {
+                "reference_id": "I01",
+                "prediction_id": "S01",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I02",
+                "prediction_id": "S03",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I03",
+                "prediction_id": "S12",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I04",
+                "prediction_id": "S13",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I05",
+                "prediction_id": "S15",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I06",
+                "prediction_id": "S17",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I07",
+                "prediction_id": "S18",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I08",
+                "prediction_id": "S19",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I09",
+                "prediction_id": "S20",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I10",
+                "prediction_id": "S21",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I11",
+                "prediction_id": "S23",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I12",
+                "prediction_id": "S24",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I13",
+                "prediction_id": "S26",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I14",
+                "prediction_id": "S27",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I15",
+                "prediction_id": "S30",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I17",
+                "prediction_id": "S32",
+                "colour_match": true
+              }
+            ],
+            "missed_reference_ids": [
+              "I16"
+            ],
+            "extra_prediction_ids": [
+              "S14"
+            ],
+            "scoring_tolerance_s": 0.0,
+            "prediction_time_mode": "point",
+            "max_prediction_interval_s": null,
+            "timing_interpretation": "Passage detection within a reference interval; no release-time error inferred."
+          }
+        },
+        {
+          "left_entry_y_m": 0.0,
+          "right_entry_y_m": 0.0,
+          "selected_candidate_ids": [
+            "S01",
+            "S03",
+            "S12",
+            "S13",
+            "S14",
+            "S15",
+            "S17",
+            "S18",
+            "S19",
+            "S20",
+            "S21",
+            "S23",
+            "S24",
+            "S26",
+            "S27",
+            "S30",
+            "S32"
+          ],
+          "selection_status_by_candidate": {
+            "S01": "provisional_unique_far_entry_motion_path",
+            "S03": "provisional_unique_far_entry_motion_path",
+            "S07": "no_supported_far_entry_motion_path",
+            "S08": "no_supported_far_entry_motion_path",
+            "S10": "no_supported_far_entry_motion_path",
+            "S12": "provisional_unique_far_entry_motion_path",
+            "S13": "provisional_unique_far_entry_motion_path",
+            "S14": "provisional_unique_far_entry_motion_path",
+            "S15": "provisional_unique_far_entry_motion_path",
+            "S16": "no_supported_far_entry_motion_path",
+            "S17": "provisional_unique_far_entry_motion_path",
+            "S18": "provisional_unique_far_entry_motion_path",
+            "S19": "provisional_unique_far_entry_motion_path",
+            "S20": "provisional_unique_far_entry_motion_path",
+            "S21": "provisional_unique_far_entry_motion_path",
+            "S22": "no_supported_far_entry_motion_path",
+            "S23": "provisional_unique_far_entry_motion_path",
+            "S24": "provisional_unique_far_entry_motion_path",
+            "S26": "provisional_unique_far_entry_motion_path",
+            "S27": "provisional_unique_far_entry_motion_path",
+            "S29": "no_supported_far_entry_motion_path",
+            "S30": "provisional_unique_far_entry_motion_path",
+            "S31": "ambiguous_far_entry_motion_paths",
+            "S32": "provisional_unique_far_entry_motion_path"
+          },
+          "motion_only_score": {
+            "reference_count": 17,
+            "prediction_count": 17,
+            "true_positives": 16,
+            "false_positives": 1,
+            "false_negatives": 1,
+            "precision": 0.9411764705882353,
+            "recall": 0.9411764705882353,
+            "f1": 0.9411764705882353,
+            "colour_errors_among_matches": 0,
+            "colour_aware_true_positives": 16,
+            "colour_aware_false_positives": 1,
+            "colour_aware_false_negatives": 1,
+            "colour_aware_precision": 0.9411764705882353,
+            "colour_aware_recall": 0.9411764705882353,
+            "colour_aware_f1": 0.9411764705882353,
+            "matches": [
+              {
+                "reference_id": "I01",
+                "prediction_id": "S01",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I02",
+                "prediction_id": "S03",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I03",
+                "prediction_id": "S12",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I04",
+                "prediction_id": "S13",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I05",
+                "prediction_id": "S15",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I06",
+                "prediction_id": "S17",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I07",
+                "prediction_id": "S18",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I08",
+                "prediction_id": "S19",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I09",
+                "prediction_id": "S20",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I10",
+                "prediction_id": "S21",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I11",
+                "prediction_id": "S23",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I12",
+                "prediction_id": "S24",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I13",
+                "prediction_id": "S26",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I14",
+                "prediction_id": "S27",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I15",
+                "prediction_id": "S30",
+                "colour_match": true
+              },
+              {
+                "reference_id": "I17",
+                "prediction_id": "S32",
+                "colour_match": true
+              }
+            ],
+            "missed_reference_ids": [
+              "I16"
+            ],
+            "extra_prediction_ids": [
+              "S14"
+            ],
+            "scoring_tolerance_s": 0.0,
+            "prediction_time_mode": "point",
+            "max_prediction_interval_s": null,
+            "timing_interpretation": "Passage detection within a reference interval; no release-time error inferred."
+          }
+        }
+      ]
+    },
+    {
+      "name": "estonia",
+      "source_id": "PXGfMeiTKMA",
+      "input_sha256": {
+        "candidates": "ba103e076936412513b3267de8625f9e3ca4fbb0be7b4f3b3cdde77c14c78526",
+        "reference": "d53b1a878c03134c328e83f0317c946c909e0c83d4395fb8a7d9c1433cc5c7fa",
+        "hold": "3c864986bc05f30bffbee78d0dd4b2f7f1614dd30bd69d1bcda2e6e204f27328"
+      },
+      "trials": [
+        {
+          "left_entry_y_m": -4.5,
+          "right_entry_y_m": 12.0,
+          "selected_candidate_ids": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S12",
+            "S13",
+            "S14",
+            "S16",
+            "S17",
+            "S18",
+            "S19",
+            "S20",
+            "S21",
+            "S22",
+            "S23",
+            "S24",
+            "S25",
+            "S26"
+          ],
+          "selection_status_by_candidate": {
+            "S01": "provisional_unique_far_entry_motion_path",
+            "S02": "provisional_unique_far_entry_motion_path",
+            "S03": "provisional_unique_far_entry_motion_path",
+            "S04": "provisional_unique_far_entry_motion_path",
+            "S06": "no_supported_far_entry_motion_path",
+            "S08": "no_supported_far_entry_motion_path",
+            "S09": "no_supported_far_entry_motion_path",
+            "S12": "provisional_unique_far_entry_motion_path",
+            "S13": "provisional_unique_far_entry_motion_path",
+            "S14": "provisional_unique_far_entry_motion_path",
+            "S16": "provisional_unique_far_entry_motion_path",
+            "S17": "provisional_unique_far_entry_motion_path",
+            "S18": "provisional_unique_far_entry_motion_path",
+            "S19": "provisional_unique_far_entry_motion_path",
+            "S20": "provisional_unique_far_entry_motion_path",
+            "S21": "provisional_unique_far_entry_motion_path",
+            "S22": "provisional_unique_far_entry_motion_path",
+            "S23": "provisional_unique_far_entry_motion_path",
+            "S24": "provisional_unique_far_entry_motion_path",
+            "S25": "provisional_unique_far_entry_motion_path",
+            "S26": "provisional_unique_far_entry_motion_path",
+            "S27": "no_supported_far_entry_motion_path"
+          },
+          "motion_only_score": {
+            "reference_count": 17,
+            "prediction_count": 18,
+            "true_positives": 17,
+            "false_positives": 1,
+            "false_negatives": 0,
+            "precision": 0.9444444444444444,
+            "recall": 1.0,
+            "f1": 0.9714285714285714,
+            "colour_errors_among_matches": 0,
+            "colour_aware_true_positives": 17,
+            "colour_aware_false_positives": 1,
+            "colour_aware_false_negatives": 0,
+            "colour_aware_precision": 0.9444444444444444,
+            "colour_aware_recall": 1.0,
+            "colour_aware_f1": 0.9714285714285714,
+            "matches": [
+              {
+                "reference_id": "E01",
+                "prediction_id": "S01",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E02",
+                "prediction_id": "S02",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E03",
+                "prediction_id": "S03",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E04",
+                "prediction_id": "S04",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E05",
+                "prediction_id": "S12",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E06",
+                "prediction_id": "S13",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E07",
+                "prediction_id": "S14",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E08",
+                "prediction_id": "S16",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E09",
+                "prediction_id": "S17",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E10",
+                "prediction_id": "S18",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E11",
+                "prediction_id": "S19",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E12",
+                "prediction_id": "S20",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E13",
+                "prediction_id": "S21",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E14",
+                "prediction_id": "S22",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E15",
+                "prediction_id": "S23",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E16",
+                "prediction_id": "S25",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E17",
+                "prediction_id": "S26",
+                "colour_match": true
+              }
+            ],
+            "missed_reference_ids": [],
+            "extra_prediction_ids": [
+              "S24"
+            ],
+            "scoring_tolerance_s": 0.0,
+            "prediction_time_mode": "point",
+            "max_prediction_interval_s": null,
+            "timing_interpretation": "Passage detection within a reference interval; no release-time error inferred."
+          }
+        },
+        {
+          "left_entry_y_m": -2.0,
+          "right_entry_y_m": 4.0,
+          "selected_candidate_ids": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S12",
+            "S13",
+            "S14",
+            "S16",
+            "S17",
+            "S18",
+            "S19",
+            "S20",
+            "S21",
+            "S22",
+            "S23",
+            "S24",
+            "S25",
+            "S26"
+          ],
+          "selection_status_by_candidate": {
+            "S01": "provisional_unique_far_entry_motion_path",
+            "S02": "provisional_unique_far_entry_motion_path",
+            "S03": "provisional_unique_far_entry_motion_path",
+            "S04": "provisional_unique_far_entry_motion_path",
+            "S06": "ambiguous_far_entry_motion_paths",
+            "S08": "ambiguous_far_entry_motion_paths",
+            "S09": "ambiguous_far_entry_motion_paths",
+            "S12": "provisional_unique_far_entry_motion_path",
+            "S13": "provisional_unique_far_entry_motion_path",
+            "S14": "provisional_unique_far_entry_motion_path",
+            "S16": "provisional_unique_far_entry_motion_path",
+            "S17": "provisional_unique_far_entry_motion_path",
+            "S18": "provisional_unique_far_entry_motion_path",
+            "S19": "provisional_unique_far_entry_motion_path",
+            "S20": "provisional_unique_far_entry_motion_path",
+            "S21": "provisional_unique_far_entry_motion_path",
+            "S22": "provisional_unique_far_entry_motion_path",
+            "S23": "provisional_unique_far_entry_motion_path",
+            "S24": "provisional_unique_far_entry_motion_path",
+            "S25": "provisional_unique_far_entry_motion_path",
+            "S26": "provisional_unique_far_entry_motion_path",
+            "S27": "no_supported_far_entry_motion_path"
+          },
+          "motion_only_score": {
+            "reference_count": 17,
+            "prediction_count": 18,
+            "true_positives": 17,
+            "false_positives": 1,
+            "false_negatives": 0,
+            "precision": 0.9444444444444444,
+            "recall": 1.0,
+            "f1": 0.9714285714285714,
+            "colour_errors_among_matches": 0,
+            "colour_aware_true_positives": 17,
+            "colour_aware_false_positives": 1,
+            "colour_aware_false_negatives": 0,
+            "colour_aware_precision": 0.9444444444444444,
+            "colour_aware_recall": 1.0,
+            "colour_aware_f1": 0.9714285714285714,
+            "matches": [
+              {
+                "reference_id": "E01",
+                "prediction_id": "S01",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E02",
+                "prediction_id": "S02",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E03",
+                "prediction_id": "S03",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E04",
+                "prediction_id": "S04",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E05",
+                "prediction_id": "S12",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E06",
+                "prediction_id": "S13",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E07",
+                "prediction_id": "S14",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E08",
+                "prediction_id": "S16",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E09",
+                "prediction_id": "S17",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E10",
+                "prediction_id": "S18",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E11",
+                "prediction_id": "S19",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E12",
+                "prediction_id": "S20",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E13",
+                "prediction_id": "S21",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E14",
+                "prediction_id": "S22",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E15",
+                "prediction_id": "S23",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E16",
+                "prediction_id": "S25",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E17",
+                "prediction_id": "S26",
+                "colour_match": true
+              }
+            ],
+            "missed_reference_ids": [],
+            "extra_prediction_ids": [
+              "S24"
+            ],
+            "scoring_tolerance_s": 0.0,
+            "prediction_time_mode": "point",
+            "max_prediction_interval_s": null,
+            "timing_interpretation": "Passage detection within a reference interval; no release-time error inferred."
+          }
+        },
+        {
+          "left_entry_y_m": 0.0,
+          "right_entry_y_m": 0.0,
+          "selected_candidate_ids": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S12",
+            "S13",
+            "S14",
+            "S16",
+            "S17",
+            "S18",
+            "S19",
+            "S20",
+            "S21",
+            "S22",
+            "S23",
+            "S24",
+            "S25",
+            "S26"
+          ],
+          "selection_status_by_candidate": {
+            "S01": "provisional_unique_far_entry_motion_path",
+            "S02": "provisional_unique_far_entry_motion_path",
+            "S03": "provisional_unique_far_entry_motion_path",
+            "S04": "provisional_unique_far_entry_motion_path",
+            "S06": "ambiguous_far_entry_motion_paths",
+            "S08": "ambiguous_far_entry_motion_paths",
+            "S09": "ambiguous_far_entry_motion_paths",
+            "S12": "provisional_unique_far_entry_motion_path",
+            "S13": "provisional_unique_far_entry_motion_path",
+            "S14": "provisional_unique_far_entry_motion_path",
+            "S16": "provisional_unique_far_entry_motion_path",
+            "S17": "provisional_unique_far_entry_motion_path",
+            "S18": "provisional_unique_far_entry_motion_path",
+            "S19": "provisional_unique_far_entry_motion_path",
+            "S20": "provisional_unique_far_entry_motion_path",
+            "S21": "provisional_unique_far_entry_motion_path",
+            "S22": "provisional_unique_far_entry_motion_path",
+            "S23": "provisional_unique_far_entry_motion_path",
+            "S24": "provisional_unique_far_entry_motion_path",
+            "S25": "provisional_unique_far_entry_motion_path",
+            "S26": "provisional_unique_far_entry_motion_path",
+            "S27": "no_supported_far_entry_motion_path"
+          },
+          "motion_only_score": {
+            "reference_count": 17,
+            "prediction_count": 18,
+            "true_positives": 17,
+            "false_positives": 1,
+            "false_negatives": 0,
+            "precision": 0.9444444444444444,
+            "recall": 1.0,
+            "f1": 0.9714285714285714,
+            "colour_errors_among_matches": 0,
+            "colour_aware_true_positives": 17,
+            "colour_aware_false_positives": 1,
+            "colour_aware_false_negatives": 0,
+            "colour_aware_precision": 0.9444444444444444,
+            "colour_aware_recall": 1.0,
+            "colour_aware_f1": 0.9714285714285714,
+            "matches": [
+              {
+                "reference_id": "E01",
+                "prediction_id": "S01",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E02",
+                "prediction_id": "S02",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E03",
+                "prediction_id": "S03",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E04",
+                "prediction_id": "S04",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E05",
+                "prediction_id": "S12",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E06",
+                "prediction_id": "S13",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E07",
+                "prediction_id": "S14",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E08",
+                "prediction_id": "S16",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E09",
+                "prediction_id": "S17",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E10",
+                "prediction_id": "S18",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E11",
+                "prediction_id": "S19",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E12",
+                "prediction_id": "S20",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E13",
+                "prediction_id": "S21",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E14",
+                "prediction_id": "S22",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E15",
+                "prediction_id": "S23",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E16",
+                "prediction_id": "S25",
+                "colour_match": true
+              },
+              {
+                "reference_id": "E17",
+                "prediction_id": "S26",
+                "colour_match": true
+              }
+            ],
+            "missed_reference_ids": [],
+            "extra_prediction_ids": [
+              "S24"
+            ],
+            "scoring_tolerance_s": 0.0,
+            "prediction_time_mode": "point",
+            "max_prediction_interval_s": null,
+            "timing_interpretation": "Passage detection within a reference interval; no release-time error inferred."
+          }
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Entry thresholds were varied after reviewing Italy misses; these are in-sample diagnostics.",
+    "Scores use motion selection only; patch appearance and timed-path deduplication are not rerun.",
+    "Reference windows are coarse and same-agent, not independent exhaustive labels."
+  ]
+}

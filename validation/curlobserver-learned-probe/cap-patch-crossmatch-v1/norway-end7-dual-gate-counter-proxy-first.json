@@ -1,0 +1,110 @@
+{
+  "status": "first_end7_dual_gate_to_delayed_counter_proxy_not_physical_f1",
+  "source_sha256": "c49fb90959c13b690447dccb87a0b78e0bba8537aa961339a92f934226baf2b3",
+  "source_only_event_sha256": "21085c463bd8e10538b5d6fc61698067fe7e5ed1d0aac774bbe0a76a2ae73a62",
+  "first_transfer_sha256": "22cf96576fae262df6d6974448924fdd385e27087db73473c6cefa6c70b9c427",
+  "scorer_sha256": "25d034dc4b3716656c7ff621e35f21ef7790d2b1f3c51467f77c58ee09c5d656",
+  "runner_sha256": "d5ae43755b26d4d9ddc8ecdface193b0178e820f3e2b6611c7e4b4a4943b8e88",
+  "end": 7,
+  "official_shot_count": 16,
+  "clean_counter_count": 12,
+  "score": {
+    "visual_candidate_count": 14,
+    "clean_counter_count": 12,
+    "matched_count": 10,
+    "unmatched_visual_ids": [
+      "S460-dual-gate",
+      "S492-dual-gate",
+      "S495-dual-gate",
+      "S519-dual-gate"
+    ],
+    "unmatched_official_shot_ids": [
+      "PREL001501-E07-S02",
+      "PREL001501-E07-S03"
+    ],
+    "matches": [
+      {
+        "visual_id": "S467-dual-gate",
+        "official_shot_id": "PREL001501-E07-S04",
+        "visual_colour": "yellow",
+        "counter_colour": "yellow",
+        "counter_minus_visual_end_s": 19.0
+      },
+      {
+        "visual_id": "S469-dual-gate",
+        "official_shot_id": "PREL001501-E07-S05",
+        "visual_colour": "red",
+        "counter_colour": "red",
+        "counter_minus_visual_end_s": -3.8
+      },
+      {
+        "visual_id": "S471-dual-gate",
+        "official_shot_id": "PREL001501-E07-S06",
+        "visual_colour": "yellow",
+        "counter_colour": "yellow",
+        "counter_minus_visual_end_s": 13.2
+      },
+      {
+        "visual_id": "S473-dual-gate",
+        "official_shot_id": "PREL001501-E07-S07",
+        "visual_colour": "red",
+        "counter_colour": "red",
+        "counter_minus_visual_end_s": 17.2
+      },
+      {
+        "visual_id": "S475-dual-gate",
+        "official_shot_id": "PREL001501-E07-S08",
+        "visual_colour": "yellow",
+        "counter_colour": "yellow",
+        "counter_minus_visual_end_s": -4.4
+      },
+      {
+        "visual_id": "S479-dual-gate",
+        "official_shot_id": "PREL001501-E07-S09",
+        "visual_colour": "red",
+        "counter_colour": "red",
+        "counter_minus_visual_end_s": 17.6
+      },
+      {
+        "visual_id": "S481-dual-gate",
+        "official_shot_id": "PREL001501-E07-S10",
+        "visual_colour": "yellow",
+        "counter_colour": "yellow",
+        "counter_minus_visual_end_s": 9.4
+      },
+      {
+        "visual_id": "S486-dual-gate",
+        "official_shot_id": "PREL001501-E07-S11",
+        "visual_colour": "red",
+        "counter_colour": "red",
+        "counter_minus_visual_end_s": 17.0
+      },
+      {
+        "visual_id": "S490-dual-gate",
+        "official_shot_id": "PREL001501-E07-S12",
+        "visual_colour": "yellow",
+        "counter_colour": "yellow",
+        "counter_minus_visual_end_s": -3.8
+      },
+      {
+        "visual_id": "S512-dual-gate",
+        "official_shot_id": "PREL001501-E07-S14",
+        "visual_colour": "yellow",
+        "counter_colour": "yellow",
+        "counter_minus_visual_end_s": 28.2
+      }
+    ],
+    "counter_proxy_precision": 0.7143,
+    "counter_proxy_recall": 0.8333,
+    "counter_proxy_f1": 0.7692,
+    "known_colour_match_count": 10,
+    "known_colour_conflict_count": 0,
+    "unknown_colour_match_count": 0
+  },
+  "limitations": [
+    "Delayed counter updates are weak references, with only 12 of 16 official shots covered.",
+    "The visual components were developed on earlier ends of the same exposed match.",
+    "Monotone timing can pair a visual cue with the wrong physical delivery.",
+    "This is not complete-end or full-match physical throw precision, recall, F1, or exact release timing."
+  ]
+}

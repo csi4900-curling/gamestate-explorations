@@ -1,0 +1,112 @@
+{
+  "status": "postproposal_singleton_source_pixel_review_not_throw_truth",
+  "source_video_sha256": "a7431b68ba6fb0df407383973a525a01eadbee2490caa0438a5a11d2df1dba13",
+  "input_sha256": {
+    "queue": "2625e8cabed673437e3682d9f04702e58386e21be4c8ddf2773189638558453a",
+    "gap_source_audit": "4a70b18de61483b9cf37a00a91a2fc58022582aa7dc2c0ccca7c2053193a7378",
+    "later_source_audit": "530bd9cd377eb65ac8635f8abb36c45629a949d900ec61cbc70ffaa1c35e03e7",
+    "global_source_packet_manifest": "fba823fac5a7f589cd20b5b3d865b979425c45633cf4e13c8a81d6a57ea523ec"
+  },
+  "runner_sha256": "fb42ce6b2867b8dfab9b23617632d3c3614acb6f07a3f120fe031e666dade490",
+  "reviewed_singleton_group_count": 11,
+  "source_class_counts": {
+    "person_or_equipment_pixels_in_sampled_prefix": 5,
+    "mixed_stone_person_or_equipment_pixels_identity_uncertain": 6
+  },
+  "rows": [
+    {
+      "review_group_id": "R0018",
+      "proposal_id": "one_second_greedy:A046:1",
+      "time_s": 987.692,
+      "source_pixel_class": "person_or_equipment_pixels_in_sampled_prefix",
+      "source_evidence": "full-right-gap2-novel-source-audit.json:old_without_temporal_counterpart",
+      "physical_throw_verified": false
+    },
+    {
+      "review_group_id": "R0023",
+      "proposal_id": "two_second_global:A083:1",
+      "time_s": 1194.379,
+      "source_pixel_class": "person_or_equipment_pixels_in_sampled_prefix",
+      "source_evidence": "full-right-global-singleton-source-packet/page-1.jpg",
+      "physical_throw_verified": false
+    },
+    {
+      "review_group_id": "R0036",
+      "proposal_id": "two_second_greedy:A156:1",
+      "time_s": 1867.028,
+      "source_pixel_class": "person_or_equipment_pixels_in_sampled_prefix",
+      "source_evidence": "full-right-gap2-novel-source-packet/novel-page-1.jpg",
+      "physical_throw_verified": false
+    },
+    {
+      "review_group_id": "R0049",
+      "proposal_id": "two_second_global:A217:1",
+      "time_s": 2835.844,
+      "source_pixel_class": "person_or_equipment_pixels_in_sampled_prefix",
+      "source_evidence": "full-right-global-singleton-source-packet/page-1.jpg",
+      "physical_throw_verified": false
+    },
+    {
+      "review_group_id": "R0051",
+      "proposal_id": "two_second_greedy:A244:1",
+      "time_s": 3151.008,
+      "source_pixel_class": "mixed_stone_person_or_equipment_pixels_identity_uncertain",
+      "source_evidence": "full-right-gap2-novel-source-packet/novel-page-2.jpg",
+      "physical_throw_verified": false
+    },
+    {
+      "review_group_id": "R0054",
+      "proposal_id": "two_second_global_later:A269:2",
+      "time_s": 3294.788,
+      "source_pixel_class": "mixed_stone_person_or_equipment_pixels_identity_uncertain",
+      "source_evidence": "full-right-global-later-episode-source-packet/later-page-1.jpg",
+      "physical_throw_verified": false
+    },
+    {
+      "review_group_id": "R0057",
+      "proposal_id": "two_second_greedy:A282:1",
+      "time_s": 3396.881,
+      "source_pixel_class": "mixed_stone_person_or_equipment_pixels_identity_uncertain",
+      "source_evidence": "full-right-gap2-novel-source-packet/novel-page-2.jpg",
+      "physical_throw_verified": false
+    },
+    {
+      "review_group_id": "R0105",
+      "proposal_id": "two_second_global:A497:1",
+      "time_s": 6143.296,
+      "source_pixel_class": "mixed_stone_person_or_equipment_pixels_identity_uncertain",
+      "source_evidence": "full-right-global-singleton-source-packet/page-2.jpg",
+      "physical_throw_verified": false
+    },
+    {
+      "review_group_id": "R0110",
+      "proposal_id": "two_second_greedy:A518:1",
+      "time_s": 6374.931,
+      "source_pixel_class": "mixed_stone_person_or_equipment_pixels_identity_uncertain",
+      "source_evidence": "full-right-gap2-novel-source-packet/novel-page-5.jpg",
+      "physical_throw_verified": false
+    },
+    {
+      "review_group_id": "R0111",
+      "proposal_id": "two_second_global:A530:1",
+      "time_s": 6376.131,
+      "source_pixel_class": "mixed_stone_person_or_equipment_pixels_identity_uncertain",
+      "source_evidence": "full-right-global-singleton-source-packet/page-2.jpg",
+      "physical_throw_verified": false
+    },
+    {
+      "review_group_id": "R0118",
+      "proposal_id": "two_second_greedy:A553:1",
+      "time_s": 6687.244,
+      "source_pixel_class": "person_or_equipment_pixels_in_sampled_prefix",
+      "source_evidence": "full-right-gap2-novel-source-packet/novel-page-5.jpg",
+      "physical_throw_verified": false
+    }
+  ],
+  "limitations": [
+    "Source classes were assigned after proposals existed and are not independent physical throw labels.",
+    "Mixed proposals may include moving stone pixels; single-variant support is not a safe automatic rejection rule.",
+    "Three sampled source frames do not validate a complete track, throw, release or settle.",
+    "This selected subset does not measure full-match detector precision, recall or F1."
+  ]
+}

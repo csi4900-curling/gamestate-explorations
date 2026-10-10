@@ -1,0 +1,24 @@
+{
+  "status": "postreview_development_motion_timing_not_throw_classification",
+  "source_sha256": "a7431b68ba6fb0df407383973a525a01eadbee2490caa0438a5a11d2df1dba13",
+  "probe_sha256": "9036741e5c53e9cb9d5960e51abce5f440eb2a9cfa5cc3e17a7ab29c4805b4e2",
+  "episodes_sha256": "63ab09daee4eb95c60658df533587073f94d0971d30a459c9fdd16c675fce115",
+  "source_review_sha256": "4ca1f49f8654235095527a6cfd2ace391c8f46ae8d29a244b31714e9b8380fdc",
+  "partial_state_sha256": "88ba8cc28d7e94e9f19898f7ca61bdc8dcb997475840f2d4e05006da15436a85",
+  "onset_code_sha256": "b7f5d45c1018b9470cc1845b52adf914c153fb0733be08a873c710e7f85c8010",
+  "rules": {
+    "quiet_absolute_vertical_rate_max_px_s": 3,
+    "quiet_consecutive_steps_min": 3,
+    "strong_directional_vertical_rate_min_px_s": 12,
+    "strong_consecutive_steps_min": 2,
+    "maximum_sample_gap_s": 1.5,
+    "maximum_quiet_to_first_strong_s": 5,
+    "scope": "every one of the 100 saved directional right proposals",
+    "event_decision": "none"
+  },
+  "limitations": [
+    "The thresholds were chosen after inspecting the exposed Latvia end-six paths.",
+    "Observed image motion onset can be later than physical release and can occur on people or equipment.",
+    "The last tracked frame is not a physical settle or event-completion time."
+  ]
+}

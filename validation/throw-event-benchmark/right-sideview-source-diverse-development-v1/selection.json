@@ -1,0 +1,4356 @@
+{
+  "status": "non_latvia_development_patch_training_selection_not_event_truth",
+  "sources": [
+    {
+      "match": "italy",
+      "inventory": "italy_r01",
+      "video": "canada-italy/source.mp4",
+      "video_sha256": "aff12e78edeb5e108d142aed3e19b61c3956b4fddc8b2fd8b202713746771739",
+      "scan": "canada-italy/right-large-cap-full-r01-disagreements.json",
+      "scan_sha256": "69b5079572979562d5b90b65f72907c7402d2886348041d590db32e3a1d7840f",
+      "review": "canada-italy/right-large-cap-full-r01-disagreement-source-review/source-prefix-classes.json",
+      "review_sha256": "ebd94325ac8165dc79a2472f06a96ae6731e71e3f43f46fe68502ed17e4e40ad"
+    },
+    {
+      "match": "estonia",
+      "inventory": "estonia_r01",
+      "video": "canada-estonia-2024/source.mp4",
+      "video_sha256": "2e2b84bb2d9dffa497ee850ddbeaf0d5cae0d697377b6eee6a1ef481f449f3da",
+      "scan": "canada-estonia-2024/right-large-cap-full-r01-disagreements.json",
+      "scan_sha256": "567b9bae26a2e523004430faa3e15f761155257a75a61e8dcf335d137f095cb9",
+      "review": "canada-estonia-2024/right-large-cap-full-r01-disagreement-source-review/source-prefix-classes.json",
+      "review_sha256": "7a9c3e30f5c909bf6a95cb5c4dc510097bafa8121b300e4b6e130975310684a0"
+    },
+    {
+      "match": "estonia",
+      "inventory": "estonia_r02",
+      "video": "canada-estonia-2024/source.mp4",
+      "video_sha256": "2e2b84bb2d9dffa497ee850ddbeaf0d5cae0d697377b6eee6a1ef481f449f3da",
+      "scan": "canada-estonia-2024/right-large-cap-full-r02-disagreements.json",
+      "scan_sha256": "ed9a634ff7a9ce7936875ce8eee527eaefe2a3d0110ab36cd4b390230c50a780",
+      "review": "canada-estonia-2024/right-large-cap-full-r02-disagreement-source-review/source-prefix-classes.json",
+      "review_sha256": "9e65d1570391725963365e548a3e5409f516eefdf87e7ac313fbe2fc822009bf"
+    },
+    {
+      "match": "usa",
+      "inventory": "usa_area",
+      "video": "canada-usa-2024/source.mp4",
+      "video_sha256": "18f4fe4ac910e2da7e1ed453ade9d291363ab7e01f8d0d207634a3d589efe0da",
+      "scan": "canada-usa-2024/right-area-aware-postscore-development.json",
+      "scan_sha256": "2832ef8d0643608fc3b5b21c4e3123d94d4ab9bdf1f0e1d42678e1cbb5fe9bdd",
+      "review": "canada-usa-2024/right-area-aware-source-review/source-prefix-classes.json",
+      "review_sha256": "02127b1b7889e0f95806833b7a0a0c4ac42f0657faa5e200bda538c53f2ae3fc"
+    },
+    {
+      "match": "italy",
+      "inventory": "italy_global",
+      "video": "canada-italy/source.mp4",
+      "video_sha256": "aff12e78edeb5e108d142aed3e19b61c3956b4fddc8b2fd8b202713746771739",
+      "scan": "canada-italy/right-global-area-fixed-transfer.json",
+      "scan_sha256": "fa10971bf7c674d138ceffa6f274b3f73b37767b2472b66a8c3215ac7c7d7f15",
+      "review": "canada-italy/right-global-area-source-review/source-prefix-classes.json",
+      "review_sha256": "e8421f14b0136027a411bf48cf5147765ad4efe3b4eec34c51eaef052f255cc5"
+    },
+    {
+      "match": "estonia",
+      "inventory": "estonia_global",
+      "video": "canada-estonia-2024/source.mp4",
+      "video_sha256": "2e2b84bb2d9dffa497ee850ddbeaf0d5cae0d697377b6eee6a1ef481f449f3da",
+      "scan": "canada-estonia-2024/right-global-area-postscore.json",
+      "scan_sha256": "6fdf1b9182330e61720f67f29c2dde268251ddfdbecb9280f3d345637832799b",
+      "review": "canada-estonia-2024/right-global-area-source-review/source-prefix-classes.json",
+      "review_sha256": "146ea018bca72c42e9a9d11b8c74973c179c303ff56ae8eb482004bf2ddc887b"
+    }
+  ],
+  "selection_rule": "All reviewed moving_stone and person/wheelchair/equipment three-frame prefixes in six preexisting 2024 right inventories; exclude uncertain, mixed and person-handled stones; no Latvia examples",
+  "example_count": 114,
+  "excluded_count": 9,
+  "counts_by_match_class": {
+    "italy": {
+      "stone_pixels": 25,
+      "person_or_equipment_pixels": 26
+    },
+    "estonia": {
+      "stone_pixels": 17,
+      "person_or_equipment_pixels": 24
+    },
+    "usa": {
+      "stone_pixels": 17,
+      "person_or_equipment_pixels": 5
+    }
+  },
+  "examples": [
+    {
+      "example_id": "italy_r01:A048",
+      "match": "italy",
+      "inventory": "italy_r01",
+      "raw_track_id": "A048",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 1005.0,
+          "cap_bbox_px": [
+            460,
+            221,
+            11,
+            7
+          ]
+        },
+        {
+          "time_s": 1006.0,
+          "cap_bbox_px": [
+            446,
+            248,
+            12,
+            4
+          ]
+        },
+        {
+          "time_s": 1008.0,
+          "cap_bbox_px": [
+            422,
+            302,
+            13,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_r01:A049",
+      "match": "italy",
+      "inventory": "italy_r01",
+      "raw_track_id": "A049",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 1010.0,
+          "cap_bbox_px": [
+            602,
+            145,
+            6,
+            5
+          ]
+        },
+        {
+          "time_s": 1012.0,
+          "cap_bbox_px": [
+            580,
+            175,
+            8,
+            8
+          ]
+        },
+        {
+          "time_s": 1014.0,
+          "cap_bbox_px": [
+            604,
+            212,
+            7,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_r01:A083",
+      "match": "italy",
+      "inventory": "italy_r01",
+      "raw_track_id": "A083",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 1797.0,
+          "cap_bbox_px": [
+            348,
+            145,
+            8,
+            5
+          ]
+        },
+        {
+          "time_s": 1798.0,
+          "cap_bbox_px": [
+            347,
+            166,
+            7,
+            6
+          ]
+        },
+        {
+          "time_s": 1800.0,
+          "cap_bbox_px": [
+            338,
+            205,
+            6,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_r01:A084",
+      "match": "italy",
+      "inventory": "italy_r01",
+      "raw_track_id": "A084",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 1814.0,
+          "cap_bbox_px": [
+            475,
+            162,
+            12,
+            11
+          ]
+        },
+        {
+          "time_s": 1817.0,
+          "cap_bbox_px": [
+            428,
+            188,
+            10,
+            12
+          ]
+        },
+        {
+          "time_s": 1820.0,
+          "cap_bbox_px": [
+            395,
+            235,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_r01:A128",
+      "match": "italy",
+      "inventory": "italy_r01",
+      "raw_track_id": "A128",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 3196.0,
+          "cap_bbox_px": [
+            604,
+            162,
+            14,
+            10
+          ]
+        },
+        {
+          "time_s": 3197.0,
+          "cap_bbox_px": [
+            608,
+            182,
+            12,
+            16
+          ]
+        },
+        {
+          "time_s": 3199.0,
+          "cap_bbox_px": [
+            619,
+            249,
+            11,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_r01:A179",
+      "match": "italy",
+      "inventory": "italy_r01",
+      "raw_track_id": "A179",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 4237.0,
+          "cap_bbox_px": [
+            491,
+            146,
+            7,
+            6
+          ]
+        },
+        {
+          "time_s": 4239.0,
+          "cap_bbox_px": [
+            470,
+            168,
+            6,
+            8
+          ]
+        },
+        {
+          "time_s": 4242.0,
+          "cap_bbox_px": [
+            478,
+            216,
+            8,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_r01:A220",
+      "match": "italy",
+      "inventory": "italy_r01",
+      "raw_track_id": "A220",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 5403.0,
+          "cap_bbox_px": [
+            540,
+            152,
+            6,
+            6
+          ]
+        },
+        {
+          "time_s": 5404.0,
+          "cap_bbox_px": [
+            522,
+            168,
+            6,
+            6
+          ]
+        },
+        {
+          "time_s": 5408.0,
+          "cap_bbox_px": [
+            436,
+            222,
+            8,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_r01:A224",
+      "match": "italy",
+      "inventory": "italy_r01",
+      "raw_track_id": "A224",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 5426.0,
+          "cap_bbox_px": [
+            360,
+            214,
+            16,
+            10
+          ]
+        },
+        {
+          "time_s": 5429.0,
+          "cap_bbox_px": [
+            351,
+            251,
+            8,
+            7
+          ]
+        },
+        {
+          "time_s": 5432.0,
+          "cap_bbox_px": [
+            358,
+            287,
+            8,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_r01:A226",
+      "match": "italy",
+      "inventory": "italy_r01",
+      "raw_track_id": "A226",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 5431.0,
+          "cap_bbox_px": [
+            550,
+            184,
+            10,
+            6
+          ]
+        },
+        {
+          "time_s": 5433.0,
+          "cap_bbox_px": [
+            557,
+            220,
+            5,
+            6
+          ]
+        },
+        {
+          "time_s": 5435.0,
+          "cap_bbox_px": [
+            566,
+            267,
+            4,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_r01:A229",
+      "match": "italy",
+      "inventory": "italy_r01",
+      "raw_track_id": "A229",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 5523.0,
+          "cap_bbox_px": [
+            470,
+            150,
+            6,
+            6
+          ]
+        },
+        {
+          "time_s": 5526.0,
+          "cap_bbox_px": [
+            536,
+            186,
+            4,
+            12
+          ]
+        },
+        {
+          "time_s": 5529.0,
+          "cap_bbox_px": [
+            506,
+            208,
+            4,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_r01:A232",
+      "match": "italy",
+      "inventory": "italy_r01",
+      "raw_track_id": "A232",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 5529.0,
+          "cap_bbox_px": [
+            378,
+            169,
+            10,
+            7
+          ]
+        },
+        {
+          "time_s": 5533.0,
+          "cap_bbox_px": [
+            442,
+            199,
+            6,
+            7
+          ]
+        },
+        {
+          "time_s": 5535.0,
+          "cap_bbox_px": [
+            461,
+            232,
+            5,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_r01:A227",
+      "match": "italy",
+      "inventory": "italy_r01",
+      "raw_track_id": "A227",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 5536.0,
+          "cap_bbox_px": [
+            462,
+            192,
+            12,
+            12
+          ]
+        },
+        {
+          "time_s": 5537.0,
+          "cap_bbox_px": [
+            460,
+            214,
+            12,
+            12
+          ]
+        },
+        {
+          "time_s": 5539.0,
+          "cap_bbox_px": [
+            484,
+            268,
+            5,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_r01:A237",
+      "match": "italy",
+      "inventory": "italy_r01",
+      "raw_track_id": "A237",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 5549.0,
+          "cap_bbox_px": [
+            332,
+            285,
+            10,
+            9
+          ]
+        },
+        {
+          "time_s": 5550.0,
+          "cap_bbox_px": [
+            338,
+            261,
+            10,
+            9
+          ]
+        },
+        {
+          "time_s": 5553.0,
+          "cap_bbox_px": [
+            361,
+            198,
+            5,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_r01:A234",
+      "match": "italy",
+      "inventory": "italy_r01",
+      "raw_track_id": "A234",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 5694.0,
+          "cap_bbox_px": [
+            438,
+            198,
+            8,
+            8
+          ]
+        },
+        {
+          "time_s": 5696.0,
+          "cap_bbox_px": [
+            436,
+            236,
+            6,
+            8
+          ]
+        },
+        {
+          "time_s": 5697.0,
+          "cap_bbox_px": [
+            427,
+            257,
+            10,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_r01:A257",
+      "match": "italy",
+      "inventory": "italy_r01",
+      "raw_track_id": "A257",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 5937.0,
+          "cap_bbox_px": [
+            582,
+            177,
+            9,
+            8
+          ]
+        },
+        {
+          "time_s": 5939.0,
+          "cap_bbox_px": [
+            603,
+            207,
+            7,
+            9
+          ]
+        },
+        {
+          "time_s": 5942.0,
+          "cap_bbox_px": [
+            623,
+            258,
+            7,
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_r01:A271",
+      "match": "italy",
+      "inventory": "italy_r01",
+      "raw_track_id": "A271",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 6171.0,
+          "cap_bbox_px": [
+            506,
+            182,
+            12,
+            10
+          ]
+        },
+        {
+          "time_s": 6189.0,
+          "cap_bbox_px": [
+            508,
+            188,
+            11,
+            10
+          ]
+        },
+        {
+          "time_s": 6191.0,
+          "cap_bbox_px": [
+            546,
+            256,
+            12,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_r01:A280",
+      "match": "italy",
+      "inventory": "italy_r01",
+      "raw_track_id": "A280",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 6329.0,
+          "cap_bbox_px": [
+            504,
+            206,
+            12,
+            8
+          ]
+        },
+        {
+          "time_s": 6330.0,
+          "cap_bbox_px": [
+            507,
+            236,
+            12,
+            8
+          ]
+        },
+        {
+          "time_s": 6331.0,
+          "cap_bbox_px": [
+            513,
+            271,
+            12,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_r01:A290",
+      "match": "italy",
+      "inventory": "italy_r01",
+      "raw_track_id": "A290",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 6571.0,
+          "cap_bbox_px": [
+            522,
+            231,
+            8,
+            7
+          ]
+        },
+        {
+          "time_s": 6572.0,
+          "cap_bbox_px": [
+            540,
+            260,
+            10,
+            4
+          ]
+        },
+        {
+          "time_s": 6574.0,
+          "cap_bbox_px": [
+            569,
+            316,
+            15,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_r01:A295",
+      "match": "italy",
+      "inventory": "italy_r01",
+      "raw_track_id": "A295",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 6657.0,
+          "cap_bbox_px": [
+            530,
+            236,
+            14,
+            10
+          ]
+        },
+        {
+          "time_s": 6658.0,
+          "cap_bbox_px": [
+            548,
+            264,
+            14,
+            10
+          ]
+        },
+        {
+          "time_s": 6659.0,
+          "cap_bbox_px": [
+            566,
+            296,
+            18,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_r01:A308",
+      "match": "italy",
+      "inventory": "italy_r01",
+      "raw_track_id": "A308",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 6860.0,
+          "cap_bbox_px": [
+            492,
+            146,
+            11,
+            8
+          ]
+        },
+        {
+          "time_s": 6862.0,
+          "cap_bbox_px": [
+            480,
+            178,
+            10,
+            14
+          ]
+        },
+        {
+          "time_s": 6869.0,
+          "cap_bbox_px": [
+            456,
+            216,
+            8,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_r01:A307",
+      "match": "italy",
+      "inventory": "italy_r01",
+      "raw_track_id": "A307",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 6862.0,
+          "cap_bbox_px": [
+            484,
+            236,
+            8,
+            8
+          ]
+        },
+        {
+          "time_s": 6863.0,
+          "cap_bbox_px": [
+            474,
+            256,
+            6,
+            12
+          ]
+        },
+        {
+          "time_s": 6865.0,
+          "cap_bbox_px": [
+            442,
+            308,
+            8,
+            12
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_r01:A310",
+      "match": "italy",
+      "inventory": "italy_r01",
+      "raw_track_id": "A310",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 6862.0,
+          "cap_bbox_px": [
+            369,
+            211,
+            7,
+            5
+          ]
+        },
+        {
+          "time_s": 6865.0,
+          "cap_bbox_px": [
+            360,
+            253,
+            10,
+            9
+          ]
+        },
+        {
+          "time_s": 6866.0,
+          "cap_bbox_px": [
+            357,
+            272,
+            5,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_r01:A315",
+      "match": "italy",
+      "inventory": "italy_r01",
+      "raw_track_id": "A315",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 6870.0,
+          "cap_bbox_px": [
+            387,
+            238,
+            8,
+            6
+          ]
+        },
+        {
+          "time_s": 6873.0,
+          "cap_bbox_px": [
+            408,
+            254,
+            10,
+            6
+          ]
+        },
+        {
+          "time_s": 6875.0,
+          "cap_bbox_px": [
+            374,
+            320,
+            12,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_r01:A317",
+      "match": "italy",
+      "inventory": "italy_r01",
+      "raw_track_id": "A317",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 6985.0,
+          "cap_bbox_px": [
+            448,
+            316,
+            13,
+            7
+          ]
+        },
+        {
+          "time_s": 6986.0,
+          "cap_bbox_px": [
+            449,
+            282,
+            14,
+            8
+          ]
+        },
+        {
+          "time_s": 6987.0,
+          "cap_bbox_px": [
+            452,
+            256,
+            10,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_r01:A319",
+      "match": "italy",
+      "inventory": "italy_r01",
+      "raw_track_id": "A319",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 7024.0,
+          "cap_bbox_px": [
+            510,
+            312,
+            14,
+            10
+          ]
+        },
+        {
+          "time_s": 7025.0,
+          "cap_bbox_px": [
+            506,
+            288,
+            16,
+            10
+          ]
+        },
+        {
+          "time_s": 7027.0,
+          "cap_bbox_px": [
+            496,
+            250,
+            14,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_r01:A320",
+      "match": "italy",
+      "inventory": "italy_r01",
+      "raw_track_id": "A320",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 7070.0,
+          "cap_bbox_px": [
+            494,
+            304,
+            14,
+            8
+          ]
+        },
+        {
+          "time_s": 7071.0,
+          "cap_bbox_px": [
+            502,
+            279,
+            8,
+            7
+          ]
+        },
+        {
+          "time_s": 7073.0,
+          "cap_bbox_px": [
+            514,
+            240,
+            8,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_r01:A321",
+      "match": "italy",
+      "inventory": "italy_r01",
+      "raw_track_id": "A321",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 7079.0,
+          "cap_bbox_px": [
+            331,
+            298,
+            10,
+            8
+          ]
+        },
+        {
+          "time_s": 7080.0,
+          "cap_bbox_px": [
+            334,
+            276,
+            10,
+            8
+          ]
+        },
+        {
+          "time_s": 7082.0,
+          "cap_bbox_px": [
+            340,
+            231,
+            10,
+            12
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_r01:A357",
+      "match": "italy",
+      "inventory": "italy_r01",
+      "raw_track_id": "A357",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 7832.0,
+          "cap_bbox_px": [
+            593,
+            208,
+            9,
+            8
+          ]
+        },
+        {
+          "time_s": 7833.0,
+          "cap_bbox_px": [
+            567,
+            231,
+            6,
+            4
+          ]
+        },
+        {
+          "time_s": 7835.0,
+          "cap_bbox_px": [
+            600,
+            274,
+            7,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_r01:A359",
+      "match": "italy",
+      "inventory": "italy_r01",
+      "raw_track_id": "A359",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 7948.0,
+          "cap_bbox_px": [
+            502,
+            180,
+            13,
+            10
+          ]
+        },
+        {
+          "time_s": 7950.0,
+          "cap_bbox_px": [
+            522,
+            226,
+            12,
+            6
+          ]
+        },
+        {
+          "time_s": 7951.0,
+          "cap_bbox_px": [
+            537,
+            261,
+            14,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_r01:A364",
+      "match": "italy",
+      "inventory": "italy_r01",
+      "raw_track_id": "A364",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 8040.0,
+          "cap_bbox_px": [
+            526,
+            237,
+            10,
+            7
+          ]
+        },
+        {
+          "time_s": 8041.0,
+          "cap_bbox_px": [
+            542,
+            274,
+            9,
+            6
+          ]
+        },
+        {
+          "time_s": 8042.0,
+          "cap_bbox_px": [
+            554,
+            310,
+            12,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_r01:A367",
+      "match": "italy",
+      "inventory": "italy_r01",
+      "raw_track_id": "A367",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 8083.0,
+          "cap_bbox_px": [
+            594,
+            162,
+            6,
+            5
+          ]
+        },
+        {
+          "time_s": 8085.0,
+          "cap_bbox_px": [
+            539,
+            200,
+            6,
+            12
+          ]
+        },
+        {
+          "time_s": 8088.0,
+          "cap_bbox_px": [
+            550,
+            220,
+            6,
+            16
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_r01:A371",
+      "match": "italy",
+      "inventory": "italy_r01",
+      "raw_track_id": "A371",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 8089.0,
+          "cap_bbox_px": [
+            424,
+            145,
+            14,
+            3
+          ]
+        },
+        {
+          "time_s": 8091.0,
+          "cap_bbox_px": [
+            386,
+            169,
+            6,
+            5
+          ]
+        },
+        {
+          "time_s": 8094.0,
+          "cap_bbox_px": [
+            341,
+            217,
+            7,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_r01:A377",
+      "match": "italy",
+      "inventory": "italy_r01",
+      "raw_track_id": "A377",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 8093.0,
+          "cap_bbox_px": [
+            380,
+            249,
+            7,
+            5
+          ]
+        },
+        {
+          "time_s": 8094.0,
+          "cap_bbox_px": [
+            375,
+            269,
+            8,
+            6
+          ]
+        },
+        {
+          "time_s": 8096.0,
+          "cap_bbox_px": [
+            370,
+            316,
+            11,
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_r01:A374",
+      "match": "italy",
+      "inventory": "italy_r01",
+      "raw_track_id": "A374",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 8093.0,
+          "cap_bbox_px": [
+            408,
+            199,
+            7,
+            5
+          ]
+        },
+        {
+          "time_s": 8094.0,
+          "cap_bbox_px": [
+            400,
+            217,
+            7,
+            5
+          ]
+        },
+        {
+          "time_s": 8096.0,
+          "cap_bbox_px": [
+            398,
+            265,
+            7,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_r01:A001",
+      "match": "estonia",
+      "inventory": "estonia_r01",
+      "raw_track_id": "A001",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 119.0,
+          "cap_bbox_px": [
+            374,
+            298,
+            24,
+            14
+          ]
+        },
+        {
+          "time_s": 120.0,
+          "cap_bbox_px": [
+            380,
+            276,
+            20,
+            12
+          ]
+        },
+        {
+          "time_s": 122.0,
+          "cap_bbox_px": [
+            392,
+            238,
+            18,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_r01:A006",
+      "match": "estonia",
+      "inventory": "estonia_r01",
+      "raw_track_id": "A006",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 248.0,
+          "cap_bbox_px": [
+            468,
+            304,
+            14,
+            7
+          ]
+        },
+        {
+          "time_s": 249.0,
+          "cap_bbox_px": [
+            476,
+            280,
+            14,
+            8
+          ]
+        },
+        {
+          "time_s": 251.0,
+          "cap_bbox_px": [
+            494,
+            242,
+            12,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_r01:A017",
+      "match": "estonia",
+      "inventory": "estonia_r01",
+      "raw_track_id": "A017",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 575.0,
+          "cap_bbox_px": [
+            404,
+            310,
+            15,
+            8
+          ]
+        },
+        {
+          "time_s": 576.0,
+          "cap_bbox_px": [
+            408,
+            274,
+            10,
+            8
+          ]
+        },
+        {
+          "time_s": 577.0,
+          "cap_bbox_px": [
+            410,
+            242,
+            12,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_r01:A029",
+      "match": "estonia",
+      "inventory": "estonia_r01",
+      "raw_track_id": "A029",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 884.0,
+          "cap_bbox_px": [
+            354,
+            174,
+            12,
+            12
+          ]
+        },
+        {
+          "time_s": 885.0,
+          "cap_bbox_px": [
+            340,
+            196,
+            14,
+            14
+          ]
+        },
+        {
+          "time_s": 887.0,
+          "cap_bbox_px": [
+            330,
+            244,
+            8,
+            16
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_r01:A034",
+      "match": "estonia",
+      "inventory": "estonia_r01",
+      "raw_track_id": "A034",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 900.0,
+          "cap_bbox_px": [
+            566,
+            322,
+            16,
+            3
+          ]
+        },
+        {
+          "time_s": 901.0,
+          "cap_bbox_px": [
+            570,
+            300,
+            24,
+            15
+          ]
+        },
+        {
+          "time_s": 904.0,
+          "cap_bbox_px": [
+            564,
+            244,
+            19,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_r01:A075",
+      "match": "estonia",
+      "inventory": "estonia_r01",
+      "raw_track_id": "A075",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 1581.0,
+          "cap_bbox_px": [
+            532,
+            145,
+            12,
+            7
+          ]
+        },
+        {
+          "time_s": 1583.0,
+          "cap_bbox_px": [
+            552,
+            177,
+            17,
+            13
+          ]
+        },
+        {
+          "time_s": 1586.0,
+          "cap_bbox_px": [
+            604,
+            214,
+            4,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_r01:A113",
+      "match": "estonia",
+      "inventory": "estonia_r01",
+      "raw_track_id": "A113",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 2743.0,
+          "cap_bbox_px": [
+            344,
+            152,
+            8,
+            6
+          ]
+        },
+        {
+          "time_s": 2744.0,
+          "cap_bbox_px": [
+            338,
+            178,
+            10,
+            6
+          ]
+        },
+        {
+          "time_s": 2746.0,
+          "cap_bbox_px": [
+            330,
+            226,
+            6,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_r01:A180",
+      "match": "estonia",
+      "inventory": "estonia_r01",
+      "raw_track_id": "A180",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 3865.0,
+          "cap_bbox_px": [
+            472,
+            190,
+            14,
+            10
+          ]
+        },
+        {
+          "time_s": 3866.0,
+          "cap_bbox_px": [
+            480,
+            226,
+            10,
+            6
+          ]
+        },
+        {
+          "time_s": 3867.0,
+          "cap_bbox_px": [
+            486,
+            260,
+            12,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_r02:A039",
+      "match": "estonia",
+      "inventory": "estonia_r02",
+      "raw_track_id": "A039",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 5070.0,
+          "cap_bbox_px": [
+            472,
+            158,
+            12,
+            12
+          ]
+        },
+        {
+          "time_s": 5073.0,
+          "cap_bbox_px": [
+            459,
+            200,
+            9,
+            10
+          ]
+        },
+        {
+          "time_s": 5074.0,
+          "cap_bbox_px": [
+            464,
+            225,
+            8,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_r02:A038",
+      "match": "estonia",
+      "inventory": "estonia_r02",
+      "raw_track_id": "A038",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 5074.0,
+          "cap_bbox_px": [
+            452,
+            245,
+            10,
+            5
+          ]
+        },
+        {
+          "time_s": 5076.0,
+          "cap_bbox_px": [
+            480,
+            282,
+            10,
+            10
+          ]
+        },
+        {
+          "time_s": 5077.0,
+          "cap_bbox_px": [
+            490,
+            314,
+            12,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_r02:A072",
+      "match": "estonia",
+      "inventory": "estonia_r02",
+      "raw_track_id": "A072",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 5659.0,
+          "cap_bbox_px": [
+            552,
+            145,
+            16,
+            7
+          ]
+        },
+        {
+          "time_s": 5661.0,
+          "cap_bbox_px": [
+            545,
+            174,
+            13,
+            16
+          ]
+        },
+        {
+          "time_s": 5663.0,
+          "cap_bbox_px": [
+            528,
+            220,
+            15,
+            16
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_r02:A088",
+      "match": "estonia",
+      "inventory": "estonia_r02",
+      "raw_track_id": "A088",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 5925.0,
+          "cap_bbox_px": [
+            602,
+            234,
+            8,
+            8
+          ]
+        },
+        {
+          "time_s": 5925.0,
+          "cap_bbox_px": [
+            602,
+            234,
+            8,
+            8
+          ]
+        },
+        {
+          "time_s": 5927.0,
+          "cap_bbox_px": [
+            620,
+            170,
+            4,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_r02:A086",
+      "match": "estonia",
+      "inventory": "estonia_r02",
+      "raw_track_id": "A086",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 5926.0,
+          "cap_bbox_px": [
+            506,
+            200,
+            12,
+            8
+          ]
+        },
+        {
+          "time_s": 5927.0,
+          "cap_bbox_px": [
+            498,
+            218,
+            10,
+            14
+          ]
+        },
+        {
+          "time_s": 5929.0,
+          "cap_bbox_px": [
+            486,
+            258,
+            14,
+            12
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_r02:A090",
+      "match": "estonia",
+      "inventory": "estonia_r02",
+      "raw_track_id": "A090",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 6019.0,
+          "cap_bbox_px": [
+            621,
+            320,
+            9,
+            5
+          ]
+        },
+        {
+          "time_s": 6022.0,
+          "cap_bbox_px": [
+            600,
+            277,
+            15,
+            13
+          ]
+        },
+        {
+          "time_s": 6023.0,
+          "cap_bbox_px": [
+            599,
+            253,
+            14,
+            12
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_r02:A094",
+      "match": "estonia",
+      "inventory": "estonia_r02",
+      "raw_track_id": "A094",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 6022.0,
+          "cap_bbox_px": [
+            484,
+            318,
+            22,
+            7
+          ]
+        },
+        {
+          "time_s": 6023.0,
+          "cap_bbox_px": [
+            474,
+            289,
+            22,
+            12
+          ]
+        },
+        {
+          "time_s": 6025.0,
+          "cap_bbox_px": [
+            466,
+            240,
+            19,
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_r02:A093",
+      "match": "estonia",
+      "inventory": "estonia_r02",
+      "raw_track_id": "A093",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 6022.0,
+          "cap_bbox_px": [
+            596,
+            244,
+            14,
+            14
+          ]
+        },
+        {
+          "time_s": 6024.0,
+          "cap_bbox_px": [
+            600,
+            228,
+            17,
+            4
+          ]
+        },
+        {
+          "time_s": 6027.0,
+          "cap_bbox_px": [
+            612,
+            147,
+            12,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_r02:A092",
+      "match": "estonia",
+      "inventory": "estonia_r02",
+      "raw_track_id": "A092",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 6023.0,
+          "cap_bbox_px": [
+            531,
+            266,
+            12,
+            11
+          ]
+        },
+        {
+          "time_s": 6024.0,
+          "cap_bbox_px": [
+            542,
+            248,
+            11,
+            8
+          ]
+        },
+        {
+          "time_s": 6026.0,
+          "cap_bbox_px": [
+            543,
+            204,
+            9,
+            12
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_r02:A095",
+      "match": "estonia",
+      "inventory": "estonia_r02",
+      "raw_track_id": "A095",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 6026.0,
+          "cap_bbox_px": [
+            458,
+            218,
+            8,
+            8
+          ]
+        },
+        {
+          "time_s": 6028.0,
+          "cap_bbox_px": [
+            446,
+            182,
+            12,
+            5
+          ]
+        },
+        {
+          "time_s": 6030.0,
+          "cap_bbox_px": [
+            455,
+            152,
+            7,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_r02:A103",
+      "match": "estonia",
+      "inventory": "estonia_r02",
+      "raw_track_id": "A103",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 6160.0,
+          "cap_bbox_px": [
+            372,
+            158,
+            10,
+            6
+          ]
+        },
+        {
+          "time_s": 6162.0,
+          "cap_bbox_px": [
+            352,
+            187,
+            6,
+            5
+          ]
+        },
+        {
+          "time_s": 6165.0,
+          "cap_bbox_px": [
+            340,
+            232,
+            8,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_r02:A156",
+      "match": "estonia",
+      "inventory": "estonia_r02",
+      "raw_track_id": "A156",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 7277.0,
+          "cap_bbox_px": [
+            525,
+            304,
+            15,
+            14
+          ]
+        },
+        {
+          "time_s": 7278.0,
+          "cap_bbox_px": [
+            534,
+            284,
+            15,
+            12
+          ]
+        },
+        {
+          "time_s": 7280.0,
+          "cap_bbox_px": [
+            558,
+            240,
+            14,
+            12
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_r02:A159",
+      "match": "estonia",
+      "inventory": "estonia_r02",
+      "raw_track_id": "A159",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 7294.0,
+          "cap_bbox_px": [
+            589,
+            320,
+            18,
+            5
+          ]
+        },
+        {
+          "time_s": 7296.0,
+          "cap_bbox_px": [
+            615,
+            287,
+            4,
+            5
+          ]
+        },
+        {
+          "time_s": 7298.0,
+          "cap_bbox_px": [
+            623,
+            250,
+            5,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_r02:A195",
+      "match": "estonia",
+      "inventory": "estonia_r02",
+      "raw_track_id": "A195",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 7897.0,
+          "cap_bbox_px": [
+            481,
+            308,
+            13,
+            10
+          ]
+        },
+        {
+          "time_s": 7898.0,
+          "cap_bbox_px": [
+            497,
+            280,
+            12,
+            7
+          ]
+        },
+        {
+          "time_s": 7900.0,
+          "cap_bbox_px": [
+            514,
+            218,
+            9,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_r02:A197",
+      "match": "estonia",
+      "inventory": "estonia_r02",
+      "raw_track_id": "A197",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 7898.0,
+          "cap_bbox_px": [
+            550,
+            298,
+            13,
+            7
+          ]
+        },
+        {
+          "time_s": 7899.0,
+          "cap_bbox_px": [
+            546,
+            296,
+            7,
+            3
+          ]
+        },
+        {
+          "time_s": 7901.0,
+          "cap_bbox_px": [
+            541,
+            227,
+            5,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_r02:A198",
+      "match": "estonia",
+      "inventory": "estonia_r02",
+      "raw_track_id": "A198",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 7899.0,
+          "cap_bbox_px": [
+            543,
+            302,
+            15,
+            14
+          ]
+        },
+        {
+          "time_s": 7900.0,
+          "cap_bbox_px": [
+            540,
+            278,
+            14,
+            12
+          ]
+        },
+        {
+          "time_s": 7902.0,
+          "cap_bbox_px": [
+            534,
+            235,
+            14,
+            13
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_r02:A227",
+      "match": "estonia",
+      "inventory": "estonia_r02",
+      "raw_track_id": "A227",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 8223.0,
+          "cap_bbox_px": [
+            604,
+            145,
+            11,
+            7
+          ]
+        },
+        {
+          "time_s": 8226.0,
+          "cap_bbox_px": [
+            616,
+            178,
+            14,
+            10
+          ]
+        },
+        {
+          "time_s": 8228.0,
+          "cap_bbox_px": [
+            620,
+            206,
+            9,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_r02:A230",
+      "match": "estonia",
+      "inventory": "estonia_r02",
+      "raw_track_id": "A230",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 8229.0,
+          "cap_bbox_px": [
+            378,
+            167,
+            6,
+            4
+          ]
+        },
+        {
+          "time_s": 8231.0,
+          "cap_bbox_px": [
+            382,
+            194,
+            8,
+            8
+          ]
+        },
+        {
+          "time_s": 8233.0,
+          "cap_bbox_px": [
+            376,
+            230,
+            4,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_r02:A231",
+      "match": "estonia",
+      "inventory": "estonia_r02",
+      "raw_track_id": "A231",
+      "source_prefix_class": "person_or_wheelchair_or_equipment",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 8231.0,
+          "cap_bbox_px": [
+            391,
+            195,
+            5,
+            5
+          ]
+        },
+        {
+          "time_s": 8233.0,
+          "cap_bbox_px": [
+            388,
+            232,
+            4,
+            4
+          ]
+        },
+        {
+          "time_s": 8239.0,
+          "cap_bbox_px": [
+            356,
+            252,
+            14,
+            12
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "usa_area:A002",
+      "match": "usa",
+      "inventory": "usa_area",
+      "raw_track_id": "A002",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 1650.0,
+          "cap_bbox_px": [
+            480,
+            224,
+            12,
+            8
+          ]
+        },
+        {
+          "time_s": 1651.0,
+          "cap_bbox_px": [
+            476,
+            252,
+            14,
+            10
+          ]
+        },
+        {
+          "time_s": 1652.0,
+          "cap_bbox_px": [
+            470,
+            284,
+            18,
+            12
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "usa_area:A027",
+      "match": "usa",
+      "inventory": "usa_area",
+      "raw_track_id": "A027",
+      "source_prefix_class": "person_or_wheelchair",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 1839.0,
+          "cap_bbox_px": [
+            584,
+            159,
+            12,
+            7
+          ]
+        },
+        {
+          "time_s": 1842.0,
+          "cap_bbox_px": [
+            569,
+            196,
+            19,
+            7
+          ]
+        },
+        {
+          "time_s": 1844.0,
+          "cap_bbox_px": [
+            551,
+            232,
+            19,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "usa_area:A028",
+      "match": "usa",
+      "inventory": "usa_area",
+      "raw_track_id": "A028",
+      "source_prefix_class": "person_or_wheelchair",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 1843.0,
+          "cap_bbox_px": [
+            592,
+            176,
+            6,
+            6
+          ]
+        },
+        {
+          "time_s": 1845.0,
+          "cap_bbox_px": [
+            574,
+            205,
+            6,
+            5
+          ]
+        },
+        {
+          "time_s": 1847.0,
+          "cap_bbox_px": [
+            551,
+            255,
+            9,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "usa_area:A030",
+      "match": "usa",
+      "inventory": "usa_area",
+      "raw_track_id": "A030",
+      "source_prefix_class": "person_or_wheelchair",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 1881.0,
+          "cap_bbox_px": [
+            600,
+            301,
+            14,
+            5
+          ]
+        },
+        {
+          "time_s": 1882.0,
+          "cap_bbox_px": [
+            606,
+            271,
+            8,
+            5
+          ]
+        },
+        {
+          "time_s": 1884.0,
+          "cap_bbox_px": [
+            598,
+            220,
+            24,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "usa_area:A032",
+      "match": "usa",
+      "inventory": "usa_area",
+      "raw_track_id": "A032",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 1924.0,
+          "cap_bbox_px": [
+            554,
+            316,
+            14,
+            8
+          ]
+        },
+        {
+          "time_s": 1925.0,
+          "cap_bbox_px": [
+            554,
+            293,
+            12,
+            9
+          ]
+        },
+        {
+          "time_s": 1928.0,
+          "cap_bbox_px": [
+            544,
+            242,
+            12,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "usa_area:A035",
+      "match": "usa",
+      "inventory": "usa_area",
+      "raw_track_id": "A035",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 1966.0,
+          "cap_bbox_px": [
+            484,
+            296,
+            16,
+            12
+          ]
+        },
+        {
+          "time_s": 1967.0,
+          "cap_bbox_px": [
+            480,
+            270,
+            18,
+            10
+          ]
+        },
+        {
+          "time_s": 1969.0,
+          "cap_bbox_px": [
+            474,
+            226,
+            14,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "usa_area:A037",
+      "match": "usa",
+      "inventory": "usa_area",
+      "raw_track_id": "A037",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2011.0,
+          "cap_bbox_px": [
+            531,
+            300,
+            14,
+            10
+          ]
+        },
+        {
+          "time_s": 2012.0,
+          "cap_bbox_px": [
+            528,
+            280,
+            15,
+            8
+          ]
+        },
+        {
+          "time_s": 2015.0,
+          "cap_bbox_px": [
+            516,
+            230,
+            11,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "usa_area:A039",
+      "match": "usa",
+      "inventory": "usa_area",
+      "raw_track_id": "A039",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2059.0,
+          "cap_bbox_px": [
+            444,
+            290,
+            18,
+            10
+          ]
+        },
+        {
+          "time_s": 2060.0,
+          "cap_bbox_px": [
+            449,
+            260,
+            15,
+            10
+          ]
+        },
+        {
+          "time_s": 2062.0,
+          "cap_bbox_px": [
+            454,
+            212,
+            14,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "usa_area:A041",
+      "match": "usa",
+      "inventory": "usa_area",
+      "raw_track_id": "A041",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2109.0,
+          "cap_bbox_px": [
+            372,
+            316,
+            16,
+            8
+          ]
+        },
+        {
+          "time_s": 2110.0,
+          "cap_bbox_px": [
+            368,
+            287,
+            12,
+            7
+          ]
+        },
+        {
+          "time_s": 2112.0,
+          "cap_bbox_px": [
+            355,
+            240,
+            11,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "usa_area:A045",
+      "match": "usa",
+      "inventory": "usa_area",
+      "raw_track_id": "A045",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2156.0,
+          "cap_bbox_px": [
+            516,
+            306,
+            18,
+            10
+          ]
+        },
+        {
+          "time_s": 2157.0,
+          "cap_bbox_px": [
+            514,
+            278,
+            16,
+            10
+          ]
+        },
+        {
+          "time_s": 2159.0,
+          "cap_bbox_px": [
+            510,
+            232,
+            14,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "usa_area:A046",
+      "match": "usa",
+      "inventory": "usa_area",
+      "raw_track_id": "A046",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2194.0,
+          "cap_bbox_px": [
+            508,
+            306,
+            14,
+            8
+          ]
+        },
+        {
+          "time_s": 2195.0,
+          "cap_bbox_px": [
+            510,
+            277,
+            10,
+            7
+          ]
+        },
+        {
+          "time_s": 2197.0,
+          "cap_bbox_px": [
+            504,
+            230,
+            12,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "usa_area:A047",
+      "match": "usa",
+      "inventory": "usa_area",
+      "raw_track_id": "A047",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2236.0,
+          "cap_bbox_px": [
+            526,
+            298,
+            18,
+            12
+          ]
+        },
+        {
+          "time_s": 2237.0,
+          "cap_bbox_px": [
+            532,
+            272,
+            16,
+            10
+          ]
+        },
+        {
+          "time_s": 2239.0,
+          "cap_bbox_px": [
+            542,
+            226,
+            16,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "usa_area:A052",
+      "match": "usa",
+      "inventory": "usa_area",
+      "raw_track_id": "A052",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2301.0,
+          "cap_bbox_px": [
+            524,
+            306,
+            12,
+            8
+          ]
+        },
+        {
+          "time_s": 2303.0,
+          "cap_bbox_px": [
+            520,
+            270,
+            12,
+            4
+          ]
+        },
+        {
+          "time_s": 2305.0,
+          "cap_bbox_px": [
+            513,
+            238,
+            11,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "usa_area:A056",
+      "match": "usa",
+      "inventory": "usa_area",
+      "raw_track_id": "A056",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2351.0,
+          "cap_bbox_px": [
+            476,
+            278,
+            16,
+            10
+          ]
+        },
+        {
+          "time_s": 2352.0,
+          "cap_bbox_px": [
+            474,
+            252,
+            14,
+            10
+          ]
+        },
+        {
+          "time_s": 2354.0,
+          "cap_bbox_px": [
+            468,
+            206,
+            14,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "usa_area:A058",
+      "match": "usa",
+      "inventory": "usa_area",
+      "raw_track_id": "A058",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2402.0,
+          "cap_bbox_px": [
+            517,
+            301,
+            15,
+            9
+          ]
+        },
+        {
+          "time_s": 2403.0,
+          "cap_bbox_px": [
+            522,
+            273,
+            12,
+            7
+          ]
+        },
+        {
+          "time_s": 2405.0,
+          "cap_bbox_px": [
+            532,
+            226,
+            10,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "usa_area:A059",
+      "match": "usa",
+      "inventory": "usa_area",
+      "raw_track_id": "A059",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2463.0,
+          "cap_bbox_px": [
+            572,
+            290,
+            18,
+            10
+          ]
+        },
+        {
+          "time_s": 2464.0,
+          "cap_bbox_px": [
+            578,
+            260,
+            16,
+            10
+          ]
+        },
+        {
+          "time_s": 2466.0,
+          "cap_bbox_px": [
+            580,
+            212,
+            16,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "usa_area:A064",
+      "match": "usa",
+      "inventory": "usa_area",
+      "raw_track_id": "A064",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2518.0,
+          "cap_bbox_px": [
+            544,
+            291,
+            10,
+            7
+          ]
+        },
+        {
+          "time_s": 2519.0,
+          "cap_bbox_px": [
+            546,
+            266,
+            12,
+            4
+          ]
+        },
+        {
+          "time_s": 2521.0,
+          "cap_bbox_px": [
+            554,
+            218,
+            8,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "usa_area:A065",
+      "match": "usa",
+      "inventory": "usa_area",
+      "raw_track_id": "A065",
+      "source_prefix_class": "person_or_wheelchair",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 2527.0,
+          "cap_bbox_px": [
+            478,
+            158,
+            8,
+            6
+          ]
+        },
+        {
+          "time_s": 2533.0,
+          "cap_bbox_px": [
+            426,
+            190,
+            6,
+            10
+          ]
+        },
+        {
+          "time_s": 2536.0,
+          "cap_bbox_px": [
+            422,
+            230,
+            10,
+            16
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "usa_area:A069",
+      "match": "usa",
+      "inventory": "usa_area",
+      "raw_track_id": "A069",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2585.0,
+          "cap_bbox_px": [
+            436,
+            320,
+            12,
+            5
+          ]
+        },
+        {
+          "time_s": 2586.0,
+          "cap_bbox_px": [
+            440,
+            294,
+            16,
+            10
+          ]
+        },
+        {
+          "time_s": 2588.0,
+          "cap_bbox_px": [
+            444,
+            250,
+            16,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "usa_area:A072",
+      "match": "usa",
+      "inventory": "usa_area",
+      "raw_track_id": "A072",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2643.0,
+          "cap_bbox_px": [
+            538,
+            301,
+            14,
+            9
+          ]
+        },
+        {
+          "time_s": 2645.0,
+          "cap_bbox_px": [
+            533,
+            266,
+            13,
+            4
+          ]
+        },
+        {
+          "time_s": 2647.0,
+          "cap_bbox_px": [
+            527,
+            231,
+            10,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "usa_area:A074",
+      "match": "usa",
+      "inventory": "usa_area",
+      "raw_track_id": "A074",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2700.0,
+          "cap_bbox_px": [
+            426,
+            302,
+            16,
+            10
+          ]
+        },
+        {
+          "time_s": 2701.0,
+          "cap_bbox_px": [
+            428,
+            276,
+            16,
+            10
+          ]
+        },
+        {
+          "time_s": 2703.0,
+          "cap_bbox_px": [
+            436,
+            234,
+            14,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "usa_area:A078",
+      "match": "usa",
+      "inventory": "usa_area",
+      "raw_track_id": "A078",
+      "source_prefix_class": "person_or_wheelchair",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 2720.0,
+          "cap_bbox_px": [
+            448,
+            314,
+            20,
+            4
+          ]
+        },
+        {
+          "time_s": 2722.0,
+          "cap_bbox_px": [
+            476,
+            274,
+            22,
+            4
+          ]
+        },
+        {
+          "time_s": 2724.0,
+          "cap_bbox_px": [
+            488,
+            240,
+            20,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_global:A006",
+      "match": "italy",
+      "inventory": "italy_global",
+      "raw_track_id": "A006",
+      "source_prefix_class": "person_or_wheelchair",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 1797.0,
+          "cap_bbox_px": [
+            348,
+            145,
+            8,
+            5
+          ]
+        },
+        {
+          "time_s": 1798.0,
+          "cap_bbox_px": [
+            347,
+            166,
+            7,
+            6
+          ]
+        },
+        {
+          "time_s": 1800.0,
+          "cap_bbox_px": [
+            338,
+            205,
+            6,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_global:A007",
+      "match": "italy",
+      "inventory": "italy_global",
+      "raw_track_id": "A007",
+      "source_prefix_class": "person_or_wheelchair",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 1814.0,
+          "cap_bbox_px": [
+            475,
+            162,
+            12,
+            11
+          ]
+        },
+        {
+          "time_s": 1817.0,
+          "cap_bbox_px": [
+            428,
+            188,
+            10,
+            12
+          ]
+        },
+        {
+          "time_s": 1820.0,
+          "cap_bbox_px": [
+            395,
+            235,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_global:A011",
+      "match": "italy",
+      "inventory": "italy_global",
+      "raw_track_id": "A011",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 1909.0,
+          "cap_bbox_px": [
+            402,
+            302,
+            18,
+            10
+          ]
+        },
+        {
+          "time_s": 1910.0,
+          "cap_bbox_px": [
+            408,
+            278,
+            16,
+            12
+          ]
+        },
+        {
+          "time_s": 1912.0,
+          "cap_bbox_px": [
+            424,
+            242,
+            12,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_global:A012",
+      "match": "italy",
+      "inventory": "italy_global",
+      "raw_track_id": "A012",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 1954.0,
+          "cap_bbox_px": [
+            477,
+            297,
+            11,
+            5
+          ]
+        },
+        {
+          "time_s": 1955.0,
+          "cap_bbox_px": [
+            474,
+            271,
+            12,
+            8
+          ]
+        },
+        {
+          "time_s": 1958.0,
+          "cap_bbox_px": [
+            466,
+            219,
+            10,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_global:A013",
+      "match": "italy",
+      "inventory": "italy_global",
+      "raw_track_id": "A013",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2004.0,
+          "cap_bbox_px": [
+            404,
+            300,
+            18,
+            10
+          ]
+        },
+        {
+          "time_s": 2005.0,
+          "cap_bbox_px": [
+            408,
+            276,
+            16,
+            10
+          ]
+        },
+        {
+          "time_s": 2007.0,
+          "cap_bbox_px": [
+            418,
+            236,
+            14,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_global:A014",
+      "match": "italy",
+      "inventory": "italy_global",
+      "raw_track_id": "A014",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2059.0,
+          "cap_bbox_px": [
+            407,
+            306,
+            14,
+            6
+          ]
+        },
+        {
+          "time_s": 2060.0,
+          "cap_bbox_px": [
+            411,
+            284,
+            7,
+            4
+          ]
+        },
+        {
+          "time_s": 2062.0,
+          "cap_bbox_px": [
+            422,
+            242,
+            7,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_global:A016",
+      "match": "italy",
+      "inventory": "italy_global",
+      "raw_track_id": "A016",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2138.0,
+          "cap_bbox_px": [
+            432,
+            310,
+            16,
+            10
+          ]
+        },
+        {
+          "time_s": 2139.0,
+          "cap_bbox_px": [
+            434,
+            282,
+            16,
+            10
+          ]
+        },
+        {
+          "time_s": 2141.0,
+          "cap_bbox_px": [
+            442,
+            236,
+            16,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_global:A017",
+      "match": "italy",
+      "inventory": "italy_global",
+      "raw_track_id": "A017",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2187.0,
+          "cap_bbox_px": [
+            466,
+            262,
+            8,
+            7
+          ]
+        },
+        {
+          "time_s": 2188.0,
+          "cap_bbox_px": [
+            473,
+            238,
+            5,
+            4
+          ]
+        },
+        {
+          "time_s": 2190.0,
+          "cap_bbox_px": [
+            475,
+            197,
+            5,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_global:A019",
+      "match": "italy",
+      "inventory": "italy_global",
+      "raw_track_id": "A019",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2240.0,
+          "cap_bbox_px": [
+            480,
+            256,
+            16,
+            12
+          ]
+        },
+        {
+          "time_s": 2241.0,
+          "cap_bbox_px": [
+            484,
+            224,
+            12,
+            10
+          ]
+        },
+        {
+          "time_s": 2242.0,
+          "cap_bbox_px": [
+            490,
+            196,
+            10,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_global:A021",
+      "match": "italy",
+      "inventory": "italy_global",
+      "raw_track_id": "A021",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2296.0,
+          "cap_bbox_px": [
+            550,
+            316,
+            12,
+            6
+          ]
+        },
+        {
+          "time_s": 2297.0,
+          "cap_bbox_px": [
+            554,
+            278,
+            12,
+            7
+          ]
+        },
+        {
+          "time_s": 2298.0,
+          "cap_bbox_px": [
+            558,
+            250,
+            8,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_global:A023",
+      "match": "italy",
+      "inventory": "italy_global",
+      "raw_track_id": "A023",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2349.0,
+          "cap_bbox_px": [
+            466,
+            302,
+            18,
+            10
+          ]
+        },
+        {
+          "time_s": 2350.0,
+          "cap_bbox_px": [
+            466,
+            262,
+            16,
+            12
+          ]
+        },
+        {
+          "time_s": 2351.0,
+          "cap_bbox_px": [
+            466,
+            230,
+            12,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_global:A024",
+      "match": "italy",
+      "inventory": "italy_global",
+      "raw_track_id": "A024",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2401.0,
+          "cap_bbox_px": [
+            530,
+            316,
+            12,
+            7
+          ]
+        },
+        {
+          "time_s": 2402.0,
+          "cap_bbox_px": [
+            531,
+            284,
+            12,
+            4
+          ]
+        },
+        {
+          "time_s": 2403.0,
+          "cap_bbox_px": [
+            531,
+            252,
+            11,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_global:A026",
+      "match": "italy",
+      "inventory": "italy_global",
+      "raw_track_id": "A026",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2467.0,
+          "cap_bbox_px": [
+            482,
+            288,
+            16,
+            12
+          ]
+        },
+        {
+          "time_s": 2468.0,
+          "cap_bbox_px": [
+            482,
+            252,
+            16,
+            10
+          ]
+        },
+        {
+          "time_s": 2469.0,
+          "cap_bbox_px": [
+            484,
+            220,
+            12,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_global:A027",
+      "match": "italy",
+      "inventory": "italy_global",
+      "raw_track_id": "A027",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2520.0,
+          "cap_bbox_px": [
+            502,
+            314,
+            14,
+            8
+          ]
+        },
+        {
+          "time_s": 2521.0,
+          "cap_bbox_px": [
+            502,
+            283,
+            12,
+            6
+          ]
+        },
+        {
+          "time_s": 2522.0,
+          "cap_bbox_px": [
+            500,
+            255,
+            10,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_global:A028",
+      "match": "italy",
+      "inventory": "italy_global",
+      "raw_track_id": "A028",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2588.0,
+          "cap_bbox_px": [
+            506,
+            288,
+            18,
+            10
+          ]
+        },
+        {
+          "time_s": 2590.0,
+          "cap_bbox_px": [
+            504,
+            232,
+            16,
+            10
+          ]
+        },
+        {
+          "time_s": 2591.0,
+          "cap_bbox_px": [
+            502,
+            208,
+            13,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_global:A031",
+      "match": "italy",
+      "inventory": "italy_global",
+      "raw_track_id": "A031",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2681.0,
+          "cap_bbox_px": [
+            530,
+            296,
+            14,
+            6
+          ]
+        },
+        {
+          "time_s": 2682.0,
+          "cap_bbox_px": [
+            538,
+            264,
+            8,
+            5
+          ]
+        },
+        {
+          "time_s": 2684.0,
+          "cap_bbox_px": [
+            548,
+            211,
+            8,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "italy_global:A033",
+      "match": "italy",
+      "inventory": "italy_global",
+      "raw_track_id": "A033",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2736.0,
+          "cap_bbox_px": [
+            502,
+            260,
+            16,
+            13
+          ]
+        },
+        {
+          "time_s": 2737.0,
+          "cap_bbox_px": [
+            508,
+            234,
+            16,
+            10
+          ]
+        },
+        {
+          "time_s": 2739.0,
+          "cap_bbox_px": [
+            520,
+            188,
+            14,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_global:A009",
+      "match": "estonia",
+      "inventory": "estonia_global",
+      "raw_track_id": "A009",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 1932.0,
+          "cap_bbox_px": [
+            472,
+            192,
+            18,
+            10
+          ]
+        },
+        {
+          "time_s": 1938.0,
+          "cap_bbox_px": [
+            490,
+            230,
+            19,
+            10
+          ]
+        },
+        {
+          "time_s": 1939.0,
+          "cap_bbox_px": [
+            502,
+            256,
+            16,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_global:A014",
+      "match": "estonia",
+      "inventory": "estonia_global",
+      "raw_track_id": "A014",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2063.0,
+          "cap_bbox_px": [
+            368,
+            318,
+            18,
+            7
+          ]
+        },
+        {
+          "time_s": 2065.0,
+          "cap_bbox_px": [
+            376,
+            272,
+            20,
+            10
+          ]
+        },
+        {
+          "time_s": 2066.0,
+          "cap_bbox_px": [
+            380,
+            252,
+            20,
+            12
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_global:A015",
+      "match": "estonia",
+      "inventory": "estonia_global",
+      "raw_track_id": "A015",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2108.0,
+          "cap_bbox_px": [
+            478,
+            310,
+            16,
+            9
+          ]
+        },
+        {
+          "time_s": 2110.0,
+          "cap_bbox_px": [
+            494,
+            278,
+            14,
+            8
+          ]
+        },
+        {
+          "time_s": 2113.0,
+          "cap_bbox_px": [
+            520,
+            246,
+            12,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_global:A016",
+      "match": "estonia",
+      "inventory": "estonia_global",
+      "raw_track_id": "A016",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2148.0,
+          "cap_bbox_px": [
+            378,
+            284,
+            20,
+            12
+          ]
+        },
+        {
+          "time_s": 2150.0,
+          "cap_bbox_px": [
+            390,
+            250,
+            20,
+            12
+          ]
+        },
+        {
+          "time_s": 2152.0,
+          "cap_bbox_px": [
+            404,
+            222,
+            16,
+            12
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_global:A017",
+      "match": "estonia",
+      "inventory": "estonia_global",
+      "raw_track_id": "A017",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2184.0,
+          "cap_bbox_px": [
+            488,
+            306,
+            16,
+            9
+          ]
+        },
+        {
+          "time_s": 2186.0,
+          "cap_bbox_px": [
+            506,
+            272,
+            14,
+            6
+          ]
+        },
+        {
+          "time_s": 2188.0,
+          "cap_bbox_px": [
+            526,
+            242,
+            14,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_global:A020",
+      "match": "estonia",
+      "inventory": "estonia_global",
+      "raw_track_id": "A020",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2232.0,
+          "cap_bbox_px": [
+            368,
+            300,
+            20,
+            12
+          ]
+        },
+        {
+          "time_s": 2234.0,
+          "cap_bbox_px": [
+            376,
+            256,
+            18,
+            12
+          ]
+        },
+        {
+          "time_s": 2235.0,
+          "cap_bbox_px": [
+            380,
+            236,
+            18,
+            12
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_global:A021",
+      "match": "estonia",
+      "inventory": "estonia_global",
+      "raw_track_id": "A021",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2303.0,
+          "cap_bbox_px": [
+            468,
+            314,
+            18,
+            6
+          ]
+        },
+        {
+          "time_s": 2304.0,
+          "cap_bbox_px": [
+            467,
+            288,
+            17,
+            8
+          ]
+        },
+        {
+          "time_s": 2306.0,
+          "cap_bbox_px": [
+            464,
+            254,
+            12,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_global:A024",
+      "match": "estonia",
+      "inventory": "estonia_global",
+      "raw_track_id": "A024",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2365.0,
+          "cap_bbox_px": [
+            416,
+            220,
+            16,
+            10
+          ]
+        },
+        {
+          "time_s": 2367.0,
+          "cap_bbox_px": [
+            412,
+            182,
+            16,
+            8
+          ]
+        },
+        {
+          "time_s": 2369.0,
+          "cap_bbox_px": [
+            402,
+            145,
+            14,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_global:A027",
+      "match": "estonia",
+      "inventory": "estonia_global",
+      "raw_track_id": "A027",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2422.0,
+          "cap_bbox_px": [
+            488,
+            296,
+            14,
+            10
+          ]
+        },
+        {
+          "time_s": 2423.0,
+          "cap_bbox_px": [
+            490,
+            270,
+            12,
+            8
+          ]
+        },
+        {
+          "time_s": 2425.0,
+          "cap_bbox_px": [
+            486,
+            224,
+            16,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_global:A029",
+      "match": "estonia",
+      "inventory": "estonia_global",
+      "raw_track_id": "A029",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2494.0,
+          "cap_bbox_px": [
+            398,
+            250,
+            18,
+            12
+          ]
+        },
+        {
+          "time_s": 2496.0,
+          "cap_bbox_px": [
+            410,
+            224,
+            20,
+            10
+          ]
+        },
+        {
+          "time_s": 2502.0,
+          "cap_bbox_px": [
+            449,
+            184,
+            17,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_global:A030",
+      "match": "estonia",
+      "inventory": "estonia_global",
+      "raw_track_id": "A030",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2558.0,
+          "cap_bbox_px": [
+            474,
+            295,
+            14,
+            9
+          ]
+        },
+        {
+          "time_s": 2559.0,
+          "cap_bbox_px": [
+            474,
+            266,
+            14,
+            6
+          ]
+        },
+        {
+          "time_s": 2561.0,
+          "cap_bbox_px": [
+            470,
+            212,
+            8,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_global:A034",
+      "match": "estonia",
+      "inventory": "estonia_global",
+      "raw_track_id": "A034",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2666.0,
+          "cap_bbox_px": [
+            408,
+            314,
+            16,
+            7
+          ]
+        },
+        {
+          "time_s": 2667.0,
+          "cap_bbox_px": [
+            416,
+            284,
+            16,
+            8
+          ]
+        },
+        {
+          "time_s": 2669.0,
+          "cap_bbox_px": [
+            432,
+            236,
+            12,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_global:A036",
+      "match": "estonia",
+      "inventory": "estonia_global",
+      "raw_track_id": "A036",
+      "source_prefix_class": "moving_stone",
+      "training_pixel_class": "stone_pixels",
+      "samples": [
+        {
+          "time_s": 2724.0,
+          "cap_bbox_px": [
+            396,
+            314,
+            22,
+            11
+          ]
+        },
+        {
+          "time_s": 2726.0,
+          "cap_bbox_px": [
+            408,
+            258,
+            18,
+            10
+          ]
+        },
+        {
+          "time_s": 2727.0,
+          "cap_bbox_px": [
+            414,
+            234,
+            16,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "example_id": "estonia_global:A037",
+      "match": "estonia",
+      "inventory": "estonia_global",
+      "raw_track_id": "A037",
+      "source_prefix_class": "person_or_wheelchair",
+      "training_pixel_class": "person_or_equipment_pixels",
+      "samples": [
+        {
+          "time_s": 2743.0,
+          "cap_bbox_px": [
+            344,
+            152,
+            8,
+            6
+          ]
+        },
+        {
+          "time_s": 2744.0,
+          "cap_bbox_px": [
+            338,
+            178,
+            10,
+            6
+          ]
+        },
+        {
+          "time_s": 2746.0,
+          "cap_bbox_px": [
+            330,
+            226,
+            6,
+            6
+          ]
+        }
+      ]
+    }
+  ],
+  "excluded": [
+    {
+      "inventory": "estonia_r02",
+      "raw_track_id": "A238",
+      "source_prefix_class": "stone_moved_by_person"
+    },
+    {
+      "inventory": "usa_area",
+      "raw_track_id": "A003",
+      "source_prefix_class": "stone_pixels_identity_uncertain"
+    },
+    {
+      "inventory": "usa_area",
+      "raw_track_id": "A010",
+      "source_prefix_class": "stone_pixels_identity_uncertain"
+    },
+    {
+      "inventory": "usa_area",
+      "raw_track_id": "A018",
+      "source_prefix_class": "stone_pixels_identity_uncertain"
+    },
+    {
+      "inventory": "italy_global",
+      "raw_track_id": "A001",
+      "source_prefix_class": "stone_pixels_identity_uncertain"
+    },
+    {
+      "inventory": "italy_global",
+      "raw_track_id": "A005",
+      "source_prefix_class": "stone_pixels_identity_uncertain"
+    },
+    {
+      "inventory": "estonia_global",
+      "raw_track_id": "A001",
+      "source_prefix_class": "stone_pixels_identity_uncertain"
+    },
+    {
+      "inventory": "estonia_global",
+      "raw_track_id": "A003",
+      "source_prefix_class": "stone_pixels_identity_uncertain"
+    },
+    {
+      "inventory": "estonia_global",
+      "raw_track_id": "A006",
+      "source_prefix_class": "stone_pixels_identity_uncertain"
+    }
+  ],
+  "runner_sha256": "fa85ca3aedb13112ff9cfc18682f2788cd7d303fd9907adfa160cbd836d609b2",
+  "limitations": [
+    "Labels are selected same-agent short-prefix source-pixel reviews, not independent physical throw truth.",
+    "Some examples from the same match or physical path occur in more than one inventory; exact duplicate crops must be deduplicated during fitting.",
+    "Source matches share broadcast conventions, so leave-one-match-out checks still cannot prove production generalization.",
+    "Latvia labels and source frames are excluded from fitting but were already inspected during model-design work; its later score is development transfer, not a sealed holdout."
+  ]
+}

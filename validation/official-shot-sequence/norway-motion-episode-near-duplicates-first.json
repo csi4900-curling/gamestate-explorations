@@ -1,0 +1,109 @@
+{
+  "status": "source_only_possible_window_truncation_pairs_not_merged",
+  "episode_registry_sha256": "f1be1a28fd0ef5cc45188cdeae3a5b5d72bec578cfdf4c251d3e110a9f0b9a4b",
+  "audit_code_sha256": "41bcae2252513eb52b6b7df981372197cea32afd4b35362acd18f214ff124687",
+  "runner_sha256": "41418d15f20b6a82ff3c3c144572e873555e0ccfa156a35f7972ffa5c687b6ad",
+  "selection_rule": {
+    "same_colour": true,
+    "different_candidate_sets": true,
+    "positive_time_overlap": true,
+    "maximum_onset_difference_s": 1.0,
+    "maximum_end_difference_s": 5.0,
+    "maximum_span_difference_px": 0.01,
+    "maximum_first_and_last_pixel_distance_px": 2.0
+  },
+  "input_exact_episode_count": 150,
+  "possible_duplicate_pair_count": 3,
+  "pairs": [
+    {
+      "episode_ids": [
+        "M0012",
+        "M0013"
+      ],
+      "colour": "red",
+      "motion_intervals_s": [
+        [
+          631.0,
+          638.0
+        ],
+        [
+          631.0,
+          643.0
+        ]
+      ],
+      "candidate_ids": [
+        [
+          "S39"
+        ],
+        [
+          "S40"
+        ]
+      ],
+      "first_pixel_distance_px": 0.0,
+      "last_pixel_distance_px": 0.0,
+      "same_physical_stone_verified": false
+    },
+    {
+      "episode_ids": [
+        "M0019",
+        "M0020"
+      ],
+      "colour": "red",
+      "motion_intervals_s": [
+        [
+          993.0,
+          1000.0
+        ],
+        [
+          993.0,
+          1003.0
+        ]
+      ],
+      "candidate_ids": [
+        [
+          "S63"
+        ],
+        [
+          "S64"
+        ]
+      ],
+      "first_pixel_distance_px": 0.0,
+      "last_pixel_distance_px": 0.5,
+      "same_physical_stone_verified": false
+    },
+    {
+      "episode_ids": [
+        "M0104",
+        "M0105"
+      ],
+      "colour": "yellow",
+      "motion_intervals_s": [
+        [
+          5291.0,
+          5298.0
+        ],
+        [
+          5292.0,
+          5303.0
+        ]
+      ],
+      "candidate_ids": [
+        [
+          "S376"
+        ],
+        [
+          "S379"
+        ]
+      ],
+      "first_pixel_distance_px": 0.0,
+      "last_pixel_distance_px": 1.0,
+      "same_physical_stone_verified": false
+    }
+  ],
+  "limitations": [
+    "Rule was selected after examining this Norway transfer and is a development diagnostic, not independent validation.",
+    "Matched endpoints and timing strongly suggest window truncation but do not prove physical identity.",
+    "Other split records may be missed, especially across camera cuts or shifted track origins.",
+    "Pairs are not merged and no candidate is assigned a verified throw."
+  ]
+}
