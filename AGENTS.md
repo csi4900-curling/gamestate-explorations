@@ -1,5 +1,13 @@
 # Standing instructions: evidence, transfer, and completion
 
+## Authorship and attribution
+
+- Do not add AI co-author trailers, sign-offs, signatures, or self-credit to
+  commits, PR descriptions, source files, or other project work. In particular,
+  do not add `Co-Authored-By` attribution for an AI assistant or its provider.
+- Factual disclosure of AI assistance and required evidence provenance are
+  permitted; they do not authorize the assistant to claim authorship.
+
 ## Active scope — supervisor-approved focus, 22 October 2026
 
 - The primary objective is ONE reliable end-to-end pipeline for left/right
