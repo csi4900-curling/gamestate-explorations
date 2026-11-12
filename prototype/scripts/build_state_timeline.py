@@ -14,7 +14,6 @@ import argparse
 import json
 import math
 from bisect import bisect_left, bisect_right
-from collections import Counter
 from pathlib import Path
 
 HOUSE_RADIUS_M = 1.829

@@ -1,5 +1,4 @@
 import copy
-import cv2
 import numpy as np
 import pytest
 from prototype.rink_calibration import fit_panel,landmarks,project,verify_sealed_panel

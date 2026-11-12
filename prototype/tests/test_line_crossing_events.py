@@ -1,4 +1,3 @@
-import copy,json
 import pytest
 from prototype.line_crossing_events import LineCrossings,validate_config
 

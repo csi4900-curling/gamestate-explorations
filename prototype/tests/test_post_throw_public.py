@@ -48,7 +48,7 @@ def test_public_post_throw_replay_preserves_missing_candidates_and_unknown_point
           '--run-dir',str(run),'--output-dir',str(output),'--post-throw-config',str(config),
           '--post-throw-motion',str(motion),'--post-throw-aggregate',str(aggregate),
           '--event-colours',str(colour)]
-    result=subprocess.run(args,capture_output=True,text=True,check=True)
+    subprocess.run(args,capture_output=True,text=True,check=True)
     payload=json.loads((output/'states.json').read_text())
     assert payload['summary']['candidates']==2
     assert payload['summary']['snapshots']==1

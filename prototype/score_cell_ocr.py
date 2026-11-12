@@ -52,7 +52,7 @@ def probe(video, observations, output, teams, times, model_dir):
     if source_sha!=protocol['source_sha256']:raise ValueError('OCR observations and video source differ')
     output.mkdir(parents=True)
     engine=RapidOCR(params={'Global.model_root_dir':str(model_dir),'EngineConfig.onnxruntime.intra_op_num_threads':2,'EngineConfig.onnxruntime.inter_op_num_threads':1})
-    cap=cv2.VideoCapture(str(video));fps=cap.get(cv2.CAP_PROP_FPS);rows=[];requested=set(times)
+    cap=cv2.VideoCapture(str(video));rows=[];requested=set(times)
     try:
         for line in observations.open():
             row=json.loads(line)

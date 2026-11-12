@@ -4,7 +4,6 @@ Requires source-only annotations and a frame protocol. Does not tune thresholds,
 change event detection, or establish independent trajectory ground truth.
 """
 import argparse
-import html
 import os
 from urllib.parse import quote
 import hashlib

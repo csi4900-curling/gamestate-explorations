@@ -84,7 +84,6 @@ def scan(video, config_path, output, *, start=0., end=None):
     same source, parser, OCR weights and configuration hashes.
     """
     import cv2
-    import hashlib
     import importlib.metadata
     import json
     from pathlib import Path

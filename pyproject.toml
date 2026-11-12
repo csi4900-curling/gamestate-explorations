@@ -10,6 +10,11 @@ select = ["F", "E9"]
 # Kept byte-for-byte to preserve published experiment fingerprints.
 "prototype/vision_core.py" = ["F401"]
 "prototype/throw_detection.py" = ["F841"]
+# These modules import pytest fixtures from another test module; the import is used by name injection.
+"prototype/tests/test_calibration_store.py" = ["F401", "F811"]
+"prototype/tests/test_review_presentation.py" = ["F401", "F811"]
+"prototype/tests/test_rink_template.py" = ["F401", "F811"]
+"prototype/tests/test_workbench_detection_reuse.py" = ["F401", "F811"]
 
 [tool.ruff.format]
 exclude = ["prototype/vision_core.py", "prototype/stone_accuracy.py", "prototype/body_localization.py", "prototype/throw_detection.py", "prototype/rectification_core.py", "prototype/continuous_tracker.py", "prototype/target_analysis.py", "feasibility/scripts/geometry.py"]

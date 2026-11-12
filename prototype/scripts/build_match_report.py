@@ -39,7 +39,6 @@ def main() -> None:
     ev = evaluation.get("events") or {}
     rink = evaluation.get("rink") or {}
     boards = evaluation.get("boards") or {}
-    state = evaluation.get("state") or {}
     runtime = evaluation.get("runtime") or {}
     end_inf = evaluation.get("end_inference") or {}
     colour = (evaluation.get("colour") or {}).get("summary") or {}

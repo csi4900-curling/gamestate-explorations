@@ -16,7 +16,6 @@ import argparse
 import json
 import os
 import subprocess
-import sys
 from pathlib import Path
 
 from prototype.scripts.build_state_timeline import build as build_state
@@ -117,7 +116,6 @@ def deliverable_summary(evaluation):
     scores = evaluation.get("scores") or {}
     runtime = evaluation.get("runtime") or {}
     dense = evaluation.get("dense") or {}
-    state = evaluation.get("state") or {}
     colour = evaluation.get("colour") or {}
     handoff = evaluation.get("handoff_colour") or {}
     end_inference = evaluation.get("end_inference") or {}

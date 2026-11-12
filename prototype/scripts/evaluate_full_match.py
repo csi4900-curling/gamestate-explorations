@@ -8,7 +8,6 @@ identity, metric trajectory accuracy, complete per-end board accuracy).
 
 import argparse
 import json
-import math
 import statistics
 from collections import Counter, defaultdict
 from pathlib import Path

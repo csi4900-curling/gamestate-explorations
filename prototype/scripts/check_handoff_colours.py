@@ -11,7 +11,6 @@ Same-colour stones remain indistinguishable.
 import argparse
 import hashlib
 import json
-import math
 import time
 from collections import Counter
 from pathlib import Path

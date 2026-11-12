@@ -1,4 +1,3 @@
-import cv2
 import numpy as np
 import pytest
 from prototype.calibrated_camera_geometry import panel_features,CalibratedCameraGeometry

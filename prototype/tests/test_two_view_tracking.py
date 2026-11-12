@@ -1,5 +1,4 @@
 import json
-from pathlib import Path
 import pytest
 from prototype.spin.throws import association, handoff_observations, visibility_intervals, run_throws
 
