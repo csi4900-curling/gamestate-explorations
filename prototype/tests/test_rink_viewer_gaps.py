@@ -104,3 +104,9 @@ def test_display_selects_only_first_receiving_crossing_strictly_after_departure(
     event['segments'].append({'segment_id':'tied','role':'receiving','associated':False,
         'hog_crossing_evidence':{'crossing_time_s':107.},'geometry_samples':[]})
     assert compact_event(event)['display_receiving_candidate'] is None
+
+
+def test_compact_event_preserves_throw_extent():
+    event={'candidate_id':'e','event_prediction':{'crossing_time_s':1.},'segments':[],
+           'throw_extent':{'status':'quiet_board_proposal','end_time_s':15.5}}
+    assert compact_event(event)['throw_extent']=={'status':'quiet_board_proposal','end_time_s':15.5}

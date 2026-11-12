@@ -161,7 +161,7 @@ class Workbench:
             if not asset.is_file():
                 return match[0]
             return 'src=' + match[1] + match[2] + '?data=' + digest(asset)[:16] + match[1]
-        return re.sub(r'''src=(["'])(states\.js|rink-data\.js)(?:\?[^"']*)?\1''',
+        return re.sub(r'''src=(["'])(states\.js|rink-data\.js|effects\.js)(?:\?[^"']*)?\1''',
                       version, path.read_text()).encode()
 
     def update(self, identifier, **values):

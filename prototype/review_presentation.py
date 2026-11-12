@@ -34,8 +34,9 @@ def focused_views(app,job):
     from prototype import post_throw_state
     from prototype.scripts import render_rink_viewer
     native_pages=[source/name/'index.html' for name in ('trajectories','camera-fragments')]
+    extent_aggregate=source/'aggregate-rink-throw-extent.json'
     version=hashlib.sha256(Path(__file__).read_bytes()+Path(post_throw_state.__file__).read_bytes()+Path(render_rink_viewer.__file__).read_bytes()+payload_bytes+
-        b''.join(p.read_bytes() for p in native_pages if p.exists())).hexdigest()[:20]
+        b''.join(p.read_bytes() for p in [*native_pages, extent_aggregate] if p.exists())).hexdigest()[:20]
     destination=app.data/'presentations'/job['id']/version
     with app.lock:
         if not (destination/'index.html').exists():
@@ -45,12 +46,16 @@ def focused_views(app,job):
             for name,page in zip(('trajectories','camera-fragments'),native_pages):
                 if page.exists():
                     target=destination/name;target.mkdir(exist_ok=True)
-                    aggregate=source/('aggregate-rink.json' if name=='trajectories' else 'camera-fragments.json')
+                    aggregate=(extent_aggregate if name=='trajectories' and extent_aggregate.exists()
+                               else source/('aggregate-rink.json' if name=='trajectories' else 'camera-fragments.json'))
                     data=page.parent/'rink-data.js'
                     if aggregate.exists() and data.exists():
                         raw=data.read_text().split('=',1)[1].strip().rstrip(';')
                         current=json.loads(raw)
-                        current['events']=[render_rink_viewer.compact_event(e) for e in json.loads(aggregate.read_text())['events']]
+                        agg_data=json.loads(aggregate.read_text())
+                        current['events']=[render_rink_viewer.compact_event(e) for e in agg_data['events']]
+                        if 'throw_extent_display' in agg_data:
+                            current['throw_extent_display']=agg_data['throw_extent_display']
                         (target/'rink-data.js').write_text('window.RINK_DATA='+json.dumps(current,separators=(',',':')).replace('<','\\u003c')+';\n')
                         text=render_rink_viewer.TEMPLATE.replace('__DATA__',app.file_url(target/'rink-data.js')).replace('__VIDEO__','/media/'+job['video_id']).replace('__TITLE__','Trajectories — corrected development presentation')
                         text=text.replace('<meta charset="utf-8">','<meta charset="utf-8"><base href="'+html.escape(app.file_url(page.parent)+'/',quote=True)+'">',1)

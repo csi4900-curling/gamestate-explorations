@@ -3,7 +3,8 @@
 Replays existing tracker observations and post-throw proposals; it does not
 rerun detection, tracking or geometry. For each event candidate it compares the
 receiving-panel stones before the delivered stone arrives with those in the
-proposed low-motion interval, and keeps the observed paths of stones that moved.
+first interval where no in-play stone moves, and keeps the observed paths of
+the delivered stone and of stones that moved.
 Positions inherit unverified calibration. A tracker ID is not physical identity;
 only stationary stones are re-linked, by the physical exclusion of two stone
 centres within one radius. Collision identity through an ID change stays open.
@@ -27,6 +28,7 @@ DEFAULTS = {
     'sheet_half_width_m': 2.375,
     'quiet_window_s': 2.0,
     'quiet_search_step_s': 0.5,
+    'quiet_tail_s': 3.0,
     'provenance': 'Engineering defaults for a development replay; not validated thresholds.',
 }
 
@@ -103,6 +105,16 @@ def quiet_interval(panel_tracks, delivered, start, end, region, settings):
             if a is None or b is None:
                 if tracker_id == delivered and last_delivered is not None and last_delivered > t:
                     quiet = False; break
+                present = a or b
+                if present is not None and (tracker_id == delivered or region(present['position_m'])):
+                    h0, h1 = (t, t+span/2) if a is not None else (t+span/2, t+span)
+                    pts = [p for ts, p in samples if h0 <= ts <= h1 and p is not None]
+                    mid = len(pts)//2
+                    if mid >= 1 and math.dist(
+                        [median(p[0] for p in pts[:mid]), median(p[1] for p in pts[:mid])],
+                        [median(p[0] for p in pts[mid:]), median(p[1] for p in pts[mid:])],
+                    ) > settings['moved_minimum_m']:
+                        quiet = False; break
                 continue
             # The delivered stone counts wherever it is: it arrives from outside the region.
             if ((tracker_id == delivered or region(a['position_m']) or region(b['position_m'])) and
@@ -112,6 +124,66 @@ def quiet_interval(panel_tracks, delivered, start, end, region, settings):
             return [t, t+span]
         t += settings['quiet_search_step_s']
     return None
+
+
+def throw_extents(aggregate, observations, *, house_radius_m, stone_radius_m, hog_y_by_panel, settings=None):
+    """End each event's receiving trajectory at its first quiet board.
+
+    A receiving track otherwise continues until the tracker loses the stone or the
+    next candidate arrives, so later sweeping, clearing or repositioning is drawn as
+    part of the throw. Returns the aggregate annotated with every event's extent
+    (all samples retained) and a display copy whose receiving segments stop at that
+    extent. Events without one receiving segment or without a quiet interval are
+    left whole and marked unresolved; nothing is trimmed by hand.
+    """
+    settings = {**DEFAULTS, **(settings or {})}
+    tracks = load_tracks(observations)
+    crossings = sorted(e['event_prediction']['crossing_time_s'] for e in aggregate['events'])
+
+    def extent_of(receiver, search_end):
+        panel = receiver.get('rink_panel') or {'left_split': 'left', 'right_split': 'right'}[receiver['camera']]
+        samples = tracks.get(panel, {}).get(receiver.get('tracker_id'))
+        if not samples:
+            return {'status': 'unresolved', 'reason': 'receiving_track_missing_from_observations'}
+
+        def region(position):
+            return in_play(position, hog_y_by_panel[panel], half_width_m=settings['sheet_half_width_m'],
+                           house_radius_m=house_radius_m, stone_radius_m=stone_radius_m)
+
+        quiet = quiet_interval(tracks[panel], receiver['tracker_id'], samples[0][0], search_end, region, settings)
+        if quiet is None:
+            return {'status': 'unresolved', 'reason': 'no_quiet_board_interval_before_next_candidate'}
+        end_time_s = round(min(quiet[1]+settings['quiet_tail_s'], search_end), 3)
+        return {'status': 'quiet_board_proposal', 'end_time_s': end_time_s, 'quiet_interval_s': quiet,
+                'tail_s': round(end_time_s-quiet[1], 3),
+                'basis': 'Earliest window with no net in-play stone displacement after arrival, plus a trailing tail bounded by the next candidate.',
+                # False when the tracker lost the stone first: the board is quiet, the stone's rest is unseen.
+                'stone_observed_in_quiet_interval': any(quiet[0] <= t <= quiet[1] for t, _ in samples),
+                'verified_settled_board': False}
+
+    annotated = []; display = []
+    for event in aggregate['events']:
+        crossing = event['event_prediction']['crossing_time_s']
+        search_end = next((t for t in crossings if t > crossing), aggregate['source_interval_s'][1])
+        extents = {s['segment_id']: extent_of(s, search_end) for s in event['segments']
+                   if s.get('role') == 'receiving' and s.get('pixel_points')}
+        # Competing receiving hypotheses are each limited by their own stone; none is chosen here.
+        summary = (next(iter(extents.values())) if len(extents) == 1 else
+                   {'status': 'unresolved', 'reason': 'missing_or_ambiguous_receiving_segment',
+                    'receiving_segments': extents})
+        annotated.append({**event, 'throw_extent': summary})
+        segments = []
+        for segment in event['segments']:
+            extent = extents.get(segment['segment_id'])
+            if not extent or extent['status'] != 'quiet_board_proposal':
+                segments.append(segment); continue
+            kept = {key: [p for p in segment.get(key, []) if p['time_s'] <= extent['end_time_s']]
+                    for key in ('pixel_points', 'geometry_samples')}
+            segments.append({**segment, **kept, 'samples_after_throw_end_not_displayed':
+                             len(segment.get('pixel_points', []))-len(kept['pixel_points'])})
+        display.append({**annotated[-1], 'segments': segments})
+    scope = 'Receiving trajectories are displayed up to each event\'s proposed throw end; the full aggregate retains every sample.'
+    return {**aggregate, 'events': annotated}, {**aggregate, 'events': display, 'throw_extent_display': scope}
 
 
 def effect(record, tracks, *, house_radius_m, stone_radius_m, hog_y_by_panel, settings, search_end_s,
@@ -125,6 +197,7 @@ def effect(record, tracks, *, house_radius_m, stone_radius_m, hog_y_by_panel, se
     if delivered not in panel_tracks:
         return {**base, 'status': 'unresolved', 'reason': 'delivered_track_missing_from_observations'}
     arrival = panel_tracks[delivered][0][0]
+
     def region(position):
         return in_play(position, hog_y_by_panel[panel], half_width_m=settings['sheet_half_width_m'],
                        house_radius_m=house_radius_m, stone_radius_m=stone_radius_m)
@@ -152,7 +225,6 @@ def effect(record, tracks, *, house_radius_m, stone_radius_m, hog_y_by_panel, se
 
     def house(position):
         return max(0., math.hypot(*position)-stone_radius_m) <= house_radius_m
-
 
     def row(old, new, link):
         b, a = before.get(old), after.get(new)
@@ -184,8 +256,9 @@ def effect(record, tracks, *, house_radius_m, stone_radius_m, hog_y_by_panel, se
 
     stones = [row(old, *links.get(old, (None, None))) for old in sorted(before)]
     stones += [row(None, new, None) for new in sorted(set(after)-{v[0] for v in links.values()})]
-    moving = {s['before_tracker_id'] if s['before_tracker_id'] is not None else s['after_tracker_id']
-              for s in stones if s['change'] != 'unchanged'}
+    # The delivered stone's path is kept even when it leaves play and has no board row.
+    moving = {delivered} | {s['before_tracker_id'] if s['before_tracker_id'] is not None else s['after_tracker_id']
+                            for s in stones if s['change'] != 'unchanged'}
     board = [{'observation_id': s['after_tracker_id'], 'position_m': s['after_m'], 'group': s['colour']}
              for s in stones if s['in_play_after']]
     points = points_lying(board, house_radius_m=house_radius_m, stone_radius_m=stone_radius_m,
@@ -206,12 +279,13 @@ def effect(record, tracks, *, house_radius_m, stone_radius_m, hog_y_by_panel, se
             'points_lying_after': points and {k: points[k] for k in
                                                ['conditional_points_by_group', 'unresolved_observations', 'status']},
             'settle_selection': 'Earliest window with no net in-play stone displacement after arrival.',
-            'superseded_motion_proposal_interval_s': proposal['stationary_interval_s'],
+            'superseded_motion_proposal_interval_s': proposal.get('stationary_interval_s'),
             'tracks_with_inconsistent_colour': [s['after_tracker_id'] if s['after_tracker_id'] is not None
                                            else s['before_tracker_id'] for s in stones
                                            if s['colour_differs_along_track']],
             'limitations': ['Quiet-window proposal is not a verified settled board.',
                             'A stone whose tracker ID changes while moving appears as lost plus appeared.',
+                            'A moving stone without observations in a window cannot block that window.',
                             'Positions inherit unverified calibration; displacement is not a validated measurement.']}
 
 
@@ -268,6 +342,7 @@ pick.onchange=()=>show();
 document.querySelector('#play').onclick=()=>{const e=current();if(e.status==='unresolved'){video.currentTime=e.crossing_time_s;video.play();return}
  video.currentTime=Math.max(0,e.arrival_time_s-2);stopAt=e.settle_interval_s[1];video.play()};
 document.querySelector('#after').onclick=()=>show();
+video.addEventListener('pause',()=>{stopAt=null});
 function tick(t){if(stopAt!==null&&t>=stopAt){video.pause();stopAt=null}draw(t)}
 if(video.requestVideoFrameCallback){const f=(_,m)=>{tick(m.mediaTime);video.requestVideoFrameCallback(f)};video.requestVideoFrameCallback(f)}
 else video.addEventListener('timeupdate',()=>tick(video.currentTime));
@@ -276,8 +351,27 @@ window.throwAudit=()=>({event:current().event_id,time:video.currentTime,status:d
 </script></html>'''
 
 
+def _fallback_record(record, event_by_id):
+    proposal = record['proposal']
+    if 'time_s' in proposal or proposal.get('reason') not in (
+            'no_observed_moving_to_stationary_transition', 'no_receiving_motion_observations'):
+        return record
+    event = event_by_id.get(record['event_id'])
+    if not event:
+        return record
+    receivers = [s for s in event.get('segments', []) if s.get('role') == 'receiving' and s.get('pixel_points')]
+    if len(receivers) != 1:
+        return record
+    receiver = receivers[0]
+    panel = receiver.get('rink_panel') or {'left_split': 'left', 'right_split': 'right'}[receiver['camera']]
+    return {**record, 'proposal': {'time_s': receiver['pixel_points'][0]['time_s'], 'panel': panel,
+                                    'receiving_tracker_id': receiver['tracker_id'],
+                                    'stationary_interval_s': None,
+                                    'fallback': 'aggregate_receiving_segment'}}
+
+
 def run(*, public_run, states, config_path, match_config, output, video=None, track_colours=None,
-        settings=None):
+        aggregate=None, settings=None):
     public_run, output = Path(public_run), Path(output)
     if output.exists():
         raise ValueError('Preserve previous throw-effect output; choose a new directory')
@@ -289,8 +383,10 @@ def run(*, public_run, states, config_path, match_config, output, video=None, tr
     if payload['source_sha256'] != protocol['source_sha256']:
         raise ValueError('Post-throw states do not match public run')
     colours = json.loads(Path(track_colours).read_text())['evidence'] if track_colours else None
+    event_by_id = ({e['candidate_id']: e for e in json.loads(Path(aggregate).read_text())['events']}
+                   if aggregate else {})
     tracks = load_tracks(public_run/'match-observations.jsonl')
-    records = payload['events']
+    records = [_fallback_record(r, event_by_id) for r in payload['events']]
     ends = [r['crossing_time_s'] for r in records[1:]]+[protocol['source_interval_s'][1]]
     events = [effect(r, tracks, house_radius_m=config['house_radius_m'],
                      stone_radius_m=config['stone_radius_m'], hog_y_by_panel=hog, settings=settings,
@@ -310,6 +406,7 @@ def run(*, public_run, states, config_path, match_config, output, video=None, tr
                              'input_sha256': {'observations': digest(public_run/'match-observations.jsonl'),
                                               'states': digest(states), 'config': digest(config_path),
                                               'match_config': digest(match_config),
+                                              **({'aggregate': digest(aggregate)} if aggregate else {}),
                                               **({'track_colours': digest(track_colours)} if track_colours else {})},
                              'mode': 'Postprocessing replay; saved detection, tracking and geometry unchanged.'}}
     output.mkdir(parents=True)
@@ -328,6 +425,7 @@ if __name__ == '__main__':
     parser.add_argument('--config', dest='config_path', required=True)
     parser.add_argument('--match-config', required=True)
     parser.add_argument('--track-colours')
+    parser.add_argument('--aggregate')
     parser.add_argument('--video')
     args = parser.parse_args()
     print(json.dumps(run(**vars(args))['summary']))

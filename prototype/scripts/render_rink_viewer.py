@@ -9,7 +9,6 @@ provisional and is displayed as such.
 import argparse
 import json
 import statistics
-import math
 import os
 from collections import OrderedDict
 from pathlib import Path
@@ -145,6 +144,7 @@ def compact_event(event):
         "colour": event.get("colour"),
         "colour_status": event.get("colour_status"),
         "camera_consistency": event.get("camera_consistency"),
+        "throw_extent": event.get("throw_extent"),
     }
 
 
@@ -283,6 +283,7 @@ def render(aggregate_path, video, output_dir, *, match_observations=None,
         "provenance": aggregate.get("provenance"),
         "event_colour": aggregate.get("event_colour"),
         "handoff_colour": aggregate.get("handoff_colour"),
+        "throw_extent_display": aggregate.get("throw_extent_display"),
     }
     (output_dir / "rink-data.js").write_text(
         "window.RINK_DATA=" + json.dumps(payload, separators=(",", ":")).replace("<", "\\u003c") + ";\n")
@@ -382,25 +383,29 @@ function drawOverlay(event,t){
 }
 function linkTiming(link){if(link.temporal_relation==='overlap')return 'overlap '+link.overlap_s.toFixed(2)+' s; compare simultaneous observations';if(link.temporal_relation==='simultaneous_endpoints')return 'fragment endpoints share a source timestamp';if(link.temporal_relation==='unknown')return 'fragment timing unavailable';return 'unobserved gap '+link.gap_m.toFixed(2)+' m / '+link.gap_s.toFixed(2)+' s; speed '+(link.implied_speed_m_s===null?'unknown':link.implied_speed_m_s.toFixed(2)+' m/s')+'; '+link.spatial_consistency}
 function stateAt(t){if(!window.STATE_DATA||!window.STATE_DATA.samples.length||t<window.STATE_DATA.samples[0][0]-1e-6)return null;let lo=0,hi=window.STATE_DATA.samples.length;while(lo<hi){const m=(lo+hi)>>1;if(window.STATE_DATA.samples[m][0]<=t+1e-6)lo=m+1;else hi=m}return window.STATE_DATA.samples[Math.max(0,Math.min(window.STATE_DATA.samples.length-1,lo-1))]}
+let stopAt=null;
 function draw(){
  if(!D.events.length){drawRink({segments:[],links:[]},0);return}
  const event=D.events[Number(sel.value)];
  window.currentEvent=event;
  const t=presentedTime??(video.readyState>=1?video.currentTime:event.time_s);
+ if(stopAt!==null&&!video.seeking&&t>=stopAt){video.pause();stopAt=null}
  window.frameAudit={presented_time_s:presentedTime,requested_time_s:video.currentTime,waiting_for_frame:video.seeking||(frameCallbacks&&presentedTime===null)};
  drawRink(event,t);drawOverlay(event,t);
  const link=event.links[0];status.textContent='Source '+t.toFixed(2)+' s · '+event.id+' crossing '+event.time_s.toFixed(2)+' s'+(event.observation_only?' · unresolved camera observation':'')+' · '+(link?('handoff '+link.identity_status+'; '+linkTiming(link)+(link.colour_consistency?('; colour '+link.colour_consistency):'')):'no cross-view link')+' · colour '+(event.colour||'unknown')+' ('+(event.colour_status||'unavailable')+'; not team/identity) · physical identity unverified';
+ if(event.throw_extent){status.textContent+=event.throw_extent.status==='quiet_board_proposal'?' · throw ends '+event.throw_extent.end_time_s.toFixed(1)+' s':' · throw end unresolved ('+event.throw_extent.reason+')'}
  const agreement=event.camera_consistency;
  if(event.display_receiving_candidate)status.textContent+=' · receiving candidate shown: first crossing strictly after departure (display rule; association unresolved)';
  if(event.unassigned_segment_ids?.length)status.textContent+=' · '+event.unassigned_segment_ids.length+' ambiguous camera fragments excluded from this event; review them in unresolved camera tracks';
  if(agreement)status.textContent+=agreement.paired_samples?' · camera disagreement: median '+agreement.median_m.toFixed(2)+' m, max '+agreement.maximum_m.toFixed(2)+' m across '+agreement.paired_samples+' simultaneous samples (not absolute accuracy)':' · camera agreement unavailable: no comparable simultaneous observations';
  requestAnimationFrame(draw)
 }
-function choose(){video.pause();const e=D.events[Number(sel.value)];if(!e)return;video.currentTime=Math.max(0,e.time_s);}
+function choose(){stopAt=null;video.pause();const e=D.events[Number(sel.value)];if(!e)return;video.currentTime=Math.max(0,e.time_s);}
 sel.onchange=choose;
-document.getElementById('play').onclick=()=>{const e=D.events[Number(sel.value)];if(!e)return;video.currentTime=Math.max(0,e.start_s);video.play()};
-document.getElementById('back').onclick=()=>{video.pause();video.currentTime=Math.max(0,video.currentTime-0.5)};
-document.getElementById('next').onclick=()=>{video.pause();video.currentTime=Math.min(video.duration||1e9,video.currentTime+0.5)};
+document.getElementById('play').onclick=()=>{const e=D.events[Number(sel.value)];if(!e)return;video.currentTime=Math.max(0,e.start_s);stopAt=e.end_s;video.play()};
+document.getElementById('back').onclick=()=>{stopAt=null;video.pause();video.currentTime=Math.max(0,video.currentTime-0.5)};
+document.getElementById('next').onclick=()=>{stopAt=null;video.pause();video.currentTime=Math.min(video.duration||1e9,video.currentTime+0.5)};
+video.addEventListener('pause',()=>{stopAt=null});
 video.addEventListener('loadedmetadata',choose);if(video.readyState>=1)choose();
 draw();
 </script>'''

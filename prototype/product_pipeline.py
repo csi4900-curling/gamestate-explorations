@@ -31,7 +31,16 @@ def assemble(spec):
     attach_event_colours(aggregate, output / "event-colours.json")
     rink = annotate(enrich(aggregate, aggregate_path=aggregate_path))
     rink_path = result / "aggregate-rink.json"
+    # The stored aggregate keeps every tracked sample; the trajectory view stops each
+    # receiving track at the throw's first quiet board instead of at tracker loss.
+    from prototype.throw_effect import throw_extents
+    state_config = json.loads(Path(spec["state_config"]).read_text())
+    rink, throw_view = throw_extents(
+        rink, run / "match-observations.jsonl", house_radius_m=state_config["house_radius_m"],
+        stone_radius_m=state_config["stone_radius_m"], hog_y_by_panel=config["local_hog_y_m"])
     write(rink_path, rink)
+    view_path = result / "aggregate-rink-throw-extent.json"
+    write(view_path, throw_view)
     state = build_state(
         run / "events.json",
         run / "match-observations.jsonl",
@@ -43,7 +52,7 @@ def assemble(spec):
     )
     write(result / "state-timeline.json", state)
     render(
-        rink_path,
+        view_path,
         Path(spec["video"]),
         result / "trajectories",
         match_observations=run / "match-observations.jsonl",
@@ -97,6 +106,7 @@ def boards(spec):
         match_config=spec["match_config"],
         output=result / "throws",
         video=spec["video"],
+        aggregate=result / "aggregate-rink.json",
         track_colours=colours if colours.exists() else None,
     )
 

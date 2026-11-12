@@ -1,6 +1,6 @@
 import json
 
-from prototype.throw_effect import DEFAULTS, colour_at, effect, run
+from prototype.throw_effect import DEFAULTS, colour_at, effect, run, throw_extents
 
 GEOMETRY = dict(house_radius_m=1.829, stone_radius_m=0.139, hog_y_by_panel={'right': 6.401},
                 settings=DEFAULTS)
@@ -65,6 +65,49 @@ def test_missing_receiver_and_never_quiet_board_stay_unresolved():
     assert result['reason'] == 'no_quiet_board_interval_before_next_candidate'
 
 
+def test_delivered_stone_that_leaves_play_keeps_its_path_and_is_not_on_the_board():
+    through = [(round(10+i*0.1, 1), [0.0, 8.0-12.0*i/50]) for i in range(51)]
+    result = effect(record(), {'right': {9: through, 1: still([1.0, 1.0], 0.0, 40.0)}}, search_end_s=40.0, **GEOMETRY)
+    assert result['status'] == 'review_proposal' and result['in_play'] == {'before': 1, 'after': 1, 'changed': 0}
+    assert not any(s['in_play_after'] for s in result['stones'] if s['after_tracker_id'] == 9)
+    assert len(result['paths']['9']) == 51
+
+
+def aggregate_event(candidate, crossing, tracker_id, samples):
+    points = [{'time_s': t} for t, _ in samples]
+    return {'candidate_id': candidate, 'event_prediction': {'crossing_time_s': crossing},
+            'segments': [{'segment_id': candidate+':primary', 'role': 'departure', 'pixel_points': [{'time_s': crossing}]},
+                         {'segment_id': candidate+':receiving', 'role': 'receiving', 'rink_panel': 'right',
+                          'tracker_id': tracker_id, 'pixel_points': points, 'geometry_samples': list(points)}]}
+
+
+def test_receiving_trajectory_display_ends_at_quiet_board_and_aggregate_keeps_all_samples(tmp_path):
+    # The delivered stone rests at 15 s and is carried away from 25 s; a second event never rests.
+    handled = delivered()[:150]+[(round(25+i*0.1, 1), [i*0.1, 0.0]) for i in range(150)]
+    restless = [(round(50+i*0.1, 1), [0.0, 6.0-i*0.05]) for i in range(100)]
+    with (tmp_path/'observations.jsonl').open('w') as stream:
+        for t in sorted({t for rows in (handled, restless) for t, _ in rows}):
+            stones = [{'tracker_id': k, 'height_adjusted_local_m': dict(rows)[t]}
+                      for k, rows in ((9, handled), (7, restless)) if t in dict(rows)]
+            stream.write(json.dumps({'time_s': t, 'boards': {'right': {'stones': stones}}})+'\n')
+    aggregate = {'source_interval_s': [0, 60], 'events': [aggregate_event('L1', 8.0, 9, handled),
+                                                          aggregate_event('L2', 48.0, 7, restless)]}
+    full, view = throw_extents(aggregate, tmp_path/'observations.jsonl', house_radius_m=1.829,
+                               stone_radius_m=0.139, hog_y_by_panel={'right': 6.401})
+    extent = full['events'][0]['throw_extent']
+    assert extent['status'] == 'quiet_board_proposal'
+    assert 16.0 <= extent['quiet_interval_s'][1] <= 18.0
+    assert extent['end_time_s'] == round(extent['quiet_interval_s'][1] + DEFAULTS['quiet_tail_s'], 3) < 25
+    assert len(full['events'][0]['segments'][1]['pixel_points']) == len(handled)
+    shown = view['events'][0]['segments'][1]
+    assert shown['pixel_points'][-1]['time_s'] <= extent['end_time_s'] < 25
+    assert len(shown['geometry_samples']) == len(shown['pixel_points'])
+    assert shown['samples_after_throw_end_not_displayed'] == len(handled)-len(shown['pixel_points'])
+    assert view['events'][0]['segments'][0] == aggregate['events'][0]['segments'][0]
+    assert full['events'][1]['throw_extent']['reason'] == 'no_quiet_board_interval_before_next_candidate'
+    assert len(view['events'][1]['segments'][1]['pixel_points']) == len(restless)
+
+
 def test_colour_uses_sample_nearest_in_time_and_flags_inconsistency():
     evidence = {'7': {'samples': [{'time_s': 10, 'prediction': 'red'}, {'time_s': 90, 'prediction': 'yellow'}]}}
     assert colour_at(evidence, 7, 20) == ('red', True)
@@ -73,6 +116,40 @@ def test_colour_uses_sample_nearest_in_time_and_flags_inconsistency():
     # A stone already on the board keeps its colour from before the throw arrived.
     assert colour_at(evidence, 7, 80, not_after=True) == ('red', True)
     assert colour_at(evidence, 7, 5, not_after=True) == ('red', True)
+
+
+def test_moving_stone_that_vanishes_mid_window_does_not_settle_in_play():
+    struck = still([0.0, 0.5], 0.0, 14.0)+[(round(14.1+i*0.1, 1), [-0.14*i, 0.5-0.05*i]) for i in range(17)]
+    result = effect(record(), {'right': {9: delivered(), 2: struck}}, search_end_s=40.0, **GEOMETRY)
+    assert result['settle_interval_s'][0] >= 16.0
+    row = next(s for s in result['stones'] if s['before_tracker_id'] == 2)
+    assert row['change'] == 'left_view_or_lost'
+
+
+def test_run_uses_aggregate_receiver_when_motion_model_saw_no_stop(tmp_path):
+    public = tmp_path/'run'; public.mkdir()
+    (public/'protocol.json').write_text(json.dumps({'source_sha256': 'h', 'source_interval_s': [0, 40]}))
+    through = [(round(10+i*0.1, 1), [0.0, 8.0-12.0*i/50]) for i in range(51)]
+    tracks = {9: through, 1: still([1.0, 1.0], 0.0, 40.0)}
+    times = sorted({t for rows in tracks.values() for t, _ in rows})
+    with (public/'match-observations.jsonl').open('w') as stream:
+        for t in times:
+            stones = [{'tracker_id': k, 'height_adjusted_local_m': dict(rows).get(t)}
+                      for k, rows in tracks.items() if t in dict(rows)]
+            stream.write(json.dumps({'time_s': t, 'boards': {'right': {'stones': stones}}})+'\n')
+    states = {'source_sha256': 'h', 'events': [{'event_id': 'L1', 'crossing_time_s': 8.0,
+              'proposal': {'status': 'unresolved', 'reason': 'no_observed_moving_to_stationary_transition'}}]}
+    aggregate = {'events': [aggregate_event('L1', 8.0, 9, through)]}
+    for name, value in [('states.json', states), ('aggregate.json', aggregate),
+                        ('state.json', {'house_radius_m': 1.829, 'stone_radius_m': 0.139,
+                                        'group_to_team': {'red': 'A', 'yellow': 'B'}}),
+                        ('match.json', {'local_hog_y_m': {'right': 6.401}})]:
+        (tmp_path/name).write_text(json.dumps(value))
+    result = run(public_run=public, states=tmp_path/'states.json', config_path=tmp_path/'state.json',
+                 match_config=tmp_path/'match.json', output=tmp_path/'throws', aggregate=tmp_path/'aggregate.json')
+    assert result['summary']['with_board_change'] == 1
+    assert result['events'][0]['status'] == 'review_proposal'
+    assert not any(s['in_play_after'] for s in result['events'][0]['stones'] if s['after_tracker_id'] == 9)
 
 
 def test_run_writes_viewer_and_refuses_to_overwrite(tmp_path):
