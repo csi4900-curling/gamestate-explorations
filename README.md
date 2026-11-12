@@ -45,6 +45,20 @@ tracker IDs are not physical identity, missed throws are not counted, and
 per-throw points are not accumulated into end or match scores. Evidence is in
 `validation/throw-effect-development-2026-11-11/`.
 
+### Source-only labels and the revolution probe — 12 November 2026
+
+`prototype/source_label_tool.html` is a standalone page for labelling a
+recording from the video alone: throw release and stop times, colour, by-eye
+turn count and direction, and end scores read from the scoreboard. Open it in
+a browser and pick a local video; labels download as JSON marked
+`predictions_visible: false`. It is the intended source of independent
+references for the reserved holdout recordings.
+
+`research/revolutions-2026-11-12/` holds a development probe that estimates the
+full-turn period of the handle from the self-similarity of registered stone
+crops. See its README for the method, the ten-throw result and its limits. It
+is not in the pipeline and reports no physical revolution count.
+
 ### Tests
 
 ```sh
@@ -52,7 +66,8 @@ PYTHONPATH=/path/to/state-deps:$PWD feasibility/scripts/python.sh -m pytest -q p
   --ignore prototype/tests/test_online_checkpoint.py
 ```
 
-`test_online_checkpoint.py` needs PyTorch and runs in the detector environment.
+`test_online_checkpoint.py` needs PyTorch, which the default environment does not
+provide; it was not run for this checkpoint.
 Model weights, source recordings and most run evidence are not in the
 repository; the workbench cannot analyse a new video without the detector
 checkpoint named in `prototype/config/workbench.json`.
@@ -151,6 +166,10 @@ The older upload server indexes coarse video activity and is not this workbench.
 The archived README preserves the earlier launch/status descriptions.
 
 ## Start here
+
+Links below into `validation/meeting-2026-10-22/` and
+`validation/spin-development-2026-10-22/`, and the import example above, refer to
+local run evidence and recordings that are too large for the repository.
 
 - [Historical component deliverable: dense tracking, synchronized projection and spin results](validation/spin-development-2026-10-22/index.html)
 - [What this deliverable implements and how to run it (French)](docs/SPIN_DELIVERABLE.md)

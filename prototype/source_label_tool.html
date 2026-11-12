@@ -1,0 +1,69 @@
+<!doctype html><html lang="en"><meta charset="utf-8">
+<title>Source-only throw labels</title>
+<style>body{font:15px system-ui;margin:18px;color:#233746}main{max-width:1500px}video{width:100%;background:#000}
+.views{display:grid;grid-template-columns:3fr 2fr;gap:16px}button,select,input{font:inherit;padding:5px 8px}
+table{border-collapse:collapse;width:100%;font-size:13px}td,th{padding:3px 5px;border-bottom:1px solid #d5e1e4;text-align:left}
+tr.active{background:#e6f4f1}input[type=number]{width:64px}.note{background:#fff5d9;padding:10px}kbd{background:#eef2f4;border:1px solid #c5d2d8;border-radius:3px;padding:0 4px}
+.scroll{max-height:46vh;overflow:auto}h2{font-size:16px;margin:14px 0 6px}</style><main>
+<h1>Source-only throw labels</h1>
+<p class="note">Label from the video alone, before looking at any pipeline output for this recording. Nothing is uploaded: the video stays on this computer and labels are saved in this browser until you download them.</p>
+<p><input type="file" id="file" accept="video/*"> Reviewer <input id="reviewer" value="" placeholder="your name" style="width:150px">
+<button id="download">Download labels (JSON)</button> <label>Continue from file <input type="file" id="load" accept="application/json"></label></p>
+<div class="views"><div><video id="video" controls></video>
+<p id="clock">No video loaded</p>
+<p>Speed <select id="speed"><option>0.25</option><option>0.5</option><option selected>1</option><option>2</option><option>4</option></select>
+<kbd>Space</kbd> play/pause · <kbd>,</kbd> <kbd>.</kbd> one frame · <kbd>←</kbd> <kbd>→</kbd> 2 s · <kbd>T</kbd> new throw at release · <kbd>S</kbd> stone stopped / left play · <kbd>E</kbd> end score here</p></div>
+<div><h2>Throws <button id="addThrow">＋ Throw at current time (T)</button></h2>
+<div class="scroll"><table id="throws"></table></div>
+<h2>End scores read from the broadcast scoreboard <button id="addEnd">＋ End score (E)</button></h2>
+<div class="scroll" style="max-height:22vh"><table id="ends"></table></div>
+<p><b>Turns:</b> count full turns of the handle from release until the stone stops or leaves play, to the nearest quarter. <b>Direction:</b> as seen from above. Tick “unsure” instead of guessing.</p></div></div></main>
+<script>
+const $=s=>document.querySelector(s),video=$('#video'),KEY='curling-source-labels-v1';
+let state={schema_version:'curling-source-labels-v1',video:null,throws:[],ends:[]},selected=null;
+function save(){state.reviewer=$('#reviewer').value;try{localStorage.setItem(KEY+':'+(state.video?.name||''),JSON.stringify(state))}catch(e){}}
+function cell(row,key,type,options){const td=document.createElement('td');let el;
+ if(type==='select'){el=document.createElement('select');for(const o of options){const x=document.createElement('option');x.value=o;x.textContent=o||'—';el.append(x)}el.value=row[key]??''}
+ else if(type==='check'){el=document.createElement('input');el.type='checkbox';el.checked=!!row[key]}
+ else{el=document.createElement('input');el.type=type;if(type==='number'){el.step=options||'1'}el.value=row[key]??''}
+ el.onchange=()=>{row[key]=type==='check'?el.checked:type==='number'?(el.value===''?null:Number(el.value)):el.value;save();if(type==='select')el.blur()};td.append(el);return td}
+function timeCell(row,key){const td=document.createElement('td'),b=document.createElement('button');b.textContent=row[key]==null?'set':row[key].toFixed(2);
+ b.title='Click: go to this time. Shift-click: set to the current video time.';
+ b.onclick=e=>{if(e.shiftKey||row[key]==null){row[key]=video.currentTime;save();paint()}else video.currentTime=row[key]};td.append(b);return td}
+function paint(){const t=$('#throws');t.innerHTML='<tr><th>#</th><th>Release (s)</th><th>Stopped (s)</th><th>Colour</th><th>Turns</th><th>Direction</th><th>End</th><th>Unsure</th><th>Note</th><th></th></tr>';
+ state.throws.sort((a,b)=>a.release_time_s-b.release_time_s).forEach((r,i)=>{const tr=document.createElement('tr');if(r===selected)tr.className='active';
+  const n=document.createElement('td');n.textContent=i+1;tr.append(n,timeCell(r,'release_time_s'),timeCell(r,'stopped_time_s'),cell(r,'colour','select',['','red','yellow']),
+   cell(r,'turns','number','0.25'),cell(r,'direction','select',['','clockwise','counterclockwise']),cell(r,'end','number'),cell(r,'unsure','check'),cell(r,'note','text'));
+  const d=document.createElement('td'),x=document.createElement('button');x.textContent='✕';x.onclick=()=>{if(confirm('Delete throw '+(i+1)+'?')){state.throws.splice(state.throws.indexOf(r),1);save();paint()}};d.append(x);tr.append(d);
+  tr.onclick=e=>{if(e.target.tagName==='TD'){selected=r;paint()}};t.append(tr)});
+ const e=$('#ends');e.innerHTML='<tr><th>End</th><th>Read at (s)</th><th>Red</th><th>Yellow</th><th>Note</th><th></th></tr>';
+ state.ends.forEach(r=>{const tr=document.createElement('tr');tr.append(cell(r,'end','number'),timeCell(r,'read_time_s'),cell(r,'red','number'),cell(r,'yellow','number'),cell(r,'note','text'));
+  const d=document.createElement('td'),x=document.createElement('button');x.textContent='✕';x.onclick=()=>{state.ends.splice(state.ends.indexOf(r),1);save();paint()};d.append(x);tr.append(d);e.append(tr)})}
+function addThrow(){if(!state.video)return;selected={release_time_s:video.currentTime,stopped_time_s:null,colour:'',turns:null,direction:'',end:state.throws.at(-1)?.end??null,unsure:false,note:''};state.throws.push(selected);save();paint()}
+function addEnd(){if(!state.video)return;state.ends.push({end:(state.ends.at(-1)?.end??0)+1,read_time_s:video.currentTime,red:null,yellow:null,note:''});save();paint()}
+$('#addThrow').onclick=addThrow;$('#addEnd').onclick=addEnd;$('#speed').onchange=()=>video.playbackRate=Number($('#speed').value);$('#reviewer').onchange=save;
+$('#file').onchange=()=>{const f=$('#file').files[0];if(!f)return;video.src=URL.createObjectURL(f);
+ video.onloadedmetadata=()=>{const info={name:f.name,size_bytes:f.size,duration_s:video.duration,width:video.videoWidth,height:video.videoHeight};
+  const stored=localStorage.getItem(KEY+':'+f.name);
+  if(stored&&confirm('Continue the labels saved in this browser for '+f.name+'?')){state=JSON.parse(stored);$('#reviewer').value=state.reviewer||''}
+  else if(state.video&&state.video.name!==f.name)state={schema_version:state.schema_version,video:null,throws:[],ends:[]};
+  state.video=info;save();paint()}};
+$('#load').onchange=async()=>{const f=$('#load').files[0];if(!f)return;const loaded=JSON.parse(await f.text());
+ if(loaded.schema_version!==state.schema_version){alert('Not a label file from this tool');return}
+ if(state.video&&loaded.video&&loaded.video.name!==state.video.name&&!confirm('These labels are for '+loaded.video.name+'. Load anyway?'))return;
+ const video_info=state.video;state=loaded;if(video_info)state.video=video_info;$('#reviewer').value=state.reviewer||'';save();paint()};
+$('#download').onclick=()=>{if(!$('#reviewer').value.trim()){alert('Enter the reviewer name first');return}
+ const out={...state,reviewer:$('#reviewer').value.trim(),exported_at:new Date().toISOString(),predictions_visible:false,
+  provenance:'Human source-only review in the label tool; no pipeline output shown. Turn counts are by-eye counts, nearest quarter turn.',
+  time_semantics:'release_time_s: stone leaves the stick or hand; stopped_time_s: stone at rest or out of play.'};
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(out,null,2)+'\n'],{type:'application/json'}));
+ a.download=(state.video?.name||'video').replace(/\.[^.]+$/,'')+'-source-labels.json';a.click()};
+video.addEventListener('timeupdate',()=>$('#clock').textContent=video.currentTime.toFixed(2)+' s of '+(video.duration||0).toFixed(1)+' s');
+document.addEventListener('keydown',e=>{if(['INPUT','SELECT','TEXTAREA'].includes(e.target.tagName)&&e.target.type!=='checkbox')return;
+ const k=e.key.toLowerCase();if(k===' '){e.preventDefault();video.paused?video.play():video.pause()}
+ else if(k===','){video.pause();video.currentTime-=1/30}else if(k==='.'){video.pause();video.currentTime+=1/30}
+ else if(k==='arrowleft')video.currentTime-=2;else if(k==='arrowright')video.currentTime+=2
+ else if(k==='t')addThrow();else if(k==='e')addEnd()
+ else if(k==='s'&&selected){selected.stopped_time_s=video.currentTime;save();paint()}});
+paint();
+</script></html>
