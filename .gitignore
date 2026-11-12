@@ -1,4 +1,6 @@
 .venv/
+.venv-tracking/
+models/cotracker3/*.pth
 __pycache__/
 *.py[cod]
 .pytest_cache/
@@ -19,3 +21,8 @@ validation/smoke/
 validation/before/
 dist/
 validation/unpacked/
+
+# Isolated learned detector runtime and externally shared checkpoint.
+.venv-detector/
+research/shared-stone-detector-2026-10-22/*.pt
+workbench-data/

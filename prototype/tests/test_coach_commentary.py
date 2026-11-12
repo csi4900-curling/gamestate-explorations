@@ -65,6 +65,7 @@ class TestCoachCommentary(unittest.TestCase):
         self.assertIn("2.45 m/s", text)
         self.assertIn("65.0%", text)
         self.assertIn("+1.25 expected points", text)
+        self.assertNotIn("revolutions", text)
 
     def test_llm_prompt_structure(self):
         inp = ShotStateInput(shot_num=1, end=1, tier="A")
@@ -72,19 +73,6 @@ class TestCoachCommentary(unittest.TestCase):
         self.assertIn("system_prompt", prompt)
         self.assertIn("user_message", prompt)
         self.assertIn("STRICT GROUNDING RULES", prompt["system_prompt"])
-
-    def test_estimate_stone_revolutions(self):
-        from prototype.reasoning.coach_commentary import estimate_stone_revolutions
-
-        draw_revs = estimate_stone_revolutions(release_speed_mps=2.45, curl_cm=68.2)
-        self.assertGreaterEqual(draw_revs["mean_revolutions"], 2.8)
-        self.assertLessEqual(draw_revs["mean_revolutions"], 3.8)
-        self.assertEqual(len(draw_revs["ci_95"]), 2)
-        self.assertLess(draw_revs["ci_95"][0], draw_revs["mean_revolutions"])
-        self.assertGreater(draw_revs["ci_95"][1], draw_revs["mean_revolutions"])
-
-        takeout_revs = estimate_stone_revolutions(release_speed_mps=3.20, curl_cm=40.0)
-        self.assertLess(takeout_revs["mean_revolutions"], draw_revs["mean_revolutions"])
 
 
 if __name__ == "__main__":

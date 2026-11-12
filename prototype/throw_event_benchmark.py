@@ -33,6 +33,7 @@ def evaluate_events(
     tolerance_s=0.0,
     prediction_time_mode="point",
     max_prediction_interval_s=None,
+    evaluate_colour=True,
 ):
     """Match a proposed crossing inside a labelled delivery interval, once only.
 
@@ -57,7 +58,7 @@ def evaluate_events(
     ref_windows = []
     for r in references:
         a, b = _interval(r["delivery_interval_s"])
-        if a < lo or b > hi or r["colour"] not in ("red", "yellow"):
+        if a < lo or b > hi or (evaluate_colour and r.get("colour") not in ("red", "yellow")):
             raise ValueError("Invalid reference event")
         ref_windows.append((a, b))
     if any(a[1] > b[0] for a, b in zip(sorted(ref_windows), sorted(ref_windows)[1:])):
@@ -70,7 +71,7 @@ def evaluate_events(
             or not isinstance(t, (int, float))
             or not math.isfinite(t)
             or not lo <= t <= hi
-            or p["colour"] not in ("red", "yellow")
+            or (evaluate_colour and p.get("colour") not in ("red", "yellow"))
         ):
             raise ValueError("Invalid predicted event")
         if prediction_time_mode == "evidence_interval":
@@ -99,13 +100,13 @@ def evaluate_events(
     used_ref = {i for i, _ in pairs}
     used_pred = {j for _, j in pairs}
     tp = len(pairs)
-    colour_errors = sum(references[i]["colour"] != predictions[j]["colour"] for i, j in pairs)
+    colour_errors = sum(references[i]["colour"] != predictions[j]["colour"] for i, j in pairs) if evaluate_colour else None
     colour_costs = [row.copy() for row in costs]
     for i in range(n):
         for j in range(m):
-            if references[i]["colour"] != predictions[j]["colour"]:
+            if evaluate_colour and references[i]["colour"] != predictions[j]["colour"]:
                 colour_costs[i][j] = penalty * (n + m + 2)
-    if n:
+    if n and evaluate_colour:
         colour_rows, colour_columns = linear_sum_assignment(colour_costs)
         colour_pairs = [
             (int(i), int(j))
@@ -118,7 +119,7 @@ def evaluate_events(
     precision = tp / m if m else (1.0 if n == 0 else 0.0)
     recall = tp / n if n else (1.0 if m == 0 else 0.0)
     f1 = 2 * tp / (n + m) if n + m else 1.0
-    return {
+    result = {
         "reference_count": n,
         "prediction_count": m,
         "true_positives": tp,
@@ -138,7 +139,7 @@ def evaluate_events(
             {
                 "reference_id": references[i]["id"],
                 "prediction_id": predictions[j]["id"],
-                "colour_match": references[i]["colour"] == predictions[j]["colour"],
+                "colour_match": references[i]["colour"] == predictions[j]["colour"] if evaluate_colour else None,
             }
             for i, j in pairs
         ],
@@ -149,3 +150,10 @@ def evaluate_events(
         "max_prediction_interval_s": max_prediction_interval_s,
         "timing_interpretation": "Passage detection within a reference interval; no release-time error inferred.",
     }
+
+    result["colour_evaluated"] = evaluate_colour
+    if not evaluate_colour:
+        for key in result:
+            if key.startswith("colour_aware_"):
+                result[key] = None
+    return result

@@ -366,7 +366,17 @@ def main():
             print(f"RUN {artifact}", flush=True)
             subprocess.run(command, cwd=ROOT, check=True)
     if not args.dry_run:
-        print(f"Candidate ledger: {args.output / 'candidate-event-ledger.json'}")
+        sys.path.insert(0, str(ROOT / "prototype"))
+        from scripts.complete_throw_trajectories import complete
+
+        complete(
+            args.video,
+            args.output / "candidate-event-ledger.json",
+            args.output / "aggregate.json",
+            motion_review=args.output / "shot-review/manifest.json",
+            learned_model=args.learned_model,
+        )
+        print(f"Aggregate pipeline output: {args.output / 'aggregate.json'}")
 
 
 if __name__ == "__main__":

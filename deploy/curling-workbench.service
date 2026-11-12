@@ -1,0 +1,14 @@
+[Unit]
+Description=Curling match workbench (development pipeline)
+
+[Service]
+Type=exec
+WorkingDirectory=%h/curling-project
+ExecStart=%h/curling-project/curling-workbench
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=30
+KillMode=control-group
+
+[Install]
+WantedBy=default.target

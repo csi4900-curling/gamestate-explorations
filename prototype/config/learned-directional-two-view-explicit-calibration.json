@@ -1,0 +1,33 @@
+{
+  "schema_version": "match-observation-v1",
+  "calibration": "../rectification/calibration.json",
+  "reference_annotations": "../vision/annotations/calibration.json",
+  "reference_frames": "../vision/frames",
+  "feature_heights_m": {
+    "cap_with_body_support": 0.136,
+    "body_box_center": 0.068
+  },
+  "scoreboard_team_labels": [
+    "CAN",
+    "SWE"
+  ],
+  "scoreboard_crop_normalized": [
+    0.5,
+    0,
+    1,
+    0.5
+  ],
+  "score_sample_interval_s": 10,
+  "ocr_model_dir": "../../validation/full-match-development-2026-10-23/ocr-models",
+  "geometry_mode": "explicit_source_calibration_v1",
+  "handoff_method": "observed_motion_bidirectional_hog_crossing_development",
+  "local_hog_y_m": {
+    "left": -6.401,
+    "right": 6.401
+  },
+  "source_calibration_bundle": null,
+  "camera_alignment": "static_feature_similarity",
+  "geometry_opencv_threads": 4,
+  "camera_foreground_checkpoint": "../../models/camera-foreground/yolov8n-seg.pt",
+  "camera_foreground_sha256": "a7cd8f929e1903d78a12a48efecab430209f18dc46cb96c3599a5980c63c423c"
+}

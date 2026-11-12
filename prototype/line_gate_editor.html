@@ -1,0 +1,25 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>Stone crossing line setup</title>
+<style>body{font:17px system-ui;max-width:1100px;margin:30px auto;padding:15px}#source{position:relative}video{display:block;width:100%}canvas{position:absolute;top:0;left:0;width:100%;pointer-events:none}button,input,select{padding:8px;margin:5px}#status{min-height:2em}label{display:inline-block}pre{white-space:pre-wrap}</style>
+<h1>Configure a stone-crossing line</h1>
+<p>Open a local video, seek to a clear view, pause, then choose two endpoints on the image. This sets a fixed image line; it does not learn rink geometry or follow camera movement. The crossing point is the centre of a detected stone box. Video stays on your machine.</p>
+<input id="file" type="file" accept="video/*"><button id="place" disabled>Place / replace line</button>
+<div id="source"><video id="video" controls></video><canvas id="overlay"></canvas></div>
+<p id="status">No video selected.</p><label>Line ID <input id="name" value="departure"></label>
+<label>Direction <select id="direction"><option value="both">Both directions</option><option value="negative">Positive side → negative side</option><option value="positive">Negative side → positive side</option></select></label>
+<p>Endpoint order defines the sides. For a horizontal line drawn left to right, positive is below the line and negative is above it. Only crossings between the endpoints count.</p>
+<label>Detector samples/second <input id="hz" type="number" min="0.01" step="any" value="10"></label>
+<label>Detector confidence floor <input id="confidence" type="number" min="0" max="0.1" step="0.01" value="0.1"></label>
+<p>The supplied ByteTrack configuration uses its upstream thresholds; 0.1 retains its low-confidence association inputs. These settings are explicit defaults, not measured accuracy probabilities.</p>
+<button id="save" disabled>Download line-events.json</button> <a href="config/bytetrack.yaml" download="bytetrack.yaml">Download tracker configuration</a>
+<p>Keep both downloaded files together. Pass <code>--events-only --event-line-config /path/to/line-events.json</code> and the learned detector checkpoint to the public runner. New line settings require a new run; they do not change existing predictions.</p>
+<pre id="json"></pre>
+<script>
+const v=document.querySelector('#video'),c=document.querySelector('#overlay'),file=document.querySelector('#file');let points=[],placing=false,url;
+function config(){return {schema_version:'stone-line-events-v1',sample_hz:Number(document.querySelector('#hz').value),detector_confidence:Number(document.querySelector('#confidence').value),tracker_config:'bytetrack.yaml',lines:[{id:document.querySelector('#name').value.trim(),endpoints_normalized:points,direction:document.querySelector('#direction').value,deadband_normalized:0}]}}
+function draw(){c.width=v.videoWidth;c.height=v.videoHeight;const x=c.getContext('2d');x.strokeStyle=x.fillStyle='#00e35f';x.lineWidth=3;x.beginPath();points.forEach((p,i)=>{x[i?'lineTo':'moveTo'](p[0]*c.width,p[1]*c.height)});x.stroke();for(const p of points){x.beginPath();x.arc(p[0]*c.width,p[1]*c.height,5,0,2*Math.PI);x.fill()}document.querySelector('#json').textContent=points.length===2?JSON.stringify(config(),null,2):'';document.querySelector('#save').disabled=points.length!==2}
+file.onchange=()=>{if(!file.files.length)return;if(url)URL.revokeObjectURL(url);url=URL.createObjectURL(file.files[0]);v.src=url;points=[];placing=false;draw()};v.onloadedmetadata=()=>{document.querySelector('#place').disabled=false;document.querySelector('#status').textContent='Seek to a clear frame, pause, then choose Place line.';draw()};
+document.querySelector('#place').onclick=()=>{v.pause();points=[];placing=true;v.controls=false;document.querySelector('#status').textContent='Click the first endpoint, then the second.';draw()};
+v.onclick=e=>{if(!placing)return;const r=v.getBoundingClientRect();points.push([(e.clientX-r.left)/r.width,(e.clientY-r.top)/r.height]);if(points.length===2){if(points[0][0]===points[1][0]&&points[0][1]===points[1][1]){points=[];document.querySelector('#status').textContent='Choose two different endpoints.'}else{placing=false;v.controls=true;document.querySelector('#status').textContent='Line configured. Download configuration for a new run.'}}draw()};
+for(const id of ['name','direction','hz','confidence'])document.getElementById(id).oninput=draw;
+document.querySelector('#save').onclick=()=>{const cfg=config();if(!cfg.lines[0].id||!Number.isFinite(cfg.sample_hz)||cfg.sample_hz<=0||!Number.isFinite(cfg.detector_confidence)||cfg.detector_confidence<0||cfg.detector_confidence>.1){alert('Provide a line ID, positive sample rate and confidence between 0 and 0.1.');return}const u=URL.createObjectURL(new Blob([JSON.stringify(cfg,null,2)+'\n'],{type:'application/json'}));const a=document.createElement('a');a.href=u;a.download='line-events.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)};
+</script></html>

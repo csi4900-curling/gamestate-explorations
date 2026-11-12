@@ -1,4 +1,11 @@
 {
+  "provenance": {
+    "input": "programmatically constructed states, no source video or match labels",
+    "commentary": "deterministic template, no LLM call",
+    "audit": "regex checks on recognized claim patterns only",
+    "coach_ratings": "none collected",
+    "interpretation": "software smoke check only; not a real-world factuality rate"
+  },
   "benchmark_summary": {
     "total_scenarios": 50,
     "tier_a_scenarios": 30,
@@ -6,26 +13,8 @@
     "tier_c_rejections": 10,
     "total_claims_checked": 330,
     "supported_claims": 330,
-    "factuality_rate": 1.0,
+    "recognized_claim_match_rate": 1.0,
     "rejections_contract_rate": 1.0
-  },
-  "coach_evaluation": {
-    "num_clips_evaluated": 50,
-    "num_coaches": 3,
-    "correctness": {
-      "mean": 4.733333333333333,
-      "std": 0.44221663871405337,
-      "min": 4,
-      "max": 5,
-      "inter_rater_kappa": 0.333
-    },
-    "usefulness": {
-      "mean": 4.4,
-      "std": 0.4898979485566356,
-      "min": 4,
-      "max": 5,
-      "inter_rater_kappa": 0.02
-    }
   },
   "sample_commentaries": [
     {

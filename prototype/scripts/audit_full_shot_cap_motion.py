@@ -26,6 +26,7 @@ def tracks_for_shot(observations, shot_id):
                     "interval_s": [points[0]["time_s"], points[-1]["time_s"]],
                     "span_px": round(track["span_px"], 2),
                     "point_count": len(points),
+                    "points": points,
                 }
             )
     return rows

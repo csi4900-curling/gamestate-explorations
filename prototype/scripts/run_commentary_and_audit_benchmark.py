@@ -1,9 +1,4 @@
-"""Execute Step 15 & Step 16 Coach Commentary & Factuality Audit Benchmark.
-
-Runs grounded commentary generation across 50 diverse tournament scenarios,
-audits every atomic claim against input JSON ground truth, evaluates multi-coach
-rating distributions with weighted Cohen's Kappa, and saves official artifacts.
-"""
+"""Software smoke check on 50 synthetic states, not a real-match or coach study."""
 
 from pathlib import Path
 import json
@@ -14,7 +9,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from prototype.reasoning.coach_commentary import CoachCommentaryEngine, ShotStateInput
-from prototype.reasoning.commentary_audit import CommentaryFactualityAuditor, CoachEvaluationSuite
+from prototype.reasoning.commentary_audit import CommentaryFactualityAuditor
 
 ARTIFACTS_DIR = ROOT / "artifacts" / "reasoning"
 ARTIFACTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -125,41 +120,15 @@ def build_benchmark_scenarios() -> list:
     return scenarios
 
 
-def simulate_coach_ratings(scenario_id: str, is_rejected: bool, factuality_rate: float) -> dict:
-    """Generate expert coach evaluation ratings (1-5 Likert scale) for a given output."""
-    # When correctly rejected or 100% grounded, coaches rate correctness 5 or 4, usefulness 4 or 5
-    if is_rejected:
-        # Coaches appreciate honest refusal over hallucinated numbers
-        c1 = {"correctness": 5, "usefulness": 5}
-        c2 = {"correctness": 5, "usefulness": 4}
-        c3 = {"correctness": 5, "usefulness": 5}
-    elif factuality_rate >= 0.99:
-        c1 = {"correctness": 5, "usefulness": 4}
-        c2 = {"correctness": 5, "usefulness": 5}
-        c3 = {"correctness": 4, "usefulness": 4}
-    else:
-        c1 = {"correctness": 3, "usefulness": 2}
-        c2 = {"correctness": 2, "usefulness": 2}
-        c3 = {"correctness": 3, "usefulness": 3}
-
-    return {
-        "clip_id": scenario_id,
-        "coach_1": c1,
-        "coach_2": c2,
-        "coach_3": c3,
-    }
-
-
 def main():
-    print("[1/4] Initializing Coach Commentary Engine & Factuality Auditor...")
+    print("[1/3] Initializing template generator and limited claim checker...")
     engine = CoachCommentaryEngine()
     auditor = CommentaryFactualityAuditor()
 
-    print("[2/4] Generating commentary across 50 benchmark match situations...")
+    print("[2/3] Generating 50 synthetic state examples...")
     scenarios = build_benchmark_scenarios()
     generated_records = []
     audit_records = []
-    coach_evals = []
 
     total_claims = 0
     supported_claims = 0
@@ -192,29 +161,23 @@ def main():
         if res.status == "rejected":
             rejections_count += 1
 
-        # Coach rating simulation
-        c_eval = simulate_coach_ratings(s_id, res.status == "rejected", audit.factuality_rate)
-        coach_evals.append(c_eval)
-
     factuality_pct = (supported_claims / total_claims) * 100.0 if total_claims > 0 else 100.0
     print(
         f"       Generated {len(scenarios)} commentaries ({rejections_count} honest refusals on Tier C/D)."
     )
     print(
-        f"       Factuality Audit: {supported_claims} / {total_claims} claims supported ({factuality_pct:.1f}%)."
+        f"       Recognized claim checks: {supported_claims} / {total_claims} matched synthetic inputs ({factuality_pct:.1f}%)."
     )
 
-    print("[3/4] Computing Multi-Coach Inter-Rater Agreement (Cohen's Weighted Kappa)...")
-    coach_agreement = CoachEvaluationSuite.evaluate_coach_ratings(coach_evals)
-    print(
-        f"       Correctness: Mean {coach_agreement['correctness']['mean']:.2f}/5 (Kappa: {coach_agreement['correctness']['inter_rater_kappa']:.3f})"
-    )
-    print(
-        f"       Usefulness:  Mean {coach_agreement['usefulness']['mean']:.2f}/5 (Kappa: {coach_agreement['usefulness']['inter_rater_kappa']:.3f})"
-    )
-
-    print("[4/4] Writing Step 15 & 16 Benchmark Artifacts...")
+    print("[3/3] Writing synthetic smoke-check artifact...")
     summary = {
+        "provenance": {
+            "input": "programmatically constructed states, no source video or match labels",
+            "commentary": "deterministic template, no LLM call",
+            "audit": "regex checks on recognized claim patterns only",
+            "coach_ratings": "none collected",
+            "interpretation": "software smoke check only; not a real-world factuality rate",
+        },
         "benchmark_summary": {
             "total_scenarios": len(scenarios),
             "tier_a_scenarios": 30,
@@ -222,10 +185,9 @@ def main():
             "tier_c_rejections": 10,
             "total_claims_checked": total_claims,
             "supported_claims": supported_claims,
-            "factuality_rate": round(factuality_pct / 100.0, 4),
+            "recognized_claim_match_rate": round(factuality_pct / 100.0, 4),
             "rejections_contract_rate": 1.0,
         },
-        "coach_evaluation": coach_agreement,
         "sample_commentaries": generated_records[:5],
     }
 
@@ -233,7 +195,7 @@ def main():
     with out_file.open("w") as f:
         json.dump(summary, f, indent=2)
 
-    print("\nSUCCESS: Commentary and audit benchmark complete.")
+    print("\nSUCCESS: Synthetic commentary smoke check complete.")
     print(f"         Summary JSON: {out_file}")
     return 0
 

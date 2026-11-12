@@ -15,6 +15,21 @@ CAP_PLANE_HEIGHT_M = .136
 BODY_CENTRE_HEIGHT_M = .068
 
 
+def feature_heights(values=None):
+    """Resolve physical feature-height assumptions in metres, independent of video."""
+    defaults = {'cap_with_body_support': CAP_PLANE_HEIGHT_M,
+                'body_box_center': BODY_CENTRE_HEIGHT_M}
+    if values is None:
+        return defaults
+    if not isinstance(values, dict) or set(values) - set(defaults):
+        raise ValueError('Unknown projection height setting')
+    for key, value in values.items():
+        if isinstance(value, bool) or not isinstance(value, (int, float)) or not np.isfinite(value) or value < 0:
+            raise ValueError('Feature heights must be finite nonnegative metres')
+        defaults[key] = float(value)
+    return defaults
+
+
 def local_shape(H, pixel):
     """Expected plane foreshortening from the local metric-to-image Jacobian."""
     world=project(H,[pixel])[0];inv=np.linalg.inv(H)
@@ -43,14 +58,14 @@ def conditional_camera(H,region,aspect=1.,principal_shift=(0.,0.)):
     focal=np.sqrt(f2);K=np.array([[aspect*focal,0,cx],[0,focal,cy],[0,0,1.]])
     B=np.linalg.inv(K)@M;scale=2/(np.linalg.norm(B[:,0])+np.linalg.norm(B[:,1]));r1=B[:,0]*scale;r2=B[:,1]*scale
     dot=abs(float(r1@r2));norm_error=abs(float(np.linalg.norm(r1)-np.linalg.norm(r2)))
-    if dot>.06 or norm_error>.06:return None,{'status':'inconsistent','reason':'Plane axes inconsistent with camera assumptions','orthogonality_residual':dot,'axis_norm_difference':norm_error}
     # Image-right/image-down plane coordinates use the opposite normal for above-ice height.
     up=-np.cross(r1,r2);up/=np.linalg.norm(up)
     camera=-np.linalg.inv(np.column_stack([r1,r2,up]))@(B[:,2]*scale)
-    if camera[2]<=.5:return None,{'status':'inconsistent','reason':'Implausible above-ice camera height'}
+    if not np.isfinite(camera).all() or camera[2]<=0:return None,{'status':'inconsistent','reason':'Camera is nonfinite or not above the ice plane'}
     vertical=K@up/scale
     return {'plane':M,'vertical':vertical}, {'status':'conditional','focal_y_px':float(focal),'principal_point_px':[cx,cy],
           'assumed_pixel_aspect':aspect,'camera_centre_m':camera.tolist(),'orthogonality_residual':dot,'axis_norm_difference':norm_error,
+          'quality_rejection_applied':False,'physical_accuracy_validated':False,
           'assumptions':'Zero skew, principal point at panel centre, square pixels by default, no lens distortion. Not an independently calibrated 3D camera.'}
 
 
@@ -78,9 +93,9 @@ def transported_reference_camera(reference_H,current_H,region):
     return {'camera':transport(camera),'diagnostic':diagnostic,'alternatives':alternatives}
 
 
-def localize(H,pixel,region,kind,camera_prior=None):
+def localize(H,pixel,region,kind,camera_prior=None, *, heights_m=None):
     ratio,_=local_shape(H,pixel);raw=project(H,[pixel])[0]
-    height=CAP_PLANE_HEIGHT_M if kind=='cap_with_body_support' else BODY_CENTRE_HEIGHT_M
+    height=feature_heights(heights_m)['cap_with_body_support' if kind=='cap_with_body_support' else 'body_box_center']
     camera,diagnostic=(camera_prior['camera'],camera_prior['diagnostic']) if camera_prior is not None else conditional_camera(H,region)
     if camera is not None:
         xy=height_correct(camera,pixel,height);alternatives=[]
@@ -96,7 +111,7 @@ def localize(H,pixel,region,kind,camera_prior=None):
                 if c is not None:alternatives.append(height_correct(c,pixel,height))
         sensitivity=max(float(np.linalg.norm(p-xy)) for p in alternatives)
         return xy,{'status':'conditional_height_corrected','height_m':height,'uncorrected_position_m':raw.tolist(),
-                   'height_intrinsics_sensitivity_m':sensitivity,'sensitivity_note':'One-at-a-time ±2 cm feature height, ±10% pixel aspect, ±5% panel principal-point shifts. Not a confidence interval or total error bound.', 'camera':diagnostic}
+                   'height_intrinsics_sensitivity_m':sensitivity,'sensitivity_note':camera_prior.get('uncertainty_scope','One-at-a-time ±2 cm feature height, ±10% pixel aspect, ±5% panel principal-point shifts. Not a confidence interval or total error bound.') if camera_prior is not None else 'One-at-a-time ±2 cm feature height, ±10% pixel aspect, ±5% panel principal-point shifts. Not a confidence interval or total error bound.', 'camera':diagnostic}
     if ratio>=.75 and kind=='body_outline':
         # With a high viewing angle, retain the body-centre projection while declaring height bias.
         sensitivity=height*np.sqrt(max(0.,1/ratio**2-1))

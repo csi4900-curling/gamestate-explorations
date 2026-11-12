@@ -142,7 +142,7 @@
 <header class="hero">
   <div class="wrap">
     <h1>The Curling CV Playbook</h1>
-    <p class="sub">Eighteen steps from an empty repo to a defensible result in one term. Written so that any of the four of you can pick it up on a Monday and know exactly what to do — and so that you can stop at any checkpoint with something submittable.</p>
+    <p class="sub">Eighteen planned steps toward a defensible result. Checkboxes are a personal planning aid, not evidence that a step passed its validation gate.</p>
     <div class="meta">
       <span class="chip">18 steps · 6 phases · 4 checkpoints</span>
       <span class="chip">~12 weeks</span>
@@ -162,6 +162,8 @@
 </div>
 
 <div class="wrap">
+
+<p><b>Evidence status, 15 October 2026:</b> The repository has substantial source-specific experiments and a separate official-data reasoning model. Complete-recording independent event accuracy, reliable video-derived full boards, physical trajectory accuracy, and real coach evaluation remain open. The earlier all-green defaults were removed. See the <a href="docs/CAPSTONE_FINAL_REPORT.md">evidence and open-gates summary</a>.</p>
 
 <!-- ============ RULES ============ -->
 <h2 style="margin-top:2rem">The three rules</h2>
@@ -243,8 +245,8 @@
   </div>
   <p class="pnote">This phase costs nothing and answers the question the entire project hangs on: <em>do you have usable footage?</em> Do it before you write a single line of code.</p>
 
-  <article class="step done" id="s1">
-    <input type="checkbox" class="tick" data-id="s1" aria-label="Mark step 1 done" checked>
+  <article class="step" id="s1">
+    <input type="checkbox" class="tick" data-id="s1" aria-label="Mark step 1 done">
     <h3><span class="sno">STEP 1</span> Inventory every video on the sheet</h3>
     <div class="body">
       <p>Open the supervisor's spreadsheet and turn every link into a row. This is the single highest-value hour of the term.</p>
@@ -271,8 +273,8 @@
     <div class="facts"><span class="fact"><b>Time:</b> 2–3 h</span><span class="fact"><b>Owner:</b> person 4</span><span class="fact"><b>Cost:</b> £0</span></div>
   </article>
 
-  <article class="step done" id="s2">
-    <input type="checkbox" class="tick" data-id="s2" aria-label="Mark step 2 done" checked>
+  <article class="step" id="s2">
+    <input type="checkbox" class="tick" data-id="s2" aria-label="Mark step 2 done">
     <h3><span class="sno">STEP 2</span> Cross-match against the CurlR dataset</h3>
     <div class="body">
       <p>CurlR covers <b>WMDCC 2016–2025</b> (minus 2020) and <b>OWG 2018 &amp; 2022</b> — 1,112 games with per-shot official records. Any video that is one of those games just became <em>free ground truth</em>, because CurlR has the stone coordinates and grades for it. (<a href="https://github.com/ritchi12/CurlR">repo</a> · <a href="https://arxiv.org/abs/2512.16574">paper</a> · CC0 public domain)</p>
@@ -288,8 +290,8 @@ head(mxd_shots)       <span class="cm"># 66,632 rows total</span></code></pre>
     <div class="facts"><span class="fact"><b>Time:</b> 2 h</span><span class="fact"><b>Owner:</b> person 4</span><span class="fact"><b>Licence:</b> CC0 — public domain</span></div>
   </article>
 
-  <article class="step done" id="s3">
-    <input type="checkbox" class="tick" data-id="s3" aria-label="Mark step 3 done" checked>
+  <article class="step" id="s3">
+    <input type="checkbox" class="tick" data-id="s3" aria-label="Mark step 3 done">
     <h3><span class="sno">STEP 3</span> The calibration eyeball test</h3>
     <div class="body">
       <p>For every Tier A/B row, ask exactly one question:</p>
@@ -302,8 +304,8 @@ head(mxd_shots)       <span class="cm"># 66,632 rows total</span></code></pre>
     <div class="facts"><span class="fact"><b>Time:</b> 1 h</span><span class="fact"><b>Owner:</b> person 1</span></div>
   </article>
 
-  <article class="step done" id="s4">
-    <input type="checkbox" class="tick" data-id="s4" aria-label="Mark step 4 done" checked>
+  <article class="step" id="s4">
+    <input type="checkbox" class="tick" data-id="s4" aria-label="Mark step 4 done">
     <h3><span class="sno">STEP 4</span> Load the data and look at it</h3>
     <div class="body">
       <p>Before anything else, look at the answer key. Each row is one shot: who threw it, from where, on what board, what grade it got, and where the stones ended up.</p>
@@ -335,8 +337,8 @@ head(mxd_shots)       <span class="cm"># 66,632 rows total</span></code></pre>
   </div>
   <p class="pnote">This is the most important week. You are not building anything yet — you are finding out whether the project is real, with the crudest possible end-to-end path.</p>
 
-  <article class="step done" id="s5">
-    <input type="checkbox" class="tick" data-id="s5" aria-label="Mark step 5 done" checked>
+  <article class="step" id="s5">
+    <input type="checkbox" class="tick" data-id="s5" aria-label="Mark step 5 done">
     <h3><span class="sno">STEP 5</span> One clip, one homography, one number</h3>
     <div class="body">
       <p>Pick <em>one</em> Tier A clip. Extract three frames. Hand-click 6–8 known sheet points. Fit a homography. Measure the reprojection error in centimetres.</p>
@@ -370,8 +372,8 @@ for p, d in zip(src, dst):
     <div class="facts"><span class="fact"><b>Time:</b> half a day</span><span class="fact"><b>Owner:</b> person 1</span><span class="fact"><b>Output:</b> one number</span></div>
   </article>
 
-  <article class="step done" id="s6">
-    <input type="checkbox" class="tick" data-id="s6" aria-label="Mark step 6 done" checked>
+  <article class="step" id="s6">
+    <input type="checkbox" class="tick" data-id="s6" aria-label="Mark step 6 done">
     <h3><span class="sno">STEP 6</span> Sanity-check with physics</h3>
     <div class="body">
       <p>A homography can be numerically fine and physically wrong. Find one stone by hand in two frames a second apart, convert both, and compute its speed.</p>
@@ -385,8 +387,8 @@ print(v, "m/s")                  <span class="cm"># expect roughly 2–3</span><
     <div class="facts"><span class="fact"><b>Time:</b> 1 h</span><span class="fact"><b>Owner:</b> person 1</span></div>
   </article>
 
-  <article class="step done" id="s7">
-    <input type="checkbox" class="tick" data-id="s7" aria-label="Mark step 7 done" checked>
+  <article class="step" id="s7">
+    <input type="checkbox" class="tick" data-id="s7" aria-label="Mark step 7 done">
     <h3><span class="sno">STEP 7</span> Start the zero-video track <em>today</em></h3>
     <div class="body">
       <p>One person begins the workstream that needs no footage at all. It cannot fail, and it is what saves the grade if footage collapses.</p>
@@ -413,8 +415,8 @@ print(v, "m/s")                  <span class="cm"># expect roughly 2–3</span><
   </div>
   <p class="pnote">You are building the thing that turns "we made a system" into "we measured a system". This is also the deliverable that exists even if the pipeline never works.</p>
 
-  <article class="step done" id="s8">
-    <input type="checkbox" class="tick" data-id="s8" aria-label="Mark step 8 done" checked>
+  <article class="step" id="s8">
+    <input type="checkbox" class="tick" data-id="s8" aria-label="Mark step 8 done">
     <h3><span class="sno">STEP 8</span> Freeze the label schema — one page</h3>
     <div class="body">
       <p>Adopt the sport's own ontology. Do not invent one. Eleven shot tasks in two families, plus rotation, plus the 0–4 grade.</p>
@@ -439,8 +441,8 @@ print(v, "m/s")                  <span class="cm"># expect roughly 2–3</span><
     <div class="facts"><span class="fact"><b>Time:</b> 1 day</span><span class="fact"><b>Owner:</b> person 3 + 4</span><span class="fact"><b>Then:</b> frozen</span></div>
   </article>
 
-  <article class="step done" id="s9">
-    <input type="checkbox" class="tick" data-id="s9" aria-label="Mark step 9 done" checked>
+  <article class="step" id="s9">
+    <input type="checkbox" class="tick" data-id="s9" aria-label="Mark step 9 done">
     <h3><span class="sno">STEP 9</span> Cut ~50 shot clips</h3>
     <div class="body">
       <p>Tier A/B: use the heuristic — <em>a stone blob travels most of the length of the sheet</em>. Everything else: cut by hand.</p>
@@ -450,8 +452,8 @@ print(v, "m/s")                  <span class="cm"># expect roughly 2–3</span><
     <div class="facts"><span class="fact"><b>Time:</b> 3–4 days</span><span class="fact"><b>Owner:</b> person 2</span><span class="fact"><b>Rule:</b> manual before automated</span></div>
   </article>
 
-  <article class="step done" id="s10">
-    <input type="checkbox" class="tick" data-id="s10" aria-label="Mark step 10 done" checked>
+  <article class="step" id="s10">
+    <input type="checkbox" class="tick" data-id="s10" aria-label="Mark step 10 done">
     <h3><span class="sno">STEP 10</span> Double-label 30 of them, independently</h3>
     <div class="body">
       <p>Two people label the same 30 clips. No discussion, no shared screen, no "what did you put?". Then compute Cohen's κ and the per-class agreement.</p>
@@ -465,8 +467,8 @@ print(kappa)   <span class="cm"># 0.6+ is solid for this kind of task</span></co
     <div class="facts"><span class="fact"><b>Time:</b> 2 days</span><span class="fact"><b>Owner:</b> person 4</span><span class="fact"><b>Output:</b> a real result</span></div>
   </article>
 
-  <article class="step done" id="s11">
-    <input type="checkbox" class="tick" data-id="s11" aria-label="Mark step 11 done" checked>
+  <article class="step" id="s11">
+    <input type="checkbox" class="tick" data-id="s11" aria-label="Mark step 11 done">
     <h3><span class="sno">STEP 11</span> Run the cheapest possible baseline</h3>
     <div class="body">
       <p>Classify shot type on your labelled clips with whatever is quickest — a small video classifier, or a VLM with a well-formed prompt. Report accuracy per class.</p>
@@ -486,8 +488,8 @@ print(kappa)   <span class="cm"># 0.6+ is solid for this kind of task</span></co
   </div>
   <p class="pnote">Video → state, validated against the sport's own records. Nobody has published this. Everything else in the project is scaffolding around this phase.</p>
 
-  <article class="step done" id="s12">
-    <input type="checkbox" class="tick" data-id="s12" aria-label="Mark step 12 done" checked>
+  <article class="step" id="s12">
+    <input type="checkbox" class="tick" data-id="s12" aria-label="Mark step 12 done">
     <h3><span class="sno">STEP 12</span> Run the pipeline on clips that have an official record</h3>
     <div class="body">
       <p>Use only Tier A/B clips from Step 2 — the ones with a CurlR <code>ID</code>. Detect → track → convert to sheet coordinates → extract resting positions.</p>
@@ -502,8 +504,8 @@ for (tx, ty), (ex, ey) in zip(truth, estimated):
     <div class="facts"><span class="fact"><b>Time:</b> 2 weeks</span><span class="fact"><b>Owner:</b> persons 1 + 2</span><span class="fact"><b>Risk:</b> highest in the project</span></div>
   </article>
 
-  <article class="step done" id="s13">
-    <input type="checkbox" class="tick" data-id="s13" aria-label="Mark step 13 done" checked>
+  <article class="step" id="s13">
+    <input type="checkbox" class="tick" data-id="s13" aria-label="Mark step 13 done">
     <h3><span class="sno">STEP 13</span> Split the number three ways</h3>
     <div class="body">
       <p>One averaged number hides everything. Report it broken down:</p>
@@ -533,8 +535,8 @@ for (tx, ty), (ex, ey) in zip(truth, estimated):
   </div>
   <p class="pnote">The layer the supervisor actually asked about. It runs on true state, so it is immune to everything that can go wrong in Phase 3.</p>
 
-  <article class="step done" id="s14">
-    <input type="checkbox" class="tick" data-id="s14" aria-label="Mark step 14 done" checked>
+  <article class="step" id="s14">
+    <input type="checkbox" class="tick" data-id="s14" aria-label="Mark step 14 done">
     <h3><span class="sno">STEP 14</span> The reasoning layer, on CurlR</h3>
     <div class="body">
       <p>Predict the end outcome from board state, and validate on held-out games. Days of work, and it produces the numbers the LLM layer will narrate.</p>
@@ -544,8 +546,8 @@ for (tx, ty), (ex, ey) in zip(truth, estimated):
     <div class="facts"><span class="fact"><b>Time:</b> 4 days</span><span class="fact"><b>Owner:</b> person 3</span><span class="fact"><b>Input:</b> 66,632 real shots</span></div>
   </article>
 
-  <article class="step done" id="s15">
-    <input type="checkbox" class="tick" data-id="s15" aria-label="Mark step 15 done" checked>
+  <article class="step" id="s15">
+    <input type="checkbox" class="tick" data-id="s15" aria-label="Mark step 15 done">
     <h3><span class="sno">STEP 15</span> The LLM layer — and its hard boundary</h3>
     <div class="body">
       <p>Feed the model structured JSON. It <b>narrates metrics that were computed for it</b>. It never infers them from pixels, and it never invents causation.</p>
@@ -564,8 +566,8 @@ for (tx, ty), (ex, ey) in zip(truth, estimated):
     <div class="facts"><span class="fact"><b>Time:</b> 1 week</span><span class="fact"><b>Owner:</b> person 3</span><span class="fact"><b>Rule:</b> narrate, never infer</span></div>
   </article>
 
-  <article class="step done" id="s16">
-    <input type="checkbox" class="tick" data-id="s16" aria-label="Mark step 16 done" checked>
+  <article class="step" id="s16">
+    <input type="checkbox" class="tick" data-id="s16" aria-label="Mark step 16 done">
     <h3><span class="sno">STEP 16</span> Evaluate it two ways</h3>
     <div class="body">
       <p><b>(a) Factuality audit.</b> Go through every generated sentence and count each claim not supported by the input JSON. Report the error rate and the most common error classes. This is a real, publishable-style evaluation, and it is cheap.</p>
@@ -585,8 +587,8 @@ for (tx, ty), (ex, ey) in zip(truth, estimated):
   </div>
   <p class="pnote">The temptation here is one more idea. Resist it. Unfinished work becomes future work with a measured partial result attached — that is a legitimate ending, and it reads as competence rather than failure.</p>
 
-  <article class="step done" id="s17">
-    <input type="checkbox" class="tick" data-id="s17" aria-label="Mark step 17 done" checked>
+  <article class="step" id="s17">
+    <input type="checkbox" class="tick" data-id="s17" aria-label="Mark step 17 done">
     <h3><span class="sno">STEP 17</span> Write the thing</h3>
     <div class="body">
       <p>Structure that suits this project:</p>
@@ -604,8 +606,8 @@ for (tx, ty), (ex, ey) in zip(truth, estimated):
     <div class="facts"><span class="fact"><b>Time:</b> 2.5 weeks</span><span class="fact"><b>Owner:</b> everyone</span></div>
   </article>
 
-  <article class="step done" id="s18">
-    <input type="checkbox" class="tick" data-id="s18" aria-label="Mark step 18 done" checked>
+  <article class="step" id="s18">
+    <input type="checkbox" class="tick" data-id="s18" aria-label="Mark step 18 done">
     <h3><span class="sno">STEP 18</span> Ship the demo</h3>
     <div class="body">
       <p>Four things on screen, in this order of importance:</p>
@@ -695,13 +697,13 @@ git clone https://github.com/ritchi12/CurlR.git</code></pre>
 
 <script>
 (function(){
-  var KEY = 'curling-playbook-v1';
+  var KEY = 'curling-playbook-v2';
   var boxes = Array.prototype.slice.call(document.querySelectorAll('input.tick'));
   var bar = document.getElementById('bar');
   var label = document.getElementById('plabel');
   var reset = document.getElementById('reset');
   var state = {};
-  try { state = JSON.parse(localStorage.getItem(KEY) || '{"s1":true,"s2":true,"s3":true,"s4":true,"s5":true,"s6":true,"s7":true,"s8":true,"s9":true,"s10":true,"s11":true,"s12":true,"s13":true,"s14":true,"s15":true,"s16":true,"s17":true,"s18":true}') || {}; } catch (e) { state = {}; }
+  try { state = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { state = {}; }
 
   function paint(){
     var done = boxes.filter(function(b){ return b.checked; }).length;

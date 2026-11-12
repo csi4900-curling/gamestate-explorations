@@ -1,4 +1,43 @@
+> Current scope: one reliable left/right split-screen trajectory pipeline with stable stone identity and no manual per-video calibration. This document includes historical work. See [the current execution inventory](../../docs/CURRENT_PIPELINE.md) before using old commands or claims.
+
 # Supervisor meeting reports
+
+For the **Thursday 22 October 2026, 09:30** meeting, use the
+[completed one-page handout](../../validation/meeting-2026-10-22/summary.html),
+[printable PDF](../../supervisor-progress-2026-10-22.pdf), and
+[detailed evidence appendix](../../validation/meeting-2026-10-22/index.html).
+Both complete public-entry-point runs and the archived control/target comparison
+are finished. Current Beijing event-context precision/recall is **88.9%/89.6%**,
+not the historical adapter's 89.3%/100%. Processing took 120.4 minutes for Sweden 2024
+and 132.2 minutes for Beijing. Current endpoint and viewer checks are linked in
+these documents. Reliable complete-trajectory generalization remains unestablished.
+The sections below preserve earlier development history and scopes.
+
+The [transfer-video fit analysis](../../validation/TRANSFER_VIDEO_FIT_2026-10-20.md)
+classifies the supported and failing video conditions, separating direct
+2024-pipeline transfer from the separate Beijing 2022 adapter and learned
+stone-box component. The 22 October brief links to this analysis.
+The [fresh same-format transfer audit](../../validation/fresh-same-format-transfer-2026-10-21/RESULTS.md)
+uses two further complete recordings selected before inference: a new 2024
+split-screen match and a new Beijing 2022 match. It is the direct answer to
+whether the system handles different videos in familiar formats. The separate
+[three-match earlier first-run audit](../../validation/unseen-match-transfer-2026-10-21/RESULTS.md)
+is retained as development history; those recordings were subsequently
+inspected. The new Beijing match now has a [140-candidate source-video score](../../validation/fresh-same-format-transfer-2026-10-21/sweden22/SOURCE_VIDEO_REVIEW.md):
+125 TP, 15 FP, 0 FN, event precision 89.3%, recall 100%, F1 94.3% after
+same-agent review. The latest 2024 full source audit gives 140 TP, 7 FP and 3 FN (95.2% precision,
+97.9% recall). The integrated pipeline and exhaustive projected-point scores are in the
+[current viewer](../../validation/integrated-pipeline-final/index.html); earlier audits below retain their original scope.
+The [full-match count audit](../../validation/full-match-count-audit-2026-10-20/RESULTS.md)
+adds numerical precision and recall ceilings for four complete 2024 videos;
+these are official-count constraints, not timestamped event F1 scores.
+The [2022 official shot-list comparison](../../validation/full-match-official-comparison-2026-10-20/RESULTS.md)
+reconciles 359 provisional candidates with 349 numbered official shots across
+three complete development recordings: 344 matched events, 15 extra proposals,
+and five missed shots (event F1 97.2%). The [per-event score](../../validation/full-match-official-comparison-2026-10-20/source-video-event-score.csv)
+and [source-video review](../../validation/full-match-official-comparison-2026-10-20/SOURCE_VIDEO_REVIEW.md)
+show the decisions and their limits. This retrospective score is separate from
+held-out transfer accuracy and continuous physical stone tracking.
 
 For the **9 October 2026, 10:00** meeting, open the concise
 [French HTML brief](../../supervisor-progress-2026-10-09.html) or its

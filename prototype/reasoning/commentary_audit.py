@@ -1,10 +1,10 @@
-"""Step 16: Automated Factuality Audit and Multi-Coach Rating Agreement Engine.
+"""Limited regex claim checker and utility for supplied rating data.
 
 Performs:
-1. Sentence-by-sentence atomic claim extraction and verification against input JSON ground truth.
+1. Recognition of selected claim patterns and comparison with supplied JSON values.
 2. Error taxonomy attribution (hallucinated_metric, contradicted_score, wrong_end_or_shot, unsupported_speculation).
 3. Inter-rater agreement statistics (Cohen's Kappa / Krippendorff's Alpha / Pearson r) across coach evaluators.
-4. Batch evaluation reporting matching Playbook Step 16 output contracts.
+4. Rating aggregation only when actual rating data is supplied by the caller.
 """
 
 from __future__ import annotations

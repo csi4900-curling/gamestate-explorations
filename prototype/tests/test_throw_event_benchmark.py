@@ -90,3 +90,14 @@ class ThrowBenchmarkTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+def test_learned_single_class_events_do_not_invent_colour_scores():
+    score=evaluate_events([{'id':'P','crossing_time_s':11}],
+                          [{'id':'R','delivery_interval_s':[10,12]}],
+                          [0,20],evaluate_colour=False)
+    assert score['true_positives']==1
+    assert score['colour_evaluated'] is False
+    assert score['colour_aware_f1'] is None
+    assert score['colour_errors_among_matches'] is None
+    assert score['matches'][0]['colour_match'] is None
