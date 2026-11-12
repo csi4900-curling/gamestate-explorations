@@ -27,6 +27,36 @@ JSON. Review-subset precision is not full-match accuracy; recall remains unknown
 without labels for missed throws. Rotation remains experimental, with no validated
 physical count.
 
+### Throws view — 12 November 2026 (development)
+
+Each completed run now opens on a **Throws** tab. For every detected throw it
+shows the receiving-house stones before the delivered stone arrives, the
+observed paths of the stones that moved, the board in the first interval where
+no in-play stone moves, and the points lying on that board. It is built by
+`prototype/throw_effect.py` from saved observations; detection, tracking and
+geometry are unchanged. `prototype/track_colours.py` adds a colour to every
+tracked stone with the existing OpenCLIP component.
+
+This is a development replay, checked on one 14-minute NOR–CZE interval: 8 of
+10 detected throws received a board and 2 stayed unresolved. Three throws were
+compared with source frames by the developing agent with predictions visible;
+that is not independent ground truth. Positions inherit unverified calibration,
+tracker IDs are not physical identity, missed throws are not counted, and
+per-throw points are not accumulated into end or match scores. Evidence is in
+`validation/throw-effect-development-2026-11-11/`.
+
+### Tests
+
+```sh
+PYTHONPATH=/path/to/state-deps:$PWD feasibility/scripts/python.sh -m pytest -q prototype/tests \
+  --ignore prototype/tests/test_online_checkpoint.py
+```
+
+`test_online_checkpoint.py` needs PyTorch and runs in the detector environment.
+Model weights, source recordings and most run evidence are not in the
+repository; the workbench cannot analyse a new video without the detector
+checkpoint named in `prototype/config/workbench.json`.
+
 For supervised local operation on Linux, a user service is provided. With this
 checkout at `~/curling-project`, run:
 

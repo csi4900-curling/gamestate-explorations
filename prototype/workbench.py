@@ -111,13 +111,16 @@ class Workbench:
         result=focused_views(self,result)
         # Viewer HTML can be repaired without rerunning immutable observations.
         # Give the browser a new URL when that presentation changes.
+        throws = self.data / "jobs" / identifier / "result/throws/index.html"
+        if throws.exists():
+            result["throw_url"] = self.file_url(throws)
         result["viewer_revisions"] = {}
-        for key in ("board_url", "trajectory_url"):
+        for key in ("board_url", "trajectory_url", "throw_url"):
             url = result.get(key)
             if url and url.startswith("/files/"):
                 path = (self.root / unquote(urlsplit(url).path[len("/files/"):])).resolve()
                 if path.is_relative_to(self.root) and path.is_file():
-                    assets = [path, path.with_name("states.js"), path.with_name("rink-data.js")]
+                    assets = [path, path.with_name("states.js"), path.with_name("rink-data.js"), path.with_name("effects.js")]
                     fingerprint = "".join(digest(asset) for asset in assets if asset.is_file())
                     result["viewer_revisions"][key] = hashlib.sha256(fingerprint.encode()).hexdigest()[:16]
         events_path = self.data / "jobs" / identifier / "observations/events.json"
@@ -609,6 +612,24 @@ class Workbench:
                 ],
             ),
             (
+                "stone_colours",
+                inference,
+                [p["colour_dependencies"]],
+                [
+                    wrapper,
+                    "-m",
+                    "prototype.track_colours",
+                    "--public-run",
+                    str(output / "observations"),
+                    "--video",
+                    spec["video"],
+                    "--output",
+                    str(output / "track-colours.json"),
+                    "--config",
+                    spec["colour_config"],
+                ],
+            ),
+            (
                 "boards",
                 state_python,
                 [p["state_dependencies"]],
@@ -667,6 +688,7 @@ class Workbench:
                         "observation_view": "Reusing verified observations and rebuilding views",
                         "colour": "Classifying stone colours",
                         "trajectories": "Building trajectory views",
+                        "stone_colours": "Classifying colours of all tracked stones",
                         "boards": "Building synchronized board state",
                         "report": "Preparing report",
                     }[name],
@@ -689,7 +711,7 @@ class Workbench:
                         [str(code_root), str(code_root / "prototype"), *extra]
                     ),
                 }
-                if name == "colour":
+                if name in ("colour", "stone_colours"):
                     stage_env["HF_HUB_OFFLINE"] = "1"
                 with (output / (name + ".log")).open("w") as log:
                     process = subprocess.Popen(

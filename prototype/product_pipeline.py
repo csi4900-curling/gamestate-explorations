@@ -88,6 +88,17 @@ def boards(spec):
         output=result / "boards",
         state_timeline=result / "state-timeline.json",
     )
+    from prototype.throw_effect import run as throw_effects
+    colours = output / "track-colours.json"
+    throw_effects(
+        public_run=output / "observations",
+        states=result / "boards/states.json",
+        config_path=spec["state_config"],
+        match_config=spec["match_config"],
+        output=result / "throws",
+        video=spec["video"],
+        track_colours=colours if colours.exists() else None,
+    )
 
 
 def finish(spec):
@@ -96,6 +107,7 @@ def finish(spec):
     events = json.loads((output / "observations/events.json").read_text())
     board = json.loads((result / "boards/manifest.json").read_text())
     aggregate = json.loads((result / "aggregate-rink.json").read_text())
+    throws = json.loads((result / "throws/effects.json").read_text())
     fragment_samples=[p for e in aggregate.get('unresolved_camera_fragments',[]) for s in e['segments'] for p in s.get('geometry_samples',[])]
     summary = {
         "schema_version": "curling-product-result-v1",
@@ -108,6 +120,9 @@ def finish(spec):
         "observed_board_frames": len(board["timeline"]["times"]),
         "trajectory_viewer": "trajectories/index.html",
         "board_viewer": "boards/index.html",
+        "throw_viewer": "throws/index.html",
+        "throws_with_board_change": throws["summary"]["with_board_change"],
+        "throws_without_board_change": throws["summary"]["unresolved"],
         "physical_identity_verified": False,
         "metric_geometry_accuracy_verified": False,
         "official_scoring_verified": False,
@@ -176,8 +191,8 @@ def finish(spec):
     ).write_text("""<!doctype html><meta charset="utf-8"><title>Curling results</title>
 <style>body{font:16px system-ui;margin:20px;color:#203641}a{color:#156777}iframe{width:100%;height:85vh;border:1px solid #d5e1e4}</style>
 <h1>Match review</h1><p>Source detections and estimated trajectories. Positions depend on calibration; tracking gaps and provisional camera links remain visible.</p>
-<p><a href="trajectories/index.html" target="review">Trajectories</a> · <a href="boards/index.html" target="review">Stone observations</a> · <a href="summary.json">Result summary</a> · <a href="calibration/index.html">Source calibration evidence (explicit-calibration runs)</a></p>
-<iframe name="review" title="Synchronized match review" src="boards/index.html"></iframe>""")
+<p><a href="throws/index.html" target="review">Throws</a> · <a href="trajectories/index.html" target="review">Trajectories</a> · <a href="boards/index.html" target="review">Stone observations</a> · <a href="summary.json">Result summary</a> · <a href="calibration/index.html">Source calibration evidence (explicit-calibration runs)</a></p>
+<iframe name="review" title="Synchronized match review" src="throws/index.html"></iframe>""")
     if not observation_summary.get('manual_calibration'):
         page=result/'index.html'
         page.write_text(page.read_text().replace(' · <a href="calibration/index.html">Source calibration evidence (explicit-calibration runs)</a>', ''))
