@@ -1,0 +1,88 @@
+{
+  "status": "development_fitted_2024_split_screen_candidate",
+  "source_id": "mKtmFW-B5UI",
+  "source_sha256": "6007ff0d33771aec1aa45f26b5e9271f151e77bcbb6c85a4b613e3aaf3163eae",
+  "source_interval_s": [
+    7110.0,
+    7200.0
+  ],
+  "input_sha256": "e0eafbf5190f2247310faa7d66e12d1cdf9f61c51f54a47e9692c64ffc03a58b",
+  "motion_sha256": "12da45b313974035c72cdfdc77d016d9e8fac4508d1e8ffe455649a08e1d93f8",
+  "model_sha256": "f53813d594ed2f820c14d5dac79a4490234e99c3dff28c267ded99b7541f704c",
+  "runner_sha256": "44ccc5d1fc494acaf7f0eadb09f4d9b3eb1349ee1a1492e8baf01cb244a2451b",
+  "events": [
+    {
+      "id": "S01",
+      "track_id": 26,
+      "colour": "red",
+      "crossing_time_s": 7126.42,
+      "time_semantics": "observed_track_midpoint",
+      "confirmed_at_s": 7127.8,
+      "first_observed_s": 7124.7,
+      "evidence_kind": "early_roi_motion_span",
+      "release_time_s": null,
+      "gate_y_px": null,
+      "crossing_x_px": 135.89814814814815,
+      "passage_y_px": 18.22,
+      "velocity_px_s": [
+        -5.856734592445153,
+        8.065904572564376
+      ],
+      "observations_at_confirmation": 30,
+      "observed_span_px": 24.44,
+      "median_candidate_bbox_width_px": 9.0,
+      "median_candidate_bbox_height_px": 10.0,
+      "mean_body_support": 0.43506102693602694,
+      "recent_track_duration_s": 3.100000000000364,
+      "direction_consistency": 1.0,
+      "view_motion": "positive_y"
+    }
+  ],
+  "withheld_events": [
+    {
+      "id": "S02",
+      "track_id": 69,
+      "colour": "red",
+      "crossing_time_s": 7135.002,
+      "time_semantics": "observed_track_midpoint",
+      "confirmed_at_s": 7135.6,
+      "first_observed_s": 7134.0,
+      "evidence_kind": "early_roi_motion_span",
+      "release_time_s": null,
+      "gate_y_px": null,
+      "crossing_x_px": 90.99236641221374,
+      "passage_y_px": 22.24,
+      "velocity_px_s": [
+        -2.456744003145702,
+        16.38088871411736
+      ],
+      "observations_at_confirmation": 13,
+      "observed_span_px": 24.119999999999997,
+      "median_candidate_bbox_width_px": 11.0,
+      "median_candidate_bbox_height_px": 16.0,
+      "mean_body_support": 0.9972027972027973,
+      "recent_track_duration_s": 1.6000000000003638,
+      "direction_consistency": 1.0,
+      "view_motion": "positive_y"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "S01",
+      "status": "confirmed",
+      "reason": "compact_tracked_motion",
+      "changed_px_80x80": 1189
+    },
+    {
+      "id": "S02",
+      "status": "unconfirmed",
+      "reason": "outside_ice_corridor",
+      "changed_px_80x80": 1211
+    }
+  ],
+  "limitations": [
+    "Motion-area cutoff was chosen after observing three 2024 development recordings.",
+    "The 2024 fixed split-screen left panel is the only supported camera layout.",
+    "Observed passage time is a track midpoint, not exact release time."
+  ]
+}

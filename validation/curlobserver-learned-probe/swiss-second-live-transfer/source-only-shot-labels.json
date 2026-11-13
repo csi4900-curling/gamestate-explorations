@@ -1,0 +1,23 @@
+{
+  "status": "agent_source_only_shot_origin_labels_before_model_inference",
+  "source_sha256": "49429abdd3796e8240e66c201d37e94e71a7bb6225890b2492bea26d2f70d560",
+  "source_interval_s": [3300, 3600],
+  "review": "validation/curlobserver-learned-probe/swiss-second-live-transfer/shot-review",
+  "meaning": "1 = throwing-side action of a delivered stone visible; 0 = no such action; null = setup/release boundary uncertain from the source-only sheet",
+  "labels": {
+    "S01": 0, "S02": 0, "S03": 0, "S04": 1, "S05": 0,
+    "S06": 0, "S07": 0, "S08": null, "S09": 0, "S10": 1,
+    "S11": 0, "S12": 0, "S13": 0, "S14": 0, "S15": 0,
+    "S16": 1, "S17": 0, "S18": 0, "S19": 0, "S20": 1,
+    "S21": 0, "S22": 0, "S23": 0, "S24": 0, "S25": 1,
+    "S26": 0, "S27": 0
+  },
+  "ambiguous_notes": {
+    "S08": "Yellow player has a stone in a short shot before a separate wide view and later throwing-side shot; exact delivery boundary is unclear."
+  },
+  "limitations": [
+    "Single-agent source-only visual review of three sampled frames per detected shot.",
+    "Neither independent throw ground truth nor release-time labels.",
+    "A cut scanner can miss edits, and a shot can change phase internally."
+  ]
+}

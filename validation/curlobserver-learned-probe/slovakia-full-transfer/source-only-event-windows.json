@@ -1,0 +1,26 @@
+{
+  "source_sha256": "eba1d86944a2f4278b6e5e2c7549d12b47e5e8a51bf0c680b2db372c6ec12420",
+  "reviewer": "implementing agent",
+  "method": "Source video full-frame contact sheets at 5-second spacing; event windows are coarse visual delivery intervals, not exact release times. Frozen before inspecting candidate ledger rows in these intervals.",
+  "independent_validation": false,
+  "sampled_intervals_seconds": [[2100, 2400], [5100, 5400], [6900, 7200]],
+  "events": [
+    {"id": "S1", "delivery_interval_seconds": [2115, 2130], "colour": "yellow", "status": "clear"},
+    {"id": "S2", "delivery_interval_seconds": [2230, 2245], "colour": "red", "status": "clear"},
+    {"id": "S3", "delivery_interval_seconds": [2280, 2295], "colour": "yellow", "status": "clear"},
+    {"id": "S4", "delivery_interval_seconds": [2320, 2335], "colour": "red", "status": "clear"},
+    {"id": "S5", "delivery_interval_seconds": [2360, 2375], "colour": "yellow", "status": "clear"},
+    {"id": "S6", "delivery_interval_seconds": [5135, 5155], "colour": "red", "status": "clear"},
+    {"id": "S7", "delivery_interval_seconds": [5210, 5230], "colour": "yellow", "status": "clear"},
+    {"id": "S8", "delivery_interval_seconds": [5320, 5340], "colour": "yellow", "status": "clear"},
+    {"id": "S9", "delivery_interval_seconds": [5360, 5380], "colour": "red", "status": "clear"},
+    {"id": "S10", "delivery_interval_seconds": [6930, 6950], "colour": "red", "status": "clear"},
+    {"id": "S11", "delivery_interval_seconds": [7020, 7045], "colour": "yellow", "status": "clear"},
+    {"id": "S12", "delivery_interval_seconds": [7080, 7095], "colour": "red", "status": "clear"},
+    {"id": "S13", "delivery_interval_seconds": [7120, 7145], "colour": "yellow", "status": "clear"}
+  ],
+  "uncertain_boundary_events": [
+    {"interval_seconds": [5100, 5125], "colour": "red", "reason": "A red stone is seen travelling at 5115, but the delivery may have begun before the sampled interval."},
+    {"interval_seconds": [6900, 6915], "colour": "unknown", "reason": "Board aftermath of a prior delivery at the sampled interval boundary; no visible delivery in the interval."}
+  ]
+}

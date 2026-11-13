@@ -1,0 +1,26 @@
+{
+  "status": "agent_source_review_of_selected_bridge_crossings_not_independent_throw_labels",
+  "source_sha256": "6007ff0d33771aec1aa45f26b5e9271f151e77bcbb6c85a4b613e3aaf3163eae",
+  "bridge_triage_sha256": "20932d1ab8a22bf0cbea3c5fc03f5648d01c8ecd21b7f1dbe5437c857983bae2",
+  "crossing_source_manifest_sha256": "6eee00a82c68a6ffa9339ceb95ffd453f4da2256bd2983b69e6f70814dd07bef",
+  "crossing_patch_diagnostic_sha256": "c6021e754f3cad77224e1ed4e7d269a5c27e3679b4479a268cce7360389cf4df",
+  "reviewer": "development_agent",
+  "rows": [
+    {"candidate_id": "R01-S56", "crossing_source_class": "stone_at_tracked_crossing"},
+    {"candidate_id": "R01-S58", "crossing_source_class": "nonstone_at_tracked_crossing", "object": "jersey_logo"},
+    {"candidate_id": "R01-S59", "crossing_source_class": "stone_at_tracked_crossing"},
+    {"candidate_id": "R01-S63", "crossing_source_class": "stone_at_tracked_crossing"},
+    {"candidate_id": "R01-S117", "crossing_source_class": "occluded_identity_uncertain"},
+    {"candidate_id": "R01-S156", "crossing_source_class": "nonstone_at_tracked_crossing", "object": "player"},
+    {"candidate_id": "R01-S160", "crossing_source_class": "stone_at_tracked_crossing"},
+    {"candidate_id": "R01-S181", "crossing_source_class": "stone_at_tracked_crossing"},
+    {"candidate_id": "R01-S184", "crossing_source_class": "nonstone_at_tracked_crossing", "object": "player"},
+    {"candidate_id": "R01-S191", "crossing_source_class": "nonstone_at_tracked_crossing", "object": "wheelchair_hardware"}
+  ],
+  "limitations": [
+    "The cases were selected by the bridge detector and inspected by the same development agent.",
+    "A visible stone at the tracked crossing is not independent proof of a physical delivery.",
+    "S117 remains visually occluded at the tracked crossing even though a right stone prefix appears later.",
+    "This is neither an exhaustive match sample nor a throw F1 label set."
+  ]
+}

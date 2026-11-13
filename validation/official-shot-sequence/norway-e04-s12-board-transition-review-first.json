@@ -1,0 +1,77 @@
+{
+  "status": "retrospective_source_board_transition_review_not_independent_validation",
+  "source_video_sha256": "c49fb90959c13b690447dccb87a0b78e0bba8537aa961339a92f934226baf2b3",
+  "official_boards_sha256": "2ec935cdb82fbbb1de27f1b5a383138bffe57bb4bdc567506f9457fadd3233bd",
+  "runner_sha256": "e4d6f075109560b9b9bb82823be517bfd3f15dd31ace6b3299080befc2bed6ed",
+  "contact_sheet_sha256": "89a22391a551865e17cf10c843a0db3553c44a2364feef8c6f7c8285192dc9c8",
+  "frame_times_s": [
+    3909.0,
+    3912.0,
+    3915.0,
+    3918.0,
+    3921.0
+  ],
+  "candidate_camera_shot_id": "S281",
+  "receiving_camera_shot_id": "S282",
+  "source_visual_observation": {
+    "3909_s": "Red stone and yellow stone visible in the house as red approaches yellow.",
+    "3912_s": "Yellow stone no longer visible in the house; red stone on right side.",
+    "3918_to_3921_s": "One red stone appears stable on right side of the house; no yellow stone visible in the house.",
+    "scope": "Visible house in sampled source frames only; stones elsewhere on the sheet are not inventoried."
+  },
+  "official_diagrams": {
+    "before": {
+      "shot_id": "PREL001501-E04-S11",
+      "house_stone_counts": {
+        "red": 0,
+        "yellow": 1
+      },
+      "stones": [
+        {
+          "colour": "yellow",
+          "diagram_pixel": [
+            157,
+            465
+          ],
+          "house_radius_coordinates": [
+            0.0583,
+            0.2083
+          ],
+          "fill_score_px": 106,
+          "hough_radius_px": 8.2,
+          "near_diagram_edge": false,
+          "low_fill_margin": false
+        }
+      ]
+    },
+    "after": {
+      "shot_id": "PREL001501-E04-S12",
+      "house_stone_counts": {
+        "red": 1,
+        "yellow": 0
+      },
+      "stones": [
+        {
+          "colour": "red",
+          "diagram_pixel": [
+            227,
+            482
+          ],
+          "house_radius_coordinates": [
+            0.6417,
+            0.35
+          ],
+          "fill_score_px": 146,
+          "hough_radius_px": 8.4,
+          "near_diagram_edge": false,
+          "low_fill_margin": false
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "Matching board counts and layout support the sequence hypothesis but do not prove physical identity across the camera cut.",
+    "The source observation is retrospective and not an independent blinded board label.",
+    "No calibrated physical position, complete sheet board state, or exact settle time is inferred."
+  ]
+}

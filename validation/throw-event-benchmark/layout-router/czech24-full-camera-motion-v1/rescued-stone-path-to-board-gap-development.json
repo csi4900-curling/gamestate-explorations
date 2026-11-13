@@ -1,0 +1,201 @@
+{
+  "status": "development_rescued_stone_path_to_board_gap_not_identity_proof",
+  "source_sha256": "e63c9b063b5b11ad5173083dffe974d909c78e5d01312740b87bccc006402013",
+  "input_sha256": {
+    "current_raw": "6742154c02b99c1c3c9b28b11d96a981959264d2cd5082562f09b6ec839048fe",
+    "candidate_state_union": "99f3306758f458dd051654cde90d60c27c25b1df8b99c25fdb13b7008bc3b0d5",
+    "historical_motion": "5f24a8066fb58bba86c2f6892d184d49822dbeddba1a93e3b79435b9c22eca9a",
+    "historical_episodes": "95df9690699de9b54a36d2e43204aa6dc65d142243aaa61f1a58b43e9c5fd59e"
+  },
+  "code_sha256": {
+    "runner": "de31a2b281f0b029dc45784af8897b8e03bcbf22fd55878279db5349e739d8f6",
+    "board_comparison": "a2aaabb96503b93540a754fb5c4b18ac9cee1809539951e7c94073a7cfe26f03"
+  },
+  "rows": [
+    {
+      "candidate_id": "S04",
+      "passage_time_s": 191.949,
+      "episode_id": "E003",
+      "selected_receiving_motion_status": "provisional_unique_far_entry_motion_path",
+      "selected_path_first_s": 197.0,
+      "selected_path_last_s": 200.0,
+      "selected_path_last_ground_position_m_conditional": [
+        0.15490097922790372,
+        12.090642330975745
+      ],
+      "same_colour_partial_board_observations": [
+        {
+          "local_observation_id": "V01",
+          "first_seen_s": 204.0,
+          "position_m_conditional": [
+            1.2821384103987714,
+            -0.32085626953780283
+          ],
+          "persistent_stone_identity": null
+        },
+        {
+          "local_observation_id": "V02",
+          "first_seen_s": 212.0,
+          "position_m_conditional": [
+            -0.6486992932503943,
+            2.0411924201452005
+          ],
+          "persistent_stone_identity": null
+        }
+      ],
+      "minimum_unobserved_path_to_board_s": 4.0,
+      "neighboring_board_comparisons": [
+        {
+          "direction": "previous_to_target",
+          "before_episode_id": "E002",
+          "after_episode_id": "E003",
+          "before_candidate_id": "E002",
+          "after_candidate_id": "E003",
+          "before_view": "right",
+          "after_view": "right",
+          "elapsed_between_crossings_s": 47.154,
+          "intervening_passage_candidate_ids": [
+            "S03"
+          ],
+          "status": "abstain_missing_partial_board",
+          "same_end_verified": false,
+          "complete_game_state": false,
+          "simulation_ready": false
+        },
+        {
+          "direction": "target_to_next",
+          "before_episode_id": "E003",
+          "after_episode_id": "E004",
+          "before_candidate_id": "E003",
+          "after_candidate_id": "E004",
+          "before_view": "right",
+          "after_view": "right",
+          "elapsed_between_crossings_s": 49.931,
+          "intervening_passage_candidate_ids": [
+            "S05"
+          ],
+          "status": "abstain_intervening_passage_candidate",
+          "same_end_verified": false,
+          "complete_game_state": false,
+          "simulation_ready": false
+        }
+      ],
+      "delivered_stone_board_identity_verified": false,
+      "physical_settle_time_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "S13",
+      "passage_time_s": 488.651,
+      "episode_id": "E011",
+      "selected_receiving_motion_status": "provisional_unique_far_entry_motion_path",
+      "selected_path_first_s": 492.5,
+      "selected_path_last_s": 499.0,
+      "selected_path_last_ground_position_m_conditional": [
+        -0.34170851273568453,
+        5.009350855823006
+      ],
+      "same_colour_partial_board_observations": [
+        {
+          "local_observation_id": "V01",
+          "first_seen_s": 505.0,
+          "position_m_conditional": [
+            0.5831928734117262,
+            1.1283049750842125
+          ],
+          "persistent_stone_identity": null
+        }
+      ],
+      "minimum_unobserved_path_to_board_s": 6.0,
+      "neighboring_board_comparisons": [
+        {
+          "direction": "previous_to_target",
+          "before_episode_id": "E010",
+          "after_episode_id": "E011",
+          "before_candidate_id": "E010",
+          "after_candidate_id": "E011",
+          "before_view": "right",
+          "after_view": "right",
+          "elapsed_between_crossings_s": 38.851,
+          "intervening_passage_candidate_ids": [],
+          "status": "view_local_partial_comparison",
+          "matched_observations": [
+            {
+              "before_local_observation_id": "V02",
+              "after_local_observation_id": "V02",
+              "colour": "yellow",
+              "distance_m_conditional": 0.0067,
+              "physical_identity_verified": false
+            },
+            {
+              "before_local_observation_id": "V03",
+              "after_local_observation_id": "V03",
+              "colour": "yellow",
+              "distance_m_conditional": 0.0033,
+              "physical_identity_verified": false
+            }
+          ],
+          "before_only_observations": [
+            "V01"
+          ],
+          "after_only_observations": [
+            "V01"
+          ],
+          "ambiguous_before_observations": [],
+          "ambiguous_after_observations": [],
+          "physical_appearance_or_removal_inferred": false,
+          "same_end_verified": false,
+          "complete_game_state": false,
+          "simulation_ready": false
+        },
+        {
+          "direction": "target_to_next",
+          "before_episode_id": "E011",
+          "after_episode_id": "E012",
+          "before_candidate_id": "E011",
+          "after_candidate_id": "E012",
+          "before_view": "right",
+          "after_view": "right",
+          "elapsed_between_crossings_s": 48.047,
+          "intervening_passage_candidate_ids": [],
+          "status": "view_local_partial_comparison",
+          "matched_observations": [
+            {
+              "before_local_observation_id": "V02",
+              "after_local_observation_id": "V01",
+              "colour": "yellow",
+              "distance_m_conditional": 0.0057,
+              "physical_identity_verified": false
+            },
+            {
+              "before_local_observation_id": "V03",
+              "after_local_observation_id": "V02",
+              "colour": "yellow",
+              "distance_m_conditional": 0.002,
+              "physical_identity_verified": false
+            }
+          ],
+          "before_only_observations": [
+            "V01"
+          ],
+          "after_only_observations": [],
+          "ambiguous_before_observations": [],
+          "ambiguous_after_observations": [],
+          "physical_appearance_or_removal_inferred": false,
+          "same_end_verified": false,
+          "complete_game_state": false,
+          "simulation_ready": false
+        }
+      ],
+      "delivered_stone_board_identity_verified": false,
+      "physical_settle_time_verified": false,
+      "simulation_ready": false
+    }
+  ],
+  "limitations": [
+    "The selected receiving paths and partial boards use conditional view-local projection, not validated physical coordinates.",
+    "A temporal gap between selected path and board observation prevents verified same-stone association.",
+    "Near-colour board matches or changes are partial observations, not physical addition, removal, or collision labels.",
+    "The source-selected cases are development diagnostics, not independent throw-event validation."
+  ]
+}

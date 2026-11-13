@@ -1,0 +1,89 @@
+{
+  "status": "development_crossing_local_identity_packet",
+  "selection_sha256": "95cbcbbcea8166a55d294672bf725b8ee2a67a6163bad1bfb02ce4d11e3732e0",
+  "runner_sha256": "d16ab3ae34063c99e5f0f5cd0d45974a103f3e4b43f81438e71ecc74caeba5bc",
+  "replay_code_sha256": "43a466781a65d9ed38284b5d611622c0f64b74b302b99c411da865f512470cba",
+  "sampling_policy": "nearest_distinct_track_points_at_crossing_minus_0.2_zero_plus_0.2_s",
+  "samples_per_event": 3,
+  "crop_size_px": [
+    48,
+    48
+  ],
+  "sources": [
+    {
+      "source_id": "Y_U6gzqORUs",
+      "video_path": "validation/source-cache/Y_U6gzqORUs-360p.mp4",
+      "video_sha256": "51d300ede336efdd8d39029f8728c9d7cac3dd0fcfdc96eb7b84832d80753e82",
+      "timeline_path": "validation/throw-event-benchmark/layout-router/full-2024-coverage/new-preflight-china24/timeline.json",
+      "timeline_sha256": "23b6d2c57f1a6ad774e07c8323a3690b904fd2d4cefe2af902bd8eddae09fb24",
+      "same_video_bytes_as_timeline": false
+    }
+  ],
+  "rows": [
+    {
+      "source_id": "Y_U6gzqORUs",
+      "event_id": "R01-S211",
+      "source_review": "real",
+      "review_kind": "prediction_targeted_identity_merge_source_clip",
+      "timeline_crossing_time_s": 6876.522,
+      "replayed_crossing_time_s": 6876.522,
+      "track_observations_at_confirmation": 54,
+      "samples": [
+        {
+          "time_s": 6876.3,
+          "pixel": [
+            187.0,
+            96.0
+          ],
+          "bbox": [
+            184,
+            92,
+            6,
+            9
+          ],
+          "body_support": 1.0,
+          "crop_path": "crops/Y_U6gzqORUs/R01-S211-1.jpg",
+          "crop_sha256": "4dccfca86b6f091c2fbbcd7dbc14d4eddd91147c613562a7439975aaa5e922d9"
+        },
+        {
+          "time_s": 6876.5,
+          "pixel": [
+            187.0,
+            89.0
+          ],
+          "bbox": [
+            184,
+            86,
+            6,
+            7
+          ],
+          "body_support": 1.0,
+          "crop_path": "crops/Y_U6gzqORUs/R01-S211-2.jpg",
+          "crop_sha256": "47b368b80ac3c9064e8e96c727304de8b15d26fd524caad3fc98dc3a24b1e9e2"
+        },
+        {
+          "time_s": 6876.7,
+          "pixel": [
+            187.0,
+            81.2
+          ],
+          "bbox": [
+            182,
+            78,
+            10,
+            8
+          ],
+          "body_support": 1.0,
+          "crop_path": "crops/Y_U6gzqORUs/R01-S211-3.jpg",
+          "crop_sha256": "4f764130f01d6b0c684c32357f638c47ee0f5abc11442e578149f7a428996d31"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "R01-S211 was selected after the systematic catalog and source inspection.",
+    "The real-delivery review is same-agent source-clip evidence, not independent event ground truth.",
+    "Even crossing-local crops can contain occlusion or a tracker identity switch.",
+    "Patch identity is not a verified delivered-stone event."
+  ]
+}

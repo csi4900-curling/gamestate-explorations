@@ -1,0 +1,79 @@
+{
+  "status": "development_source_activity_coverage_overlay_not_throw_truth",
+  "source_id": "Vp3TIdOAlrc",
+  "source_sha256": "aff12e78edeb5e108d142aed3e19b61c3956b4fddc8b2fd8b202713746771739",
+  "source_interval_s": [
+    0.0,
+    8340.0
+  ],
+  "original_supported_seconds": 8100.0,
+  "original_unknown_seconds": 240.0,
+  "newly_unsupported_seconds": 365,
+  "revised_supported_seconds": 7735.0,
+  "revised_unknown_seconds": 605.0,
+  "revised_supported_runs": [
+    {
+      "source_run_id": "R01",
+      "layout": "split_2024",
+      "interval_s": [
+        90.0,
+        2835
+      ]
+    },
+    {
+      "source_run_id": "R01",
+      "layout": "split_2024",
+      "interval_s": [
+        3200,
+        8100.0
+      ]
+    },
+    {
+      "source_run_id": "R02",
+      "layout": "split_2024",
+      "interval_s": [
+        8190.0,
+        8280.0
+      ]
+    }
+  ],
+  "newly_unsupported_intervals": [
+    {
+      "interval_s": [
+        2835,
+        3200
+      ],
+      "reason": "left_panel_static_while_right_panel_active",
+      "source_run_id": "R01",
+      "median_left_mae": 1.2361,
+      "median_right_mae": 16.3357,
+      "existing_event_ids_inside": []
+    }
+  ],
+  "original_coverage_gaps_s": [
+    [
+      0.0,
+      90.0
+    ],
+    [
+      8100.0,
+      8190.0
+    ],
+    [
+      8280.0,
+      8340.0
+    ]
+  ],
+  "original_event_count_unchanged": 109,
+  "minimum_right_panel_median_mae": 5.0,
+  "timeline_sha256": "db494eb0ce0c2dce4c0815ad65a4a0e7e6f32f98a64a2f2d8198b72547b3b5c2",
+  "activity_audit_sha256": "4777b0c57f790242c377b89a74e82beef9f15093999bff5731bb71c872337a62",
+  "overlay_code_sha256": "5cd0b92a740ff5ea405310af52d3f43fd0873ae04a2b08f6c886c4d246b2f4e9",
+  "runner_sha256": "6383a1d9a2cfddbfe34230cb6b28942588410b005697c9ccc881e4efc6809165",
+  "limitations": [
+    "The active-static thresholds were chosen after inspecting Latvia and Italy source frames.",
+    "A static left panel can be a still camera view or frozen feed; this audit does not distinguish them.",
+    "Source-image activity does not label individual delivered stones or estimate throw F1.",
+    "Original candidate events are preserved, including any that fall inside a newly unsupported interval."
+  ]
+}

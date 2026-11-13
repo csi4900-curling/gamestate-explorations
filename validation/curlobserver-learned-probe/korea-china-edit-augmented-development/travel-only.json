@@ -1,0 +1,80 @@
+{
+  "status": "postscore_development_counter_backed_travel_only_candidates",
+  "source_sha256": "b779f017ff450293d13f589e3eb64816b3620fee81081e06c9a4b368e90ccbb9",
+  "source_interval_s": [
+    0,
+    6829
+  ],
+  "origins_sha256": "08b0bf049a1aaf3acb3b95487422a0602127f068dcd3e5cc7d4e37ae101ed533",
+  "counter_alignment_sha256": "c7cc863903b343cbe49ccd430c3256eb66d16ae9eee17b8e46f2625e659db9b6",
+  "cap_motion_sha256": "7f22368f080261e0d216e37b40f361c65a573198f55d53bbdec327779e636a4b",
+  "learned_motion_sha256": "34e3cb90efc486958a79504649177e2f8be9041222871e7f6ecc4a20736d85bd",
+  "fused_events_sha256": "6189016592a7532059dc748fb34db5a25647b666a9168b7a7b4f9a89188daf54",
+  "fallback_code_sha256": "32d37ea3783719f8e50caeac3f177c042bbdd7087c653f60ecea4fe1013de049",
+  "runner_sha256": "3bdb4b5f0f34010db8b8f07df7162f222b05ada8a1c25f5755d3835c027ec07e",
+  "candidate_count": 1,
+  "rows": [
+    {
+      "counter_id": "B59",
+      "colour": "yellow",
+      "counter_update_s": 4439.0,
+      "candidate_shots": [
+        {
+          "shot_id": "S354",
+          "shot_interval_s": [
+            4421.0,
+            4450.0
+          ],
+          "channel_support": [
+            {
+              "channel": "cap",
+              "tracks": [
+                {
+                  "id": "S354-Y01",
+                  "colour": "yellow",
+                  "interval_s": [
+                    4421.0,
+                    4449.8
+                  ],
+                  "span_px": 126.09,
+                  "point_count": 143
+                }
+              ]
+            },
+            {
+              "channel": "learned",
+              "tracks": [
+                {
+                  "id": "S354-Y01",
+                  "colour": "yellow",
+                  "interval_s": [
+                    4421.0,
+                    4449.8
+                  ],
+                  "span_px": 123.46,
+                  "point_count": 135
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "status": "unlocalized_travel_candidate",
+      "travel_shot_id": "S354",
+      "release_window_s": [
+        4394.0,
+        4421.0
+      ],
+      "observed_travel_window_s": [
+        4421.0,
+        4449.8
+      ]
+    }
+  ],
+  "limitations": [
+    "The source broadcast may omit the physical release; the release window is broad.",
+    "Same-colour cap and learned tracks can depict a displaced old stone.",
+    "Counter updates can be delayed or missing; these are candidate events, not F1 truth.",
+    "This fallback was specified after full-source development misses and is not independent validation."
+  ]
+}

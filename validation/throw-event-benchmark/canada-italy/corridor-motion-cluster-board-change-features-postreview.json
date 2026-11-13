@@ -1,0 +1,980 @@
+{
+  "status": "postreview_prediction_only_motion_cluster_board_change_not_event_truth",
+  "source_id": "Vp3TIdOAlrc",
+  "source_sha256": "aff12e78edeb5e108d142aed3e19b61c3956b4fddc8b2fd8b202713746771739",
+  "source_interval_s": [
+    1650.0,
+    2760.0
+  ],
+  "candidates_sha256": "10b4166a2275ced86d4fa4c8d4395a42a46e83aa36430567b60d0aab1bd5fa5d",
+  "group_code_sha256": "e7e3f28f6da270a6e30991703921caeae184e7b5797672bae8199487723cf708",
+  "pixel_feature_code_sha256": "84008948b0b4d7a7980f3e54717b2a0670f2dddf397b59cf267d9de89a5a1aca",
+  "runner_sha256": "1c1fbce52579d96c93467cdac8b7dd9afd6b1dbc88b7dbd12a8442ad86f8e331",
+  "max_group_span_s": 25,
+  "pre_offsets_from_first_s": [
+    -25,
+    -20,
+    -15
+  ],
+  "post_offsets_from_last_s": [
+    15,
+    20,
+    25
+  ],
+  "adjacent_group_guard_s": 1,
+  "group_count": 20,
+  "multi_candidate_group_count": 3,
+  "status_counts": {
+    "partial_cap_image_comparison": 15,
+    "abstain_cross_window_scene_change": 3,
+    "abstain_adjacent_group_or_interval_boundary": 2
+  },
+  "rows": [
+    {
+      "colour": "red",
+      "view_motion": "positive_y",
+      "first_time_s": 1691.45,
+      "last_time_s": 1691.45,
+      "member_ids": [
+        "S01"
+      ],
+      "group_id": "G001",
+      "physical_throw_verified": false,
+      "conditional_receiving_view": "left",
+      "previous_group_last_s": 1650.0,
+      "next_group_first_s": 1793.1,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "partial_cap_image_comparison",
+      "pre_sample_times_s": [
+        1666.45,
+        1671.45,
+        1676.45
+      ],
+      "post_sample_times_s": [
+        1706.45,
+        1711.45,
+        1716.45
+      ],
+      "pre_repeated_cap_count": 5,
+      "post_repeated_cap_count": 4,
+      "cross_window_scene_mae": 2.308,
+      "image_cap_delta": {
+        "locally_retained": [
+          {
+            "before_local_id": "C02",
+            "after_local_id": "C03",
+            "colour": "red",
+            "pixel_shift": 2.0
+          },
+          {
+            "before_local_id": "C03",
+            "after_local_id": "C04",
+            "colour": "red",
+            "pixel_shift": 0.0
+          }
+        ],
+        "no_longer_observed": [
+          "C01",
+          "C04",
+          "C05"
+        ],
+        "newly_observed": [
+          "C01",
+          "C02"
+        ],
+        "unresolved_before": [],
+        "unresolved_after": [],
+        "physical_transition_verified": false,
+        "simulation_ready": false
+      }
+    },
+    {
+      "colour": "yellow",
+      "view_motion": "positive_y",
+      "first_time_s": 1793.1,
+      "last_time_s": 1793.1,
+      "member_ids": [
+        "S03"
+      ],
+      "group_id": "G002",
+      "physical_throw_verified": false,
+      "conditional_receiving_view": "left",
+      "previous_group_last_s": 1691.45,
+      "next_group_first_s": 1824.95,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "partial_cap_image_comparison",
+      "pre_sample_times_s": [
+        1768.1,
+        1773.1,
+        1778.1
+      ],
+      "post_sample_times_s": [
+        1808.1,
+        1813.1,
+        1818.1
+      ],
+      "pre_repeated_cap_count": 7,
+      "post_repeated_cap_count": 1,
+      "cross_window_scene_mae": 9.84,
+      "image_cap_delta": {
+        "locally_retained": [
+          {
+            "before_local_id": "C05",
+            "after_local_id": "C01",
+            "colour": "red",
+            "pixel_shift": 4.0
+          }
+        ],
+        "no_longer_observed": [
+          "C01",
+          "C02",
+          "C03",
+          "C04",
+          "C06",
+          "C07"
+        ],
+        "newly_observed": [],
+        "unresolved_before": [],
+        "unresolved_after": [],
+        "physical_transition_verified": false,
+        "simulation_ready": false
+      }
+    },
+    {
+      "colour": "red",
+      "view_motion": "positive_y",
+      "first_time_s": 1824.95,
+      "last_time_s": 1843.268,
+      "member_ids": [
+        "S07",
+        "S08",
+        "S10"
+      ],
+      "group_id": "G003",
+      "physical_throw_verified": false,
+      "conditional_receiving_view": "left",
+      "previous_group_last_s": 1793.1,
+      "next_group_first_s": 1903.233,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_cross_window_scene_change",
+      "pre_sample_times_s": [
+        1799.95,
+        1804.95,
+        1809.95
+      ],
+      "post_sample_times_s": [
+        1858.268,
+        1863.268,
+        1868.268
+      ],
+      "pre_repeated_cap_count": 5,
+      "post_repeated_cap_count": 1,
+      "cross_window_scene_mae": 13.598,
+      "image_cap_delta": null
+    },
+    {
+      "colour": "yellow",
+      "view_motion": "negative_y",
+      "first_time_s": 1903.233,
+      "last_time_s": 1903.233,
+      "member_ids": [
+        "S12"
+      ],
+      "group_id": "G004",
+      "physical_throw_verified": false,
+      "conditional_receiving_view": "right",
+      "previous_group_last_s": 1843.268,
+      "next_group_first_s": 1948.142,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "partial_cap_image_comparison",
+      "pre_sample_times_s": [
+        1878.233,
+        1883.233,
+        1888.233
+      ],
+      "post_sample_times_s": [
+        1918.233,
+        1923.233,
+        1928.233
+      ],
+      "pre_repeated_cap_count": 0,
+      "post_repeated_cap_count": 0,
+      "cross_window_scene_mae": 3.02,
+      "image_cap_delta": {
+        "locally_retained": [],
+        "no_longer_observed": [],
+        "newly_observed": [],
+        "unresolved_before": [],
+        "unresolved_after": [],
+        "physical_transition_verified": false,
+        "simulation_ready": false
+      }
+    },
+    {
+      "colour": "red",
+      "view_motion": "negative_y",
+      "first_time_s": 1948.142,
+      "last_time_s": 1956.317,
+      "member_ids": [
+        "S13",
+        "S14"
+      ],
+      "group_id": "G005",
+      "physical_throw_verified": false,
+      "conditional_receiving_view": "right",
+      "previous_group_last_s": 1903.233,
+      "next_group_first_s": 1998.66,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "partial_cap_image_comparison",
+      "pre_sample_times_s": [
+        1923.142,
+        1928.142,
+        1933.142
+      ],
+      "post_sample_times_s": [
+        1971.317,
+        1976.317,
+        1981.317
+      ],
+      "pre_repeated_cap_count": 1,
+      "post_repeated_cap_count": 2,
+      "cross_window_scene_mae": 3.197,
+      "image_cap_delta": {
+        "locally_retained": [
+          {
+            "before_local_id": "C01",
+            "after_local_id": "C02",
+            "colour": "yellow",
+            "pixel_shift": 0.0
+          }
+        ],
+        "no_longer_observed": [],
+        "newly_observed": [
+          "C01"
+        ],
+        "unresolved_before": [],
+        "unresolved_after": [],
+        "physical_transition_verified": false,
+        "simulation_ready": false
+      }
+    },
+    {
+      "colour": "yellow",
+      "view_motion": "negative_y",
+      "first_time_s": 1998.66,
+      "last_time_s": 1998.66,
+      "member_ids": [
+        "S15"
+      ],
+      "group_id": "G006",
+      "physical_throw_verified": false,
+      "conditional_receiving_view": "right",
+      "previous_group_last_s": 1956.317,
+      "next_group_first_s": 2001.711,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_adjacent_group_or_interval_boundary"
+    },
+    {
+      "colour": "red",
+      "view_motion": "negative_y",
+      "first_time_s": 2001.711,
+      "last_time_s": 2001.711,
+      "member_ids": [
+        "S16"
+      ],
+      "group_id": "G007",
+      "physical_throw_verified": false,
+      "conditional_receiving_view": "right",
+      "previous_group_last_s": 1998.66,
+      "next_group_first_s": 2053.042,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_adjacent_group_or_interval_boundary"
+    },
+    {
+      "colour": "red",
+      "view_motion": "negative_y",
+      "first_time_s": 2053.042,
+      "last_time_s": 2053.042,
+      "member_ids": [
+        "S17"
+      ],
+      "group_id": "G008",
+      "physical_throw_verified": false,
+      "conditional_receiving_view": "right",
+      "previous_group_last_s": 2001.711,
+      "next_group_first_s": 2133.157,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_cross_window_scene_change",
+      "pre_sample_times_s": [
+        2028.042,
+        2033.042,
+        2038.042
+      ],
+      "post_sample_times_s": [
+        2068.042,
+        2073.042,
+        2078.042
+      ],
+      "pre_repeated_cap_count": 2,
+      "post_repeated_cap_count": 2,
+      "cross_window_scene_mae": 33.571,
+      "image_cap_delta": null
+    },
+    {
+      "colour": "yellow",
+      "view_motion": "negative_y",
+      "first_time_s": 2133.157,
+      "last_time_s": 2133.157,
+      "member_ids": [
+        "S18"
+      ],
+      "group_id": "G009",
+      "physical_throw_verified": false,
+      "conditional_receiving_view": "right",
+      "previous_group_last_s": 2053.042,
+      "next_group_first_s": 2181.55,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "partial_cap_image_comparison",
+      "pre_sample_times_s": [
+        2108.157,
+        2113.157,
+        2118.157
+      ],
+      "post_sample_times_s": [
+        2148.157,
+        2153.157,
+        2158.157
+      ],
+      "pre_repeated_cap_count": 2,
+      "post_repeated_cap_count": 2,
+      "cross_window_scene_mae": 3.702,
+      "image_cap_delta": {
+        "locally_retained": [
+          {
+            "before_local_id": "C01",
+            "after_local_id": "C01",
+            "colour": "red",
+            "pixel_shift": 1.118
+          }
+        ],
+        "no_longer_observed": [
+          "C02"
+        ],
+        "newly_observed": [
+          "C02"
+        ],
+        "unresolved_before": [],
+        "unresolved_after": [],
+        "physical_transition_verified": false,
+        "simulation_ready": false
+      }
+    },
+    {
+      "colour": "red",
+      "view_motion": "negative_y",
+      "first_time_s": 2181.55,
+      "last_time_s": 2181.55,
+      "member_ids": [
+        "S19"
+      ],
+      "group_id": "G010",
+      "physical_throw_verified": false,
+      "conditional_receiving_view": "right",
+      "previous_group_last_s": 2133.157,
+      "next_group_first_s": 2235.305,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "partial_cap_image_comparison",
+      "pre_sample_times_s": [
+        2156.55,
+        2161.55,
+        2166.55
+      ],
+      "post_sample_times_s": [
+        2196.55,
+        2201.55,
+        2206.55
+      ],
+      "pre_repeated_cap_count": 2,
+      "post_repeated_cap_count": 3,
+      "cross_window_scene_mae": 2.793,
+      "image_cap_delta": {
+        "locally_retained": [
+          {
+            "before_local_id": "C01",
+            "after_local_id": "C02",
+            "colour": "red",
+            "pixel_shift": 0.0
+          },
+          {
+            "before_local_id": "C02",
+            "after_local_id": "C03",
+            "colour": "yellow",
+            "pixel_shift": 0.0
+          }
+        ],
+        "no_longer_observed": [],
+        "newly_observed": [
+          "C01"
+        ],
+        "unresolved_before": [],
+        "unresolved_after": [],
+        "physical_transition_verified": false,
+        "simulation_ready": false
+      }
+    },
+    {
+      "colour": "yellow",
+      "view_motion": "negative_y",
+      "first_time_s": 2235.305,
+      "last_time_s": 2235.305,
+      "member_ids": [
+        "S20"
+      ],
+      "group_id": "G011",
+      "physical_throw_verified": false,
+      "conditional_receiving_view": "right",
+      "previous_group_last_s": 2181.55,
+      "next_group_first_s": 2291.629,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "partial_cap_image_comparison",
+      "pre_sample_times_s": [
+        2210.305,
+        2215.305,
+        2220.305
+      ],
+      "post_sample_times_s": [
+        2250.305,
+        2255.305,
+        2260.305
+      ],
+      "pre_repeated_cap_count": 3,
+      "post_repeated_cap_count": 3,
+      "cross_window_scene_mae": 2.692,
+      "image_cap_delta": {
+        "locally_retained": [
+          {
+            "before_local_id": "C02",
+            "after_local_id": "C01",
+            "colour": "red",
+            "pixel_shift": 0.5
+          },
+          {
+            "before_local_id": "C03",
+            "after_local_id": "C03",
+            "colour": "yellow",
+            "pixel_shift": 0.0
+          }
+        ],
+        "no_longer_observed": [
+          "C01"
+        ],
+        "newly_observed": [
+          "C02"
+        ],
+        "unresolved_before": [],
+        "unresolved_after": [],
+        "physical_transition_verified": false,
+        "simulation_ready": false
+      }
+    },
+    {
+      "colour": "red",
+      "view_motion": "negative_y",
+      "first_time_s": 2291.629,
+      "last_time_s": 2298.847,
+      "member_ids": [
+        "S21",
+        "S22"
+      ],
+      "group_id": "G012",
+      "physical_throw_verified": false,
+      "conditional_receiving_view": "right",
+      "previous_group_last_s": 2235.305,
+      "next_group_first_s": 2345.525,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "partial_cap_image_comparison",
+      "pre_sample_times_s": [
+        2266.629,
+        2271.629,
+        2276.629
+      ],
+      "post_sample_times_s": [
+        2313.847,
+        2318.847,
+        2323.847
+      ],
+      "pre_repeated_cap_count": 4,
+      "post_repeated_cap_count": 2,
+      "cross_window_scene_mae": 4.152,
+      "image_cap_delta": {
+        "locally_retained": [
+          {
+            "before_local_id": "C01",
+            "after_local_id": "C01",
+            "colour": "red",
+            "pixel_shift": 0.0
+          },
+          {
+            "before_local_id": "C02",
+            "after_local_id": "C02",
+            "colour": "yellow",
+            "pixel_shift": 0.0
+          }
+        ],
+        "no_longer_observed": [
+          "C03",
+          "C04"
+        ],
+        "newly_observed": [],
+        "unresolved_before": [],
+        "unresolved_after": [],
+        "physical_transition_verified": false,
+        "simulation_ready": false
+      }
+    },
+    {
+      "colour": "yellow",
+      "view_motion": "negative_y",
+      "first_time_s": 2345.525,
+      "last_time_s": 2345.525,
+      "member_ids": [
+        "S23"
+      ],
+      "group_id": "G013",
+      "physical_throw_verified": false,
+      "conditional_receiving_view": "right",
+      "previous_group_last_s": 2298.847,
+      "next_group_first_s": 2396.92,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "partial_cap_image_comparison",
+      "pre_sample_times_s": [
+        2320.525,
+        2325.525,
+        2330.525
+      ],
+      "post_sample_times_s": [
+        2360.525,
+        2365.525,
+        2370.525
+      ],
+      "pre_repeated_cap_count": 3,
+      "post_repeated_cap_count": 2,
+      "cross_window_scene_mae": 3.717,
+      "image_cap_delta": {
+        "locally_retained": [
+          {
+            "before_local_id": "C01",
+            "after_local_id": "C01",
+            "colour": "red",
+            "pixel_shift": 0.5
+          },
+          {
+            "before_local_id": "C03",
+            "after_local_id": "C02",
+            "colour": "yellow",
+            "pixel_shift": 0.0
+          }
+        ],
+        "no_longer_observed": [
+          "C02"
+        ],
+        "newly_observed": [],
+        "unresolved_before": [],
+        "unresolved_after": [],
+        "physical_transition_verified": false,
+        "simulation_ready": false
+      }
+    },
+    {
+      "colour": "red",
+      "view_motion": "negative_y",
+      "first_time_s": 2396.92,
+      "last_time_s": 2396.92,
+      "member_ids": [
+        "S24"
+      ],
+      "group_id": "G014",
+      "physical_throw_verified": false,
+      "conditional_receiving_view": "right",
+      "previous_group_last_s": 2345.525,
+      "next_group_first_s": 2463.137,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "partial_cap_image_comparison",
+      "pre_sample_times_s": [
+        2371.92,
+        2376.92,
+        2381.92
+      ],
+      "post_sample_times_s": [
+        2411.92,
+        2416.92,
+        2421.92
+      ],
+      "pre_repeated_cap_count": 4,
+      "post_repeated_cap_count": 4,
+      "cross_window_scene_mae": 2.85,
+      "image_cap_delta": {
+        "locally_retained": [
+          {
+            "before_local_id": "C01",
+            "after_local_id": "C02",
+            "colour": "red",
+            "pixel_shift": 1.0
+          },
+          {
+            "before_local_id": "C04",
+            "after_local_id": "C04",
+            "colour": "yellow",
+            "pixel_shift": 0.0
+          }
+        ],
+        "no_longer_observed": [
+          "C02",
+          "C03"
+        ],
+        "newly_observed": [
+          "C01",
+          "C03"
+        ],
+        "unresolved_before": [],
+        "unresolved_after": [],
+        "physical_transition_verified": false,
+        "simulation_ready": false
+      }
+    },
+    {
+      "colour": "yellow",
+      "view_motion": "negative_y",
+      "first_time_s": 2463.137,
+      "last_time_s": 2463.137,
+      "member_ids": [
+        "S26"
+      ],
+      "group_id": "G015",
+      "physical_throw_verified": false,
+      "conditional_receiving_view": "right",
+      "previous_group_last_s": 2396.92,
+      "next_group_first_s": 2515.76,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "partial_cap_image_comparison",
+      "pre_sample_times_s": [
+        2438.137,
+        2443.137,
+        2448.137
+      ],
+      "post_sample_times_s": [
+        2478.137,
+        2483.137,
+        2488.137
+      ],
+      "pre_repeated_cap_count": 4,
+      "post_repeated_cap_count": 4,
+      "cross_window_scene_mae": 6.058,
+      "image_cap_delta": {
+        "locally_retained": [
+          {
+            "before_local_id": "C02",
+            "after_local_id": "C01",
+            "colour": "red",
+            "pixel_shift": 1.118
+          },
+          {
+            "before_local_id": "C04",
+            "after_local_id": "C04",
+            "colour": "yellow",
+            "pixel_shift": 0.0
+          }
+        ],
+        "no_longer_observed": [
+          "C01",
+          "C03"
+        ],
+        "newly_observed": [
+          "C02",
+          "C03"
+        ],
+        "unresolved_before": [],
+        "unresolved_after": [],
+        "physical_transition_verified": false,
+        "simulation_ready": false
+      }
+    },
+    {
+      "colour": "red",
+      "view_motion": "negative_y",
+      "first_time_s": 2515.76,
+      "last_time_s": 2515.76,
+      "member_ids": [
+        "S27"
+      ],
+      "group_id": "G016",
+      "physical_throw_verified": false,
+      "conditional_receiving_view": "right",
+      "previous_group_last_s": 2463.137,
+      "next_group_first_s": 2554.893,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "partial_cap_image_comparison",
+      "pre_sample_times_s": [
+        2490.76,
+        2495.76,
+        2500.76
+      ],
+      "post_sample_times_s": [
+        2530.76,
+        2535.76,
+        2540.76
+      ],
+      "pre_repeated_cap_count": 4,
+      "post_repeated_cap_count": 4,
+      "cross_window_scene_mae": 3.026,
+      "image_cap_delta": {
+        "locally_retained": [
+          {
+            "before_local_id": "C01",
+            "after_local_id": "C02",
+            "colour": "red",
+            "pixel_shift": 1.0
+          },
+          {
+            "before_local_id": "C04",
+            "after_local_id": "C04",
+            "colour": "yellow",
+            "pixel_shift": 0.0
+          }
+        ],
+        "no_longer_observed": [
+          "C02",
+          "C03"
+        ],
+        "newly_observed": [
+          "C01",
+          "C03"
+        ],
+        "unresolved_before": [],
+        "unresolved_after": [],
+        "physical_transition_verified": false,
+        "simulation_ready": false
+      }
+    },
+    {
+      "colour": "red",
+      "view_motion": "positive_y",
+      "first_time_s": 2554.893,
+      "last_time_s": 2554.893,
+      "member_ids": [
+        "S29"
+      ],
+      "group_id": "G017",
+      "physical_throw_verified": false,
+      "conditional_receiving_view": "left",
+      "previous_group_last_s": 2515.76,
+      "next_group_first_s": 2582.302,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "abstain_cross_window_scene_change",
+      "pre_sample_times_s": [
+        2529.893,
+        2534.893,
+        2539.893
+      ],
+      "post_sample_times_s": [
+        2569.893,
+        2574.893,
+        2579.893
+      ],
+      "pre_repeated_cap_count": 1,
+      "post_repeated_cap_count": 2,
+      "cross_window_scene_mae": 18.958,
+      "image_cap_delta": null
+    },
+    {
+      "colour": "yellow",
+      "view_motion": "negative_y",
+      "first_time_s": 2582.302,
+      "last_time_s": 2582.302,
+      "member_ids": [
+        "S30"
+      ],
+      "group_id": "G018",
+      "physical_throw_verified": false,
+      "conditional_receiving_view": "right",
+      "previous_group_last_s": 2554.893,
+      "next_group_first_s": 2676.3,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "partial_cap_image_comparison",
+      "pre_sample_times_s": [
+        2557.302,
+        2562.302,
+        2567.302
+      ],
+      "post_sample_times_s": [
+        2597.302,
+        2602.302,
+        2607.302
+      ],
+      "pre_repeated_cap_count": 4,
+      "post_repeated_cap_count": 3,
+      "cross_window_scene_mae": 3.359,
+      "image_cap_delta": {
+        "locally_retained": [
+          {
+            "before_local_id": "C02",
+            "after_local_id": "C01",
+            "colour": "red",
+            "pixel_shift": 0.0
+          },
+          {
+            "before_local_id": "C04",
+            "after_local_id": "C03",
+            "colour": "yellow",
+            "pixel_shift": 0.0
+          }
+        ],
+        "no_longer_observed": [
+          "C01",
+          "C03"
+        ],
+        "newly_observed": [
+          "C02"
+        ],
+        "unresolved_before": [],
+        "unresolved_after": [],
+        "physical_transition_verified": false,
+        "simulation_ready": false
+      }
+    },
+    {
+      "colour": "red",
+      "view_motion": "negative_y",
+      "first_time_s": 2676.3,
+      "last_time_s": 2676.3,
+      "member_ids": [
+        "S31"
+      ],
+      "group_id": "G019",
+      "physical_throw_verified": false,
+      "conditional_receiving_view": "right",
+      "previous_group_last_s": 2582.302,
+      "next_group_first_s": 2729.529,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "partial_cap_image_comparison",
+      "pre_sample_times_s": [
+        2651.3,
+        2656.3,
+        2661.3
+      ],
+      "post_sample_times_s": [
+        2691.3,
+        2696.3,
+        2701.3
+      ],
+      "pre_repeated_cap_count": 4,
+      "post_repeated_cap_count": 2,
+      "cross_window_scene_mae": 2.75,
+      "image_cap_delta": {
+        "locally_retained": [
+          {
+            "before_local_id": "C01",
+            "after_local_id": "C01",
+            "colour": "red",
+            "pixel_shift": 1.5
+          },
+          {
+            "before_local_id": "C04",
+            "after_local_id": "C02",
+            "colour": "yellow",
+            "pixel_shift": 0.0
+          }
+        ],
+        "no_longer_observed": [
+          "C02",
+          "C03"
+        ],
+        "newly_observed": [],
+        "unresolved_before": [],
+        "unresolved_after": [],
+        "physical_transition_verified": false,
+        "simulation_ready": false
+      }
+    },
+    {
+      "colour": "yellow",
+      "view_motion": "negative_y",
+      "first_time_s": 2729.529,
+      "last_time_s": 2729.529,
+      "member_ids": [
+        "S32"
+      ],
+      "group_id": "G020",
+      "physical_throw_verified": false,
+      "conditional_receiving_view": "right",
+      "previous_group_last_s": 2676.3,
+      "next_group_first_s": 2760.0,
+      "complete_board_verified": false,
+      "simulation_ready": false,
+      "status": "partial_cap_image_comparison",
+      "pre_sample_times_s": [
+        2704.529,
+        2709.529,
+        2714.529
+      ],
+      "post_sample_times_s": [
+        2744.529,
+        2749.529,
+        2754.529
+      ],
+      "pre_repeated_cap_count": 2,
+      "post_repeated_cap_count": 3,
+      "cross_window_scene_mae": 2.759,
+      "image_cap_delta": {
+        "locally_retained": [
+          {
+            "before_local_id": "C01",
+            "after_local_id": "C01",
+            "colour": "red",
+            "pixel_shift": 0.5
+          },
+          {
+            "before_local_id": "C02",
+            "after_local_id": "C03",
+            "colour": "yellow",
+            "pixel_shift": 0.0
+          }
+        ],
+        "no_longer_observed": [],
+        "newly_observed": [
+          "C02"
+        ],
+        "unresolved_before": [],
+        "unresolved_after": [],
+        "physical_transition_verified": false,
+        "simulation_ready": false
+      }
+    }
+  ],
+  "limitations": [
+    "The 25-second grouping and cap rules were chosen on exposed 2024 examples.",
+    "A cluster of passages is not one verified physical throw.",
+    "Grouping can merge different real throws or leave false passages isolated.",
+    "Image cap changes can arise from occlusion, player handling, or rink graphics.",
+    "No reference labels were read by this feature runner."
+  ]
+}

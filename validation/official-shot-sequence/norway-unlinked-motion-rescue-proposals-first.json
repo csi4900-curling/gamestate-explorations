@@ -1,0 +1,144 @@
+{
+  "status": "source_only_unlinked_motion_adjacent_origin_review_proposals_not_verified_throws",
+  "input_sha256": {
+    "global_motion_catalog": "0ea87cf9c1df66b15008c9a9e3a1cb5b21e09b26c4695e8fb3cf4f1f3d036a0b",
+    "candidate_link_graph": "7ac8954b1ccdac42ba84e7c85d0bf1ba9d89674d53cae883b13fb0cf542dfe29",
+    "shot_origin": "477b7822f30af37f95e7665d346395e2ebe4f193af94ead1bc42a53df35997eb",
+    "camera_shot_manifest": "a0437979cf986cb1139a60098222ce9084f11988bbbfa9f65501d70845c6efb4",
+    "candidate_ledger": "803f9c6033b6a3a31d43d7c6bf3d2d33fe46dac94729a02195286553b9d4b700"
+  },
+  "selection_code_sha256": "7bf6e76e847bafbabab9c77e490f22f71fc973b1ec54ad115c5058ad831b9c1b",
+  "runner_sha256": "a918d474d82d4212582e5c556593688cf1de7ae4fa9ca15a7e400a367b223dd2",
+  "selection_rule": {
+    "unlinked_global_cap_track": true,
+    "immediately_previous_camera_shot_origin_probability_at_least": 0.9,
+    "origin_shot_duration_at_least_s": 5.0,
+    "motion_onset_after_receiving_cut_at_most_s": 1.0,
+    "candidate_origin_absent_or_colour_conflicted": true,
+    "post_hoc_development_rule": true
+  },
+  "proposal_count": 5,
+  "proposals": [
+    {
+      "origin_shot_id": "S86",
+      "origin_interval_s": [
+        1195.4,
+        1202.6
+      ],
+      "origin_model_probability": 0.9622032308660948,
+      "origin_model_predicted": 1,
+      "receiving_shot_id": "S87",
+      "receiving_episode_id": "S87-Y01",
+      "receiving_colour": "yellow",
+      "receiving_motion_interval_s": [
+        1203.0,
+        1215.0
+      ],
+      "receiving_span_px": 81.44,
+      "receiving_point_count": 11,
+      "onset_after_camera_cut_s": 0.4,
+      "candidate_status": "origin_absent_from_candidate_ledger",
+      "existing_candidate_colour": null,
+      "existing_counter_id": null,
+      "physical_throw_verified": false
+    },
+    {
+      "origin_shot_id": "S243",
+      "origin_interval_s": [
+        3335.0,
+        3349.2
+      ],
+      "origin_model_probability": 0.9785188105540258,
+      "origin_model_predicted": 1,
+      "receiving_shot_id": "S244",
+      "receiving_episode_id": "S244-Y01",
+      "receiving_colour": "yellow",
+      "receiving_motion_interval_s": [
+        3350.0,
+        3361.0
+      ],
+      "receiving_span_px": 63.81,
+      "receiving_point_count": 11,
+      "onset_after_camera_cut_s": 0.8,
+      "candidate_status": "existing_candidate_colour_conflict",
+      "existing_candidate_colour": "red",
+      "existing_counter_id": null,
+      "physical_throw_verified": false
+    },
+    {
+      "origin_shot_id": "S443",
+      "origin_interval_s": [
+        6228.0,
+        6234.6
+      ],
+      "origin_model_probability": 0.9692611636943748,
+      "origin_model_predicted": 1,
+      "receiving_shot_id": "S444",
+      "receiving_episode_id": "S444-Y01",
+      "receiving_colour": "yellow",
+      "receiving_motion_interval_s": [
+        6235.0,
+        6242.0
+      ],
+      "receiving_span_px": 70.0,
+      "receiving_point_count": 8,
+      "onset_after_camera_cut_s": 0.4,
+      "candidate_status": "origin_absent_from_candidate_ledger",
+      "existing_candidate_colour": null,
+      "existing_counter_id": null,
+      "physical_throw_verified": false
+    },
+    {
+      "origin_shot_id": "S561",
+      "origin_interval_s": [
+        7764.8,
+        7772.4
+      ],
+      "origin_model_probability": 0.9615807824425476,
+      "origin_model_predicted": 0,
+      "receiving_shot_id": "S562",
+      "receiving_episode_id": "S562-Y01",
+      "receiving_colour": "yellow",
+      "receiving_motion_interval_s": [
+        7773.0,
+        7777.0
+      ],
+      "receiving_span_px": 34.01,
+      "receiving_point_count": 5,
+      "onset_after_camera_cut_s": 0.6,
+      "candidate_status": "origin_absent_from_candidate_ledger",
+      "existing_candidate_colour": null,
+      "existing_counter_id": null,
+      "physical_throw_verified": false
+    },
+    {
+      "origin_shot_id": "S647",
+      "origin_interval_s": [
+        8605.4,
+        8613.0
+      ],
+      "origin_model_probability": 0.9765075202940717,
+      "origin_model_predicted": 1,
+      "receiving_shot_id": "S648",
+      "receiving_episode_id": "S648-Y01",
+      "receiving_colour": "yellow",
+      "receiving_motion_interval_s": [
+        8613.0,
+        8621.0
+      ],
+      "receiving_span_px": 44.72,
+      "receiving_point_count": 8,
+      "onset_after_camera_cut_s": 0.0,
+      "candidate_status": "existing_candidate_colour_conflict",
+      "existing_candidate_colour": "red",
+      "existing_counter_id": null,
+      "physical_throw_verified": false
+    }
+  ],
+  "limitations": [
+    "The rule was selected after inspecting Norway unlinked tracks; its yield is not an unbiased recall estimate.",
+    "Origin scores and cap tracks share source footage and are not independent labels.",
+    "A receiving cap may be an old stone; colour conflict can result from a collision, not a wrong candidate colour.",
+    "No candidate is automatically inserted, recoloured, or matched to an official shot."
+  ]
+}

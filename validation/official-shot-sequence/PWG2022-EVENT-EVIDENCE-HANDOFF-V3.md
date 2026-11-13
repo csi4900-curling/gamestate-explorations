@@ -1,0 +1,9 @@
+# Event evidence handoff with the B02 travel-only candidate
+
+The [additive v3 handoff](pwg2022-event-evidence-handoff-v3-development.json) has **359 provisional event records**: 118 Switzerland, 125 China, 116 Slovakia. It preserves all 358 records in the [v2 handoff](pwg2022-event-evidence-handoff-v2-development.json) unchanged and adds China `TRAVEL-B02`. The new row joins delivery-like S27, a verified camera cut, red receiving track S28-R01 at 365.4–380.2 s, and the delayed red B02 counter at 383.0 s. No other v2 event or counter link is altered.
+
+Across v3, **113** events have a unique source-scoped visible release cue, **18** have matching source colour cues across views, and **nine** have partial-board links. Only China B57 has both a release cue and a later partial-board link. B02 increases candidate coverage without increasing the release-cue count: its overhead S28 trigger is explicitly receiving **travel**, so its visible release cue and exact physical release time are both null.
+
+Every record keeps persistent stone ID, exact settle time, continuous physical trajectory, and simulation readiness unknown or false. A same-colour cap track plus delayed counter is a provisional event hypothesis, not proof of physical stone identity across the cut. The [source audit](PWG2022-ALL-UNASSIGNED-SHOT-SCAN.md) explains the frozen 1,351-shot search and the postscan B02 selection rule. Neither the 359-candidate union nor this handoff has independently measured complete-match physical throw precision, recall, or F1.
+
+Run `python prototype/scripts/export_2022_preorigin_travel_union_v3.py`, `python prototype/scripts/export_2022_full_match_review_segments_v3.py`, and `python prototype/scripts/export_pwg2022_event_evidence_handoff_v3.py` from the project root. The [v3 viewer](../../prototype/full-match-event-review-v3/index.html) contains all 359 review windows; search `TRAVEL-B02` for the new case.

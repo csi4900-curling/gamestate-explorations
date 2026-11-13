@@ -1,0 +1,125 @@
+{
+  "status": "development_conservative_hard_cut_scan",
+  "source_id": "Ns12UZ5nlPk",
+  "source_sha256": "eba1d86944a2f4278b6e5e2c7549d12b47e5e8a51bf0c680b2db372c6ec12420",
+  "source_interval_s": [
+    2400,
+    2700
+  ],
+  "sample_count": 1500,
+  "sample_step_frames": 6,
+  "sample_rate_hz": 5.0,
+  "min_gray_change": 45,
+  "min_hist_distance": 0.35,
+  "model_sha256": "5c4049a0e82853cb36e0eee4fd7e1bb009babc08318b3ce8b53566f309b883e9",
+  "runner_sha256": "fd3ebfb39a76cda5b21da04aad5a3c7552f616d0efb71b1b844b39a67bb4de5c",
+  "cuts": [
+    {
+      "time_s": 2402.2,
+      "gray_change": 86.846,
+      "hist_distance": 0.5827,
+      "hard_cut": true
+    },
+    {
+      "time_s": 2414.6,
+      "gray_change": 123.99,
+      "hist_distance": 0.8505,
+      "hard_cut": true
+    },
+    {
+      "time_s": 2440.2,
+      "gray_change": 83.378,
+      "hist_distance": 0.5147,
+      "hard_cut": true
+    },
+    {
+      "time_s": 2472.8,
+      "gray_change": 132.416,
+      "hist_distance": 0.8911,
+      "hard_cut": true
+    },
+    {
+      "time_s": 2494.6,
+      "gray_change": 101.779,
+      "hist_distance": 0.4181,
+      "hard_cut": true
+    },
+    {
+      "time_s": 2508.2,
+      "gray_change": 126.986,
+      "hist_distance": 0.8506,
+      "hard_cut": true
+    },
+    {
+      "time_s": 2528.6,
+      "gray_change": 96.886,
+      "hist_distance": 0.4072,
+      "hard_cut": true
+    },
+    {
+      "time_s": 2533.0,
+      "gray_change": 78.723,
+      "hist_distance": 0.4691,
+      "hard_cut": true
+    },
+    {
+      "time_s": 2549.6,
+      "gray_change": 78.75,
+      "hist_distance": 0.6019,
+      "hard_cut": true
+    },
+    {
+      "time_s": 2568.2,
+      "gray_change": 119.201,
+      "hist_distance": 0.8402,
+      "hard_cut": true
+    },
+    {
+      "time_s": 2604.6,
+      "gray_change": 101.994,
+      "hist_distance": 0.4826,
+      "hard_cut": true
+    },
+    {
+      "time_s": 2622.8,
+      "gray_change": 129.059,
+      "hist_distance": 0.7892,
+      "hard_cut": true
+    },
+    {
+      "time_s": 2648.4,
+      "gray_change": 87.696,
+      "hist_distance": 0.3935,
+      "hard_cut": true
+    },
+    {
+      "time_s": 2651.2,
+      "gray_change": 71.557,
+      "hist_distance": 0.4203,
+      "hard_cut": true
+    },
+    {
+      "time_s": 2659.4,
+      "gray_change": 94.929,
+      "hist_distance": 0.5261,
+      "hard_cut": true
+    },
+    {
+      "time_s": 2667.0,
+      "gray_change": 92.458,
+      "hist_distance": 0.3967,
+      "hard_cut": true
+    },
+    {
+      "time_s": 2684.6,
+      "gray_change": 114.754,
+      "hist_distance": 0.7932,
+      "hard_cut": true
+    }
+  ],
+  "limitations": [
+    "Hard-cut detection is conservative; soft cuts and similar-looking edits may remain.",
+    "A hard cut ends within-shot identity but does not prove that objects in adjacent shots differ.",
+    "A camera cut is not a throw event."
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "status": "targeted_relaxed_raw_motion_review_not_physical_throw_confirmation",
+  "source_sha256": "2e2b84bb2d9dffa497ee850ddbeaf0d5cae0d697377b6eee6a1ef481f449f3da",
+  "timeline_sha256": "0e7cc1110e1f1a9c43cd0f8fe05b9aefa3b8a437def873853cebb844bab1da2b",
+  "inventory_sha256": "26605e49cba13e52380d3af2908ed74e3a9113279370bb22c57b49d3cf302128",
+  "raw_probe_sha256_by_run": {
+    "R01": "40e65dcc58ce0388dc23295b21c5434a268c3a74280b8aed65ce5c501625109c",
+    "R02": "2e6eb15d0270addf2b70140f7e0bd635063c4c588c84afeff47e2783bee20b08"
+  },
+  "model_code_sha256": "588b2b48035762b54f01d0ce1141fa9b0162a464af1360f250fe042253854332",
+  "runner_sha256": "45d48b68cccf36daba421bfe02135b3b7930e62942d7e4349af3b4bb3bbc2002",
+  "parameters": {
+    "displacement_px": 30,
+    "max_tail_duration_s": 5,
+    "min_first_cap_area_px2": 5,
+    "max_direction_aware_cross_view_lag_s": 20,
+    "minimum_observed_prefix_points": 3
+  },
+  "left_only_event_count": 4,
+  "candidate_status_counts": {
+    "none": 4
+  },
+  "rows": [
+    {
+      "left_event_id": "R01-S14",
+      "left_colour_claim": "red",
+      "left_passage_time_s": 678.654,
+      "run_id": "R01",
+      "candidate_count": 0,
+      "candidates": [],
+      "physical_cross_view_identity_verified": false
+    },
+    {
+      "left_event_id": "R02-S62",
+      "left_colour_claim": "red",
+      "left_passage_time_s": 6280.083,
+      "run_id": "R02",
+      "candidate_count": 0,
+      "candidates": [],
+      "physical_cross_view_identity_verified": false
+    },
+    {
+      "left_event_id": "R02-S88",
+      "left_colour_claim": "yellow",
+      "left_passage_time_s": 7389.005,
+      "run_id": "R02",
+      "candidate_count": 0,
+      "candidates": [],
+      "physical_cross_view_identity_verified": false
+    },
+    {
+      "left_event_id": "R02-S101",
+      "left_colour_claim": "red",
+      "left_passage_time_s": 7844.5,
+      "run_id": "R02",
+      "candidate_count": 0,
+      "candidates": [],
+      "physical_cross_view_identity_verified": false
+    }
+  ],
+  "limitations": [
+    "The relaxed thresholds were chosen after inspecting Italy left-only misses.",
+    "A left candidate can be false and a raw right path can follow a player or an old stone.",
+    "This targeted search makes no new accepted event or physical identity claim."
+  ]
+}

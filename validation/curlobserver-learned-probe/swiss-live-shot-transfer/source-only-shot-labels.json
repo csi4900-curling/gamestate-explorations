@@ -1,0 +1,23 @@
+{
+  "status": "agent_source_only_shot_origin_labels_before_model_inference",
+  "source_sha256": "49429abdd3796e8240e66c201d37e94e71a7bb6225890b2492bea26d2f70d560",
+  "source_interval_s": [1200, 1500],
+  "review": "validation/curlobserver-learned-probe/swiss-live-shot-transfer/shot-review",
+  "meaning": "1 = this shot visibly contains the throwing-side action of a delivery; 0 = no such action; null = setup or action boundary cannot be decided from this review packet",
+  "labels": {
+    "S01": 0, "S02": 1, "S03": 0, "S04": 0, "S05": 0,
+    "S06": 1, "S07": 0, "S08": 1, "S09": 0, "S10": 0,
+    "S11": 0, "S12": null, "S13": 1, "S14": 0, "S15": 0,
+    "S16": 0, "S17": 1, "S18": 0, "S19": 0, "S20": 0,
+    "S21": 1, "S22": 0, "S23": 0, "S24": 0, "S25": null
+  },
+  "ambiguous_notes": {
+    "S12": "Red player prepares and moves the stone before a close view; the exact action boundary with S13 is unclear.",
+    "S25": "Yellow player begins setup at the interval boundary; delivery may occur after 1500 s."
+  },
+  "limitations": [
+    "One agent reviewed three source frames per cut-defined shot; this is not independent annotation.",
+    "A hard-cut scan can miss edits, and some long shots change phase internally.",
+    "Shot labels are not exact release times or throw-event ground truth."
+  ]
+}

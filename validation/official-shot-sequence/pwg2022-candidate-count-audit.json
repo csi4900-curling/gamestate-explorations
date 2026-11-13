@@ -1,0 +1,108 @@
+{
+  "status": "independent_official_count_constraint_not_timestamped_f1",
+  "official_reference_path": "validation/official-shot-sequence/pwg2022-official-shot-ledger.json",
+  "official_reference_sha256": "8a38eb9866a6615015b07d606a187e131f7bdec14f7ebfa9a17c8b3e7936d220",
+  "runner_sha256": "cc0dc3d1aaf00585c7a8acf2e51e9c9d3f951b99bc4f77e1ba6abbf8e2ece065",
+  "games": [
+    {
+      "official_game_code": "PREL000101",
+      "teams": [
+        "SWE",
+        "SUI"
+      ],
+      "source_video_sha256": "49429abdd3796e8240e66c201d37e94e71a7bb6225890b2492bea26d2f70d560",
+      "candidate_ledger_path": "validation/curlobserver-learned-probe/swiss-full-transfer/candidate-event-ledger.json",
+      "candidate_ledger_sha256": "effde38cf0e70ee6fce2212a677c609777b77e77246915d8f5da9e24b6f9f96d",
+      "candidate_source_interval_s": [
+        0,
+        7734
+      ],
+      "official_shot_count": 112,
+      "candidate_count": 121,
+      "candidate_minus_official": 9,
+      "candidate_colour_counts": {
+        "red": 60,
+        "yellow": 48,
+        "unknown": 13
+      },
+      "official_end_shot_counts": [
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16
+      ]
+    },
+    {
+      "official_game_code": "PREL000102",
+      "teams": [
+        "CAN",
+        "CHN"
+      ],
+      "source_video_sha256": "c5254bb9103e32c6beac74cf269fc7bcec8ce2c2a710a7d4600c7ddb951f160e",
+      "candidate_ledger_path": "validation/curlobserver-learned-probe/china-full-transfer/candidate-throw-event-ledger-v1.json",
+      "candidate_ledger_sha256": "40a9ccaed2b4007b735b98ad52e45b707442065253da7344d81705831ca7d2a0",
+      "candidate_source_interval_s": [
+        0,
+        8356
+      ],
+      "official_shot_count": 125,
+      "candidate_count": 133,
+      "candidate_minus_official": 8,
+      "candidate_colour_counts": {
+        "red": 71,
+        "yellow": 52,
+        "unknown": 10
+      },
+      "official_end_shot_counts": [
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        13
+      ]
+    },
+    {
+      "official_game_code": "PREL000103",
+      "teams": [
+        "SVK",
+        "USA"
+      ],
+      "source_video_sha256": "eba1d86944a2f4278b6e5e2c7549d12b47e5e8a51bf0c680b2db372c6ec12420",
+      "candidate_ledger_path": "validation/curlobserver-learned-probe/slovakia-full-transfer/candidate-event-ledger.json",
+      "candidate_ledger_sha256": "a0ef3d46a319f3341b5e680a2bb5ac914131717a41216360ced464b693279552",
+      "candidate_source_interval_s": [
+        0,
+        7616
+      ],
+      "official_shot_count": 112,
+      "candidate_count": 119,
+      "candidate_minus_official": 7,
+      "candidate_colour_counts": {
+        "red": 66,
+        "yellow": 41,
+        "unknown": 12
+      },
+      "official_end_shot_counts": [
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16
+      ]
+    }
+  ],
+  "limitations": [
+    "Official shot order and counts have no video timestamps, so candidate-to-shot matching is unproven.",
+    "An excess candidate can be a false event, duplicate, wrong match boundary or other off-play detection; misses can coexist with extras.",
+    "These counts cannot establish precision, recall or F1, but they expose discrepancies a high-F1 detector must resolve.",
+    "The candidate ledgers are development outputs, not frozen independent predictions against this newly extracted reference."
+  ]
+}

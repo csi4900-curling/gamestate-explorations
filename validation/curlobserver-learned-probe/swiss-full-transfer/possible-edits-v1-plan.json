@@ -1,0 +1,22 @@
+{
+  "status": "frozen_source_only_possible_edit_scan_plan",
+  "source_id": "ZJAMdkERdpE",
+  "video_relative_path": "validation/throw-event-benchmark/paralympics-2022-sweden-switzerland/source.mp4",
+  "hard_cuts_relative_path": "validation/curlobserver-learned-probe/swiss-full-transfer/hard-cuts.json",
+  "source_interval_s": [
+    0,
+    7734
+  ],
+  "sample_rate_hz": 5,
+  "minimum_gray_change": 60.0,
+  "minimum_hist_distance": 0.25,
+  "hard_cut_exclusion_s": 0.3,
+  "sha256": {
+    "video": "49429abdd3796e8240e66c201d37e94e71a7bb6225890b2492bea26d2f70d560",
+    "hard_cuts": "ba3b75f780ea382224f2cc57e73a31f17abbb075194196847801569ff49dcc44",
+    "scene_code": "5c4049a0e82853cb36e0eee4fd7e1bb009babc08318b3ce8b53566f309b883e9",
+    "runner": "8fad71b9e087d51f93ac10491968e074818d117e694e6744926d968004affb2e"
+  },
+  "rule": "At 5 Hz, flag frame pairs with mean greyscale change at least 60 and HSV histogram distance at least 0.25; report candidates more than 0.3 s from an existing hard cut. These are possible edits only, not event detections or validated cuts.",
+  "provenance": "Thresholds fixed after selected China S123/S519 diagnostics, before full China and Swiss scans."
+}

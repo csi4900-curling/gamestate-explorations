@@ -1,0 +1,103 @@
+{
+  "status": "postscore_exposed_development_prefix_proposals_not_event_validation",
+  "base_sha256": "9ec651bb631037b9eae5e9061e5b0f9f900aca13835707557be1d0abdd21ef8f",
+  "retry_sha256": "6fc1d5e85580f5da2317acbfbc885f4c7243437c2017d2803c71dc109d50801a",
+  "patch_sha256": "dc89778e725730b1f16f15089c512a531aad575f7fb0f8464a37dc3d18ceef97",
+  "screen_sha256": "bb2d33cea62b0324904d43d215044e07e3dd58f7b85c517c6068651394f01074",
+  "model_code_sha256": "46d3ebd341d4b33c2c8ac0562f0852bebf82dce0b9e4baa471ed3528c07ffa07",
+  "runner_sha256": "948077e3733b8b96008faf4f7969b66e303865394e829be47d709e985a2dc9c5",
+  "parameters": {
+    "min_samples": 5,
+    "min_fraction": 0.7,
+    "min_travel_m": 2.0,
+    "min_scored_patches": 3,
+    "min_positive_patches": 2
+  },
+  "proposal_count": 1,
+  "proposals": [
+    {
+      "candidate_id": "S02",
+      "status": "development_original_prefix_only_motion_proposal",
+      "receiving_view": "left",
+      "colour": "red",
+      "original_prefix": [
+        {
+          "source_time_s": 1743.0,
+          "pixel_center": [
+            679.16,
+            364.12
+          ],
+          "ground_position_m": [
+            0.9735916211317268,
+            -5.287258186313798
+          ],
+          "same_colour_candidate_count": 2
+        },
+        {
+          "source_time_s": 1743.5,
+          "pixel_center": [
+            694.47,
+            402.42
+          ],
+          "ground_position_m": [
+            1.0233454300558622,
+            -4.456953980576354
+          ],
+          "same_colour_candidate_count": 2
+        },
+        {
+          "source_time_s": 1744.0,
+          "pixel_center": [
+            709.13,
+            445.14
+          ],
+          "ground_position_m": [
+            1.0614532735750544,
+            -3.594459000439008
+          ],
+          "same_colour_candidate_count": 2
+        },
+        {
+          "source_time_s": 1744.5,
+          "pixel_center": [
+            726.29,
+            486.87
+          ],
+          "ground_position_m": [
+            1.109777135207281,
+            -2.8042101011428144
+          ],
+          "same_colour_candidate_count": 3
+        },
+        {
+          "source_time_s": 1745.0,
+          "pixel_center": [
+            745.52,
+            533.03
+          ],
+          "ground_position_m": [
+            1.1609061531706555,
+            -1.9822325907867946
+          ],
+          "same_colour_candidate_count": 3
+        }
+      ],
+      "prefix_sample_count": 5,
+      "best_original_path_sample_count": 7,
+      "prefix_fraction": 0.7143,
+      "prefix_endpoint_displacement_m_conditional": 3.3103,
+      "scored_patch_count": 3,
+      "positive_patch_count": 2,
+      "first_ambiguity_time_s": 1745.5,
+      "motion_after_ambiguity_verified": false,
+      "physical_throw_identity_verified": false,
+      "simulation_ready": false
+    }
+  ],
+  "limitations": [
+    "This rule was formed after inspecting the exposed Slovakia S02 failure.",
+    "Appearance and shared motion support a proposal, not a verified throw or release time.",
+    "No position or identity is asserted beyond the original shared prefix.",
+    "The frozen screen and its previous transfer results are unchanged."
+  ]
+}

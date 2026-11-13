@@ -1,0 +1,9 @@
+# Full-match evidence explorer
+
+Open [index.html](index.html) directly in a browser. It uses the adjacent generated [data.js](data.js) and the pinned `../source-360p.mp4`, so no server is required. Choose any of the 147 raw candidate IDs to seek the original broadcast four seconds before its observed passage estimate. Filter the frozen provisional candidates, nine postscore additions, abstentions, outside-corridor spans, or the two source-reviewed false-positive paths S96 and S143.
+
+For each candidate, the page shows available conditional receiving-path samples, the subsequent camera-local partial board, and any one-to-one observation tracklets. Click an O-number to visit the other boards containing that observation tracklet. A displayed-end graphic is source context only, not verified physical end identity. The page explicitly leaves throw identity, exact release and settle times, spin, complete game state, and simulation readiness unresolved.
+
+The viewer is generated from the [147-candidate board handoff](../full-match-evidence-with-boards-postscore.json), [135-tracklet handoff](../full-match-observation-tracklets-postscore.json), frozen and development screens, adjacent-board comparisons, display-marker audit, and an [additional source review of S96](../source-review/s96-review.json). [provenance.json](provenance.json) records input and UI hashes. Regenerate `data.js` with `prototype/scripts/build_full_match_evidence_viewer.py` using the pinned inputs in that provenance file. The [browser capture](browser-s120.png) shows S120's path, four-stone partial board, and same-view comparison.
+
+This is a **model-evidence review page**. It is separate from the [prediction-blind throw-labeling packet](../blind-throw-review/index.html) and must not be used for independent annotation because it exposes predictions.

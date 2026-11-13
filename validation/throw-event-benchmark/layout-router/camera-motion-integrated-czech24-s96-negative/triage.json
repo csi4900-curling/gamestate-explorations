@@ -1,0 +1,94 @@
+{
+  "status": "candidate_triage_not_physical_event_validation",
+  "source_id": "canada-czech-2024",
+  "source_sha256": "e63c9b063b5b11ad5173083dffe974d909c78e5d01312740b87bccc006402013",
+  "source_interval_s": [
+    4028.0,
+    4052.0
+  ],
+  "raw_sha256": "e7089987401102651790e84840e40b83db509419b70c45afa423a15aa85315bf",
+  "confirmation_sha256": "1c2c7108ce8232dfba39bfed41f3567b2e80908360b8651ec48c2d1fd74e511a",
+  "triage_code_sha256": "a008d7e9a875561d23d2d55abba31765a2ae2c13f124b8fb6d396492441e6836",
+  "counts": {
+    "proposed": 5,
+    "auto_confirmed": 0,
+    "needs_review": 5
+  },
+  "proposals": [
+    {
+      "id": "S01",
+      "crossing_time_s": 4033.243,
+      "colour": "red",
+      "disposition": "needs_review",
+      "stage_evidence": [
+        {
+          "stage": "span_context",
+          "decision": "needs_review",
+          "reason": "outside_ice_corridor"
+        }
+      ],
+      "release_time_s": null
+    },
+    {
+      "id": "S02",
+      "crossing_time_s": 4036.118,
+      "colour": "red",
+      "disposition": "needs_review",
+      "stage_evidence": [
+        {
+          "stage": "span_context",
+          "decision": "needs_review",
+          "reason": "outside_ice_corridor"
+        }
+      ],
+      "release_time_s": null
+    },
+    {
+      "id": "S03",
+      "crossing_time_s": 4036.863,
+      "colour": "red",
+      "disposition": "needs_review",
+      "stage_evidence": [
+        {
+          "stage": "span_context",
+          "decision": "needs_review",
+          "reason": "outside_ice_corridor"
+        }
+      ],
+      "release_time_s": null
+    },
+    {
+      "id": "S04",
+      "crossing_time_s": 4037.326,
+      "colour": "red",
+      "disposition": "needs_review",
+      "stage_evidence": [
+        {
+          "stage": "span_context",
+          "decision": "needs_review",
+          "reason": "large_surrounding_motion"
+        }
+      ],
+      "release_time_s": null
+    },
+    {
+      "id": "S05",
+      "crossing_time_s": 4039.05,
+      "colour": "red",
+      "disposition": "needs_review",
+      "stage_evidence": [
+        {
+          "stage": "span_context",
+          "decision": "needs_review",
+          "reason": "outside_ice_corridor"
+        }
+      ],
+      "release_time_s": null
+    }
+  ],
+  "limitations": [
+    "Review proposals are not confirmed throws and must not be silently discarded.",
+    "The span-context gate is development-fitted and covers only the known 2024 split-screen layout.",
+    "First observed motion and passage times are not exact physical release times."
+  ]
+}

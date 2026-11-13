@@ -1,0 +1,870 @@
+{
+  "status": "same_agent_local_source_pixel_measurement_not_physical_identity_truth",
+  "episode_id": "E019",
+  "left_candidate_id": "S20",
+  "source_video_sha256": "490b8703b2fcfaa2fbd61f8b45ebc45fd3281f0e9453bb4721f56e64056cd620",
+  "input_sha256": {
+    "motion": "5f24a8066fb58bba86c2f6892d184d49822dbeddba1a93e3b79435b9c22eca9a",
+    "board": "19e45eea532d0d74728b6c2d8b931bebc9f2b16f1812504ea3224e1c26a3fb03",
+    "visual_audit": "ae0dd7b2497c49e0789aa3bc31275a7628c7da05c01e17bf6c92896da5cb0587"
+  },
+  "runner_sha256": "a1bd315c29a242f2e574ce0ae168ff988fc5bd77c7adaa431963246658962dcf",
+  "component_code_sha256": "69b9f1540091b6d038fd637dd6132c355c26c1081c2c010351c46faba4036519",
+  "method": {
+    "source_resolution_px": [
+      1920,
+      1080
+    ],
+    "fps": 30.0,
+    "sample_interval_s": 0.1,
+    "roi_xyxy_px_1080": [
+      1300,
+      360,
+      1420,
+      530
+    ],
+    "red_hsv_opencv": "(H<12 or H>170) and S>85 and V>50",
+    "yellow_hsv_opencv": "16<H<43 and S>85 and V>70",
+    "minimum_contour_area_px2": 20,
+    "component_policy": "retain every contour; unique center only if exactly one component"
+  },
+  "sample_count": 21,
+  "red_unique_component_frames": 21,
+  "yellow_ambiguous_frame_times_s": [
+    686.6,
+    686.7,
+    686.8,
+    687.0
+  ],
+  "stored_stage_anchor_comparisons": [
+    {
+      "source_time_s": 686.0,
+      "stored_stage": "moving_path",
+      "stored_red_center_px_1080": [
+        1368.14,
+        493.64
+      ],
+      "local_red_cap_center_px_1080": [
+        1368.466,
+        493.981
+      ],
+      "center_distance_px_1080": 0.472
+    },
+    {
+      "source_time_s": 686.5,
+      "stored_stage": "moving_path",
+      "stored_red_center_px_1080": [
+        1366.44,
+        467.15
+      ],
+      "local_red_cap_center_px_1080": [
+        1366.531,
+        467.08
+      ],
+      "center_distance_px_1080": 0.115
+    },
+    {
+      "source_time_s": 687.0,
+      "stored_stage": "partial_board",
+      "stored_red_center_px_1080": [
+        1361.3,
+        454.87
+      ],
+      "local_red_cap_center_px_1080": [
+        1361.089,
+        454.804
+      ],
+      "center_distance_px_1080": 0.221
+    },
+    {
+      "source_time_s": 688.0,
+      "stored_stage": "partial_board",
+      "stored_red_center_px_1080": [
+        1361.91,
+        456.51
+      ],
+      "local_red_cap_center_px_1080": [
+        1361.777,
+        456.702
+      ],
+      "center_distance_px_1080": 0.234
+    }
+  ],
+  "samples": [
+    {
+      "source_time_s": 686.0,
+      "decoded_frame_index": 20580,
+      "red_components": [
+        {
+          "area_px2": 122.0,
+          "centroid_px_1080": [
+            1368.466,
+            493.981
+          ],
+          "bbox_xywh_px_1080": [
+            1356,
+            488,
+            30,
+            10
+          ]
+        }
+      ],
+      "yellow_components": [
+        {
+          "area_px2": 508.0,
+          "centroid_px_1080": [
+            1362.62,
+            446.967
+          ],
+          "bbox_xywh_px_1080": [
+            1342,
+            436,
+            46,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "source_time_s": 686.1,
+      "decoded_frame_index": 20583,
+      "red_components": [
+        {
+          "area_px2": 281.0,
+          "centroid_px_1080": [
+            1365.842,
+            483.709
+          ],
+          "bbox_xywh_px_1080": [
+            1354,
+            473,
+            31,
+            21
+          ]
+        }
+      ],
+      "yellow_components": [
+        {
+          "area_px2": 517.5,
+          "centroid_px_1080": [
+            1362.24,
+            446.933
+          ],
+          "bbox_xywh_px_1080": [
+            1342,
+            436,
+            46,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "source_time_s": 686.2,
+      "decoded_frame_index": 20586,
+      "red_components": [
+        {
+          "area_px2": 245.0,
+          "centroid_px_1080": [
+            1366.556,
+            479.603
+          ],
+          "bbox_xywh_px_1080": [
+            1356,
+            468,
+            28,
+            20
+          ]
+        }
+      ],
+      "yellow_components": [
+        {
+          "area_px2": 507.5,
+          "centroid_px_1080": [
+            1362.227,
+            446.981
+          ],
+          "bbox_xywh_px_1080": [
+            1342,
+            436,
+            46,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "source_time_s": 686.3,
+      "decoded_frame_index": 20589,
+      "red_components": [
+        {
+          "area_px2": 195.5,
+          "centroid_px_1080": [
+            1364.957,
+            475.943
+          ],
+          "bbox_xywh_px_1080": [
+            1356,
+            464,
+            27,
+            20
+          ]
+        }
+      ],
+      "yellow_components": [
+        {
+          "area_px2": 498.0,
+          "centroid_px_1080": [
+            1362.356,
+            447.049
+          ],
+          "bbox_xywh_px_1080": [
+            1342,
+            436,
+            46,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "source_time_s": 686.4,
+      "decoded_frame_index": 20592,
+      "red_components": [
+        {
+          "area_px2": 180.0,
+          "centroid_px_1080": [
+            1367.143,
+            471.851
+          ],
+          "bbox_xywh_px_1080": [
+            1356,
+            462,
+            30,
+            16
+          ]
+        }
+      ],
+      "yellow_components": [
+        {
+          "area_px2": 502.0,
+          "centroid_px_1080": [
+            1362.275,
+            446.977
+          ],
+          "bbox_xywh_px_1080": [
+            1342,
+            436,
+            46,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "source_time_s": 686.5,
+      "decoded_frame_index": 20595,
+      "red_components": [
+        {
+          "area_px2": 196.5,
+          "centroid_px_1080": [
+            1366.531,
+            467.08
+          ],
+          "bbox_xywh_px_1080": [
+            1356,
+            456,
+            28,
+            18
+          ]
+        }
+      ],
+      "yellow_components": [
+        {
+          "area_px2": 497.5,
+          "centroid_px_1080": [
+            1362.382,
+            446.913
+          ],
+          "bbox_xywh_px_1080": [
+            1342,
+            436,
+            46,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "source_time_s": 686.6,
+      "decoded_frame_index": 20598,
+      "red_components": [
+        {
+          "area_px2": 170.0,
+          "centroid_px_1080": [
+            1365.452,
+            462.508
+          ],
+          "bbox_xywh_px_1080": [
+            1356,
+            454,
+            26,
+            14
+          ]
+        }
+      ],
+      "yellow_components": [
+        {
+          "area_px2": 317.5,
+          "centroid_px_1080": [
+            1356.731,
+            444.386
+          ],
+          "bbox_xywh_px_1080": [
+            1342,
+            436,
+            36,
+            20
+          ]
+        },
+        {
+          "area_px2": 146.0,
+          "centroid_px_1080": [
+            1374.622,
+            451.814
+          ],
+          "bbox_xywh_px_1080": [
+            1364,
+            448,
+            24,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "source_time_s": 686.7,
+      "decoded_frame_index": 20601,
+      "red_components": [
+        {
+          "area_px2": 253.0,
+          "centroid_px_1080": [
+            1362.602,
+            458.215
+          ],
+          "bbox_xywh_px_1080": [
+            1344,
+            446,
+            38,
+            18
+          ]
+        }
+      ],
+      "yellow_components": [
+        {
+          "area_px2": 314.0,
+          "centroid_px_1080": [
+            1357.285,
+            444.487
+          ],
+          "bbox_xywh_px_1080": [
+            1342,
+            436,
+            36,
+            20
+          ]
+        },
+        {
+          "area_px2": 108.0,
+          "centroid_px_1080": [
+            1375.73,
+            451.528
+          ],
+          "bbox_xywh_px_1080": [
+            1368,
+            448,
+            18,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "source_time_s": 686.8,
+      "decoded_frame_index": 20604,
+      "red_components": [
+        {
+          "area_px2": 273.0,
+          "centroid_px_1080": [
+            1360.835,
+            455.952
+          ],
+          "bbox_xywh_px_1080": [
+            1340,
+            442,
+            42,
+            20
+          ]
+        }
+      ],
+      "yellow_components": [
+        {
+          "area_px2": 272.0,
+          "centroid_px_1080": [
+            1358.33,
+            440.567
+          ],
+          "bbox_xywh_px_1080": [
+            1342,
+            432,
+            36,
+            20
+          ]
+        },
+        {
+          "area_px2": 103.5,
+          "centroid_px_1080": [
+            1374.556,
+            448.19
+          ],
+          "bbox_xywh_px_1080": [
+            1366,
+            444,
+            22,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "source_time_s": 686.9,
+      "decoded_frame_index": 20607,
+      "red_components": [
+        {
+          "area_px2": 282.5,
+          "centroid_px_1080": [
+            1361.739,
+            455.412
+          ],
+          "bbox_xywh_px_1080": [
+            1340,
+            444,
+            40,
+            18
+          ]
+        }
+      ],
+      "yellow_components": [
+        {
+          "area_px2": 341.5,
+          "centroid_px_1080": [
+            1364.623,
+            439.248
+          ],
+          "bbox_xywh_px_1080": [
+            1344,
+            428,
+            40,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "source_time_s": 687.0,
+      "decoded_frame_index": 20610,
+      "red_components": [
+        {
+          "area_px2": 286.0,
+          "centroid_px_1080": [
+            1361.089,
+            454.804
+          ],
+          "bbox_xywh_px_1080": [
+            1340,
+            442,
+            40,
+            20
+          ]
+        }
+      ],
+      "yellow_components": [
+        {
+          "area_px2": 433.5,
+          "centroid_px_1080": [
+            1363.577,
+            435.253
+          ],
+          "bbox_xywh_px_1080": [
+            1344,
+            424,
+            42,
+            22
+          ]
+        },
+        {
+          "area_px2": 21.0,
+          "centroid_px_1080": [
+            1371.5,
+            447.5
+          ],
+          "bbox_xywh_px_1080": [
+            1368,
+            446,
+            8,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "source_time_s": 687.1,
+      "decoded_frame_index": 20613,
+      "red_components": [
+        {
+          "area_px2": 315.5,
+          "centroid_px_1080": [
+            1360.222,
+            453.788
+          ],
+          "bbox_xywh_px_1080": [
+            1340,
+            442,
+            40,
+            20
+          ]
+        }
+      ],
+      "yellow_components": [
+        {
+          "area_px2": 420.0,
+          "centroid_px_1080": [
+            1363.347,
+            430.56
+          ],
+          "bbox_xywh_px_1080": [
+            1344,
+            420,
+            40,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "source_time_s": 687.2,
+      "decoded_frame_index": 20616,
+      "red_components": [
+        {
+          "area_px2": 356.5,
+          "centroid_px_1080": [
+            1360.041,
+            452.491
+          ],
+          "bbox_xywh_px_1080": [
+            1340,
+            438,
+            39,
+            24
+          ]
+        }
+      ],
+      "yellow_components": [
+        {
+          "area_px2": 434.0,
+          "centroid_px_1080": [
+            1363.826,
+            426.972
+          ],
+          "bbox_xywh_px_1080": [
+            1346,
+            416,
+            40,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "source_time_s": 687.3,
+      "decoded_frame_index": 20619,
+      "red_components": [
+        {
+          "area_px2": 333.5,
+          "centroid_px_1080": [
+            1359.954,
+            453.137
+          ],
+          "bbox_xywh_px_1080": [
+            1339,
+            440,
+            41,
+            22
+          ]
+        }
+      ],
+      "yellow_components": [
+        {
+          "area_px2": 454.0,
+          "centroid_px_1080": [
+            1365.356,
+            423.249
+          ],
+          "bbox_xywh_px_1080": [
+            1348,
+            412,
+            38,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "source_time_s": 687.4,
+      "decoded_frame_index": 20622,
+      "red_components": [
+        {
+          "area_px2": 337.0,
+          "centroid_px_1080": [
+            1360.31,
+            453.247
+          ],
+          "bbox_xywh_px_1080": [
+            1339,
+            442,
+            41,
+            20
+          ]
+        }
+      ],
+      "yellow_components": [
+        {
+          "area_px2": 447.0,
+          "centroid_px_1080": [
+            1366.661,
+            419.141
+          ],
+          "bbox_xywh_px_1080": [
+            1348,
+            408,
+            40,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "source_time_s": 687.5,
+      "decoded_frame_index": 20625,
+      "red_components": [
+        {
+          "area_px2": 306.0,
+          "centroid_px_1080": [
+            1360.522,
+            453.66
+          ],
+          "bbox_xywh_px_1080": [
+            1340,
+            442,
+            40,
+            20
+          ]
+        }
+      ],
+      "yellow_components": [
+        {
+          "area_px2": 431.0,
+          "centroid_px_1080": [
+            1366.87,
+            415.218
+          ],
+          "bbox_xywh_px_1080": [
+            1349,
+            404,
+            39,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "source_time_s": 687.6,
+      "decoded_frame_index": 20628,
+      "red_components": [
+        {
+          "area_px2": 258.5,
+          "centroid_px_1080": [
+            1361.157,
+            455.364
+          ],
+          "bbox_xywh_px_1080": [
+            1340,
+            442,
+            40,
+            20
+          ]
+        }
+      ],
+      "yellow_components": [
+        {
+          "area_px2": 418.0,
+          "centroid_px_1080": [
+            1367.791,
+            411.492
+          ],
+          "bbox_xywh_px_1080": [
+            1350,
+            400,
+            40,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "source_time_s": 687.7,
+      "decoded_frame_index": 20631,
+      "red_components": [
+        {
+          "area_px2": 240.0,
+          "centroid_px_1080": [
+            1361.253,
+            456.441
+          ],
+          "bbox_xywh_px_1080": [
+            1340,
+            446,
+            40,
+            16
+          ]
+        }
+      ],
+      "yellow_components": [
+        {
+          "area_px2": 397.5,
+          "centroid_px_1080": [
+            1369.01,
+            408.232
+          ],
+          "bbox_xywh_px_1080": [
+            1350,
+            396,
+            42,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "source_time_s": 687.8,
+      "decoded_frame_index": 20634,
+      "red_components": [
+        {
+          "area_px2": 231.0,
+          "centroid_px_1080": [
+            1361.045,
+            456.722
+          ],
+          "bbox_xywh_px_1080": [
+            1340,
+            448,
+            40,
+            14
+          ]
+        }
+      ],
+      "yellow_components": [
+        {
+          "area_px2": 382.5,
+          "centroid_px_1080": [
+            1369.744,
+            404.594
+          ],
+          "bbox_xywh_px_1080": [
+            1352,
+            393,
+            40,
+            19
+          ]
+        }
+      ]
+    },
+    {
+      "source_time_s": 687.9,
+      "decoded_frame_index": 20637,
+      "red_components": [
+        {
+          "area_px2": 214.0,
+          "centroid_px_1080": [
+            1361.54,
+            456.707
+          ],
+          "bbox_xywh_px_1080": [
+            1340,
+            448,
+            40,
+            14
+          ]
+        }
+      ],
+      "yellow_components": [
+        {
+          "area_px2": 368.5,
+          "centroid_px_1080": [
+            1371.178,
+            401.354
+          ],
+          "bbox_xywh_px_1080": [
+            1352,
+            390,
+            40,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "source_time_s": 688.0,
+      "decoded_frame_index": 20640,
+      "red_components": [
+        {
+          "area_px2": 215.5,
+          "centroid_px_1080": [
+            1361.777,
+            456.702
+          ],
+          "bbox_xywh_px_1080": [
+            1340,
+            448,
+            40,
+            14
+          ]
+        }
+      ],
+      "yellow_components": [
+        {
+          "area_px2": 332.5,
+          "centroid_px_1080": [
+            1372.429,
+            397.389
+          ],
+          "bbox_xywh_px_1080": [
+            1354,
+            386,
+            40,
+            18
+          ]
+        }
+      ]
+    }
+  ],
+  "physical_throw_identity_independently_verified": false,
+  "full_contact_dynamics_reconstructed": false,
+  "simulation_ready": false,
+  "limitations": [
+    "The local ROI and HSV thresholds were chosen after inspecting E019; this is a development probe, not transfer validation.",
+    "Cap centroid is not a physical stone center; occlusion and overlap can shift or split colour components.",
+    "One contour does not prove persistent physical identity, and ambiguous yellow frames are left unresolved.",
+    "Image-pixel motion alone does not determine stone spin, collision impulse, metric speed or complete game state."
+  ]
+}

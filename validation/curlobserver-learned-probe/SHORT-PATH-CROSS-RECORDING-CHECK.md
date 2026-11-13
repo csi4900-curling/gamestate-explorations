@@ -1,0 +1,5 @@
+# Canada–Slovakia cross-recording check of the left short-path rule
+
+Apply the [Canada–Czechia postscore short-path rule](../throw-event-benchmark/canada-czech-2024/LEFT-SHORT-PATH-RESCUE-PLAN.md) **unchanged** to the existing Canada–Slovakia 2024 candidate-centric 1650–2760 s transfer: left-view only, preserve every previously selected path, `min_forward_step_m=0.15`, `min_travel_m=1.0`, four samples, the existing 0.5 s observations, and the same frozen three-patch appearance plus duplicate screen. Keep the Canada–Slovakia candidate source and high-resolution video hashes fixed. Compare every one of the 25 corridor candidate decisions to the preexisting 17-accepted/8-abstained screen.
+
+This is a **cross-recording development check**, not a clean independent validation: the project previously used Canada–Slovakia for other detector work, and there are no exhaustive independent throw labels for this interval. Do not retune the rule on its outcome or claim F1. Source-review any newly accepted candidate only after the unchanged screen runs; preserve the original result and any newly accepted false-looking motion.

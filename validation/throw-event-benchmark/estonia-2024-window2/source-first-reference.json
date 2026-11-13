@@ -1,0 +1,21 @@
+{
+  "source_id": "PXGfMeiTKMA",
+  "source_sha256": "2e2b84bb2d9dffa497ee850ddbeaf0d5cae0d697377b6eee6a1ef481f449f3da",
+  "source_interval_s": [3000, 3300],
+  "reference_method": "agent_blind",
+  "exhaustive": false,
+  "event_semantics": "Coarse one-to-one delivery windows from one-second source-only left and right panel samples, frozen before reading predictions for this interval. These are observed stone travel intervals, not release timestamps.",
+  "reference_limitations": [
+    "One-second sampling and split-screen views can miss a brief or hidden delivery; continuous full-frame source review has not independently verified completeness.",
+    "The same agent prepared this reference and develops the detector, so this is a source-first development check rather than independent validation.",
+    "The interval begins and ends during play; events crossing its boundaries could be truncated."
+  ],
+  "events": [
+    {"id": "W01", "colour": "yellow", "delivery_interval_s": [3009, 3031]},
+    {"id": "W02", "colour": "red", "delivery_interval_s": [3048, 3072]},
+    {"id": "W03", "colour": "yellow", "delivery_interval_s": [3094, 3115]},
+    {"id": "W04", "colour": "red", "delivery_interval_s": [3141, 3169]},
+    {"id": "W05", "colour": "yellow", "delivery_interval_s": [3193, 3218]},
+    {"id": "W06", "colour": "red", "delivery_interval_s": [3250, 3273]}
+  ]
+}

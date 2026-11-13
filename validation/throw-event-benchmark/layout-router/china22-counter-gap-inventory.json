@@ -1,0 +1,83 @@
+{
+  "status": "counter_gap_evidence_inventory_not_confirmed_throws",
+  "source_id": "qn9tHfcimlQ",
+  "source_sha256": "c5254bb9103e32c6beac74cf269fc7bcec8ce2c2a710a7d4600c7ddb951f160e",
+  "source_interval_s": [
+    0.0,
+    8356.0
+  ],
+  "coverage_gaps_s": [
+    [
+      0.0,
+      300.0
+    ],
+    [
+      3600.0,
+      3900.0
+    ],
+    [
+      8100.0,
+      8356.0
+    ]
+  ],
+  "preflight_sha256": "26ebe16b2782a407d23afbff4835bd4db606290ca3e6f4fe247731914f57adef",
+  "counter_replay_sha256": "536f4be01c11705135ba4de3f8a4513aa75262525a56994c7419e5aacb3a72a7",
+  "model_sha256": "5f6e62d1f45a4a7e16ddb9a9a24ab8c824c6f10a5c018100029c1bbbf9b2f4d4",
+  "runner_sha256": "38f66a6e35458d4e6434badc506787d20cc9e0a8ef2c8b9e348cd6bd64402460",
+  "counter_event_count": 116,
+  "interior_gap_candidate_count": 1,
+  "boundary_ambiguous_count": 1,
+  "interior_gap_candidates": [
+    {
+      "counter_id": "B62",
+      "colour": "yellow",
+      "counter_update_s": 3662.0,
+      "counter_evidence_interval_s": [
+        3661.0,
+        3662.0
+      ],
+      "remaining_before": [
+        0,
+        1
+      ],
+      "remaining_after": [
+        0,
+        0
+      ],
+      "classification": "counter_evidence_inside_gap",
+      "gap_interval_s": [
+        3600.0,
+        3900.0
+      ]
+    }
+  ],
+  "boundary_ambiguous": [
+    {
+      "counter_id": "B61",
+      "colour": "red",
+      "counter_update_s": 3629.0,
+      "counter_evidence_interval_s": [
+        3596.0,
+        3629.0
+      ],
+      "remaining_before": [
+        1,
+        1
+      ],
+      "remaining_after": [
+        0,
+        1
+      ],
+      "classification": "boundary_ambiguous_counter_evidence",
+      "gap_interval_s": [
+        3600.0,
+        3900.0
+      ]
+    }
+  ],
+  "limitations": [
+    "Counter updates are delayed broadcast evidence, not observed release times.",
+    "No counter evidence in a gap does not establish that no throw occurred.",
+    "Route gaps remain gaps; these candidates are not confirmed timeline events."
+  ]
+}

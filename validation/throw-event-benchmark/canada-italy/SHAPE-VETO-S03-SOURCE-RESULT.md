@@ -1,0 +1,7 @@
+# Latvia body-support veto rejects a visible Italy stone path
+
+The [exact-source four-frame sheet](shape-veto-s03-source-audit/s03-source-sequence.jpg) shows raw Italy run-02 candidate **S03** at 227.5, 227.9, 228.3 and 228.7 s. Its marked pixel at roughly **(160, 69.5)** is on a yellow-capped stone body moving up the ice in the left camera. The stone remains visible in successive source frames. This is a same-agent postproposal source-pixel review; it is **not** an independent throw-event label, nor a verified release or settle.
+
+S03's saved `mean_body_support` is **0.9132**, below the Latvia-reviewed stone minimum **0.9233**. Its box height/width is **1.00**, recent track duration **0.8 s**, and direction consistency **1.0**. Thus the proposed Latvia-derived three-part hard veto would reject S03 **solely because of body support**, despite the clearly moving stone-shaped source pixels. This disproves source-stone retention for that exact transferred boundary on this Italy example; it does not quantify full-match recall.
+
+The [manifest](shape-veto-s03-source-audit/manifest.json) records the full-source and candidate-run hashes, frame times, crossing pixel, Latvia audit hash and image hash. Reproduce with `python prototype/scripts/audit_italy_shape_veto_s03.py` from the project root. The runner verifies the Italy video fingerprint and the raw event input against the prior transfer audit before rendering.

@@ -1,0 +1,3786 @@
+{
+  "status": "source_video_temporal_partial_board_development_audit_not_throw_f1",
+  "sample_sha256": "47299fa0e828f1dc0a775c2b608ceb8268e4a776d82086493da8386947dc4fcc",
+  "counter_alignment_sha256": "bbb37c334890fcd044317e8514d24dfbd4094a46592c2ef81d415e44ef2c55bd",
+  "official_diagrams_sha256": "e55890f1f1ca8d938b212626223408fd0ebe029577bc2da95d032130c78caf8c",
+  "source_video_sha256_by_game": {
+    "PREL000101": "49429abdd3796e8240e66c201d37e94e71a7bb6225890b2492bea26d2f70d560",
+    "PREL000102": "c5254bb9103e32c6beac74cf269fc7bcec8ce2c2a710a7d4600c7ddb951f160e",
+    "PREL000103": "eba1d86944a2f4278b6e5e2c7549d12b47e5e8a51bf0c680b2db372c6ec12420"
+  },
+  "house_detector_sha256": "d92ac3f0792c3194ef600668bd4305a74fd6cc25335ef796c691e34b044ed3be",
+  "stone_detector_sha256": "e938a8fbe4e3eee59ceb2f680738bfbc90626e68907d6b90fd65170a4ff65542",
+  "temporal_cluster_sha256": "0adfdc8692ac312ec8a6246d60776e4cdabe3e7311667855080555b99a5e2108",
+  "comparator_sha256": "68ec2b456af65518a8eac4e7e5c88b3e8f1e1fcb035d3d8048252a932da82ae8",
+  "runner_sha256": "683af46f7359c49a27d8859e080e3509e8b3e64507f8985e6935ee448d2ac104",
+  "sample_rule": "Same fifteen counter anchors as v2; +4..+30 seconds every 2 seconds, stopping 12 seconds before next counter; stable stone requires three frames spanning four seconds, within 0.10 house radii. Inferred delivery side uses unanimous known views per recording only.",
+  "sample_count": 15,
+  "rows_with_accepted_frames": 9,
+  "rows_with_stable_stones": 7,
+  "stable_stone_count": 22,
+  "stable_matched_count": 22,
+  "stable_unmatched_count": 0,
+  "rows": [
+    {
+      "official_game_code": "PREL000101",
+      "official_shot_id": "PREL000101-E01-S05",
+      "counter_time_s": 493.0,
+      "following_counter_time_s": 526.0,
+      "sampled_offsets_s": [
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20
+      ],
+      "inferred_recording_delivery_side": "top",
+      "accepted_frame_count": 2,
+      "frame_observations": [
+        {
+          "time_s": 497.0,
+          "offset_s": 4,
+          "house": {
+            "center_px": [
+              317,
+              199
+            ],
+            "outer_radius_px": 145,
+            "annulus_support": {
+              "mean_blue_fraction": 0.793,
+              "supported_angle_bins": 71,
+              "visible_angle_bins": 72
+            },
+            "component_fill_fraction": 0.426,
+            "component_bbox_px": [
+              172,
+              54,
+              290,
+              290
+            ],
+            "delivery_side": "top"
+          },
+          "stones": [
+            {
+              "colour": "red",
+              "pixel": [
+                92,
+                26
+              ],
+              "cap_colour_pixels": 61,
+              "hough_radius_px": 5.5,
+              "canonical_lateral_house_radii": -1.5517,
+              "longitudinal_house_radii": -1.1931
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                412,
+                118
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 10.3,
+              "canonical_lateral_house_radii": 0.6552,
+              "longitudinal_house_radii": -0.5586
+            }
+          ]
+        },
+        {
+          "time_s": 499.0,
+          "offset_s": 6,
+          "house": {
+            "center_px": [
+              317,
+              199
+            ],
+            "outer_radius_px": 145,
+            "annulus_support": {
+              "mean_blue_fraction": 0.793,
+              "supported_angle_bins": 71,
+              "visible_angle_bins": 72
+            },
+            "component_fill_fraction": 0.426,
+            "component_bbox_px": [
+              172,
+              54,
+              290,
+              290
+            ],
+            "delivery_side": "top"
+          },
+          "stones": [
+            {
+              "colour": "red",
+              "pixel": [
+                92,
+                26
+              ],
+              "cap_colour_pixels": 61,
+              "hough_radius_px": 5.5,
+              "canonical_lateral_house_radii": -1.5517,
+              "longitudinal_house_radii": -1.1931
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                350,
+                230
+              ],
+              "cap_colour_pixels": 66,
+              "hough_radius_px": 8.0,
+              "canonical_lateral_house_radii": 0.2276,
+              "longitudinal_house_radii": 0.2138
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                412,
+                118
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 10.3,
+              "canonical_lateral_house_radii": 0.6552,
+              "longitudinal_house_radii": -0.5586
+            }
+          ]
+        }
+      ],
+      "stable_partial_board": [],
+      "comparison": {
+        "video_stone_count": 0,
+        "official_symbol_count": 1,
+        "matched_count": 0,
+        "mean_matched_distance_house_radii": null,
+        "max_matched_distance_house_radii": null,
+        "matches": [],
+        "unmatched_video": [],
+        "unmatched_official": [
+          {
+            "colour": "yellow",
+            "official_index": 0
+          }
+        ]
+      },
+      "official_symbol_count": 1
+    },
+    {
+      "official_game_code": "PREL000101",
+      "official_shot_id": "PREL000101-E02-S12",
+      "counter_time_s": 1694.0,
+      "following_counter_time_s": 1751.0,
+      "sampled_offsets_s": [
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30
+      ],
+      "inferred_recording_delivery_side": "top",
+      "accepted_frame_count": 3,
+      "frame_observations": [
+        {
+          "time_s": 1706.0,
+          "offset_s": 12,
+          "house": {
+            "center_px": [
+              316,
+              178
+            ],
+            "outer_radius_px": 156,
+            "annulus_support": {
+              "mean_blue_fraction": 0.737,
+              "supported_angle_bins": 65,
+              "visible_angle_bins": 72
+            },
+            "component_fill_fraction": 0.397,
+            "component_bbox_px": [
+              160,
+              23,
+              312,
+              311
+            ],
+            "delivery_side": "top"
+          },
+          "stones": [
+            {
+              "colour": "red",
+              "pixel": [
+                94,
+                26
+              ],
+              "cap_colour_pixels": 51,
+              "hough_radius_px": 6.6,
+              "canonical_lateral_house_radii": -1.4231,
+              "longitudinal_house_radii": -0.9744
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                466,
+                114
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": 0.9615,
+              "longitudinal_house_radii": -0.4103
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                194,
+                262
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": -0.7821,
+              "longitudinal_house_radii": 0.5385
+            }
+          ]
+        },
+        {
+          "time_s": 1708.0,
+          "offset_s": 14,
+          "house": {
+            "center_px": [
+              316,
+              178
+            ],
+            "outer_radius_px": 156,
+            "annulus_support": {
+              "mean_blue_fraction": 0.737,
+              "supported_angle_bins": 65,
+              "visible_angle_bins": 72
+            },
+            "component_fill_fraction": 0.397,
+            "component_bbox_px": [
+              160,
+              23,
+              312,
+              311
+            ],
+            "delivery_side": "top"
+          },
+          "stones": [
+            {
+              "colour": "red",
+              "pixel": [
+                94,
+                26
+              ],
+              "cap_colour_pixels": 51,
+              "hough_radius_px": 6.6,
+              "canonical_lateral_house_radii": -1.4231,
+              "longitudinal_house_radii": -0.9744
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                466,
+                114
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": 0.9615,
+              "longitudinal_house_radii": -0.4103
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                194,
+                262
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": -0.7821,
+              "longitudinal_house_radii": 0.5385
+            }
+          ]
+        },
+        {
+          "time_s": 1710.0,
+          "offset_s": 16,
+          "house": {
+            "center_px": [
+              316,
+              179
+            ],
+            "outer_radius_px": 156,
+            "annulus_support": {
+              "mean_blue_fraction": 0.736,
+              "supported_angle_bins": 64,
+              "visible_angle_bins": 72
+            },
+            "component_fill_fraction": 0.398,
+            "component_bbox_px": [
+              160,
+              24,
+              312,
+              310
+            ],
+            "delivery_side": "top"
+          },
+          "stones": [
+            {
+              "colour": "red",
+              "pixel": [
+                466,
+                114
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": 0.9615,
+              "longitudinal_house_radii": -0.4167
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                92,
+                46
+              ],
+              "cap_colour_pixels": 34,
+              "hough_radius_px": 8.0,
+              "canonical_lateral_house_radii": -1.4359,
+              "longitudinal_house_radii": -0.8526
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                194,
+                260
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": -0.7821,
+              "longitudinal_house_radii": 0.5192
+            }
+          ]
+        }
+      ],
+      "stable_partial_board": [
+        {
+          "colour": "red",
+          "canonical_lateral_house_radii": 0.9615,
+          "longitudinal_house_radii": -0.4103,
+          "supporting_frame_count": 3,
+          "first_seen_s": 1706.0,
+          "last_seen_s": 1710.0,
+          "max_position_spread_house_radii": 0.0064
+        },
+        {
+          "colour": "yellow",
+          "canonical_lateral_house_radii": -0.7821,
+          "longitudinal_house_radii": 0.5385,
+          "supporting_frame_count": 3,
+          "first_seen_s": 1706.0,
+          "last_seen_s": 1710.0,
+          "max_position_spread_house_radii": 0.0193
+        }
+      ],
+      "comparison": {
+        "video_stone_count": 2,
+        "official_symbol_count": 2,
+        "matched_count": 2,
+        "mean_matched_distance_house_radii": 0.0292,
+        "max_matched_distance_house_radii": 0.0422,
+        "matches": [
+          {
+            "colour": "red",
+            "video_index": 0,
+            "official_index": 0,
+            "distance_house_radii": 0.0422,
+            "video_xy": [
+              0.9615,
+              -0.4103
+            ],
+            "official_xy": [
+              0.9333,
+              -0.4417
+            ]
+          },
+          {
+            "colour": "yellow",
+            "video_index": 0,
+            "official_index": 0,
+            "distance_house_radii": 0.0163,
+            "video_xy": [
+              -0.7821,
+              0.5385
+            ],
+            "official_xy": [
+              -0.7667,
+              0.5333
+            ]
+          }
+        ],
+        "unmatched_video": [],
+        "unmatched_official": []
+      },
+      "official_symbol_count": 2
+    },
+    {
+      "official_game_code": "PREL000101",
+      "official_shot_id": "PREL000101-E04-S10",
+      "counter_time_s": 3487.0,
+      "following_counter_time_s": 3542.0,
+      "sampled_offsets_s": [
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30
+      ],
+      "inferred_recording_delivery_side": "top",
+      "accepted_frame_count": 0,
+      "frame_observations": [],
+      "stable_partial_board": [],
+      "comparison": {
+        "video_stone_count": 0,
+        "official_symbol_count": 4,
+        "matched_count": 0,
+        "mean_matched_distance_house_radii": null,
+        "max_matched_distance_house_radii": null,
+        "matches": [],
+        "unmatched_video": [],
+        "unmatched_official": [
+          {
+            "colour": "red",
+            "official_index": 0
+          },
+          {
+            "colour": "red",
+            "official_index": 1
+          },
+          {
+            "colour": "yellow",
+            "official_index": 0
+          },
+          {
+            "colour": "yellow",
+            "official_index": 1
+          }
+        ]
+      },
+      "official_symbol_count": 4
+    },
+    {
+      "official_game_code": "PREL000101",
+      "official_shot_id": "PREL000101-E06-S06",
+      "counter_time_s": 5514.0,
+      "following_counter_time_s": 5563.0,
+      "sampled_offsets_s": [
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30
+      ],
+      "inferred_recording_delivery_side": "top",
+      "accepted_frame_count": 3,
+      "frame_observations": [
+        {
+          "time_s": 5528.0,
+          "offset_s": 14,
+          "house": {
+            "center_px": [
+              316,
+              192
+            ],
+            "outer_radius_px": 142,
+            "annulus_support": {
+              "mean_blue_fraction": 0.739,
+              "supported_angle_bins": 65,
+              "visible_angle_bins": 72
+            },
+            "component_fill_fraction": 0.398,
+            "component_bbox_px": [
+              174,
+              50,
+              284,
+              284
+            ],
+            "delivery_side": "top"
+          },
+          "stones": [
+            {
+              "colour": "red",
+              "pixel": [
+                92,
+                26
+              ],
+              "cap_colour_pixels": 61,
+              "hough_radius_px": 5.5,
+              "canonical_lateral_house_radii": -1.5775,
+              "longitudinal_house_radii": -1.169
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                382,
+                136
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": 0.4648,
+              "longitudinal_house_radii": -0.3944
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                330,
+                50
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 9.1,
+              "canonical_lateral_house_radii": 0.0986,
+              "longitudinal_house_radii": -1.0
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                326,
+                180
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 10.3,
+              "canonical_lateral_house_radii": 0.0704,
+              "longitudinal_house_radii": -0.0845
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                302,
+                216
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 10.2,
+              "canonical_lateral_house_radii": -0.0986,
+              "longitudinal_house_radii": 0.169
+            }
+          ]
+        },
+        {
+          "time_s": 5530.0,
+          "offset_s": 16,
+          "house": {
+            "center_px": [
+              316,
+              193
+            ],
+            "outer_radius_px": 142,
+            "annulus_support": {
+              "mean_blue_fraction": 0.764,
+              "supported_angle_bins": 70,
+              "visible_angle_bins": 72
+            },
+            "component_fill_fraction": 0.411,
+            "component_bbox_px": [
+              174,
+              51,
+              284,
+              284
+            ],
+            "delivery_side": "top"
+          },
+          "stones": [
+            {
+              "colour": "red",
+              "pixel": [
+                394,
+                174
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": 0.5493,
+              "longitudinal_house_radii": -0.1338
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                330,
+                52
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 10.3,
+              "canonical_lateral_house_radii": 0.0986,
+              "longitudinal_house_radii": -0.993
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                326,
+                180
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 8.0,
+              "canonical_lateral_house_radii": 0.0704,
+              "longitudinal_house_radii": -0.0915
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                302,
+                218
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 9.1,
+              "canonical_lateral_house_radii": -0.0986,
+              "longitudinal_house_radii": 0.1761
+            }
+          ]
+        },
+        {
+          "time_s": 5532.0,
+          "offset_s": 18,
+          "house": {
+            "center_px": [
+              316,
+              192
+            ],
+            "outer_radius_px": 142,
+            "annulus_support": {
+              "mean_blue_fraction": 0.749,
+              "supported_angle_bins": 67,
+              "visible_angle_bins": 72
+            },
+            "component_fill_fraction": 0.406,
+            "component_bbox_px": [
+              174,
+              51,
+              284,
+              283
+            ],
+            "delivery_side": "top"
+          },
+          "stones": [
+            {
+              "colour": "red",
+              "pixel": [
+                394,
+                174
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": 0.5493,
+              "longitudinal_house_radii": -0.1268
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                330,
+                52
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 10.3,
+              "canonical_lateral_house_radii": 0.0986,
+              "longitudinal_house_radii": -0.9859
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                232,
+                168
+              ],
+              "cap_colour_pixels": 46,
+              "hough_radius_px": 8.0,
+              "canonical_lateral_house_radii": -0.5915,
+              "longitudinal_house_radii": -0.169
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                326,
+                180
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 7.4,
+              "canonical_lateral_house_radii": 0.0704,
+              "longitudinal_house_radii": -0.0845
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                302,
+                216
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 10.2,
+              "canonical_lateral_house_radii": -0.0986,
+              "longitudinal_house_radii": 0.169
+            }
+          ]
+        }
+      ],
+      "stable_partial_board": [
+        {
+          "colour": "yellow",
+          "canonical_lateral_house_radii": 0.0986,
+          "longitudinal_house_radii": -0.993,
+          "supporting_frame_count": 3,
+          "first_seen_s": 5528.0,
+          "last_seen_s": 5532.0,
+          "max_position_spread_house_radii": 0.0071
+        },
+        {
+          "colour": "yellow",
+          "canonical_lateral_house_radii": 0.0704,
+          "longitudinal_house_radii": -0.0845,
+          "supporting_frame_count": 3,
+          "first_seen_s": 5528.0,
+          "last_seen_s": 5532.0,
+          "max_position_spread_house_radii": 0.007
+        },
+        {
+          "colour": "yellow",
+          "canonical_lateral_house_radii": -0.0986,
+          "longitudinal_house_radii": 0.169,
+          "supporting_frame_count": 3,
+          "first_seen_s": 5528.0,
+          "last_seen_s": 5532.0,
+          "max_position_spread_house_radii": 0.0071
+        }
+      ],
+      "comparison": {
+        "video_stone_count": 3,
+        "official_symbol_count": 6,
+        "matched_count": 3,
+        "mean_matched_distance_house_radii": 0.0131,
+        "max_matched_distance_house_radii": 0.0236,
+        "matches": [
+          {
+            "colour": "yellow",
+            "video_index": 0,
+            "official_index": 0,
+            "distance_house_radii": 0.0236,
+            "video_xy": [
+              0.0986,
+              -0.993
+            ],
+            "official_xy": [
+              0.075,
+              -0.9917
+            ]
+          },
+          {
+            "colour": "yellow",
+            "video_index": 1,
+            "official_index": 1,
+            "distance_house_radii": 0.0085,
+            "video_xy": [
+              0.0704,
+              -0.0845
+            ],
+            "official_xy": [
+              0.075,
+              -0.0917
+            ]
+          },
+          {
+            "colour": "yellow",
+            "video_index": 2,
+            "official_index": 2,
+            "distance_house_radii": 0.0073,
+            "video_xy": [
+              -0.0986,
+              0.169
+            ],
+            "official_xy": [
+              -0.0917,
+              0.1667
+            ]
+          }
+        ],
+        "unmatched_video": [],
+        "unmatched_official": [
+          {
+            "colour": "red",
+            "official_index": 0
+          },
+          {
+            "colour": "red",
+            "official_index": 1
+          },
+          {
+            "colour": "red",
+            "official_index": 2
+          }
+        ]
+      },
+      "official_symbol_count": 6
+    },
+    {
+      "official_game_code": "PREL000101",
+      "official_shot_id": "PREL000101-E07-S14",
+      "counter_time_s": 7169.0,
+      "following_counter_time_s": null,
+      "sampled_offsets_s": [
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30
+      ],
+      "inferred_recording_delivery_side": "top",
+      "accepted_frame_count": 7,
+      "frame_observations": [
+        {
+          "time_s": 7175.0,
+          "offset_s": 6,
+          "house": {
+            "center_px": [
+              318,
+              207
+            ],
+            "outer_radius_px": 131,
+            "annulus_support": {
+              "mean_blue_fraction": 0.76,
+              "supported_angle_bins": 70,
+              "visible_angle_bins": 72
+            },
+            "component_fill_fraction": 0.408,
+            "component_bbox_px": [
+              187,
+              76,
+              261,
+              262
+            ],
+            "delivery_side": "top"
+          },
+          "stones": [
+            {
+              "colour": "red",
+              "pixel": [
+                394,
+                136
+              ],
+              "cap_colour_pixels": 67,
+              "hough_radius_px": 9.4,
+              "canonical_lateral_house_radii": 0.5802,
+              "longitudinal_house_radii": -0.542
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                234,
+                326
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 9.6,
+              "canonical_lateral_house_radii": -0.6412,
+              "longitudinal_house_radii": 0.9084
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                392,
+                52
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 9.6,
+              "canonical_lateral_house_radii": 0.5649,
+              "longitudinal_house_radii": -1.1832
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                468,
+                242
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 9.6,
+              "canonical_lateral_house_radii": 1.145,
+              "longitudinal_house_radii": 0.2672
+            }
+          ]
+        },
+        {
+          "time_s": 7177.0,
+          "offset_s": 8,
+          "house": {
+            "center_px": [
+              318,
+              207
+            ],
+            "outer_radius_px": 131,
+            "annulus_support": {
+              "mean_blue_fraction": 0.79,
+              "supported_angle_bins": 71,
+              "visible_angle_bins": 72
+            },
+            "component_fill_fraction": 0.425,
+            "component_bbox_px": [
+              187,
+              76,
+              261,
+              262
+            ],
+            "delivery_side": "top"
+          },
+          "stones": [
+            {
+              "colour": "red",
+              "pixel": [
+                394,
+                136
+              ],
+              "cap_colour_pixels": 67,
+              "hough_radius_px": 9.4,
+              "canonical_lateral_house_radii": 0.5802,
+              "longitudinal_house_radii": -0.542
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                234,
+                326
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 9.6,
+              "canonical_lateral_house_radii": -0.6412,
+              "longitudinal_house_radii": 0.9084
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                392,
+                52
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 9.6,
+              "canonical_lateral_house_radii": 0.5649,
+              "longitudinal_house_radii": -1.1832
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                468,
+                242
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 10.0,
+              "canonical_lateral_house_radii": 1.145,
+              "longitudinal_house_radii": 0.2672
+            }
+          ]
+        },
+        {
+          "time_s": 7179.0,
+          "offset_s": 10,
+          "house": {
+            "center_px": [
+              318,
+              207
+            ],
+            "outer_radius_px": 131,
+            "annulus_support": {
+              "mean_blue_fraction": 0.789,
+              "supported_angle_bins": 71,
+              "visible_angle_bins": 72
+            },
+            "component_fill_fraction": 0.423,
+            "component_bbox_px": [
+              187,
+              76,
+              261,
+              262
+            ],
+            "delivery_side": "top"
+          },
+          "stones": [
+            {
+              "colour": "red",
+              "pixel": [
+                394,
+                136
+              ],
+              "cap_colour_pixels": 67,
+              "hough_radius_px": 9.4,
+              "canonical_lateral_house_radii": 0.5802,
+              "longitudinal_house_radii": -0.542
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                236,
+                326
+              ],
+              "cap_colour_pixels": 68,
+              "hough_radius_px": 6.9,
+              "canonical_lateral_house_radii": -0.626,
+              "longitudinal_house_radii": 0.9084
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                392,
+                52
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 9.6,
+              "canonical_lateral_house_radii": 0.5649,
+              "longitudinal_house_radii": -1.1832
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                468,
+                242
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 9.6,
+              "canonical_lateral_house_radii": 1.145,
+              "longitudinal_house_radii": 0.2672
+            }
+          ]
+        },
+        {
+          "time_s": 7181.0,
+          "offset_s": 12,
+          "house": {
+            "center_px": [
+              318,
+              207
+            ],
+            "outer_radius_px": 131,
+            "annulus_support": {
+              "mean_blue_fraction": 0.765,
+              "supported_angle_bins": 69,
+              "visible_angle_bins": 72
+            },
+            "component_fill_fraction": 0.412,
+            "component_bbox_px": [
+              187,
+              76,
+              261,
+              262
+            ],
+            "delivery_side": "top"
+          },
+          "stones": [
+            {
+              "colour": "red",
+              "pixel": [
+                394,
+                136
+              ],
+              "cap_colour_pixels": 67,
+              "hough_radius_px": 9.4,
+              "canonical_lateral_house_radii": 0.5802,
+              "longitudinal_house_radii": -0.542
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                234,
+                326
+              ],
+              "cap_colour_pixels": 68,
+              "hough_radius_px": 10.3,
+              "canonical_lateral_house_radii": -0.6412,
+              "longitudinal_house_radii": 0.9084
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                394,
+                52
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 10.5,
+              "canonical_lateral_house_radii": 0.5802,
+              "longitudinal_house_radii": -1.1832
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                468,
+                242
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 9.6,
+              "canonical_lateral_house_radii": 1.145,
+              "longitudinal_house_radii": 0.2672
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                364,
+                282
+              ],
+              "cap_colour_pixels": 36,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": 0.3511,
+              "longitudinal_house_radii": 0.5725
+            }
+          ]
+        },
+        {
+          "time_s": 7195.0,
+          "offset_s": 26,
+          "house": {
+            "center_px": [
+              318,
+              207
+            ],
+            "outer_radius_px": 131,
+            "annulus_support": {
+              "mean_blue_fraction": 0.785,
+              "supported_angle_bins": 70,
+              "visible_angle_bins": 72
+            },
+            "component_fill_fraction": 0.422,
+            "component_bbox_px": [
+              187,
+              76,
+              261,
+              262
+            ],
+            "delivery_side": "top"
+          },
+          "stones": [
+            {
+              "colour": "red",
+              "pixel": [
+                396,
+                136
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 9.4,
+              "canonical_lateral_house_radii": 0.5954,
+              "longitudinal_house_radii": -0.542
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                234,
+                326
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 10.3,
+              "canonical_lateral_house_radii": -0.6412,
+              "longitudinal_house_radii": 0.9084
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                392,
+                52
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 9.6,
+              "canonical_lateral_house_radii": 0.5649,
+              "longitudinal_house_radii": -1.1832
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                468,
+                242
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 9.6,
+              "canonical_lateral_house_radii": 1.145,
+              "longitudinal_house_radii": 0.2672
+            }
+          ]
+        },
+        {
+          "time_s": 7197.0,
+          "offset_s": 28,
+          "house": {
+            "center_px": [
+              318,
+              207
+            ],
+            "outer_radius_px": 131,
+            "annulus_support": {
+              "mean_blue_fraction": 0.764,
+              "supported_angle_bins": 70,
+              "visible_angle_bins": 72
+            },
+            "component_fill_fraction": 0.415,
+            "component_bbox_px": [
+              187,
+              76,
+              261,
+              262
+            ],
+            "delivery_side": "top"
+          },
+          "stones": [
+            {
+              "colour": "red",
+              "pixel": [
+                396,
+                136
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 9.4,
+              "canonical_lateral_house_radii": 0.5954,
+              "longitudinal_house_radii": -0.542
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                236,
+                326
+              ],
+              "cap_colour_pixels": 68,
+              "hough_radius_px": 6.9,
+              "canonical_lateral_house_radii": -0.626,
+              "longitudinal_house_radii": 0.9084
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                392,
+                52
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 9.6,
+              "canonical_lateral_house_radii": 0.5649,
+              "longitudinal_house_radii": -1.1832
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                468,
+                242
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 9.6,
+              "canonical_lateral_house_radii": 1.145,
+              "longitudinal_house_radii": 0.2672
+            }
+          ]
+        },
+        {
+          "time_s": 7199.0,
+          "offset_s": 30,
+          "house": {
+            "center_px": [
+              318,
+              207
+            ],
+            "outer_radius_px": 131,
+            "annulus_support": {
+              "mean_blue_fraction": 0.768,
+              "supported_angle_bins": 70,
+              "visible_angle_bins": 72
+            },
+            "component_fill_fraction": 0.415,
+            "component_bbox_px": [
+              187,
+              76,
+              261,
+              262
+            ],
+            "delivery_side": "top"
+          },
+          "stones": [
+            {
+              "colour": "red",
+              "pixel": [
+                396,
+                136
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 9.4,
+              "canonical_lateral_house_radii": 0.5954,
+              "longitudinal_house_radii": -0.542
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                234,
+                326
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 10.3,
+              "canonical_lateral_house_radii": -0.6412,
+              "longitudinal_house_radii": 0.9084
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                392,
+                52
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 9.6,
+              "canonical_lateral_house_radii": 0.5649,
+              "longitudinal_house_radii": -1.1832
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                468,
+                242
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 9.6,
+              "canonical_lateral_house_radii": 1.145,
+              "longitudinal_house_radii": 0.2672
+            }
+          ]
+        }
+      ],
+      "stable_partial_board": [
+        {
+          "colour": "red",
+          "canonical_lateral_house_radii": 0.5802,
+          "longitudinal_house_radii": -0.542,
+          "supporting_frame_count": 7,
+          "first_seen_s": 7175.0,
+          "last_seen_s": 7199.0,
+          "max_position_spread_house_radii": 0.0152
+        },
+        {
+          "colour": "red",
+          "canonical_lateral_house_radii": -0.6412,
+          "longitudinal_house_radii": 0.9084,
+          "supporting_frame_count": 7,
+          "first_seen_s": 7175.0,
+          "last_seen_s": 7199.0,
+          "max_position_spread_house_radii": 0.0152
+        },
+        {
+          "colour": "yellow",
+          "canonical_lateral_house_radii": 0.5649,
+          "longitudinal_house_radii": -1.1832,
+          "supporting_frame_count": 7,
+          "first_seen_s": 7175.0,
+          "last_seen_s": 7199.0,
+          "max_position_spread_house_radii": 0.0153
+        },
+        {
+          "colour": "yellow",
+          "canonical_lateral_house_radii": 1.145,
+          "longitudinal_house_radii": 0.2672,
+          "supporting_frame_count": 7,
+          "first_seen_s": 7175.0,
+          "last_seen_s": 7199.0,
+          "max_position_spread_house_radii": 0.0
+        }
+      ],
+      "comparison": {
+        "video_stone_count": 4,
+        "official_symbol_count": 4,
+        "matched_count": 4,
+        "mean_matched_distance_house_radii": 0.0737,
+        "max_matched_distance_house_radii": 0.1523,
+        "matches": [
+          {
+            "colour": "red",
+            "video_index": 0,
+            "official_index": 1,
+            "distance_house_radii": 0.1523,
+            "video_xy": [
+              0.5802,
+              -0.542
+            ],
+            "official_xy": [
+              0.6667,
+              -0.4167
+            ]
+          },
+          {
+            "colour": "red",
+            "video_index": 1,
+            "official_index": 0,
+            "distance_house_radii": 0.0305,
+            "video_xy": [
+              -0.6412,
+              0.9084
+            ],
+            "official_xy": [
+              -0.6667,
+              0.8917
+            ]
+          },
+          {
+            "colour": "yellow",
+            "video_index": 0,
+            "official_index": 1,
+            "distance_house_radii": 0.1072,
+            "video_xy": [
+              0.5649,
+              -1.1832
+            ],
+            "official_xy": [
+              0.6667,
+              -1.2167
+            ]
+          },
+          {
+            "colour": "yellow",
+            "video_index": 1,
+            "official_index": 0,
+            "distance_house_radii": 0.005,
+            "video_xy": [
+              1.145,
+              0.2672
+            ],
+            "official_xy": [
+              1.15,
+              0.2667
+            ]
+          }
+        ],
+        "unmatched_video": [],
+        "unmatched_official": []
+      },
+      "official_symbol_count": 4
+    },
+    {
+      "official_game_code": "PREL000102",
+      "official_shot_id": "PREL000102-E01-S05",
+      "counter_time_s": 508.0,
+      "following_counter_time_s": 550.0,
+      "sampled_offsets_s": [
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30
+      ],
+      "inferred_recording_delivery_side": "top",
+      "accepted_frame_count": 0,
+      "frame_observations": [],
+      "stable_partial_board": [],
+      "comparison": {
+        "video_stone_count": 0,
+        "official_symbol_count": 0,
+        "matched_count": 0,
+        "mean_matched_distance_house_radii": null,
+        "max_matched_distance_house_radii": null,
+        "matches": [],
+        "unmatched_video": [],
+        "unmatched_official": []
+      },
+      "official_symbol_count": 0
+    },
+    {
+      "official_game_code": "PREL000102",
+      "official_shot_id": "PREL000102-E02-S15",
+      "counter_time_s": 1780.0,
+      "following_counter_time_s": 1950.0,
+      "sampled_offsets_s": [
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30
+      ],
+      "inferred_recording_delivery_side": "top",
+      "accepted_frame_count": 3,
+      "frame_observations": [
+        {
+          "time_s": 1788.0,
+          "offset_s": 8,
+          "house": {
+            "center_px": [
+              325,
+              188
+            ],
+            "outer_radius_px": 170,
+            "annulus_support": {
+              "mean_blue_fraction": 0.741,
+              "supported_angle_bins": 66,
+              "visible_angle_bins": 72
+            },
+            "component_fill_fraction": 0.408,
+            "component_bbox_px": [
+              156,
+              16,
+              338,
+              344
+            ],
+            "delivery_side": "top"
+          },
+          "stones": [
+            {
+              "colour": "red",
+              "pixel": [
+                194,
+                108
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": -0.7706,
+              "longitudinal_house_radii": -0.4706
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                146,
+                298
+              ],
+              "cap_colour_pixels": 49,
+              "hough_radius_px": 6.9,
+              "canonical_lateral_house_radii": -1.0529,
+              "longitudinal_house_radii": 0.6471
+            }
+          ]
+        },
+        {
+          "time_s": 1790.0,
+          "offset_s": 10,
+          "house": {
+            "center_px": [
+              325,
+              188
+            ],
+            "outer_radius_px": 170,
+            "annulus_support": {
+              "mean_blue_fraction": 0.741,
+              "supported_angle_bins": 66,
+              "visible_angle_bins": 72
+            },
+            "component_fill_fraction": 0.408,
+            "component_bbox_px": [
+              156,
+              16,
+              338,
+              344
+            ],
+            "delivery_side": "top"
+          },
+          "stones": [
+            {
+              "colour": "red",
+              "pixel": [
+                192,
+                106
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": -0.7824,
+              "longitudinal_house_radii": -0.4824
+            }
+          ]
+        },
+        {
+          "time_s": 1792.0,
+          "offset_s": 12,
+          "house": {
+            "center_px": [
+              325,
+              188
+            ],
+            "outer_radius_px": 170,
+            "annulus_support": {
+              "mean_blue_fraction": 0.742,
+              "supported_angle_bins": 66,
+              "visible_angle_bins": 72
+            },
+            "component_fill_fraction": 0.408,
+            "component_bbox_px": [
+              156,
+              16,
+              338,
+              344
+            ],
+            "delivery_side": "top"
+          },
+          "stones": [
+            {
+              "colour": "red",
+              "pixel": [
+                194,
+                108
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": -0.7706,
+              "longitudinal_house_radii": -0.4706
+            }
+          ]
+        }
+      ],
+      "stable_partial_board": [
+        {
+          "colour": "red",
+          "canonical_lateral_house_radii": -0.7706,
+          "longitudinal_house_radii": -0.4706,
+          "supporting_frame_count": 3,
+          "first_seen_s": 1788.0,
+          "last_seen_s": 1792.0,
+          "max_position_spread_house_radii": 0.0167
+        }
+      ],
+      "comparison": {
+        "video_stone_count": 1,
+        "official_symbol_count": 3,
+        "matched_count": 1,
+        "mean_matched_distance_house_radii": 0.0528,
+        "max_matched_distance_house_radii": 0.0528,
+        "matches": [
+          {
+            "colour": "red",
+            "video_index": 0,
+            "official_index": 0,
+            "distance_house_radii": 0.0528,
+            "video_xy": [
+              -0.7706,
+              -0.4706
+            ],
+            "official_xy": [
+              -0.7333,
+              -0.4333
+            ]
+          }
+        ],
+        "unmatched_video": [],
+        "unmatched_official": [
+          {
+            "colour": "red",
+            "official_index": 1
+          },
+          {
+            "colour": "red",
+            "official_index": 2
+          }
+        ]
+      },
+      "official_symbol_count": 3
+    },
+    {
+      "official_game_code": "PREL000102",
+      "official_shot_id": "PREL000102-E04-S13",
+      "counter_time_s": 3478.0,
+      "following_counter_time_s": 3546.0,
+      "sampled_offsets_s": [
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30
+      ],
+      "inferred_recording_delivery_side": "top",
+      "accepted_frame_count": 5,
+      "frame_observations": [
+        {
+          "time_s": 3500.0,
+          "offset_s": 22,
+          "house": {
+            "center_px": [
+              318,
+              178
+            ],
+            "outer_radius_px": 162,
+            "annulus_support": {
+              "mean_blue_fraction": 0.783,
+              "supported_angle_bins": 72,
+              "visible_angle_bins": 72
+            },
+            "component_fill_fraction": 0.422,
+            "component_bbox_px": [
+              156,
+              16,
+              324,
+              324
+            ],
+            "delivery_side": "top"
+          },
+          "stones": [
+            {
+              "colour": "red",
+              "pixel": [
+                422,
+                310
+              ],
+              "cap_colour_pixels": 67,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": 0.642,
+              "longitudinal_house_radii": 0.8148
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                222,
+                322
+              ],
+              "cap_colour_pixels": 68,
+              "hough_radius_px": 8.0,
+              "canonical_lateral_house_radii": -0.5926,
+              "longitudinal_house_radii": 0.8889
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                342,
+                348
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 9.1,
+              "canonical_lateral_house_radii": 0.1481,
+              "longitudinal_house_radii": 1.0494
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                462,
+                32
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": 0.8889,
+              "longitudinal_house_radii": -0.9012
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                274,
+                324
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 6.9,
+              "canonical_lateral_house_radii": -0.2716,
+              "longitudinal_house_radii": 0.9012
+            }
+          ]
+        },
+        {
+          "time_s": 3502.0,
+          "offset_s": 24,
+          "house": {
+            "center_px": [
+              318,
+              178
+            ],
+            "outer_radius_px": 162,
+            "annulus_support": {
+              "mean_blue_fraction": 0.783,
+              "supported_angle_bins": 72,
+              "visible_angle_bins": 72
+            },
+            "component_fill_fraction": 0.422,
+            "component_bbox_px": [
+              156,
+              16,
+              324,
+              324
+            ],
+            "delivery_side": "top"
+          },
+          "stones": [
+            {
+              "colour": "red",
+              "pixel": [
+                422,
+                310
+              ],
+              "cap_colour_pixels": 67,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": 0.642,
+              "longitudinal_house_radii": 0.8148
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                222,
+                322
+              ],
+              "cap_colour_pixels": 68,
+              "hough_radius_px": 8.0,
+              "canonical_lateral_house_radii": -0.5926,
+              "longitudinal_house_radii": 0.8889
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                342,
+                348
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 9.1,
+              "canonical_lateral_house_radii": 0.1481,
+              "longitudinal_house_radii": 1.0494
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                462,
+                32
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": 0.8889,
+              "longitudinal_house_radii": -0.9012
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                276,
+                328
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": -0.2593,
+              "longitudinal_house_radii": 0.9259
+            }
+          ]
+        },
+        {
+          "time_s": 3504.0,
+          "offset_s": 26,
+          "house": {
+            "center_px": [
+              318,
+              178
+            ],
+            "outer_radius_px": 162,
+            "annulus_support": {
+              "mean_blue_fraction": 0.783,
+              "supported_angle_bins": 72,
+              "visible_angle_bins": 72
+            },
+            "component_fill_fraction": 0.423,
+            "component_bbox_px": [
+              156,
+              16,
+              324,
+              324
+            ],
+            "delivery_side": "top"
+          },
+          "stones": [
+            {
+              "colour": "red",
+              "pixel": [
+                422,
+                310
+              ],
+              "cap_colour_pixels": 67,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": 0.642,
+              "longitudinal_house_radii": 0.8148
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                222,
+                322
+              ],
+              "cap_colour_pixels": 68,
+              "hough_radius_px": 8.0,
+              "canonical_lateral_house_radii": -0.5926,
+              "longitudinal_house_radii": 0.8889
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                342,
+                348
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 9.1,
+              "canonical_lateral_house_radii": 0.1481,
+              "longitudinal_house_radii": 1.0494
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                462,
+                32
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": 0.8889,
+              "longitudinal_house_radii": -0.9012
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                274,
+                324
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 6.9,
+              "canonical_lateral_house_radii": -0.2716,
+              "longitudinal_house_radii": 0.9012
+            }
+          ]
+        },
+        {
+          "time_s": 3506.0,
+          "offset_s": 28,
+          "house": {
+            "center_px": [
+              318,
+              178
+            ],
+            "outer_radius_px": 162,
+            "annulus_support": {
+              "mean_blue_fraction": 0.787,
+              "supported_angle_bins": 71,
+              "visible_angle_bins": 72
+            },
+            "component_fill_fraction": 0.423,
+            "component_bbox_px": [
+              156,
+              16,
+              324,
+              324
+            ],
+            "delivery_side": "top"
+          },
+          "stones": [
+            {
+              "colour": "red",
+              "pixel": [
+                90,
+                26
+              ],
+              "cap_colour_pixels": 55,
+              "hough_radius_px": 5.5,
+              "canonical_lateral_house_radii": -1.4074,
+              "longitudinal_house_radii": -0.9383
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                422,
+                310
+              ],
+              "cap_colour_pixels": 67,
+              "hough_radius_px": 6.9,
+              "canonical_lateral_house_radii": 0.642,
+              "longitudinal_house_radii": 0.8148
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                220,
+                322
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 6.9,
+              "canonical_lateral_house_radii": -0.6049,
+              "longitudinal_house_radii": 0.8889
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                342,
+                348
+              ],
+              "cap_colour_pixels": 67,
+              "hough_radius_px": 9.1,
+              "canonical_lateral_house_radii": 0.1481,
+              "longitudinal_house_radii": 1.0494
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                462,
+                32
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": 0.8889,
+              "longitudinal_house_radii": -0.9012
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                276,
+                328
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 10.3,
+              "canonical_lateral_house_radii": -0.2593,
+              "longitudinal_house_radii": 0.9259
+            }
+          ]
+        },
+        {
+          "time_s": 3508.0,
+          "offset_s": 30,
+          "house": {
+            "center_px": [
+              318,
+              178
+            ],
+            "outer_radius_px": 162,
+            "annulus_support": {
+              "mean_blue_fraction": 0.787,
+              "supported_angle_bins": 71,
+              "visible_angle_bins": 72
+            },
+            "component_fill_fraction": 0.424,
+            "component_bbox_px": [
+              156,
+              16,
+              324,
+              324
+            ],
+            "delivery_side": "top"
+          },
+          "stones": [
+            {
+              "colour": "red",
+              "pixel": [
+                90,
+                26
+              ],
+              "cap_colour_pixels": 55,
+              "hough_radius_px": 5.5,
+              "canonical_lateral_house_radii": -1.4074,
+              "longitudinal_house_radii": -0.9383
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                422,
+                310
+              ],
+              "cap_colour_pixels": 67,
+              "hough_radius_px": 6.9,
+              "canonical_lateral_house_radii": 0.642,
+              "longitudinal_house_radii": 0.8148
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                220,
+                322
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 6.9,
+              "canonical_lateral_house_radii": -0.6049,
+              "longitudinal_house_radii": 0.8889
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                342,
+                348
+              ],
+              "cap_colour_pixels": 67,
+              "hough_radius_px": 9.1,
+              "canonical_lateral_house_radii": 0.1481,
+              "longitudinal_house_radii": 1.0494
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                462,
+                32
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": 0.8889,
+              "longitudinal_house_radii": -0.9012
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                276,
+                324
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": -0.2593,
+              "longitudinal_house_radii": 0.9012
+            }
+          ]
+        }
+      ],
+      "stable_partial_board": [
+        {
+          "colour": "red",
+          "canonical_lateral_house_radii": 0.642,
+          "longitudinal_house_radii": 0.8148,
+          "supporting_frame_count": 5,
+          "first_seen_s": 3500.0,
+          "last_seen_s": 3508.0,
+          "max_position_spread_house_radii": 0.0
+        },
+        {
+          "colour": "red",
+          "canonical_lateral_house_radii": -0.5926,
+          "longitudinal_house_radii": 0.8889,
+          "supporting_frame_count": 5,
+          "first_seen_s": 3500.0,
+          "last_seen_s": 3508.0,
+          "max_position_spread_house_radii": 0.0123
+        },
+        {
+          "colour": "red",
+          "canonical_lateral_house_radii": 0.1481,
+          "longitudinal_house_radii": 1.0494,
+          "supporting_frame_count": 5,
+          "first_seen_s": 3500.0,
+          "last_seen_s": 3508.0,
+          "max_position_spread_house_radii": 0.0
+        },
+        {
+          "colour": "yellow",
+          "canonical_lateral_house_radii": 0.8889,
+          "longitudinal_house_radii": -0.9012,
+          "supporting_frame_count": 5,
+          "first_seen_s": 3500.0,
+          "last_seen_s": 3508.0,
+          "max_position_spread_house_radii": 0.0
+        },
+        {
+          "colour": "yellow",
+          "canonical_lateral_house_radii": -0.2593,
+          "longitudinal_house_radii": 0.9012,
+          "supporting_frame_count": 5,
+          "first_seen_s": 3500.0,
+          "last_seen_s": 3508.0,
+          "max_position_spread_house_radii": 0.0247
+        }
+      ],
+      "comparison": {
+        "video_stone_count": 5,
+        "official_symbol_count": 5,
+        "matched_count": 5,
+        "mean_matched_distance_house_radii": 0.0986,
+        "max_matched_distance_house_radii": 0.192,
+        "matches": [
+          {
+            "colour": "red",
+            "video_index": 0,
+            "official_index": 0,
+            "distance_house_radii": 0.0914,
+            "video_xy": [
+              0.642,
+              0.8148
+            ],
+            "official_xy": [
+              0.6833,
+              0.7333
+            ]
+          },
+          {
+            "colour": "red",
+            "video_index": 1,
+            "official_index": 1,
+            "distance_house_radii": 0.192,
+            "video_xy": [
+              -0.5926,
+              0.8889
+            ],
+            "official_xy": [
+              -0.7333,
+              0.7583
+            ]
+          },
+          {
+            "colour": "red",
+            "video_index": 2,
+            "official_index": 2,
+            "distance_house_radii": 0.0343,
+            "video_xy": [
+              0.1481,
+              1.0494
+            ],
+            "official_xy": [
+              0.1583,
+              1.0167
+            ]
+          },
+          {
+            "colour": "yellow",
+            "video_index": 0,
+            "official_index": 0,
+            "distance_house_radii": 0.0168,
+            "video_xy": [
+              0.8889,
+              -0.9012
+            ],
+            "official_xy": [
+              0.875,
+              -0.8917
+            ]
+          },
+          {
+            "colour": "yellow",
+            "video_index": 1,
+            "official_index": 1,
+            "distance_house_radii": 0.1584,
+            "video_xy": [
+              -0.2593,
+              0.9012
+            ],
+            "official_xy": [
+              -0.4167,
+              0.8833
+            ]
+          }
+        ],
+        "unmatched_video": [],
+        "unmatched_official": []
+      },
+      "official_symbol_count": 5
+    },
+    {
+      "official_game_code": "PREL000102",
+      "official_shot_id": "PREL000102-E06-S12",
+      "counter_time_s": 5441.0,
+      "following_counter_time_s": 5642.0,
+      "sampled_offsets_s": [
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30
+      ],
+      "inferred_recording_delivery_side": "top",
+      "accepted_frame_count": 6,
+      "frame_observations": [
+        {
+          "time_s": 5461.0,
+          "offset_s": 20,
+          "house": {
+            "center_px": [
+              319,
+              220
+            ],
+            "outer_radius_px": 144,
+            "annulus_support": {
+              "mean_blue_fraction": 0.78,
+              "supported_angle_bins": 70,
+              "visible_angle_bins": 72
+            },
+            "component_fill_fraction": 0.431,
+            "component_bbox_px": [
+              172,
+              80,
+              294,
+              280
+            ],
+            "delivery_side": "top"
+          },
+          "stones": [
+            {
+              "colour": "red",
+              "pixel": [
+                190,
+                44
+              ],
+              "cap_colour_pixels": 63,
+              "hough_radius_px": 9.6,
+              "canonical_lateral_house_radii": -0.8958,
+              "longitudinal_house_radii": -1.2222
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                204,
+                186
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 10.3,
+              "canonical_lateral_house_radii": -0.7986,
+              "longitudinal_house_radii": -0.2361
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                136,
+                228
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 6.9,
+              "canonical_lateral_house_radii": -1.2708,
+              "longitudinal_house_radii": 0.0556
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                392,
+                162
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": 0.5069,
+              "longitudinal_house_radii": -0.4028
+            }
+          ]
+        },
+        {
+          "time_s": 5463.0,
+          "offset_s": 22,
+          "house": {
+            "center_px": [
+              319,
+              220
+            ],
+            "outer_radius_px": 144,
+            "annulus_support": {
+              "mean_blue_fraction": 0.776,
+              "supported_angle_bins": 71,
+              "visible_angle_bins": 72
+            },
+            "component_fill_fraction": 0.428,
+            "component_bbox_px": [
+              172,
+              80,
+              294,
+              280
+            ],
+            "delivery_side": "top"
+          },
+          "stones": [
+            {
+              "colour": "red",
+              "pixel": [
+                190,
+                44
+              ],
+              "cap_colour_pixels": 63,
+              "hough_radius_px": 9.6,
+              "canonical_lateral_house_radii": -0.8958,
+              "longitudinal_house_radii": -1.2222
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                198,
+                200
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": -0.8403,
+              "longitudinal_house_radii": -0.1389
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                136,
+                228
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 6.9,
+              "canonical_lateral_house_radii": -1.2708,
+              "longitudinal_house_radii": 0.0556
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                392,
+                162
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": 0.5069,
+              "longitudinal_house_radii": -0.4028
+            }
+          ]
+        },
+        {
+          "time_s": 5465.0,
+          "offset_s": 24,
+          "house": {
+            "center_px": [
+              319,
+              220
+            ],
+            "outer_radius_px": 144,
+            "annulus_support": {
+              "mean_blue_fraction": 0.735,
+              "supported_angle_bins": 66,
+              "visible_angle_bins": 72
+            },
+            "component_fill_fraction": 0.404,
+            "component_bbox_px": [
+              172,
+              80,
+              294,
+              280
+            ],
+            "delivery_side": "top"
+          },
+          "stones": [
+            {
+              "colour": "red",
+              "pixel": [
+                188,
+                42
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": -0.9097,
+              "longitudinal_house_radii": -1.2361
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                198,
+                200
+              ],
+              "cap_colour_pixels": 68,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": -0.8403,
+              "longitudinal_house_radii": -0.1389
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                136,
+                228
+              ],
+              "cap_colour_pixels": 67,
+              "hough_radius_px": 6.9,
+              "canonical_lateral_house_radii": -1.2708,
+              "longitudinal_house_radii": 0.0556
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                392,
+                162
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": 0.5069,
+              "longitudinal_house_radii": -0.4028
+            }
+          ]
+        },
+        {
+          "time_s": 5467.0,
+          "offset_s": 26,
+          "house": {
+            "center_px": [
+              319,
+              220
+            ],
+            "outer_radius_px": 144,
+            "annulus_support": {
+              "mean_blue_fraction": 0.709,
+              "supported_angle_bins": 66,
+              "visible_angle_bins": 72
+            },
+            "component_fill_fraction": 0.386,
+            "component_bbox_px": [
+              172,
+              80,
+              294,
+              280
+            ],
+            "delivery_side": "top"
+          },
+          "stones": [
+            {
+              "colour": "red",
+              "pixel": [
+                188,
+                42
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": -0.9097,
+              "longitudinal_house_radii": -1.2361
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                198,
+                200
+              ],
+              "cap_colour_pixels": 68,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": -0.8403,
+              "longitudinal_house_radii": -0.1389
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                136,
+                228
+              ],
+              "cap_colour_pixels": 67,
+              "hough_radius_px": 6.9,
+              "canonical_lateral_house_radii": -1.2708,
+              "longitudinal_house_radii": 0.0556
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                392,
+                162
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": 0.5069,
+              "longitudinal_house_radii": -0.4028
+            }
+          ]
+        },
+        {
+          "time_s": 5469.0,
+          "offset_s": 28,
+          "house": {
+            "center_px": [
+              319,
+              220
+            ],
+            "outer_radius_px": 144,
+            "annulus_support": {
+              "mean_blue_fraction": 0.73,
+              "supported_angle_bins": 66,
+              "visible_angle_bins": 72
+            },
+            "component_fill_fraction": 0.402,
+            "component_bbox_px": [
+              172,
+              80,
+              294,
+              280
+            ],
+            "delivery_side": "top"
+          },
+          "stones": [
+            {
+              "colour": "red",
+              "pixel": [
+                188,
+                42
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": -0.9097,
+              "longitudinal_house_radii": -1.2361
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                198,
+                200
+              ],
+              "cap_colour_pixels": 68,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": -0.8403,
+              "longitudinal_house_radii": -0.1389
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                136,
+                228
+              ],
+              "cap_colour_pixels": 67,
+              "hough_radius_px": 6.9,
+              "canonical_lateral_house_radii": -1.2708,
+              "longitudinal_house_radii": 0.0556
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                392,
+                162
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": 0.5069,
+              "longitudinal_house_radii": -0.4028
+            }
+          ]
+        },
+        {
+          "time_s": 5471.0,
+          "offset_s": 30,
+          "house": {
+            "center_px": [
+              318,
+              220
+            ],
+            "outer_radius_px": 144,
+            "annulus_support": {
+              "mean_blue_fraction": 0.731,
+              "supported_angle_bins": 66,
+              "visible_angle_bins": 72
+            },
+            "component_fill_fraction": 0.399,
+            "component_bbox_px": [
+              171,
+              80,
+              295,
+              280
+            ],
+            "delivery_side": "top"
+          },
+          "stones": [
+            {
+              "colour": "red",
+              "pixel": [
+                188,
+                42
+              ],
+              "cap_colour_pixels": 65,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": -0.9028,
+              "longitudinal_house_radii": -1.2361
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                198,
+                200
+              ],
+              "cap_colour_pixels": 68,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": -0.8333,
+              "longitudinal_house_radii": -0.1389
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                136,
+                226
+              ],
+              "cap_colour_pixels": 67,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": -1.2639,
+              "longitudinal_house_radii": 0.0417
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                392,
+                162
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": 0.5139,
+              "longitudinal_house_radii": -0.4028
+            }
+          ]
+        }
+      ],
+      "stable_partial_board": [
+        {
+          "colour": "red",
+          "canonical_lateral_house_radii": -0.9062,
+          "longitudinal_house_radii": -1.2361,
+          "supporting_frame_count": 6,
+          "first_seen_s": 5461.0,
+          "last_seen_s": 5471.0,
+          "max_position_spread_house_radii": 0.0174
+        },
+        {
+          "colour": "red",
+          "canonical_lateral_house_radii": -0.8403,
+          "longitudinal_house_radii": -0.1389,
+          "supporting_frame_count": 5,
+          "first_seen_s": 5463.0,
+          "last_seen_s": 5471.0,
+          "max_position_spread_house_radii": 0.007
+        },
+        {
+          "colour": "red",
+          "canonical_lateral_house_radii": -1.2708,
+          "longitudinal_house_radii": 0.0556,
+          "supporting_frame_count": 6,
+          "first_seen_s": 5461.0,
+          "last_seen_s": 5471.0,
+          "max_position_spread_house_radii": 0.0155
+        },
+        {
+          "colour": "yellow",
+          "canonical_lateral_house_radii": 0.5069,
+          "longitudinal_house_radii": -0.4028,
+          "supporting_frame_count": 6,
+          "first_seen_s": 5461.0,
+          "last_seen_s": 5471.0,
+          "max_position_spread_house_radii": 0.007
+        }
+      ],
+      "comparison": {
+        "video_stone_count": 4,
+        "official_symbol_count": 4,
+        "matched_count": 4,
+        "mean_matched_distance_house_radii": 0.0832,
+        "max_matched_distance_house_radii": 0.119,
+        "matches": [
+          {
+            "colour": "red",
+            "video_index": 0,
+            "official_index": 0,
+            "distance_house_radii": 0.0821,
+            "video_xy": [
+              -0.9062,
+              -1.2361
+            ],
+            "official_xy": [
+              -0.95,
+              -1.1667
+            ]
+          },
+          {
+            "colour": "red",
+            "video_index": 1,
+            "official_index": 1,
+            "distance_house_radii": 0.069,
+            "video_xy": [
+              -0.8403,
+              -0.1389
+            ],
+            "official_xy": [
+              -0.8083,
+              -0.2
+            ]
+          },
+          {
+            "colour": "red",
+            "video_index": 2,
+            "official_index": 2,
+            "distance_house_radii": 0.119,
+            "video_xy": [
+              -1.2708,
+              0.0556
+            ],
+            "official_xy": [
+              -1.1833,
+              -0.025
+            ]
+          },
+          {
+            "colour": "yellow",
+            "video_index": 0,
+            "official_index": 0,
+            "distance_house_radii": 0.0628,
+            "video_xy": [
+              0.5069,
+              -0.4028
+            ],
+            "official_xy": [
+              0.5583,
+              -0.3667
+            ]
+          }
+        ],
+        "unmatched_video": [],
+        "unmatched_official": []
+      },
+      "official_symbol_count": 4
+    },
+    {
+      "official_game_code": "PREL000102",
+      "official_shot_id": "PREL000102-E08-S12",
+      "counter_time_s": 7918.0,
+      "following_counter_time_s": null,
+      "sampled_offsets_s": [
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30
+      ],
+      "inferred_recording_delivery_side": "top",
+      "accepted_frame_count": 0,
+      "frame_observations": [],
+      "stable_partial_board": [],
+      "comparison": {
+        "video_stone_count": 0,
+        "official_symbol_count": 9,
+        "matched_count": 0,
+        "mean_matched_distance_house_radii": null,
+        "max_matched_distance_house_radii": null,
+        "matches": [],
+        "unmatched_video": [],
+        "unmatched_official": [
+          {
+            "colour": "red",
+            "official_index": 0
+          },
+          {
+            "colour": "red",
+            "official_index": 1
+          },
+          {
+            "colour": "red",
+            "official_index": 2
+          },
+          {
+            "colour": "red",
+            "official_index": 3
+          },
+          {
+            "colour": "red",
+            "official_index": 4
+          },
+          {
+            "colour": "yellow",
+            "official_index": 0
+          },
+          {
+            "colour": "yellow",
+            "official_index": 1
+          },
+          {
+            "colour": "yellow",
+            "official_index": 2
+          },
+          {
+            "colour": "yellow",
+            "official_index": 3
+          }
+        ]
+      },
+      "official_symbol_count": 9
+    },
+    {
+      "official_game_code": "PREL000103",
+      "official_shot_id": "PREL000103-E01-S05",
+      "counter_time_s": 505.0,
+      "following_counter_time_s": 537.0,
+      "sampled_offsets_s": [
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20
+      ],
+      "inferred_recording_delivery_side": "top",
+      "accepted_frame_count": 0,
+      "frame_observations": [],
+      "stable_partial_board": [],
+      "comparison": {
+        "video_stone_count": 0,
+        "official_symbol_count": 3,
+        "matched_count": 0,
+        "mean_matched_distance_house_radii": null,
+        "max_matched_distance_house_radii": null,
+        "matches": [],
+        "unmatched_video": [],
+        "unmatched_official": [
+          {
+            "colour": "yellow",
+            "official_index": 0
+          },
+          {
+            "colour": "yellow",
+            "official_index": 1
+          },
+          {
+            "colour": "yellow",
+            "official_index": 2
+          }
+        ]
+      },
+      "official_symbol_count": 3
+    },
+    {
+      "official_game_code": "PREL000103",
+      "official_shot_id": "PREL000103-E02-S15",
+      "counter_time_s": 1972.0,
+      "following_counter_time_s": 2256.0,
+      "sampled_offsets_s": [
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30
+      ],
+      "inferred_recording_delivery_side": "top",
+      "accepted_frame_count": 2,
+      "frame_observations": [
+        {
+          "time_s": 2000.0,
+          "offset_s": 28,
+          "house": {
+            "center_px": [
+              315,
+              203
+            ],
+            "outer_radius_px": 157,
+            "annulus_support": {
+              "mean_blue_fraction": 0.79,
+              "supported_angle_bins": 71,
+              "visible_angle_bins": 72
+            },
+            "component_fill_fraction": 0.415,
+            "component_bbox_px": [
+              158,
+              46,
+              314,
+              314
+            ],
+            "delivery_side": "top"
+          },
+          "stones": [
+            {
+              "colour": "red",
+              "pixel": [
+                378,
+                68
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": 0.4013,
+              "longitudinal_house_radii": -0.8599
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                354,
+                194
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": 0.2484,
+              "longitudinal_house_radii": -0.0573
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                366,
+                260
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 9.1,
+              "canonical_lateral_house_radii": 0.3248,
+              "longitudinal_house_radii": 0.3631
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                368,
+                324
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": 0.3376,
+              "longitudinal_house_radii": 0.7707
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                384,
+                20
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 6.9,
+              "canonical_lateral_house_radii": 0.4395,
+              "longitudinal_house_radii": -1.1656
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                470,
+                254
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": 0.9873,
+              "longitudinal_house_radii": 0.3248
+            }
+          ]
+        },
+        {
+          "time_s": 2002.0,
+          "offset_s": 30,
+          "house": {
+            "center_px": [
+              315,
+              203
+            ],
+            "outer_radius_px": 157,
+            "annulus_support": {
+              "mean_blue_fraction": 0.748,
+              "supported_angle_bins": 67,
+              "visible_angle_bins": 72
+            },
+            "component_fill_fraction": 0.391,
+            "component_bbox_px": [
+              158,
+              46,
+              314,
+              314
+            ],
+            "delivery_side": "top"
+          },
+          "stones": [
+            {
+              "colour": "red",
+              "pixel": [
+                378,
+                68
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": 0.4013,
+              "longitudinal_house_radii": -0.8599
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                354,
+                194
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": 0.2484,
+              "longitudinal_house_radii": -0.0573
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                366,
+                260
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 9.1,
+              "canonical_lateral_house_radii": 0.3248,
+              "longitudinal_house_radii": 0.3631
+            },
+            {
+              "colour": "red",
+              "pixel": [
+                368,
+                324
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": 0.3376,
+              "longitudinal_house_radii": 0.7707
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                384,
+                20
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 6.9,
+              "canonical_lateral_house_radii": 0.4395,
+              "longitudinal_house_radii": -1.1656
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                470,
+                254
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": 0.9873,
+              "longitudinal_house_radii": 0.3248
+            }
+          ]
+        }
+      ],
+      "stable_partial_board": [],
+      "comparison": {
+        "video_stone_count": 0,
+        "official_symbol_count": 10,
+        "matched_count": 0,
+        "mean_matched_distance_house_radii": null,
+        "max_matched_distance_house_radii": null,
+        "matches": [],
+        "unmatched_video": [],
+        "unmatched_official": [
+          {
+            "colour": "red",
+            "official_index": 0
+          },
+          {
+            "colour": "red",
+            "official_index": 1
+          },
+          {
+            "colour": "red",
+            "official_index": 2
+          },
+          {
+            "colour": "red",
+            "official_index": 3
+          },
+          {
+            "colour": "red",
+            "official_index": 4
+          },
+          {
+            "colour": "yellow",
+            "official_index": 0
+          },
+          {
+            "colour": "yellow",
+            "official_index": 1
+          },
+          {
+            "colour": "yellow",
+            "official_index": 2
+          },
+          {
+            "colour": "yellow",
+            "official_index": 3
+          },
+          {
+            "colour": "yellow",
+            "official_index": 4
+          }
+        ]
+      },
+      "official_symbol_count": 10
+    },
+    {
+      "official_game_code": "PREL000103",
+      "official_shot_id": "PREL000103-E04-S09",
+      "counter_time_s": 3549.0,
+      "following_counter_time_s": 3629.0,
+      "sampled_offsets_s": [
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30
+      ],
+      "inferred_recording_delivery_side": "top",
+      "accepted_frame_count": 0,
+      "frame_observations": [],
+      "stable_partial_board": [],
+      "comparison": {
+        "video_stone_count": 0,
+        "official_symbol_count": 2,
+        "matched_count": 0,
+        "mean_matched_distance_house_radii": null,
+        "max_matched_distance_house_radii": null,
+        "matches": [],
+        "unmatched_video": [],
+        "unmatched_official": [
+          {
+            "colour": "yellow",
+            "official_index": 0
+          },
+          {
+            "colour": "yellow",
+            "official_index": 1
+          }
+        ]
+      },
+      "official_symbol_count": 2
+    },
+    {
+      "official_game_code": "PREL000103",
+      "official_shot_id": "PREL000103-E06-S06",
+      "counter_time_s": 5547.0,
+      "following_counter_time_s": 5594.0,
+      "sampled_offsets_s": [
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30
+      ],
+      "inferred_recording_delivery_side": "top",
+      "accepted_frame_count": 6,
+      "frame_observations": [
+        {
+          "time_s": 5551.0,
+          "offset_s": 4,
+          "house": {
+            "center_px": [
+              317,
+              209
+            ],
+            "outer_radius_px": 157,
+            "annulus_support": {
+              "mean_blue_fraction": 0.736,
+              "supported_angle_bins": 68,
+              "visible_angle_bins": 72
+            },
+            "component_fill_fraction": 0.41,
+            "component_bbox_px": [
+              154,
+              58,
+              326,
+              302
+            ],
+            "delivery_side": "top"
+          },
+          "stones": [
+            {
+              "colour": "red",
+              "pixel": [
+                290,
+                16
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 9.6,
+              "canonical_lateral_house_radii": -0.172,
+              "longitudinal_house_radii": -1.2293
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                296,
+                128
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 10.3,
+              "canonical_lateral_house_radii": -0.1338,
+              "longitudinal_house_radii": -0.5159
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                292,
+                250
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 10.3,
+              "canonical_lateral_house_radii": -0.1592,
+              "longitudinal_house_radii": 0.2611
+            }
+          ]
+        },
+        {
+          "time_s": 5553.0,
+          "offset_s": 6,
+          "house": {
+            "center_px": [
+              319,
+              209
+            ],
+            "outer_radius_px": 158,
+            "annulus_support": {
+              "mean_blue_fraction": 0.711,
+              "supported_angle_bins": 66,
+              "visible_angle_bins": 72
+            },
+            "component_fill_fraction": 0.4,
+            "component_bbox_px": [
+              154,
+              58,
+              330,
+              302
+            ],
+            "delivery_side": "top"
+          },
+          "stones": [
+            {
+              "colour": "red",
+              "pixel": [
+                292,
+                20
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 10.3,
+              "canonical_lateral_house_radii": -0.1709,
+              "longitudinal_house_radii": -1.1962
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                298,
+                128
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 9.1,
+              "canonical_lateral_house_radii": -0.1329,
+              "longitudinal_house_radii": -0.5127
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                292,
+                254
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 9.1,
+              "canonical_lateral_house_radii": -0.1709,
+              "longitudinal_house_radii": 0.2848
+            }
+          ]
+        },
+        {
+          "time_s": 5555.0,
+          "offset_s": 8,
+          "house": {
+            "center_px": [
+              315,
+              209
+            ],
+            "outer_radius_px": 156,
+            "annulus_support": {
+              "mean_blue_fraction": 0.762,
+              "supported_angle_bins": 69,
+              "visible_angle_bins": 72
+            },
+            "component_fill_fraction": 0.42,
+            "component_bbox_px": [
+              154,
+              58,
+              322,
+              302
+            ],
+            "delivery_side": "top"
+          },
+          "stones": [
+            {
+              "colour": "red",
+              "pixel": [
+                292,
+                20
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 10.3,
+              "canonical_lateral_house_radii": -0.1474,
+              "longitudinal_house_radii": -1.2115
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                298,
+                128
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 9.1,
+              "canonical_lateral_house_radii": -0.109,
+              "longitudinal_house_radii": -0.5192
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                292,
+                254
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 9.1,
+              "canonical_lateral_house_radii": -0.1474,
+              "longitudinal_house_radii": 0.2885
+            }
+          ]
+        },
+        {
+          "time_s": 5557.0,
+          "offset_s": 10,
+          "house": {
+            "center_px": [
+              315,
+              209
+            ],
+            "outer_radius_px": 156,
+            "annulus_support": {
+              "mean_blue_fraction": 0.769,
+              "supported_angle_bins": 72,
+              "visible_angle_bins": 72
+            },
+            "component_fill_fraction": 0.424,
+            "component_bbox_px": [
+              154,
+              58,
+              322,
+              302
+            ],
+            "delivery_side": "top"
+          },
+          "stones": [
+            {
+              "colour": "red",
+              "pixel": [
+                292,
+                20
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 10.3,
+              "canonical_lateral_house_radii": -0.1474,
+              "longitudinal_house_radii": -1.2115
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                298,
+                128
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 9.1,
+              "canonical_lateral_house_radii": -0.109,
+              "longitudinal_house_radii": -0.5192
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                292,
+                254
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 9.1,
+              "canonical_lateral_house_radii": -0.1474,
+              "longitudinal_house_radii": 0.2885
+            }
+          ]
+        },
+        {
+          "time_s": 5559.0,
+          "offset_s": 12,
+          "house": {
+            "center_px": [
+              315,
+              209
+            ],
+            "outer_radius_px": 156,
+            "annulus_support": {
+              "mean_blue_fraction": 0.762,
+              "supported_angle_bins": 70,
+              "visible_angle_bins": 72
+            },
+            "component_fill_fraction": 0.421,
+            "component_bbox_px": [
+              154,
+              58,
+              322,
+              302
+            ],
+            "delivery_side": "top"
+          },
+          "stones": [
+            {
+              "colour": "red",
+              "pixel": [
+                292,
+                16
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 10.3,
+              "canonical_lateral_house_radii": -0.1474,
+              "longitudinal_house_radii": -1.2372
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                296,
+                126
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 10.3,
+              "canonical_lateral_house_radii": -0.1218,
+              "longitudinal_house_radii": -0.5321
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                290,
+                254
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": -0.1603,
+              "longitudinal_house_radii": 0.2885
+            }
+          ]
+        },
+        {
+          "time_s": 5561.0,
+          "offset_s": 14,
+          "house": {
+            "center_px": [
+              315,
+              209
+            ],
+            "outer_radius_px": 156,
+            "annulus_support": {
+              "mean_blue_fraction": 0.764,
+              "supported_angle_bins": 70,
+              "visible_angle_bins": 72
+            },
+            "component_fill_fraction": 0.421,
+            "component_bbox_px": [
+              154,
+              58,
+              322,
+              302
+            ],
+            "delivery_side": "top"
+          },
+          "stones": [
+            {
+              "colour": "red",
+              "pixel": [
+                292,
+                16
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 10.3,
+              "canonical_lateral_house_radii": -0.1474,
+              "longitudinal_house_radii": -1.2372
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                296,
+                126
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 10.3,
+              "canonical_lateral_house_radii": -0.1218,
+              "longitudinal_house_radii": -0.5321
+            },
+            {
+              "colour": "yellow",
+              "pixel": [
+                290,
+                254
+              ],
+              "cap_colour_pixels": 69,
+              "hough_radius_px": 11.4,
+              "canonical_lateral_house_radii": -0.1603,
+              "longitudinal_house_radii": 0.2885
+            }
+          ]
+        }
+      ],
+      "stable_partial_board": [
+        {
+          "colour": "red",
+          "canonical_lateral_house_radii": -0.1474,
+          "longitudinal_house_radii": -1.2204,
+          "supporting_frame_count": 6,
+          "first_seen_s": 5551.0,
+          "last_seen_s": 5561.0,
+          "max_position_spread_house_radii": 0.0337
+        },
+        {
+          "colour": "yellow",
+          "canonical_lateral_house_radii": -0.1218,
+          "longitudinal_house_radii": -0.5192,
+          "supporting_frame_count": 6,
+          "first_seen_s": 5551.0,
+          "last_seen_s": 5561.0,
+          "max_position_spread_house_radii": 0.0129
+        },
+        {
+          "colour": "yellow",
+          "canonical_lateral_house_radii": -0.1598,
+          "longitudinal_house_radii": 0.2885,
+          "supporting_frame_count": 6,
+          "first_seen_s": 5551.0,
+          "last_seen_s": 5561.0,
+          "max_position_spread_house_radii": 0.0274
+        }
+      ],
+      "comparison": {
+        "video_stone_count": 3,
+        "official_symbol_count": 3,
+        "matched_count": 3,
+        "mean_matched_distance_house_radii": 0.0755,
+        "max_matched_distance_house_radii": 0.0822,
+        "matches": [
+          {
+            "colour": "red",
+            "video_index": 0,
+            "official_index": 0,
+            "distance_house_radii": 0.0788,
+            "video_xy": [
+              -0.1474,
+              -1.2204
+            ],
+            "official_xy": [
+              -0.1,
+              -1.2833
+            ]
+          },
+          {
+            "colour": "yellow",
+            "video_index": 0,
+            "official_index": 0,
+            "distance_house_radii": 0.0655,
+            "video_xy": [
+              -0.1218,
+              -0.5192
+            ],
+            "official_xy": [
+              -0.1083,
+              -0.5833
+            ]
+          },
+          {
+            "colour": "yellow",
+            "video_index": 1,
+            "official_index": 1,
+            "distance_house_radii": 0.0822,
+            "video_xy": [
+              -0.1598,
+              0.2885
+            ],
+            "official_xy": [
+              -0.1417,
+              0.2083
+            ]
+          }
+        ],
+        "unmatched_video": [],
+        "unmatched_official": []
+      },
+      "official_symbol_count": 3
+    },
+    {
+      "official_game_code": "PREL000103",
+      "official_shot_id": "PREL000103-E07-S16",
+      "counter_time_s": 7142.0,
+      "following_counter_time_s": null,
+      "sampled_offsets_s": [
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30
+      ],
+      "inferred_recording_delivery_side": "top",
+      "accepted_frame_count": 0,
+      "frame_observations": [],
+      "stable_partial_board": [],
+      "comparison": {
+        "video_stone_count": 0,
+        "official_symbol_count": 3,
+        "matched_count": 0,
+        "mean_matched_distance_house_radii": null,
+        "max_matched_distance_house_radii": null,
+        "matches": [],
+        "unmatched_video": [],
+        "unmatched_official": [
+          {
+            "colour": "red",
+            "official_index": 0
+          },
+          {
+            "colour": "red",
+            "official_index": 1
+          },
+          {
+            "colour": "yellow",
+            "official_index": 0
+          }
+        ]
+      },
+      "official_symbol_count": 3
+    }
+  ],
+  "limitations": [
+    "The official diagram is used only after source-video frame selection and temporal clustering, but the sample is still drawn from development recordings.",
+    "Counter spacing does not guarantee the next throw has not begun; board time and shot identity remain approximate.",
+    "Stable static graphics or people can survive temporal clustering; cropped views cannot show off-frame stones.",
+    "This is a partial 2D board observation, not physical game state, release timing, trajectory, or event F1."
+  ]
+}

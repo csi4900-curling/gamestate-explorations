@@ -5,7 +5,10 @@ from pathlib import Path
 from urllib.parse import urlsplit, parse_qs
 from concurrent.futures import ThreadPoolExecutor
 import argparse, json, re, uuid, shutil
-from pipeline import analyse, PROFILES
+if __package__:
+    from .pipeline import analyse, PROFILES
+else:
+    from pipeline import analyse, PROFILES
 
 ROOT = Path(__file__).resolve().parent
 POOL = ThreadPoolExecutor(max_workers=1)

@@ -1,0 +1,1462 @@
+{
+  "status": "development_2024_multimatch_source_pixel_patch_model_not_event_detector",
+  "selection_sha256": "498344982e0c2f7da3746bd877965d5a957f9f3b721f7177495fafeec4b32354",
+  "model_sha256": "7ebc6c9a9aac3344ebdfad5c6cd7374f1f031e2debe7687c2138f8c8bbcc3481",
+  "feature_code_sha256": "746e6f4e0c7c9c32d698573e9a14230321e6dd3e1789db642206cab44bd78f68",
+  "crop_code_sha256": "828a84a14930266c83afea41526f1e4800163e2c41c3462195c96a3551116169",
+  "runner_sha256": "a7ad80bc26dc8fdbf844cef30b43dead85e1d2eddbc31b1415509e0460a9ac0a",
+  "fit_method": "StandardScaler + LinearSVC(C=0.1, class_weight=balanced, random_state=9031), zero threshold",
+  "training_matches": [
+    "italy",
+    "estonia",
+    "usa"
+  ],
+  "training_example_count": 114,
+  "unique_training_crop_count": 332,
+  "leave_one_match_out": [
+    {
+      "heldout_match": "italy",
+      "training_match_names": [
+        "estonia",
+        "usa"
+      ],
+      "training_unique_crop_count": 185,
+      "source_class_by_any_positive_patch": {
+        "stone_pixels": {
+          "positive": 25,
+          "negative": 0
+        },
+        "person_or_equipment_pixels": {
+          "positive": 0,
+          "negative": 26
+        }
+      },
+      "rows": [
+        {
+          "example_id": "italy_r01:A048",
+          "match": "italy",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.081571,
+            0.871208,
+            1.142809
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "italy_r01:A049",
+          "match": "italy",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -2.190175,
+            -1.449489,
+            -1.631917
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "italy_r01:A083",
+          "match": "italy",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -1.909643,
+            -1.345329,
+            -0.922234
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "italy_r01:A084",
+          "match": "italy",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -1.039278,
+            -1.69724,
+            -1.470474
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "italy_r01:A128",
+          "match": "italy",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -1.561663,
+            -1.395592,
+            -1.107121
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "italy_r01:A179",
+          "match": "italy",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -0.976048,
+            -0.466009,
+            -0.894602
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "italy_r01:A220",
+          "match": "italy",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -1.408052,
+            -1.479998,
+            -1.534279
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "italy_r01:A224",
+          "match": "italy",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -0.756994,
+            -1.297954,
+            -1.684417
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "italy_r01:A226",
+          "match": "italy",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -1.46797,
+            -1.276819,
+            -1.887407
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "italy_r01:A229",
+          "match": "italy",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -1.089439,
+            -0.700897,
+            -0.891863
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "italy_r01:A232",
+          "match": "italy",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -1.360726,
+            -0.356292,
+            -1.087473
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "italy_r01:A227",
+          "match": "italy",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -1.054941,
+            -1.26288,
+            -1.556948
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "italy_r01:A237",
+          "match": "italy",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -1.41561,
+            -1.59757,
+            -1.63975
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "italy_r01:A234",
+          "match": "italy",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -0.929708,
+            -1.129448,
+            -1.120062
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "italy_r01:A257",
+          "match": "italy",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -1.578576,
+            -1.652108,
+            -0.970667
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "italy_r01:A271",
+          "match": "italy",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            -0.124343,
+            0.383625,
+            0.637411
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "italy_r01:A280",
+          "match": "italy",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            0.712294,
+            0.339852,
+            0.976191
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "italy_r01:A290",
+          "match": "italy",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            0.587967,
+            0.782665,
+            0.981103
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "italy_r01:A295",
+          "match": "italy",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            0.719612,
+            0.454,
+            0.745855
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "italy_r01:A308",
+          "match": "italy",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -0.908847,
+            -0.766153,
+            -1.538383
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "italy_r01:A307",
+          "match": "italy",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -1.376415,
+            -0.776307,
+            -0.937794
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "italy_r01:A310",
+          "match": "italy",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -1.326383,
+            -1.338869,
+            -1.756394
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "italy_r01:A315",
+          "match": "italy",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -2.423074,
+            -2.505572,
+            -2.780003
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "italy_r01:A317",
+          "match": "italy",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            0.970461,
+            0.956011,
+            0.841522
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "italy_r01:A319",
+          "match": "italy",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.005405,
+            1.124512,
+            0.95188
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "italy_r01:A320",
+          "match": "italy",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            0.813618,
+            0.814144,
+            0.867433
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "italy_r01:A321",
+          "match": "italy",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -1.084429,
+            -0.943873,
+            -1.741236
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "italy_r01:A357",
+          "match": "italy",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -1.168418,
+            -1.588265,
+            -0.240157
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "italy_r01:A359",
+          "match": "italy",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            -0.019442,
+            0.31062,
+            0.891962
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "italy_r01:A364",
+          "match": "italy",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            0.710081,
+            0.916292,
+            1.038302
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "italy_r01:A367",
+          "match": "italy",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -1.902543,
+            -1.525051,
+            -0.953474
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "italy_r01:A371",
+          "match": "italy",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -2.50347,
+            -1.744316,
+            -1.557474
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "italy_r01:A377",
+          "match": "italy",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -1.063954,
+            -0.946857,
+            -0.777603
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "italy_r01:A374",
+          "match": "italy",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -1.583018,
+            -1.519282,
+            -1.785679
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "italy_global:A006",
+          "match": "italy",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -1.909643,
+            -1.345329,
+            -0.922234
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "italy_global:A007",
+          "match": "italy",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -1.039278,
+            -1.69724,
+            -1.470474
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "italy_global:A011",
+          "match": "italy",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.042546,
+            1.12419,
+            0.94541
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "italy_global:A012",
+          "match": "italy",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.092302,
+            0.718711,
+            1.062908
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "italy_global:A013",
+          "match": "italy",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.026982,
+            1.201423,
+            1.042557
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "italy_global:A014",
+          "match": "italy",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.060051,
+            0.743057,
+            1.041493
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "italy_global:A016",
+          "match": "italy",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.362028,
+            0.963664,
+            0.950915
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "italy_global:A017",
+          "match": "italy",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            0.740215,
+            0.686528,
+            0.784974
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "italy_global:A019",
+          "match": "italy",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.037656,
+            0.652074,
+            0.836071
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "italy_global:A021",
+          "match": "italy",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            0.604812,
+            0.750478,
+            0.206822
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "italy_global:A023",
+          "match": "italy",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            0.831249,
+            0.73629,
+            0.805679
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "italy_global:A024",
+          "match": "italy",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.199654,
+            1.290827,
+            0.526192
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "italy_global:A026",
+          "match": "italy",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            0.753961,
+            0.847339,
+            1.025073
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "italy_global:A027",
+          "match": "italy",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.262259,
+            0.883412,
+            0.678386
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "italy_global:A028",
+          "match": "italy",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            0.768925,
+            0.422914,
+            0.738952
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "italy_global:A031",
+          "match": "italy",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            0.935482,
+            1.082896,
+            0.861125
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "italy_global:A033",
+          "match": "italy",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            0.889288,
+            1.109611,
+            1.169949
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        }
+      ]
+    },
+    {
+      "heldout_match": "estonia",
+      "training_match_names": [
+        "italy",
+        "usa"
+      ],
+      "training_unique_crop_count": 213,
+      "source_class_by_any_positive_patch": {
+        "stone_pixels": {
+          "positive": 17,
+          "negative": 0
+        },
+        "person_or_equipment_pixels": {
+          "positive": 1,
+          "negative": 23
+        }
+      },
+      "rows": [
+        {
+          "example_id": "estonia_r01:A001",
+          "match": "estonia",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.297243,
+            1.589421,
+            1.692888
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "estonia_r01:A006",
+          "match": "estonia",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.846418,
+            1.573131,
+            1.578786
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "estonia_r01:A017",
+          "match": "estonia",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.616352,
+            1.913844,
+            1.674122
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "estonia_r01:A029",
+          "match": "estonia",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -1.693311,
+            -1.9062,
+            -2.487458
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "estonia_r01:A034",
+          "match": "estonia",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -0.544183,
+            -0.616519,
+            -0.525577
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "estonia_r01:A075",
+          "match": "estonia",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -2.149772,
+            -1.888158,
+            0.250557
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "estonia_r01:A113",
+          "match": "estonia",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -1.187357,
+            -1.636554,
+            -1.776554
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "estonia_r01:A180",
+          "match": "estonia",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.461029,
+            1.682339,
+            1.81223
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "estonia_r02:A039",
+          "match": "estonia",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -1.893868,
+            -0.11813,
+            -0.533288
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "estonia_r02:A038",
+          "match": "estonia",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -2.347796,
+            -0.42231,
+            -0.78047
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "estonia_r02:A072",
+          "match": "estonia",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -2.537386,
+            -2.21146,
+            -1.642276
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "estonia_r02:A088",
+          "match": "estonia",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -2.240383,
+            -2.240383,
+            -1.4561
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "estonia_r02:A086",
+          "match": "estonia",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -2.100946,
+            -1.700938,
+            -1.71743
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "estonia_r02:A090",
+          "match": "estonia",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -1.272844,
+            -1.12216,
+            -0.951696
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "estonia_r02:A094",
+          "match": "estonia",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -0.828325,
+            -0.748462,
+            -0.444957
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "estonia_r02:A093",
+          "match": "estonia",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -1.281422,
+            -0.215138,
+            -1.102878
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "estonia_r02:A092",
+          "match": "estonia",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -0.60224,
+            -0.066225,
+            -0.626774
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "estonia_r02:A095",
+          "match": "estonia",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -0.11156,
+            -0.906263,
+            -0.506765
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "estonia_r02:A103",
+          "match": "estonia",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -0.958872,
+            -1.221483,
+            -0.157729
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "estonia_r02:A156",
+          "match": "estonia",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -0.610613,
+            -1.268971,
+            -1.27287
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "estonia_r02:A159",
+          "match": "estonia",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -0.458718,
+            -0.700257,
+            -0.175075
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "estonia_r02:A195",
+          "match": "estonia",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -0.475606,
+            -0.075113,
+            -0.703275
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "estonia_r02:A197",
+          "match": "estonia",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -0.93182,
+            -0.378281,
+            -1.541047
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "estonia_r02:A198",
+          "match": "estonia",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -0.729315,
+            -0.821005,
+            -0.847891
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "estonia_r02:A227",
+          "match": "estonia",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -1.046507,
+            -0.520633,
+            -1.12464
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "estonia_r02:A230",
+          "match": "estonia",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -1.003613,
+            -0.869593,
+            -0.856403
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "estonia_r02:A231",
+          "match": "estonia",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -0.572978,
+            -1.387531,
+            -1.575029
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "estonia_global:A009",
+          "match": "estonia",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.111828,
+            1.555528,
+            1.667068
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "estonia_global:A014",
+          "match": "estonia",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            2.031859,
+            1.570174,
+            1.358489
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "estonia_global:A015",
+          "match": "estonia",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.674822,
+            1.727072,
+            1.584583
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "estonia_global:A016",
+          "match": "estonia",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.303314,
+            1.407326,
+            1.661585
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "estonia_global:A017",
+          "match": "estonia",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.901576,
+            1.965752,
+            1.623054
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "estonia_global:A020",
+          "match": "estonia",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.521517,
+            1.561925,
+            1.532812
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "estonia_global:A021",
+          "match": "estonia",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.411876,
+            1.669367,
+            1.31181
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "estonia_global:A024",
+          "match": "estonia",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.333761,
+            0.806854,
+            0.428238
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "estonia_global:A027",
+          "match": "estonia",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.680169,
+            1.658761,
+            1.458219
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "estonia_global:A029",
+          "match": "estonia",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.207189,
+            1.581551,
+            0.931254
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "estonia_global:A030",
+          "match": "estonia",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.880047,
+            1.578575,
+            1.266702
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "estonia_global:A034",
+          "match": "estonia",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.738055,
+            1.957218,
+            1.198763
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "estonia_global:A036",
+          "match": "estonia",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            0.959861,
+            1.465647,
+            1.544562
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "estonia_global:A037",
+          "match": "estonia",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -1.187357,
+            -1.636554,
+            -1.776554
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        }
+      ]
+    },
+    {
+      "heldout_match": "usa",
+      "training_match_names": [
+        "italy",
+        "estonia"
+      ],
+      "training_unique_crop_count": 266,
+      "source_class_by_any_positive_patch": {
+        "stone_pixels": {
+          "positive": 17,
+          "negative": 0
+        },
+        "person_or_equipment_pixels": {
+          "positive": 1,
+          "negative": 4
+        }
+      },
+      "rows": [
+        {
+          "example_id": "usa_area:A002",
+          "match": "usa",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            0.238585,
+            0.855038,
+            1.07243
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "usa_area:A027",
+          "match": "usa",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -1.583709,
+            -0.974326,
+            -0.572475
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "usa_area:A028",
+          "match": "usa",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -1.653177,
+            -1.601049,
+            -0.324298
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "usa_area:A030",
+          "match": "usa",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -2.16518,
+            -1.984153,
+            -0.852962
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "usa_area:A032",
+          "match": "usa",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.33944,
+            1.011588,
+            1.176325
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "usa_area:A035",
+          "match": "usa",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.367961,
+            1.027966,
+            0.775306
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "usa_area:A037",
+          "match": "usa",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.427624,
+            1.516204,
+            0.967797
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "usa_area:A039",
+          "match": "usa",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.362539,
+            1.13461,
+            1.294193
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "usa_area:A041",
+          "match": "usa",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.568386,
+            0.913088,
+            0.894429
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "usa_area:A045",
+          "match": "usa",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.025305,
+            1.425278,
+            1.255466
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "usa_area:A046",
+          "match": "usa",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.74323,
+            1.117208,
+            0.622481
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "usa_area:A047",
+          "match": "usa",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.088632,
+            1.505734,
+            1.453894
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "usa_area:A052",
+          "match": "usa",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.478738,
+            0.823417,
+            1.256605
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "usa_area:A056",
+          "match": "usa",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.236115,
+            0.944908,
+            0.880644
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "usa_area:A058",
+          "match": "usa",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.540347,
+            1.191908,
+            0.830957
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "usa_area:A059",
+          "match": "usa",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            0.912898,
+            0.937121,
+            1.256565
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "usa_area:A064",
+          "match": "usa",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            0.694984,
+            1.00498,
+            1.143848
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "usa_area:A065",
+          "match": "usa",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            0.116176,
+            -1.49803,
+            -2.109317
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": false
+        },
+        {
+          "example_id": "usa_area:A069",
+          "match": "usa",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.403969,
+            1.056085,
+            1.657909
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "usa_area:A072",
+          "match": "usa",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.439239,
+            0.754883,
+            1.288886
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "usa_area:A074",
+          "match": "usa",
+          "source_pixel_class": "stone_pixels",
+          "sample_scores": [
+            1.552625,
+            1.390094,
+            1.272226
+          ],
+          "any_positive_patch": true,
+          "mean_positive_patch": true
+        },
+        {
+          "example_id": "usa_area:A078",
+          "match": "usa",
+          "source_pixel_class": "person_or_equipment_pixels",
+          "sample_scores": [
+            -1.074961,
+            -1.159303,
+            -1.117596
+          ],
+          "any_positive_patch": false,
+          "mean_positive_patch": false
+        }
+      ]
+    }
+  ],
+  "fit_source_class_by_any_positive_patch": {
+    "stone_pixels": {
+      "positive": 59,
+      "negative": 0
+    },
+    "person_or_equipment_pixels": {
+      "positive": 0,
+      "negative": 55
+    }
+  },
+  "limitations": [
+    "All labels are selected same-agent source-pixel judgments, not independent physical throw labels.",
+    "Some paths overlap within a match; leave-one-match-out prevents video leakage across folds but path counts remain correlated.",
+    "No Latvia sample enters fitting, but Latvia results were already inspected before this development model was specified.",
+    "Patch identity cannot establish delivery, release, settle, full-match recall or simulation readiness."
+  ]
+}

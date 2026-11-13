@@ -1,0 +1,53 @@
+{
+  "status": "published_label_component_smoke_test",
+  "revision": "2cfe61efede3c446957ee94aefa8df1345fc4684",
+  "sample_indices": [
+    0,
+    208,
+    417,
+    625,
+    833,
+    1041,
+    1250,
+    1458,
+    1666,
+    1875,
+    2083,
+    2291,
+    2500,
+    2708,
+    2916,
+    3124,
+    3333,
+    3541,
+    3749,
+    3958,
+    4166,
+    4374,
+    4582,
+    4791,
+    4999
+  ],
+  "selection": "25 evenly spaced image indices selected before downloading or inference",
+  "config": {
+    "roi": [
+      0,
+      0,
+      640,
+      360
+    ],
+    "gate_y": 60.0,
+    "min_span_px": 24.0,
+    "min_observations": 6,
+    "max_gap_s": 0.55,
+    "association_px": 13.0,
+    "min_speed_px_s": 8.0,
+    "max_speed_px_s": 65.0
+  },
+  "iou_threshold": 0.5,
+  "matching": "one-to-one same-colour maximum-cardinality matching at IoU >= 0.5",
+  "model_sha256": "40678c23b117f527c80375ff7d7fbe3a1119fb94c4650b05698cd2c76be9628f",
+  "runner_sha256": "9038135062c57a5b5de99905741a14372430109d74ac3d93bc8b6445a884425c",
+  "adaptation": "Full-image ROI to test stone proposals; all colour/size/body thresholds unchanged.",
+  "provenance": "Publisher labels, not authored here. Not an official held-out split; match-level overlap with previous Olympic development images is unverified."
+}

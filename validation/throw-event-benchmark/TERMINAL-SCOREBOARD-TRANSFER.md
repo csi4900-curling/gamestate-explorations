@@ -1,0 +1,11 @@
+# Terminal scoreboard cue: three full 2024 recordings
+
+This is a source-only development audit, not independent throw labels or a detector validation. The [Canada–Czechia 5 s sheet](canada-czech-2024/source-review/final-transition-6300-6400-5s.jpg) and 10 s sheets for [Canada–Scotland](canada-scotland-2024/terminal-phase-last-4min-10s.jpg) and [Canada–Latvia](canada-latvia-2024/terminal-phase-last-4min-10s.jpg) each have a source-hashed JSON manifest alongside the image. All three sources are complete 360p recordings of the same 2024 broadcast layout.
+
+| Recording | Visible late sequence | Consequence for an “X in unplayed end” gate |
+| --- | --- | --- |
+| Czechia | Stones remain around the house at 6325 s; clearing is underway by 6335–6350 s. The 4–13 score and departing players are visible by 6370 s. The known S143 wheelchair false path begins at 6374.697 s. The empty unplayed-end cells at 6380 s are not yet marked X; an X appears later in the sampled sequence. | An X-only gate arrives **after** the known false path and would not remove it. |
+| Scotland | At 7100–7140 s, players leave an already cleared rink while the final scoreboard is shown. The unplayed-end part of the score line contains an X. From about 7170 s onward, the rink is empty; credits begin by 7280 s. | The X is compatible with a postgame state here, but its first appearance and relation to the last delivery were not measured. |
+| Latvia | The rink is empty throughout the sampled 6810–6990 s interval. Unplayed-end cells are initially blank; X marks are visible by 6900 s. Credits begin by 7000 s. | The X can lag clearly empty postgame ice by at least the sampled 90 s. |
+
+The visual X is a **positive but late broadcast-state cue**, not a safe last-throw timestamp. Its absence is not evidence that play is continuing. A persistent final score, stone clearing, player departure and credits may jointly support a terminal-state hypothesis, but these cues have not been measured as an event-level classifier. The currently frozen throw screen therefore remains unchanged. The next precision experiment should focus on stone identity along each motion path and evaluate any phase cue only as additional evidence, with late true throws explicitly protected in an independent reference.

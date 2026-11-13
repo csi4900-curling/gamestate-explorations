@@ -1,0 +1,40 @@
+{
+  "status": "prerun_full_source_prediction_only_transfer",
+  "source_id": "yu_YoFrFd20",
+  "scan_interval_s": [
+    0,
+    6683
+  ],
+  "left_interval_s": [
+    0,
+    6683
+  ],
+  "source_and_code_sha256": {
+    "video": "e63c9b063b5b11ad5173083dffe974d909c78e5d01312740b87bccc006402013",
+    "left": "9176ac5934ce3729e2a7281d954d9b4f968cc6804c0686d9ca4fcc5f0aa02768",
+    "right_probe_runner": "6a9cbb81b585ca0837d06878ce13a779d5880f592df4ce8edc852eba5f81ed81",
+    "right_proposal_code": "0f1588b4eb3de2a5d9c732c0a0264f03a41933821a0a943845df2dc0a4ba1645",
+    "right_association_code": "fd57618be239344c6d5e7795a3b0e97720fc7ccd5944791210a200b2cd848b9e",
+    "right_span_code": "be45207245e5f0c88dc9720810a4be44075affd8b5cbcbd8b3ade70f9fe55335",
+    "tail_runner": "b59e9fcbdb13477dd2033fc0e99c168f10544d5205cc1f987343b1cdeae98062",
+    "tail_code": "5266fcf009bf74c309aef6a810a8414d45456987b8aefde3cba3447983077007",
+    "join_runner": "95eb269e4222880c18e2fcac3f873bd00da5691cc10a4c3ef59282fc868bf083",
+    "join_code": "796a5e3ccd485b64449668608cd713b53041f8b0502cb80320eae3ee1138dd14",
+    "episode_runner": "dbda11fd93e9738275a8c20f15f3c62a7cfbbbd628a19bdfe012463dcd67b463",
+    "episode_code": "8d551d1cc3545b17e7ee423bdc62b388634a16c22b2f41f40fa7d0e247a0a90d"
+  },
+  "rules": {
+    "right_sample_period_s": 1,
+    "right_tail": "unchanged moving-tail derivative",
+    "corroboration": "same colour/direction and direction-aware camera order within 20 s",
+    "shared_rights": "preserve as ambiguous cross-view episodes",
+    "right_only": "preserve every right proposal within full interval",
+    "appearance_gate": "none",
+    "event_decision": "none; no independent full-match throw reference"
+  },
+  "limitations": [
+    "The full 2024 source includes live play, resets and non-play footage.",
+    "Camera cuts can make a 1 Hz right scan incomplete.",
+    "Counts measure proposals and temporal joins, not throws or F1."
+  ]
+}

@@ -1,0 +1,501 @@
+{
+  "status": "same_agent_source_pixel_development_audit_not_event_validation",
+  "input_sha256": {
+    "raw_left": "641524704a5b37284d8cd337fb7410848f3ac8493d85178d79652adb04568f02",
+    "earlier_review": "4a515e0e7dce0e85c26447ef8b16f3379141d3776f33fd8a0f644292a7387924",
+    "accepted_no_right_review": "5e075911a058aa98c3da0b536075ea60dbae79a09e2aee4e345e6f6aab008879",
+    "withheld_cross_view_review": "7392911b8f0d18ec076f52a42ac98148822fa627ae74264374b742975894fb4c"
+  },
+  "runner_sha256": "693fa552417f9ac874fa882a9ac54ade3aa52d88b2004a373694590b248cf14f",
+  "reviewed_unique_left_crossings": 24,
+  "source_category_counts": {
+    "stone_shaped_pixels": 12,
+    "person_pixels": 9,
+    "ambiguous_pixels": 3
+  },
+  "stone_preserving_in_sample_boundaries": {
+    "maximum_stone_height_to_width_ratio": 1.5,
+    "minimum_stone_mean_body_support": 0.9232954545454546,
+    "person_pixel_ids_flagged_by_either_boundary": [
+      "S10",
+      "S22",
+      "S23",
+      "S45",
+      "S76",
+      "S100"
+    ],
+    "person_pixel_ids_surviving_both_boundaries": [
+      "S72",
+      "S116",
+      "S118"
+    ]
+  },
+  "additional_in_sample_duration_check": {
+    "maximum_stone_recent_track_duration_s": 1.8,
+    "person_pixel_ids_flagged_by_shape_body_or_duration": [
+      "S10",
+      "S22",
+      "S23",
+      "S45",
+      "S72",
+      "S76",
+      "S100"
+    ],
+    "person_pixel_ids_surviving_all_three_boundaries": [
+      "S116",
+      "S118"
+    ]
+  },
+  "cross_recording_proposal_distribution": {
+    "italy24": {
+      "input_sha256": "03813bef4b08aeb2bd9c863c57e9e7be65451845a07e95f37b4ca1164ff5595a",
+      "source_sha256": "aff12e78edeb5e108d142aed3e19b61c3956b4fddc8b2fd8b202713746771739",
+      "candidate_counts_only_no_source_truth": {
+        "events": {
+          "total": 109,
+          "would_flag": 35
+        },
+        "withheld_events": {
+          "total": 48,
+          "would_flag": 33
+        }
+      }
+    },
+    "estonia24": {
+      "input_sha256": "2cead1af6843e897d200ea49dc5ebe5b93c18cdf8bd690df101ffb20814d7016",
+      "source_sha256": "2e2b84bb2d9dffa497ee850ddbeaf0d5cae0d697377b6eee6a1ef481f449f3da",
+      "candidate_counts_only_no_source_truth": {
+        "events": {
+          "total": 61,
+          "would_flag": 28
+        },
+        "withheld_events": {
+          "total": 28,
+          "would_flag": 17
+        }
+      }
+    },
+    "china24": {
+      "input_sha256": "496f99d578a33d2e7afe1e1c57eeaed3b9183812b329a9fb5c8a5934f3c261ee",
+      "source_sha256": "2a0885f28b5496670f99ab159c37aeb270cc454e65b909ce8a37a0398f7771ac",
+      "candidate_counts_only_no_source_truth": {
+        "events": {
+          "total": 131,
+          "would_flag": 37
+        },
+        "withheld_events": {
+          "total": 108,
+          "would_flag": 79
+        }
+      }
+    },
+    "scotland24": {
+      "input_sha256": "6d0917b3486ee3025a21e27696527698e9ad795624adf6e890769a57c9bab42c",
+      "source_sha256": "6007ff0d33771aec1aa45f26b5e9271f151e77bcbb6c85a4b613e3aaf3163eae",
+      "candidate_counts_only_no_source_truth": {
+        "events": {
+          "total": 122,
+          "would_flag": 63
+        },
+        "withheld_events": {
+          "total": 72,
+          "would_flag": 44
+        }
+      }
+    }
+  },
+  "rows": [
+    {
+      "candidate_id": "S04",
+      "raw_decision": "accepted",
+      "source_category": "stone_shaped_pixels",
+      "source_pixel_class": "stone_body_and_red_cap_pixels",
+      "review_sources": [
+        "accepted_no_right_review"
+      ],
+      "mean_body_support": 1.0,
+      "median_candidate_bbox_width_px": 8.0,
+      "median_candidate_bbox_height_px": 9.5,
+      "height_to_width_ratio": 1.1875,
+      "recent_track_duration_s": 0.9000000000000057,
+      "observed_span_px": 25.08,
+      "direction_consistency": 1.0
+    },
+    {
+      "candidate_id": "S10",
+      "raw_decision": "withheld",
+      "source_category": "person_pixels",
+      "source_pixel_class": "person_head_at_crossing",
+      "review_sources": [
+        "earlier_review"
+      ],
+      "mean_body_support": 0.8227215335169881,
+      "median_candidate_bbox_width_px": 9.0,
+      "median_candidate_bbox_height_px": 16.0,
+      "height_to_width_ratio": 1.7778,
+      "recent_track_duration_s": 2.3000000000000114,
+      "observed_span_px": 33.0,
+      "direction_consistency": 1.0
+    },
+    {
+      "candidate_id": "S22",
+      "raw_decision": "withheld",
+      "source_category": "person_pixels",
+      "source_pixel_class": "person_jacket_logo",
+      "review_sources": [
+        "withheld_cross_view_review"
+      ],
+      "mean_body_support": 0.885546875,
+      "median_candidate_bbox_width_px": 8.0,
+      "median_candidate_bbox_height_px": 11.0,
+      "height_to_width_ratio": 1.375,
+      "recent_track_duration_s": 1.5,
+      "observed_span_px": 24.5,
+      "direction_consistency": 0.9333333333333333
+    },
+    {
+      "candidate_id": "S23",
+      "raw_decision": "withheld",
+      "source_category": "person_pixels",
+      "source_pixel_class": "person_face",
+      "review_sources": [
+        "withheld_cross_view_review"
+      ],
+      "mean_body_support": 1.0,
+      "median_candidate_bbox_width_px": 8.0,
+      "median_candidate_bbox_height_px": 13.5,
+      "height_to_width_ratio": 1.6875,
+      "recent_track_duration_s": 1.2999999999999545,
+      "observed_span_px": 24.0,
+      "direction_consistency": 1.0
+    },
+    {
+      "candidate_id": "S35",
+      "raw_decision": "accepted",
+      "source_category": "stone_shaped_pixels",
+      "source_pixel_class": "stone_body_at_crossing",
+      "review_sources": [
+        "earlier_review"
+      ],
+      "mean_body_support": 1.0,
+      "median_candidate_bbox_width_px": 6.0,
+      "median_candidate_bbox_height_px": 7.0,
+      "height_to_width_ratio": 1.1667,
+      "recent_track_duration_s": 1.3999999999998636,
+      "observed_span_px": 25.0,
+      "direction_consistency": 1.0
+    },
+    {
+      "candidate_id": "S38",
+      "raw_decision": "accepted",
+      "source_category": "stone_shaped_pixels",
+      "source_pixel_class": "stone_body_at_crossing",
+      "review_sources": [
+        "earlier_review"
+      ],
+      "mean_body_support": 1.0,
+      "median_candidate_bbox_width_px": 6.0,
+      "median_candidate_bbox_height_px": 6.0,
+      "height_to_width_ratio": 1.0,
+      "recent_track_duration_s": 1.2999999999999545,
+      "observed_span_px": 24.5,
+      "direction_consistency": 1.0
+    },
+    {
+      "candidate_id": "S45",
+      "raw_decision": "accepted",
+      "source_category": "person_pixels",
+      "source_pixel_class": "person_at_crossing",
+      "review_sources": [
+        "earlier_review",
+        "accepted_no_right_review"
+      ],
+      "mean_body_support": 0.9768353174603174,
+      "median_candidate_bbox_width_px": 7.0,
+      "median_candidate_bbox_height_px": 13.0,
+      "height_to_width_ratio": 1.8571,
+      "recent_track_duration_s": 2.2999999999999545,
+      "observed_span_px": 25.5,
+      "direction_consistency": 1.0
+    },
+    {
+      "candidate_id": "S49",
+      "raw_decision": "accepted",
+      "source_category": "stone_shaped_pixels",
+      "source_pixel_class": "stone_body_and_red_cap_pixels",
+      "review_sources": [
+        "accepted_no_right_review"
+      ],
+      "mean_body_support": 0.9375,
+      "median_candidate_bbox_width_px": 6.0,
+      "median_candidate_bbox_height_px": 9.0,
+      "height_to_width_ratio": 1.5,
+      "recent_track_duration_s": 1.099999999999909,
+      "observed_span_px": 25.200000000000003,
+      "direction_consistency": 1.0
+    },
+    {
+      "candidate_id": "S59",
+      "raw_decision": "accepted",
+      "source_category": "stone_shaped_pixels",
+      "source_pixel_class": "stone_body_and_red_cap_pixels",
+      "review_sources": [
+        "accepted_no_right_review"
+      ],
+      "mean_body_support": 0.9772727272727273,
+      "median_candidate_bbox_width_px": 8.0,
+      "median_candidate_bbox_height_px": 9.0,
+      "height_to_width_ratio": 1.125,
+      "recent_track_duration_s": 1.0,
+      "observed_span_px": 25.08,
+      "direction_consistency": 1.0
+    },
+    {
+      "candidate_id": "S67",
+      "raw_decision": "accepted",
+      "source_category": "stone_shaped_pixels",
+      "source_pixel_class": "stone_body_and_red_cap_pixels",
+      "review_sources": [
+        "accepted_no_right_review"
+      ],
+      "mean_body_support": 0.9232954545454546,
+      "median_candidate_bbox_width_px": 8.0,
+      "median_candidate_bbox_height_px": 9.0,
+      "height_to_width_ratio": 1.125,
+      "recent_track_duration_s": 1.0,
+      "observed_span_px": 25.5,
+      "direction_consistency": 1.0
+    },
+    {
+      "candidate_id": "S72",
+      "raw_decision": "withheld",
+      "source_category": "person_pixels",
+      "source_pixel_class": "person_bending_over_ice_at_crossing",
+      "review_sources": [
+        "earlier_review"
+      ],
+      "mean_body_support": 0.9491090995898686,
+      "median_candidate_bbox_width_px": 6.0,
+      "median_candidate_bbox_height_px": 9.0,
+      "height_to_width_ratio": 1.5,
+      "recent_track_duration_s": 4.0,
+      "observed_span_px": 48.5,
+      "direction_consistency": 0.9473684210526315
+    },
+    {
+      "candidate_id": "S76",
+      "raw_decision": "withheld",
+      "source_category": "person_pixels",
+      "source_pixel_class": "person_or_wheelchair_pixels",
+      "review_sources": [
+        "withheld_cross_view_review"
+      ],
+      "mean_body_support": 0.6113095238095239,
+      "median_candidate_bbox_width_px": 4.5,
+      "median_candidate_bbox_height_px": 7.0,
+      "height_to_width_ratio": 1.5556,
+      "recent_track_duration_s": 1.599999999999909,
+      "observed_span_px": 24.5,
+      "direction_consistency": 1.0
+    },
+    {
+      "candidate_id": "S87",
+      "raw_decision": "accepted",
+      "source_category": "stone_shaped_pixels",
+      "source_pixel_class": "stone_body_at_crossing",
+      "review_sources": [
+        "earlier_review"
+      ],
+      "mean_body_support": 1.0,
+      "median_candidate_bbox_width_px": 6.0,
+      "median_candidate_bbox_height_px": 8.0,
+      "height_to_width_ratio": 1.3333,
+      "recent_track_duration_s": 1.6000000000003638,
+      "observed_span_px": 25.0,
+      "direction_consistency": 1.0
+    },
+    {
+      "candidate_id": "S90",
+      "raw_decision": "accepted",
+      "source_category": "stone_shaped_pixels",
+      "source_pixel_class": "stone_body_and_red_cap_pixels",
+      "review_sources": [
+        "accepted_no_right_review"
+      ],
+      "mean_body_support": 1.0,
+      "median_candidate_bbox_width_px": 6.0,
+      "median_candidate_bbox_height_px": 7.0,
+      "height_to_width_ratio": 1.1667,
+      "recent_track_duration_s": 1.7999999999997272,
+      "observed_span_px": 24.5,
+      "direction_consistency": 1.0
+    },
+    {
+      "candidate_id": "S96",
+      "raw_decision": "accepted",
+      "source_category": "stone_shaped_pixels",
+      "source_pixel_class": "stone_body_at_crossing",
+      "review_sources": [
+        "earlier_review"
+      ],
+      "mean_body_support": 1.0,
+      "median_candidate_bbox_width_px": 5.0,
+      "median_candidate_bbox_height_px": 6.5,
+      "height_to_width_ratio": 1.3,
+      "recent_track_duration_s": 1.300000000000182,
+      "observed_span_px": 25.0,
+      "direction_consistency": 1.0
+    },
+    {
+      "candidate_id": "S99",
+      "raw_decision": "withheld",
+      "source_category": "ambiguous_pixels",
+      "source_pixel_class": "ambiguous_low_red_pixels_near_wheelchair",
+      "review_sources": [
+        "withheld_cross_view_review"
+      ],
+      "mean_body_support": 1.0,
+      "median_candidate_bbox_width_px": 10.0,
+      "median_candidate_bbox_height_px": 9.0,
+      "height_to_width_ratio": 0.9,
+      "recent_track_duration_s": 1.5,
+      "observed_span_px": 24.12,
+      "direction_consistency": 1.0
+    },
+    {
+      "candidate_id": "S100",
+      "raw_decision": "withheld",
+      "source_category": "person_pixels",
+      "source_pixel_class": "person_face",
+      "review_sources": [
+        "withheld_cross_view_review"
+      ],
+      "mean_body_support": 0.8976711560044893,
+      "median_candidate_bbox_width_px": 11.0,
+      "median_candidate_bbox_height_px": 17.0,
+      "height_to_width_ratio": 1.5455,
+      "recent_track_duration_s": 1.5,
+      "observed_span_px": 27.62,
+      "direction_consistency": 1.0
+    },
+    {
+      "candidate_id": "S104",
+      "raw_decision": "accepted",
+      "source_category": "stone_shaped_pixels",
+      "source_pixel_class": "stone_body_and_red_cap_pixels",
+      "review_sources": [
+        "accepted_no_right_review"
+      ],
+      "mean_body_support": 0.9542929292929293,
+      "median_candidate_bbox_width_px": 9.0,
+      "median_candidate_bbox_height_px": 9.0,
+      "height_to_width_ratio": 1.0,
+      "recent_track_duration_s": 1.0,
+      "observed_span_px": 25.58,
+      "direction_consistency": 1.0
+    },
+    {
+      "candidate_id": "S110",
+      "raw_decision": "accepted",
+      "source_category": "stone_shaped_pixels",
+      "source_pixel_class": "stone_body_and_red_cap_pixels",
+      "review_sources": [
+        "accepted_no_right_review"
+      ],
+      "mean_body_support": 0.9474206349206349,
+      "median_candidate_bbox_width_px": 8.0,
+      "median_candidate_bbox_height_px": 9.0,
+      "height_to_width_ratio": 1.125,
+      "recent_track_duration_s": 1.0,
+      "observed_span_px": 24.0,
+      "direction_consistency": 1.0
+    },
+    {
+      "candidate_id": "S114",
+      "raw_decision": "accepted",
+      "source_category": "stone_shaped_pixels",
+      "source_pixel_class": "stone_body_and_red_cap_pixels",
+      "review_sources": [
+        "accepted_no_right_review"
+      ],
+      "mean_body_support": 1.0,
+      "median_candidate_bbox_width_px": 8.0,
+      "median_candidate_bbox_height_px": 9.0,
+      "height_to_width_ratio": 1.125,
+      "recent_track_duration_s": 0.8000000000001819,
+      "observed_span_px": 26.0,
+      "direction_consistency": 1.0
+    },
+    {
+      "candidate_id": "S116",
+      "raw_decision": "withheld",
+      "source_category": "person_pixels",
+      "source_pixel_class": "person_face",
+      "review_sources": [
+        "withheld_cross_view_review"
+      ],
+      "mean_body_support": 0.9376984994172495,
+      "median_candidate_bbox_width_px": 11.0,
+      "median_candidate_bbox_height_px": 16.5,
+      "height_to_width_ratio": 1.5,
+      "recent_track_duration_s": 1.699999999999818,
+      "observed_span_px": 25.48,
+      "direction_consistency": 1.0
+    },
+    {
+      "candidate_id": "S117",
+      "raw_decision": "withheld",
+      "source_category": "ambiguous_pixels",
+      "source_pixel_class": "ambiguous_low_red_pixels_near_wheelchair",
+      "review_sources": [
+        "withheld_cross_view_review"
+      ],
+      "mean_body_support": 0.970467032967033,
+      "median_candidate_bbox_width_px": 14.0,
+      "median_candidate_bbox_height_px": 13.0,
+      "height_to_width_ratio": 0.9286,
+      "recent_track_duration_s": 1.199999999999818,
+      "observed_span_px": 24.680000000000007,
+      "direction_consistency": 1.0
+    },
+    {
+      "candidate_id": "S118",
+      "raw_decision": "withheld",
+      "source_category": "person_pixels",
+      "source_pixel_class": "person_head",
+      "review_sources": [
+        "withheld_cross_view_review"
+      ],
+      "mean_body_support": 0.9565018315018314,
+      "median_candidate_bbox_width_px": 10.0,
+      "median_candidate_bbox_height_px": 12.0,
+      "height_to_width_ratio": 1.2,
+      "recent_track_duration_s": 1.2000000000007276,
+      "observed_span_px": 26.060000000000002,
+      "direction_consistency": 1.0
+    },
+    {
+      "candidate_id": "S119",
+      "raw_decision": "accepted",
+      "source_category": "ambiguous_pixels",
+      "source_pixel_class": "ambiguous_yellow_pixels_near_player",
+      "review_sources": [
+        "accepted_no_right_review"
+      ],
+      "mean_body_support": 0.6076599326599327,
+      "median_candidate_bbox_width_px": 8.0,
+      "median_candidate_bbox_height_px": 11.0,
+      "height_to_width_ratio": 1.375,
+      "recent_track_duration_s": 4.0,
+      "observed_span_px": 47.0,
+      "direction_consistency": 0.9375
+    }
+  ],
+  "limitations": [
+    "Source classes were reviewed by the same agent after seeing candidate proposals.",
+    "A stone-shaped pixel at a crossing is not a verified throw event.",
+    "The boundaries were chosen from the reviewed Latvia examples and have no held-out validity.",
+    "Source-pixel outcomes for unreviewed candidates and other recordings are not evaluated here.",
+    "Transfer counts are candidate distributions only, without source-class or throw-event labels."
+  ]
+}

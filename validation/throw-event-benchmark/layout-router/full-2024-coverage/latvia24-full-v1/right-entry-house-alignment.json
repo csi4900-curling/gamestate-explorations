@@ -1,0 +1,137 @@
+{
+  "status": "selected_source_only_house_image_alignment_development",
+  "source_sha256": "a7431b68ba6fb0df407383973a525a01eadbee2490caa0438a5a11d2df1dba13",
+  "observations_sha256": "e67e6868adf34332cd58ee65d65284815aaa2bac2d749fb1cb3c83b99120fb31",
+  "alignment_code_sha256": "cf58aaa5efe55c1b64195e7b7f66fac213a58339e99c92235369655a24ca0f83",
+  "runner_sha256": "3368cf94273a34dfd7ea4c2c792988443aa9ff0c67c603aa5cb923b86e9d1ca0",
+  "roi_xyxy": [
+    340,
+    160,
+    620,
+    200
+  ],
+  "hsv_blue_mask": {
+    "hue_inclusive": [
+      90,
+      135
+    ],
+    "min_saturation": 45,
+    "min_value": 45
+  },
+  "translation_search_radius_px": 8,
+  "frames": [
+    {
+      "right_raw_track_id": "R005",
+      "sample_time_s": 5087.429,
+      "decoded_frame_index": 152623
+    },
+    {
+      "right_raw_track_id": "R008",
+      "sample_time_s": 5139.918,
+      "decoded_frame_index": 154198
+    },
+    {
+      "right_raw_track_id": "R014",
+      "sample_time_s": 5210.056,
+      "decoded_frame_index": 156302
+    },
+    {
+      "right_raw_track_id": "R017",
+      "sample_time_s": 5276.167,
+      "decoded_frame_index": 158285
+    },
+    {
+      "right_raw_track_id": "R024",
+      "sample_time_s": 5398.514,
+      "decoded_frame_index": 161955
+    },
+    {
+      "right_raw_track_id": "R025",
+      "sample_time_s": 5463.348,
+      "decoded_frame_index": 163900
+    }
+  ],
+  "adjacent_pairs": [
+    {
+      "before_right_track_id": "R005",
+      "after_right_track_id": "R008",
+      "status": "painted_ring_alignment_probe",
+      "first_blue_px": 2934,
+      "second_blue_px": 2644,
+      "best_translation_second_to_first_px": [
+        0,
+        0
+      ],
+      "best_mask_iou": 0.773,
+      "zero_translation_mask_iou": 0.773,
+      "zero_translation_is_best": true,
+      "full_camera_pose_verified": false
+    },
+    {
+      "before_right_track_id": "R008",
+      "after_right_track_id": "R014",
+      "status": "painted_ring_alignment_probe",
+      "first_blue_px": 2644,
+      "second_blue_px": 2894,
+      "best_translation_second_to_first_px": [
+        0,
+        0
+      ],
+      "best_mask_iou": 0.7388,
+      "zero_translation_mask_iou": 0.7388,
+      "zero_translation_is_best": true,
+      "full_camera_pose_verified": false
+    },
+    {
+      "before_right_track_id": "R014",
+      "after_right_track_id": "R017",
+      "status": "painted_ring_alignment_probe",
+      "first_blue_px": 2894,
+      "second_blue_px": 2814,
+      "best_translation_second_to_first_px": [
+        0,
+        0
+      ],
+      "best_mask_iou": 0.8389,
+      "zero_translation_mask_iou": 0.8389,
+      "zero_translation_is_best": true,
+      "full_camera_pose_verified": false
+    },
+    {
+      "before_right_track_id": "R017",
+      "after_right_track_id": "R020",
+      "status": "abstain_missing_usable_board_sample"
+    },
+    {
+      "before_right_track_id": "R020",
+      "after_right_track_id": "R024",
+      "status": "abstain_missing_usable_board_sample"
+    },
+    {
+      "before_right_track_id": "R024",
+      "after_right_track_id": "R025",
+      "status": "painted_ring_alignment_probe",
+      "first_blue_px": 2494,
+      "second_blue_px": 2497,
+      "best_translation_second_to_first_px": [
+        0,
+        0
+      ],
+      "best_mask_iou": 0.7574,
+      "zero_translation_mask_iou": 0.7574,
+      "zero_translation_is_best": true,
+      "full_camera_pose_verified": false
+    },
+    {
+      "before_right_track_id": "R025",
+      "after_right_track_id": "R028",
+      "status": "abstain_missing_usable_board_sample"
+    }
+  ],
+  "limitations": [
+    "The ROI and colour mask were chosen after seeing this source; this is development evidence.",
+    "People and stones occlude some paint; overlap measures painted pixels, not a camera transform error bound.",
+    "One sampled frame per event cannot prove camera pose through the full event interval.",
+    "Image alignment does not establish physical stone identity, end identity, or rink coordinates."
+  ]
+}

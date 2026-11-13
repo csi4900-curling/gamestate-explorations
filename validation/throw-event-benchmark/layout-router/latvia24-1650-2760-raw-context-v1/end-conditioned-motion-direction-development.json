@@ -1,0 +1,83 @@
+{
+  "status": "development_marker_conditioned_direction_audit_not_throw_classification",
+  "source_sha256": "a7431b68ba6fb0df407383973a525a01eadbee2490caa0438a5a11d2df1dba13",
+  "source_interval_s": [
+    1650.0,
+    2760.0
+  ],
+  "input_sha256": {
+    "raw": "7a658f611b98d8c4797ffd09b484015d1cb06645259373e12f9b244cce552670",
+    "events": "ea570a728f55a23d1d8ae5989eafffb5e4517a6822afcce8613f83cb972361eb",
+    "markers": "de3ab98c9192ceef730e5816b53bbc5560a224b0651419eacf0c3dcadcd11dcc",
+    "temporal": "96a535fd6b58ce39aaf01bccf69005c16d9d1bba242386d9a7ea9b3550d7596d"
+  },
+  "runner_sha256": "2ba25294536c90884a72554e130f6accee29a4f7186b4c8bbcdd2c4d538d4e3e",
+  "marker_transition": {
+    "from_end": 2,
+    "to_end": 3,
+    "last_old_hit_s": 1900,
+    "first_new_hit_s": 1920
+  },
+  "rows": [
+    {
+      "broadcast_end_marker": 2,
+      "stable_marker_hit_interval_s": [
+        1060,
+        1900
+      ],
+      "marker_hit_count": 65,
+      "raw_direction_counts": {
+        "positive_y": 7
+      },
+      "context_confirmed_direction_counts": {
+        "positive_y": 5
+      },
+      "context_confirmed_candidate_ids": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S07"
+      ]
+    },
+    {
+      "broadcast_end_marker": 3,
+      "stable_marker_hit_interval_s": [
+        1920,
+        3360
+      ],
+      "marker_hit_count": 80,
+      "raw_direction_counts": {
+        "negative_y": 14,
+        "positive_y": 3
+      },
+      "context_confirmed_direction_counts": {
+        "negative_y": 11
+      },
+      "context_confirmed_candidate_ids": [
+        "S11",
+        "S12",
+        "S15",
+        "S16",
+        "S18",
+        "S19",
+        "S21",
+        "S23",
+        "S25",
+        "S26",
+        "S27"
+      ]
+    }
+  ],
+  "raw_candidates_outside_stable_marker_runs": [
+    "S08",
+    "S09",
+    "S10"
+  ],
+  "limitations": [
+    "These are context-confirmed candidates, not independently labeled physical throws.",
+    "The broadcast marker is intermittent and its transition does not time a physical delivery.",
+    "Direction is in image coordinates and can change with camera layout or orientation.",
+    "This exposed Latvia interval is a transfer audit, not a held-out accuracy estimate or automatic veto."
+  ]
+}

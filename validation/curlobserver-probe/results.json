@@ -1,0 +1,2714 @@
+{
+  "status": "published_label_component_smoke_test",
+  "revision": "2cfe61efede3c446957ee94aefa8df1345fc4684",
+  "sample_indices": [
+    0,
+    208,
+    417,
+    625,
+    833,
+    1041,
+    1250,
+    1458,
+    1666,
+    1875,
+    2083,
+    2291,
+    2500,
+    2708,
+    2916,
+    3124,
+    3333,
+    3541,
+    3749,
+    3958,
+    4166,
+    4374,
+    4582,
+    4791,
+    4999
+  ],
+  "selection": "25 evenly spaced image indices selected before downloading or inference",
+  "config": {
+    "roi": [
+      0,
+      0,
+      640,
+      360
+    ],
+    "gate_y": 60.0,
+    "min_span_px": 24.0,
+    "min_observations": 6,
+    "max_gap_s": 0.55,
+    "association_px": 13.0,
+    "min_speed_px_s": 8.0,
+    "max_speed_px_s": 65.0
+  },
+  "iou_threshold": 0.5,
+  "matching": "one-to-one same-colour maximum-cardinality matching at IoU >= 0.5",
+  "model_sha256": "40678c23b117f527c80375ff7d7fbe3a1119fb94c4650b05698cd2c76be9628f",
+  "runner_sha256": "9038135062c57a5b5de99905741a14372430109d74ac3d93bc8b6445a884425c",
+  "adaptation": "Full-image ROI to test stone proposals; all colour/size/body thresholds unchanged.",
+  "provenance": "Publisher labels, not authored here. Not an official held-out split; match-level overlap with previous Olympic development images is unverified.",
+  "totals": {
+    "references": 102,
+    "predictions": 93,
+    "matches": 8,
+    "misses": 94,
+    "extras": 85,
+    "precision": 0.08602150537634409,
+    "recall": 0.0784313725490196
+  },
+  "images": [
+    {
+      "index": 0,
+      "image_sha256": "1595d68f892eaf69e3b38ce2d22f71c50a130ec7fa29ac6f0a909c45ea607ee6",
+      "labels_sha256": "fc7d6f960afcd19160b61fea3ead7b65c0fcf9d64a79290f6a66a4f1f58c74c8",
+      "reference": [
+        {
+          "colour": "yellow",
+          "bbox": [
+            323.838144,
+            189.416466,
+            19.796352,
+            19.964988
+          ]
+        },
+        {
+          "colour": "red",
+          "bbox": [
+            318.01151999999996,
+            217.04931,
+            19.78112,
+            20.03418
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            312.557568,
+            131.137488,
+            19.540224,
+            19.766304
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            360.70822400000003,
+            328.11246,
+            20.616191999999998,
+            21.14172
+          ]
+        },
+        {
+          "colour": "red",
+          "bbox": [
+            350.890048,
+            43.658387999999995,
+            18.950784,
+            19.799784
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            228.130624,
+            197.21284200000002,
+            18.613632,
+            19.189116
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            0.0,
+            199.84552200000002,
+            7.2656,
+            20.837916
+          ]
+        }
+      ],
+      "predicted": [
+        {
+          "colour": "red",
+          "pixel": [
+            235.5,
+            351.0
+          ],
+          "bbox": [
+            234,
+            348,
+            3,
+            6
+          ],
+          "body_support": 0.6666666666666666
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            226.5,
+            346.0
+          ],
+          "bbox": [
+            225,
+            343,
+            3,
+            6
+          ],
+          "body_support": 1.0
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            82.5,
+            318.5
+          ],
+          "bbox": [
+            80,
+            315,
+            5,
+            7
+          ],
+          "body_support": 0.4
+        }
+      ],
+      "score": {
+        "references": 7,
+        "predictions": 3,
+        "matches": 0,
+        "misses": 7,
+        "extras": 3,
+        "matched_ious": []
+      }
+    },
+    {
+      "index": 208,
+      "image_sha256": "7c5e94bdf61b8a7fc99aa71b1f5b1ad5e14e0de07ec15476e923973e117a17f1",
+      "labels_sha256": "e673c1d3968132120bf2dc21798254fa166352a69e848182be5128d16f3f8860",
+      "reference": [
+        {
+          "colour": "red",
+          "bbox": [
+            291.737952,
+            96.277266,
+            21.681216,
+            23.269788
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            220.52860799999996,
+            178.530462,
+            21.091904,
+            20.929716
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            366.59561600000006,
+            323.44804800000003,
+            21.526207999999997,
+            22.323024
+          ]
+        },
+        {
+          "colour": "red",
+          "bbox": [
+            353.78048000000007,
+            12.547386000000001,
+            20.32384,
+            20.901852
+          ]
+        }
+      ],
+      "predicted": [
+        {
+          "colour": "red",
+          "pixel": [
+            183.5,
+            329.5
+          ],
+          "bbox": [
+            182,
+            327,
+            3,
+            5
+          ],
+          "body_support": 0.5
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            173.5,
+            290.5
+          ],
+          "bbox": [
+            171,
+            288,
+            5,
+            5
+          ],
+          "body_support": 1.0
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            128.5,
+            284.58
+          ],
+          "bbox": [
+            124,
+            278,
+            9,
+            15
+          ],
+          "body_support": 0.9444444444444444
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            428.5,
+            224.82
+          ],
+          "bbox": [
+            423,
+            219,
+            11,
+            14
+          ],
+          "body_support": 0.2909090909090909
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            407.0,
+            213.0
+          ],
+          "bbox": [
+            403,
+            207,
+            8,
+            14
+          ],
+          "body_support": 0.8125
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            428.0,
+            207.66
+          ],
+          "bbox": [
+            419,
+            201,
+            18,
+            17
+          ],
+          "body_support": 0.9861111111111112
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            141.5,
+            108.8
+          ],
+          "bbox": [
+            134,
+            102,
+            15,
+            17
+          ],
+          "body_support": 0.8666666666666667
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            136.0,
+            87.42
+          ],
+          "bbox": [
+            128,
+            80,
+            16,
+            18
+          ],
+          "body_support": 0.29464285714285715
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            117.5,
+            83.32
+          ],
+          "bbox": [
+            112,
+            79,
+            11,
+            11
+          ],
+          "body_support": 0.6181818181818182
+        }
+      ],
+      "score": {
+        "references": 4,
+        "predictions": 9,
+        "matches": 0,
+        "misses": 4,
+        "extras": 9,
+        "matched_ious": []
+      }
+    },
+    {
+      "index": 417,
+      "image_sha256": "5b2a8f7f487aedd5294c8e18d5791f362262d65b99e4fa74c9e1b9e181988f0b",
+      "labels_sha256": "3e5e8085426ed2aa6d236e642a1d8c64e0d0afd01e30434b61aa0b3bdfa6240a",
+      "reference": [
+        {
+          "colour": "red",
+          "bbox": [
+            291.482528,
+            95.77620000000002,
+            22.185664,
+            24.724800000000002
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            220.257632,
+            178.29174600000002,
+            21.435456,
+            20.949228
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            366.486304,
+            323.06570999999997,
+            21.685952,
+            22.66002
+          ]
+        },
+        {
+          "colour": "red",
+          "bbox": [
+            353.75075200000003,
+            12.451176,
+            20.585536,
+            21.579335999999998
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            155.314496,
+            266.51385,
+            13.856128000000002,
+            13.679099999999998
+          ]
+        }
+      ],
+      "predicted": [
+        {
+          "colour": "red",
+          "pixel": [
+            177.5,
+            322.5
+          ],
+          "bbox": [
+            176,
+            320,
+            3,
+            5
+          ],
+          "body_support": 0.8333333333333334
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            181.5,
+            309.52
+          ],
+          "bbox": [
+            171,
+            301,
+            21,
+            21
+          ],
+          "body_support": 0.47619047619047616
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            169.0,
+            286.5
+          ],
+          "bbox": [
+            167,
+            283,
+            4,
+            7
+          ],
+          "body_support": 0.25
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            176.5,
+            265.56
+          ],
+          "bbox": [
+            170,
+            261,
+            13,
+            12
+          ],
+          "body_support": 0.8846153846153846
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            408.5,
+            128.0
+          ],
+          "bbox": [
+            406,
+            124,
+            5,
+            8
+          ],
+          "body_support": 0.4
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            402.5,
+            125.0
+          ],
+          "bbox": [
+            400,
+            123,
+            5,
+            4
+          ],
+          "body_support": 1.0
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            408.5,
+            115.5
+          ],
+          "bbox": [
+            406,
+            112,
+            5,
+            7
+          ],
+          "body_support": 1.0
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            403.0,
+            108.42
+          ],
+          "bbox": [
+            395,
+            102,
+            16,
+            16
+          ],
+          "body_support": 1.0
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            128.0,
+            77.7
+          ],
+          "bbox": [
+            123,
+            70,
+            10,
+            17
+          ],
+          "body_support": 0.95
+        },
+        {
+          "colour": "yellow",
+          "pixel": [
+            150.0,
+            88.92
+          ],
+          "bbox": [
+            142,
+            82,
+            16,
+            17
+          ],
+          "body_support": 0.7767857142857143
+        }
+      ],
+      "score": {
+        "references": 5,
+        "predictions": 10,
+        "matches": 0,
+        "misses": 5,
+        "extras": 10,
+        "matched_ious": []
+      }
+    },
+    {
+      "index": 625,
+      "image_sha256": "91240ecb8a78a18fdea8f2f5102ff0478c004be96edae3cf6bfe9cf6b983a746",
+      "labels_sha256": "d40f275ce2a85fa5e14172206b461e42899ef3efde34c20f433c1c707a0585ab",
+      "reference": [
+        {
+          "colour": "yellow",
+          "bbox": [
+            305.04944,
+            98.55939599999999,
+            22.46304,
+            23.455368
+          ]
+        }
+      ],
+      "predicted": [
+        {
+          "colour": "red",
+          "pixel": [
+            307.0,
+            63.0
+          ],
+          "bbox": [
+            305,
+            60,
+            4,
+            6
+          ],
+          "body_support": 0.875
+        }
+      ],
+      "score": {
+        "references": 1,
+        "predictions": 1,
+        "matches": 0,
+        "misses": 1,
+        "extras": 1,
+        "matched_ious": []
+      }
+    },
+    {
+      "index": 833,
+      "image_sha256": "de69a723510df56289dba1b4580c16a9f00bb9f1c42cfdd7ac630f9192ddeb70",
+      "labels_sha256": "4f992eab077c8e9babb976bc3a1085e683e19290179c4bf972a662592f683859",
+      "reference": [
+        {
+          "colour": "red",
+          "bbox": [
+            372.78726399999994,
+            135.673452,
+            30.380672,
+            30.960936
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            375.85440000000006,
+            297.16300800000005,
+            33.27936,
+            33.015024
+          ]
+        }
+      ],
+      "predicted": [],
+      "score": {
+        "references": 2,
+        "predictions": 0,
+        "matches": 0,
+        "misses": 2,
+        "extras": 0,
+        "matched_ious": []
+      }
+    },
+    {
+      "index": 1041,
+      "image_sha256": "19bc23ef068f4e4f2fdfb22181e9a3bf0068e3813419bd09c00af99b4939c187",
+      "labels_sha256": "880791c1a181ac457ee77fa31a82467f6e6114e6f3e203f4ac9177feb76c0fc3",
+      "reference": [
+        {
+          "colour": "yellow",
+          "bbox": [
+            321.49337599999996,
+            141.053436,
+            29.283328,
+            29.813688
+          ]
+        }
+      ],
+      "predicted": [],
+      "score": {
+        "references": 1,
+        "predictions": 0,
+        "matches": 0,
+        "misses": 1,
+        "extras": 0,
+        "matched_ious": []
+      }
+    },
+    {
+      "index": 1250,
+      "image_sha256": "1a549e30241db32d53f1a7991b36b8f9084eb54df1912d42c6f4d9880e347f17",
+      "labels_sha256": "bb3e062ccd1cf73f57075f7effe3e502d80ee43d8899e329cd214e13e4fc193e",
+      "reference": [
+        {
+          "colour": "red",
+          "bbox": [
+            210.536224,
+            138.236526,
+            30.203072,
+            29.849508
+          ]
+        }
+      ],
+      "predicted": [],
+      "score": {
+        "references": 1,
+        "predictions": 0,
+        "matches": 0,
+        "misses": 1,
+        "extras": 0,
+        "matched_ious": []
+      }
+    },
+    {
+      "index": 1458,
+      "image_sha256": "91b10fd9306dcde130dda54d91959ceb188402ec6a473235f035bd326aaddba2",
+      "labels_sha256": "5d439671e93243b99d37b46a18023a44d5b088f9d081355263d84730dcf5d5b3",
+      "reference": [
+        {
+          "colour": "yellow",
+          "bbox": [
+            387.35328000000004,
+            281.070018,
+            27.523200000000003,
+            26.679564000000003
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            335.16755200000006,
+            156.386286,
+            24.651136,
+            25.301988
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            198.775136,
+            340.649046,
+            25.944128000000003,
+            18.834228
+          ]
+        }
+      ],
+      "predicted": [
+        {
+          "colour": "red",
+          "pixel": [
+            308.5,
+            223.5
+          ],
+          "bbox": [
+            306,
+            219,
+            5,
+            9
+          ],
+          "body_support": 0.7
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            357.5,
+            211.5
+          ],
+          "bbox": [
+            355,
+            208,
+            5,
+            7
+          ],
+          "body_support": 0.4
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            344.5,
+            206.5
+          ],
+          "bbox": [
+            342,
+            203,
+            5,
+            7
+          ],
+          "body_support": 0.6
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            323.0,
+            153.5
+          ],
+          "bbox": [
+            321,
+            150,
+            4,
+            7
+          ],
+          "body_support": 1.0
+        }
+      ],
+      "score": {
+        "references": 3,
+        "predictions": 4,
+        "matches": 0,
+        "misses": 3,
+        "extras": 4,
+        "matched_ious": []
+      }
+    },
+    {
+      "index": 1666,
+      "image_sha256": "f4e80c7c89f5301f89479fa96bc88d983d30e9368460d8f37465079eb1549f6d",
+      "labels_sha256": "7e0542b68cab0cbb6ed18b1464eea5788c41fdc0500b2f41f397f13948df19c3",
+      "reference": [
+        {
+          "colour": "yellow",
+          "bbox": [
+            383.719008,
+            307.90470600000003,
+            26.941504,
+            26.124588
+          ]
+        },
+        {
+          "colour": "red",
+          "bbox": [
+            360.82415999999995,
+            172.82190599999998,
+            24.55712,
+            24.971868
+          ]
+        }
+      ],
+      "predicted": [
+        {
+          "colour": "red",
+          "pixel": [
+            334.0,
+            231.5
+          ],
+          "bbox": [
+            332,
+            229,
+            4,
+            5
+          ],
+          "body_support": 0.625
+        }
+      ],
+      "score": {
+        "references": 2,
+        "predictions": 1,
+        "matches": 0,
+        "misses": 2,
+        "extras": 1,
+        "matched_ious": []
+      }
+    },
+    {
+      "index": 1875,
+      "image_sha256": "7e66caa79a70e895ebde30de1cfbe850819257b17e794d4f548f68815d695d80",
+      "labels_sha256": "df7e205932723bf0390759d47d1bee693a42b65f4ff61657a0cb795011f92535",
+      "reference": [
+        {
+          "colour": "yellow",
+          "bbox": [
+            297.06105599999995,
+            129.81160799999998,
+            23.504768,
+            23.708304
+          ]
+        },
+        {
+          "colour": "red",
+          "bbox": [
+            350.77974399999994,
+            159.180264,
+            24.295232000000002,
+            24.924671999999997
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            303.4608,
+            292.99635,
+            24.36416,
+            26.12538
+          ]
+        }
+      ],
+      "predicted": [
+        {
+          "colour": "red",
+          "pixel": [
+            636.5,
+            15.5
+          ],
+          "bbox": [
+            633,
+            10,
+            7,
+            12
+          ],
+          "body_support": 0.38095238095238093
+        },
+        {
+          "colour": "yellow",
+          "pixel": [
+            159.0,
+            360.0
+          ],
+          "bbox": [
+            156,
+            358,
+            6,
+            5
+          ],
+          "body_support": 0.3333333333333333
+        }
+      ],
+      "score": {
+        "references": 3,
+        "predictions": 2,
+        "matches": 0,
+        "misses": 3,
+        "extras": 2,
+        "matched_ious": []
+      }
+    },
+    {
+      "index": 2083,
+      "image_sha256": "df7063cef10175679e9ab27f93cba44d1bbeaac9f77a253e8d73c1c1e98eaee2",
+      "labels_sha256": "2d2f5c5fac8fc12942f819bece6cdcccc33b9d7315cb87626711af06581aff5f",
+      "reference": [
+        {
+          "colour": "yellow",
+          "bbox": [
+            367.04176000000007,
+            145.217106,
+            20.75424,
+            20.258028
+          ]
+        },
+        {
+          "colour": "red",
+          "bbox": [
+            350.50336000000004,
+            36.84452399999999,
+            19.057280000000002,
+            19.841112000000003
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            228.637472,
+            189.10542600000002,
+            18.613696,
+            19.142748
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            362.236128,
+            321.43509,
+            20.117824,
+            21.25998
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            1.2799999999923983e-05,
+            192.293316,
+            9.149568,
+            20.298888
+          ]
+        }
+      ],
+      "predicted": [
+        {
+          "colour": "red",
+          "pixel": [
+            53.5,
+            317.58
+          ],
+          "bbox": [
+            49,
+            313,
+            9,
+            11
+          ],
+          "body_support": 1.0
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            414.0,
+            93.5
+          ],
+          "bbox": [
+            412,
+            91,
+            4,
+            5
+          ],
+          "body_support": 0.25
+        }
+      ],
+      "score": {
+        "references": 5,
+        "predictions": 2,
+        "matches": 0,
+        "misses": 5,
+        "extras": 2,
+        "matched_ious": []
+      }
+    },
+    {
+      "index": 2291,
+      "image_sha256": "f2884d836aa2091488d2aca49460e5585ebb76ccce540eb3e545ef992d673d1a",
+      "labels_sha256": "d2ca7c0997eb7ecb89939c17f7126eb96f735a8684927a21243ed1ce1761bf9c",
+      "reference": [
+        {
+          "colour": "yellow",
+          "bbox": [
+            310.65136,
+            189.91254599999996,
+            40.60064,
+            32.089788
+          ]
+        }
+      ],
+      "predicted": [
+        {
+          "colour": "red",
+          "pixel": [
+            361.0,
+            289.0
+          ],
+          "bbox": [
+            358,
+            286,
+            6,
+            7
+          ],
+          "body_support": 0.6111111111111112
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            346.5,
+            166.82
+          ],
+          "bbox": [
+            341,
+            160,
+            11,
+            16
+          ],
+          "body_support": 0.5636363636363636
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            356.5,
+            162.5
+          ],
+          "bbox": [
+            354,
+            158,
+            5,
+            9
+          ],
+          "body_support": 1.0
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            378.0,
+            151.5
+          ],
+          "bbox": [
+            376,
+            149,
+            4,
+            5
+          ],
+          "body_support": 0.25
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            322.5,
+            125.5
+          ],
+          "bbox": [
+            321,
+            123,
+            3,
+            5
+          ],
+          "body_support": 1.0
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            316.5,
+            128.58
+          ],
+          "bbox": [
+            312,
+            123,
+            9,
+            13
+          ],
+          "body_support": 0.4166666666666667
+        },
+        {
+          "colour": "yellow",
+          "pixel": [
+            319.5,
+            205.5
+          ],
+          "bbox": [
+            316,
+            200,
+            7,
+            12
+          ],
+          "body_support": 1.0
+        },
+        {
+          "colour": "yellow",
+          "pixel": [
+            365.5,
+            140.0
+          ],
+          "bbox": [
+            363,
+            138,
+            5,
+            4
+          ],
+          "body_support": 1.0
+        }
+      ],
+      "score": {
+        "references": 1,
+        "predictions": 8,
+        "matches": 0,
+        "misses": 1,
+        "extras": 8,
+        "matched_ious": []
+      }
+    },
+    {
+      "index": 2500,
+      "image_sha256": "b7a382ead48e1cc5a286a3d8ed466318d440b0357265fe1e119011ffe39aeba7",
+      "labels_sha256": "6a08786beef43656da0793da0fa9dc5e8df50c18293fd49942bc717818b373a8",
+      "reference": [
+        {
+          "colour": "yellow",
+          "bbox": [
+            326.03702400000003,
+            217.108314,
+            22.356672,
+            23.195771999999998
+          ]
+        },
+        {
+          "colour": "red",
+          "bbox": [
+            300.669952,
+            165.257658,
+            22.053376,
+            22.571244
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            305.81180800000004,
+            40.36356,
+            21.497664,
+            22.7988
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            302.60528,
+            270.281772,
+            22.9392,
+            22.970376
+          ]
+        },
+        {
+          "colour": "red",
+          "bbox": [
+            318.310496,
+            249.160608,
+            22.919488,
+            21.736224
+          ]
+        }
+      ],
+      "predicted": [],
+      "score": {
+        "references": 5,
+        "predictions": 0,
+        "matches": 0,
+        "misses": 5,
+        "extras": 0,
+        "matched_ious": []
+      }
+    },
+    {
+      "index": 2708,
+      "image_sha256": "c6c9d23b87d7ea495e5b3175f8fdbc0092778b9d77e56e15ffdfbdee3e00e072",
+      "labels_sha256": "2e6ca7425337abc8114d3e405a64f38fe771cad51087281f4e934aa549432e3c",
+      "reference": [
+        {
+          "colour": "yellow",
+          "bbox": [
+            221.472256,
+            201.70857600000002,
+            21.968128,
+            21.136608000000003
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            371.349984,
+            155.238264,
+            21.152832,
+            20.651472
+          ]
+        },
+        {
+          "colour": "red",
+          "bbox": [
+            353.78704,
+            37.926144,
+            19.91648,
+            20.186352
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            367.63606400000003,
+            345.778902,
+            21.000511999999997,
+            13.982436000000002
+          ]
+        }
+      ],
+      "predicted": [
+        {
+          "colour": "red",
+          "pixel": [
+            39.0,
+            359.0
+          ],
+          "bbox": [
+            37,
+            356,
+            4,
+            6
+          ],
+          "body_support": 0.25
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            71.0,
+            355.0
+          ],
+          "bbox": [
+            67,
+            351,
+            8,
+            10
+          ],
+          "body_support": 0.5
+        }
+      ],
+      "score": {
+        "references": 4,
+        "predictions": 2,
+        "matches": 0,
+        "misses": 4,
+        "extras": 2,
+        "matched_ious": []
+      }
+    },
+    {
+      "index": 2916,
+      "image_sha256": "6eb0a9c1f7d1ed6c3ca648838851296052ae25e47672171ea18a938e6cb7c252",
+      "labels_sha256": "9f1ee5d4dc1f0d5ae709817c9d0c250b71328c56d48702f4926ec6d1df21f662",
+      "reference": [
+        {
+          "colour": "yellow",
+          "bbox": [
+            379.04752,
+            171.879354,
+            31.2848,
+            28.295531999999998
+          ]
+        }
+      ],
+      "predicted": [
+        {
+          "colour": "red",
+          "pixel": [
+            416.5,
+            286.5
+          ],
+          "bbox": [
+            414,
+            283,
+            5,
+            7
+          ],
+          "body_support": 0.5
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            393.5,
+            222.58
+          ],
+          "bbox": [
+            389,
+            219,
+            9,
+            9
+          ],
+          "body_support": 1.0
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            401.5,
+            212.0
+          ],
+          "bbox": [
+            398,
+            209,
+            7,
+            7
+          ],
+          "body_support": 1.0
+        }
+      ],
+      "score": {
+        "references": 1,
+        "predictions": 3,
+        "matches": 0,
+        "misses": 1,
+        "extras": 3,
+        "matched_ious": []
+      }
+    },
+    {
+      "index": 3124,
+      "image_sha256": "438d9d0f07b7a4fad85df6031baa7f62fa50e3055b8ebfeaa02523f72386f024",
+      "labels_sha256": "9a2315df993448ae6265e31897c203754919e5c816a136b143f7b2d48d19a457",
+      "reference": [
+        {
+          "colour": "yellow",
+          "bbox": [
+            274.028096,
+            290.730078,
+            19.317888,
+            19.936404
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            367.68188799999996,
+            137.713824,
+            20.245824,
+            20.854512
+          ]
+        },
+        {
+          "colour": "red",
+          "bbox": [
+            351.14569599999993,
+            27.78435,
+            18.783808,
+            19.508580000000002
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            227.20534399999997,
+            181.78725599999999,
+            20.334912,
+            19.542528
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            362.21587199999993,
+            316.068912,
+            21.744256,
+            21.508416
+          ]
+        },
+        {
+          "colour": "red",
+          "bbox": [
+            438.319616,
+            333.051372,
+            20.962048000000003,
+            21.522456000000002
+          ]
+        }
+      ],
+      "predicted": [
+        {
+          "colour": "red",
+          "pixel": [
+            72.5,
+            358.0
+          ],
+          "bbox": [
+            70,
+            354,
+            5,
+            8
+          ],
+          "body_support": 0.6
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            93.5,
+            346.0
+          ],
+          "bbox": [
+            91,
+            343,
+            5,
+            6
+          ],
+          "body_support": 0.6
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            97.0,
+            339.5
+          ],
+          "bbox": [
+            95,
+            336,
+            4,
+            7
+          ],
+          "body_support": 0.875
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            373.0,
+            332.7
+          ],
+          "bbox": [
+            368,
+            327,
+            10,
+            13
+          ],
+          "body_support": 1.0
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            359.5,
+            190.0
+          ],
+          "bbox": [
+            357,
+            186,
+            5,
+            8
+          ],
+          "body_support": 1.0
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            438.5,
+            187.08
+          ],
+          "bbox": [
+            434,
+            181,
+            9,
+            14
+          ],
+          "body_support": 0.5555555555555556
+        }
+      ],
+      "score": {
+        "references": 6,
+        "predictions": 6,
+        "matches": 0,
+        "misses": 6,
+        "extras": 6,
+        "matched_ious": []
+      }
+    },
+    {
+      "index": 3333,
+      "image_sha256": "c25fb73eab37dde1712e2874b55dad58ed36988a3f98d31823dd01ead91bb177",
+      "labels_sha256": "ee890336dca70f9e9ee83f6dd194dc0b81113f601ffcc0ccfad4dc2f45665e55",
+      "reference": [
+        {
+          "colour": "red",
+          "bbox": [
+            299.917152,
+            166.065066,
+            22.423616000000003,
+            21.928428
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            301.801152,
+            269.605314,
+            23.942016000000002,
+            23.456412
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            326.73404800000003,
+            216.83032200000002,
+            21.882944000000002,
+            22.285836
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            305.972416,
+            40.325922000000006,
+            21.318528,
+            22.683276
+          ]
+        },
+        {
+          "colour": "red",
+          "bbox": [
+            322.339104,
+            240.41484000000003,
+            22.831552,
+            21.7404
+          ]
+        }
+      ],
+      "predicted": [
+        {
+          "colour": "red",
+          "pixel": [
+            391.5,
+            289.0
+          ],
+          "bbox": [
+            389,
+            285,
+            5,
+            8
+          ],
+          "body_support": 0.4
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            465.5,
+            229.0
+          ],
+          "bbox": [
+            464,
+            227,
+            3,
+            4
+          ],
+          "body_support": 0.5
+        }
+      ],
+      "score": {
+        "references": 5,
+        "predictions": 2,
+        "matches": 0,
+        "misses": 5,
+        "extras": 2,
+        "matched_ious": []
+      }
+    },
+    {
+      "index": 3541,
+      "image_sha256": "a4c40574856d38176efed42efc356a7ecfb42ad20143f25288d06008960ee7ac",
+      "labels_sha256": "a585b234e03521665cac30640518d8e7738e094dfac4e8e0e51e6d035aec3fc9",
+      "reference": [
+        {
+          "colour": "red",
+          "bbox": [
+            351.722336,
+            31.986611999999997,
+            18.799167999999998,
+            19.638936
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            273.72211200000004,
+            297.637416,
+            19.502336,
+            20.104848
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            368.16182399999997,
+            142.743942,
+            20.699071999999997,
+            20.532276
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            226.31257599999998,
+            187.707582,
+            20.690688,
+            19.589076
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            363.167616,
+            323.126892,
+            21.676288,
+            20.091096
+          ]
+        },
+        {
+          "colour": "red",
+          "bbox": [
+            439.9656,
+            340.828848,
+            21.566399999999998,
+            18.907344000000002
+          ]
+        }
+      ],
+      "predicted": [
+        {
+          "colour": "red",
+          "pixel": [
+            376.0,
+            354.0
+          ],
+          "bbox": [
+            374,
+            352,
+            4,
+            4
+          ],
+          "body_support": 0.625
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            372.0,
+            339.5
+          ],
+          "bbox": [
+            370,
+            336,
+            4,
+            7
+          ],
+          "body_support": 1.0
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            359.5,
+            184.5
+          ],
+          "bbox": [
+            357,
+            181,
+            5,
+            7
+          ],
+          "body_support": 1.0
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            409.5,
+            174.5
+          ],
+          "bbox": [
+            408,
+            172,
+            3,
+            5
+          ],
+          "body_support": 0.3333333333333333
+        }
+      ],
+      "score": {
+        "references": 6,
+        "predictions": 4,
+        "matches": 0,
+        "misses": 6,
+        "extras": 4,
+        "matched_ious": []
+      }
+    },
+    {
+      "index": 3749,
+      "image_sha256": "d601db07e0ae28363b9176ab6f9ae71595eeaab7c2efed64516f7a1386810e99",
+      "labels_sha256": "d8bed22c3066e1dff5a5c449a7b9d73a93de72d44777e3ba1998e2cf9ae4d4cd",
+      "reference": [
+        {
+          "colour": "red",
+          "bbox": [
+            310.325152,
+            144.892872,
+            23.182016,
+            23.164416000000003
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            312.882208,
+            188.23517999999999,
+            24.187584,
+            22.13244
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            327.134048,
+            257.20659,
+            23.974464,
+            24.494580000000003
+          ]
+        },
+        {
+          "colour": "red",
+          "bbox": [
+            358.598048,
+            84.16981799999999,
+            23.674304,
+            25.181243999999996
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            210.557792,
+            266.75888399999997,
+            23.263296000000004,
+            22.885991999999998
+          ]
+        },
+        {
+          "colour": "red",
+          "bbox": [
+            319.19308800000005,
+            290.140956,
+            24.630784000000002,
+            24.208488
+          ]
+        }
+      ],
+      "predicted": [
+        {
+          "colour": "red",
+          "pixel": [
+            261.5,
+            334.82
+          ],
+          "bbox": [
+            256,
+            331,
+            11,
+            10
+          ],
+          "body_support": 0.8181818181818182
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            280.5,
+            139.0
+          ],
+          "bbox": [
+            278,
+            137,
+            5,
+            4
+          ],
+          "body_support": 0.8
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            389.0,
+            125.2
+          ],
+          "bbox": [
+            384,
+            123,
+            10,
+            6
+          ],
+          "body_support": 1.0
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            285.5,
+            120.06
+          ],
+          "bbox": [
+            279,
+            114,
+            13,
+            15
+          ],
+          "body_support": 0.7307692307692307
+        }
+      ],
+      "score": {
+        "references": 6,
+        "predictions": 4,
+        "matches": 0,
+        "misses": 6,
+        "extras": 4,
+        "matched_ious": []
+      }
+    },
+    {
+      "index": 3958,
+      "image_sha256": "3eb7c119157e0d7202f48e491b4f715f2bade07ae2ec660f276100b1701da3ec",
+      "labels_sha256": "09ba85b04b29db99c0640b8905c754f9b2ea9d0d93b585d91b522cbe26bbeb4a",
+      "reference": [
+        {
+          "colour": "red",
+          "bbox": [
+            172.55910400000002,
+            230.48260199999999,
+            35.396352,
+            31.662396
+          ]
+        }
+      ],
+      "predicted": [
+        {
+          "colour": "red",
+          "pixel": [
+            184.0,
+            290.0
+          ],
+          "bbox": [
+            182,
+            288,
+            4,
+            4
+          ],
+          "body_support": 1.0
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            122.5,
+            127.5
+          ],
+          "bbox": [
+            121,
+            125,
+            3,
+            5
+          ],
+          "body_support": 0.6666666666666666
+        },
+        {
+          "colour": "yellow",
+          "pixel": [
+            620.0,
+            88.0
+          ],
+          "bbox": [
+            617,
+            84,
+            6,
+            9
+          ],
+          "body_support": 0.3888888888888889
+        }
+      ],
+      "score": {
+        "references": 1,
+        "predictions": 3,
+        "matches": 0,
+        "misses": 1,
+        "extras": 3,
+        "matched_ious": []
+      }
+    },
+    {
+      "index": 4166,
+      "image_sha256": "ca45a7537d07dfe853cf3408203c000c3c757ae572d217a9184e16d1b3416a89",
+      "labels_sha256": "11b6aae3be69d466df1d0d961c84c467c2109ef893ded1ea8b674979089b6668",
+      "reference": [
+        {
+          "colour": "yellow",
+          "bbox": [
+            323.80886399999997,
+            189.02601,
+            19.684672,
+            19.8783
+          ]
+        },
+        {
+          "colour": "red",
+          "bbox": [
+            317.87203200000005,
+            216.16774199999998,
+            19.667136,
+            20.535156
+          ]
+        },
+        {
+          "colour": "red",
+          "bbox": [
+            350.793632,
+            43.436718,
+            19.015616,
+            19.416564
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            312.65872,
+            130.592862,
+            19.2944,
+            20.033316
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            228.23603200000002,
+            196.623162,
+            18.543616,
+            18.914075999999998
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            362.700704,
+            330.145848,
+            20.280512,
+            21.338064000000003
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            -6.399999999961992e-06,
+            199.314126,
+            7.178816,
+            20.606148
+          ]
+        }
+      ],
+      "predicted": [
+        {
+          "colour": "red",
+          "pixel": [
+            66.5,
+            332.5
+          ],
+          "bbox": [
+            64,
+            329,
+            5,
+            7
+          ],
+          "body_support": 0.7
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            82.5,
+            319.5
+          ],
+          "bbox": [
+            80,
+            317,
+            5,
+            5
+          ],
+          "body_support": 0.6
+        }
+      ],
+      "score": {
+        "references": 7,
+        "predictions": 2,
+        "matches": 0,
+        "misses": 7,
+        "extras": 2,
+        "matched_ious": []
+      }
+    },
+    {
+      "index": 4374,
+      "image_sha256": "603204be51483dec18a953847454251f1498dabb230821e710f88873e904868f",
+      "labels_sha256": "01c2021708820cd203b3741717617dc423280f4ccc223fb89d5722c32a87beda",
+      "reference": [
+        {
+          "colour": "yellow",
+          "bbox": [
+            338.36345600000004,
+            185.47354800000002,
+            30.324607999999998,
+            30.678984
+          ]
+        }
+      ],
+      "predicted": [
+        {
+          "colour": "red",
+          "pixel": [
+            440.5,
+            274.0
+          ],
+          "bbox": [
+            437,
+            270,
+            7,
+            9
+          ],
+          "body_support": 0.3333333333333333
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            353.0,
+            254.0
+          ],
+          "bbox": [
+            350,
+            250,
+            6,
+            9
+          ],
+          "body_support": 0.3333333333333333
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            369.0,
+            248.5
+          ],
+          "bbox": [
+            366,
+            245,
+            6,
+            8
+          ],
+          "body_support": 0.8333333333333334
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            348.0,
+            173.44
+          ],
+          "bbox": [
+            342,
+            168,
+            12,
+            13
+          ],
+          "body_support": 1.0
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            94.5,
+            49.0
+          ],
+          "bbox": [
+            91,
+            47,
+            7,
+            5
+          ],
+          "body_support": 0.6666666666666666
+        },
+        {
+          "colour": "yellow",
+          "pixel": [
+            419.5,
+            238.8
+          ],
+          "bbox": [
+            412,
+            234,
+            15,
+            13
+          ],
+          "body_support": 0.5523809523809524
+        }
+      ],
+      "score": {
+        "references": 1,
+        "predictions": 6,
+        "matches": 0,
+        "misses": 1,
+        "extras": 6,
+        "matched_ious": []
+      }
+    },
+    {
+      "index": 4582,
+      "image_sha256": "737c1a20dcd2928ea53532af4a2a1c5e2b6f20f5331df3de5a56a7b06a293a98",
+      "labels_sha256": "312255cced8fcec2eee4fa811eca8d5063ebdb3b104f35cd1dbf192a37f8f7c0",
+      "reference": [
+        {
+          "colour": "red",
+          "bbox": [
+            333.149984,
+            212.044878,
+            14.475712000000001,
+            15.011603999999998
+          ]
+        },
+        {
+          "colour": "red",
+          "bbox": [
+            262.70473599999997,
+            288.992466,
+            14.594368,
+            15.176268
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            306.236896,
+            105.127164,
+            14.154048,
+            14.115672
+          ]
+        },
+        {
+          "colour": "red",
+          "bbox": [
+            301.65952,
+            201.745476,
+            14.26944,
+            15.099048
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            317.54188800000003,
+            33.832548,
+            14.157824000000002,
+            14.234903999999998
+          ]
+        },
+        {
+          "colour": "red",
+          "bbox": [
+            588.571552,
+            16.32753,
+            15.548096000000001,
+            14.639004000000002
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            302.513856,
+            9.900809999999998,
+            13.916288000000002,
+            13.569372000000001
+          ]
+        },
+        {
+          "colour": "red",
+          "bbox": [
+            512.0025599999999,
+            93.12730200000001,
+            14.49216,
+            14.779476
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            509.938784,
+            16.26408,
+            15.351872,
+            15.36876
+          ]
+        }
+      ],
+      "predicted": [
+        {
+          "colour": "red",
+          "pixel": [
+            497.0,
+            217.5
+          ],
+          "bbox": [
+            495,
+            215,
+            4,
+            5
+          ],
+          "body_support": 0.75
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            340.5,
+            220.82
+          ],
+          "bbox": [
+            335,
+            214,
+            11,
+            16
+          ],
+          "body_support": 0.3090909090909091
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            528.5,
+            213.08
+          ],
+          "bbox": [
+            524,
+            209,
+            9,
+            10
+          ],
+          "body_support": 0.5555555555555556
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            309.5,
+            210.82
+          ],
+          "bbox": [
+            304,
+            204,
+            11,
+            16
+          ],
+          "body_support": 0.3090909090909091
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            519.0,
+            101.7
+          ],
+          "bbox": [
+            514,
+            95,
+            10,
+            15
+          ],
+          "body_support": 0.725
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            597.5,
+            23.58
+          ],
+          "bbox": [
+            593,
+            18,
+            9,
+            13
+          ],
+          "body_support": 0.5277777777777778
+        },
+        {
+          "colour": "yellow",
+          "pixel": [
+            313.5,
+            113.32
+          ],
+          "bbox": [
+            308,
+            106,
+            11,
+            17
+          ],
+          "body_support": 0.2727272727272727
+        },
+        {
+          "colour": "yellow",
+          "pixel": [
+            324.5,
+            41.82
+          ],
+          "bbox": [
+            319,
+            35,
+            11,
+            16
+          ],
+          "body_support": 0.4
+        },
+        {
+          "colour": "yellow",
+          "pixel": [
+            517.5,
+            25.32
+          ],
+          "bbox": [
+            512,
+            19,
+            11,
+            15
+          ],
+          "body_support": 0.4
+        },
+        {
+          "colour": "yellow",
+          "pixel": [
+            309.5,
+            17.32
+          ],
+          "bbox": [
+            304,
+            11,
+            11,
+            15
+          ],
+          "body_support": 0.5454545454545454
+        }
+      ],
+      "score": {
+        "references": 9,
+        "predictions": 10,
+        "matches": 8,
+        "misses": 1,
+        "extras": 2,
+        "matched_ious": [
+          0.5752160679596431,
+          0.6041372055110041,
+          0.56478585568825,
+          0.6148250441872793,
+          0.5120393630640337,
+          0.6331114240421399,
+          0.5489472000913086,
+          0.5304309596709073
+        ]
+      }
+    },
+    {
+      "index": 4791,
+      "image_sha256": "19daa0a440c1368788aff6dbf948df40f8d49d754793a75dc0ca62525eb0d166",
+      "labels_sha256": "b6caa635914fa4e11e11b68288317966b25ddcdc65cde2242deed9d2e0865371",
+      "reference": [
+        {
+          "colour": "yellow",
+          "bbox": [
+            367.294048,
+            137.166336,
+            20.368704,
+            19.441728
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            274.90704,
+            287.819694,
+            19.015359999999998,
+            19.613412
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            228.007808,
+            180.234792,
+            20.061184,
+            18.956736
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            306.500576,
+            276.852852,
+            20.006208,
+            19.582776000000003
+          ]
+        },
+        {
+          "colour": "red",
+          "bbox": [
+            436.87705600000004,
+            330.15654,
+            20.558847999999998,
+            20.61756
+          ]
+        },
+        {
+          "colour": "red",
+          "bbox": [
+            316.93868800000007,
+            202.77136799999997,
+            19.117184,
+            18.931824
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            362.53087999999997,
+            313.091118,
+            20.27456,
+            20.664324
+          ]
+        },
+        {
+          "colour": "red",
+          "bbox": [
+            350.628704,
+            27.731304,
+            18.486591999999998,
+            19.479312
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            -1.2800000000479095e-05,
+            183.31713000000002,
+            8.617664000000001,
+            20.650859999999998
+          ]
+        }
+      ],
+      "predicted": [
+        {
+          "colour": "red",
+          "pixel": [
+            61.5,
+            359.5
+          ],
+          "bbox": [
+            59,
+            357,
+            5,
+            5
+          ],
+          "body_support": 1.0
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            280.0,
+            180.0
+          ],
+          "bbox": [
+            278,
+            177,
+            4,
+            6
+          ],
+          "body_support": 1.0
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            274.5,
+            166.3
+          ],
+          "bbox": [
+            267,
+            159,
+            15,
+            18
+          ],
+          "body_support": 0.7523809523809524
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            306.5,
+            159.0
+          ],
+          "bbox": [
+            304,
+            156,
+            5,
+            6
+          ],
+          "body_support": 1.0
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            317.5,
+            145.0
+          ],
+          "bbox": [
+            314,
+            142,
+            7,
+            7
+          ],
+          "body_support": 0.2857142857142857
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            305.0,
+            134.5
+          ],
+          "bbox": [
+            302,
+            130,
+            6,
+            10
+          ],
+          "body_support": 1.0
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            417.5,
+            135.78
+          ],
+          "bbox": [
+            408,
+            128,
+            19,
+            20
+          ],
+          "body_support": 0.9649122807017544
+        },
+        {
+          "colour": "yellow",
+          "pixel": [
+            103.0,
+            225.5
+          ],
+          "bbox": [
+            101,
+            223,
+            4,
+            5
+          ],
+          "body_support": 0.875
+        }
+      ],
+      "score": {
+        "references": 9,
+        "predictions": 8,
+        "matches": 0,
+        "misses": 9,
+        "extras": 8,
+        "matched_ious": []
+      }
+    },
+    {
+      "index": 4999,
+      "image_sha256": "33403dc682c8660242119fcf3918c054230c904242a93a5a062b1ba72e6fbc8d",
+      "labels_sha256": "25f0c413a93ae9404d82eb9dae6e333d9dc413f5eed9f26759ee145f8b404733",
+      "reference": [
+        {
+          "colour": "yellow",
+          "bbox": [
+            310.66576,
+            227.67039,
+            19.616960000000002,
+            20.11482
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            363.32553599999994,
+            323.19964799999997,
+            20.657728,
+            21.255983999999998
+          ]
+        },
+        {
+          "colour": "red",
+          "bbox": [
+            351.63174399999997,
+            33.638274,
+            18.785792,
+            19.592892
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            369.0490879999999,
+            143.694144,
+            19.755264,
+            19.549872
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            273.565216,
+            297.22384800000003,
+            19.474368,
+            20.633904
+          ]
+        },
+        {
+          "colour": "yellow",
+          "bbox": [
+            227.05872000000002,
+            188.242686,
+            18.774720000000002,
+            19.236708
+          ]
+        },
+        {
+          "colour": "red",
+          "bbox": [
+            438.861216,
+            340.176078,
+            21.266368,
+            19.784484000000003
+          ]
+        }
+      ],
+      "predicted": [
+        {
+          "colour": "red",
+          "pixel": [
+            355.5,
+            359.0
+          ],
+          "bbox": [
+            354,
+            356,
+            3,
+            6
+          ],
+          "body_support": 1.0
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            349.5,
+            355.5
+          ],
+          "bbox": [
+            346,
+            352,
+            7,
+            8
+          ],
+          "body_support": 1.0
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            102.5,
+            291.08
+          ],
+          "bbox": [
+            98,
+            287,
+            9,
+            10
+          ],
+          "body_support": 0.8333333333333334
+        }
+      ],
+      "score": {
+        "references": 7,
+        "predictions": 3,
+        "matches": 0,
+        "misses": 7,
+        "extras": 3,
+        "matched_ious": []
+      }
+    }
+  ]
+}

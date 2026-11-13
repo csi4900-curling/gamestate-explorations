@@ -1,0 +1,67 @@
+{
+  "status": "development_source_activity_coverage_overlay_not_throw_truth",
+  "source_id": "YCfdKLu-BRc",
+  "source_sha256": "a7431b68ba6fb0df407383973a525a01eadbee2490caa0438a5a11d2df1dba13",
+  "source_interval_s": [
+    0.0,
+    7059.0
+  ],
+  "original_supported_seconds": 6840.0,
+  "original_unknown_seconds": 219.0,
+  "newly_unsupported_seconds": 1655,
+  "revised_supported_seconds": 5185.0,
+  "revised_unknown_seconds": 1874.0,
+  "revised_supported_runs": [
+    {
+      "source_run_id": "R01",
+      "layout": "split_2024",
+      "interval_s": [
+        90.0,
+        5015
+      ]
+    },
+    {
+      "source_run_id": "R01",
+      "layout": "split_2024",
+      "interval_s": [
+        6670,
+        6930.0
+      ]
+    }
+  ],
+  "newly_unsupported_intervals": [
+    {
+      "interval_s": [
+        5015,
+        6670
+      ],
+      "reason": "left_panel_static_while_right_panel_active",
+      "source_run_id": "R01",
+      "median_left_mae": 1.6307,
+      "median_right_mae": 12.731,
+      "existing_event_ids_inside": []
+    }
+  ],
+  "original_coverage_gaps_s": [
+    [
+      0.0,
+      90.0
+    ],
+    [
+      6930.0,
+      7059.0
+    ]
+  ],
+  "original_event_count_unchanged": 72,
+  "minimum_right_panel_median_mae": 5.0,
+  "timeline_sha256": "6dda6388abc2e8cf795fe9f5732fb9019d3e50ebb7ecb2b9d34a3a3a297202ff",
+  "activity_audit_sha256": "aa786a7b0f515c02794b573397b3c18ec469d2e0d6ef4b2a96080554f34fc543",
+  "overlay_code_sha256": "5cd0b92a740ff5ea405310af52d3f43fd0873ae04a2b08f6c886c4d246b2f4e9",
+  "runner_sha256": "6383a1d9a2cfddbfe34230cb6b28942588410b005697c9ccc881e4efc6809165",
+  "limitations": [
+    "The active-static thresholds were chosen after inspecting Latvia and Italy source frames.",
+    "A static left panel can be a still camera view or frozen feed; this audit does not distinguish them.",
+    "Source-image activity does not label individual delivered stones or estimate throw F1.",
+    "Original candidate events are preserved, including any that fall inside a newly unsupported interval."
+  ]
+}

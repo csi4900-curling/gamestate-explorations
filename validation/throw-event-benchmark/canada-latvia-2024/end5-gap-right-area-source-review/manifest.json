@@ -1,0 +1,79 @@
+{
+  "status": "prediction_selected_source_frames_not_independent_throw_labels",
+  "source_sha256": "a7431b68ba6fb0df407383973a525a01eadbee2490caa0438a5a11d2df1dba13",
+  "probe_sha256": "9036741e5c53e9cb9d5960e51abce5f440eb2a9cfa5cc3e17a7ab29c4805b4e2",
+  "episodes_sha256": "63ab09daee4eb95c60658df533587073f94d0971d30a459c9fdd16c675fce115",
+  "runner_sha256": "743e9a0001dae3d15fd27b5e40d6d6510d25731047507a0fa66c070813df6008",
+  "selection": "all right-only episodes with passage in inclusive declared interval",
+  "selection_interval_s": [
+    5460.0,
+    5550.0
+  ],
+  "rows": [
+    {
+      "episode_id": "E123",
+      "right_proposal_id": "R01:A367",
+      "passage_time_s": 5507.968,
+      "colour_claim": "red",
+      "direction": "negative_y",
+      "sheet": "sheet-01.jpg",
+      "samples": [
+        {
+          "source_time_s": 5507.0,
+          "decoded_frame_index": 165210,
+          "pixel": [
+            445.0,
+            306.0
+          ],
+          "bbox": [
+            436,
+            302,
+            18,
+            8
+          ]
+        },
+        {
+          "source_time_s": 5508.0,
+          "decoded_frame_index": 165240,
+          "pixel": [
+            447.0,
+            275.0
+          ],
+          "bbox": [
+            440,
+            272,
+            14,
+            6
+          ]
+        },
+        {
+          "source_time_s": 5510.0,
+          "decoded_frame_index": 165300,
+          "pixel": [
+            455.0,
+            226.0
+          ],
+          "bbox": [
+            448,
+            222,
+            14,
+            8
+          ]
+        }
+      ]
+    }
+  ],
+  "sheets": [
+    {
+      "file": "sheet-01.jpg",
+      "sha256": "85109026a65fdfe7b9367dec6296610da092989663a80f96734ede55d83bc188",
+      "right_proposal_ids": [
+        "R01:A367"
+      ]
+    }
+  ],
+  "limitations": [
+    "Three sampled frames can identify a marked object but cannot verify a complete delivery.",
+    "This is source review after proposal generation, not independent event validation."
+  ]
+}

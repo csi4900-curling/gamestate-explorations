@@ -1,0 +1,42 @@
+{
+  "status": "development_source_review_selection",
+  "limitations": [
+    "The real events were matched in same-agent source-first five-minute reviews or later prediction-targeted fine review.",
+    "The likely false events were selected after inspecting detector predictions.",
+    "These labels are model-development examples, not an independent event reference or F1 evaluation."
+  ],
+  "sources": [
+    {
+      "source_id": "Y_U6gzqORUs",
+      "video": "validation/source-cache/Y_U6gzqORUs-360p.mp4",
+      "timeline": "validation/throw-event-benchmark/layout-router/full-2024-coverage/new-preflight-china24/timeline.json",
+      "events": [
+        {"id": "R01-S25", "review": "real", "review_kind": "prediction_targeted_fine"},
+        {"id": "R01-S96", "review": "real", "review_kind": "source_first_five_minute"},
+        {"id": "R01-S97", "review": "real", "review_kind": "source_first_five_minute"},
+        {"id": "R01-S99", "review": "real", "review_kind": "source_first_five_minute"},
+        {"id": "R01-S100", "review": "real", "review_kind": "source_first_five_minute"},
+        {"id": "R01-S101", "review": "real", "review_kind": "source_first_five_minute"},
+        {"id": "R01-S103", "review": "real", "review_kind": "source_first_five_minute"},
+        {"id": "R01-S105", "review": "real", "review_kind": "source_first_five_minute"},
+        {"id": "R01-S173", "review": "likely_false", "review_kind": "prediction_targeted_fine"},
+        {"id": "R01-S200", "review": "likely_false", "review_kind": "prediction_targeted_fine"}
+      ]
+    },
+    {
+      "source_id": "PXGfMeiTKMA",
+      "video": "validation/source-cache/PXGfMeiTKMA-360p.mp4",
+      "timeline": "validation/throw-event-benchmark/layout-router/full-2024-coverage/new-preflight-estonia24/timeline.json",
+      "events": [
+        {"id": "R01-S74", "review": "real", "review_kind": "source_first_five_minute"},
+        {"id": "R01-S75", "review": "real", "review_kind": "source_first_five_minute"},
+        {"id": "R01-S76", "review": "real", "review_kind": "source_first_five_minute"},
+        {"id": "R01-S77", "review": "real", "review_kind": "source_first_five_minute"},
+        {"id": "R01-S79", "review": "real", "review_kind": "source_first_five_minute"},
+        {"id": "R01-S80", "review": "real", "review_kind": "source_first_five_minute"},
+        {"id": "R02-S61", "review": "real", "review_kind": "prediction_targeted_fine"},
+        {"id": "R02-S62", "review": "likely_false", "review_kind": "prediction_targeted_fine"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,156 @@
+{
+  "status": "source_temporal_median_right_house_image_reference_not_physical_calibration",
+  "source_sha256": "aff12e78edeb5e108d142aed3e19b61c3956b4fddc8b2fd8b202713746771739",
+  "timeline_sha256": "db494eb0ce0c2dce4c0815ad65a4a0e7e6f32f98a64a2f2d8198b72547b3b5c2",
+  "run_id": "R01",
+  "run_interval_s": [
+    90.0,
+    8100.0
+  ],
+  "sampled_source_times_s": [
+    105.0,
+    229.688,
+    354.375,
+    479.062,
+    603.75,
+    728.438,
+    853.125,
+    977.812,
+    1102.5,
+    1227.188,
+    1351.875,
+    1476.562,
+    1601.25,
+    1725.938,
+    1850.625,
+    1975.312,
+    2100.0,
+    2224.688,
+    2349.375,
+    2474.062,
+    2598.75,
+    2723.438,
+    2848.125,
+    2972.812,
+    3097.5,
+    3222.188,
+    3346.875,
+    3471.562,
+    3596.25,
+    3720.938,
+    3845.625,
+    3970.312,
+    4095.0,
+    4219.688,
+    4344.375,
+    4469.062,
+    4593.75,
+    4718.438,
+    4843.125,
+    4967.812,
+    5092.5,
+    5217.188,
+    5341.875,
+    5466.562,
+    5591.25,
+    5715.938,
+    5840.625,
+    5965.312,
+    6090.0,
+    6214.688,
+    6339.375,
+    6464.062,
+    6588.75,
+    6713.438,
+    6838.125,
+    6962.812,
+    7087.5,
+    7212.188,
+    7336.875,
+    7461.562,
+    7586.25,
+    7710.938,
+    7835.625,
+    7960.312,
+    8085.0
+  ],
+  "sample_count": 65,
+  "median_image": "right-house-reference-r01-development-median.png",
+  "median_image_sha256": "05fc8d74d4ac0147bd0ff81bfd83af225f85f652a60e95efd038f262ebc02221",
+  "paint_mask_image": "right-house-reference-r01-development-paint-mask.png",
+  "paint_mask_sha256": "1f6c8b882847dc89afa91337a79dcc7f5e232a74304b8fbbaa0d8c770018e057",
+  "temporal_median_house_ellipse": {
+    "center_px": [
+      490.906,
+      153.496
+    ],
+    "axis_lengths_px": [
+      261.215,
+      26.411
+    ],
+    "angle_degrees_opencv": 89.966,
+    "component_bbox_px": [
+      356,
+      138,
+      272,
+      28
+    ],
+    "paint_component_count": 1,
+    "coordinate_status": "source_right_panel_image_ellipse_not_metric_rink_geometry"
+  },
+  "single_frame_checks": [
+    {
+      "source_time_s": 105.0,
+      "single_frame_house_ellipse": null,
+      "center_shift_from_temporal_median_px": null
+    },
+    {
+      "source_time_s": 1102.5,
+      "single_frame_house_ellipse": null,
+      "center_shift_from_temporal_median_px": null
+    },
+    {
+      "source_time_s": 2100.0,
+      "single_frame_house_ellipse": null,
+      "center_shift_from_temporal_median_px": null
+    },
+    {
+      "source_time_s": 3097.5,
+      "single_frame_house_ellipse": null,
+      "center_shift_from_temporal_median_px": null
+    },
+    {
+      "source_time_s": 4095.0,
+      "single_frame_house_ellipse": null,
+      "center_shift_from_temporal_median_px": null
+    },
+    {
+      "source_time_s": 5092.5,
+      "single_frame_house_ellipse": null,
+      "center_shift_from_temporal_median_px": null
+    },
+    {
+      "source_time_s": 6090.0,
+      "single_frame_house_ellipse": null,
+      "center_shift_from_temporal_median_px": null
+    },
+    {
+      "source_time_s": 7087.5,
+      "single_frame_house_ellipse": null,
+      "center_shift_from_temporal_median_px": null
+    },
+    {
+      "source_time_s": 8085.0,
+      "single_frame_house_ellipse": null,
+      "center_shift_from_temporal_median_px": null
+    }
+  ],
+  "feature_code_sha256": "e07f71d97a23b3881aa288810ee5e104fea2037d971af497db0c1ea5f47dd0b5",
+  "runner_sha256": "871fbd6fc80ae94e6653b860534f0deb88dd54dc417dc31b21ca18ac13160118",
+  "limitations": [
+    "A temporal median assumes the split camera and painted house remain aligned during this routed run.",
+    "The paint ellipse covers the scoring house only, not guard stones or the complete board.",
+    "Single-frame ellipse failures can reflect player occlusion or a camera/layout change.",
+    "Image coordinates are not validated metric rink coordinates or simulation-ready geometry."
+  ]
+}

@@ -1,0 +1,781 @@
+{
+  "status": "postscore_development_shot_pair_and_phase_transfer_probe",
+  "labels_sha256": "6d63df1cfe02c606d0387bbe147165f9b50b7b0cf04a8de5bd1eb1603fd5d67d",
+  "inputs": [
+    {
+      "source": "china-dev",
+      "manifest_sha256": "790a0bc0e8e1f6abcedcc09f8ff0d4b4b104a00e429db30e6121a659b19581c8",
+      "video_sha256": "c5254bb9103e32c6beac74cf269fc7bcec8ce2c2a710a7d4600c7ddb951f160e"
+    },
+    {
+      "source": "slovakia-dev",
+      "manifest_sha256": "215e65675ae2c967361e5e51e77e9b2fd6c8c886e2bb08504217999d67a71e04",
+      "video_sha256": "eba1d86944a2f4278b6e5e2c7549d12b47e5e8a51bf0c680b2db372c6ec12420"
+    },
+    {
+      "source": "swiss-dev",
+      "manifest_sha256": "fb47985e0b731ac8b0f0f447a09e18d2e85996ca5f0c599af9c8aed9621d292e",
+      "video_sha256": "49429abdd3796e8240e66c201d37e94e71a7bb6225890b2492bea26d2f70d560"
+    }
+  ],
+  "feature_code_sha256": "f5b28fc761aca84a2721f971afdf62370a1d2732479eece4574bb68ba9dfd54c",
+  "runner_sha256": "23b7778c12bc35b3f2bfb5d442e100bd3236a2535df38fe8fc72a76e5e9490e1",
+  "model_specification": "Current and following three-frame shot features, balanced logistic regression C=0.05, 0.5 probability threshold, then live overlay in either shot",
+  "folds": [
+    {
+      "heldout": "china-dev",
+      "score": {
+        "tp": 7,
+        "fp": 0,
+        "fn": 0,
+        "tn": 13,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "model_sha256": "fbd7ec0738984578ce5450e96e719be747b801bd23ac10fcce1de840bb7c0953",
+      "rows": [
+        {
+          "source": "china-dev",
+          "shot_id": "S01",
+          "interval_s": [
+            300,
+            331.6
+          ],
+          "label": 1,
+          "probability": 0.864165254738934,
+          "phase_supported": true,
+          "predicted": 1
+        },
+        {
+          "source": "china-dev",
+          "shot_id": "S02",
+          "interval_s": [
+            331.6,
+            356.0
+          ],
+          "label": 0,
+          "probability": 0.01033601263979563,
+          "phase_supported": true,
+          "predicted": 0
+        },
+        {
+          "source": "china-dev",
+          "shot_id": "S03",
+          "interval_s": [
+            356.0,
+            365.4
+          ],
+          "label": 1,
+          "probability": 0.8292615336602079,
+          "phase_supported": true,
+          "predicted": 1
+        },
+        {
+          "source": "china-dev",
+          "shot_id": "S04",
+          "interval_s": [
+            365.4,
+            382.2
+          ],
+          "label": 0,
+          "probability": 0.03948436192826052,
+          "phase_supported": true,
+          "predicted": 0
+        },
+        {
+          "source": "china-dev",
+          "shot_id": "S05",
+          "interval_s": [
+            382.2,
+            385.2
+          ],
+          "label": 0,
+          "probability": 0.09149804486888771,
+          "phase_supported": true,
+          "predicted": 0
+        },
+        {
+          "source": "china-dev",
+          "shot_id": "S06",
+          "interval_s": [
+            385.2,
+            413.0
+          ],
+          "label": 1,
+          "probability": 0.6617431328729652,
+          "phase_supported": true,
+          "predicted": 1
+        },
+        {
+          "source": "china-dev",
+          "shot_id": "S07",
+          "interval_s": [
+            413.0,
+            430.4
+          ],
+          "label": 0,
+          "probability": 0.11172253548865005,
+          "phase_supported": true,
+          "predicted": 0
+        },
+        {
+          "source": "china-dev",
+          "shot_id": "S08",
+          "interval_s": [
+            430.4,
+            441.2
+          ],
+          "label": 0,
+          "probability": 0.005627827015543107,
+          "phase_supported": true,
+          "predicted": 0
+        },
+        {
+          "source": "china-dev",
+          "shot_id": "S09",
+          "interval_s": [
+            441.2,
+            447.2
+          ],
+          "label": 1,
+          "probability": 0.8922735858439805,
+          "phase_supported": true,
+          "predicted": 1
+        },
+        {
+          "source": "china-dev",
+          "shot_id": "S10",
+          "interval_s": [
+            447.2,
+            463.0
+          ],
+          "label": 0,
+          "probability": 0.06169737290729919,
+          "phase_supported": true,
+          "predicted": 0
+        },
+        {
+          "source": "china-dev",
+          "shot_id": "S11",
+          "interval_s": [
+            463.0,
+            467.4
+          ],
+          "label": 0,
+          "probability": 0.04222666762803262,
+          "phase_supported": true,
+          "predicted": 0
+        },
+        {
+          "source": "china-dev",
+          "shot_id": "S12",
+          "interval_s": [
+            467.4,
+            487.0
+          ],
+          "label": 1,
+          "probability": 0.8722208815357992,
+          "phase_supported": true,
+          "predicted": 1
+        },
+        {
+          "source": "china-dev",
+          "shot_id": "S13",
+          "interval_s": [
+            487.0,
+            507.4
+          ],
+          "label": 0,
+          "probability": 0.026175235570683703,
+          "phase_supported": true,
+          "predicted": 0
+        },
+        {
+          "source": "china-dev",
+          "shot_id": "S14",
+          "interval_s": [
+            507.4,
+            512.8
+          ],
+          "label": 0,
+          "probability": 0.2082826579913758,
+          "phase_supported": true,
+          "predicted": 0
+        },
+        {
+          "source": "china-dev",
+          "shot_id": "S15",
+          "interval_s": [
+            512.8,
+            530.0
+          ],
+          "label": 1,
+          "probability": 0.8562865141393885,
+          "phase_supported": true,
+          "predicted": 1
+        },
+        {
+          "source": "china-dev",
+          "shot_id": "S16",
+          "interval_s": [
+            530.0,
+            554.2
+          ],
+          "label": 0,
+          "probability": 0.011656860773153995,
+          "phase_supported": true,
+          "predicted": 0
+        },
+        {
+          "source": "china-dev",
+          "shot_id": "S17",
+          "interval_s": [
+            554.2,
+            558.6
+          ],
+          "label": 0,
+          "probability": 0.19979889457387476,
+          "phase_supported": true,
+          "predicted": 0
+        },
+        {
+          "source": "china-dev",
+          "shot_id": "S18",
+          "interval_s": [
+            558.6,
+            579.2
+          ],
+          "label": 1,
+          "probability": 0.7117387901425998,
+          "phase_supported": true,
+          "predicted": 1
+        },
+        {
+          "source": "china-dev",
+          "shot_id": "S19",
+          "interval_s": [
+            579.2,
+            592.6
+          ],
+          "label": 0,
+          "probability": 0.028719348861496068,
+          "phase_supported": true,
+          "predicted": 0
+        },
+        {
+          "source": "china-dev",
+          "shot_id": "S20",
+          "interval_s": [
+            592.6,
+            600
+          ],
+          "label": 0,
+          "probability": 0.03817088179923054,
+          "phase_supported": true,
+          "predicted": 0
+        }
+      ]
+    },
+    {
+      "heldout": "slovakia-dev",
+      "score": {
+        "tp": 6,
+        "fp": 0,
+        "fn": 0,
+        "tn": 12,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "model_sha256": "c11270b3f3681c7b3eb5579c2132cdaf8c7c08b0807558b93443a32c7e48d7d2",
+      "rows": [
+        {
+          "source": "slovakia-dev",
+          "shot_id": "S01",
+          "interval_s": [
+            2400,
+            2402.2
+          ],
+          "label": 0,
+          "probability": 0.005719829583862288,
+          "phase_supported": true,
+          "predicted": 0
+        },
+        {
+          "source": "slovakia-dev",
+          "shot_id": "S02",
+          "interval_s": [
+            2402.2,
+            2414.6
+          ],
+          "label": 1,
+          "probability": 0.7751572283119356,
+          "phase_supported": true,
+          "predicted": 1
+        },
+        {
+          "source": "slovakia-dev",
+          "shot_id": "S03",
+          "interval_s": [
+            2414.6,
+            2440.2
+          ],
+          "label": 0,
+          "probability": 0.03286768741508279,
+          "phase_supported": true,
+          "predicted": 0
+        },
+        {
+          "source": "slovakia-dev",
+          "shot_id": "S04",
+          "interval_s": [
+            2440.2,
+            2472.8
+          ],
+          "label": 1,
+          "probability": 0.6255131093147455,
+          "phase_supported": true,
+          "predicted": 1
+        },
+        {
+          "source": "slovakia-dev",
+          "shot_id": "S05",
+          "interval_s": [
+            2472.8,
+            2494.6
+          ],
+          "label": 0,
+          "probability": 0.027512688829480176,
+          "phase_supported": true,
+          "predicted": 0
+        },
+        {
+          "source": "slovakia-dev",
+          "shot_id": "S06",
+          "interval_s": [
+            2494.6,
+            2508.2
+          ],
+          "label": 1,
+          "probability": 0.732412153274366,
+          "phase_supported": true,
+          "predicted": 1
+        },
+        {
+          "source": "slovakia-dev",
+          "shot_id": "S07",
+          "interval_s": [
+            2508.2,
+            2528.6
+          ],
+          "label": 0,
+          "probability": 0.01858037115572122,
+          "phase_supported": true,
+          "predicted": 0
+        },
+        {
+          "source": "slovakia-dev",
+          "shot_id": "S08",
+          "interval_s": [
+            2528.6,
+            2533.0
+          ],
+          "label": 0,
+          "probability": 0.28745009198651217,
+          "phase_supported": true,
+          "predicted": 0
+        },
+        {
+          "source": "slovakia-dev",
+          "shot_id": "S09",
+          "interval_s": [
+            2533.0,
+            2549.6
+          ],
+          "label": 0,
+          "probability": 0.021056806504940864,
+          "phase_supported": true,
+          "predicted": 0
+        },
+        {
+          "source": "slovakia-dev",
+          "shot_id": "S10",
+          "interval_s": [
+            2549.6,
+            2568.2
+          ],
+          "label": 1,
+          "probability": 0.7119676868646616,
+          "phase_supported": true,
+          "predicted": 1
+        },
+        {
+          "source": "slovakia-dev",
+          "shot_id": "S11",
+          "interval_s": [
+            2568.2,
+            2604.6
+          ],
+          "label": 0,
+          "probability": 0.010971556781608872,
+          "phase_supported": true,
+          "predicted": 0
+        },
+        {
+          "source": "slovakia-dev",
+          "shot_id": "S12",
+          "interval_s": [
+            2604.6,
+            2622.8
+          ],
+          "label": 1,
+          "probability": 0.6043070174433015,
+          "phase_supported": true,
+          "predicted": 1
+        },
+        {
+          "source": "slovakia-dev",
+          "shot_id": "S13",
+          "interval_s": [
+            2622.8,
+            2648.4
+          ],
+          "label": 0,
+          "probability": 0.012353080006196674,
+          "phase_supported": true,
+          "predicted": 0
+        },
+        {
+          "source": "slovakia-dev",
+          "shot_id": "S14",
+          "interval_s": [
+            2648.4,
+            2651.2
+          ],
+          "label": 0,
+          "probability": 0.029272609058845593,
+          "phase_supported": true,
+          "predicted": 0
+        },
+        {
+          "source": "slovakia-dev",
+          "shot_id": "S15",
+          "interval_s": [
+            2651.2,
+            2659.4
+          ],
+          "label": 0,
+          "probability": 0.049007775573495664,
+          "phase_supported": true,
+          "predicted": 0
+        },
+        {
+          "source": "slovakia-dev",
+          "shot_id": "S16",
+          "interval_s": [
+            2659.4,
+            2667.0
+          ],
+          "label": 0,
+          "probability": 0.007431418667241415,
+          "phase_supported": true,
+          "predicted": 0
+        },
+        {
+          "source": "slovakia-dev",
+          "shot_id": "S17",
+          "interval_s": [
+            2667.0,
+            2684.6
+          ],
+          "label": 1,
+          "probability": 0.9214702803465579,
+          "phase_supported": true,
+          "predicted": 1
+        },
+        {
+          "source": "slovakia-dev",
+          "shot_id": "S18",
+          "interval_s": [
+            2684.6,
+            2700
+          ],
+          "label": 0,
+          "probability": 0.023517001541867425,
+          "phase_supported": true,
+          "predicted": 0
+        }
+      ]
+    },
+    {
+      "heldout": "swiss-dev",
+      "score": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "tn": 19,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "model_sha256": "9586973ae7cbc632c65e3b757015f30d1d2fcf38190d50c39bb43c4ed827661a",
+      "rows": [
+        {
+          "source": "swiss-dev",
+          "shot_id": "S01",
+          "interval_s": [
+            3900,
+            3903.0
+          ],
+          "label": 0,
+          "probability": 0.012522830641757951,
+          "phase_supported": true,
+          "predicted": 0
+        },
+        {
+          "source": "swiss-dev",
+          "shot_id": "S02",
+          "interval_s": [
+            3903.0,
+            3913.0
+          ],
+          "label": 1,
+          "probability": 0.8776540037359903,
+          "phase_supported": true,
+          "predicted": 1
+        },
+        {
+          "source": "swiss-dev",
+          "shot_id": "S03",
+          "interval_s": [
+            3913.0,
+            3936.2
+          ],
+          "label": 0,
+          "probability": 0.0020379073571977595,
+          "phase_supported": true,
+          "predicted": 0
+        },
+        {
+          "source": "swiss-dev",
+          "shot_id": "S04",
+          "interval_s": [
+            3936.2,
+            3936.4
+          ],
+          "label": 0,
+          "probability": 0.0394480128114381,
+          "phase_supported": false,
+          "predicted": 0
+        },
+        {
+          "source": "swiss-dev",
+          "shot_id": "S05",
+          "interval_s": [
+            3936.4,
+            3938.6
+          ],
+          "label": 0,
+          "probability": 0.010657946563422298,
+          "phase_supported": false,
+          "predicted": 0
+        },
+        {
+          "source": "swiss-dev",
+          "shot_id": "S06",
+          "interval_s": [
+            3938.6,
+            3944.4
+          ],
+          "label": 0,
+          "probability": 0.6543922721268525,
+          "phase_supported": false,
+          "predicted": 0
+        },
+        {
+          "source": "swiss-dev",
+          "shot_id": "S07",
+          "interval_s": [
+            3944.4,
+            3948.4
+          ],
+          "label": 0,
+          "probability": 0.03683818005562534,
+          "phase_supported": false,
+          "predicted": 0
+        },
+        {
+          "source": "swiss-dev",
+          "shot_id": "S08",
+          "interval_s": [
+            3948.4,
+            3993.6
+          ],
+          "label": 0,
+          "probability": 0.6435346227356161,
+          "phase_supported": false,
+          "predicted": 0
+        },
+        {
+          "source": "swiss-dev",
+          "shot_id": "S09",
+          "interval_s": [
+            3993.6,
+            3993.8
+          ],
+          "label": 0,
+          "probability": 0.005456082270405801,
+          "phase_supported": false,
+          "predicted": 0
+        },
+        {
+          "source": "swiss-dev",
+          "shot_id": "S10",
+          "interval_s": [
+            3993.8,
+            4003.2
+          ],
+          "label": 0,
+          "probability": 0.294579193543869,
+          "phase_supported": false,
+          "predicted": 0
+        },
+        {
+          "source": "swiss-dev",
+          "shot_id": "S11",
+          "interval_s": [
+            4003.2,
+            4011.0
+          ],
+          "label": 0,
+          "probability": 0.9996517197355717,
+          "phase_supported": false,
+          "predicted": 0
+        },
+        {
+          "source": "swiss-dev",
+          "shot_id": "S12",
+          "interval_s": [
+            4011.0,
+            4017.6
+          ],
+          "label": 0,
+          "probability": 0.6357092867407127,
+          "phase_supported": false,
+          "predicted": 0
+        },
+        {
+          "source": "swiss-dev",
+          "shot_id": "S13",
+          "interval_s": [
+            4017.6,
+            4019.4
+          ],
+          "label": 0,
+          "probability": 0.31846003168904824,
+          "phase_supported": false,
+          "predicted": 0
+        },
+        {
+          "source": "swiss-dev",
+          "shot_id": "S14",
+          "interval_s": [
+            4019.4,
+            4023.0
+          ],
+          "label": 0,
+          "probability": 4.9067340826038836e-05,
+          "phase_supported": false,
+          "predicted": 0
+        },
+        {
+          "source": "swiss-dev",
+          "shot_id": "S15",
+          "interval_s": [
+            4023.0,
+            4028.6
+          ],
+          "label": 0,
+          "probability": 0.012136552962677313,
+          "phase_supported": false,
+          "predicted": 0
+        },
+        {
+          "source": "swiss-dev",
+          "shot_id": "S16",
+          "interval_s": [
+            4028.6,
+            4034.6
+          ],
+          "label": 0,
+          "probability": 1.5767269194231595e-06,
+          "phase_supported": false,
+          "predicted": 0
+        },
+        {
+          "source": "swiss-dev",
+          "shot_id": "S17",
+          "interval_s": [
+            4034.6,
+            4044.6
+          ],
+          "label": 0,
+          "probability": 0.006564044036893973,
+          "phase_supported": false,
+          "predicted": 0
+        },
+        {
+          "source": "swiss-dev",
+          "shot_id": "S18",
+          "interval_s": [
+            4044.6,
+            4131.0
+          ],
+          "label": 0,
+          "probability": 0.004595807108597669,
+          "phase_supported": false,
+          "predicted": 0
+        },
+        {
+          "source": "swiss-dev",
+          "shot_id": "S19",
+          "interval_s": [
+            4131.0,
+            4144.8
+          ],
+          "label": 0,
+          "probability": 9.545437050040492e-05,
+          "phase_supported": false,
+          "predicted": 0
+        },
+        {
+          "source": "swiss-dev",
+          "shot_id": "S20",
+          "interval_s": [
+            4144.8,
+            4200
+          ],
+          "label": 0,
+          "probability": 0.0007889157928652869,
+          "phase_supported": false,
+          "predicted": 0
+        }
+      ]
+    }
+  ],
+  "pooled": {
+    "tp": 14,
+    "fp": 0,
+    "fn": 0,
+    "tn": 44,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+  },
+  "limitations": [
+    "Pairing and phase condition were designed after inspecting the first three-fold failure, including Swiss break errors.",
+    "No independent held-out shot or throw-event score follows from this postscore probe.",
+    "A live overlay and delivery-looking shot still do not verify stone release or identity."
+  ]
+}

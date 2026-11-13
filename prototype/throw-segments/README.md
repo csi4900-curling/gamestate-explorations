@@ -12,6 +12,16 @@ Ouvrir `index.html` directement. Le lecteur découpe la manche en 16 intervalles
 
 Les limites entre passages sont des limites de consultation et incluent l’attente. Elles ne sont pas présentées comme les instants exacts de fin du lancer. Les associations et fins candidates n’ont pas de référence indépendante complète. Le résultat historique 16/16 concerne uniquement les passages sur cette manche.
 
+L’export sépare maintenant `candidate_active_window` (du premier point suivi
+à la confirmation de stabilité de la pierre livrée, si disponible),
+`visible_scene_stability_confirmation_s` et la limite de consultation
+`end_s`. Il y a 12 fenêtres actives candidates sur 16 événements. Leur début
+n’est pas le lâcher physique et leur fin est une **confirmation différée**,
+pas l’instant exact d’arrêt. Sur T12, la pierre livrée est confirmée stable à
+2 376 s, tandis que la scène visible ne l’est qu’à 2 391 s : confondre ces
+deux critères déplacerait la fin de 15 secondes. `segments.csv` expose les
+deux confirmations séparément ; les fins physiques restent nulles.
+
 La trajectoire avant la ligne n’est pas reconstruite. Une droite exigerait au minimum une position de départ et une direction ; elle constituerait une hypothèse distincte des observations. Aucune liaison géométrique inventée entre les deux caméras.
 
 ## Reproduction

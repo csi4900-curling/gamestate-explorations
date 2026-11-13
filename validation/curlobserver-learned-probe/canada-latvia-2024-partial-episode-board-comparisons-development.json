@@ -1,0 +1,110 @@
+{
+  "status": "postscore_partial_episode_board_comparison_not_game_state_validation",
+  "source_id": "YCfdKLu-BRc",
+  "source_sha256": "a7431b68ba6fb0df407383973a525a01eadbee2490caa0438a5a11d2df1dba13",
+  "partial_boards_sha256": "0eb767f8eabfddff0fe6dfb8888f206b1e6ee01b2b21b7ee8484259157164105",
+  "accepted_boards_sha256": "2a46580948f82dfc0e5a4d8683b8fe8ebf83948ba14a10c2e17e176e8c86a372",
+  "partial_episodes_sha256": "cde81db3167ea734a010ea8aea3c54e216a4b4c9a6498584b5323dbdf312aa75",
+  "candidates_sha256": "bbeba0dd8e9ff5929b35b878becc2dc5f310696b1fe890fed6dd8cec76aad67b",
+  "screen_sha256": "378410cea0a31507846ab55ec862834694609e5187d030826b61584b4cfb7a9c",
+  "comparison_code_sha256": "a2aaabb96503b93540a754fb5c4b18ac9cee1809539951e7c94073a7cfe26f03",
+  "runner_sha256": "f8af0d90bda23ebb01a50bc61a735b288e31816796984d46a05bfdbfde9b8cb6",
+  "comparison_status_counts": {
+    "abstain_intervening_passage_candidate": 1,
+    "view_local_partial_comparison": 1
+  },
+  "associated_observation_pair_count": 5,
+  "comparisons": [
+    {
+      "episode_id": "P01",
+      "direction": "from_previous_accepted",
+      "excluded_same_episode_candidate_ids": [
+        "S21",
+        "S22"
+      ],
+      "before_candidate_id": "S19",
+      "after_candidate_id": "P01",
+      "before_view": "right",
+      "after_view": "right",
+      "elapsed_between_crossings_s": 56.262,
+      "intervening_passage_candidate_ids": [
+        "S20"
+      ],
+      "status": "abstain_intervening_passage_candidate",
+      "same_end_verified": false,
+      "complete_game_state": false,
+      "simulation_ready": false
+    },
+    {
+      "episode_id": "P01",
+      "direction": "to_next_accepted",
+      "excluded_same_episode_candidate_ids": [
+        "S21",
+        "S22"
+      ],
+      "before_candidate_id": "P01",
+      "after_candidate_id": "S23",
+      "before_view": "right",
+      "after_view": "right",
+      "elapsed_between_crossings_s": 56.255,
+      "intervening_passage_candidate_ids": [],
+      "status": "view_local_partial_comparison",
+      "matched_observations": [
+        {
+          "before_local_observation_id": "V01",
+          "after_local_observation_id": "V01",
+          "colour": "red",
+          "distance_m_conditional": 0.0751,
+          "physical_identity_verified": false
+        },
+        {
+          "before_local_observation_id": "V02",
+          "after_local_observation_id": "V03",
+          "colour": "red",
+          "distance_m_conditional": 0.0254,
+          "physical_identity_verified": false
+        },
+        {
+          "before_local_observation_id": "V03",
+          "after_local_observation_id": "V04",
+          "colour": "red",
+          "distance_m_conditional": 0.0121,
+          "physical_identity_verified": false
+        },
+        {
+          "before_local_observation_id": "V05",
+          "after_local_observation_id": "V05",
+          "colour": "yellow",
+          "distance_m_conditional": 0.0035,
+          "physical_identity_verified": false
+        },
+        {
+          "before_local_observation_id": "V06",
+          "after_local_observation_id": "V06",
+          "colour": "yellow",
+          "distance_m_conditional": 0.0056,
+          "physical_identity_verified": false
+        }
+      ],
+      "before_only_observations": [
+        "V04"
+      ],
+      "after_only_observations": [
+        "V02",
+        "V07"
+      ],
+      "ambiguous_before_observations": [],
+      "ambiguous_after_observations": [],
+      "physical_appearance_or_removal_inferred": false,
+      "same_end_verified": false,
+      "complete_game_state": false,
+      "simulation_ready": false
+    }
+  ],
+  "limitations": [
+    "Same-episode passage cues are excluded only from the intervening-candidate test; grouping is not verified physical identity.",
+    "Intervening unassociated passage candidates force abstention, even if they later prove false.",
+    "View-local spatial associations are not persistent stone identities or physical appearance/removal claims.",
+    "End identity, complete board state and simulator-ready positions remain unverified."
+  ]
+}

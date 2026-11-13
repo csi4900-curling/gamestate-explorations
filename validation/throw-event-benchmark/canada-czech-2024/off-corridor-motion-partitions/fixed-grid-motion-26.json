@@ -1,0 +1,739 @@
+{
+  "status": "postscore_development_rebased_right_reference_not_transfer_validation",
+  "candidate_source_id": "yu_YoFrFd20",
+  "candidate_source_sha256": "e63c9b063b5b11ad5173083dffe974d909c78e5d01312740b87bccc006402013",
+  "high_resolution_source_sha256": "490b8703b2fcfaa2fbd61f8b45ebc45fd3281f0e9453bb4721f56e64056cd620",
+  "source_offset_s": 0.0,
+  "lookahead_s": 12.0,
+  "sample_period_s": 0.5,
+  "max_corner_displacement_px": 160.0,
+  "candidates_sha256": "1af3a30f63d842181212ceb63a71dddeee454bc411ad58f70863e22e01918967",
+  "vision_calibration_sha256": "03e164c0f26c0b2e3ebca7e85577c5874dbb83128aab52569776e60cd293103b",
+  "rectification_sha256": "fe7c6c832c2bc6b5095ce932ffd7905a59f9fdf8c0b4e029816e1108d1238402",
+  "registration_code_sha256": "648deed967ec5d64b68fdaeea90c202f4f25c689d1961711ac379ee06951d8d0",
+  "detector_code_sha256": "602010aba323a63401a8f7edfe7aee8ed2bd135dfdcb6c4d4308a41d29610dd6",
+  "selector_sha256": "8cae87a9b90904647ccb67cceec2473739ccf1d626b68e1305769b28107d63cd",
+  "runner_sha256": "2b2084161cab0c0671197623c5c9ae1b9322d9f0b0662cdcdbcc59b9e59e084c",
+  "rebase_code_sha256": "6d917ae47e3dfaef45ab5def54f4c5b5ea15c3e82f3d79181e3ac17900904ff9",
+  "right_reference_anchor_time_s": 6525.0,
+  "right_reference_anchor_registration": {
+    "status": "registered",
+    "inliers": 39,
+    "matches": 59,
+    "rmse_px": 1.0726771652157872,
+    "max_corner_displacement_px": 90.02350488819164,
+    "reference_to_current": [
+      [
+        1.1141360242253953,
+        0.08979434438406485,
+        -195.68106569114437
+      ],
+      [
+        -0.005874037539324768,
+        1.0912579823239008,
+        -2.3774273820660925
+      ],
+      [
+        4.258787514731362e-06,
+        1.9325571868452738e-05,
+        1.0
+      ]
+    ],
+    "note": "Feature consistency only; not proof of correct camera identity or metric accuracy."
+  },
+  "conditional_camera_prior": "original_calibration_transported_to_current_frame",
+  "detection_background": "original_clean_reference_transported_to_current_frame",
+  "candidate_count": 1,
+  "selection_status_counts": {
+    "no_supported_far_entry_motion_path": 1
+  },
+  "rows": [
+    {
+      "candidate_id": "S123",
+      "crossing_time_s": 5237.653,
+      "colour": "red",
+      "view_motion": "negative_y",
+      "receiving_view": "right",
+      "sample_count": 24,
+      "registration_abstentions": 6,
+      "selection": {
+        "status": "no_supported_far_entry_motion_path",
+        "path": [],
+        "sample_count": 24,
+        "same_colour_proposal_count": 26
+      },
+      "samples": [
+        {
+          "source_time_s": 5238.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1847.35,
+                    842.41
+                  ],
+                  "ground_position_m": [
+                    1.3907455992471927,
+                    12.641740011162813
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1582.61,
+                    811.16
+                  ],
+                  "ground_position_m": [
+                    0.4936924369402665,
+                    11.81258490756266
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 5238.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1829.64,
+                    829.06
+                  ],
+                  "ground_position_m": [
+                    1.3386658652149726,
+                    12.3100119630879
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 5239.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1803.91,
+                    826.16
+                  ],
+                  "ground_position_m": [
+                    1.253632791317197,
+                    12.244947681896011
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 5239.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1689.85,
+                    1042.47
+                  ],
+                  "ground_position_m": [
+                    0.7665830825162514,
+                    17.27021141736645
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1788.39,
+                    825.62
+                  ],
+                  "ground_position_m": [
+                    1.2021189155803391,
+                    12.243201250913325
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 5240.0,
+          "registration_status": "rejected",
+          "registration_reason": "Excessive registration motion/error",
+          "views": {
+            "right": {
+              "proposals": []
+            }
+          }
+        },
+        {
+          "source_time_s": 5240.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1751.18,
+                    819.85
+                  ],
+                  "ground_position_m": [
+                    1.0708102220556326,
+                    12.085028279178749
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1680.68,
+                    612.42
+                  ],
+                  "ground_position_m": [
+                    0.9412687829250866,
+                    6.010287008396294
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1675.95,
+                    590.4
+                  ],
+                  "ground_position_m": [
+                    0.9364977968887641,
+                    5.274632019193607
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 5241.0,
+          "registration_status": "rejected",
+          "registration_reason": "Invalid transform",
+          "views": {
+            "right": {
+              "proposals": []
+            }
+          }
+        },
+        {
+          "source_time_s": 5241.5,
+          "registration_status": "rejected",
+          "registration_reason": "Insufficient spatial support",
+          "views": {
+            "right": {
+              "proposals": []
+            }
+          }
+        },
+        {
+          "source_time_s": 5242.0,
+          "registration_status": "rejected",
+          "registration_reason": "Excessive registration motion/error",
+          "views": {
+            "right": {
+              "proposals": []
+            }
+          }
+        },
+        {
+          "source_time_s": 5242.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1003.01,
+                    482.86
+                  ],
+                  "ground_position_m": [
+                    -1.8500531729108498,
+                    1.2801731279331798
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1714.8,
+                    823.48
+                  ],
+                  "ground_position_m": [
+                    0.9486064763459319,
+                    12.173169911744585
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 5243.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    991.49,
+                    493.96
+                  ],
+                  "ground_position_m": [
+                    -1.8817201352681976,
+                    1.7116213390179527
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1710.13,
+                    824.1
+                  ],
+                  "ground_position_m": [
+                    0.9316516319059619,
+                    12.207962651924587
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 5243.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    990.4,
+                    502.6
+                  ],
+                  "ground_position_m": [
+                    -1.8753582513067808,
+                    2.0309787384764126
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1708.44,
+                    824.89
+                  ],
+                  "ground_position_m": [
+                    0.9272258401413355,
+                    12.213722791883262
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 5244.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    980.27,
+                    505.74
+                  ],
+                  "ground_position_m": [
+                    -1.9122608699373695,
+                    2.153859329818112
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1629.26,
+                    1047.97
+                  ],
+                  "ground_position_m": [
+                    0.5722370562464565,
+                    17.33846199064539
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1708.26,
+                    825.15
+                  ],
+                  "ground_position_m": [
+                    0.9222991264330535,
+                    12.215894696560309
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 5244.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    980.72,
+                    505.72
+                  ],
+                  "ground_position_m": [
+                    -1.9165657702446792,
+                    2.150587899617925
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1706.85,
+                    825.21
+                  ],
+                  "ground_position_m": [
+                    0.9198226836491767,
+                    12.20866103346069
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 5245.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    979.88,
+                    504.04
+                  ],
+                  "ground_position_m": [
+                    -1.9222228370272254,
+                    2.0877633522743566
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1707.57,
+                    825.8
+                  ],
+                  "ground_position_m": [
+                    0.9231325197052647,
+                    12.2266891479873
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 5245.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    980.7,
+                    505.11
+                  ],
+                  "ground_position_m": [
+                    -1.9138730075129882,
+                    2.127966387981067
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1708.22,
+                    825.75
+                  ],
+                  "ground_position_m": [
+                    0.9250492861077269,
+                    12.227982179584169
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 5246.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    981.19,
+                    505.34
+                  ],
+                  "ground_position_m": [
+                    -1.915048449350265,
+                    2.133127476963153
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1712.75,
+                    826.86
+                  ],
+                  "ground_position_m": [
+                    0.9420324237548372,
+                    12.260379004267607
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 5246.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    981.07,
+                    505.32
+                  ],
+                  "ground_position_m": [
+                    -1.9698223574316698,
+                    2.0724145987696163
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1705.66,
+                    833.56
+                  ],
+                  "ground_position_m": [
+                    0.9148176133929755,
+                    12.537509476902434
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 5247.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    980.97,
+                    504.88
+                  ],
+                  "ground_position_m": [
+                    -1.9122721851129207,
+                    2.1236443605448203
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1687.27,
+                    832.03
+                  ],
+                  "ground_position_m": [
+                    0.8501475858337602,
+                    12.42526971196402
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 5247.5,
+          "registration_status": "rejected",
+          "registration_reason": "Insufficient spatial support",
+          "views": {
+            "right": {
+              "proposals": []
+            }
+          }
+        },
+        {
+          "source_time_s": 5248.0,
+          "registration_status": "rejected",
+          "registration_reason": "Insufficient spatial support",
+          "views": {
+            "right": {
+              "proposals": []
+            }
+          }
+        },
+        {
+          "source_time_s": 5248.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1762.56,
+                    1044.83
+                  ],
+                  "ground_position_m": [
+                    0.9855076192539313,
+                    17.2621008247715
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1658.04,
+                    820.32
+                  ],
+                  "ground_position_m": [
+                    0.7512755440144343,
+                    12.072521116012735
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 5249.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1802.53,
+                    1056.45
+                  ],
+                  "ground_position_m": [
+                    1.1087173634041574,
+                    17.53229874950514
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1687.91,
+                    807.97
+                  ],
+                  "ground_position_m": [
+                    0.8642723689207786,
+                    11.762208877752903
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 5249.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1011.46,
+                    504.85
+                  ],
+                  "ground_position_m": [
+                    -1.793455624154696,
+                    2.1180291831390385
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1822.76,
+                    1043.8
+                  ],
+                  "ground_position_m": [
+                    1.184691161120395,
+                    17.39732680544011
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1710.12,
+                    789.6
+                  ],
+                  "ground_position_m": [
+                    0.9542821456715431,
+                    11.31432842880365
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Anchor 2044.5 s was chosen after seeing this recording's frozen registration failures.",
+    "The new reference is transported from an old conditional calibration, not independently measured rink geometry.",
+    "A registered image and a selected cap path do not prove a physical throw."
+  ]
+}

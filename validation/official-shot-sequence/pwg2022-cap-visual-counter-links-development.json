@@ -1,0 +1,6524 @@
+{
+  "status": "postscore_existing_event_counter_relink_not_physical_event_f1",
+  "travel_audit_sha256": "53173e57a586c2ae0db2088c14b6cd1ba0367b7f78e3b5c178113d72029e99e4",
+  "link_code_sha256": "4f4ac237de6fd654bc719c5d75271e8ba5dbdb7a7c7641350db0fd3339859ee3",
+  "fusion_code_sha256": "ce7d786e9d51507e0602007dd969f92cf37953f98e1e173ab7f4963927455665",
+  "runner_sha256": "8365849ac53af109d7b95d24717b4423ed4edbc5f61a1bb19b1024d7fd1ab597",
+  "games": [
+    {
+      "official_game_code": "PREL000101",
+      "source_sha256": "49429abdd3796e8240e66c201d37e94e71a7bb6225890b2492bea26d2f70d560",
+      "input_sha256": {
+        "origins": "c436693b5586aef1baa77f43d9e0a3fe3b26139fba0c3c39158c774bbc3ef8bb",
+        "two_shot": "e8d741ebd3a9195917609545ae804f8a9c6773643ba4b3512ae644a6a1334856",
+        "cap_motion": "bff17c272b4621b9a37d177a2a0658c78da4f86290124e06558740c83429a31a",
+        "learned_motion": "6a14295baeeb823f3dd4b2a9b36b78db48e38e0ad5549558aa71a2597e2496db",
+        "counter_alignment": "a2bfe573a69804a49a9576baf835801b58cd8feb3d903333b2954e8dfcec2f07",
+        "baseline_fusion": "c6b257cbd82bc66a4b0fcd2a63ff441b7105932975cc96360087589a0ec31100"
+      },
+      "candidate_count_unchanged": 115,
+      "baseline_counter_linked_count": 93,
+      "new_counter_linked_count": 96,
+      "new_link_count": 3,
+      "new_colour_conflict_count": 2,
+      "unassociated_counter_count_after": 7,
+      "new_links_also_travel_proposals": 2,
+      "new_links": [
+        {
+          "counter_id": "B01",
+          "counter_colour": "yellow",
+          "shot_id": "S25",
+          "visual_colour_before": null,
+          "event_colour_after": "yellow",
+          "colour_status_after": "resolved",
+          "following_motion_options": [
+            {
+              "shot_id": "S25",
+              "interval_s": [
+                275.0,
+                308.4
+              ],
+              "visual_probability": 0.9999997560568064,
+              "motion_channels": [
+                "cap",
+                "learned"
+              ]
+            }
+          ]
+        },
+        {
+          "counter_id": "B49",
+          "counter_colour": "yellow",
+          "shot_id": "S247",
+          "visual_colour_before": "red",
+          "event_colour_after": null,
+          "colour_status_after": "conflict",
+          "following_motion_options": [
+            {
+              "shot_id": "S247",
+              "interval_s": [
+                3162.2,
+                3173.0
+              ],
+              "visual_probability": 0.9999729001101446,
+              "motion_channels": [
+                "cap",
+                "learned"
+              ]
+            }
+          ]
+        },
+        {
+          "counter_id": "B82",
+          "counter_colour": "yellow",
+          "shot_id": "S442",
+          "visual_colour_before": "red",
+          "event_colour_after": null,
+          "colour_status_after": "conflict",
+          "following_motion_options": [
+            {
+              "shot_id": "S442",
+              "interval_s": [
+                5670.8,
+                5691.0
+              ],
+              "visual_probability": 0.9999770810028987,
+              "motion_channels": [
+                "cap",
+                "learned"
+              ]
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "shot_id": "S25",
+          "delivery_window_s": [
+            275.0,
+            308.4
+          ],
+          "origin_probability": 0.9999997560568064,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_linked_to_existing_visual_candidate"
+          ],
+          "counter_id": "B01",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S27",
+          "delivery_window_s": [
+            329.0,
+            350.6
+          ],
+          "origin_probability": 0.8534287015777835,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B02",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S29",
+          "delivery_window_s": [
+            369.0,
+            389.0
+          ],
+          "origin_probability": 0.9999868138308965,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B03",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S32",
+          "delivery_window_s": [
+            420.0,
+            436.2
+          ],
+          "origin_probability": 0.0039562206656727885,
+          "evidence_sources": [
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B04",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S33",
+          "delivery_window_s": [
+            436.2,
+            454.2
+          ],
+          "origin_probability": 0.14634293997877826,
+          "evidence_sources": [
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B05",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S39",
+          "delivery_window_s": [
+            517.2,
+            529.8
+          ],
+          "origin_probability": 0.0006094557282667248,
+          "evidence_sources": [
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B06",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S43",
+          "delivery_window_s": [
+            559.6,
+            576.8
+          ],
+          "origin_probability": 0.9999702070324225,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B07",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S46",
+          "delivery_window_s": [
+            599.2,
+            628.8
+          ],
+          "origin_probability": 0.3501035950660586,
+          "evidence_sources": [
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B08",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S50",
+          "delivery_window_s": [
+            655.4,
+            672.2
+          ],
+          "origin_probability": 0.9999613310115774,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B09",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S56",
+          "delivery_window_s": [
+            721.4,
+            736.2
+          ],
+          "origin_probability": 0.9909385506384769,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B10",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S58",
+          "delivery_window_s": [
+            760.6,
+            787.2
+          ],
+          "origin_probability": 0.02503883565417541,
+          "evidence_sources": [
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B11",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S61",
+          "delivery_window_s": [
+            810.0,
+            821.4
+          ],
+          "origin_probability": 0.9895614081887553,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B12",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S65",
+          "delivery_window_s": [
+            853.6,
+            871.0
+          ],
+          "origin_probability": 0.999263980006587,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B13",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S68",
+          "delivery_window_s": [
+            906.2,
+            932.6
+          ],
+          "origin_probability": 0.9671283722757089,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B14",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S72",
+          "delivery_window_s": [
+            960.4,
+            980.4
+          ],
+          "origin_probability": 0.999842946150557,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B15",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S75",
+          "delivery_window_s": [
+            1007.6,
+            1026.4
+          ],
+          "origin_probability": 0.9949185453142341,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S83",
+          "delivery_window_s": [
+            1109.2,
+            1130.8
+          ],
+          "origin_probability": 0.9883009433274419,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B16",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S85",
+          "delivery_window_s": [
+            1159.4,
+            1179.4
+          ],
+          "origin_probability": 0.97024462787038,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B17",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S87",
+          "delivery_window_s": [
+            1201.8,
+            1221.0
+          ],
+          "origin_probability": 0.8418227515898974,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B18",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S91",
+          "delivery_window_s": [
+            1242.6,
+            1273.0
+          ],
+          "origin_probability": 0.9784775689621715,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B19",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S93",
+          "delivery_window_s": [
+            1296.2,
+            1313.6
+          ],
+          "origin_probability": 0.9974386904562034,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B20",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S98",
+          "delivery_window_s": [
+            1350.4,
+            1364.8
+          ],
+          "origin_probability": 0.9848207430280806,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B21",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S102",
+          "delivery_window_s": [
+            1389.6,
+            1413.8
+          ],
+          "origin_probability": 0.9999991885098695,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S106",
+          "delivery_window_s": [
+            1445.4,
+            1466.8
+          ],
+          "origin_probability": 0.9473821988100741,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B22",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S110",
+          "delivery_window_s": [
+            1492.4,
+            1522.8
+          ],
+          "origin_probability": 0.932842855741704,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B23",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S112",
+          "delivery_window_s": [
+            1531.8,
+            1537.4
+          ],
+          "origin_probability": 0.999996457118176,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S116",
+          "delivery_window_s": [
+            1564.0,
+            1580.8
+          ],
+          "origin_probability": 0.009598472982628368,
+          "evidence_sources": [
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B24",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S120",
+          "delivery_window_s": [
+            1607.0,
+            1636.6
+          ],
+          "origin_probability": 0.99997920303153,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B25",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S124",
+          "delivery_window_s": [
+            1660.8,
+            1677.6
+          ],
+          "origin_probability": 0.9675501445413989,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B26",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S128",
+          "delivery_window_s": [
+            1711.8,
+            1734.4
+          ],
+          "origin_probability": 0.9999479307536716,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B27",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S136",
+          "delivery_window_s": [
+            1784.4,
+            1800.8
+          ],
+          "origin_probability": 0.6018437605276097,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B28",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S140",
+          "delivery_window_s": [
+            1831.0,
+            1852.6
+          ],
+          "origin_probability": 0.9982837296514335,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": null,
+          "colour_status": "ambiguous",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S142",
+          "delivery_window_s": [
+            1884.0,
+            1898.2
+          ],
+          "origin_probability": 0.961056127824559,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S159",
+          "delivery_window_s": [
+            1988.0,
+            1996.4
+          ],
+          "origin_probability": 0.9999968303345834,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B29",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S163",
+          "delivery_window_s": [
+            2032.4,
+            2049.6
+          ],
+          "origin_probability": 0.00269829151770715,
+          "evidence_sources": [
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B30",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S167",
+          "delivery_window_s": [
+            2077.6,
+            2096.0
+          ],
+          "origin_probability": 0.9999791343475019,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B31",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S171",
+          "delivery_window_s": [
+            2132.8,
+            2148.8
+          ],
+          "origin_probability": 0.4863246787934253,
+          "evidence_sources": [
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B32",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S173",
+          "delivery_window_s": [
+            2173.0,
+            2200.4
+          ],
+          "origin_probability": 0.9999923321297425,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B33",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S177",
+          "delivery_window_s": [
+            2251.6,
+            2269.4
+          ],
+          "origin_probability": 0.18479649560429232,
+          "evidence_sources": [
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B34",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S180",
+          "delivery_window_s": [
+            2295.6,
+            2315.2
+          ],
+          "origin_probability": 0.9999861360512451,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B35",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S182",
+          "delivery_window_s": [
+            2345.8,
+            2364.2
+          ],
+          "origin_probability": 0.024759111576234293,
+          "evidence_sources": [
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B36",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S186",
+          "delivery_window_s": [
+            2396.8,
+            2415.6
+          ],
+          "origin_probability": 0.9999991234851637,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B37",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S189",
+          "delivery_window_s": [
+            2453.2,
+            2471.6
+          ],
+          "origin_probability": 0.95646625662565,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B38",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S197",
+          "delivery_window_s": [
+            2535.4,
+            2555.8
+          ],
+          "origin_probability": 0.9993745075547075,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B39",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S201",
+          "delivery_window_s": [
+            2597.0,
+            2612.4
+          ],
+          "origin_probability": 0.8925423544094905,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B40",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S209",
+          "delivery_window_s": [
+            2653.8,
+            2675.2
+          ],
+          "origin_probability": 0.9999847960575726,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B41",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S214",
+          "delivery_window_s": [
+            2740.4,
+            2752.6
+          ],
+          "origin_probability": 0.9985359190336897,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S218",
+          "delivery_window_s": [
+            2792.2,
+            2807.2
+          ],
+          "origin_probability": 0.9919792620148534,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B42",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S222",
+          "delivery_window_s": [
+            2851.6,
+            2860.2
+          ],
+          "origin_probability": 0.9725651781617991,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S228",
+          "delivery_window_s": [
+            2949.2,
+            2968.6
+          ],
+          "origin_probability": 0.9991179122450778,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B43",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S232",
+          "delivery_window_s": [
+            3000.8,
+            3020.2
+          ],
+          "origin_probability": 0.9855669266529048,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B44",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S236",
+          "delivery_window_s": [
+            3051.0,
+            3061.0
+          ],
+          "origin_probability": 0.9999771363356286,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B45",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S240",
+          "delivery_window_s": [
+            3092.8,
+            3108.4
+          ],
+          "origin_probability": 0.20994843503030045,
+          "evidence_sources": [
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B46",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S243",
+          "delivery_window_s": [
+            3117.2,
+            3128.4
+          ],
+          "origin_probability": 0.984676682317933,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B47",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S247",
+          "delivery_window_s": [
+            3162.2,
+            3173.0
+          ],
+          "origin_probability": 0.9999729001101446,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_linked_to_existing_visual_candidate"
+          ],
+          "counter_id": "B49",
+          "colour": null,
+          "colour_status": "conflict",
+          "status": "candidate_with_colour_conflict"
+        },
+        {
+          "shot_id": "S252",
+          "delivery_window_s": [
+            3201.0,
+            3221.8
+          ],
+          "origin_probability": 0.9809270617697172,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B50",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S259",
+          "delivery_window_s": [
+            3277.4,
+            3294.0
+          ],
+          "origin_probability": 0.9999844102437929,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B51",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S263",
+          "delivery_window_s": [
+            3328.8,
+            3344.8
+          ],
+          "origin_probability": 0.9654794490343077,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": null,
+          "colour_status": "ambiguous",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S269",
+          "delivery_window_s": [
+            3388.2,
+            3417.0
+          ],
+          "origin_probability": 0.9999828960523249,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B52",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S275",
+          "delivery_window_s": [
+            3454.0,
+            3469.0
+          ],
+          "origin_probability": 0.9785938551848112,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B53",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S279",
+          "delivery_window_s": [
+            3504.8,
+            3525.2
+          ],
+          "origin_probability": 0.9941609832572202,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B54",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S284",
+          "delivery_window_s": [
+            3562.2,
+            3574.4
+          ],
+          "origin_probability": 0.2585894731138113,
+          "evidence_sources": [
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B55",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S291",
+          "delivery_window_s": [
+            3632.6,
+            3651.2
+          ],
+          "origin_probability": 0.9581391381373903,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B56",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S297",
+          "delivery_window_s": [
+            3713.2,
+            3741.2
+          ],
+          "origin_probability": 0.837871708649829,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B57",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S302",
+          "delivery_window_s": [
+            3782.6,
+            3801.4
+          ],
+          "origin_probability": 0.7072563274983193,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S308",
+          "delivery_window_s": [
+            3841.6,
+            3857.6
+          ],
+          "origin_probability": 0.8019284465384269,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B58",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S314",
+          "delivery_window_s": [
+            3903.0,
+            3913.0
+          ],
+          "origin_probability": 0.8776540037359903,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B59",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S333",
+          "delivery_window_s": [
+            4264.2,
+            4283.8
+          ],
+          "origin_probability": 0.9607193122253347,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B60",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S335",
+          "delivery_window_s": [
+            4310.0,
+            4333.0
+          ],
+          "origin_probability": 0.9999984619873654,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B61",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S339",
+          "delivery_window_s": [
+            4379.6,
+            4390.8
+          ],
+          "origin_probability": 0.9128206757275658,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B62",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S341",
+          "delivery_window_s": [
+            4418.8,
+            4439.4
+          ],
+          "origin_probability": 0.9999940575866016,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B63",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S344",
+          "delivery_window_s": [
+            4469.8,
+            4496.4
+          ],
+          "origin_probability": 0.9700767469082071,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B64",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S346",
+          "delivery_window_s": [
+            4522.4,
+            4549.0
+          ],
+          "origin_probability": 0.9979621975744664,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B65",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S350",
+          "delivery_window_s": [
+            4581.8,
+            4593.8
+          ],
+          "origin_probability": 0.9933602820537348,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B66",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S352",
+          "delivery_window_s": [
+            4617.6,
+            4637.0
+          ],
+          "origin_probability": 0.057366569816386034,
+          "evidence_sources": [
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B67",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S356",
+          "delivery_window_s": [
+            4675.0,
+            4688.0
+          ],
+          "origin_probability": 0.07458427886056085,
+          "evidence_sources": [
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B68",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S360",
+          "delivery_window_s": [
+            4727.4,
+            4750.2
+          ],
+          "origin_probability": 0.5237855941808142,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B69",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S362",
+          "delivery_window_s": [
+            4768.0,
+            4774.8
+          ],
+          "origin_probability": 0.9840780586340198,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S364",
+          "delivery_window_s": [
+            4782.2,
+            4789.4
+          ],
+          "origin_probability": 0.9364620973290142,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S366",
+          "delivery_window_s": [
+            4806.2,
+            4817.6
+          ],
+          "origin_probability": 0.9925861696966258,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S368",
+          "delivery_window_s": [
+            4823.0,
+            4842.4
+          ],
+          "origin_probability": 0.999660165979428,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S374",
+          "delivery_window_s": [
+            4894.4,
+            4912.2
+          ],
+          "origin_probability": 0.9638591806410791,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B72",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S381",
+          "delivery_window_s": [
+            4986.0,
+            5003.2
+          ],
+          "origin_probability": 0.9595524179051012,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S396",
+          "delivery_window_s": [
+            5120.0,
+            5133.0
+          ],
+          "origin_probability": 0.9996685924344821,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S410",
+          "delivery_window_s": [
+            5267.8,
+            5296.8
+          ],
+          "origin_probability": 0.9947679343673987,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B75",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S414",
+          "delivery_window_s": [
+            5324.8,
+            5338.8
+          ],
+          "origin_probability": 0.9999643792200366,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B76",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S418",
+          "delivery_window_s": [
+            5369.4,
+            5392.6
+          ],
+          "origin_probability": 0.9926993285268407,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B77",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S422",
+          "delivery_window_s": [
+            5430.4,
+            5454.8
+          ],
+          "origin_probability": 0.999999217702344,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B78",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S426",
+          "delivery_window_s": [
+            5497.4,
+            5514.2
+          ],
+          "origin_probability": 0.9896255808964806,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B79",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S430",
+          "delivery_window_s": [
+            5545.0,
+            5565.6
+          ],
+          "origin_probability": 0.9999997821789278,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B80",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S434",
+          "delivery_window_s": [
+            5602.8,
+            5611.8
+          ],
+          "origin_probability": 0.9909924913756557,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B81",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S442",
+          "delivery_window_s": [
+            5670.8,
+            5691.0
+          ],
+          "origin_probability": 0.9999770810028987,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_linked_to_existing_visual_candidate"
+          ],
+          "counter_id": "B82",
+          "colour": null,
+          "colour_status": "conflict",
+          "status": "candidate_with_colour_conflict"
+        },
+        {
+          "shot_id": "S450",
+          "delivery_window_s": [
+            5741.8,
+            5764.6
+          ],
+          "origin_probability": 0.9650569478141557,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B83",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S460",
+          "delivery_window_s": [
+            5858.6,
+            5870.4
+          ],
+          "origin_probability": 0.9715967839275877,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B85",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S476",
+          "delivery_window_s": [
+            6044.4,
+            6048.4
+          ],
+          "origin_probability": 0.003218461455398711,
+          "evidence_sources": [
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B87",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S477",
+          "delivery_window_s": [
+            6048.4,
+            6062.0
+          ],
+          "origin_probability": 0.21322974208402554,
+          "evidence_sources": [
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B86",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S485",
+          "delivery_window_s": [
+            6127.8,
+            6147.6
+          ],
+          "origin_probability": 0.9981138743915923,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B89",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S489",
+          "delivery_window_s": [
+            6187.4,
+            6206.2
+          ],
+          "origin_probability": 0.9999994068652912,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B90",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S497",
+          "delivery_window_s": [
+            6264.2,
+            6275.2
+          ],
+          "origin_probability": 0.9502912545230001,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S511",
+          "delivery_window_s": [
+            6384.2,
+            6391.6
+          ],
+          "origin_probability": 0.9999894395632437,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B91",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S513",
+          "delivery_window_s": [
+            6416.4,
+            6448.8
+          ],
+          "origin_probability": 0.9997008181890739,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B92",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S515",
+          "delivery_window_s": [
+            6474.2,
+            6492.2
+          ],
+          "origin_probability": 0.9999996861246175,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S518",
+          "delivery_window_s": [
+            6519.2,
+            6540.6
+          ],
+          "origin_probability": 0.9660752295698465,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B93",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S520",
+          "delivery_window_s": [
+            6570.0,
+            6607.0
+          ],
+          "origin_probability": 0.9990162586329685,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B94",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S522",
+          "delivery_window_s": [
+            6622.4,
+            6640.2
+          ],
+          "origin_probability": 0.05780661597548061,
+          "evidence_sources": [
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B95",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S525",
+          "delivery_window_s": [
+            6692.8,
+            6717.8
+          ],
+          "origin_probability": 0.96859316773668,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B96",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S528",
+          "delivery_window_s": [
+            6742.2,
+            6760.2
+          ],
+          "origin_probability": 0.9555869005928777,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B97",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S531",
+          "delivery_window_s": [
+            6788.4,
+            6821.4
+          ],
+          "origin_probability": 0.6564834919077047,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B98",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S533",
+          "delivery_window_s": [
+            6858.4,
+            6884.0
+          ],
+          "origin_probability": 0.991177668766709,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B99",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S535",
+          "delivery_window_s": [
+            6911.8,
+            6958.8
+          ],
+          "origin_probability": 0.8510087185332987,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B100",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S537",
+          "delivery_window_s": [
+            6984.6,
+            7000.4
+          ],
+          "origin_probability": 0.9937075980141893,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B101",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S541",
+          "delivery_window_s": [
+            7049.4,
+            7069.6
+          ],
+          "origin_probability": 0.9998618501975336,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B102",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S547",
+          "delivery_window_s": [
+            7124.2,
+            7145.4
+          ],
+          "origin_probability": 0.9999911801058624,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B103",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S555",
+          "delivery_window_s": [
+            7208.2,
+            7236.8
+          ],
+          "origin_probability": 0.999995438001433,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S559",
+          "delivery_window_s": [
+            7274.6,
+            7286.2
+          ],
+          "origin_probability": 0.9973488242409532,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        }
+      ],
+      "unassociated_counter_events": [
+        {
+          "counter_id": "B48",
+          "colour": "red",
+          "counter_evidence_interval_s": [
+            3123.0,
+            3146.0
+          ],
+          "counter_update_s": 3146.0,
+          "shot_id": null,
+          "status": "abstained",
+          "association_route": null,
+          "candidate_shots": [],
+          "development_label": null,
+          "existing_visual_candidates": []
+        },
+        {
+          "counter_id": "B70",
+          "colour": "red",
+          "counter_evidence_interval_s": [
+            4784.0,
+            4807.0
+          ],
+          "counter_update_s": 4807.0,
+          "shot_id": null,
+          "status": "abstained",
+          "association_route": null,
+          "candidate_shots": [
+            {
+              "shot_id": "S362",
+              "interval_s": [
+                4768.0,
+                4774.8
+              ],
+              "origin_probability": 0.9840780586340198,
+              "motion_channels": [
+                "cap-motion"
+              ]
+            },
+            {
+              "shot_id": "S364",
+              "interval_s": [
+                4782.2,
+                4789.4
+              ],
+              "origin_probability": 0.9364620973290142,
+              "motion_channels": [
+                "cap-motion"
+              ]
+            },
+            {
+              "shot_id": "S363",
+              "interval_s": [
+                4774.8,
+                4782.2
+              ],
+              "origin_probability": 0.04062496929600635,
+              "motion_channels": [
+                "cap-motion"
+              ]
+            },
+            {
+              "shot_id": "S361",
+              "interval_s": [
+                4750.2,
+                4768.0
+              ],
+              "origin_probability": 1.7831515159795495e-07,
+              "motion_channels": [
+                "cap-motion"
+              ]
+            }
+          ],
+          "development_label": null,
+          "existing_visual_candidates": [
+            {
+              "shot_id": "S364",
+              "interval_s": [
+                4782.2,
+                4789.4
+              ],
+              "visual_probability": 0.9364620973290142,
+              "motion_channels": [
+                "cap",
+                "learned"
+              ]
+            },
+            {
+              "shot_id": "S366",
+              "interval_s": [
+                4806.2,
+                4817.6
+              ],
+              "visual_probability": 0.9925861696966258,
+              "motion_channels": [
+                "cap",
+                "learned"
+              ]
+            }
+          ]
+        },
+        {
+          "counter_id": "B71",
+          "colour": "yellow",
+          "counter_evidence_interval_s": [
+            4836.0,
+            4858.0
+          ],
+          "counter_update_s": 4858.0,
+          "shot_id": null,
+          "status": "abstained",
+          "association_route": null,
+          "candidate_shots": [
+            {
+              "shot_id": "S368",
+              "interval_s": [
+                4823.0,
+                4842.4
+              ],
+              "origin_probability": 0.999660165979428,
+              "motion_channels": [
+                "cap-motion"
+              ]
+            },
+            {
+              "shot_id": "S366",
+              "interval_s": [
+                4806.2,
+                4817.6
+              ],
+              "origin_probability": 0.9925861696966258,
+              "motion_channels": [
+                "cap-motion"
+              ]
+            },
+            {
+              "shot_id": "S367",
+              "interval_s": [
+                4817.6,
+                4823.0
+              ],
+              "origin_probability": 5.297249729372031e-06,
+              "motion_channels": [
+                "cap-motion"
+              ]
+            }
+          ],
+          "development_label": null,
+          "existing_visual_candidates": [
+            {
+              "shot_id": "S366",
+              "interval_s": [
+                4806.2,
+                4817.6
+              ],
+              "visual_probability": 0.9925861696966258,
+              "motion_channels": [
+                "cap",
+                "learned"
+              ]
+            },
+            {
+              "shot_id": "S368",
+              "interval_s": [
+                4823.0,
+                4842.4
+              ],
+              "visual_probability": 0.999660165979428,
+              "motion_channels": [
+                "cap",
+                "learned"
+              ]
+            }
+          ]
+        },
+        {
+          "counter_id": "B73",
+          "colour": "yellow",
+          "counter_evidence_interval_s": [
+            5245.0,
+            5254.0
+          ],
+          "counter_update_s": 5254.0,
+          "shot_id": null,
+          "status": "abstained",
+          "association_route": null,
+          "candidate_shots": [],
+          "development_label": null,
+          "existing_visual_candidates": []
+        },
+        {
+          "counter_id": "B74",
+          "colour": "yellow",
+          "counter_evidence_interval_s": [
+            5267.0,
+            5268.0
+          ],
+          "counter_update_s": 5268.0,
+          "shot_id": null,
+          "status": "abstained",
+          "association_route": null,
+          "candidate_shots": [],
+          "development_label": null,
+          "existing_visual_candidates": []
+        },
+        {
+          "counter_id": "B84",
+          "colour": "yellow",
+          "counter_evidence_interval_s": [
+            5817.0,
+            5840.0
+          ],
+          "counter_update_s": 5840.0,
+          "shot_id": null,
+          "status": "abstained",
+          "association_route": null,
+          "candidate_shots": [],
+          "development_label": null,
+          "existing_visual_candidates": []
+        },
+        {
+          "counter_id": "B88",
+          "colour": "red",
+          "counter_evidence_interval_s": [
+            6097.0,
+            6098.0
+          ],
+          "counter_update_s": 6098.0,
+          "shot_id": null,
+          "status": "abstained",
+          "association_route": null,
+          "candidate_shots": [],
+          "development_label": null,
+          "existing_visual_candidates": []
+        }
+      ]
+    },
+    {
+      "official_game_code": "PREL000102",
+      "source_sha256": "c5254bb9103e32c6beac74cf269fc7bcec8ce2c2a710a7d4600c7ddb951f160e",
+      "input_sha256": {
+        "origins": "ba685f6822de05e32efe8458a6cd6b6ef46150fedcfe93bd7e05a6a22d0d37db",
+        "two_shot": "9c28c3eeb2ad44d92b9f2c90a2d0bc426aa6ca7a6da497b93d412d9208e36bc4",
+        "cap_motion": "6cd943d780350ce120c0520a528b45f473339862a87dec73bcbabad75d2591ae",
+        "learned_motion": "7ae5f38f1281124fb35110624aa32a2b0f4a66fd64d4c4faa229e3cdd885468b",
+        "counter_alignment": "80fce8b9f0aa8161b6a44d2c5a2076bbc71ad3ed2745524c94e48f1d5ddaa68c",
+        "baseline_fusion": "b1a9611e2cc901cda31c894d01a5fff101ca99cfc490aeac955a0a198fe900ad"
+      },
+      "candidate_count_unchanged": 112,
+      "baseline_counter_linked_count": 92,
+      "new_counter_linked_count": 104,
+      "new_link_count": 12,
+      "new_colour_conflict_count": 10,
+      "unassociated_counter_count_after": 12,
+      "new_links_also_travel_proposals": 11,
+      "new_links": [
+        {
+          "counter_id": "B34",
+          "counter_colour": "yellow",
+          "shot_id": "S169",
+          "visual_colour_before": "red",
+          "event_colour_after": null,
+          "colour_status_after": "conflict",
+          "following_motion_options": [
+            {
+              "shot_id": "S169",
+              "interval_s": [
+                2109.2,
+                2119.8
+              ],
+              "visual_probability": 0.9167171255876136,
+              "motion_channels": [
+                "cap",
+                "learned"
+              ]
+            }
+          ]
+        },
+        {
+          "counter_id": "B35",
+          "counter_colour": "red",
+          "shot_id": "S173",
+          "visual_colour_before": "red",
+          "event_colour_after": "red",
+          "colour_status_after": "resolved",
+          "following_motion_options": [
+            {
+              "shot_id": "S173",
+              "interval_s": [
+                2150.8,
+                2157.2
+              ],
+              "visual_probability": 0.9014772981295032,
+              "motion_channels": [
+                "cap",
+                "learned"
+              ]
+            }
+          ]
+        },
+        {
+          "counter_id": "B40",
+          "counter_colour": "yellow",
+          "shot_id": "S193",
+          "visual_colour_before": "red",
+          "event_colour_after": null,
+          "colour_status_after": "conflict",
+          "following_motion_options": [
+            {
+              "shot_id": "S193",
+              "interval_s": [
+                2350.0,
+                2377.2
+              ],
+              "visual_probability": 0.7767826684537498,
+              "motion_channels": [
+                "cap",
+                "learned"
+              ]
+            }
+          ]
+        },
+        {
+          "counter_id": "B41",
+          "counter_colour": "red",
+          "shot_id": "S197",
+          "visual_colour_before": "red",
+          "event_colour_after": "red",
+          "colour_status_after": "resolved",
+          "following_motion_options": [
+            {
+              "shot_id": "S197",
+              "interval_s": [
+                2408.8,
+                2423.0
+              ],
+              "visual_probability": 0.9540847260693824,
+              "motion_channels": [
+                "cap",
+                "learned"
+              ]
+            }
+          ]
+        },
+        {
+          "counter_id": "B70",
+          "counter_colour": "yellow",
+          "shot_id": "S331",
+          "visual_colour_before": "red",
+          "event_colour_after": null,
+          "colour_status_after": "conflict",
+          "following_motion_options": [
+            {
+              "shot_id": "S331",
+              "interval_s": [
+                4377.6,
+                4400.6
+              ],
+              "visual_probability": 0.9311856537020834,
+              "motion_channels": [
+                "cap",
+                "learned"
+              ]
+            }
+          ]
+        },
+        {
+          "counter_id": "B75",
+          "counter_colour": "red",
+          "shot_id": "S353",
+          "visual_colour_before": "yellow",
+          "event_colour_after": null,
+          "colour_status_after": "conflict",
+          "following_motion_options": [
+            {
+              "shot_id": "S353",
+              "interval_s": [
+                4629.6,
+                4656.8
+              ],
+              "visual_probability": 0.9429167325747936,
+              "motion_channels": [
+                "cap",
+                "learned"
+              ]
+            }
+          ]
+        },
+        {
+          "counter_id": "B86",
+          "counter_colour": "yellow",
+          "shot_id": "S404",
+          "visual_colour_before": "red",
+          "event_colour_after": null,
+          "colour_status_after": "conflict",
+          "following_motion_options": [
+            {
+              "shot_id": "S404",
+              "interval_s": [
+                5365.6,
+                5393.4
+              ],
+              "visual_probability": 0.6192927829692906,
+              "motion_channels": [
+                "cap",
+                "learned"
+              ]
+            }
+          ]
+        },
+        {
+          "counter_id": "B98",
+          "counter_colour": "yellow",
+          "shot_id": "S483",
+          "visual_colour_before": "red",
+          "event_colour_after": null,
+          "colour_status_after": "conflict",
+          "following_motion_options": [
+            {
+              "shot_id": "S483",
+              "interval_s": [
+                6489.2,
+                6500.4
+              ],
+              "visual_probability": 0.9335582865463562,
+              "motion_channels": [
+                "cap",
+                "learned"
+              ]
+            }
+          ]
+        },
+        {
+          "counter_id": "B105",
+          "counter_colour": "yellow",
+          "shot_id": "S539",
+          "visual_colour_before": "red",
+          "event_colour_after": null,
+          "colour_status_after": "conflict",
+          "following_motion_options": [
+            {
+              "shot_id": "S539",
+              "interval_s": [
+                7291.4,
+                7298.8
+              ],
+              "visual_probability": 0.9064568597640182,
+              "motion_channels": [
+                "cap",
+                "learned"
+              ]
+            }
+          ]
+        },
+        {
+          "counter_id": "B111",
+          "counter_colour": "yellow",
+          "shot_id": "S562",
+          "visual_colour_before": "red",
+          "event_colour_after": null,
+          "colour_status_after": "conflict",
+          "following_motion_options": [
+            {
+              "shot_id": "S562",
+              "interval_s": [
+                7568.0,
+                7578.2
+              ],
+              "visual_probability": 0.9238352069282127,
+              "motion_channels": [
+                "cap",
+                "learned"
+              ]
+            }
+          ]
+        },
+        {
+          "counter_id": "B113",
+          "counter_colour": "yellow",
+          "shot_id": "S574",
+          "visual_colour_before": "red",
+          "event_colour_after": null,
+          "colour_status_after": "conflict",
+          "following_motion_options": [
+            {
+              "shot_id": "S574",
+              "interval_s": [
+                7719.2,
+                7731.0
+              ],
+              "visual_probability": 0.8986387298542078,
+              "motion_channels": [
+                "cap",
+                "learned"
+              ]
+            }
+          ]
+        },
+        {
+          "counter_id": "B115",
+          "counter_colour": "yellow",
+          "shot_id": "S581",
+          "visual_colour_before": "red",
+          "event_colour_after": null,
+          "colour_status_after": "conflict",
+          "following_motion_options": [
+            {
+              "shot_id": "S581",
+              "interval_s": [
+                7824.6,
+                7838.0
+              ],
+              "visual_probability": 0.9622929571629335,
+              "motion_channels": [
+                "cap",
+                "learned"
+              ]
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "shot_id": "S25",
+          "delivery_window_s": [
+            252.2,
+            331.6
+          ],
+          "origin_probability": 0.7668679143725786,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B01",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S30",
+          "delivery_window_s": [
+            385.2,
+            413.0
+          ],
+          "origin_probability": 0.6617431328729652,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B03",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S36",
+          "delivery_window_s": [
+            467.4,
+            487.0
+          ],
+          "origin_probability": 0.8722208815357992,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B05",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S37",
+          "delivery_window_s": [
+            487.0,
+            507.4
+          ],
+          "origin_probability": 0.026175235570683703,
+          "evidence_sources": [
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B06",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S42",
+          "delivery_window_s": [
+            558.6,
+            579.2
+          ],
+          "origin_probability": 0.7117387901425998,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B07",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S44",
+          "delivery_window_s": [
+            592.6,
+            613.4
+          ],
+          "origin_probability": 0.845408186902996,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B08",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S46",
+          "delivery_window_s": [
+            633.2,
+            671.2
+          ],
+          "origin_probability": 0.9316587764166597,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B09",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S49",
+          "delivery_window_s": [
+            688.2,
+            705.0
+          ],
+          "origin_probability": 0.9518085216109574,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B10",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S52",
+          "delivery_window_s": [
+            728.2,
+            766.4
+          ],
+          "origin_probability": 0.8762321193173721,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": null,
+          "colour_status": "ambiguous",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S55",
+          "delivery_window_s": [
+            787.8,
+            805.4
+          ],
+          "origin_probability": 0.9339389035338443,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B11",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S58",
+          "delivery_window_s": [
+            834.8,
+            861.6
+          ],
+          "origin_probability": 0.8519570806099837,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B12",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S66",
+          "delivery_window_s": [
+            932.2,
+            964.6
+          ],
+          "origin_probability": 0.8640869966774953,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B13",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S67",
+          "delivery_window_s": [
+            964.6,
+            978.4
+          ],
+          "origin_probability": 0.19656772298071667,
+          "evidence_sources": [
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B14",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S79",
+          "delivery_window_s": [
+            1096.2,
+            1105.8
+          ],
+          "origin_probability": 0.9082350319156706,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B15",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S81",
+          "delivery_window_s": [
+            1126.8,
+            1164.0
+          ],
+          "origin_probability": 0.7639773842960506,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B16",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S85",
+          "delivery_window_s": [
+            1203.0,
+            1209.4
+          ],
+          "origin_probability": 0.9344737058667756,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B17",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S87",
+          "delivery_window_s": [
+            1237.0,
+            1256.8
+          ],
+          "origin_probability": 0.708346383839682,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B18",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S89",
+          "delivery_window_s": [
+            1284.4,
+            1293.6
+          ],
+          "origin_probability": 0.9253688434731192,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B19",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S92",
+          "delivery_window_s": [
+            1320.6,
+            1340.6
+          ],
+          "origin_probability": 0.6422703524460012,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B20",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S93",
+          "delivery_window_s": [
+            1340.6,
+            1353.4
+          ],
+          "origin_probability": 0.06983076489389098,
+          "evidence_sources": [
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B21",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S104",
+          "delivery_window_s": [
+            1417.4,
+            1436.4
+          ],
+          "origin_probability": 0.02905179472755001,
+          "evidence_sources": [
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B23",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S113",
+          "delivery_window_s": [
+            1495.6,
+            1512.8
+          ],
+          "origin_probability": 0.7994368781004455,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B24",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S116",
+          "delivery_window_s": [
+            1540.2,
+            1554.6
+          ],
+          "origin_probability": 0.5900836786398593,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B25",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S127",
+          "delivery_window_s": [
+            1652.4,
+            1660.6
+          ],
+          "origin_probability": 0.8955586436479196,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B27",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S132",
+          "delivery_window_s": [
+            1694.0,
+            1712.6
+          ],
+          "origin_probability": 0.8168474084045471,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B28",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S137",
+          "delivery_window_s": [
+            1749.4,
+            1755.2
+          ],
+          "origin_probability": 0.9248046691257195,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B29",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S142",
+          "delivery_window_s": [
+            1798.4,
+            1811.0
+          ],
+          "origin_probability": 0.7659513446077929,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S150",
+          "delivery_window_s": [
+            1916.4,
+            1931.6
+          ],
+          "origin_probability": 0.8765078450637638,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B30",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S154",
+          "delivery_window_s": [
+            1963.8,
+            1973.0
+          ],
+          "origin_probability": 0.8913188933286956,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B31",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S159",
+          "delivery_window_s": [
+            2009.4,
+            2022.8
+          ],
+          "origin_probability": 0.9419335749507263,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B32",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S163",
+          "delivery_window_s": [
+            2059.6,
+            2069.0
+          ],
+          "origin_probability": 0.8508622275132651,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B33",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S169",
+          "delivery_window_s": [
+            2109.2,
+            2119.8
+          ],
+          "origin_probability": 0.9167171255876136,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_linked_to_existing_visual_candidate"
+          ],
+          "counter_id": "B34",
+          "colour": null,
+          "colour_status": "conflict",
+          "status": "candidate_with_colour_conflict"
+        },
+        {
+          "shot_id": "S173",
+          "delivery_window_s": [
+            2150.8,
+            2157.2
+          ],
+          "origin_probability": 0.9014772981295032,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_linked_to_existing_visual_candidate"
+          ],
+          "counter_id": "B35",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S177",
+          "delivery_window_s": [
+            2189.2,
+            2200.0
+          ],
+          "origin_probability": 0.9368013742507737,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B36",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S181",
+          "delivery_window_s": [
+            2229.4,
+            2235.0
+          ],
+          "origin_probability": 0.8510425031121732,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B37",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S190",
+          "delivery_window_s": [
+            2314.8,
+            2322.8
+          ],
+          "origin_probability": 0.9386838458572595,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B39",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S193",
+          "delivery_window_s": [
+            2350.0,
+            2377.2
+          ],
+          "origin_probability": 0.7767826684537498,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_linked_to_existing_visual_candidate"
+          ],
+          "counter_id": "B40",
+          "colour": null,
+          "colour_status": "conflict",
+          "status": "candidate_with_colour_conflict"
+        },
+        {
+          "shot_id": "S197",
+          "delivery_window_s": [
+            2408.8,
+            2423.0
+          ],
+          "origin_probability": 0.9540847260693824,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_linked_to_existing_visual_candidate"
+          ],
+          "counter_id": "B41",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S201",
+          "delivery_window_s": [
+            2465.0,
+            2477.6
+          ],
+          "origin_probability": 0.9059686932831398,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B42",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S206",
+          "delivery_window_s": [
+            2532.2,
+            2544.4
+          ],
+          "origin_probability": 0.8967609853039298,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B43",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S209",
+          "delivery_window_s": [
+            2578.8,
+            2594.2
+          ],
+          "origin_probability": 0.8954725911094726,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B44",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S227",
+          "delivery_window_s": [
+            2793.6,
+            2805.0
+          ],
+          "origin_probability": 0.8748246708193087,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B45",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S229",
+          "delivery_window_s": [
+            2830.6,
+            2853.8
+          ],
+          "origin_probability": 0.8826884147349128,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B46",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S232",
+          "delivery_window_s": [
+            2884.0,
+            2894.6
+          ],
+          "origin_probability": 0.843774521591038,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B47",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S237",
+          "delivery_window_s": [
+            2956.2,
+            2969.2
+          ],
+          "origin_probability": 0.9004405289785419,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B48",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S240",
+          "delivery_window_s": [
+            2999.6,
+            3017.2
+          ],
+          "origin_probability": 0.8708515221368519,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B49",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S245",
+          "delivery_window_s": [
+            3057.4,
+            3075.6
+          ],
+          "origin_probability": 0.8068521905017161,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B50",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S250",
+          "delivery_window_s": [
+            3115.8,
+            3123.2
+          ],
+          "origin_probability": 0.9260271314676295,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B51",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S255",
+          "delivery_window_s": [
+            3167.4,
+            3176.8
+          ],
+          "origin_probability": 0.8739424151741735,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B52",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S261",
+          "delivery_window_s": [
+            3225.8,
+            3240.0
+          ],
+          "origin_probability": 0.017896773529212293,
+          "evidence_sources": [
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B53",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S264",
+          "delivery_window_s": [
+            3268.4,
+            3286.2
+          ],
+          "origin_probability": 0.861399190541703,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B54",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S268",
+          "delivery_window_s": [
+            3336.8,
+            3346.0
+          ],
+          "origin_probability": 0.9225127837338293,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B55",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S283",
+          "delivery_window_s": [
+            3498.4,
+            3521.4
+          ],
+          "origin_probability": 0.6358424333647609,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B58",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S288",
+          "delivery_window_s": [
+            3595.4,
+            3602.2
+          ],
+          "origin_probability": 0.8018338506003047,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B59",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S293",
+          "delivery_window_s": [
+            3652.2,
+            3664.8
+          ],
+          "origin_probability": 0.8568724395179033,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B60",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S303",
+          "delivery_window_s": [
+            3813.2,
+            4036.4
+          ],
+          "origin_probability": 0.8637135403151986,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B61",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S304",
+          "delivery_window_s": [
+            4036.4,
+            4059.4
+          ],
+          "origin_probability": 0.09755088059468542,
+          "evidence_sources": [
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B62",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S309",
+          "delivery_window_s": [
+            4094.6,
+            4113.4
+          ],
+          "origin_probability": 0.9382702940381001,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B63",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S312",
+          "delivery_window_s": [
+            4140.8,
+            4158.6
+          ],
+          "origin_probability": 0.9438540332858018,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B64",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S315",
+          "delivery_window_s": [
+            4182.0,
+            4205.4
+          ],
+          "origin_probability": 0.9542721552075257,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B65",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S316",
+          "delivery_window_s": [
+            4205.4,
+            4229.8
+          ],
+          "origin_probability": 0.2598469455731869,
+          "evidence_sources": [
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B66",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S327",
+          "delivery_window_s": [
+            4327.4,
+            4344.8
+          ],
+          "origin_probability": 0.9317060812224603,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B69",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S331",
+          "delivery_window_s": [
+            4377.6,
+            4400.6
+          ],
+          "origin_probability": 0.9311856537020834,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_linked_to_existing_visual_candidate"
+          ],
+          "counter_id": "B70",
+          "colour": null,
+          "colour_status": "conflict",
+          "status": "candidate_with_colour_conflict"
+        },
+        {
+          "shot_id": "S335",
+          "delivery_window_s": [
+            4426.8,
+            4435.4
+          ],
+          "origin_probability": 0.9696853321969711,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B71",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S340",
+          "delivery_window_s": [
+            4480.0,
+            4493.2
+          ],
+          "origin_probability": 0.9302263131014994,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B72",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S344",
+          "delivery_window_s": [
+            4522.0,
+            4530.6
+          ],
+          "origin_probability": 0.9642846090805552,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B73",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S349",
+          "delivery_window_s": [
+            4573.8,
+            4601.8
+          ],
+          "origin_probability": 0.9062999196423485,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B74",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S353",
+          "delivery_window_s": [
+            4629.6,
+            4656.8
+          ],
+          "origin_probability": 0.9429167325747936,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_linked_to_existing_visual_candidate"
+          ],
+          "counter_id": "B75",
+          "colour": null,
+          "colour_status": "conflict",
+          "status": "candidate_with_colour_conflict"
+        },
+        {
+          "shot_id": "S360",
+          "delivery_window_s": [
+            4753.4,
+            4776.2
+          ],
+          "origin_probability": 0.6748430961684957,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S366",
+          "delivery_window_s": [
+            4895.6,
+            4904.0
+          ],
+          "origin_probability": 0.8786223347961964,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B76",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S370",
+          "delivery_window_s": [
+            4938.4,
+            4953.8
+          ],
+          "origin_probability": 0.8420737866046885,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B77",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S372",
+          "delivery_window_s": [
+            4981.6,
+            5000.0
+          ],
+          "origin_probability": 0.9247623979372079,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B78",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S373",
+          "delivery_window_s": [
+            5000.0,
+            5024.0
+          ],
+          "origin_probability": 0.014594705592910933,
+          "evidence_sources": [
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B79",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S382",
+          "delivery_window_s": [
+            5093.6,
+            5107.8
+          ],
+          "origin_probability": 0.9391599570039659,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B80",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S387",
+          "delivery_window_s": [
+            5149.4,
+            5164.8
+          ],
+          "origin_probability": 0.5926885565184932,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B81",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S392",
+          "delivery_window_s": [
+            5196.2,
+            5217.8
+          ],
+          "origin_probability": 0.8743503735384348,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B82",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S395",
+          "delivery_window_s": [
+            5239.0,
+            5253.2
+          ],
+          "origin_probability": 0.94117626439197,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B83",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S398",
+          "delivery_window_s": [
+            5290.4,
+            5305.6
+          ],
+          "origin_probability": 0.8745200140717965,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B84",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S399",
+          "delivery_window_s": [
+            5305.6,
+            5321.6
+          ],
+          "origin_probability": 0.051969171793133165,
+          "evidence_sources": [
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B85",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S403",
+          "delivery_window_s": [
+            5358.8,
+            5365.6
+          ],
+          "origin_probability": 0.6078133222793961,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S404",
+          "delivery_window_s": [
+            5365.6,
+            5393.4
+          ],
+          "origin_probability": 0.6192927829692906,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_linked_to_existing_visual_candidate"
+          ],
+          "counter_id": "B86",
+          "colour": null,
+          "colour_status": "conflict",
+          "status": "candidate_with_colour_conflict"
+        },
+        {
+          "shot_id": "S408",
+          "delivery_window_s": [
+            5434.4,
+            5444.2
+          ],
+          "origin_probability": 0.9435763990295386,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B87",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S411",
+          "delivery_window_s": [
+            5485.2,
+            5553.2
+          ],
+          "origin_probability": 0.8854767569957348,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": null,
+          "colour_status": "ambiguous",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S416",
+          "delivery_window_s": [
+            5603.2,
+            5618.6
+          ],
+          "origin_probability": 0.9325242238380096,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B88",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S421",
+          "delivery_window_s": [
+            5661.0,
+            5673.4
+          ],
+          "origin_probability": 0.8897976942116386,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B89",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S427",
+          "delivery_window_s": [
+            5724.6,
+            5740.8
+          ],
+          "origin_probability": 0.8118245719023376,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S436",
+          "delivery_window_s": [
+            5898.8,
+            5916.0
+          ],
+          "origin_probability": 0.9389835261977618,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B90",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S440",
+          "delivery_window_s": [
+            5952.2,
+            5965.0
+          ],
+          "origin_probability": 0.9446832023879398,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B91",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S445",
+          "delivery_window_s": [
+            6005.2,
+            6014.6
+          ],
+          "origin_probability": 0.9531083565658217,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B92",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S446",
+          "delivery_window_s": [
+            6014.6,
+            6040.2
+          ],
+          "origin_probability": 0.013775405590315943,
+          "evidence_sources": [
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B93",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S453",
+          "delivery_window_s": [
+            6093.0,
+            6115.8
+          ],
+          "origin_probability": 0.9219889558476259,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B94",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S456",
+          "delivery_window_s": [
+            6134.2,
+            6153.4
+          ],
+          "origin_probability": 0.7533227488664761,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B95",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S461",
+          "delivery_window_s": [
+            6196.4,
+            6206.4
+          ],
+          "origin_probability": 0.9431175323142582,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B96",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S465",
+          "delivery_window_s": [
+            6234.4,
+            6245.0
+          ],
+          "origin_probability": 0.9393272469756697,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B97",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S483",
+          "delivery_window_s": [
+            6489.2,
+            6500.4
+          ],
+          "origin_probability": 0.9335582865463562,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_linked_to_existing_visual_candidate"
+          ],
+          "counter_id": "B98",
+          "colour": null,
+          "colour_status": "conflict",
+          "status": "candidate_with_colour_conflict"
+        },
+        {
+          "shot_id": "S493",
+          "delivery_window_s": [
+            6599.6,
+            6613.2
+          ],
+          "origin_probability": 0.9536436611465393,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B100",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S504",
+          "delivery_window_s": [
+            6798.2,
+            6813.8
+          ],
+          "origin_probability": 0.9523582767351366,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B101",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S510",
+          "delivery_window_s": [
+            6875.4,
+            6886.0
+          ],
+          "origin_probability": 0.9367514455678821,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B102",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S516",
+          "delivery_window_s": [
+            6960.6,
+            6978.2
+          ],
+          "origin_probability": 0.5266533356554954,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B103",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S522",
+          "delivery_window_s": [
+            7073.0,
+            7087.0
+          ],
+          "origin_probability": 0.9471871233906476,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B104",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S529",
+          "delivery_window_s": [
+            7150.0,
+            7159.0
+          ],
+          "origin_probability": 0.8843404362720597,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": null,
+          "colour_status": "ambiguous",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S539",
+          "delivery_window_s": [
+            7291.4,
+            7298.8
+          ],
+          "origin_probability": 0.9064568597640182,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_linked_to_existing_visual_candidate"
+          ],
+          "counter_id": "B105",
+          "colour": null,
+          "colour_status": "conflict",
+          "status": "candidate_with_colour_conflict"
+        },
+        {
+          "shot_id": "S543",
+          "delivery_window_s": [
+            7331.6,
+            7346.4
+          ],
+          "origin_probability": 0.9652933340921261,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B106",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S547",
+          "delivery_window_s": [
+            7391.2,
+            7405.2
+          ],
+          "origin_probability": 0.9604216557124473,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B108",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S556",
+          "delivery_window_s": [
+            7491.4,
+            7515.0
+          ],
+          "origin_probability": 0.9497163374958911,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B110",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S562",
+          "delivery_window_s": [
+            7568.0,
+            7578.2
+          ],
+          "origin_probability": 0.9238352069282127,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_linked_to_existing_visual_candidate"
+          ],
+          "counter_id": "B111",
+          "colour": null,
+          "colour_status": "conflict",
+          "status": "candidate_with_colour_conflict"
+        },
+        {
+          "shot_id": "S569",
+          "delivery_window_s": [
+            7639.2,
+            7652.4
+          ],
+          "origin_probability": 0.9468552913925171,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B112",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S574",
+          "delivery_window_s": [
+            7719.2,
+            7731.0
+          ],
+          "origin_probability": 0.8986387298542078,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_linked_to_existing_visual_candidate"
+          ],
+          "counter_id": "B113",
+          "colour": null,
+          "colour_status": "conflict",
+          "status": "candidate_with_colour_conflict"
+        },
+        {
+          "shot_id": "S576",
+          "delivery_window_s": [
+            7764.2,
+            7772.6
+          ],
+          "origin_probability": 0.964592706538845,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B114",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S581",
+          "delivery_window_s": [
+            7824.6,
+            7838.0
+          ],
+          "origin_probability": 0.9622929571629335,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_linked_to_existing_visual_candidate"
+          ],
+          "counter_id": "B115",
+          "colour": null,
+          "colour_status": "conflict",
+          "status": "candidate_with_colour_conflict"
+        },
+        {
+          "shot_id": "S586",
+          "delivery_window_s": [
+            7882.2,
+            7894.0
+          ],
+          "origin_probability": 0.9703451609592333,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B116",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S593",
+          "delivery_window_s": [
+            7946.8,
+            7954.2
+          ],
+          "origin_probability": 0.8506610940324089,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        }
+      ],
+      "unassociated_counter_events": [
+        {
+          "counter_id": "B02",
+          "colour": "red",
+          "counter_evidence_interval_s": [
+            362.0,
+            383.0
+          ],
+          "counter_update_s": 383.0,
+          "shot_id": null,
+          "status": "abstained",
+          "candidate_shots": [],
+          "development_label": null,
+          "existing_visual_candidates": []
+        },
+        {
+          "counter_id": "B04",
+          "colour": "red",
+          "counter_evidence_interval_s": [
+            443.0,
+            460.0
+          ],
+          "counter_update_s": 460.0,
+          "shot_id": null,
+          "status": "abstained",
+          "candidate_shots": [],
+          "development_label": null,
+          "existing_visual_candidates": []
+        },
+        {
+          "counter_id": "B22",
+          "colour": "yellow",
+          "counter_evidence_interval_s": [
+            1413.0,
+            1423.0
+          ],
+          "counter_update_s": 1423.0,
+          "shot_id": null,
+          "status": "abstained",
+          "candidate_shots": [],
+          "development_label": null,
+          "existing_visual_candidates": []
+        },
+        {
+          "counter_id": "B26",
+          "colour": "yellow",
+          "counter_evidence_interval_s": [
+            1606.0,
+            1608.0
+          ],
+          "counter_update_s": 1608.0,
+          "shot_id": null,
+          "status": "abstained",
+          "candidate_shots": [],
+          "development_label": null,
+          "existing_visual_candidates": []
+        },
+        {
+          "counter_id": "B38",
+          "colour": "yellow",
+          "counter_evidence_interval_s": [
+            2285.0,
+            2302.0
+          ],
+          "counter_update_s": 2302.0,
+          "shot_id": null,
+          "status": "abstained",
+          "candidate_shots": [],
+          "development_label": null,
+          "existing_visual_candidates": []
+        },
+        {
+          "counter_id": "B56",
+          "colour": "yellow",
+          "counter_evidence_interval_s": [
+            3395.0,
+            3396.0
+          ],
+          "counter_update_s": 3396.0,
+          "shot_id": null,
+          "status": "abstained",
+          "candidate_shots": [],
+          "development_label": null,
+          "existing_visual_candidates": []
+        },
+        {
+          "counter_id": "B57",
+          "colour": "red",
+          "counter_evidence_interval_s": [
+            3459.0,
+            3478.0
+          ],
+          "counter_update_s": 3478.0,
+          "shot_id": null,
+          "status": "abstained",
+          "candidate_shots": [],
+          "development_label": null,
+          "existing_visual_candidates": []
+        },
+        {
+          "counter_id": "B67",
+          "colour": "red",
+          "counter_evidence_interval_s": [
+            4248.0,
+            4263.0
+          ],
+          "counter_update_s": 4263.0,
+          "shot_id": null,
+          "status": "abstained",
+          "candidate_shots": [],
+          "development_label": null,
+          "existing_visual_candidates": []
+        },
+        {
+          "counter_id": "B68",
+          "colour": "yellow",
+          "counter_evidence_interval_s": [
+            4302.0,
+            4323.0
+          ],
+          "counter_update_s": 4323.0,
+          "shot_id": null,
+          "status": "abstained",
+          "candidate_shots": [],
+          "development_label": null,
+          "existing_visual_candidates": []
+        },
+        {
+          "counter_id": "B99",
+          "colour": "red",
+          "counter_evidence_interval_s": [
+            6540.0,
+            6547.0
+          ],
+          "counter_update_s": 6547.0,
+          "shot_id": null,
+          "status": "abstained",
+          "candidate_shots": [
+            {
+              "shot_id": "S484",
+              "interval_s": [
+                6500.4,
+                6524.2
+              ],
+              "origin_probability": 0.09287186690326278,
+              "motion_channels": [
+                "sequential-shot-cap-motion"
+              ]
+            },
+            {
+              "shot_id": "S485",
+              "interval_s": [
+                6524.2,
+                6528.8
+              ],
+              "origin_probability": 0.07033959531064678,
+              "motion_channels": [
+                "sequential-shot-cap-motion"
+              ]
+            }
+          ],
+          "development_label": null,
+          "existing_visual_candidates": []
+        },
+        {
+          "counter_id": "B107",
+          "colour": "yellow",
+          "counter_evidence_interval_s": [
+            7375.0,
+            7386.0
+          ],
+          "counter_update_s": 7386.0,
+          "shot_id": null,
+          "status": "abstained",
+          "candidate_shots": [],
+          "development_label": null,
+          "existing_visual_candidates": []
+        },
+        {
+          "counter_id": "B109",
+          "colour": "yellow",
+          "counter_evidence_interval_s": [
+            7460.0,
+            7461.0
+          ],
+          "counter_update_s": 7461.0,
+          "shot_id": null,
+          "status": "abstained",
+          "candidate_shots": [],
+          "development_label": null,
+          "existing_visual_candidates": []
+        }
+      ]
+    },
+    {
+      "official_game_code": "PREL000103",
+      "source_sha256": "eba1d86944a2f4278b6e5e2c7549d12b47e5e8a51bf0c680b2db372c6ec12420",
+      "input_sha256": {
+        "origins": "1a93d01e0aeb399177e3de08f13c56554e06955994d2c2302999d5ea3ab87b38",
+        "two_shot": "93fb45ed5964bb40e6717a7ca65745a973660ee021ffdedc47499169afecacc7",
+        "cap_motion": "91f4db5dd26eff408e7ee8c1b35421bb39e1cb0bbf6410c087d315a2d97b6e15",
+        "learned_motion": "c42d50855ce1b2f5524dca74674cf846dfb313145e297d8dd61fd77040c5aa6a",
+        "counter_alignment": "daa5aef0683a5bb7ea59059035a50b7c4be6b795ba43da60526d3ecc56bb6a40",
+        "baseline_fusion": "54a1c360847761cf574d02edbedbec897f6c5c3b4c0ca30d10a83e9a82a4f9e9"
+      },
+      "candidate_count_unchanged": 116,
+      "baseline_counter_linked_count": 88,
+      "new_counter_linked_count": 94,
+      "new_link_count": 6,
+      "new_colour_conflict_count": 4,
+      "unassociated_counter_count_after": 4,
+      "new_links_also_travel_proposals": 3,
+      "new_links": [
+        {
+          "counter_id": "B13",
+          "counter_colour": "yellow",
+          "shot_id": "S72",
+          "visual_colour_before": "red",
+          "event_colour_after": null,
+          "colour_status_after": "conflict",
+          "following_motion_options": [
+            {
+              "shot_id": "S72",
+              "interval_s": [
+                1181.4,
+                1198.2
+              ],
+              "visual_probability": 0.9003398424838586,
+              "motion_channels": [
+                "cap",
+                "learned"
+              ]
+            }
+          ]
+        },
+        {
+          "counter_id": "B24",
+          "counter_colour": "yellow",
+          "shot_id": "S115",
+          "visual_colour_before": "red",
+          "event_colour_after": null,
+          "colour_status_after": "conflict",
+          "following_motion_options": [
+            {
+              "shot_id": "S115",
+              "interval_s": [
+                1867.8,
+                1897.6
+              ],
+              "visual_probability": 0.7931934442104994,
+              "motion_channels": [
+                "cap",
+                "learned"
+              ]
+            }
+          ]
+        },
+        {
+          "counter_id": "B54",
+          "counter_colour": "yellow",
+          "shot_id": "S253",
+          "visual_colour_before": "red",
+          "event_colour_after": null,
+          "colour_status_after": "conflict",
+          "following_motion_options": [
+            {
+              "shot_id": "S253",
+              "interval_s": [
+                3927.2,
+                3959.0
+              ],
+              "visual_probability": 0.8478544755105114,
+              "motion_channels": [
+                "cap",
+                "learned"
+              ]
+            }
+          ]
+        },
+        {
+          "counter_id": "B61",
+          "counter_colour": "red",
+          "shot_id": "S286",
+          "visual_colour_before": "red",
+          "event_colour_after": "red",
+          "colour_status_after": "resolved",
+          "following_motion_options": [
+            {
+              "shot_id": "S286",
+              "interval_s": [
+                4540.6,
+                4562.6
+              ],
+              "visual_probability": 0.7868909397813599,
+              "motion_channels": [
+                "cap",
+                "learned"
+              ]
+            }
+          ]
+        },
+        {
+          "counter_id": "B70",
+          "counter_colour": "yellow",
+          "shot_id": "S340",
+          "visual_colour_before": "red",
+          "event_colour_after": null,
+          "colour_status_after": "conflict",
+          "following_motion_options": [
+            {
+              "shot_id": "S340",
+              "interval_s": [
+                5326.2,
+                5334.6
+              ],
+              "visual_probability": 0.9742343265745588,
+              "motion_channels": [
+                "cap",
+                "learned"
+              ]
+            }
+          ]
+        },
+        {
+          "counter_id": "B93",
+          "counter_colour": "red",
+          "shot_id": "S438",
+          "visual_colour_before": "red",
+          "event_colour_after": "red",
+          "colour_status_after": "resolved",
+          "following_motion_options": [
+            {
+              "shot_id": "S438",
+              "interval_s": [
+                6684.0,
+                6697.2
+              ],
+              "visual_probability": 0.8051014617396762,
+              "motion_channels": [
+                "cap",
+                "learned"
+              ]
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "shot_id": "S17",
+          "delivery_window_s": [
+            307.2,
+            331.8
+          ],
+          "origin_probability": 0.9704437536815879,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": null,
+          "colour_status": "ambiguous",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S19",
+          "delivery_window_s": [
+            351.4,
+            366.6
+          ],
+          "origin_probability": 0.9601296713936008,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B01",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S22",
+          "delivery_window_s": [
+            389.2,
+            408.8
+          ],
+          "origin_probability": 0.8960740676066258,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B02",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S23",
+          "delivery_window_s": [
+            408.8,
+            426.6
+          ],
+          "origin_probability": 0.03609910315087877,
+          "evidence_sources": [
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B03",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S25",
+          "delivery_window_s": [
+            438.2,
+            451.2
+          ],
+          "origin_probability": 0.8819062722238682,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B04",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S27",
+          "delivery_window_s": [
+            468.2,
+            489.8
+          ],
+          "origin_probability": 0.9542917403429556,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B05",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S29",
+          "delivery_window_s": [
+            508.6,
+            524.6
+          ],
+          "origin_probability": 0.6886041363398603,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B06",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S32",
+          "delivery_window_s": [
+            548.0,
+            570.2
+          ],
+          "origin_probability": 0.9313575355265145,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B07",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S34",
+          "delivery_window_s": [
+            588.2,
+            599.8
+          ],
+          "origin_probability": 0.8487696536281871,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B08",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S36",
+          "delivery_window_s": [
+            616.4,
+            635.2
+          ],
+          "origin_probability": 0.9632548909029348,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B09",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S38",
+          "delivery_window_s": [
+            658.6,
+            694.0
+          ],
+          "origin_probability": 0.9563005126354112,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B10",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S40",
+          "delivery_window_s": [
+            716.2,
+            730.0
+          ],
+          "origin_probability": 0.950775816629398,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B11",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S43",
+          "delivery_window_s": [
+            752.8,
+            764.2
+          ],
+          "origin_probability": 0.9397974447697771,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S47",
+          "delivery_window_s": [
+            815.0,
+            849.6
+          ],
+          "origin_probability": 0.9594465105881533,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": null,
+          "colour_status": "ambiguous",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S50",
+          "delivery_window_s": [
+            893.4,
+            915.4
+          ],
+          "origin_probability": 0.9328945791266909,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S54",
+          "delivery_window_s": [
+            947.0,
+            963.8
+          ],
+          "origin_probability": 0.9687706044561804,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S60",
+          "delivery_window_s": [
+            1014.4,
+            1031.0
+          ],
+          "origin_probability": 0.8627431779961094,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S70",
+          "delivery_window_s": [
+            1140.2,
+            1157.8
+          ],
+          "origin_probability": 0.9329784242896593,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B12",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S72",
+          "delivery_window_s": [
+            1181.4,
+            1198.2
+          ],
+          "origin_probability": 0.9003398424838586,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_linked_to_existing_visual_candidate"
+          ],
+          "counter_id": "B13",
+          "colour": null,
+          "colour_status": "conflict",
+          "status": "candidate_with_colour_conflict"
+        },
+        {
+          "shot_id": "S74",
+          "delivery_window_s": [
+            1218.0,
+            1234.0
+          ],
+          "origin_probability": 0.9259407457135433,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B14",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S76",
+          "delivery_window_s": [
+            1254.6,
+            1281.4
+          ],
+          "origin_probability": 0.9437490254812698,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S79",
+          "delivery_window_s": [
+            1309.6,
+            1328.0
+          ],
+          "origin_probability": 0.9551152049119402,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B15",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S82",
+          "delivery_window_s": [
+            1356.2,
+            1375.4
+          ],
+          "origin_probability": 0.8883733887429319,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B16",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S84",
+          "delivery_window_s": [
+            1404.4,
+            1420.8
+          ],
+          "origin_probability": 0.8731737564853308,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B17",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S87",
+          "delivery_window_s": [
+            1448.8,
+            1481.6
+          ],
+          "origin_probability": 0.8973364675891774,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B18",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S92",
+          "delivery_window_s": [
+            1519.2,
+            1532.0
+          ],
+          "origin_probability": 0.8187683669348697,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B19",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S94",
+          "delivery_window_s": [
+            1557.4,
+            1575.0
+          ],
+          "origin_probability": 0.914432402651374,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B20",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S99",
+          "delivery_window_s": [
+            1611.6,
+            1624.0
+          ],
+          "origin_probability": 0.9075161358051003,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B21",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S102",
+          "delivery_window_s": [
+            1647.6,
+            1682.0
+          ],
+          "origin_probability": 0.6911516702331967,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B22",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S109",
+          "delivery_window_s": [
+            1780.0,
+            1808.6
+          ],
+          "origin_probability": 0.8795111833116315,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B23",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S115",
+          "delivery_window_s": [
+            1867.8,
+            1897.6
+          ],
+          "origin_probability": 0.7931934442104994,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_linked_to_existing_visual_candidate"
+          ],
+          "counter_id": "B24",
+          "colour": null,
+          "colour_status": "conflict",
+          "status": "candidate_with_colour_conflict"
+        },
+        {
+          "shot_id": "S118",
+          "delivery_window_s": [
+            1934.0,
+            1949.4
+          ],
+          "origin_probability": 0.6372813119866604,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B25",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S126",
+          "delivery_window_s": [
+            2103.0,
+            2131.6
+          ],
+          "origin_probability": 0.9501595716624184,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S135",
+          "delivery_window_s": [
+            2218.0,
+            2240.6
+          ],
+          "origin_probability": 0.8997340022496362,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B26",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S137",
+          "delivery_window_s": [
+            2261.8,
+            2297.4
+          ],
+          "origin_probability": 0.8954408625114549,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B27",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S139",
+          "delivery_window_s": [
+            2319.6,
+            2332.0
+          ],
+          "origin_probability": 0.8985640796188343,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B28",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S141",
+          "delivery_window_s": [
+            2359.6,
+            2378.0
+          ],
+          "origin_probability": 0.6472112185053293,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B29",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S144",
+          "delivery_window_s": [
+            2402.2,
+            2414.6
+          ],
+          "origin_probability": 0.7751572283119356,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B30",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S146",
+          "delivery_window_s": [
+            2440.2,
+            2472.8
+          ],
+          "origin_probability": 0.6255131093147455,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B31",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S148",
+          "delivery_window_s": [
+            2494.6,
+            2508.2
+          ],
+          "origin_probability": 0.732412153274366,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B32",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S152",
+          "delivery_window_s": [
+            2549.6,
+            2568.2
+          ],
+          "origin_probability": 0.7119676868646616,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B33",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S154",
+          "delivery_window_s": [
+            2604.6,
+            2622.8
+          ],
+          "origin_probability": 0.6043070174433015,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B34",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S159",
+          "delivery_window_s": [
+            2667.0,
+            2684.6
+          ],
+          "origin_probability": 0.9049870447251528,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B35",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S162",
+          "delivery_window_s": [
+            2715.0,
+            2731.4
+          ],
+          "origin_probability": 0.6458511001426269,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B36",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S166",
+          "delivery_window_s": [
+            2784.8,
+            2796.8
+          ],
+          "origin_probability": 0.7333115482976571,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B37",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S169",
+          "delivery_window_s": [
+            2846.4,
+            2866.2
+          ],
+          "origin_probability": 0.6355324000485677,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B38",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S175",
+          "delivery_window_s": [
+            2935.0,
+            2953.2
+          ],
+          "origin_probability": 0.689901989128373,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B39",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S179",
+          "delivery_window_s": [
+            2986.4,
+            3005.6
+          ],
+          "origin_probability": 0.7839652196216879,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B40",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S182",
+          "delivery_window_s": [
+            3064.4,
+            3076.0
+          ],
+          "origin_probability": 0.9186761508750555,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B41",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S192",
+          "delivery_window_s": [
+            3162.8,
+            3183.6
+          ],
+          "origin_probability": 0.9266979329914676,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": null,
+          "colour_status": "ambiguous",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S195",
+          "delivery_window_s": [
+            3204.2,
+            3221.6
+          ],
+          "origin_probability": 0.6813833775301666,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B42",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S197",
+          "delivery_window_s": [
+            3247.8,
+            3265.0
+          ],
+          "origin_probability": 0.8212329726978096,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B43",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S199",
+          "delivery_window_s": [
+            3290.0,
+            3303.0
+          ],
+          "origin_probability": 0.9455898584649178,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B44",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S201",
+          "delivery_window_s": [
+            3325.4,
+            3355.8
+          ],
+          "origin_probability": 0.8909706911487236,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B45",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S205",
+          "delivery_window_s": [
+            3377.4,
+            3389.8
+          ],
+          "origin_probability": 0.7770307970059037,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B46",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S209",
+          "delivery_window_s": [
+            3424.6,
+            3440.8
+          ],
+          "origin_probability": 0.9235687499016925,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B47",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S213",
+          "delivery_window_s": [
+            3465.6,
+            3478.2
+          ],
+          "origin_probability": 0.8946663343877039,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B48",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S217",
+          "delivery_window_s": [
+            3507.4,
+            3530.2
+          ],
+          "origin_probability": 0.7957277337400707,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B49",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S223",
+          "delivery_window_s": [
+            3582.2,
+            3612.4
+          ],
+          "origin_probability": 0.8726473733385871,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B50",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S228",
+          "delivery_window_s": [
+            3651.8,
+            3669.0
+          ],
+          "origin_probability": 0.680067258055749,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B51",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S232",
+          "delivery_window_s": [
+            3700.6,
+            3710.6
+          ],
+          "origin_probability": 0.7435207560847072,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B52",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S241",
+          "delivery_window_s": [
+            3778.0,
+            3804.2
+          ],
+          "origin_probability": 0.9086072209887127,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B53",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S249",
+          "delivery_window_s": [
+            3866.8,
+            3886.2
+          ],
+          "origin_probability": 0.9091585934895853,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S253",
+          "delivery_window_s": [
+            3927.2,
+            3959.0
+          ],
+          "origin_probability": 0.8478544755105114,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_linked_to_existing_visual_candidate"
+          ],
+          "counter_id": "B54",
+          "colour": null,
+          "colour_status": "conflict",
+          "status": "candidate_with_colour_conflict"
+        },
+        {
+          "shot_id": "S257",
+          "delivery_window_s": [
+            3988.4,
+            4008.2
+          ],
+          "origin_probability": 0.9454755921647816,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S274",
+          "delivery_window_s": [
+            4352.6,
+            4361.8
+          ],
+          "origin_probability": 0.9252236461083233,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B55",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S277",
+          "delivery_window_s": [
+            4385.8,
+            4391.0
+          ],
+          "origin_probability": 0.02515102833937371,
+          "evidence_sources": [
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B57",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S278",
+          "delivery_window_s": [
+            4391.0,
+            4401.4
+          ],
+          "origin_probability": 0.9416213804699382,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B56",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S279",
+          "delivery_window_s": [
+            4401.4,
+            4422.2
+          ],
+          "origin_probability": 0.00419512099218933,
+          "evidence_sources": [
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B59",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S282",
+          "delivery_window_s": [
+            4458.0,
+            4469.4
+          ],
+          "origin_probability": 0.9477564687776057,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B58",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S284",
+          "delivery_window_s": [
+            4498.4,
+            4515.2
+          ],
+          "origin_probability": 0.8870272830220163,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B60",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S286",
+          "delivery_window_s": [
+            4540.6,
+            4562.6
+          ],
+          "origin_probability": 0.7868909397813599,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_linked_to_existing_visual_candidate"
+          ],
+          "counter_id": "B61",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S287",
+          "delivery_window_s": [
+            4562.6,
+            4602.0
+          ],
+          "origin_probability": 0.8275634025827557,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B62",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S291",
+          "delivery_window_s": [
+            4627.6,
+            4642.8
+          ],
+          "origin_probability": 0.9584977066224508,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B63",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S293",
+          "delivery_window_s": [
+            4666.8,
+            4688.2
+          ],
+          "origin_probability": 0.7891419552044406,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B64",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S298",
+          "delivery_window_s": [
+            4742.6,
+            4755.4
+          ],
+          "origin_probability": 0.9183947932165927,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B65",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S303",
+          "delivery_window_s": [
+            4786.4,
+            4802.0
+          ],
+          "origin_probability": 0.9786800386586291,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B66",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S310",
+          "delivery_window_s": [
+            4865.6,
+            4876.0
+          ],
+          "origin_probability": 0.6970076700255095,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B67",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S312",
+          "delivery_window_s": [
+            4910.4,
+            4931.2
+          ],
+          "origin_probability": 0.8897975584508501,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": null,
+          "colour_status": "ambiguous",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S317",
+          "delivery_window_s": [
+            4994.0,
+            5028.4
+          ],
+          "origin_probability": 0.8516929780604713,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B68",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S324",
+          "delivery_window_s": [
+            5092.2,
+            5114.6
+          ],
+          "origin_probability": 0.9102094708143633,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B69",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S328",
+          "delivery_window_s": [
+            5146.4,
+            5166.4
+          ],
+          "origin_probability": 0.8771169314730658,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S332",
+          "delivery_window_s": [
+            5207.6,
+            5227.8
+          ],
+          "origin_probability": 0.9492778057637353,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": null,
+          "colour_status": "ambiguous",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S340",
+          "delivery_window_s": [
+            5326.2,
+            5334.6
+          ],
+          "origin_probability": 0.9742343265745588,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_linked_to_existing_visual_candidate"
+          ],
+          "counter_id": "B70",
+          "colour": null,
+          "colour_status": "conflict",
+          "status": "candidate_with_colour_conflict"
+        },
+        {
+          "shot_id": "S343",
+          "delivery_window_s": [
+            5359.6,
+            5379.2
+          ],
+          "origin_probability": 0.9558520268920809,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B71",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S346",
+          "delivery_window_s": [
+            5401.2,
+            5416.6
+          ],
+          "origin_probability": 0.9443190466466322,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B72",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S348",
+          "delivery_window_s": [
+            5439.4,
+            5457.4
+          ],
+          "origin_probability": 0.970823027648321,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B73",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S351",
+          "delivery_window_s": [
+            5476.8,
+            5496.4
+          ],
+          "origin_probability": 0.9573186629015022,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B74",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S355",
+          "delivery_window_s": [
+            5525.8,
+            5537.0
+          ],
+          "origin_probability": 0.9274954634087101,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B75",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S357",
+          "delivery_window_s": [
+            5562.4,
+            5577.8
+          ],
+          "origin_probability": 0.7736218021304749,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B76",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S361",
+          "delivery_window_s": [
+            5609.8,
+            5619.4
+          ],
+          "origin_probability": 0.6771317594165754,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B77",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S364",
+          "delivery_window_s": [
+            5644.2,
+            5660.0
+          ],
+          "origin_probability": 0.7829043518921542,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B78",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S369",
+          "delivery_window_s": [
+            5719.2,
+            5752.0
+          ],
+          "origin_probability": 0.020832950899664533,
+          "evidence_sources": [
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B79",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S372",
+          "delivery_window_s": [
+            5774.4,
+            5792.4
+          ],
+          "origin_probability": 0.814357902701917,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": null,
+          "colour_status": "ambiguous",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S374",
+          "delivery_window_s": [
+            5814.2,
+            5843.4
+          ],
+          "origin_probability": 0.9075736098007787,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B81",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S380",
+          "delivery_window_s": [
+            5909.6,
+            5932.6
+          ],
+          "origin_probability": 0.9333484920953521,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B82",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S385",
+          "delivery_window_s": [
+            5989.4,
+            6000.0
+          ],
+          "origin_probability": 0.9301145594714312,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B83",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S389",
+          "delivery_window_s": [
+            6033.6,
+            6048.6
+          ],
+          "origin_probability": 0.9342663545951227,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B84",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S396",
+          "delivery_window_s": [
+            6120.0,
+            6142.8
+          ],
+          "origin_probability": 0.9368348413082577,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S409",
+          "delivery_window_s": [
+            6323.2,
+            6346.4
+          ],
+          "origin_probability": 0.8301907346668447,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B85",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S411",
+          "delivery_window_s": [
+            6373.0,
+            6393.4
+          ],
+          "origin_probability": 0.9579426225653497,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": null,
+          "colour_status": "ambiguous",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S414",
+          "delivery_window_s": [
+            6421.0,
+            6437.6
+          ],
+          "origin_probability": 0.930826555867892,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B87",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S420",
+          "delivery_window_s": [
+            6473.0,
+            6488.2
+          ],
+          "origin_probability": 0.9341642290506156,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B89",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S424",
+          "delivery_window_s": [
+            6514.8,
+            6530.0
+          ],
+          "origin_probability": 0.8886329074823829,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S428",
+          "delivery_window_s": [
+            6562.0,
+            6572.8
+          ],
+          "origin_probability": 0.9215849772121006,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B90",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S430",
+          "delivery_window_s": [
+            6592.0,
+            6610.8
+          ],
+          "origin_probability": 0.9253632707657483,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B91",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S434",
+          "delivery_window_s": [
+            6637.0,
+            6651.6
+          ],
+          "origin_probability": 0.8798705281592972,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S438",
+          "delivery_window_s": [
+            6684.0,
+            6697.2
+          ],
+          "origin_probability": 0.8051014617396762,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_linked_to_existing_visual_candidate"
+          ],
+          "counter_id": "B93",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S441",
+          "delivery_window_s": [
+            6726.4,
+            6745.2
+          ],
+          "origin_probability": 0.9636085499980973,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B94",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S444",
+          "delivery_window_s": [
+            6781.4,
+            6799.8
+          ],
+          "origin_probability": 0.82881758603953,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B95",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S446",
+          "delivery_window_s": [
+            6820.8,
+            6845.8
+          ],
+          "origin_probability": 0.9191078120169135,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B96",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S449",
+          "delivery_window_s": [
+            6883.8,
+            6895.8
+          ],
+          "origin_probability": 0.5549981231994456,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S453",
+          "delivery_window_s": [
+            6924.8,
+            6952.6
+          ],
+          "origin_probability": 0.8924030511528449,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S459",
+          "delivery_window_s": [
+            7018.8,
+            7042.8
+          ],
+          "origin_probability": 0.9417405450000013,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion"
+          ],
+          "counter_id": null,
+          "colour": null,
+          "colour_status": "ambiguous",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S461",
+          "delivery_window_s": [
+            7074.4,
+            7092.6
+          ],
+          "origin_probability": 0.903703846770174,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B97",
+          "colour": "red",
+          "colour_status": "resolved",
+          "status": "candidate"
+        },
+        {
+          "shot_id": "S464",
+          "delivery_window_s": [
+            7113.4,
+            7144.4
+          ],
+          "origin_probability": 0.8657051881873994,
+          "evidence_sources": [
+            "visual_origin_and_adjacent_motion",
+            "delayed_counter_and_adjacent_motion"
+          ],
+          "counter_id": "B98",
+          "colour": "yellow",
+          "colour_status": "resolved",
+          "status": "candidate"
+        }
+      ],
+      "unassociated_counter_events": [
+        {
+          "counter_id": "B80",
+          "colour": "red",
+          "counter_evidence_interval_s": [
+            5831.0,
+            5832.0
+          ],
+          "counter_update_s": 5832.0,
+          "shot_id": null,
+          "status": "abstained",
+          "association_route": null,
+          "candidate_shots": [
+            {
+              "shot_id": "S374",
+              "interval_s": [
+                5814.2,
+                5843.4
+              ],
+              "origin_probability": 0.9075736098007787,
+              "motion_channels": [
+                "cap-motion"
+              ]
+            },
+            {
+              "shot_id": "S372",
+              "interval_s": [
+                5774.4,
+                5792.4
+              ],
+              "origin_probability": 0.814357902701917,
+              "motion_channels": [
+                "cap-motion"
+              ]
+            },
+            {
+              "shot_id": "S373",
+              "interval_s": [
+                5792.4,
+                5814.2
+              ],
+              "origin_probability": 0.015065245642514088,
+              "motion_channels": [
+                "cap-motion"
+              ]
+            }
+          ],
+          "development_label": null,
+          "existing_visual_candidates": []
+        },
+        {
+          "counter_id": "B86",
+          "colour": "red",
+          "counter_evidence_interval_s": [
+            6420.0,
+            6421.0
+          ],
+          "counter_update_s": 6421.0,
+          "shot_id": null,
+          "status": "abstained",
+          "association_route": null,
+          "candidate_shots": [
+            {
+              "shot_id": "S411",
+              "interval_s": [
+                6373.0,
+                6393.4
+              ],
+              "origin_probability": 0.9579426225653497,
+              "motion_channels": [
+                "cap-motion"
+              ]
+            },
+            {
+              "shot_id": "S414",
+              "interval_s": [
+                6421.0,
+                6437.6
+              ],
+              "origin_probability": 0.930826555867892,
+              "motion_channels": [
+                "cap-motion"
+              ]
+            },
+            {
+              "shot_id": "S413",
+              "interval_s": [
+                6412.4,
+                6421.0
+              ],
+              "origin_probability": 0.03727708259380277,
+              "motion_channels": [
+                "cap-motion"
+              ]
+            },
+            {
+              "shot_id": "S412",
+              "interval_s": [
+                6393.4,
+                6412.4
+              ],
+              "origin_probability": 0.006961336373666909,
+              "motion_channels": [
+                "cap-motion"
+              ]
+            }
+          ],
+          "development_label": null,
+          "existing_visual_candidates": []
+        },
+        {
+          "counter_id": "B88",
+          "colour": "yellow",
+          "counter_evidence_interval_s": [
+            6457.0,
+            6458.0
+          ],
+          "counter_update_s": 6458.0,
+          "shot_id": null,
+          "status": "abstained",
+          "association_route": null,
+          "candidate_shots": [],
+          "development_label": null,
+          "existing_visual_candidates": []
+        },
+        {
+          "counter_id": "B92",
+          "colour": "yellow",
+          "counter_evidence_interval_s": [
+            6647.0,
+            6670.0
+          ],
+          "counter_update_s": 6670.0,
+          "shot_id": null,
+          "status": "abstained",
+          "association_route": null,
+          "candidate_shots": [],
+          "development_label": null,
+          "existing_visual_candidates": []
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Counter matching uses selected learned-motion scans on exposed development sources.",
+    "A same-colour following-view track does not prove the origin candidate is the same physical stone.",
+    "Colour conflicts are preserved with null event colour; no candidate is deleted or added.",
+    "No independent full-recording physical throw precision, recall or F1 is established."
+  ]
+}

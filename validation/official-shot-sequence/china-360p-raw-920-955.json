@@ -1,0 +1,62 @@
+{
+  "status": "development_after_canada_estonia_first_score",
+  "source_id": "Y_U6gzqORUs-360p",
+  "source_sha256": "51d300ede336efdd8d39029f8728c9d7cac3dd0fcfdc96eb7b84832d80753e82",
+  "source_interval_s": [
+    920.0,
+    955.0
+  ],
+  "model_sha256": "45a14f710e6523f1036f939b90fb196c0c6e7a636c47ab443000eb20340d42e4",
+  "baseline_sha256": "40678c23b117f527c80375ff7d7fbe3a1119fb94c4650b05698cd2c76be9628f",
+  "runner_sha256": "35f3062165aac099e9b9337fbd7614f98e865c248774872ef89c2034b03b8653",
+  "config": {
+    "roi": [
+      40,
+      4,
+      280,
+      116
+    ],
+    "gate_y": 60.0,
+    "min_span_px": 24.0,
+    "min_observations": 6,
+    "max_gap_s": 0.55,
+    "association_px": 13.0,
+    "min_speed_px_s": 8.0,
+    "max_speed_px_s": 65.0
+  },
+  "events": [
+    {
+      "id": "S01",
+      "track_id": 5,
+      "colour": "red",
+      "crossing_time_s": 935.777,
+      "time_semantics": "observed_track_midpoint",
+      "confirmed_at_s": 936.1,
+      "first_observed_s": 935.1,
+      "evidence_kind": "early_roi_motion_span",
+      "release_time_s": null,
+      "gate_y_px": null,
+      "crossing_x_px": 176.54285714285714,
+      "passage_y_px": 96.5,
+      "velocity_px_s": [
+        17.43589743589784,
+        -25.602564102564642
+      ],
+      "observations_at_confirmation": 9,
+      "observed_span_px": 25.0,
+      "median_candidate_bbox_width_px": 8.0,
+      "median_candidate_bbox_height_px": 9.0,
+      "mean_body_support": 0.7606481481481482,
+      "recent_track_duration_s": 1.0,
+      "direction_consistency": 1.0,
+      "view_motion": "negative_y"
+    }
+  ],
+  "samples": 350,
+  "processing_seconds": 0.7151613339992764,
+  "limitations": [
+    "Candidates are motion spans in the 2024 fixed left-panel ROI, not confirmed throws.",
+    "Passage timestamps are observed track midpoints, not release times.",
+    "Any score on the three exposed 2024 recordings is post-score development fitting."
+  ]
+}

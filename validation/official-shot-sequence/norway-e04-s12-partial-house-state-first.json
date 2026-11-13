@@ -1,0 +1,210 @@
+{
+  "status": "source_only_partial_house_state_with_retrospective_official_comparison",
+  "source_video_sha256": "c49fb90959c13b690447dccb87a0b78e0bba8537aa961339a92f934226baf2b3",
+  "official_boards_sha256": "2ec935cdb82fbbb1de27f1b5a383138bffe57bb4bdc567506f9457fadd3233bd",
+  "detector_code_sha256": {
+    "v1": "e938a8fbe4e3eee59ceb2f680738bfbc90626e68907d6b90fd65170a4ff65542",
+    "v2": "d92ac3f0792c3194ef600668bd4305a74fd6cc25335ef796c691e34b044ed3be"
+  },
+  "runner_sha256": "5a6534770452854edb8e4740b9a796733a00ea3d55c278b0bee59b90f14f1ceb",
+  "candidate_camera_shot_id": "S281",
+  "receiving_camera_shot_id": "S282",
+  "proposed_official_shot_id": "PREL001501-E04-S12",
+  "source_measurements": [
+    {
+      "time_s": 3912.0,
+      "house": {
+        "center_px": [
+          316,
+          195
+        ],
+        "outer_radius_px": 156,
+        "annulus_support": {
+          "mean_blue_fraction": 0.793,
+          "supported_angle_bins": 72,
+          "visible_angle_bins": 72
+        },
+        "component_fill_fraction": 0.426,
+        "component_bbox_px": [
+          160,
+          38,
+          312,
+          314
+        ],
+        "delivery_side": "uncertain"
+      },
+      "visible_stones": [
+        {
+          "colour": "red",
+          "pixel": [
+            406,
+            242
+          ],
+          "cap_colour_pixels": 69,
+          "hough_radius_px": 11.4,
+          "image_house_radius_coordinates": [
+            0.5769,
+            0.3013
+          ]
+        }
+      ]
+    },
+    {
+      "time_s": 3915.0,
+      "house": {
+        "center_px": [
+          316,
+          195
+        ],
+        "outer_radius_px": 156,
+        "annulus_support": {
+          "mean_blue_fraction": 0.79,
+          "supported_angle_bins": 71,
+          "visible_angle_bins": 72
+        },
+        "component_fill_fraction": 0.424,
+        "component_bbox_px": [
+          160,
+          38,
+          312,
+          314
+        ],
+        "delivery_side": "uncertain"
+      },
+      "visible_stones": [
+        {
+          "colour": "red",
+          "pixel": [
+            418,
+            250
+          ],
+          "cap_colour_pixels": 69,
+          "hough_radius_px": 10.3,
+          "image_house_radius_coordinates": [
+            0.6538,
+            0.3526
+          ]
+        }
+      ]
+    },
+    {
+      "time_s": 3918.0,
+      "house": {
+        "center_px": [
+          316,
+          195
+        ],
+        "outer_radius_px": 156,
+        "annulus_support": {
+          "mean_blue_fraction": 0.79,
+          "supported_angle_bins": 71,
+          "visible_angle_bins": 72
+        },
+        "component_fill_fraction": 0.424,
+        "component_bbox_px": [
+          160,
+          38,
+          312,
+          314
+        ],
+        "delivery_side": "uncertain"
+      },
+      "visible_stones": [
+        {
+          "colour": "red",
+          "pixel": [
+            416,
+            248
+          ],
+          "cap_colour_pixels": 69,
+          "hough_radius_px": 11.4,
+          "image_house_radius_coordinates": [
+            0.641,
+            0.3397
+          ]
+        }
+      ]
+    },
+    {
+      "time_s": 3921.0,
+      "house": {
+        "center_px": [
+          316,
+          195
+        ],
+        "outer_radius_px": 156,
+        "annulus_support": {
+          "mean_blue_fraction": 0.79,
+          "supported_angle_bins": 71,
+          "visible_angle_bins": 72
+        },
+        "component_fill_fraction": 0.424,
+        "component_bbox_px": [
+          160,
+          38,
+          312,
+          314
+        ],
+        "delivery_side": "uncertain"
+      },
+      "visible_stones": [
+        {
+          "colour": "red",
+          "pixel": [
+            416,
+            248
+          ],
+          "cap_colour_pixels": 69,
+          "hough_radius_px": 11.4,
+          "image_house_radius_coordinates": [
+            0.641,
+            0.3397
+          ]
+        }
+      ]
+    }
+  ],
+  "observed_partial_house_state": {
+    "observation_time_s": 3921.0,
+    "scope": "Complete visible house, not complete sheet",
+    "visible_stone_counts": {
+      "red": 1,
+      "yellow": 0
+    },
+    "red_stone_image_house_radius_coordinates": [
+      0.641,
+      0.3397
+    ],
+    "position_stable_at_sampled_times_s": [
+      3918.0,
+      3921.0
+    ],
+    "delivery_side_semantics": "Image coordinates: +x right, +y down. Source review shows stone arriving from image top; detector itself marks delivery side uncertain.",
+    "complete_game_state": false,
+    "simulation_ready": false
+  },
+  "retrospective_official_comparison": {
+    "before_official_shot_id": "PREL001501-E04-S11",
+    "before_house_stone_counts": {
+      "red": 0,
+      "yellow": 1
+    },
+    "after_official_shot_id": "PREL001501-E04-S12",
+    "after_house_stone_counts": {
+      "red": 1,
+      "yellow": 0
+    },
+    "after_red_house_radius_coordinates": [
+      0.6417,
+      0.35
+    ],
+    "source_to_diagram_distance_house_radii": 0.0103,
+    "interpretation": "Agreement with an extracted PDF diagram, not independent physical-position accuracy."
+  },
+  "limitations": [
+    "The observed state covers the visible house only; out-of-house stones are not inventoried.",
+    "No independently calibrated rink coordinates or 3D physical stone identity are provided.",
+    "The source-to-official comparison is retrospective and cannot establish independent validation accuracy.",
+    "Stable sampled positions are not an exact settle time."
+  ]
+}

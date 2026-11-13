@@ -1,0 +1,917 @@
+{
+  "status": "development_video_board_transfer_diagnostic_not_throw_event_f1",
+  "source_video_sha256_by_game": {
+    "PREL000101": "49429abdd3796e8240e66c201d37e94e71a7bb6225890b2492bea26d2f70d560",
+    "PREL000102": "c5254bb9103e32c6beac74cf269fc7bcec8ce2c2a710a7d4600c7ddb951f160e",
+    "PREL000103": "eba1d86944a2f4278b6e5e2c7549d12b47e5e8a51bf0c680b2db372c6ec12420"
+  },
+  "counter_alignment_sha256": "bbb37c334890fcd044317e8514d24dfbd4094a46592c2ef81d415e44ef2c55bd",
+  "official_diagrams_sha256": "e55890f1f1ca8d938b212626223408fd0ebe029577bc2da95d032130c78caf8c",
+  "video_detector_sha256": "e938a8fbe4e3eee59ceb2f680738bfbc90626e68907d6b90fd65170a4ff65542",
+  "comparator_sha256": "68ec2b456af65518a8eac4e7e5c88b3e8f1e1fcb035d3d8048252a932da82ae8",
+  "runner_sha256": "48da90062fb18f300bd224ecaf1ca092c38aeca5a09b331a7730000c7ea9c199",
+  "selection_rule": "Five evenly spaced unique colour-concordant counter anchors with shot number >=5 per game; sample +6,+12,+18,+24,+30 seconds; select accepted overhead with strongest blue ring, without official board positions.",
+  "sample_count": 15,
+  "status_counts": {
+    "compared": 7,
+    "no_confident_overhead_frame": 8
+  },
+  "complete_board_match_count": 1,
+  "rows": [
+    {
+      "official_game_code": "PREL000101",
+      "official_shot_id": "PREL000101-E01-S05",
+      "counter_id": "B05",
+      "counter_time_s": 493.0,
+      "sampled_offsets_s": [
+        6,
+        12,
+        18,
+        24,
+        30
+      ],
+      "status": "compared",
+      "video_time_s": 499.0,
+      "house": {
+        "center_px": [
+          319,
+          202
+        ],
+        "outer_radius_px": 142,
+        "annulus_support": {
+          "mean_blue_fraction": 0.797,
+          "supported_angle_bins": 71,
+          "visible_angle_bins": 72
+        },
+        "delivery_side": "top"
+      },
+      "video_stones": [
+        {
+          "colour": "red",
+          "pixel": [
+            92,
+            26
+          ],
+          "cap_colour_pixels": 61,
+          "hough_radius_px": 5.5,
+          "canonical_lateral_house_radii": -1.5986,
+          "longitudinal_house_radii": -1.2394
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            350,
+            230
+          ],
+          "cap_colour_pixels": 66,
+          "hough_radius_px": 8.0,
+          "canonical_lateral_house_radii": 0.2183,
+          "longitudinal_house_radii": 0.1972
+        },
+        {
+          "colour": "yellow",
+          "pixel": [
+            412,
+            118
+          ],
+          "cap_colour_pixels": 69,
+          "hough_radius_px": 10.3,
+          "canonical_lateral_house_radii": 0.6549,
+          "longitudinal_house_radii": -0.5915
+        }
+      ],
+      "official_stone_counts": {
+        "red": 0,
+        "yellow": 1
+      },
+      "official_review_flags": [],
+      "comparison": {
+        "video_stone_count": 3,
+        "official_symbol_count": 1,
+        "matched_count": 1,
+        "mean_matched_distance_house_radii": 0.173,
+        "max_matched_distance_house_radii": 0.173,
+        "matches": [
+          {
+            "colour": "yellow",
+            "video_index": 0,
+            "official_index": 0,
+            "distance_house_radii": 0.173,
+            "video_xy": [
+              0.6549,
+              -0.5915
+            ],
+            "official_xy": [
+              0.725,
+              -0.4333
+            ]
+          }
+        ],
+        "unmatched_video": [
+          {
+            "colour": "red",
+            "video_index": 0
+          },
+          {
+            "colour": "red",
+            "video_index": 1
+          }
+        ],
+        "unmatched_official": []
+      }
+    },
+    {
+      "official_game_code": "PREL000101",
+      "official_shot_id": "PREL000101-E02-S12",
+      "counter_id": "B26",
+      "counter_time_s": 1694.0,
+      "sampled_offsets_s": [
+        6,
+        12,
+        18,
+        24,
+        30
+      ],
+      "status": "no_confident_overhead_frame"
+    },
+    {
+      "official_game_code": "PREL000101",
+      "official_shot_id": "PREL000101-E04-S10",
+      "counter_id": "B53",
+      "counter_time_s": 3487.0,
+      "sampled_offsets_s": [
+        6,
+        12,
+        18,
+        24,
+        30
+      ],
+      "status": "no_confident_overhead_frame"
+    },
+    {
+      "official_game_code": "PREL000101",
+      "official_shot_id": "PREL000101-E06-S06",
+      "counter_id": "B79",
+      "counter_time_s": 5514.0,
+      "sampled_offsets_s": [
+        6,
+        12,
+        18,
+        24,
+        30
+      ],
+      "status": "compared",
+      "video_time_s": 5538.0,
+      "house": {
+        "center_px": [
+          316,
+          316
+        ],
+        "outer_radius_px": 100,
+        "annulus_support": {
+          "mean_blue_fraction": 0.763,
+          "supported_angle_bins": 51,
+          "visible_angle_bins": 53
+        },
+        "delivery_side": "top"
+      },
+      "video_stones": [
+        {
+          "colour": "red",
+          "pixel": [
+            382,
+            38
+          ],
+          "cap_colour_pixels": 53,
+          "hough_radius_px": 6.9,
+          "canonical_lateral_house_radii": 0.66,
+          "longitudinal_house_radii": -2.78
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            360,
+            64
+          ],
+          "cap_colour_pixels": 43,
+          "hough_radius_px": 6.2,
+          "canonical_lateral_house_radii": 0.44,
+          "longitudinal_house_radii": -2.52
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            372,
+            302
+          ],
+          "cap_colour_pixels": 68,
+          "hough_radius_px": 8.0,
+          "canonical_lateral_house_radii": 0.56,
+          "longitudinal_house_radii": -0.14
+        },
+        {
+          "colour": "yellow",
+          "pixel": [
+            326,
+            218
+          ],
+          "cap_colour_pixels": 68,
+          "hough_radius_px": 7.3,
+          "canonical_lateral_house_radii": 0.1,
+          "longitudinal_house_radii": -0.98
+        },
+        {
+          "colour": "yellow",
+          "pixel": [
+            324,
+            306
+          ],
+          "cap_colour_pixels": 69,
+          "hough_radius_px": 6.9,
+          "canonical_lateral_house_radii": 0.08,
+          "longitudinal_house_radii": -0.1
+        },
+        {
+          "colour": "yellow",
+          "pixel": [
+            306,
+            334
+          ],
+          "cap_colour_pixels": 69,
+          "hough_radius_px": 5.5,
+          "canonical_lateral_house_radii": -0.1,
+          "longitudinal_house_radii": 0.18
+        }
+      ],
+      "official_stone_counts": {
+        "red": 3,
+        "yellow": 3
+      },
+      "official_review_flags": [],
+      "comparison": {
+        "video_stone_count": 6,
+        "official_symbol_count": 6,
+        "matched_count": 4,
+        "mean_matched_distance_house_radii": 0.0196,
+        "max_matched_distance_house_radii": 0.0276,
+        "matches": [
+          {
+            "colour": "red",
+            "video_index": 2,
+            "official_index": 2,
+            "distance_house_radii": 0.0254,
+            "video_xy": [
+              0.56,
+              -0.14
+            ],
+            "official_xy": [
+              0.55,
+              -0.1167
+            ]
+          },
+          {
+            "colour": "yellow",
+            "video_index": 0,
+            "official_index": 0,
+            "distance_house_radii": 0.0276,
+            "video_xy": [
+              0.1,
+              -0.98
+            ],
+            "official_xy": [
+              0.075,
+              -0.9917
+            ]
+          },
+          {
+            "colour": "yellow",
+            "video_index": 1,
+            "official_index": 1,
+            "distance_house_radii": 0.0097,
+            "video_xy": [
+              0.08,
+              -0.1
+            ],
+            "official_xy": [
+              0.075,
+              -0.0917
+            ]
+          },
+          {
+            "colour": "yellow",
+            "video_index": 2,
+            "official_index": 2,
+            "distance_house_radii": 0.0157,
+            "video_xy": [
+              -0.1,
+              0.18
+            ],
+            "official_xy": [
+              -0.0917,
+              0.1667
+            ]
+          }
+        ],
+        "unmatched_video": [
+          {
+            "colour": "red",
+            "video_index": 0
+          },
+          {
+            "colour": "red",
+            "video_index": 1
+          }
+        ],
+        "unmatched_official": [
+          {
+            "colour": "red",
+            "official_index": 0
+          },
+          {
+            "colour": "red",
+            "official_index": 1
+          }
+        ]
+      }
+    },
+    {
+      "official_game_code": "PREL000101",
+      "official_shot_id": "PREL000101-E07-S14",
+      "counter_id": "B103",
+      "counter_time_s": 7169.0,
+      "sampled_offsets_s": [
+        6,
+        12,
+        18,
+        24,
+        30
+      ],
+      "status": "compared",
+      "video_time_s": 7199.0,
+      "house": {
+        "center_px": [
+          316,
+          205
+        ],
+        "outer_radius_px": 130,
+        "annulus_support": {
+          "mean_blue_fraction": 0.772,
+          "supported_angle_bins": 72,
+          "visible_angle_bins": 72
+        },
+        "delivery_side": "top"
+      },
+      "video_stones": [
+        {
+          "colour": "red",
+          "pixel": [
+            396,
+            136
+          ],
+          "cap_colour_pixels": 69,
+          "hough_radius_px": 9.4,
+          "canonical_lateral_house_radii": 0.6154,
+          "longitudinal_house_radii": -0.5308
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            234,
+            326
+          ],
+          "cap_colour_pixels": 69,
+          "hough_radius_px": 10.3,
+          "canonical_lateral_house_radii": -0.6308,
+          "longitudinal_house_radii": 0.9308
+        },
+        {
+          "colour": "yellow",
+          "pixel": [
+            392,
+            52
+          ],
+          "cap_colour_pixels": 69,
+          "hough_radius_px": 9.6,
+          "canonical_lateral_house_radii": 0.5846,
+          "longitudinal_house_radii": -1.1769
+        },
+        {
+          "colour": "yellow",
+          "pixel": [
+            468,
+            242
+          ],
+          "cap_colour_pixels": 69,
+          "hough_radius_px": 9.6,
+          "canonical_lateral_house_radii": 1.1692,
+          "longitudinal_house_radii": 0.2846
+        }
+      ],
+      "official_stone_counts": {
+        "red": 2,
+        "yellow": 2
+      },
+      "official_review_flags": [],
+      "comparison": {
+        "video_stone_count": 4,
+        "official_symbol_count": 4,
+        "matched_count": 4,
+        "mean_matched_distance_house_radii": 0.0739,
+        "max_matched_distance_house_radii": 0.1251,
+        "matches": [
+          {
+            "colour": "red",
+            "video_index": 0,
+            "official_index": 1,
+            "distance_house_radii": 0.1251,
+            "video_xy": [
+              0.6154,
+              -0.5308
+            ],
+            "official_xy": [
+              0.6667,
+              -0.4167
+            ]
+          },
+          {
+            "colour": "red",
+            "video_index": 1,
+            "official_index": 0,
+            "distance_house_radii": 0.0531,
+            "video_xy": [
+              -0.6308,
+              0.9308
+            ],
+            "official_xy": [
+              -0.6667,
+              0.8917
+            ]
+          },
+          {
+            "colour": "yellow",
+            "video_index": 0,
+            "official_index": 1,
+            "distance_house_radii": 0.0912,
+            "video_xy": [
+              0.5846,
+              -1.1769
+            ],
+            "official_xy": [
+              0.6667,
+              -1.2167
+            ]
+          },
+          {
+            "colour": "yellow",
+            "video_index": 1,
+            "official_index": 0,
+            "distance_house_radii": 0.0262,
+            "video_xy": [
+              1.1692,
+              0.2846
+            ],
+            "official_xy": [
+              1.15,
+              0.2667
+            ]
+          }
+        ],
+        "unmatched_video": [],
+        "unmatched_official": []
+      }
+    },
+    {
+      "official_game_code": "PREL000102",
+      "official_shot_id": "PREL000102-E01-S05",
+      "counter_id": "B05",
+      "counter_time_s": 508.0,
+      "sampled_offsets_s": [
+        6,
+        12,
+        18,
+        24,
+        30
+      ],
+      "status": "no_confident_overhead_frame"
+    },
+    {
+      "official_game_code": "PREL000102",
+      "official_shot_id": "PREL000102-E02-S15",
+      "counter_id": "B29",
+      "counter_time_s": 1780.0,
+      "sampled_offsets_s": [
+        6,
+        12,
+        18,
+        24,
+        30
+      ],
+      "status": "no_confident_overhead_frame"
+    },
+    {
+      "official_game_code": "PREL000102",
+      "official_shot_id": "PREL000102-E04-S13",
+      "counter_id": "B57",
+      "counter_time_s": 3478.0,
+      "sampled_offsets_s": [
+        6,
+        12,
+        18,
+        24,
+        30
+      ],
+      "status": "compared",
+      "video_time_s": 3484.0,
+      "house": {
+        "center_px": [
+          334,
+          214
+        ],
+        "outer_radius_px": 144,
+        "annulus_support": {
+          "mean_blue_fraction": 0.542,
+          "supported_angle_bins": 41,
+          "visible_angle_bins": 72
+        },
+        "delivery_side": "top"
+      },
+      "video_stones": [],
+      "official_stone_counts": {
+        "red": 3,
+        "yellow": 2
+      },
+      "official_review_flags": [],
+      "comparison": {
+        "video_stone_count": 0,
+        "official_symbol_count": 5,
+        "matched_count": 0,
+        "mean_matched_distance_house_radii": null,
+        "max_matched_distance_house_radii": null,
+        "matches": [],
+        "unmatched_video": [],
+        "unmatched_official": [
+          {
+            "colour": "red",
+            "official_index": 0
+          },
+          {
+            "colour": "red",
+            "official_index": 1
+          },
+          {
+            "colour": "red",
+            "official_index": 2
+          },
+          {
+            "colour": "yellow",
+            "official_index": 0
+          },
+          {
+            "colour": "yellow",
+            "official_index": 1
+          }
+        ]
+      }
+    },
+    {
+      "official_game_code": "PREL000102",
+      "official_shot_id": "PREL000102-E06-S12",
+      "counter_id": "B87",
+      "counter_time_s": 5441.0,
+      "sampled_offsets_s": [
+        6,
+        12,
+        18,
+        24,
+        30
+      ],
+      "status": "no_confident_overhead_frame"
+    },
+    {
+      "official_game_code": "PREL000102",
+      "official_shot_id": "PREL000102-E08-S12",
+      "counter_id": "B116",
+      "counter_time_s": 7918.0,
+      "sampled_offsets_s": [
+        6,
+        12,
+        18,
+        24,
+        30
+      ],
+      "status": "no_confident_overhead_frame"
+    },
+    {
+      "official_game_code": "PREL000103",
+      "official_shot_id": "PREL000103-E01-S05",
+      "counter_id": "B05",
+      "counter_time_s": 505.0,
+      "sampled_offsets_s": [
+        6,
+        12,
+        18,
+        24,
+        30
+      ],
+      "status": "compared",
+      "video_time_s": 529.0,
+      "house": {
+        "center_px": [
+          302,
+          359
+        ],
+        "outer_radius_px": 117,
+        "annulus_support": {
+          "mean_blue_fraction": 0.784,
+          "supported_angle_bins": 35,
+          "visible_angle_bins": 37
+        },
+        "delivery_side": "top"
+      },
+      "video_stones": [
+        {
+          "colour": "red",
+          "pixel": [
+            324,
+            162
+          ],
+          "cap_colour_pixels": 69,
+          "hough_radius_px": 9.4,
+          "canonical_lateral_house_radii": 0.188,
+          "longitudinal_house_radii": -1.6838
+        },
+        {
+          "colour": "yellow",
+          "pixel": [
+            310,
+            256
+          ],
+          "cap_colour_pixels": 69,
+          "hough_radius_px": 9.6,
+          "canonical_lateral_house_radii": 0.0684,
+          "longitudinal_house_radii": -0.8803
+        },
+        {
+          "colour": "yellow",
+          "pixel": [
+            242,
+            346
+          ],
+          "cap_colour_pixels": 69,
+          "hough_radius_px": 6.9,
+          "canonical_lateral_house_radii": -0.5128,
+          "longitudinal_house_radii": -0.1111
+        }
+      ],
+      "official_stone_counts": {
+        "red": 0,
+        "yellow": 3
+      },
+      "official_review_flags": [],
+      "comparison": {
+        "video_stone_count": 3,
+        "official_symbol_count": 3,
+        "matched_count": 2,
+        "mean_matched_distance_house_radii": 0.0833,
+        "max_matched_distance_house_radii": 0.0934,
+        "matches": [
+          {
+            "colour": "yellow",
+            "video_index": 0,
+            "official_index": 2,
+            "distance_house_radii": 0.0934,
+            "video_xy": [
+              0.0684,
+              -0.8803
+            ],
+            "official_xy": [
+              -0.0167,
+              -0.8417
+            ]
+          },
+          {
+            "colour": "yellow",
+            "video_index": 1,
+            "official_index": 1,
+            "distance_house_radii": 0.0732,
+            "video_xy": [
+              -0.5128,
+              -0.1111
+            ],
+            "official_xy": [
+              -0.525,
+              -0.1833
+            ]
+          }
+        ],
+        "unmatched_video": [
+          {
+            "colour": "red",
+            "video_index": 0
+          }
+        ],
+        "unmatched_official": [
+          {
+            "colour": "yellow",
+            "official_index": 0
+          }
+        ]
+      }
+    },
+    {
+      "official_game_code": "PREL000103",
+      "official_shot_id": "PREL000103-E02-S15",
+      "counter_id": "B25",
+      "counter_time_s": 1972.0,
+      "sampled_offsets_s": [
+        6,
+        12,
+        18,
+        24,
+        30
+      ],
+      "status": "no_confident_overhead_frame"
+    },
+    {
+      "official_game_code": "PREL000103",
+      "official_shot_id": "PREL000103-E04-S09",
+      "counter_id": "B49",
+      "counter_time_s": 3549.0,
+      "sampled_offsets_s": [
+        6,
+        12,
+        18,
+        24,
+        30
+      ],
+      "status": "no_confident_overhead_frame"
+    },
+    {
+      "official_game_code": "PREL000103",
+      "official_shot_id": "PREL000103-E06-S06",
+      "counter_id": "B75",
+      "counter_time_s": 5547.0,
+      "sampled_offsets_s": [
+        6,
+        12,
+        18,
+        24,
+        30
+      ],
+      "status": "compared",
+      "video_time_s": 5577.0,
+      "house": {
+        "center_px": [
+          455,
+          340
+        ],
+        "outer_radius_px": 104,
+        "annulus_support": {
+          "mean_blue_fraction": 0.821,
+          "supported_angle_bins": 39,
+          "visible_angle_bins": 43
+        },
+        "delivery_side": "top"
+      },
+      "video_stones": [],
+      "official_stone_counts": {
+        "red": 1,
+        "yellow": 2
+      },
+      "official_review_flags": [],
+      "comparison": {
+        "video_stone_count": 0,
+        "official_symbol_count": 3,
+        "matched_count": 0,
+        "mean_matched_distance_house_radii": null,
+        "max_matched_distance_house_radii": null,
+        "matches": [],
+        "unmatched_video": [],
+        "unmatched_official": [
+          {
+            "colour": "red",
+            "official_index": 0
+          },
+          {
+            "colour": "yellow",
+            "official_index": 0
+          },
+          {
+            "colour": "yellow",
+            "official_index": 1
+          }
+        ]
+      }
+    },
+    {
+      "official_game_code": "PREL000103",
+      "official_shot_id": "PREL000103-E07-S16",
+      "counter_id": "B98",
+      "counter_time_s": 7142.0,
+      "sampled_offsets_s": [
+        6,
+        12,
+        18,
+        24,
+        30
+      ],
+      "status": "compared",
+      "video_time_s": 7160.0,
+      "house": {
+        "center_px": [
+          349,
+          152
+        ],
+        "outer_radius_px": 177,
+        "annulus_support": {
+          "mean_blue_fraction": 0.538,
+          "supported_angle_bins": 41,
+          "visible_angle_bins": 72
+        },
+        "delivery_side": "bottom"
+      },
+      "video_stones": [
+        {
+          "colour": "red",
+          "pixel": [
+            94,
+            190
+          ],
+          "cap_colour_pixels": 69,
+          "hough_radius_px": 10.3,
+          "canonical_lateral_house_radii": 1.4407,
+          "longitudinal_house_radii": -0.2147
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            354,
+            342
+          ],
+          "cap_colour_pixels": 69,
+          "hough_radius_px": 10.3,
+          "canonical_lateral_house_radii": -0.0282,
+          "longitudinal_house_radii": -1.0734
+        },
+        {
+          "colour": "yellow",
+          "pixel": [
+            512,
+            198
+          ],
+          "cap_colour_pixels": 69,
+          "hough_radius_px": 11.4,
+          "canonical_lateral_house_radii": -0.9209,
+          "longitudinal_house_radii": -0.2599
+        }
+      ],
+      "official_stone_counts": {
+        "red": 2,
+        "yellow": 1
+      },
+      "official_review_flags": [],
+      "comparison": {
+        "video_stone_count": 3,
+        "official_symbol_count": 3,
+        "matched_count": 0,
+        "mean_matched_distance_house_radii": null,
+        "max_matched_distance_house_radii": null,
+        "matches": [],
+        "unmatched_video": [
+          {
+            "colour": "red",
+            "video_index": 0
+          },
+          {
+            "colour": "red",
+            "video_index": 1
+          },
+          {
+            "colour": "yellow",
+            "video_index": 0
+          }
+        ],
+        "unmatched_official": [
+          {
+            "colour": "red",
+            "official_index": 0
+          },
+          {
+            "colour": "red",
+            "official_index": 1
+          },
+          {
+            "colour": "yellow",
+            "official_index": 0
+          }
+        ]
+      }
+    }
+  ],
+  "limitations": [
+    "Counter timing and official shot links come from development-source broadcasts; this is not a held-out evaluation.",
+    "A selected frame may be before a stone settles or after the next delivery; official PDF diagrams have no video timestamps.",
+    "People, handles, graphics, occlusion, camera perspective and partial houses may create false or missed stone detections.",
+    "Matching anonymous stones in 2D does not recover release time, motion trajectory, collision sequence or physical 3D state."
+  ]
+}

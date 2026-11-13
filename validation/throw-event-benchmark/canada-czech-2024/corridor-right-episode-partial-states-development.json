@@ -1,0 +1,1871 @@
+{
+  "status": "cross_view_episode_partial_state_handoff_not_physical_game_state",
+  "source_id": "yu_YoFrFd20",
+  "source_sha256": "e63c9b063b5b11ad5173083dffe974d909c78e5d01312740b87bccc006402013",
+  "source_interval_s": [
+    1650.0,
+    2760.0
+  ],
+  "input_sha256": {
+    "episodes": "223de7d877cf075f1ce309c32e2897ee4392910e9f8a4d235168df906da7d0d4",
+    "interval_candidates": "8295ac26dd4735923a73a1f84d33657ce024a66ed972ef04d585071673148cf7",
+    "reconciliation": "6bc752e3740159050d65c65ff7d26e5b82862613f64e7b6cd06ec8b5288ce0d5",
+    "full_states": "79d8e444f023b8e0d20aea47ec526016985034523ed002aa84edeaea84c08e68",
+    "full_screen": "405c5bd19fd555d3b9a13acc59f22c92bb543c055cf2298193ac35d80115c096",
+    "interval_screen": "aac4a9f3c42e3bda61c40edeeceb55e66e52949e701f1931b0e9ee1913711f0f"
+  },
+  "model_code_sha256": "4316a9c29005be279f824cb63b3496caf24869efc3a2ad79d5771f50a3ff585b",
+  "runner_sha256": "2c1198657df3966822825540cec5224bf7c71bc5863fa51c9120fa1c7387e0ae",
+  "episode_count": 20,
+  "state_status_counts": {
+    "partial_board_observed": 12,
+    "no_accepted_event_member": 5,
+    "accepted_event_without_stable_board": 3
+  },
+  "partial_board_count": 12,
+  "simulation_ready_count": 0,
+  "episodes": [
+    {
+      "episode_id": "E001",
+      "episode_kind": "one_to_one_time_candidate",
+      "observation_time_s": 1650.65,
+      "observation_time_semantics": "first_left_candidate_passage",
+      "colour_claim": "yellow",
+      "left_members": [
+        {
+          "interval_candidate_id": "S01",
+          "full_match_candidate_id": "S42",
+          "screen_accepted": true,
+          "screen_status": "provisional_motion_and_patch_support"
+        }
+      ],
+      "right_proposal_ids": [
+        "R01:A003"
+      ],
+      "state_status": "partial_board_observed",
+      "post_event_partial_board": {
+        "status": "partial_stable_view_local_board",
+        "receiving_view": "left",
+        "quiet_tail_s": [
+          1659.0,
+          1685.65
+        ],
+        "coordinate_frame": {
+          "name": "receiving_camera_view_local_ice_plane",
+          "origin": "target_house_button",
+          "unit": "metres_conditional_projection",
+          "orientation_shared_across_views": false,
+          "metric_accuracy_verified": false
+        },
+        "stones": [
+          {
+            "local_observation_id": "V01",
+            "colour": "red",
+            "position_m_conditional": [
+              -0.06678429231019575,
+              -0.4108589672317625
+            ],
+            "first_seen_s": 1659.0,
+            "last_seen_s": 1685.0,
+            "supporting_frame_count": 21,
+            "max_position_spread_m": 0.009236631074230678,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V02",
+            "colour": "red",
+            "position_m_conditional": [
+              1.6594815345427112,
+              0.1239898256555779
+            ],
+            "first_seen_s": 1662.0,
+            "last_seen_s": 1685.0,
+            "supporting_frame_count": 24,
+            "max_position_spread_m": 0.03399030828095976,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V03",
+            "colour": "yellow",
+            "position_m_conditional": [
+              -1.3104799940501106,
+              0.6040499562593187
+            ],
+            "first_seen_s": 1659.0,
+            "last_seen_s": 1685.0,
+            "supporting_frame_count": 18,
+            "max_position_spread_m": 0.07931542508675986,
+            "persistent_stone_identity": null
+          }
+        ],
+        "completeness": "unknown_from_video",
+        "physical_settle_verified": false
+      },
+      "source_board_candidate_id": "S42",
+      "complete_game_state": false,
+      "physical_throw_count_verified": false,
+      "cross_view_identity_verified": false,
+      "transition_from_previous_episode_verified": false,
+      "simulation_ready": false,
+      "simulation_blockers": [
+        "physical_throw_identity_unverified",
+        "cross_view_stone_identity_unverified",
+        "complete_board_unverified",
+        "metric_geometry_unvalidated",
+        "persistent_stone_identity_unverified",
+        "release_and_settle_times_unverified",
+        "episode_to_physical_throw_count_unknown"
+      ]
+    },
+    {
+      "episode_id": "E002",
+      "episode_kind": "right_only_candidate",
+      "observation_time_s": 1675.809,
+      "observation_time_semantics": "right_observed_motion_passage",
+      "colour_claim": "red",
+      "left_members": [],
+      "right_proposal_ids": [
+        "R01:A005"
+      ],
+      "state_status": "no_accepted_event_member",
+      "post_event_partial_board": null,
+      "source_board_candidate_id": null,
+      "complete_game_state": false,
+      "physical_throw_count_verified": false,
+      "cross_view_identity_verified": false,
+      "transition_from_previous_episode_verified": false,
+      "simulation_ready": false,
+      "simulation_blockers": [
+        "physical_throw_identity_unverified",
+        "cross_view_stone_identity_unverified",
+        "complete_board_unverified",
+        "metric_geometry_unvalidated",
+        "persistent_stone_identity_unverified",
+        "release_and_settle_times_unverified",
+        "episode_to_physical_throw_count_unknown",
+        "no_stable_post_episode_board"
+      ]
+    },
+    {
+      "episode_id": "E003",
+      "episode_kind": "right_only_candidate",
+      "observation_time_s": 1676.048,
+      "observation_time_semantics": "right_observed_motion_passage",
+      "colour_claim": "yellow",
+      "left_members": [],
+      "right_proposal_ids": [
+        "R01:A006"
+      ],
+      "state_status": "no_accepted_event_member",
+      "post_event_partial_board": null,
+      "source_board_candidate_id": null,
+      "complete_game_state": false,
+      "physical_throw_count_verified": false,
+      "cross_view_identity_verified": false,
+      "transition_from_previous_episode_verified": false,
+      "simulation_ready": false,
+      "simulation_blockers": [
+        "physical_throw_identity_unverified",
+        "cross_view_stone_identity_unverified",
+        "complete_board_unverified",
+        "metric_geometry_unvalidated",
+        "persistent_stone_identity_unverified",
+        "release_and_settle_times_unverified",
+        "episode_to_physical_throw_count_unknown",
+        "no_stable_post_episode_board"
+      ]
+    },
+    {
+      "episode_id": "E004",
+      "episode_kind": "right_only_candidate",
+      "observation_time_s": 1678.061,
+      "observation_time_semantics": "right_observed_motion_passage",
+      "colour_claim": "red",
+      "left_members": [],
+      "right_proposal_ids": [
+        "R01:A007"
+      ],
+      "state_status": "no_accepted_event_member",
+      "post_event_partial_board": null,
+      "source_board_candidate_id": null,
+      "complete_game_state": false,
+      "physical_throw_count_verified": false,
+      "cross_view_identity_verified": false,
+      "transition_from_previous_episode_verified": false,
+      "simulation_ready": false,
+      "simulation_blockers": [
+        "physical_throw_identity_unverified",
+        "cross_view_stone_identity_unverified",
+        "complete_board_unverified",
+        "metric_geometry_unvalidated",
+        "persistent_stone_identity_unverified",
+        "release_and_settle_times_unverified",
+        "episode_to_physical_throw_count_unknown",
+        "no_stable_post_episode_board"
+      ]
+    },
+    {
+      "episode_id": "E005",
+      "episode_kind": "one_to_one_time_candidate",
+      "observation_time_s": 1752.702,
+      "observation_time_semantics": "first_left_candidate_passage",
+      "colour_claim": "red",
+      "left_members": [
+        {
+          "interval_candidate_id": "S02",
+          "full_match_candidate_id": "S43",
+          "screen_accepted": true,
+          "screen_status": "provisional_motion_and_patch_support"
+        }
+      ],
+      "right_proposal_ids": [
+        "R01:A010"
+      ],
+      "state_status": "partial_board_observed",
+      "post_event_partial_board": {
+        "status": "partial_stable_view_local_board",
+        "receiving_view": "left",
+        "quiet_tail_s": [
+          1760.5,
+          1787.702
+        ],
+        "coordinate_frame": {
+          "name": "receiving_camera_view_local_ice_plane",
+          "origin": "target_house_button",
+          "unit": "metres_conditional_projection",
+          "orientation_shared_across_views": false,
+          "metric_accuracy_verified": false
+        },
+        "stones": [
+          {
+            "local_observation_id": "V01",
+            "colour": "red",
+            "position_m_conditional": [
+              -0.06029228105715752,
+              -0.39118590627510347
+            ],
+            "first_seen_s": 1761.0,
+            "last_seen_s": 1787.0,
+            "supporting_frame_count": 24,
+            "max_position_spread_m": 0.01917817750713249,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V02",
+            "colour": "red",
+            "position_m_conditional": [
+              1.6608435831083277,
+              0.125241815212317
+            ],
+            "first_seen_s": 1761.0,
+            "last_seen_s": 1787.0,
+            "supporting_frame_count": 27,
+            "max_position_spread_m": 0.008308723136414162,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V03",
+            "colour": "red",
+            "position_m_conditional": [
+              -0.3540315449928033,
+              0.14072071592507376
+            ],
+            "first_seen_s": 1771.0,
+            "last_seen_s": 1787.0,
+            "supporting_frame_count": 14,
+            "max_position_spread_m": 0.042622014555392676,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V04",
+            "colour": "red",
+            "position_m_conditional": [
+              -0.3950263704386626,
+              1.5861552045786123
+            ],
+            "first_seen_s": 1762.0,
+            "last_seen_s": 1787.0,
+            "supporting_frame_count": 15,
+            "max_position_spread_m": 0.07991849933409309,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V05",
+            "colour": "yellow",
+            "position_m_conditional": [
+              -1.3271179462493423,
+              0.5945692867760958
+            ],
+            "first_seen_s": 1761.0,
+            "last_seen_s": 1787.0,
+            "supporting_frame_count": 18,
+            "max_position_spread_m": 0.05137476275506337,
+            "persistent_stone_identity": null
+          }
+        ],
+        "completeness": "unknown_from_video",
+        "physical_settle_verified": false
+      },
+      "source_board_candidate_id": "S43",
+      "complete_game_state": false,
+      "physical_throw_count_verified": false,
+      "cross_view_identity_verified": false,
+      "transition_from_previous_episode_verified": false,
+      "simulation_ready": false,
+      "simulation_blockers": [
+        "physical_throw_identity_unverified",
+        "cross_view_stone_identity_unverified",
+        "complete_board_unverified",
+        "metric_geometry_unvalidated",
+        "persistent_stone_identity_unverified",
+        "release_and_settle_times_unverified",
+        "episode_to_physical_throw_count_unknown"
+      ]
+    },
+    {
+      "episode_id": "E006",
+      "episode_kind": "one_to_one_time_candidate",
+      "observation_time_s": 1872.36,
+      "observation_time_semantics": "first_left_candidate_passage",
+      "colour_claim": "yellow",
+      "left_members": [
+        {
+          "interval_candidate_id": "S03",
+          "full_match_candidate_id": "S44",
+          "screen_accepted": true,
+          "screen_status": "provisional_motion_and_patch_support"
+        }
+      ],
+      "right_proposal_ids": [
+        "R01:A012"
+      ],
+      "state_status": "accepted_event_without_stable_board",
+      "post_event_partial_board": {
+        "status": "no_stable_stones_in_registered_tail",
+        "receiving_view": "left",
+        "quiet_tail_s": [
+          1880.5,
+          1902.283
+        ],
+        "coordinate_frame": {
+          "name": "receiving_camera_view_local_ice_plane",
+          "origin": "target_house_button",
+          "unit": "metres_conditional_projection",
+          "orientation_shared_across_views": false,
+          "metric_accuracy_verified": false
+        },
+        "stones": [],
+        "completeness": "unknown_from_video",
+        "physical_settle_verified": false
+      },
+      "source_board_candidate_id": "S44",
+      "complete_game_state": false,
+      "physical_throw_count_verified": false,
+      "cross_view_identity_verified": false,
+      "transition_from_previous_episode_verified": false,
+      "simulation_ready": false,
+      "simulation_blockers": [
+        "physical_throw_identity_unverified",
+        "cross_view_stone_identity_unverified",
+        "complete_board_unverified",
+        "metric_geometry_unvalidated",
+        "persistent_stone_identity_unverified",
+        "release_and_settle_times_unverified",
+        "episode_to_physical_throw_count_unknown",
+        "no_stable_post_episode_board"
+      ]
+    },
+    {
+      "episode_id": "E007",
+      "episode_kind": "multiple_right_candidates",
+      "observation_time_s": 1903.283,
+      "observation_time_semantics": "first_left_candidate_passage",
+      "colour_claim": "red",
+      "left_members": [
+        {
+          "interval_candidate_id": "S04",
+          "full_match_candidate_id": "S45",
+          "screen_accepted": false,
+          "screen_status": "abstain_no_supported_motion_path"
+        },
+        {
+          "interval_candidate_id": "S05",
+          "full_match_candidate_id": "S46",
+          "screen_accepted": false,
+          "screen_status": "abstain_no_supported_motion_path"
+        },
+        {
+          "interval_candidate_id": "S06",
+          "full_match_candidate_id": "S47",
+          "screen_accepted": false,
+          "screen_status": "abstain_no_supported_motion_path"
+        }
+      ],
+      "right_proposal_ids": [
+        "R01:A020",
+        "R01:A021",
+        "R01:A024",
+        "R01:A026"
+      ],
+      "state_status": "no_accepted_event_member",
+      "post_event_partial_board": null,
+      "source_board_candidate_id": null,
+      "complete_game_state": false,
+      "physical_throw_count_verified": false,
+      "cross_view_identity_verified": false,
+      "transition_from_previous_episode_verified": false,
+      "simulation_ready": false,
+      "simulation_blockers": [
+        "physical_throw_identity_unverified",
+        "cross_view_stone_identity_unverified",
+        "complete_board_unverified",
+        "metric_geometry_unvalidated",
+        "persistent_stone_identity_unverified",
+        "release_and_settle_times_unverified",
+        "episode_to_physical_throw_count_unknown",
+        "no_stable_post_episode_board"
+      ]
+    },
+    {
+      "episode_id": "E008",
+      "episode_kind": "right_only_candidate",
+      "observation_time_s": 1926.933,
+      "observation_time_semantics": "right_observed_motion_passage",
+      "colour_claim": "red",
+      "left_members": [],
+      "right_proposal_ids": [
+        "R01:A034"
+      ],
+      "state_status": "no_accepted_event_member",
+      "post_event_partial_board": null,
+      "source_board_candidate_id": null,
+      "complete_game_state": false,
+      "physical_throw_count_verified": false,
+      "cross_view_identity_verified": false,
+      "transition_from_previous_episode_verified": false,
+      "simulation_ready": false,
+      "simulation_blockers": [
+        "physical_throw_identity_unverified",
+        "cross_view_stone_identity_unverified",
+        "complete_board_unverified",
+        "metric_geometry_unvalidated",
+        "persistent_stone_identity_unverified",
+        "release_and_settle_times_unverified",
+        "episode_to_physical_throw_count_unknown",
+        "no_stable_post_episode_board"
+      ]
+    },
+    {
+      "episode_id": "E009",
+      "episode_kind": "one_to_one_time_candidate",
+      "observation_time_s": 1968.083,
+      "observation_time_semantics": "first_left_candidate_passage",
+      "colour_claim": "red",
+      "left_members": [
+        {
+          "interval_candidate_id": "S10",
+          "full_match_candidate_id": "S51",
+          "screen_accepted": true,
+          "screen_status": "provisional_motion_and_patch_support"
+        }
+      ],
+      "right_proposal_ids": [
+        "R01:A038"
+      ],
+      "state_status": "accepted_event_without_stable_board",
+      "post_event_partial_board": {
+        "status": "no_stable_stones_in_registered_tail",
+        "receiving_view": "right",
+        "quiet_tail_s": [
+          1980.5,
+          2003.083
+        ],
+        "coordinate_frame": {
+          "name": "receiving_camera_view_local_ice_plane",
+          "origin": "target_house_button",
+          "unit": "metres_conditional_projection",
+          "orientation_shared_across_views": false,
+          "metric_accuracy_verified": false
+        },
+        "stones": [],
+        "completeness": "unknown_from_video",
+        "physical_settle_verified": false
+      },
+      "source_board_candidate_id": "S51",
+      "complete_game_state": false,
+      "physical_throw_count_verified": false,
+      "cross_view_identity_verified": false,
+      "transition_from_previous_episode_verified": false,
+      "simulation_ready": false,
+      "simulation_blockers": [
+        "physical_throw_identity_unverified",
+        "cross_view_stone_identity_unverified",
+        "complete_board_unverified",
+        "metric_geometry_unvalidated",
+        "persistent_stone_identity_unverified",
+        "release_and_settle_times_unverified",
+        "episode_to_physical_throw_count_unknown",
+        "no_stable_post_episode_board"
+      ]
+    },
+    {
+      "episode_id": "E010",
+      "episode_kind": "one_to_one_time_candidate",
+      "observation_time_s": 2025.65,
+      "observation_time_semantics": "first_left_candidate_passage",
+      "colour_claim": "yellow",
+      "left_members": [
+        {
+          "interval_candidate_id": "S11",
+          "full_match_candidate_id": "S52",
+          "screen_accepted": true,
+          "screen_status": "provisional_motion_and_patch_support"
+        }
+      ],
+      "right_proposal_ids": [
+        "R01:A040"
+      ],
+      "state_status": "partial_board_observed",
+      "post_event_partial_board": {
+        "status": "partial_stable_view_local_board",
+        "receiving_view": "right",
+        "quiet_tail_s": [
+          2038.0,
+          2060.65
+        ],
+        "coordinate_frame": {
+          "name": "receiving_camera_view_local_ice_plane",
+          "origin": "target_house_button",
+          "unit": "metres_conditional_projection",
+          "orientation_shared_across_views": false,
+          "metric_accuracy_verified": false
+        },
+        "stones": [
+          {
+            "local_observation_id": "V01",
+            "colour": "red",
+            "position_m_conditional": [
+              0.23199721365048248,
+              3.3373730496970446
+            ],
+            "first_seen_s": 2038.0,
+            "last_seen_s": 2060.0,
+            "supporting_frame_count": 20,
+            "max_position_spread_m": 0.01110278794418802,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V02",
+            "colour": "yellow",
+            "position_m_conditional": [
+              -1.1752782152367365,
+              3.2694116767325827
+            ],
+            "first_seen_s": 2045.0,
+            "last_seen_s": 2060.0,
+            "supporting_frame_count": 13,
+            "max_position_spread_m": 0.1668012411975854,
+            "persistent_stone_identity": null
+          }
+        ],
+        "completeness": "unknown_from_video",
+        "physical_settle_verified": false
+      },
+      "source_board_candidate_id": "S52",
+      "complete_game_state": false,
+      "physical_throw_count_verified": false,
+      "cross_view_identity_verified": false,
+      "transition_from_previous_episode_verified": false,
+      "simulation_ready": false,
+      "simulation_blockers": [
+        "physical_throw_identity_unverified",
+        "cross_view_stone_identity_unverified",
+        "complete_board_unverified",
+        "metric_geometry_unvalidated",
+        "persistent_stone_identity_unverified",
+        "release_and_settle_times_unverified",
+        "episode_to_physical_throw_count_unknown"
+      ]
+    },
+    {
+      "episode_id": "E011",
+      "episode_kind": "shared_one_right_candidate",
+      "observation_time_s": 2074.888,
+      "observation_time_semantics": "first_left_candidate_passage",
+      "colour_claim": "red",
+      "left_members": [
+        {
+          "interval_candidate_id": "S12",
+          "full_match_candidate_id": "S53",
+          "screen_accepted": true,
+          "screen_status": "provisional_motion_and_patch_support"
+        },
+        {
+          "interval_candidate_id": "S13",
+          "full_match_candidate_id": "S54",
+          "screen_accepted": false,
+          "screen_status": "duplicate_shared_timed_motion_path"
+        }
+      ],
+      "right_proposal_ids": [
+        "R01:A041"
+      ],
+      "state_status": "accepted_event_without_stable_board",
+      "post_event_partial_board": {
+        "status": "no_quiet_tail_before_next_candidate_or_interval_end",
+        "receiving_view": "right",
+        "quiet_tail_s": null,
+        "coordinate_frame": {
+          "name": "receiving_camera_view_local_ice_plane",
+          "origin": "target_house_button",
+          "unit": "metres_conditional_projection",
+          "orientation_shared_across_views": false,
+          "metric_accuracy_verified": false
+        },
+        "stones": [],
+        "completeness": "unknown_from_video",
+        "physical_settle_verified": false
+      },
+      "source_board_candidate_id": "S53",
+      "complete_game_state": false,
+      "physical_throw_count_verified": false,
+      "cross_view_identity_verified": false,
+      "transition_from_previous_episode_verified": false,
+      "simulation_ready": false,
+      "simulation_blockers": [
+        "physical_throw_identity_unverified",
+        "cross_view_stone_identity_unverified",
+        "complete_board_unverified",
+        "metric_geometry_unvalidated",
+        "persistent_stone_identity_unverified",
+        "release_and_settle_times_unverified",
+        "episode_to_physical_throw_count_unknown",
+        "no_stable_post_episode_board"
+      ]
+    },
+    {
+      "episode_id": "E012",
+      "episode_kind": "one_to_one_time_candidate",
+      "observation_time_s": 2130.282,
+      "observation_time_semantics": "first_left_candidate_passage",
+      "colour_claim": "yellow",
+      "left_members": [
+        {
+          "interval_candidate_id": "S14",
+          "full_match_candidate_id": "S55",
+          "screen_accepted": true,
+          "screen_status": "provisional_motion_and_patch_support"
+        }
+      ],
+      "right_proposal_ids": [
+        "R01:A042"
+      ],
+      "state_status": "partial_board_observed",
+      "post_event_partial_board": {
+        "status": "partial_stable_view_local_board",
+        "receiving_view": "right",
+        "quiet_tail_s": [
+          2142.5,
+          2165.282
+        ],
+        "coordinate_frame": {
+          "name": "receiving_camera_view_local_ice_plane",
+          "origin": "target_house_button",
+          "unit": "metres_conditional_projection",
+          "orientation_shared_across_views": false,
+          "metric_accuracy_verified": false
+        },
+        "stones": [
+          {
+            "local_observation_id": "V01",
+            "colour": "red",
+            "position_m_conditional": [
+              0.15538698998591216,
+              1.6826319572844834
+            ],
+            "first_seen_s": 2143.0,
+            "last_seen_s": 2165.0,
+            "supporting_frame_count": 18,
+            "max_position_spread_m": 0.03804201727414976,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V02",
+            "colour": "red",
+            "position_m_conditional": [
+              -0.347367279812122,
+              2.140250759954547
+            ],
+            "first_seen_s": 2149.0,
+            "last_seen_s": 2165.0,
+            "supporting_frame_count": 11,
+            "max_position_spread_m": 0.034376637763294686,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V03",
+            "colour": "yellow",
+            "position_m_conditional": [
+              -1.1752175209601248,
+              3.277375225536524
+            ],
+            "first_seen_s": 2143.0,
+            "last_seen_s": 2165.0,
+            "supporting_frame_count": 17,
+            "max_position_spread_m": 0.03005985054775907,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V04",
+            "colour": "yellow",
+            "position_m_conditional": [
+              0.44866185746204784,
+              3.463069582784908
+            ],
+            "first_seen_s": 2146.0,
+            "last_seen_s": 2165.0,
+            "supporting_frame_count": 15,
+            "max_position_spread_m": 0.11490703832395663,
+            "persistent_stone_identity": null
+          }
+        ],
+        "completeness": "unknown_from_video",
+        "physical_settle_verified": false
+      },
+      "source_board_candidate_id": "S55",
+      "complete_game_state": false,
+      "physical_throw_count_verified": false,
+      "cross_view_identity_verified": false,
+      "transition_from_previous_episode_verified": false,
+      "simulation_ready": false,
+      "simulation_blockers": [
+        "physical_throw_identity_unverified",
+        "cross_view_stone_identity_unverified",
+        "complete_board_unverified",
+        "metric_geometry_unvalidated",
+        "persistent_stone_identity_unverified",
+        "release_and_settle_times_unverified",
+        "episode_to_physical_throw_count_unknown"
+      ]
+    },
+    {
+      "episode_id": "E013",
+      "episode_kind": "one_to_one_time_candidate",
+      "observation_time_s": 2194.798,
+      "observation_time_semantics": "first_left_candidate_passage",
+      "colour_claim": "red",
+      "left_members": [
+        {
+          "interval_candidate_id": "S16",
+          "full_match_candidate_id": "S57",
+          "screen_accepted": true,
+          "screen_status": "provisional_motion_and_patch_support"
+        }
+      ],
+      "right_proposal_ids": [
+        "R01:A045"
+      ],
+      "state_status": "partial_board_observed",
+      "post_event_partial_board": {
+        "status": "partial_stable_view_local_board",
+        "receiving_view": "right",
+        "quiet_tail_s": [
+          2207.0,
+          2229.798
+        ],
+        "coordinate_frame": {
+          "name": "receiving_camera_view_local_ice_plane",
+          "origin": "target_house_button",
+          "unit": "metres_conditional_projection",
+          "orientation_shared_across_views": false,
+          "metric_accuracy_verified": false
+        },
+        "stones": [
+          {
+            "local_observation_id": "V01",
+            "colour": "red",
+            "position_m_conditional": [
+              0.15701199670630628,
+              1.6720376085374933
+            ],
+            "first_seen_s": 2207.0,
+            "last_seen_s": 2229.0,
+            "supporting_frame_count": 20,
+            "max_position_spread_m": 0.0235428537994115,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V02",
+            "colour": "red",
+            "position_m_conditional": [
+              -0.35109018531295555,
+              2.06939068070674
+            ],
+            "first_seen_s": 2207.0,
+            "last_seen_s": 2229.0,
+            "supporting_frame_count": 20,
+            "max_position_spread_m": 0.06664513348573874,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V03",
+            "colour": "red",
+            "position_m_conditional": [
+              0.06646560603019806,
+              3.4523579215638747
+            ],
+            "first_seen_s": 2214.0,
+            "last_seen_s": 2229.0,
+            "supporting_frame_count": 15,
+            "max_position_spread_m": 0.04822756102304546,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V04",
+            "colour": "yellow",
+            "position_m_conditional": [
+              -1.1776448376147202,
+              3.2708519130009535
+            ],
+            "first_seen_s": 2207.0,
+            "last_seen_s": 2229.0,
+            "supporting_frame_count": 20,
+            "max_position_spread_m": 0.015004063144188576,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V05",
+            "colour": "yellow",
+            "position_m_conditional": [
+              0.4800642414499155,
+              3.333739796280965
+            ],
+            "first_seen_s": 2207.0,
+            "last_seen_s": 2229.0,
+            "supporting_frame_count": 20,
+            "max_position_spread_m": 0.12726938537772817,
+            "persistent_stone_identity": null
+          }
+        ],
+        "completeness": "unknown_from_video",
+        "physical_settle_verified": false
+      },
+      "source_board_candidate_id": "S57",
+      "complete_game_state": false,
+      "physical_throw_count_verified": false,
+      "cross_view_identity_verified": false,
+      "transition_from_previous_episode_verified": false,
+      "simulation_ready": false,
+      "simulation_blockers": [
+        "physical_throw_identity_unverified",
+        "cross_view_stone_identity_unverified",
+        "complete_board_unverified",
+        "metric_geometry_unvalidated",
+        "persistent_stone_identity_unverified",
+        "release_and_settle_times_unverified",
+        "episode_to_physical_throw_count_unknown"
+      ]
+    },
+    {
+      "episode_id": "E014",
+      "episode_kind": "one_to_one_time_candidate",
+      "observation_time_s": 2270.3,
+      "observation_time_semantics": "first_left_candidate_passage",
+      "colour_claim": "yellow",
+      "left_members": [
+        {
+          "interval_candidate_id": "S17",
+          "full_match_candidate_id": "S58",
+          "screen_accepted": true,
+          "screen_status": "provisional_motion_and_patch_support"
+        }
+      ],
+      "right_proposal_ids": [
+        "R01:A048"
+      ],
+      "state_status": "partial_board_observed",
+      "post_event_partial_board": {
+        "status": "partial_stable_view_local_board",
+        "receiving_view": "right",
+        "quiet_tail_s": [
+          2282.5,
+          2305.3
+        ],
+        "coordinate_frame": {
+          "name": "receiving_camera_view_local_ice_plane",
+          "origin": "target_house_button",
+          "unit": "metres_conditional_projection",
+          "orientation_shared_across_views": false,
+          "metric_accuracy_verified": false
+        },
+        "stones": [
+          {
+            "local_observation_id": "V01",
+            "colour": "red",
+            "position_m_conditional": [
+              0.15716795594973168,
+              1.6927986354043574
+            ],
+            "first_seen_s": 2283.0,
+            "last_seen_s": 2305.0,
+            "supporting_frame_count": 22,
+            "max_position_spread_m": 0.026253182255770457,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V02",
+            "colour": "red",
+            "position_m_conditional": [
+              -0.3451291912612373,
+              2.1285407121563784
+            ],
+            "first_seen_s": 2283.0,
+            "last_seen_s": 2305.0,
+            "supporting_frame_count": 22,
+            "max_position_spread_m": 0.02531623952044962,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V03",
+            "colour": "red",
+            "position_m_conditional": [
+              0.061820134301490415,
+              3.4783385940450273
+            ],
+            "first_seen_s": 2283.0,
+            "last_seen_s": 2305.0,
+            "supporting_frame_count": 22,
+            "max_position_spread_m": 0.04853139369333271,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V04",
+            "colour": "yellow",
+            "position_m_conditional": [
+              0.5086710288061518,
+              -0.2293622736675175
+            ],
+            "first_seen_s": 2291.0,
+            "last_seen_s": 2305.0,
+            "supporting_frame_count": 14,
+            "max_position_spread_m": 0.09769454674711898,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V05",
+            "colour": "yellow",
+            "position_m_conditional": [
+              -1.1765699170511634,
+              3.2654121569273222
+            ],
+            "first_seen_s": 2283.0,
+            "last_seen_s": 2305.0,
+            "supporting_frame_count": 22,
+            "max_position_spread_m": 0.02041191355450767,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V06",
+            "colour": "yellow",
+            "position_m_conditional": [
+              0.4798564431336204,
+              3.3166324594620855
+            ],
+            "first_seen_s": 2283.0,
+            "last_seen_s": 2305.0,
+            "supporting_frame_count": 22,
+            "max_position_spread_m": 0.01873878538178154,
+            "persistent_stone_identity": null
+          }
+        ],
+        "completeness": "unknown_from_video",
+        "physical_settle_verified": false
+      },
+      "source_board_candidate_id": "S58",
+      "complete_game_state": false,
+      "physical_throw_count_verified": false,
+      "cross_view_identity_verified": false,
+      "transition_from_previous_episode_verified": false,
+      "simulation_ready": false,
+      "simulation_blockers": [
+        "physical_throw_identity_unverified",
+        "cross_view_stone_identity_unverified",
+        "complete_board_unverified",
+        "metric_geometry_unvalidated",
+        "persistent_stone_identity_unverified",
+        "release_and_settle_times_unverified",
+        "episode_to_physical_throw_count_unknown"
+      ]
+    },
+    {
+      "episode_id": "E015",
+      "episode_kind": "one_to_one_time_candidate",
+      "observation_time_s": 2318.052,
+      "observation_time_semantics": "first_left_candidate_passage",
+      "colour_claim": "red",
+      "left_members": [
+        {
+          "interval_candidate_id": "S18",
+          "full_match_candidate_id": "S59",
+          "screen_accepted": true,
+          "screen_status": "provisional_motion_and_patch_support"
+        }
+      ],
+      "right_proposal_ids": [
+        "R01:A051"
+      ],
+      "state_status": "partial_board_observed",
+      "post_event_partial_board": {
+        "status": "partial_stable_view_local_board",
+        "receiving_view": "right",
+        "quiet_tail_s": [
+          2330.5,
+          2353.052
+        ],
+        "coordinate_frame": {
+          "name": "receiving_camera_view_local_ice_plane",
+          "origin": "target_house_button",
+          "unit": "metres_conditional_projection",
+          "orientation_shared_across_views": false,
+          "metric_accuracy_verified": false
+        },
+        "stones": [
+          {
+            "local_observation_id": "V01",
+            "colour": "red",
+            "position_m_conditional": [
+              0.15574668773466085,
+              1.682868758285449
+            ],
+            "first_seen_s": 2334.0,
+            "last_seen_s": 2353.0,
+            "supporting_frame_count": 18,
+            "max_position_spread_m": 0.04701596696570624,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V02",
+            "colour": "red",
+            "position_m_conditional": [
+              -0.5849033796193774,
+              1.764361197362355
+            ],
+            "first_seen_s": 2334.0,
+            "last_seen_s": 2353.0,
+            "supporting_frame_count": 18,
+            "max_position_spread_m": 0.023596372527704922,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V03",
+            "colour": "red",
+            "position_m_conditional": [
+              1.2519279973404256,
+              3.0998874944812043
+            ],
+            "first_seen_s": 2334.0,
+            "last_seen_s": 2353.0,
+            "supporting_frame_count": 18,
+            "max_position_spread_m": 0.01625170617389797,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V04",
+            "colour": "red",
+            "position_m_conditional": [
+              0.062130931937590034,
+              3.4612634257440824
+            ],
+            "first_seen_s": 2334.0,
+            "last_seen_s": 2353.0,
+            "supporting_frame_count": 18,
+            "max_position_spread_m": 0.03909560780766344,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V05",
+            "colour": "yellow",
+            "position_m_conditional": [
+              0.5043690470038963,
+              -0.23736513832039308
+            ],
+            "first_seen_s": 2334.0,
+            "last_seen_s": 2353.0,
+            "supporting_frame_count": 18,
+            "max_position_spread_m": 0.09637091430282915,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V06",
+            "colour": "yellow",
+            "position_m_conditional": [
+              -0.1626603495155473,
+              2.2120084715904946
+            ],
+            "first_seen_s": 2334.0,
+            "last_seen_s": 2353.0,
+            "supporting_frame_count": 18,
+            "max_position_spread_m": 0.014547281257777643,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V07",
+            "colour": "yellow",
+            "position_m_conditional": [
+              -1.1768482507889877,
+              3.268224484371401
+            ],
+            "first_seen_s": 2334.0,
+            "last_seen_s": 2353.0,
+            "supporting_frame_count": 18,
+            "max_position_spread_m": 0.009053393569819898,
+            "persistent_stone_identity": null
+          }
+        ],
+        "completeness": "unknown_from_video",
+        "physical_settle_verified": false
+      },
+      "source_board_candidate_id": "S59",
+      "complete_game_state": false,
+      "physical_throw_count_verified": false,
+      "cross_view_identity_verified": false,
+      "transition_from_previous_episode_verified": false,
+      "simulation_ready": false,
+      "simulation_blockers": [
+        "physical_throw_identity_unverified",
+        "cross_view_stone_identity_unverified",
+        "complete_board_unverified",
+        "metric_geometry_unvalidated",
+        "persistent_stone_identity_unverified",
+        "release_and_settle_times_unverified",
+        "episode_to_physical_throw_count_unknown"
+      ]
+    },
+    {
+      "episode_id": "E016",
+      "episode_kind": "one_to_one_time_candidate",
+      "observation_time_s": 2399.668,
+      "observation_time_semantics": "first_left_candidate_passage",
+      "colour_claim": "yellow",
+      "left_members": [
+        {
+          "interval_candidate_id": "S19",
+          "full_match_candidate_id": "S60",
+          "screen_accepted": true,
+          "screen_status": "provisional_motion_and_patch_support"
+        }
+      ],
+      "right_proposal_ids": [
+        "R01:A054"
+      ],
+      "state_status": "partial_board_observed",
+      "post_event_partial_board": {
+        "status": "partial_stable_view_local_board",
+        "receiving_view": "right",
+        "quiet_tail_s": [
+          2412.0,
+          2434.668
+        ],
+        "coordinate_frame": {
+          "name": "receiving_camera_view_local_ice_plane",
+          "origin": "target_house_button",
+          "unit": "metres_conditional_projection",
+          "orientation_shared_across_views": false,
+          "metric_accuracy_verified": false
+        },
+        "stones": [
+          {
+            "local_observation_id": "V01",
+            "colour": "red",
+            "position_m_conditional": [
+              0.1555374386850903,
+              1.6828268063787641
+            ],
+            "first_seen_s": 2412.0,
+            "last_seen_s": 2434.0,
+            "supporting_frame_count": 20,
+            "max_position_spread_m": 0.025263255505898564,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V02",
+            "colour": "red",
+            "position_m_conditional": [
+              -0.5841108337328591,
+              1.7625874067069884
+            ],
+            "first_seen_s": 2412.0,
+            "last_seen_s": 2434.0,
+            "supporting_frame_count": 20,
+            "max_position_spread_m": 0.017583123124205426,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V03",
+            "colour": "red",
+            "position_m_conditional": [
+              1.2538041150627908,
+              3.0951913404816045
+            ],
+            "first_seen_s": 2412.0,
+            "last_seen_s": 2434.0,
+            "supporting_frame_count": 20,
+            "max_position_spread_m": 0.012291039994903183,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V04",
+            "colour": "red",
+            "position_m_conditional": [
+              0.06243528950033676,
+              3.480348376346714
+            ],
+            "first_seen_s": 2412.0,
+            "last_seen_s": 2434.0,
+            "supporting_frame_count": 20,
+            "max_position_spread_m": 0.0345863318033291,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V05",
+            "colour": "yellow",
+            "position_m_conditional": [
+              0.2257390703067634,
+              -0.2407818719084872
+            ],
+            "first_seen_s": 2422.0,
+            "last_seen_s": 2434.0,
+            "supporting_frame_count": 11,
+            "max_position_spread_m": 0.03561469998598177,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V06",
+            "colour": "yellow",
+            "position_m_conditional": [
+              0.5045343820010136,
+              -0.23823620820579944
+            ],
+            "first_seen_s": 2412.0,
+            "last_seen_s": 2434.0,
+            "supporting_frame_count": 19,
+            "max_position_spread_m": 0.019514978624062883,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V07",
+            "colour": "yellow",
+            "position_m_conditional": [
+              -0.16355809128027884,
+              2.210783224053338
+            ],
+            "first_seen_s": 2412.0,
+            "last_seen_s": 2434.0,
+            "supporting_frame_count": 20,
+            "max_position_spread_m": 0.009844992640877997,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V08",
+            "colour": "yellow",
+            "position_m_conditional": [
+              -1.1764199434318277,
+              3.271122248441489
+            ],
+            "first_seen_s": 2412.0,
+            "last_seen_s": 2434.0,
+            "supporting_frame_count": 20,
+            "max_position_spread_m": 0.013481378967626922,
+            "persistent_stone_identity": null
+          }
+        ],
+        "completeness": "unknown_from_video",
+        "physical_settle_verified": false
+      },
+      "source_board_candidate_id": "S60",
+      "complete_game_state": false,
+      "physical_throw_count_verified": false,
+      "cross_view_identity_verified": false,
+      "transition_from_previous_episode_verified": false,
+      "simulation_ready": false,
+      "simulation_blockers": [
+        "physical_throw_identity_unverified",
+        "cross_view_stone_identity_unverified",
+        "complete_board_unverified",
+        "metric_geometry_unvalidated",
+        "persistent_stone_identity_unverified",
+        "release_and_settle_times_unverified",
+        "episode_to_physical_throw_count_unknown"
+      ]
+    },
+    {
+      "episode_id": "E017",
+      "episode_kind": "one_to_one_time_candidate",
+      "observation_time_s": 2459.954,
+      "observation_time_semantics": "first_left_candidate_passage",
+      "colour_claim": "red",
+      "left_members": [
+        {
+          "interval_candidate_id": "S20",
+          "full_match_candidate_id": "S61",
+          "screen_accepted": true,
+          "screen_status": "provisional_motion_and_patch_support"
+        }
+      ],
+      "right_proposal_ids": [
+        "R01:A055"
+      ],
+      "state_status": "partial_board_observed",
+      "post_event_partial_board": {
+        "status": "partial_stable_view_local_board",
+        "receiving_view": "right",
+        "quiet_tail_s": [
+          2472.0,
+          2494.954
+        ],
+        "coordinate_frame": {
+          "name": "receiving_camera_view_local_ice_plane",
+          "origin": "target_house_button",
+          "unit": "metres_conditional_projection",
+          "orientation_shared_across_views": false,
+          "metric_accuracy_verified": false
+        },
+        "stones": [
+          {
+            "local_observation_id": "V01",
+            "colour": "red",
+            "position_m_conditional": [
+              0.44472676904209274,
+              -0.028972096827315844
+            ],
+            "first_seen_s": 2479.0,
+            "last_seen_s": 2493.0,
+            "supporting_frame_count": 10,
+            "max_position_spread_m": 0.02528843767424706,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V02",
+            "colour": "red",
+            "position_m_conditional": [
+              0.15777465152091513,
+              1.664880613032575
+            ],
+            "first_seen_s": 2472.0,
+            "last_seen_s": 2493.0,
+            "supporting_frame_count": 16,
+            "max_position_spread_m": 0.04627718612542269,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V03",
+            "colour": "red",
+            "position_m_conditional": [
+              -0.5871363510950985,
+              1.7496820778190547
+            ],
+            "first_seen_s": 2472.0,
+            "last_seen_s": 2493.0,
+            "supporting_frame_count": 16,
+            "max_position_spread_m": 0.0764859269429717,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V04",
+            "colour": "red",
+            "position_m_conditional": [
+              1.2529552751139375,
+              3.0971158366225278
+            ],
+            "first_seen_s": 2472.0,
+            "last_seen_s": 2493.0,
+            "supporting_frame_count": 16,
+            "max_position_spread_m": 0.01142095742978757,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V05",
+            "colour": "red",
+            "position_m_conditional": [
+              0.06477496134863373,
+              3.4692493095835317
+            ],
+            "first_seen_s": 2472.0,
+            "last_seen_s": 2493.0,
+            "supporting_frame_count": 16,
+            "max_position_spread_m": 0.045507824881811106,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V06",
+            "colour": "yellow",
+            "position_m_conditional": [
+              0.22470876045163662,
+              -0.23718739879724826
+            ],
+            "first_seen_s": 2472.0,
+            "last_seen_s": 2493.0,
+            "supporting_frame_count": 16,
+            "max_position_spread_m": 0.047320289764345665,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V07",
+            "colour": "yellow",
+            "position_m_conditional": [
+              -0.16332463460958058,
+              2.20304009061484
+            ],
+            "first_seen_s": 2472.0,
+            "last_seen_s": 2493.0,
+            "supporting_frame_count": 16,
+            "max_position_spread_m": 0.045951400072054664,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V08",
+            "colour": "yellow",
+            "position_m_conditional": [
+              -1.176271039741851,
+              3.277049130119522
+            ],
+            "first_seen_s": 2472.0,
+            "last_seen_s": 2493.0,
+            "supporting_frame_count": 16,
+            "max_position_spread_m": 0.0823225337432653,
+            "persistent_stone_identity": null
+          }
+        ],
+        "completeness": "unknown_from_video",
+        "physical_settle_verified": false
+      },
+      "source_board_candidate_id": "S61",
+      "complete_game_state": false,
+      "physical_throw_count_verified": false,
+      "cross_view_identity_verified": false,
+      "transition_from_previous_episode_verified": false,
+      "simulation_ready": false,
+      "simulation_blockers": [
+        "physical_throw_identity_unverified",
+        "cross_view_stone_identity_unverified",
+        "complete_board_unverified",
+        "metric_geometry_unvalidated",
+        "persistent_stone_identity_unverified",
+        "release_and_settle_times_unverified",
+        "episode_to_physical_throw_count_unknown"
+      ]
+    },
+    {
+      "episode_id": "E018",
+      "episode_kind": "one_to_one_time_candidate",
+      "observation_time_s": 2542.825,
+      "observation_time_semantics": "first_left_candidate_passage",
+      "colour_claim": "yellow",
+      "left_members": [
+        {
+          "interval_candidate_id": "S21",
+          "full_match_candidate_id": "S62",
+          "screen_accepted": true,
+          "screen_status": "provisional_motion_and_patch_support"
+        }
+      ],
+      "right_proposal_ids": [
+        "R01:A057"
+      ],
+      "state_status": "partial_board_observed",
+      "post_event_partial_board": {
+        "status": "partial_stable_view_local_board",
+        "receiving_view": "right",
+        "quiet_tail_s": [
+          2555.0,
+          2577.825
+        ],
+        "coordinate_frame": {
+          "name": "receiving_camera_view_local_ice_plane",
+          "origin": "target_house_button",
+          "unit": "metres_conditional_projection",
+          "orientation_shared_across_views": false,
+          "metric_accuracy_verified": false
+        },
+        "stones": [
+          {
+            "local_observation_id": "V01",
+            "colour": "red",
+            "position_m_conditional": [
+              0.15811314248390745,
+              1.6524593134612136
+            ],
+            "first_seen_s": 2555.0,
+            "last_seen_s": 2577.0,
+            "supporting_frame_count": 20,
+            "max_position_spread_m": 0.029578558370474548,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V02",
+            "colour": "red",
+            "position_m_conditional": [
+              -0.5850058229266202,
+              1.7607006788708293
+            ],
+            "first_seen_s": 2555.0,
+            "last_seen_s": 2577.0,
+            "supporting_frame_count": 20,
+            "max_position_spread_m": 0.024904531867645675,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V03",
+            "colour": "red",
+            "position_m_conditional": [
+              1.253836297027425,
+              3.1004762106230848
+            ],
+            "first_seen_s": 2555.0,
+            "last_seen_s": 2577.0,
+            "supporting_frame_count": 20,
+            "max_position_spread_m": 0.01067417221856448,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V04",
+            "colour": "red",
+            "position_m_conditional": [
+              0.06321730731629198,
+              3.4644161775887454
+            ],
+            "first_seen_s": 2555.0,
+            "last_seen_s": 2577.0,
+            "supporting_frame_count": 20,
+            "max_position_spread_m": 0.023534149164688677,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V05",
+            "colour": "yellow",
+            "position_m_conditional": [
+              -0.16261075460084298,
+              2.213948459841963
+            ],
+            "first_seen_s": 2555.0,
+            "last_seen_s": 2577.0,
+            "supporting_frame_count": 20,
+            "max_position_spread_m": 0.01216313904152401,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V06",
+            "colour": "yellow",
+            "position_m_conditional": [
+              -1.1773192492409255,
+              3.268932921334313
+            ],
+            "first_seen_s": 2555.0,
+            "last_seen_s": 2577.0,
+            "supporting_frame_count": 20,
+            "max_position_spread_m": 0.016364640882499715,
+            "persistent_stone_identity": null
+          }
+        ],
+        "completeness": "unknown_from_video",
+        "physical_settle_verified": false
+      },
+      "source_board_candidate_id": "S62",
+      "complete_game_state": false,
+      "physical_throw_count_verified": false,
+      "cross_view_identity_verified": false,
+      "transition_from_previous_episode_verified": false,
+      "simulation_ready": false,
+      "simulation_blockers": [
+        "physical_throw_identity_unverified",
+        "cross_view_stone_identity_unverified",
+        "complete_board_unverified",
+        "metric_geometry_unvalidated",
+        "persistent_stone_identity_unverified",
+        "release_and_settle_times_unverified",
+        "episode_to_physical_throw_count_unknown"
+      ]
+    },
+    {
+      "episode_id": "E019",
+      "episode_kind": "one_to_one_time_candidate",
+      "observation_time_s": 2609.269,
+      "observation_time_semantics": "first_left_candidate_passage",
+      "colour_claim": "red",
+      "left_members": [
+        {
+          "interval_candidate_id": "S22",
+          "full_match_candidate_id": "S63",
+          "screen_accepted": true,
+          "screen_status": "provisional_motion_and_patch_support"
+        }
+      ],
+      "right_proposal_ids": [
+        "R01:A060"
+      ],
+      "state_status": "partial_board_observed",
+      "post_event_partial_board": {
+        "status": "partial_stable_view_local_board",
+        "receiving_view": "right",
+        "quiet_tail_s": [
+          2621.0,
+          2644.269
+        ],
+        "coordinate_frame": {
+          "name": "receiving_camera_view_local_ice_plane",
+          "origin": "target_house_button",
+          "unit": "metres_conditional_projection",
+          "orientation_shared_across_views": false,
+          "metric_accuracy_verified": false
+        },
+        "stones": [
+          {
+            "local_observation_id": "V01",
+            "colour": "red",
+            "position_m_conditional": [
+              0.15641851353201686,
+              1.6576219854558816
+            ],
+            "first_seen_s": 2622.0,
+            "last_seen_s": 2644.0,
+            "supporting_frame_count": 18,
+            "max_position_spread_m": 0.120337329893436,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V02",
+            "colour": "red",
+            "position_m_conditional": [
+              -0.5859411041819531,
+              1.7700668765151288
+            ],
+            "first_seen_s": 2622.0,
+            "last_seen_s": 2644.0,
+            "supporting_frame_count": 18,
+            "max_position_spread_m": 0.16251431750370893,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V03",
+            "colour": "red",
+            "position_m_conditional": [
+              1.2537971097491076,
+              3.0923533987007064
+            ],
+            "first_seen_s": 2622.0,
+            "last_seen_s": 2644.0,
+            "supporting_frame_count": 18,
+            "max_position_spread_m": 0.09269822108610087,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V04",
+            "colour": "red",
+            "position_m_conditional": [
+              0.4283573881157649,
+              3.4117697740464803
+            ],
+            "first_seen_s": 2630.0,
+            "last_seen_s": 2644.0,
+            "supporting_frame_count": 11,
+            "max_position_spread_m": 0.08106068215390876,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V05",
+            "colour": "red",
+            "position_m_conditional": [
+              0.06407851221413877,
+              3.4473535610779846
+            ],
+            "first_seen_s": 2622.0,
+            "last_seen_s": 2644.0,
+            "supporting_frame_count": 18,
+            "max_position_spread_m": 0.03740997408516034,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V06",
+            "colour": "yellow",
+            "position_m_conditional": [
+              -0.16292777602667252,
+              2.212721923596388
+            ],
+            "first_seen_s": 2622.0,
+            "last_seen_s": 2644.0,
+            "supporting_frame_count": 18,
+            "max_position_spread_m": 0.10659546705958096,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V07",
+            "colour": "yellow",
+            "position_m_conditional": [
+              -1.1770117620532883,
+              3.2737998459664386
+            ],
+            "first_seen_s": 2622.0,
+            "last_seen_s": 2644.0,
+            "supporting_frame_count": 18,
+            "max_position_spread_m": 0.03296113628594488,
+            "persistent_stone_identity": null
+          }
+        ],
+        "completeness": "unknown_from_video",
+        "physical_settle_verified": false
+      },
+      "source_board_candidate_id": "S63",
+      "complete_game_state": false,
+      "physical_throw_count_verified": false,
+      "cross_view_identity_verified": false,
+      "transition_from_previous_episode_verified": false,
+      "simulation_ready": false,
+      "simulation_blockers": [
+        "physical_throw_identity_unverified",
+        "cross_view_stone_identity_unverified",
+        "complete_board_unverified",
+        "metric_geometry_unvalidated",
+        "persistent_stone_identity_unverified",
+        "release_and_settle_times_unverified",
+        "episode_to_physical_throw_count_unknown"
+      ]
+    },
+    {
+      "episode_id": "E020",
+      "episode_kind": "one_to_one_time_candidate",
+      "observation_time_s": 2681.75,
+      "observation_time_semantics": "first_left_candidate_passage",
+      "colour_claim": "yellow",
+      "left_members": [
+        {
+          "interval_candidate_id": "S23",
+          "full_match_candidate_id": "S64",
+          "screen_accepted": true,
+          "screen_status": "provisional_motion_and_patch_support"
+        }
+      ],
+      "right_proposal_ids": [
+        "R01:A065"
+      ],
+      "state_status": "partial_board_observed",
+      "post_event_partial_board": {
+        "status": "partial_stable_view_local_board",
+        "receiving_view": "right",
+        "quiet_tail_s": [
+          2691.5,
+          2716.75
+        ],
+        "coordinate_frame": {
+          "name": "receiving_camera_view_local_ice_plane",
+          "origin": "target_house_button",
+          "unit": "metres_conditional_projection",
+          "orientation_shared_across_views": false,
+          "metric_accuracy_verified": false
+        },
+        "stones": [
+          {
+            "local_observation_id": "V01",
+            "colour": "red",
+            "position_m_conditional": [
+              0.5410166610154753,
+              1.4502807920849108
+            ],
+            "first_seen_s": 2694.0,
+            "last_seen_s": 2716.0,
+            "supporting_frame_count": 19,
+            "max_position_spread_m": 0.03930523449735198,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V02",
+            "colour": "red",
+            "position_m_conditional": [
+              0.5971723102406981,
+              3.0550250423694933
+            ],
+            "first_seen_s": 2692.0,
+            "last_seen_s": 2716.0,
+            "supporting_frame_count": 20,
+            "max_position_spread_m": 0.04229925130881602,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V03",
+            "colour": "red",
+            "position_m_conditional": [
+              1.2531122447393543,
+              3.0972680005121633
+            ],
+            "first_seen_s": 2692.0,
+            "last_seen_s": 2716.0,
+            "supporting_frame_count": 19,
+            "max_position_spread_m": 0.036153049583925394,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V04",
+            "colour": "yellow",
+            "position_m_conditional": [
+              -0.9047523589644074,
+              -0.37446680708813523
+            ],
+            "first_seen_s": 2698.0,
+            "last_seen_s": 2716.0,
+            "supporting_frame_count": 15,
+            "max_position_spread_m": 0.08393523432032365,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V05",
+            "colour": "yellow",
+            "position_m_conditional": [
+              -1.175616453276958,
+              3.2729892820448137
+            ],
+            "first_seen_s": 2692.0,
+            "last_seen_s": 2716.0,
+            "supporting_frame_count": 20,
+            "max_position_spread_m": 0.018232852359266118,
+            "persistent_stone_identity": null
+          },
+          {
+            "local_observation_id": "V06",
+            "colour": "yellow",
+            "position_m_conditional": [
+              0.6841711798368229,
+              3.7260226304275714
+            ],
+            "first_seen_s": 2692.0,
+            "last_seen_s": 2716.0,
+            "supporting_frame_count": 20,
+            "max_position_spread_m": 0.16010945414175312,
+            "persistent_stone_identity": null
+          }
+        ],
+        "completeness": "unknown_from_video",
+        "physical_settle_verified": false
+      },
+      "source_board_candidate_id": "S64",
+      "complete_game_state": false,
+      "physical_throw_count_verified": false,
+      "cross_view_identity_verified": false,
+      "transition_from_previous_episode_verified": false,
+      "simulation_ready": false,
+      "simulation_blockers": [
+        "physical_throw_identity_unverified",
+        "cross_view_stone_identity_unverified",
+        "complete_board_unverified",
+        "metric_geometry_unvalidated",
+        "persistent_stone_identity_unverified",
+        "release_and_settle_times_unverified",
+        "episode_to_physical_throw_count_unknown"
+      ]
+    }
+  ],
+  "limitations": [
+    "Interval candidate IDs were reconciled to full-match IDs by the saved exact-source screen audit.",
+    "A partial board belongs to one accepted candidate, not a verified physical throw episode.",
+    "Right-only motion proposals and rejected left passages have no inferred outcome board.",
+    "Adjacent full-match board comparisons are not promoted across this richer candidate inventory."
+  ]
+}

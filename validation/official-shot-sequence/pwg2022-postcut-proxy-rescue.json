@@ -1,0 +1,873 @@
+{
+  "status": "development_postcut_visual_rescue_against_counter_proxy_not_throw_f1",
+  "proxy_sha256": "be2cf91d904e72543580d1cbe8cf33eec5c76b6a446a5e5d14f7a3970616eaab",
+  "official_reference_sha256": "8a38eb9866a6615015b07d606a187e131f7bdec14f7ebfa9a17c8b3e7936d220",
+  "input_hashes_by_game": {
+    "PREL000102": {
+      "origin_sha256": "ba685f6822de05e32efe8458a6cd6b6ef46150fedcfe93bd7e05a6a22d0d37db",
+      "cap_decision_sha256": "9c28c3eeb2ad44d92b9f2c90a2d0bc426aa6ca7a6da497b93d412d9208e36bc4",
+      "hard_cuts_sha256": "ce21faaa3af080ea232d55e83648b8c4696d0d1c7d78e4636aa0703cbaa764ee",
+      "source_video_sha256": "c5254bb9103e32c6beac74cf269fc7bcec8ce2c2a710a7d4600c7ddb951f160e"
+    },
+    "PREL000103": {
+      "origin_sha256": "1a93d01e0aeb399177e3de08f13c56554e06955994d2c2302999d5ea3ab87b38",
+      "cap_decision_sha256": "93fb45ed5964bb40e6717a7ca65745a973660ee021ffdedc47499169afecacc7",
+      "hard_cuts_sha256": "eca10243e44188e20a357c297b279adff38cf7a80e6f59b97380feeedf2941d5",
+      "source_video_sha256": "eba1d86944a2f4278b6e5e2c7549d12b47e5e8a51bf0c680b2db372c6ec12420"
+    }
+  },
+  "scanner_sha256": "64a83a0acba9933c176b136f190b65fc3e32487ea875c37489b99c86e08160fc",
+  "resolver_sha256": "75478f3d13a927b29331da4a835157902226f333d78c52e075efa8c3a69de776",
+  "scorer_sha256": "25d034dc4b3716656c7ff621e35f21ef7790d2b1f3c51467f77c58ee09c5d656",
+  "runner_sha256": "9de9e7da93740a130ee6eaf50c9e7eaef54e5fc478963bede4f4edd3300da417",
+  "rule": "For every origin-predicted but cap-unconfirmed shot in either complete-end visual search span, require a verified hard cut at the origin interval end; scan the next 12 seconds with the existing camera-filtered strict/relaxed cap-motion rule and add only a uniquely resolved colour. The counter is read only for scoring afterward.",
+  "case_count": 4,
+  "rescued_count": 1,
+  "base_total_matched": 29,
+  "postcut_total_matched": 30,
+  "rows": [
+    {
+      "official_game_code": "PREL000102",
+      "end": 4,
+      "base_visual_candidate_count": 13,
+      "origin_cases": [
+        {
+          "shot_id": "S260",
+          "origin_interval_s": [
+            3215.8,
+            3225.8
+          ],
+          "origin_probability": 0.9041496521162431,
+          "cap_decision_status": "unconfirmed",
+          "verified_hard_cut": true,
+          "postcut_counts": {
+            "red": {
+              "strict": 1,
+              "relaxed": 1
+            },
+            "yellow": {
+              "strict": 0,
+              "relaxed": 0
+            }
+          },
+          "following_cut_times_s": [],
+          "postcut_decision": {
+            "colour": "red",
+            "status": "unique_strict_postcut_motion"
+          }
+        },
+        {
+          "shot_id": "S274",
+          "origin_interval_s": [
+            3393.0,
+            3399.6
+          ],
+          "origin_probability": 0.8198192952712753,
+          "cap_decision_status": "unconfirmed",
+          "verified_hard_cut": true,
+          "postcut_counts": {
+            "red": {
+              "strict": 0,
+              "relaxed": 0
+            },
+            "yellow": {
+              "strict": 0,
+              "relaxed": 0
+            }
+          },
+          "following_cut_times_s": [],
+          "postcut_decision": {
+            "colour": null,
+            "status": "ambiguous_or_absent_postcut_motion"
+          }
+        },
+        {
+          "shot_id": "S278",
+          "origin_interval_s": [
+            3452.2,
+            3464.0
+          ],
+          "origin_probability": 0.930396613758292,
+          "cap_decision_status": "unconfirmed",
+          "verified_hard_cut": true,
+          "postcut_counts": {
+            "red": {
+              "strict": 0,
+              "relaxed": 0
+            },
+            "yellow": {
+              "strict": 0,
+              "relaxed": 0
+            }
+          },
+          "following_cut_times_s": [],
+          "postcut_decision": {
+            "colour": null,
+            "status": "ambiguous_or_absent_postcut_motion"
+          }
+        },
+        {
+          "shot_id": "S282",
+          "origin_interval_s": [
+            3490.6,
+            3498.4
+          ],
+          "origin_probability": 0.5867990084090507,
+          "cap_decision_status": "unconfirmed",
+          "verified_hard_cut": true,
+          "postcut_counts": {
+            "red": {
+              "strict": 0,
+              "relaxed": 0
+            },
+            "yellow": {
+              "strict": 0,
+              "relaxed": 0
+            }
+          },
+          "following_cut_times_s": [],
+          "postcut_decision": {
+            "colour": null,
+            "status": "ambiguous_or_absent_postcut_motion"
+          }
+        }
+      ],
+      "rescued_visual_candidates": [
+        {
+          "shot_id": "S227",
+          "interval_s": [
+            2793.6,
+            2805.0
+          ],
+          "colour": "red"
+        },
+        {
+          "shot_id": "S229",
+          "interval_s": [
+            2830.6,
+            2853.8
+          ],
+          "colour": null
+        },
+        {
+          "shot_id": "S232",
+          "interval_s": [
+            2884.0,
+            2894.6
+          ],
+          "colour": "red"
+        },
+        {
+          "shot_id": "S237",
+          "interval_s": [
+            2956.2,
+            2969.2
+          ],
+          "colour": null
+        },
+        {
+          "shot_id": "S240",
+          "interval_s": [
+            2999.6,
+            3017.2
+          ],
+          "colour": null
+        },
+        {
+          "shot_id": "S245",
+          "interval_s": [
+            3057.4,
+            3075.6
+          ],
+          "colour": null
+        },
+        {
+          "shot_id": "S250",
+          "interval_s": [
+            3115.8,
+            3123.2
+          ],
+          "colour": "red"
+        },
+        {
+          "shot_id": "S255",
+          "interval_s": [
+            3167.4,
+            3176.8
+          ],
+          "colour": null
+        },
+        {
+          "shot_id": "S264",
+          "interval_s": [
+            3268.4,
+            3286.2
+          ],
+          "colour": null
+        },
+        {
+          "shot_id": "S268",
+          "interval_s": [
+            3336.8,
+            3346.0
+          ],
+          "colour": "red"
+        },
+        {
+          "shot_id": "S283",
+          "interval_s": [
+            3498.4,
+            3521.4
+          ],
+          "colour": null
+        },
+        {
+          "shot_id": "S288",
+          "interval_s": [
+            3595.4,
+            3602.2
+          ],
+          "colour": "red"
+        },
+        {
+          "shot_id": "S293",
+          "interval_s": [
+            3652.2,
+            3664.8
+          ],
+          "colour": null
+        },
+        {
+          "shot_id": "S260",
+          "interval_s": [
+            3215.8,
+            3225.8
+          ],
+          "colour": "red"
+        }
+      ],
+      "base_score": {
+        "visual_candidate_count": 13,
+        "clean_counter_count": 16,
+        "matched_count": 13,
+        "unmatched_visual_ids": [],
+        "unmatched_official_shot_ids": [
+          "PREL000102-E04-S09",
+          "PREL000102-E04-S12",
+          "PREL000102-E04-S13"
+        ],
+        "matches": [
+          {
+            "visual_id": "S227",
+            "official_shot_id": "PREL000102-E04-S01",
+            "visual_colour": "red",
+            "counter_colour": "red",
+            "counter_minus_visual_end_s": 6.0
+          },
+          {
+            "visual_id": "S229",
+            "official_shot_id": "PREL000102-E04-S02",
+            "visual_colour": null,
+            "counter_colour": "yellow",
+            "counter_minus_visual_end_s": 15.2
+          },
+          {
+            "visual_id": "S232",
+            "official_shot_id": "PREL000102-E04-S03",
+            "visual_colour": "red",
+            "counter_colour": "red",
+            "counter_minus_visual_end_s": 28.4
+          },
+          {
+            "visual_id": "S237",
+            "official_shot_id": "PREL000102-E04-S04",
+            "visual_colour": null,
+            "counter_colour": "yellow",
+            "counter_minus_visual_end_s": -3.2
+          },
+          {
+            "visual_id": "S240",
+            "official_shot_id": "PREL000102-E04-S05",
+            "visual_colour": null,
+            "counter_colour": "red",
+            "counter_minus_visual_end_s": 15.8
+          },
+          {
+            "visual_id": "S245",
+            "official_shot_id": "PREL000102-E04-S06",
+            "visual_colour": null,
+            "counter_colour": "yellow",
+            "counter_minus_visual_end_s": 16.4
+          },
+          {
+            "visual_id": "S250",
+            "official_shot_id": "PREL000102-E04-S07",
+            "visual_colour": "red",
+            "counter_colour": "red",
+            "counter_minus_visual_end_s": 14.8
+          },
+          {
+            "visual_id": "S255",
+            "official_shot_id": "PREL000102-E04-S08",
+            "visual_colour": null,
+            "counter_colour": "yellow",
+            "counter_minus_visual_end_s": 21.2
+          },
+          {
+            "visual_id": "S264",
+            "official_shot_id": "PREL000102-E04-S10",
+            "visual_colour": null,
+            "counter_colour": "yellow",
+            "counter_minus_visual_end_s": -1.2
+          },
+          {
+            "visual_id": "S268",
+            "official_shot_id": "PREL000102-E04-S11",
+            "visual_colour": "red",
+            "counter_colour": "red",
+            "counter_minus_visual_end_s": 9.0
+          },
+          {
+            "visual_id": "S283",
+            "official_shot_id": "PREL000102-E04-S14",
+            "visual_colour": null,
+            "counter_colour": "yellow",
+            "counter_minus_visual_end_s": 24.6
+          },
+          {
+            "visual_id": "S288",
+            "official_shot_id": "PREL000102-E04-S15",
+            "visual_colour": "red",
+            "counter_colour": "red",
+            "counter_minus_visual_end_s": 26.8
+          },
+          {
+            "visual_id": "S293",
+            "official_shot_id": "PREL000102-E04-S16",
+            "visual_colour": null,
+            "counter_colour": "yellow",
+            "counter_minus_visual_end_s": -2.8
+          }
+        ],
+        "counter_proxy_precision": 1.0,
+        "counter_proxy_recall": 0.8125,
+        "counter_proxy_f1": 0.8966,
+        "known_colour_match_count": 5,
+        "known_colour_conflict_count": 0,
+        "unknown_colour_match_count": 8
+      },
+      "postcut_score": {
+        "visual_candidate_count": 14,
+        "clean_counter_count": 16,
+        "matched_count": 14,
+        "unmatched_visual_ids": [],
+        "unmatched_official_shot_ids": [
+          "PREL000102-E04-S12",
+          "PREL000102-E04-S13"
+        ],
+        "matches": [
+          {
+            "visual_id": "S227",
+            "official_shot_id": "PREL000102-E04-S01",
+            "visual_colour": "red",
+            "counter_colour": "red",
+            "counter_minus_visual_end_s": 6.0
+          },
+          {
+            "visual_id": "S229",
+            "official_shot_id": "PREL000102-E04-S02",
+            "visual_colour": null,
+            "counter_colour": "yellow",
+            "counter_minus_visual_end_s": 15.2
+          },
+          {
+            "visual_id": "S232",
+            "official_shot_id": "PREL000102-E04-S03",
+            "visual_colour": "red",
+            "counter_colour": "red",
+            "counter_minus_visual_end_s": 28.4
+          },
+          {
+            "visual_id": "S237",
+            "official_shot_id": "PREL000102-E04-S04",
+            "visual_colour": null,
+            "counter_colour": "yellow",
+            "counter_minus_visual_end_s": -3.2
+          },
+          {
+            "visual_id": "S240",
+            "official_shot_id": "PREL000102-E04-S05",
+            "visual_colour": null,
+            "counter_colour": "red",
+            "counter_minus_visual_end_s": 15.8
+          },
+          {
+            "visual_id": "S245",
+            "official_shot_id": "PREL000102-E04-S06",
+            "visual_colour": null,
+            "counter_colour": "yellow",
+            "counter_minus_visual_end_s": 16.4
+          },
+          {
+            "visual_id": "S250",
+            "official_shot_id": "PREL000102-E04-S07",
+            "visual_colour": "red",
+            "counter_colour": "red",
+            "counter_minus_visual_end_s": 14.8
+          },
+          {
+            "visual_id": "S255",
+            "official_shot_id": "PREL000102-E04-S08",
+            "visual_colour": null,
+            "counter_colour": "yellow",
+            "counter_minus_visual_end_s": 21.2
+          },
+          {
+            "visual_id": "S260",
+            "official_shot_id": "PREL000102-E04-S09",
+            "visual_colour": "red",
+            "counter_colour": "red",
+            "counter_minus_visual_end_s": 14.2
+          },
+          {
+            "visual_id": "S264",
+            "official_shot_id": "PREL000102-E04-S10",
+            "visual_colour": null,
+            "counter_colour": "yellow",
+            "counter_minus_visual_end_s": -1.2
+          },
+          {
+            "visual_id": "S268",
+            "official_shot_id": "PREL000102-E04-S11",
+            "visual_colour": "red",
+            "counter_colour": "red",
+            "counter_minus_visual_end_s": 9.0
+          },
+          {
+            "visual_id": "S283",
+            "official_shot_id": "PREL000102-E04-S14",
+            "visual_colour": null,
+            "counter_colour": "yellow",
+            "counter_minus_visual_end_s": 24.6
+          },
+          {
+            "visual_id": "S288",
+            "official_shot_id": "PREL000102-E04-S15",
+            "visual_colour": "red",
+            "counter_colour": "red",
+            "counter_minus_visual_end_s": 26.8
+          },
+          {
+            "visual_id": "S293",
+            "official_shot_id": "PREL000102-E04-S16",
+            "visual_colour": null,
+            "counter_colour": "yellow",
+            "counter_minus_visual_end_s": -2.8
+          }
+        ],
+        "counter_proxy_precision": 1.0,
+        "counter_proxy_recall": 0.875,
+        "counter_proxy_f1": 0.9333,
+        "known_colour_match_count": 6,
+        "known_colour_conflict_count": 0,
+        "unknown_colour_match_count": 8
+      }
+    },
+    {
+      "official_game_code": "PREL000103",
+      "end": 3,
+      "base_visual_candidate_count": 16,
+      "origin_cases": [],
+      "rescued_visual_candidates": [
+        {
+          "shot_id": "S135",
+          "interval_s": [
+            2218.0,
+            2240.6
+          ],
+          "colour": "red"
+        },
+        {
+          "shot_id": "S137",
+          "interval_s": [
+            2261.8,
+            2297.4
+          ],
+          "colour": null
+        },
+        {
+          "shot_id": "S139",
+          "interval_s": [
+            2319.6,
+            2332.0
+          ],
+          "colour": "red"
+        },
+        {
+          "shot_id": "S141",
+          "interval_s": [
+            2359.6,
+            2378.0
+          ],
+          "colour": null
+        },
+        {
+          "shot_id": "S144",
+          "interval_s": [
+            2402.2,
+            2414.6
+          ],
+          "colour": "red"
+        },
+        {
+          "shot_id": "S146",
+          "interval_s": [
+            2440.2,
+            2472.8
+          ],
+          "colour": null
+        },
+        {
+          "shot_id": "S148",
+          "interval_s": [
+            2494.6,
+            2508.2
+          ],
+          "colour": "red"
+        },
+        {
+          "shot_id": "S152",
+          "interval_s": [
+            2549.6,
+            2568.2
+          ],
+          "colour": null
+        },
+        {
+          "shot_id": "S154",
+          "interval_s": [
+            2604.6,
+            2622.8
+          ],
+          "colour": "red"
+        },
+        {
+          "shot_id": "S159",
+          "interval_s": [
+            2667.0,
+            2684.6
+          ],
+          "colour": null
+        },
+        {
+          "shot_id": "S162",
+          "interval_s": [
+            2715.0,
+            2731.4
+          ],
+          "colour": "red"
+        },
+        {
+          "shot_id": "S166",
+          "interval_s": [
+            2784.8,
+            2796.8
+          ],
+          "colour": null
+        },
+        {
+          "shot_id": "S169",
+          "interval_s": [
+            2846.4,
+            2866.2
+          ],
+          "colour": "red"
+        },
+        {
+          "shot_id": "S175",
+          "interval_s": [
+            2935.0,
+            2953.2
+          ],
+          "colour": null
+        },
+        {
+          "shot_id": "S179",
+          "interval_s": [
+            2986.4,
+            3005.6
+          ],
+          "colour": "red"
+        },
+        {
+          "shot_id": "S182",
+          "interval_s": [
+            3064.4,
+            3076.0
+          ],
+          "colour": null
+        }
+      ],
+      "base_score": {
+        "visual_candidate_count": 16,
+        "clean_counter_count": 16,
+        "matched_count": 16,
+        "unmatched_visual_ids": [],
+        "unmatched_official_shot_ids": [],
+        "matches": [
+          {
+            "visual_id": "S135",
+            "official_shot_id": "PREL000103-E03-S01",
+            "visual_colour": "red",
+            "counter_colour": "red",
+            "counter_minus_visual_end_s": 15.4
+          },
+          {
+            "visual_id": "S137",
+            "official_shot_id": "PREL000103-E03-S02",
+            "visual_colour": null,
+            "counter_colour": "yellow",
+            "counter_minus_visual_end_s": 11.6
+          },
+          {
+            "visual_id": "S139",
+            "official_shot_id": "PREL000103-E03-S03",
+            "visual_colour": "red",
+            "counter_colour": "red",
+            "counter_minus_visual_end_s": 18.0
+          },
+          {
+            "visual_id": "S141",
+            "official_shot_id": "PREL000103-E03-S04",
+            "visual_colour": null,
+            "counter_colour": "yellow",
+            "counter_minus_visual_end_s": 16.0
+          },
+          {
+            "visual_id": "S144",
+            "official_shot_id": "PREL000103-E03-S05",
+            "visual_colour": "red",
+            "counter_colour": "red",
+            "counter_minus_visual_end_s": 17.4
+          },
+          {
+            "visual_id": "S146",
+            "official_shot_id": "PREL000103-E03-S06",
+            "visual_colour": null,
+            "counter_colour": "yellow",
+            "counter_minus_visual_end_s": 14.2
+          },
+          {
+            "visual_id": "S148",
+            "official_shot_id": "PREL000103-E03-S07",
+            "visual_colour": "red",
+            "counter_colour": "red",
+            "counter_minus_visual_end_s": 12.8
+          },
+          {
+            "visual_id": "S152",
+            "official_shot_id": "PREL000103-E03-S08",
+            "visual_colour": null,
+            "counter_colour": "yellow",
+            "counter_minus_visual_end_s": -5.2
+          },
+          {
+            "visual_id": "S154",
+            "official_shot_id": "PREL000103-E03-S09",
+            "visual_colour": "red",
+            "counter_colour": "red",
+            "counter_minus_visual_end_s": 14.2
+          },
+          {
+            "visual_id": "S159",
+            "official_shot_id": "PREL000103-E03-S10",
+            "visual_colour": null,
+            "counter_colour": "yellow",
+            "counter_minus_visual_end_s": -3.6
+          },
+          {
+            "visual_id": "S162",
+            "official_shot_id": "PREL000103-E03-S11",
+            "visual_colour": "red",
+            "counter_colour": "red",
+            "counter_minus_visual_end_s": 15.6
+          },
+          {
+            "visual_id": "S166",
+            "official_shot_id": "PREL000103-E03-S12",
+            "visual_colour": null,
+            "counter_colour": "yellow",
+            "counter_minus_visual_end_s": 12.2
+          },
+          {
+            "visual_id": "S169",
+            "official_shot_id": "PREL000103-E03-S13",
+            "visual_colour": "red",
+            "counter_colour": "red",
+            "counter_minus_visual_end_s": 14.8
+          },
+          {
+            "visual_id": "S175",
+            "official_shot_id": "PREL000103-E03-S14",
+            "visual_colour": null,
+            "counter_colour": "yellow",
+            "counter_minus_visual_end_s": -3.2
+          },
+          {
+            "visual_id": "S179",
+            "official_shot_id": "PREL000103-E03-S15",
+            "visual_colour": "red",
+            "counter_colour": "red",
+            "counter_minus_visual_end_s": 15.4
+          },
+          {
+            "visual_id": "S182",
+            "official_shot_id": "PREL000103-E03-S16",
+            "visual_colour": null,
+            "counter_colour": "yellow",
+            "counter_minus_visual_end_s": -3.0
+          }
+        ],
+        "counter_proxy_precision": 1.0,
+        "counter_proxy_recall": 1.0,
+        "counter_proxy_f1": 1.0,
+        "known_colour_match_count": 8,
+        "known_colour_conflict_count": 0,
+        "unknown_colour_match_count": 8
+      },
+      "postcut_score": {
+        "visual_candidate_count": 16,
+        "clean_counter_count": 16,
+        "matched_count": 16,
+        "unmatched_visual_ids": [],
+        "unmatched_official_shot_ids": [],
+        "matches": [
+          {
+            "visual_id": "S135",
+            "official_shot_id": "PREL000103-E03-S01",
+            "visual_colour": "red",
+            "counter_colour": "red",
+            "counter_minus_visual_end_s": 15.4
+          },
+          {
+            "visual_id": "S137",
+            "official_shot_id": "PREL000103-E03-S02",
+            "visual_colour": null,
+            "counter_colour": "yellow",
+            "counter_minus_visual_end_s": 11.6
+          },
+          {
+            "visual_id": "S139",
+            "official_shot_id": "PREL000103-E03-S03",
+            "visual_colour": "red",
+            "counter_colour": "red",
+            "counter_minus_visual_end_s": 18.0
+          },
+          {
+            "visual_id": "S141",
+            "official_shot_id": "PREL000103-E03-S04",
+            "visual_colour": null,
+            "counter_colour": "yellow",
+            "counter_minus_visual_end_s": 16.0
+          },
+          {
+            "visual_id": "S144",
+            "official_shot_id": "PREL000103-E03-S05",
+            "visual_colour": "red",
+            "counter_colour": "red",
+            "counter_minus_visual_end_s": 17.4
+          },
+          {
+            "visual_id": "S146",
+            "official_shot_id": "PREL000103-E03-S06",
+            "visual_colour": null,
+            "counter_colour": "yellow",
+            "counter_minus_visual_end_s": 14.2
+          },
+          {
+            "visual_id": "S148",
+            "official_shot_id": "PREL000103-E03-S07",
+            "visual_colour": "red",
+            "counter_colour": "red",
+            "counter_minus_visual_end_s": 12.8
+          },
+          {
+            "visual_id": "S152",
+            "official_shot_id": "PREL000103-E03-S08",
+            "visual_colour": null,
+            "counter_colour": "yellow",
+            "counter_minus_visual_end_s": -5.2
+          },
+          {
+            "visual_id": "S154",
+            "official_shot_id": "PREL000103-E03-S09",
+            "visual_colour": "red",
+            "counter_colour": "red",
+            "counter_minus_visual_end_s": 14.2
+          },
+          {
+            "visual_id": "S159",
+            "official_shot_id": "PREL000103-E03-S10",
+            "visual_colour": null,
+            "counter_colour": "yellow",
+            "counter_minus_visual_end_s": -3.6
+          },
+          {
+            "visual_id": "S162",
+            "official_shot_id": "PREL000103-E03-S11",
+            "visual_colour": "red",
+            "counter_colour": "red",
+            "counter_minus_visual_end_s": 15.6
+          },
+          {
+            "visual_id": "S166",
+            "official_shot_id": "PREL000103-E03-S12",
+            "visual_colour": null,
+            "counter_colour": "yellow",
+            "counter_minus_visual_end_s": 12.2
+          },
+          {
+            "visual_id": "S169",
+            "official_shot_id": "PREL000103-E03-S13",
+            "visual_colour": "red",
+            "counter_colour": "red",
+            "counter_minus_visual_end_s": 14.8
+          },
+          {
+            "visual_id": "S175",
+            "official_shot_id": "PREL000103-E03-S14",
+            "visual_colour": null,
+            "counter_colour": "yellow",
+            "counter_minus_visual_end_s": -3.2
+          },
+          {
+            "visual_id": "S179",
+            "official_shot_id": "PREL000103-E03-S15",
+            "visual_colour": "red",
+            "counter_colour": "red",
+            "counter_minus_visual_end_s": 15.4
+          },
+          {
+            "visual_id": "S182",
+            "official_shot_id": "PREL000103-E03-S16",
+            "visual_colour": null,
+            "counter_colour": "yellow",
+            "counter_minus_visual_end_s": -3.0
+          }
+        ],
+        "counter_proxy_precision": 1.0,
+        "counter_proxy_recall": 1.0,
+        "counter_proxy_f1": 1.0,
+        "known_colour_match_count": 8,
+        "known_colour_conflict_count": 0,
+        "unknown_colour_match_count": 8
+      }
+    }
+  ],
+  "limitations": [
+    "The rescue rule was already developed on exposed 2022 video and this is an in-sample diagnostic, not a frozen unseen transfer.",
+    "Post-cut motion and origin evidence need not follow the same physical stone across the edit.",
+    "Official shot timestamps remain unknown; the clean broadcast counter is only a delayed weak proxy.",
+    "Incomplete ends and counter-unreadable deliveries are excluded."
+  ]
+}

@@ -1,0 +1,9 @@
+# Frozen larger-cap right-view transfer to Canada–Italy 2024
+
+This plan was written after inspecting and scoring Estonia E15 and before running the larger-cap Italy probe. Italy has previously been used for development, so this is a same-family transfer check, **not** independent validation or physical throw F1.
+
+Use the full 360p Italy source `source.mp4` (SHA-256 `aff12e78edeb5e108d142aed3e19b61c3956b4fddc8b2fd8b202713746771739`) over source seconds 1650–2760, offset zero. Run `prototype/scripts/probe_right_large_cap_interval.py` at 1 Hz with its existing fixed 180 px² contour ceiling, two-second association gap, 15 px area-change weight and late-seed span rule. Code hashes before the run: runner `6a9cbb81b585ca0837d06878ce13a779d5880f592df4ce8edc852eba5f81ed81`, colour proposals `0f1588b4eb3de2a5d9c732c0a0264f03a41933821a0a943845df2dc0a4ba1645`, global association `fd57618be239344c6d5e7795a3b0e97720fc7ccd5944791210a200b2cd848b9e`, late seed `be45207245e5f0c88dc9720810a4be44075affd8b3ade70f9fe55335`.
+
+Render **every** review proposal on source frames, classify the sampled path as short moving stone, stone pixels with uncertain long-track identity, person/equipment, or mixed identity, and save that source review before calculating any context scores. Then apply the existing 0.25 surrounding-ring and 0.25 underpoint non-ice thresholds unchanged. Report all classes and tiers, each person path left clear, each short stone path sent to cluttered review, and same-colour passage-time overlap with the earlier 17 coarse windows in `blind-reference.json`. Preserve duplicate and identity uncertainty. Do not alter this rule based on Italy output.
+
+Neither coarse overlap nor three-frame review establishes exhaustive deliveries, physical stone identity, segment endpoints, settled boards, or event precision/recall/F1. The reserved unseen 2025 end is excluded.

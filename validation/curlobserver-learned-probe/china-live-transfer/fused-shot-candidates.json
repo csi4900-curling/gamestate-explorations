@@ -1,0 +1,145 @@
+{
+  "status": "postscore_development_shot_evidence_fusion_not_full_event_detection",
+  "source_sha256": "c5254bb9103e32c6beac74cf269fc7bcec8ce2c2a710a7d4600c7ddb951f160e",
+  "source_interval_s": [
+    300,
+    600
+  ],
+  "origins_sha256": "7b6514690a71be1b97481deff75b1df8974f08906fc1fba625646232426c2951",
+  "two_shot_sha256": "ed398d41af200634bf2bde8e25b55dcf5cf31c6a984bf2fb59945ee6fc541b63",
+  "counter_alignment_sha256": "ad9085bcf51c4787a54f6c068c879bb66f5b445e37dda864eb9159bc0375eb83",
+  "fusion_code_sha256": "58c59a381d7cd412329d48f05d5e50c40561aca2406d47d4027bbbd2b72cfe85",
+  "runner_sha256": "d01b2de68e2ada9857523c1679cbebc60cac6d4f2ab87cf22d1278af155cf445",
+  "candidate_count": 7,
+  "resolved_shot_score": {
+    "tp": 7,
+    "fp": 0,
+    "fn": 0,
+    "tn": 13,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+  },
+  "events": [
+    {
+      "shot_id": "S01",
+      "delivery_window_s": [
+        300,
+        331.6
+      ],
+      "origin_probability": 0.864165254738934,
+      "evidence_sources": [
+        "visual_origin_and_adjacent_motion",
+        "delayed_counter_and_adjacent_motion"
+      ],
+      "counter_id": "B01",
+      "colour": "yellow",
+      "colour_status": "resolved",
+      "status": "candidate"
+    },
+    {
+      "shot_id": "S03",
+      "delivery_window_s": [
+        356.0,
+        365.4
+      ],
+      "origin_probability": 0.8292615336602079,
+      "evidence_sources": [
+        "visual_origin_and_adjacent_motion",
+        "delayed_counter_and_adjacent_motion"
+      ],
+      "counter_id": "B02",
+      "colour": "red",
+      "colour_status": "resolved",
+      "status": "candidate"
+    },
+    {
+      "shot_id": "S06",
+      "delivery_window_s": [
+        385.2,
+        413.0
+      ],
+      "origin_probability": 0.6617431328729652,
+      "evidence_sources": [
+        "visual_origin_and_adjacent_motion",
+        "delayed_counter_and_adjacent_motion"
+      ],
+      "counter_id": "B03",
+      "colour": "yellow",
+      "colour_status": "resolved",
+      "status": "candidate"
+    },
+    {
+      "shot_id": "S09",
+      "delivery_window_s": [
+        441.2,
+        447.2
+      ],
+      "origin_probability": 0.8922735858439805,
+      "evidence_sources": [
+        "visual_origin_and_adjacent_motion",
+        "delayed_counter_and_adjacent_motion"
+      ],
+      "counter_id": "B04",
+      "colour": "red",
+      "colour_status": "resolved",
+      "status": "candidate"
+    },
+    {
+      "shot_id": "S12",
+      "delivery_window_s": [
+        467.4,
+        487.0
+      ],
+      "origin_probability": 0.8722208815357992,
+      "evidence_sources": [
+        "visual_origin_and_adjacent_motion",
+        "delayed_counter_and_adjacent_motion"
+      ],
+      "counter_id": "B05",
+      "colour": "yellow",
+      "colour_status": "resolved",
+      "status": "candidate"
+    },
+    {
+      "shot_id": "S15",
+      "delivery_window_s": [
+        512.8,
+        530.0
+      ],
+      "origin_probability": 0.8562865141393885,
+      "evidence_sources": [
+        "visual_origin_and_adjacent_motion",
+        "delayed_counter_and_adjacent_motion"
+      ],
+      "counter_id": "B06",
+      "colour": "red",
+      "colour_status": "resolved",
+      "status": "candidate"
+    },
+    {
+      "shot_id": "S18",
+      "delivery_window_s": [
+        558.6,
+        579.2
+      ],
+      "origin_probability": 0.7117387901425998,
+      "evidence_sources": [
+        "visual_origin_and_adjacent_motion",
+        "delayed_counter_and_adjacent_motion"
+      ],
+      "counter_id": "B07",
+      "colour": "yellow",
+      "colour_status": "resolved",
+      "status": "candidate"
+    }
+  ],
+  "conflicts": [],
+  "unassociated_counter_events": [],
+  "limitations": [
+    "Postscore development fusion on exposed intervals; selection and rescue rules were shaped by prior errors.",
+    "Agent-authored shot labels are not exhaustive independent throw-event ground truth.",
+    "Delivery windows bound broadcast shots, not physical release or full stone travel.",
+    "Counter changes can be unreadable, delayed, or absent; unassociated changes remain unresolved."
+  ]
+}

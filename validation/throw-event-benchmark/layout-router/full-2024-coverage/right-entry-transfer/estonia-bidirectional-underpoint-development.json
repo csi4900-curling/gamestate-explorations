@@ -1,0 +1,135 @@
+{
+  "status": "development_underpoint_review_cue_not_physical_stone_classifier",
+  "source_sha256": "2e2b84bb2d9dffa497ee850ddbeaf0d5cae0d697377b6eee6a1ef481f449f3da",
+  "recording": "estonia",
+  "proposal_kind": "bidirectional",
+  "proposals_sha256": "00fe7d69b2d9976f93e1bd9da6b5bb44952e594af2340245d45d171f8f58c7d0",
+  "source_review_sha256": "556c3305b21e0cdee687c6fac6250a1838d74ad72e8b9137edbeafdd948d8c69",
+  "feature_code_sha256": "f5bc302786c2e0e31bdcb8a9cab7e9982648bffec464407b88b39cbccbf6b7a9",
+  "runner_sha256": "73585d4d158d338d3531bfc4e65890e3fcd243a7ea75e2de1f04cb78ecfd2664",
+  "sample_geometry_640x360": {
+    "half_width": 20,
+    "top_offset": 22,
+    "bottom_offset": 60
+  },
+  "ice_hsv_rule": {
+    "saturation_less_than": 90,
+    "value_greater_than": 150
+  },
+  "nonice_review_threshold": 0.25,
+  "counts_by_source_class_and_tier": {
+    "moving_stone_short_path": {
+      "underpoint_clear_review": 4,
+      "underpoint_cluttered_review": 0,
+      "underpoint_unavailable": 0
+    },
+    "person_wheelchair_or_clothing": {
+      "underpoint_clear_review": 0,
+      "underpoint_cluttered_review": 1,
+      "underpoint_unavailable": 0
+    }
+  },
+  "rows": [
+    {
+      "raw_track_id": "B006",
+      "source_prefix_class": "moving_stone_short_path",
+      "sample_source_times_s": [
+        1932.0,
+        1938.0,
+        1939.0
+      ],
+      "sample_underpoint_nonice_fractions": [
+        0.0211,
+        0.0,
+        0.0
+      ],
+      "median_underpoint_nonice_fraction": 0.0,
+      "available_sample_count": 3,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "underpoint_clear_review"
+    },
+    {
+      "raw_track_id": "B018",
+      "source_prefix_class": "moving_stone_short_path",
+      "sample_source_times_s": [
+        2365.0,
+        2367.0,
+        2369.0
+      ],
+      "sample_underpoint_nonice_fractions": [
+        0.0,
+        0.0342,
+        0.0007
+      ],
+      "median_underpoint_nonice_fraction": 0.0007,
+      "available_sample_count": 3,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "underpoint_clear_review"
+    },
+    {
+      "raw_track_id": "B026",
+      "source_prefix_class": "moving_stone_short_path",
+      "sample_source_times_s": [
+        2558.0,
+        2559.0,
+        2561.0
+      ],
+      "sample_underpoint_nonice_fractions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "median_underpoint_nonice_fraction": 0.0,
+      "available_sample_count": 3,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "underpoint_clear_review"
+    },
+    {
+      "raw_track_id": "B028",
+      "source_prefix_class": "moving_stone_short_path",
+      "sample_source_times_s": [
+        2666.0,
+        2667.0,
+        2669.0
+      ],
+      "sample_underpoint_nonice_fractions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "median_underpoint_nonice_fraction": 0.0,
+      "available_sample_count": 3,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "underpoint_clear_review"
+    },
+    {
+      "raw_track_id": "B031",
+      "source_prefix_class": "person_wheelchair_or_clothing",
+      "sample_source_times_s": [
+        2743.0,
+        2744.0,
+        2746.0
+      ],
+      "sample_underpoint_nonice_fractions": [
+        0.9862,
+        0.9638,
+        0.8151
+      ],
+      "median_underpoint_nonice_fraction": 0.9638,
+      "available_sample_count": 3,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "underpoint_cluttered_review"
+    }
+  ],
+  "limitations": [
+    "Band geometry and threshold were chosen after inspecting Slovakia failures.",
+    "Same-agent source classes are not independent physical throw labels.",
+    "Ice markings, equipment and overlap can clutter the band under a stone.",
+    "A clear band cannot by itself establish stone identity."
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "source_id": "qn9tHfcimlQ",
+  "reference_method": "agent_blind",
+  "source_interval_s": [
+    1650,
+    2760
+  ],
+  "reference_sha256": "c897a508df776e1a0f29b1b5b58b2e3ba1baa8d9b7b64c683d2dbe8535d1ff97",
+  "predictions_sha256": "f91ad5dfa97cb05da6db73f97f30d97fb76bd5332925e4a4e7816effaef94fa0",
+  "scorer_sha256": "9a5bfaa7b9506038cee64e1290106fdca60a9107ecc8e5d6b404f02ab3eacbd7",
+  "score": {
+    "reference_count": 20,
+    "prediction_count": 1,
+    "true_positives": 1,
+    "false_positives": 0,
+    "false_negatives": 19,
+    "precision": 1.0,
+    "recall": 0.05,
+    "f1": 0.09523809523809523,
+    "colour_errors_among_matches": 1,
+    "colour_aware_true_positives": 0,
+    "colour_aware_false_positives": 1,
+    "colour_aware_false_negatives": 20,
+    "colour_aware_precision": 0.0,
+    "colour_aware_recall": 0.0,
+    "colour_aware_f1": 0.0,
+    "matches": [
+      {
+        "reference_id": "P13",
+        "prediction_id": "D01",
+        "colour_match": false
+      }
+    ],
+    "missed_reference_ids": [
+      "P01",
+      "P02",
+      "P03",
+      "P04",
+      "P05",
+      "P06",
+      "P07",
+      "P08",
+      "P09",
+      "P10",
+      "P11",
+      "P12",
+      "P14",
+      "P15",
+      "P16",
+      "P17",
+      "P18",
+      "P19",
+      "P20"
+    ],
+    "extra_prediction_ids": [],
+    "scoring_tolerance_s": 0.0,
+    "timing_interpretation": "Passage detection within a reference interval; no release-time error inferred."
+  },
+  "limits": [
+    "An F1 score inherits the completeness and independence limits of its reference.",
+    "One-to-one interval agreement is not release-time accuracy.",
+    "Full-match accuracy requires exhaustive labels across direction and camera changes."
+  ]
+}

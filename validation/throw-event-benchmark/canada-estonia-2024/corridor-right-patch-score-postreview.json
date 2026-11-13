@@ -1,0 +1,149 @@
+{
+  "status": "postscore_exposed_development_diagnostic_not_frozen_detector",
+  "source_id": "PXGfMeiTKMA",
+  "source_sha256": "2e2b84bb2d9dffa497ee850ddbeaf0d5cae0d697377b6eee6a1ef481f449f3da",
+  "source_interval_s": [
+    1650,
+    2760
+  ],
+  "input_sha256": {
+    "candidates": "ba103e076936412513b3267de8625f9e3ca4fbb0be7b4f3b3cdde77c14c78526",
+    "corroboration": "2f43d625808096195d5ee2bff9b6d0c7f24fd33f1fe7279e5ffa211d804a5e36",
+    "patches": "bc4701c436d55a1ca5d72ef04269d70fe94f23c780bda9d72c67f83c637b6e43",
+    "reference": "d53b1a878c03134c328e83f0317c946c909e0c83d4395fb8a7d9c1433cc5c7fa"
+  },
+  "scorer_code_sha256": "f5a76cc3ea8b37ff13d90fc919f7192753276873b603ef01d4ef5b6f743307f6",
+  "runner_sha256": "1acca17fac057f762c8719c44b0ff4d4fff8541278773e7ba3cc2484e5a12613",
+  "rule": "unique right temporal match and three of three frozen-model patch positives",
+  "selected_candidate_ids": [
+    "S01",
+    "S02",
+    "S03",
+    "S04",
+    "S12",
+    "S13",
+    "S14",
+    "S16",
+    "S17",
+    "S18",
+    "S19",
+    "S20",
+    "S21",
+    "S22",
+    "S25",
+    "S26"
+  ],
+  "hypothetical_score": {
+    "reference_count": 17,
+    "prediction_count": 16,
+    "true_positives": 16,
+    "false_positives": 0,
+    "false_negatives": 1,
+    "precision": 1.0,
+    "recall": 0.9411764705882353,
+    "f1": 0.9696969696969697,
+    "colour_errors_among_matches": 0,
+    "colour_aware_true_positives": 16,
+    "colour_aware_false_positives": 0,
+    "colour_aware_false_negatives": 1,
+    "colour_aware_precision": 1.0,
+    "colour_aware_recall": 0.9411764705882353,
+    "colour_aware_f1": 0.9696969696969697,
+    "matches": [
+      {
+        "reference_id": "E01",
+        "prediction_id": "S01",
+        "colour_match": true
+      },
+      {
+        "reference_id": "E02",
+        "prediction_id": "S02",
+        "colour_match": true
+      },
+      {
+        "reference_id": "E03",
+        "prediction_id": "S03",
+        "colour_match": true
+      },
+      {
+        "reference_id": "E04",
+        "prediction_id": "S04",
+        "colour_match": true
+      },
+      {
+        "reference_id": "E05",
+        "prediction_id": "S12",
+        "colour_match": true
+      },
+      {
+        "reference_id": "E06",
+        "prediction_id": "S13",
+        "colour_match": true
+      },
+      {
+        "reference_id": "E07",
+        "prediction_id": "S14",
+        "colour_match": true
+      },
+      {
+        "reference_id": "E08",
+        "prediction_id": "S16",
+        "colour_match": true
+      },
+      {
+        "reference_id": "E09",
+        "prediction_id": "S17",
+        "colour_match": true
+      },
+      {
+        "reference_id": "E10",
+        "prediction_id": "S18",
+        "colour_match": true
+      },
+      {
+        "reference_id": "E11",
+        "prediction_id": "S19",
+        "colour_match": true
+      },
+      {
+        "reference_id": "E12",
+        "prediction_id": "S20",
+        "colour_match": true
+      },
+      {
+        "reference_id": "E13",
+        "prediction_id": "S21",
+        "colour_match": true
+      },
+      {
+        "reference_id": "E14",
+        "prediction_id": "S22",
+        "colour_match": true
+      },
+      {
+        "reference_id": "E16",
+        "prediction_id": "S25",
+        "colour_match": true
+      },
+      {
+        "reference_id": "E17",
+        "prediction_id": "S26",
+        "colour_match": true
+      }
+    ],
+    "missed_reference_ids": [
+      "E15"
+    ],
+    "extra_prediction_ids": [],
+    "scoring_tolerance_s": 0.0,
+    "prediction_time_mode": "point",
+    "max_prediction_interval_s": null,
+    "timing_interpretation": "Passage detection within a reference interval; no release-time error inferred."
+  },
+  "limitations": [
+    "The three-of-three rule was inspected on these exposed clips; this is in-sample scoring.",
+    "Coarse same-agent reference windows are not independently exhaustive.",
+    "Patch appearance does not establish a throw or cross-camera physical identity.",
+    "No full-match or unseen-family event F1 is established."
+  ]
+}

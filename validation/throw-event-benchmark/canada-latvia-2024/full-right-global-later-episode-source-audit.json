@@ -1,0 +1,65 @@
+{
+  "status": "postinspection_later_global_source_pixel_review_not_throw_truth",
+  "source_video_sha256": "a7431b68ba6fb0df407383973a525a01eadbee2490caa0438a5a11d2df1dba13",
+  "input_sha256": {
+    "multi_episode_probe": "ffd8581a8a7cc567ebd0b7e785ddab83926e058616e1b11cff7aebbec3d7079e",
+    "source_packet_manifest": "d36ad2c3d7487bce85fc8f892a93ecb3c6dae6189f59957d2d7d77bb861fe235",
+    "one_second_area_scan": "9036741e5c53e9cb9d5960e51abce5f440eb2a9cfa5cc3e17a7ab29c4805b4e2",
+    "global_area_scan": "512105bc6353f40c589a437b273bacbe71335fcece605573d659a7460b51504b"
+  },
+  "runner_sha256": "7c45efec49db75ead182a078944ef2ce8763e18c24be3d388233a0209ac73efd",
+  "source_class_counts": {
+    "mixed_stone_person_or_equipment_pixels_identity_uncertain": 3,
+    "stone_pixels_with_later_moving_tail_identity_uncertain": 1
+  },
+  "baseline_A452_global_A530_tail_interval_s": [
+    6400,
+    6407
+  ],
+  "baseline_A452_global_A530_tail_observations_equal": true,
+  "A530_later_passage_time_s": 6404.245,
+  "rows": [
+    {
+      "raw_track_id": "A006",
+      "episode_index_within_raw_track": 2,
+      "source_time_s": 983.984,
+      "source_pixel_class": "mixed_stone_person_or_equipment_pixels_identity_uncertain",
+      "class_origin": "same_agent_postproposal_three_source_frame_review",
+      "review_page": "full-right-global-later-episode-source-packet/later-page-1.jpg",
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A269",
+      "episode_index_within_raw_track": 2,
+      "source_time_s": 3294.788,
+      "source_pixel_class": "mixed_stone_person_or_equipment_pixels_identity_uncertain",
+      "class_origin": "same_agent_postproposal_three_source_frame_review",
+      "review_page": "full-right-global-later-episode-source-packet/later-page-1.jpg",
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A420",
+      "episode_index_within_raw_track": 2,
+      "source_time_s": 5589.0,
+      "source_pixel_class": "mixed_stone_person_or_equipment_pixels_identity_uncertain",
+      "class_origin": "same_agent_postproposal_three_source_frame_review",
+      "review_page": "full-right-global-later-episode-source-packet/later-page-2.jpg",
+      "physical_throw_verified": false
+    },
+    {
+      "raw_track_id": "A530",
+      "episode_index_within_raw_track": 2,
+      "source_time_s": 6404.245,
+      "source_pixel_class": "stone_pixels_with_later_moving_tail_identity_uncertain",
+      "class_origin": "same_agent_postproposal_three_source_frame_review",
+      "review_page": "full-right-global-later-episode-source-packet/later-page-2.jpg",
+      "physical_throw_verified": false
+    }
+  ],
+  "limitations": [
+    "Source-pixel classes were assigned after the new proposal extractor and are not independent physical throw labels.",
+    "A530 contains the same eight late image observations as baseline A452, but long-track physical identity before them is unresolved.",
+    "Three other later proposals switch among stone, person or equipment pixels and are unsafe as automatic events.",
+    "Restoring a source-visible timing cue does not validate full-match throw F1 or simulation state."
+  ]
+}

@@ -1,0 +1,154 @@
+{
+  "status": "development_underpoint_review_cue_not_physical_stone_classifier",
+  "source_sha256": "aff12e78edeb5e108d142aed3e19b61c3956b4fddc8b2fd8b202713746771739",
+  "recording": "italy_full_left_only_relaxed",
+  "proposal_kind": "clip",
+  "proposals_sha256": "35692cf31a6a175434bf6243afdc9343abd1790cc0a9287f5da21f68492dc00c",
+  "source_review_sha256": "d6797ce8b888582c198536456b29bfe97d0738aae1e1cfcf1ad42bebe984180f",
+  "feature_code_sha256": "f5bc302786c2e0e31bdcb8a9cab7e9982648bffec464407b88b39cbccbf6b7a9",
+  "runner_sha256": "73585d4d158d338d3531bfc4e65890e3fcd243a7ea75e2de1f04cb78ecfd2664",
+  "sample_geometry_640x360": {
+    "half_width": 20,
+    "top_offset": 22,
+    "bottom_offset": 60
+  },
+  "ice_hsv_rule": {
+    "saturation_less_than": 90,
+    "value_greater_than": 150
+  },
+  "nonice_review_threshold": 0.25,
+  "counts_by_source_class_and_tier": {
+    "moving_stone": {
+      "underpoint_clear_review": 5,
+      "underpoint_cluttered_review": 0,
+      "underpoint_unavailable": 0
+    },
+    "stone_pixels_identity_uncertain": {
+      "underpoint_clear_review": 1,
+      "underpoint_cluttered_review": 0,
+      "underpoint_unavailable": 0
+    }
+  },
+  "rows": [
+    {
+      "raw_track_id": "A043",
+      "source_prefix_class": "moving_stone",
+      "sample_source_times_s": [
+        912.0,
+        913.0,
+        914.0
+      ],
+      "sample_underpoint_nonice_fractions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "median_underpoint_nonice_fraction": 0.0,
+      "available_sample_count": 3,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "underpoint_clear_review"
+    },
+    {
+      "raw_track_id": "A041",
+      "source_prefix_class": "moving_stone",
+      "sample_source_times_s": [
+        909.0,
+        910.0,
+        911.0
+      ],
+      "sample_underpoint_nonice_fractions": [
+        0.0204,
+        0.0204,
+        0.0
+      ],
+      "median_underpoint_nonice_fraction": 0.0204,
+      "available_sample_count": 3,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "underpoint_clear_review"
+    },
+    {
+      "raw_track_id": "A069",
+      "source_prefix_class": "moving_stone",
+      "sample_source_times_s": [
+        1471.0,
+        1472.0,
+        1473.0
+      ],
+      "sample_underpoint_nonice_fractions": [
+        0.0171,
+        0.0,
+        0.0
+      ],
+      "median_underpoint_nonice_fraction": 0.0,
+      "available_sample_count": 3,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "underpoint_clear_review"
+    },
+    {
+      "raw_track_id": "A132",
+      "source_prefix_class": "moving_stone",
+      "sample_source_times_s": [
+        3258.0,
+        3259.0,
+        3260.0
+      ],
+      "sample_underpoint_nonice_fractions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "median_underpoint_nonice_fraction": 0.0,
+      "available_sample_count": 3,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "underpoint_clear_review"
+    },
+    {
+      "raw_track_id": "A166",
+      "source_prefix_class": "stone_pixels_identity_uncertain",
+      "sample_source_times_s": [
+        3878.0,
+        3879.0,
+        3880.0
+      ],
+      "sample_underpoint_nonice_fractions": [
+        0.0145,
+        0.0112,
+        0.0
+      ],
+      "median_underpoint_nonice_fraction": 0.0112,
+      "available_sample_count": 3,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "underpoint_clear_review"
+    },
+    {
+      "raw_track_id": "A169",
+      "source_prefix_class": "moving_stone",
+      "sample_source_times_s": [
+        3947.0,
+        3948.0,
+        3950.0
+      ],
+      "sample_underpoint_nonice_fractions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "median_underpoint_nonice_fraction": 0.0,
+      "available_sample_count": 3,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "underpoint_clear_review"
+    }
+  ],
+  "limitations": [
+    "Band geometry and threshold were chosen after inspecting Slovakia failures.",
+    "Same-agent source classes are not independent physical throw labels.",
+    "Ice markings, equipment and overlap can clutter the band under a stone.",
+    "A clear band cannot by itself establish stone identity."
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "status": "development_raw_context_cross_recording_comparison_not_throw_accuracy",
+  "input_sha256": {
+    "czech_2024_full_supported_run": "982c3077e2112b89632565a34438ce684889c6c15069f0cdcbe3b88f1fda084e",
+    "latvia_2024_1650_2760": "dc1146cb36035204ddb0d2bd7b8153904aa22cefa53342997f8486e39a543c74"
+  },
+  "feature_code_sha256": "4ce4ee192f4a5103f786e55b442963cbc459690fa4b9793c2d21b5536e6b638c",
+  "runner_sha256": "f14c6842593a078fc28e012ede1823f6bc240be7000892d00629262548ce102e",
+  "descriptive_boundaries": {
+    "clear_max": 0.05,
+    "cluttered_above": 0.25
+  },
+  "rows": {
+    "czech_2024_full_supported_run": {
+      "all": {
+        "candidate_count": 147,
+        "median_nonice_fraction": 0.262427,
+        "tier_counts": {
+          "cluttered": 75,
+          "ambiguous": 22,
+          "clear": 50
+        }
+      },
+      "context_confirmed": {
+        "candidate_count": 96,
+        "median_nonice_fraction": 0.050037,
+        "tier_counts": {
+          "cluttered": 31,
+          "ambiguous": 17,
+          "clear": 48
+        }
+      },
+      "context_withheld": {
+        "candidate_count": 51,
+        "median_nonice_fraction": 0.647588,
+        "tier_counts": {
+          "cluttered": 44,
+          "ambiguous": 5,
+          "clear": 2
+        }
+      }
+    },
+    "latvia_2024_1650_2760": {
+      "all": {
+        "candidate_count": 27,
+        "median_nonice_fraction": 0.446126,
+        "tier_counts": {
+          "clear": 2,
+          "ambiguous": 5,
+          "cluttered": 20
+        }
+      },
+      "context_confirmed": {
+        "candidate_count": 16,
+        "median_nonice_fraction": 0.398977,
+        "tier_counts": {
+          "clear": 2,
+          "ambiguous": 3,
+          "cluttered": 11
+        }
+      },
+      "context_withheld": {
+        "candidate_count": 11,
+        "median_nonice_fraction": 0.655044,
+        "tier_counts": {
+          "ambiguous": 2,
+          "cluttered": 9
+        }
+      }
+    }
+  },
+  "limitations": [
+    "Both recordings and the descriptive boundaries were exposed during development.",
+    "Context confirmation is a detector decision, not physical stone or throw truth.",
+    "The samples measure raw pre-confirmation caps, not the later receiving-view body paths where the boundaries were chosen."
+  ]
+}

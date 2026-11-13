@@ -98,3 +98,17 @@ class BodyLocalizationTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+def test_finite_inconsistent_camera_is_returned_with_residual():
+    # Deliberately violate the assumed zero skew; residual is diagnostic, not a gate.
+    C = np.array([0.,12.,5.])
+    R = np.array([[1,0,0],[0,5/13,-12/13],[0,-12/13,-5/13]])
+    K = np.array([[600.,120.,480],[0,600.,180],[0,0,1.]])
+    P = K @ np.column_stack([R,-R@C])
+    H = np.linalg.inv(P[:,[0,1,3]])
+    camera, diagnostic = conditional_camera(H, [320,0,640,360])
+    assert camera is not None, diagnostic
+    assert diagnostic['orthogonality_residual'] > .06
+    assert diagnostic['quality_rejection_applied'] is False
+    assert np.isfinite(height_correct(camera,[480,180],.136)).all()

@@ -1,0 +1,53 @@
+{
+  "status": "first_full_china_source_only_phase_v2_nonorigin_transfer",
+  "source_sha256": "c5254bb9103e32c6beac74cf269fc7bcec8ce2c2a710a7d4600c7ddb951f160e",
+  "source_interval_s": [
+    0,
+    8356
+  ],
+  "plan_sha256": "77667b3d83fbe347ff6d91c18dd25d7c7b3895718f18f36f20e5459b12d65b41",
+  "frozen_sha256": {
+    "cap_motion": "6cd943d780350ce120c0520a528b45f473339862a87dec73bcbabad75d2591ae",
+    "origin": "ba685f6822de05e32efe8458a6cd6b6ef46150fedcfe93bd7e05a6a22d0d37db",
+    "phase_v2_code": "dff1cf7a36d02f4d42038429b1175b5896a62982528c311d38f3f87423d0f78e",
+    "base_rescue_code": "b496f835615b47ffaf2afa9483626852e6b42c6c2008ca8324aaa656c43f0854",
+    "runner": "3dbb718097a87b90a187fff871172bcf56f06eb79170173c8453893b8469dc68"
+  },
+  "shot_count": 630,
+  "candidate_count": 2,
+  "candidates": [
+    {
+      "shot_id": "S123",
+      "interval_s": [
+        1602.8,
+        1611.8
+      ],
+      "colour": "red",
+      "origin_probability": 0.42445946724555317,
+      "following_shot_id": "S124",
+      "first_track_s": 1602.8,
+      "route": "nonorigin_adjacent_same_colour_cap_motion",
+      "identity_status": "provisional_same_colour_not_proven_same_stone"
+    },
+    {
+      "shot_id": "S519",
+      "interval_s": [
+        7009.6,
+        7036.8
+      ],
+      "colour": "red",
+      "origin_probability": 0.27826225364773804,
+      "following_shot_id": "S520",
+      "first_track_s": 7012.6,
+      "route": "nonorigin_adjacent_same_colour_cap_motion",
+      "identity_status": "provisional_same_colour_not_proven_same_stone"
+    }
+  ],
+  "limitations": [
+    "The phase-aware rule was developed after Norway and Swiss results, before this China run.",
+    "China was exposed in earlier project work but not used to fit this fallback.",
+    "Cap motion and origin phase can both be wrong; adjacent same-colour tracks do not prove stone identity.",
+    "This is not an exhaustive event detector or a physical throw precision/recall score.",
+    "No counter colour, official shot order or reserved source is used for candidate generation."
+  ]
+}

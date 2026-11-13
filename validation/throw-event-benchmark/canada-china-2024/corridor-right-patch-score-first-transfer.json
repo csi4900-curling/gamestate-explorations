@@ -1,0 +1,95 @@
+{
+  "status": "postscore_exposed_development_diagnostic_not_frozen_detector",
+  "source_id": "Y_U6gzqORUs",
+  "source_sha256": "2a0885f28b5496670f99ab159c37aeb270cc454e65b909ce8a37a0398f7771ac",
+  "source_interval_s": [
+    1650,
+    2760
+  ],
+  "input_sha256": {
+    "candidates": "35768a3a635f38374211aa4e3ee5b7bb63d2faa92b04f32e60f7a38fa205dd78",
+    "corroboration": "8e4c2b2b5a97c32f9572f31b8ad1e5b93df6b2bad6b25a4809e3f8426772da96",
+    "patches": "d0bf3e3efde93442df6557b8040702b94805e9e5f8c2c49cb3598d65c819c034",
+    "reference": "28d6c004248c4ccc61e081f459d83f0e260d3c9dcad6cd360fdb09258fad068e"
+  },
+  "scorer_code_sha256": "f5a76cc3ea8b37ff13d90fc919f7192753276873b603ef01d4ef5b6f743307f6",
+  "runner_sha256": "1acca17fac057f762c8719c44b0ff4d4fff8541278773e7ba3cc2484e5a12613",
+  "rule": "unique right temporal match and three of three frozen-model patch positives",
+  "selected_candidate_ids": [
+    "S22",
+    "S23",
+    "S24",
+    "S25",
+    "S35"
+  ],
+  "hypothetical_score": {
+    "reference_count": 18,
+    "prediction_count": 5,
+    "true_positives": 5,
+    "false_positives": 0,
+    "false_negatives": 13,
+    "precision": 1.0,
+    "recall": 0.2777777777777778,
+    "f1": 0.43478260869565216,
+    "colour_errors_among_matches": 0,
+    "colour_aware_true_positives": 5,
+    "colour_aware_false_positives": 0,
+    "colour_aware_false_negatives": 13,
+    "colour_aware_precision": 1.0,
+    "colour_aware_recall": 0.2777777777777778,
+    "colour_aware_f1": 0.43478260869565216,
+    "matches": [
+      {
+        "reference_id": "C10",
+        "prediction_id": "S22",
+        "colour_match": true
+      },
+      {
+        "reference_id": "C11",
+        "prediction_id": "S23",
+        "colour_match": true
+      },
+      {
+        "reference_id": "C12",
+        "prediction_id": "S24",
+        "colour_match": true
+      },
+      {
+        "reference_id": "C13",
+        "prediction_id": "S25",
+        "colour_match": true
+      },
+      {
+        "reference_id": "C18",
+        "prediction_id": "S35",
+        "colour_match": true
+      }
+    ],
+    "missed_reference_ids": [
+      "C01",
+      "C02",
+      "C03",
+      "C04",
+      "C05",
+      "C06",
+      "C07",
+      "C08",
+      "C09",
+      "C14",
+      "C15",
+      "C16",
+      "C17"
+    ],
+    "extra_prediction_ids": [],
+    "scoring_tolerance_s": 0.0,
+    "prediction_time_mode": "point",
+    "max_prediction_interval_s": null,
+    "timing_interpretation": "Passage detection within a reference interval; no release-time error inferred."
+  },
+  "limitations": [
+    "The three-of-three rule was inspected on these exposed clips; this is in-sample scoring.",
+    "Coarse same-agent reference windows are not independently exhaustive.",
+    "Patch appearance does not establish a throw or cross-camera physical identity.",
+    "No full-match or unseen-family event F1 is established."
+  ]
+}

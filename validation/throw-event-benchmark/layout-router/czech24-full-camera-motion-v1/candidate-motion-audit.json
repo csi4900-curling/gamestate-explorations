@@ -1,0 +1,310 @@
+{
+  "status": "full_source_development_motion_audit_not_throw_f1",
+  "source_sha256": "e63c9b063b5b11ad5173083dffe974d909c78e5d01312740b87bccc006402013",
+  "source_interval_s": [
+    0.0,
+    6683.0
+  ],
+  "supported_runs": [
+    {
+      "layout": "split_2024",
+      "interval_s": [
+        90.0,
+        6570.0
+      ],
+      "samples": 648
+    }
+  ],
+  "coverage_gaps_s": [
+    [
+      0.0,
+      90.0
+    ],
+    [
+      6570.0,
+      6683.0
+    ]
+  ],
+  "input_sha256": {
+    "preflight": "1fa74494474a086692ad3f4a24c7bfc345a2539633a688619e7a138ee235ee64",
+    "raw": "6742154c02b99c1c3c9b28b11d96a981959264d2cd5082562f09b6ec839048fe",
+    "sidecar": "6cb29593ead405b5820c1b46a928cf6dc5f17791002339765389a90b6219b657",
+    "confirmed": "7ac20248a3aa8fb57ee51337e7c53b657a5c43a02057ba34806a5276da0e0674",
+    "old_raw": "bebd660881bdf7d6d5bf55535247330cebdbe35a2a89d6c6f63d5ec89badfc90"
+  },
+  "runner_sha256": "f90164def5642455934aa062031d96da3d822df1048b2a7af0163642e5ab8dc8",
+  "summary": {
+    "raw_proposals": 147,
+    "exact_old_raw_colour_time_sequence_match": true,
+    "context_confirmed": 96,
+    "camera_registered": 128,
+    "camera_abstained": 19,
+    "camera_status_counts": {
+      "all_ice_region_subpairs_registered": 128,
+      "unregistered_subpair": 19
+    },
+    "registered_residual_over_5_px": 128,
+    "registered_residual_min_px": 44.758,
+    "registered_residual_median_px": 50.849,
+    "registered_residual_max_px": 134.241
+  },
+  "source_reviewed_downstream_non_stone_paths": [
+    {
+      "candidate_id": "S96",
+      "source_review_sha256": "937c4016075bad2733fc5445cbbf4a881bbd2d3cf001f28e16abee32e9052e9f",
+      "review_status": "false_positive_wheelchair_footrest_movement",
+      "review_applies_to": "downstream_associated_path_not_verified_raw_trigger",
+      "passage_time_s": 4037.326,
+      "context_confirmed": false,
+      "camera_motion": {
+        "id": "S96",
+        "observed_interval_s": [
+          4036.8,
+          4037.7
+        ],
+        "source_pixels": [
+          [
+            100.0,
+            82.0
+          ],
+          [
+            100.5,
+            106.0
+          ]
+        ],
+        "observed_point_count": 6,
+        "status": "all_ice_region_subpairs_registered",
+        "camera_residual_px": 48.089,
+        "subpairs": [
+          {
+            "interval_s": [
+              4036.8,
+              4037.025
+            ],
+            "region_fraction": 0.7665,
+            "tracked_features": 689,
+            "inliers": 180,
+            "inlier_fraction": 0.2612,
+            "edge_sample_count": 6822,
+            "edge_identity_support": 0.6746,
+            "edge_transform_support": 0.6746,
+            "proposed_target_shift_px": 0.006,
+            "status": "registered"
+          },
+          {
+            "interval_s": [
+              4037.025,
+              4037.25
+            ],
+            "region_fraction": 0.7721,
+            "tracked_features": 698,
+            "inliers": 202,
+            "inlier_fraction": 0.2894,
+            "edge_sample_count": 6953,
+            "edge_identity_support": 0.6771,
+            "edge_transform_support": 0.6771,
+            "proposed_target_shift_px": 0.18,
+            "status": "registered"
+          },
+          {
+            "interval_s": [
+              4037.25,
+              4037.475
+            ],
+            "region_fraction": 0.7664,
+            "tracked_features": 692,
+            "inliers": 205,
+            "inlier_fraction": 0.2962,
+            "edge_sample_count": 7142,
+            "edge_identity_support": 0.6578,
+            "edge_transform_support": 0.6578,
+            "proposed_target_shift_px": 0.138,
+            "status": "registered"
+          },
+          {
+            "interval_s": [
+              4037.475,
+              4037.7
+            ],
+            "region_fraction": 0.7616,
+            "tracked_features": 687,
+            "inliers": 208,
+            "inlier_fraction": 0.3028,
+            "edge_sample_count": 6958,
+            "edge_identity_support": 0.6712,
+            "edge_transform_support": 0.676,
+            "proposed_target_shift_px": 0.077,
+            "status": "registered"
+          }
+        ],
+        "panel": "left",
+        "coordinate_frame": "640x720_upsampled_360p_split_panel_pixels",
+        "layout": "split_2024"
+      }
+    },
+    {
+      "candidate_id": "S143",
+      "source_review_sha256": "ad7745b53a4ed1bc14e2bc79574cb69f954d648d9d9151e78d0f0a796adcad8b",
+      "review_status": "false_positive_postgame_player_wheelchair_movement",
+      "review_applies_to": "downstream_associated_path_not_verified_raw_trigger",
+      "passage_time_s": 6374.697,
+      "context_confirmed": true,
+      "camera_motion": {
+        "id": "S143",
+        "observed_interval_s": [
+          6373.6,
+          6375.7
+        ],
+        "source_pixels": [
+          [
+            121.5,
+            15.5
+          ],
+          [
+            116.5,
+            39.82
+          ]
+        ],
+        "observed_point_count": 15,
+        "status": "all_ice_region_subpairs_registered",
+        "camera_residual_px": 49.925,
+        "subpairs": [
+          {
+            "interval_s": [
+              6373.6,
+              6373.8625
+            ],
+            "region_fraction": 0.7828,
+            "tracked_features": 308,
+            "inliers": 284,
+            "inlier_fraction": 0.9221,
+            "edge_sample_count": 7764,
+            "edge_identity_support": 0.9612,
+            "edge_transform_support": 0.9612,
+            "proposed_target_shift_px": 0.133,
+            "status": "registered"
+          },
+          {
+            "interval_s": [
+              6373.8625,
+              6374.125
+            ],
+            "region_fraction": 0.7827,
+            "tracked_features": 300,
+            "inliers": 285,
+            "inlier_fraction": 0.95,
+            "edge_sample_count": 7715,
+            "edge_identity_support": 0.9784,
+            "edge_transform_support": 0.9784,
+            "proposed_target_shift_px": 0.196,
+            "status": "registered"
+          },
+          {
+            "interval_s": [
+              6374.125,
+              6374.3875
+            ],
+            "region_fraction": 0.7817,
+            "tracked_features": 271,
+            "inliers": 254,
+            "inlier_fraction": 0.9373,
+            "edge_sample_count": 7716,
+            "edge_identity_support": 0.9767,
+            "edge_transform_support": 0.9767,
+            "proposed_target_shift_px": 0.138,
+            "status": "registered"
+          },
+          {
+            "interval_s": [
+              6374.3875,
+              6374.65
+            ],
+            "region_fraction": 0.782,
+            "tracked_features": 264,
+            "inliers": 235,
+            "inlier_fraction": 0.8902,
+            "edge_sample_count": 7682,
+            "edge_identity_support": 0.9642,
+            "edge_transform_support": 0.9642,
+            "proposed_target_shift_px": 0.075,
+            "status": "registered"
+          },
+          {
+            "interval_s": [
+              6374.65,
+              6374.9125
+            ],
+            "region_fraction": 0.783,
+            "tracked_features": 283,
+            "inliers": 251,
+            "inlier_fraction": 0.8869,
+            "edge_sample_count": 7854,
+            "edge_identity_support": 0.9484,
+            "edge_transform_support": 0.9484,
+            "proposed_target_shift_px": 0.043,
+            "status": "registered"
+          },
+          {
+            "interval_s": [
+              6374.9125,
+              6375.175
+            ],
+            "region_fraction": 0.7837,
+            "tracked_features": 307,
+            "inliers": 278,
+            "inlier_fraction": 0.9055,
+            "edge_sample_count": 7888,
+            "edge_identity_support": 0.921,
+            "edge_transform_support": 0.921,
+            "proposed_target_shift_px": 0.058,
+            "status": "registered"
+          },
+          {
+            "interval_s": [
+              6375.175,
+              6375.4375
+            ],
+            "region_fraction": 0.7887,
+            "tracked_features": 292,
+            "inliers": 253,
+            "inlier_fraction": 0.8664,
+            "edge_sample_count": 8249,
+            "edge_identity_support": 0.953,
+            "edge_transform_support": 0.953,
+            "proposed_target_shift_px": 0.088,
+            "status": "registered"
+          },
+          {
+            "interval_s": [
+              6375.4375,
+              6375.7
+            ],
+            "region_fraction": 0.7884,
+            "tracked_features": 345,
+            "inliers": 305,
+            "inlier_fraction": 0.8841,
+            "edge_sample_count": 8325,
+            "edge_identity_support": 0.9707,
+            "edge_transform_support": 0.9707,
+            "proposed_target_shift_px": 0.165,
+            "status": "registered"
+          }
+        ],
+        "panel": "left",
+        "coordinate_frame": "640x720_upsampled_360p_split_panel_pixels",
+        "layout": "split_2024"
+      }
+    }
+  ],
+  "raw_S96_source_review": {
+    "status": "agent_review_player_wheelchair_attached_feature_not_independent",
+    "review_sha256": "b3d9f9f3194a47602a8b3b27d5cc6a7194097e8bf9ab4a95b24211d3aee72c77",
+    "frame_manifest_sha256": "9b958c2ece59f5408dbb38b1a39d05fe0fa8f0b9badc527d9bfd0211271e26a9"
+  },
+  "limitations": [
+    "The raw proposal inventory omits physical throws missed by the detector.",
+    "The S96 and S143 non-stone reviews apply to associated downstream paths, not independently verified continuations of the raw trigger; the reviews were performed by the detector developer.",
+    "A 5-pixel motion threshold was examined on development paths and offers no separation among registered Czech raw proposals.",
+    "Coverage gaps and registration abstentions remain unresolved."
+  ]
+}

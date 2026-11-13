@@ -1,0 +1,229 @@
+{
+  "status": "development_after_canada_estonia_first_score",
+  "source_id": "canada-czech-2024",
+  "source_sha256": "e63c9b063b5b11ad5173083dffe974d909c78e5d01312740b87bccc006402013",
+  "source_interval_s": [
+    95.0,
+    115.0
+  ],
+  "model_sha256": "404c21bc21761f2704de9ca29a9dd56809ac6a1e8428d4cc76ce87e5ebc65b5a",
+  "baseline_sha256": "40678c23b117f527c80375ff7d7fbe3a1119fb94c4650b05698cd2c76be9628f",
+  "runner_sha256": "35f3062165aac099e9b9337fbd7614f98e865c248774872ef89c2034b03b8653",
+  "config": {
+    "roi": [
+      40,
+      4,
+      280,
+      116
+    ],
+    "gate_y": 60.0,
+    "min_span_px": 24.0,
+    "min_observations": 6,
+    "max_gap_s": 0.55,
+    "association_px": 13.0,
+    "min_speed_px_s": 8.0,
+    "max_speed_px_s": 65.0
+  },
+  "events": [
+    {
+      "id": "S01",
+      "track_id": 3,
+      "colour": "red",
+      "crossing_time_s": 96.892,
+      "time_semantics": "observed_track_midpoint",
+      "confirmed_at_s": 97.4,
+      "first_observed_s": 96.4,
+      "evidence_kind": "early_roi_motion_span",
+      "release_time_s": null,
+      "gate_y_px": null,
+      "crossing_x_px": 153.04058441558442,
+      "passage_y_px": 51.25,
+      "velocity_px_s": [
+        -2.9090909090908577,
+        -25.067272727272737
+      ],
+      "observations_at_confirmation": 11,
+      "observed_span_px": 24.5,
+      "median_candidate_bbox_width_px": 8.0,
+      "median_candidate_bbox_height_px": 10.0,
+      "mean_body_support": 0.9327651515151515,
+      "recent_track_duration_s": 1.0,
+      "direction_consistency": 1.0,
+      "view_motion": "negative_y",
+      "observed_track_points": [
+        {
+          "colour": "red",
+          "pixel": [
+            154.0,
+            63.5
+          ],
+          "bbox": [
+            150,
+            59,
+            8,
+            11
+          ],
+          "body_support": 0.6875,
+          "time_s": 96.4
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            154.0,
+            61.5
+          ],
+          "bbox": [
+            150,
+            57,
+            8,
+            11
+          ],
+          "body_support": 0.8125,
+          "time_s": 96.5
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            154.0,
+            60.0
+          ],
+          "bbox": [
+            150,
+            54,
+            8,
+            14
+          ],
+          "body_support": 0.84375,
+          "time_s": 96.6
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            153.5,
+            56.08
+          ],
+          "bbox": [
+            149,
+            52,
+            9,
+            10
+          ],
+          "body_support": 0.9166666666666666,
+          "time_s": 96.7
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            153.5,
+            54.08
+          ],
+          "bbox": [
+            149,
+            50,
+            9,
+            10
+          ],
+          "body_support": 1.0,
+          "time_s": 96.8
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            153.0,
+            51.0
+          ],
+          "bbox": [
+            150,
+            48,
+            6,
+            7
+          ],
+          "body_support": 1.0,
+          "time_s": 96.9
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            153.0,
+            49.0
+          ],
+          "bbox": [
+            150,
+            46,
+            6,
+            7
+          ],
+          "body_support": 1.0,
+          "time_s": 97.0
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            152.0,
+            47.0
+          ],
+          "bbox": [
+            148,
+            44,
+            8,
+            8
+          ],
+          "body_support": 1.0,
+          "time_s": 97.1
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            152.0,
+            44.0
+          ],
+          "bbox": [
+            148,
+            40,
+            8,
+            10
+          ],
+          "body_support": 1.0,
+          "time_s": 97.2
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            151.5,
+            41.0
+          ],
+          "bbox": [
+            148,
+            38,
+            7,
+            7
+          ],
+          "body_support": 1.0,
+          "time_s": 97.3
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            151.5,
+            39.0
+          ],
+          "bbox": [
+            148,
+            36,
+            7,
+            7
+          ],
+          "body_support": 1.0,
+          "time_s": 97.4
+        }
+      ]
+    }
+  ],
+  "samples": 200,
+  "processing_seconds": 0.5453532680003264,
+  "limitations": [
+    "Candidates are motion spans in the 2024 fixed left-panel ROI, not confirmed throws.",
+    "Passage timestamps are observed track midpoints, not release times.",
+    "Any score on the three exposed 2024 recordings is post-score development fitting."
+  ]
+}

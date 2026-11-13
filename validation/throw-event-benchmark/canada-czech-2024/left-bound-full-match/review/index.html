@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wider-bound full-match evidence explorer · Canada–Czechia 2024</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="masthead">
+    <div class="masthead-inner">
+      <div class="eyebrow">CURLING VIDEO ANALYSIS · DEVELOPMENT EVIDENCE</div>
+      <h1>Wider-bound full-match evidence explorer</h1>
+      <p>Canada–Czechia 2024 · 111-minute broadcast · candidate passages, conditional paths and partial boards</p>
+      <div class="notice"><strong>Read this first.</strong> The markers are model proposals, not verified throws. Board positions are conditional camera-local projections. No complete game state or simulation-ready throw has been established.</div>
+    </div>
+  </header>
+
+  <section class="stats" id="stats" aria-label="Evidence counts"></section>
+
+  <div class="workspace">
+    <aside class="rail" aria-label="Candidate navigation">
+      <div class="rail-heading">
+        <div class="eyebrow">SOURCE TIMELINE</div>
+        <h2>147 raw candidates</h2>
+        <p>Choose a passage to inspect its source frames and available state evidence.</p>
+      </div>
+      <label class="field-label" for="search">Find candidate or time</label>
+      <input id="search" type="search" placeholder="S125 or 1:29:15" autocomplete="off">
+      <label class="field-label" for="filter">Show</label>
+      <select id="filter">
+        <option value="all">All raw candidates</option>
+        <option value="frozen_candidate">Frozen provisional candidates</option>
+        <option value="development_only">Development-only additions</option>
+        <option value="screen_abstention">Screen abstentions</option>
+        <option value="outside_corridor">Outside fixed corridor</option>
+        <option value="reviewed_false_positive">Source-reviewed false positive</option>
+      </select>
+      <div class="list-count" id="list-count"></div>
+      <div class="candidate-list" id="candidate-list" role="list"></div>
+    </aside>
+
+    <main class="detail">
+      <section class="panel video-panel">
+        <div class="panel-head">
+          <div>
+            <div class="eyebrow">ORIGINAL BROADCAST</div>
+            <h2 id="selected-title">Select a candidate</h2>
+          </div>
+          <span class="status-pill" id="selected-status"></span>
+        </div>
+        <video id="video" controls preload="metadata" playsinline src="../../source-360p.mp4" aria-label="Canada–Czechia 2024 broadcast"></video>
+        <div class="video-actions">
+          <button type="button" id="previous">← Previous</button>
+          <button type="button" id="seek">Jump to passage</button>
+          <button type="button" id="next">Next →</button>
+        </div>
+        <p class="small-note" id="time-note"></p>
+      </section>
+
+      <section class="overview-grid" aria-label="Candidate evidence overview">
+        <div class="fact"><span>Receiving view</span><strong id="fact-view">—</strong></div>
+        <div class="fact"><span>Display marker at passage</span><strong id="fact-end">—</strong></div>
+        <div class="fact"><span>Board observation</span><strong id="fact-board">—</strong></div>
+        <div class="fact"><span>Previous board comparison</span><strong id="fact-comparison">—</strong></div>
+      </section>
+
+      <section class="visual-grid">
+        <article class="panel visual-panel">
+          <div class="panel-head compact"><div><div class="eyebrow">MOTION EVIDENCE</div><h2>Receiving path</h2></div></div>
+          <p class="visual-caption" id="path-caption"></p>
+          <svg id="path-svg" viewBox="0 0 360 640" role="img" aria-label="Conditional receiving path"></svg>
+        </article>
+        <article class="panel visual-panel">
+          <div class="panel-head compact"><div><div class="eyebrow">POST-EVENT EVIDENCE</div><h2>Partial board</h2></div></div>
+          <p class="visual-caption" id="board-caption"></p>
+          <svg id="board-svg" viewBox="0 0 360 640" role="img" aria-label="Conditional partial board"></svg>
+        </article>
+      </section>
+
+      <section class="panel ledger-panel">
+        <div class="panel-head compact"><div><div class="eyebrow">STATE CONTINUITY</div><h2>Observed stones</h2></div></div>
+        <p class="small-note">An O-number is an image-observation tracklet, not a verified physical stone ID. Tracklets stop at abstained comparisons and camera changes.</p>
+        <div id="stones-table"></div>
+        <div id="tracklet-detail" class="tracklet-detail" hidden></div>
+      </section>
+
+      <section class="panel evidence-panel">
+        <div class="panel-head compact"><div><div class="eyebrow">INTERPRETATION</div><h2>What this candidate supports</h2></div></div>
+        <p id="interpretation"></p>
+        <p id="review-link" class="review-link"></p>
+        <div class="invariant">Physical throw identity: <strong>unverified</strong> · Exact release/settle: <strong>unknown</strong> · Spin count: <strong>unknown</strong> · Complete game state: <strong>no</strong> · Physics simulation ready: <strong>no</strong></div>
+      </section>
+      <p class="footer-link">Methods and limitations: <a href="../../FULL-MATCH-STAGE2-RESULTS.md">full-match results</a> · <a href="../../LEFT-BOUND-STATE-HANDOFF.md">development branch</a> · <a href="provenance.json">viewer provenance</a></p>
+    </main>
+  </div>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

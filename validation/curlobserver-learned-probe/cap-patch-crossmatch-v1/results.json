@@ -1,0 +1,901 @@
+{
+  "status": "development_leave_one_match_out_cap_patch_identity_probe",
+  "inputs": [
+    {
+      "review": "validation/curlobserver-learned-probe/sideview-patch-review-v1",
+      "manifest_sha256": "b713d63c98a71910080a9271727387617f7186bfe778417f92b71ecdfd7a76db",
+      "labels_sha256": "85ac911b6a120e3fe7f42beb5891682842e2548e9a1f6c2f4a0d30071d9e9284"
+    },
+    {
+      "review": "validation/curlobserver-learned-probe/swiss-patch-review-v1",
+      "manifest_sha256": "54d8c4dd71104422eb9c3ab8bc6c56edcb667bf8edf5013bef9f51d1761e7436",
+      "labels_sha256": "1ddd39ce98831a900ab33133622d4e6cbb8b14d2abcca4fd4f62192c0be52cd9"
+    }
+  ],
+  "runner_sha256": "b4512cfa03b36a0e3b704e493bb4f6768ff37f6e88ccd06f221fca3f32b61c3e",
+  "model_specification": "HOG+HSV on 3x cap context; StandardScaler; balanced LinearSVC C=0.1; threshold=0; no fold-specific tuning",
+  "folds": [
+    {
+      "heldout": "china-dev",
+      "train_sources": [
+        "slovakia-heldout",
+        "swiss-transfer"
+      ],
+      "train_count": 80,
+      "test_count": 35,
+      "model_sha256": "10036a8b13e7e35f0be3cfd7280e9e0afaa3cf5b5da6cecc5623fb79695e0670",
+      "score": {
+        "tp": 24,
+        "fp": 0,
+        "fn": 3,
+        "tn": 8,
+        "precision": 1.0,
+        "recall": 0.8888888888888888,
+        "f1": 0.9411764705882353
+      },
+      "rows": [
+        {
+          "id": "china-dev-G01-Y02-1",
+          "track_id": "G01-Y02",
+          "label": 1,
+          "score": 1.1439602258659747,
+          "predicted": 1
+        },
+        {
+          "id": "china-dev-G01-Y02-2",
+          "track_id": "G01-Y02",
+          "label": 1,
+          "score": 1.0651424128371962,
+          "predicted": 1
+        },
+        {
+          "id": "china-dev-G01-Y02-3",
+          "track_id": "G01-Y02",
+          "label": 1,
+          "score": 0.6717028395690751,
+          "predicted": 1
+        },
+        {
+          "id": "china-dev-G01-Y01-1",
+          "track_id": "G01-Y01",
+          "label": 1,
+          "score": 1.0838886582017742,
+          "predicted": 1
+        },
+        {
+          "id": "china-dev-G01-Y01-2",
+          "track_id": "G01-Y01",
+          "label": 1,
+          "score": 1.2837946049716473,
+          "predicted": 1
+        },
+        {
+          "id": "china-dev-G01-Y01-3",
+          "track_id": "G01-Y01",
+          "label": 1,
+          "score": 0.08602959902121995,
+          "predicted": 1
+        },
+        {
+          "id": "china-dev-G01-R06-1",
+          "track_id": "G01-R06",
+          "label": 0,
+          "score": -0.946843138655144,
+          "predicted": 0
+        },
+        {
+          "id": "china-dev-G01-R06-2",
+          "track_id": "G01-R06",
+          "label": 0,
+          "score": -1.0509794893692979,
+          "predicted": 0
+        },
+        {
+          "id": "china-dev-G01-R06-3",
+          "track_id": "G01-R06",
+          "label": 0,
+          "score": -0.4335056462200193,
+          "predicted": 0
+        },
+        {
+          "id": "china-dev-G01-R01-1",
+          "track_id": "G01-R01",
+          "label": 1,
+          "score": 1.4076742757853626,
+          "predicted": 1
+        },
+        {
+          "id": "china-dev-G01-R01-2",
+          "track_id": "G01-R01",
+          "label": 1,
+          "score": 1.031850523775469,
+          "predicted": 1
+        },
+        {
+          "id": "china-dev-G01-R01-3",
+          "track_id": "G01-R01",
+          "label": 1,
+          "score": -0.43936634754955584,
+          "predicted": 0
+        },
+        {
+          "id": "china-dev-G01-Y04-2",
+          "track_id": "G01-Y04",
+          "label": 1,
+          "score": 1.1407196884369066,
+          "predicted": 1
+        },
+        {
+          "id": "china-dev-G01-Y04-3",
+          "track_id": "G01-Y04",
+          "label": 1,
+          "score": 0.8600486087544225,
+          "predicted": 1
+        },
+        {
+          "id": "china-dev-G01-Y05-1",
+          "track_id": "G01-Y05",
+          "label": 1,
+          "score": 0.4284065933420972,
+          "predicted": 1
+        },
+        {
+          "id": "china-dev-G01-Y05-2",
+          "track_id": "G01-Y05",
+          "label": 1,
+          "score": 0.6816150998019319,
+          "predicted": 1
+        },
+        {
+          "id": "china-dev-G01-Y05-3",
+          "track_id": "G01-Y05",
+          "label": 1,
+          "score": 0.3585093944689054,
+          "predicted": 1
+        },
+        {
+          "id": "china-dev-G01-R03-1",
+          "track_id": "G01-R03",
+          "label": 0,
+          "score": -0.5762201103779907,
+          "predicted": 0
+        },
+        {
+          "id": "china-dev-G01-R03-2",
+          "track_id": "G01-R03",
+          "label": 1,
+          "score": 0.9277618682197994,
+          "predicted": 1
+        },
+        {
+          "id": "china-dev-G01-R03-3",
+          "track_id": "G01-R03",
+          "label": 1,
+          "score": -0.05789947272864421,
+          "predicted": 0
+        },
+        {
+          "id": "china-dev-G01-Y06-1",
+          "track_id": "G01-Y06",
+          "label": 1,
+          "score": 1.4575095530393032,
+          "predicted": 1
+        },
+        {
+          "id": "china-dev-G01-Y06-2",
+          "track_id": "G01-Y06",
+          "label": 1,
+          "score": 1.3804336591635087,
+          "predicted": 1
+        },
+        {
+          "id": "china-dev-G01-Y06-3",
+          "track_id": "G01-Y06",
+          "label": 1,
+          "score": 1.2102846644296859,
+          "predicted": 1
+        },
+        {
+          "id": "china-dev-G01-R02-1",
+          "track_id": "G01-R02",
+          "label": 1,
+          "score": 1.095363486342539,
+          "predicted": 1
+        },
+        {
+          "id": "china-dev-G01-R02-2",
+          "track_id": "G01-R02",
+          "label": 1,
+          "score": 0.923820684660524,
+          "predicted": 1
+        },
+        {
+          "id": "china-dev-G01-R02-3",
+          "track_id": "G01-R02",
+          "label": 1,
+          "score": 0.5851522930155378,
+          "predicted": 1
+        },
+        {
+          "id": "china-dev-G01-Y07-1",
+          "track_id": "G01-Y07",
+          "label": 0,
+          "score": -0.6279832409236673,
+          "predicted": 0
+        },
+        {
+          "id": "china-dev-G01-Y07-2",
+          "track_id": "G01-Y07",
+          "label": 1,
+          "score": 0.13899890764021303,
+          "predicted": 1
+        },
+        {
+          "id": "china-dev-G01-Y07-3",
+          "track_id": "G01-Y07",
+          "label": 1,
+          "score": 0.24658579421830967,
+          "predicted": 1
+        },
+        {
+          "id": "china-dev-G01-R05-1",
+          "track_id": "G01-R05",
+          "label": 0,
+          "score": -0.6880570638622049,
+          "predicted": 0
+        },
+        {
+          "id": "china-dev-G01-R05-2",
+          "track_id": "G01-R05",
+          "label": 0,
+          "score": -0.695714659392087,
+          "predicted": 0
+        },
+        {
+          "id": "china-dev-G01-R05-3",
+          "track_id": "G01-R05",
+          "label": 0,
+          "score": -1.0789873494821067,
+          "predicted": 0
+        },
+        {
+          "id": "china-dev-G01-Y03-1",
+          "track_id": "G01-Y03",
+          "label": 1,
+          "score": 1.566793442766465,
+          "predicted": 1
+        },
+        {
+          "id": "china-dev-G01-Y03-2",
+          "track_id": "G01-Y03",
+          "label": 1,
+          "score": 0.3658048547578292,
+          "predicted": 1
+        },
+        {
+          "id": "china-dev-G01-Y03-3",
+          "track_id": "G01-Y03",
+          "label": 1,
+          "score": -0.7886459015064907,
+          "predicted": 0
+        }
+      ]
+    },
+    {
+      "heldout": "slovakia-heldout",
+      "train_sources": [
+        "china-dev",
+        "swiss-transfer"
+      ],
+      "train_count": 74,
+      "test_count": 41,
+      "model_sha256": "27144e4d51a49a9d594d1b834767a07cfe1c6c91705e498192737a23b58048ec",
+      "score": {
+        "tp": 29,
+        "fp": 0,
+        "fn": 4,
+        "tn": 8,
+        "precision": 1.0,
+        "recall": 0.8787878787878788,
+        "f1": 0.9354838709677419
+      },
+      "rows": [
+        {
+          "id": "slovakia-heldout-G01-R06-1",
+          "track_id": "G01-R06",
+          "label": 0,
+          "score": -0.7404545844947281,
+          "predicted": 0
+        },
+        {
+          "id": "slovakia-heldout-G01-R06-2",
+          "track_id": "G01-R06",
+          "label": 1,
+          "score": 1.4578981522539414,
+          "predicted": 1
+        },
+        {
+          "id": "slovakia-heldout-G01-R06-3",
+          "track_id": "G01-R06",
+          "label": 1,
+          "score": 1.529784809444336,
+          "predicted": 1
+        },
+        {
+          "id": "slovakia-heldout-G01-R11-1",
+          "track_id": "G01-R11",
+          "label": 0,
+          "score": -0.7381510600148447,
+          "predicted": 0
+        },
+        {
+          "id": "slovakia-heldout-G01-R11-2",
+          "track_id": "G01-R11",
+          "label": 0,
+          "score": -0.6975502840476133,
+          "predicted": 0
+        },
+        {
+          "id": "slovakia-heldout-G01-R11-3",
+          "track_id": "G01-R11",
+          "label": 1,
+          "score": 0.7872305600801001,
+          "predicted": 1
+        },
+        {
+          "id": "slovakia-heldout-G01-R05-1",
+          "track_id": "G01-R05",
+          "label": 1,
+          "score": 0.6259225339742357,
+          "predicted": 1
+        },
+        {
+          "id": "slovakia-heldout-G01-R05-2",
+          "track_id": "G01-R05",
+          "label": 1,
+          "score": -0.47187417672255044,
+          "predicted": 0
+        },
+        {
+          "id": "slovakia-heldout-G01-R05-3",
+          "track_id": "G01-R05",
+          "label": 1,
+          "score": -0.6503584441628703,
+          "predicted": 0
+        },
+        {
+          "id": "slovakia-heldout-G01-Y03-1",
+          "track_id": "G01-Y03",
+          "label": 1,
+          "score": -0.03044446317927034,
+          "predicted": 0
+        },
+        {
+          "id": "slovakia-heldout-G01-Y03-2",
+          "track_id": "G01-Y03",
+          "label": 1,
+          "score": 0.30032702929857047,
+          "predicted": 1
+        },
+        {
+          "id": "slovakia-heldout-G01-Y03-3",
+          "track_id": "G01-Y03",
+          "label": 1,
+          "score": 1.1411817980442582,
+          "predicted": 1
+        },
+        {
+          "id": "slovakia-heldout-G01-R07-2",
+          "track_id": "G01-R07",
+          "label": 0,
+          "score": -0.38149800021979724,
+          "predicted": 0
+        },
+        {
+          "id": "slovakia-heldout-G01-R07-3",
+          "track_id": "G01-R07",
+          "label": 0,
+          "score": -0.035650305605051905,
+          "predicted": 0
+        },
+        {
+          "id": "slovakia-heldout-G01-Y05-1",
+          "track_id": "G01-Y05",
+          "label": 1,
+          "score": 0.754179156360034,
+          "predicted": 1
+        },
+        {
+          "id": "slovakia-heldout-G01-Y05-2",
+          "track_id": "G01-Y05",
+          "label": 1,
+          "score": 1.4171635570932652,
+          "predicted": 1
+        },
+        {
+          "id": "slovakia-heldout-G01-Y05-3",
+          "track_id": "G01-Y05",
+          "label": 1,
+          "score": 1.0621735045876004,
+          "predicted": 1
+        },
+        {
+          "id": "slovakia-heldout-G01-R03-1",
+          "track_id": "G01-R03",
+          "label": 1,
+          "score": 1.9128076546670967,
+          "predicted": 1
+        },
+        {
+          "id": "slovakia-heldout-G01-R03-2",
+          "track_id": "G01-R03",
+          "label": 1,
+          "score": 1.1380673849098943,
+          "predicted": 1
+        },
+        {
+          "id": "slovakia-heldout-G01-R03-3",
+          "track_id": "G01-R03",
+          "label": 1,
+          "score": 1.1461529409682996,
+          "predicted": 1
+        },
+        {
+          "id": "slovakia-heldout-G01-Y07-1",
+          "track_id": "G01-Y07",
+          "label": 1,
+          "score": 0.8766335166201533,
+          "predicted": 1
+        },
+        {
+          "id": "slovakia-heldout-G01-Y07-2",
+          "track_id": "G01-Y07",
+          "label": 1,
+          "score": 1.0253313788180647,
+          "predicted": 1
+        },
+        {
+          "id": "slovakia-heldout-G01-Y07-3",
+          "track_id": "G01-Y07",
+          "label": 1,
+          "score": 0.9676297282326329,
+          "predicted": 1
+        },
+        {
+          "id": "slovakia-heldout-G01-R04-1",
+          "track_id": "G01-R04",
+          "label": 1,
+          "score": 0.9660820750224539,
+          "predicted": 1
+        },
+        {
+          "id": "slovakia-heldout-G01-R04-2",
+          "track_id": "G01-R04",
+          "label": 1,
+          "score": 0.4670858053926446,
+          "predicted": 1
+        },
+        {
+          "id": "slovakia-heldout-G01-R04-3",
+          "track_id": "G01-R04",
+          "label": 1,
+          "score": 0.6567308582335953,
+          "predicted": 1
+        },
+        {
+          "id": "slovakia-heldout-G01-Y04-1",
+          "track_id": "G01-Y04",
+          "label": 1,
+          "score": 0.3629803550526574,
+          "predicted": 1
+        },
+        {
+          "id": "slovakia-heldout-G01-Y04-2",
+          "track_id": "G01-Y04",
+          "label": 1,
+          "score": 1.1604263249008335,
+          "predicted": 1
+        },
+        {
+          "id": "slovakia-heldout-G01-Y04-3",
+          "track_id": "G01-Y04",
+          "label": 1,
+          "score": 1.049437895041447,
+          "predicted": 1
+        },
+        {
+          "id": "slovakia-heldout-G01-R01-1",
+          "track_id": "G01-R01",
+          "label": 0,
+          "score": -1.1407663042976421,
+          "predicted": 0
+        },
+        {
+          "id": "slovakia-heldout-G01-R01-2",
+          "track_id": "G01-R01",
+          "label": 1,
+          "score": 0.4374447786022175,
+          "predicted": 1
+        },
+        {
+          "id": "slovakia-heldout-G01-R01-3",
+          "track_id": "G01-R01",
+          "label": 1,
+          "score": 0.48295299595016583,
+          "predicted": 1
+        },
+        {
+          "id": "slovakia-heldout-G01-Y01-1",
+          "track_id": "G01-Y01",
+          "label": 1,
+          "score": -0.07135546174188807,
+          "predicted": 0
+        },
+        {
+          "id": "slovakia-heldout-G01-Y01-2",
+          "track_id": "G01-Y01",
+          "label": 1,
+          "score": 1.3646883456866357,
+          "predicted": 1
+        },
+        {
+          "id": "slovakia-heldout-G01-Y01-3",
+          "track_id": "G01-Y01",
+          "label": 1,
+          "score": 1.5006279347229612,
+          "predicted": 1
+        },
+        {
+          "id": "slovakia-heldout-G01-R08-1",
+          "track_id": "G01-R08",
+          "label": 0,
+          "score": -1.162043701450678,
+          "predicted": 0
+        },
+        {
+          "id": "slovakia-heldout-G01-R08-2",
+          "track_id": "G01-R08",
+          "label": 0,
+          "score": -0.11146831176499737,
+          "predicted": 0
+        },
+        {
+          "id": "slovakia-heldout-G01-R08-3",
+          "track_id": "G01-R08",
+          "label": 1,
+          "score": 1.0463002162904325,
+          "predicted": 1
+        },
+        {
+          "id": "slovakia-heldout-G01-Y08-1",
+          "track_id": "G01-Y08",
+          "label": 1,
+          "score": 0.2862949144610039,
+          "predicted": 1
+        },
+        {
+          "id": "slovakia-heldout-G01-Y08-2",
+          "track_id": "G01-Y08",
+          "label": 1,
+          "score": 0.08712191853478937,
+          "predicted": 1
+        },
+        {
+          "id": "slovakia-heldout-G01-Y08-3",
+          "track_id": "G01-Y08",
+          "label": 1,
+          "score": 0.6846550840984007,
+          "predicted": 1
+        }
+      ]
+    },
+    {
+      "heldout": "swiss-transfer",
+      "train_sources": [
+        "china-dev",
+        "slovakia-heldout"
+      ],
+      "train_count": 76,
+      "test_count": 39,
+      "model_sha256": "395ebfd0b23db3c1faa90cfb71af2b33d0774e70dc05e7db8f6cb7924e1bcb47",
+      "score": {
+        "tp": 11,
+        "fp": 3,
+        "fn": 4,
+        "tn": 21,
+        "precision": 0.7857142857142857,
+        "recall": 0.7333333333333333,
+        "f1": 0.7586206896551724
+      },
+      "rows": [
+        {
+          "id": "swiss-transfer-G01-R01-1",
+          "track_id": "G01-R01",
+          "label": 0,
+          "score": -0.03619657945389432,
+          "predicted": 0
+        },
+        {
+          "id": "swiss-transfer-G01-R01-2",
+          "track_id": "G01-R01",
+          "label": 1,
+          "score": -0.5713343615059798,
+          "predicted": 0
+        },
+        {
+          "id": "swiss-transfer-G01-R01-3",
+          "track_id": "G01-R01",
+          "label": 1,
+          "score": 1.5093266817565851,
+          "predicted": 1
+        },
+        {
+          "id": "swiss-transfer-G01-R05-1",
+          "track_id": "G01-R05",
+          "label": 0,
+          "score": -0.44955155143365405,
+          "predicted": 0
+        },
+        {
+          "id": "swiss-transfer-G01-R05-2",
+          "track_id": "G01-R05",
+          "label": 0,
+          "score": -1.6339262429016697,
+          "predicted": 0
+        },
+        {
+          "id": "swiss-transfer-G01-R05-3",
+          "track_id": "G01-R05",
+          "label": 0,
+          "score": -2.6146920098950317,
+          "predicted": 0
+        },
+        {
+          "id": "swiss-transfer-G01-R02-1",
+          "track_id": "G01-R02",
+          "label": 1,
+          "score": 1.2800053402974791,
+          "predicted": 1
+        },
+        {
+          "id": "swiss-transfer-G01-R02-2",
+          "track_id": "G01-R02",
+          "label": 1,
+          "score": 1.435701715856206,
+          "predicted": 1
+        },
+        {
+          "id": "swiss-transfer-G01-R02-3",
+          "track_id": "G01-R02",
+          "label": 1,
+          "score": 1.2753695998127317,
+          "predicted": 1
+        },
+        {
+          "id": "swiss-transfer-G01-Y01-1",
+          "track_id": "G01-Y01",
+          "label": 1,
+          "score": 0.1582950721455926,
+          "predicted": 1
+        },
+        {
+          "id": "swiss-transfer-G01-Y01-2",
+          "track_id": "G01-Y01",
+          "label": 1,
+          "score": 0.6872361285713784,
+          "predicted": 1
+        },
+        {
+          "id": "swiss-transfer-G01-Y01-3",
+          "track_id": "G01-Y01",
+          "label": 1,
+          "score": 0.09961954699534886,
+          "predicted": 1
+        },
+        {
+          "id": "swiss-transfer-G01-Y02-1",
+          "track_id": "G01-Y02",
+          "label": 1,
+          "score": 0.28537242409399527,
+          "predicted": 1
+        },
+        {
+          "id": "swiss-transfer-G01-Y02-2",
+          "track_id": "G01-Y02",
+          "label": 1,
+          "score": 0.8023247759824106,
+          "predicted": 1
+        },
+        {
+          "id": "swiss-transfer-G01-Y02-3",
+          "track_id": "G01-Y02",
+          "label": 1,
+          "score": 0.6061264145705914,
+          "predicted": 1
+        },
+        {
+          "id": "swiss-transfer-G01-R04-1",
+          "track_id": "G01-R04",
+          "label": 0,
+          "score": -19.013192448373466,
+          "predicted": 0
+        },
+        {
+          "id": "swiss-transfer-G01-R04-2",
+          "track_id": "G01-R04",
+          "label": 0,
+          "score": -20.565604429631527,
+          "predicted": 0
+        },
+        {
+          "id": "swiss-transfer-G01-R04-3",
+          "track_id": "G01-R04",
+          "label": 0,
+          "score": -21.83391353284435,
+          "predicted": 0
+        },
+        {
+          "id": "swiss-transfer-G01-R12-1",
+          "track_id": "G01-R12",
+          "label": 0,
+          "score": -3.2110861373584614,
+          "predicted": 0
+        },
+        {
+          "id": "swiss-transfer-G01-R12-2",
+          "track_id": "G01-R12",
+          "label": 0,
+          "score": -2.0543948527583025,
+          "predicted": 0
+        },
+        {
+          "id": "swiss-transfer-G01-R12-3",
+          "track_id": "G01-R12",
+          "label": 0,
+          "score": -1.94615709390209,
+          "predicted": 0
+        },
+        {
+          "id": "swiss-transfer-G01-Y04-1",
+          "track_id": "G01-Y04",
+          "label": 1,
+          "score": -0.22898223517235178,
+          "predicted": 0
+        },
+        {
+          "id": "swiss-transfer-G01-Y04-2",
+          "track_id": "G01-Y04",
+          "label": 1,
+          "score": -0.04917437697222066,
+          "predicted": 0
+        },
+        {
+          "id": "swiss-transfer-G01-Y04-3",
+          "track_id": "G01-Y04",
+          "label": 1,
+          "score": -0.5520850433684528,
+          "predicted": 0
+        },
+        {
+          "id": "swiss-transfer-G01-R11-1",
+          "track_id": "G01-R11",
+          "label": 1,
+          "score": 0.7463026332710286,
+          "predicted": 1
+        },
+        {
+          "id": "swiss-transfer-G01-R11-2",
+          "track_id": "G01-R11",
+          "label": 0,
+          "score": -2.378367302776643,
+          "predicted": 0
+        },
+        {
+          "id": "swiss-transfer-G01-R11-3",
+          "track_id": "G01-R11",
+          "label": 0,
+          "score": -0.2746926544113109,
+          "predicted": 0
+        },
+        {
+          "id": "swiss-transfer-G01-R03-1",
+          "track_id": "G01-R03",
+          "label": 0,
+          "score": -1.1169570096535772,
+          "predicted": 0
+        },
+        {
+          "id": "swiss-transfer-G01-R03-2",
+          "track_id": "G01-R03",
+          "label": 0,
+          "score": -0.46543147425168113,
+          "predicted": 0
+        },
+        {
+          "id": "swiss-transfer-G01-R03-3",
+          "track_id": "G01-R03",
+          "label": 0,
+          "score": -4.145618061124017,
+          "predicted": 0
+        },
+        {
+          "id": "swiss-transfer-G01-R07-1",
+          "track_id": "G01-R07",
+          "label": 0,
+          "score": -0.7553384403283365,
+          "predicted": 0
+        },
+        {
+          "id": "swiss-transfer-G01-R07-2",
+          "track_id": "G01-R07",
+          "label": 0,
+          "score": -0.5965485948336238,
+          "predicted": 0
+        },
+        {
+          "id": "swiss-transfer-G01-R07-3",
+          "track_id": "G01-R07",
+          "label": 0,
+          "score": -0.11359966107156,
+          "predicted": 0
+        },
+        {
+          "id": "swiss-transfer-G01-R08-1",
+          "track_id": "G01-R08",
+          "label": 0,
+          "score": -1.6570845470720776,
+          "predicted": 0
+        },
+        {
+          "id": "swiss-transfer-G01-R08-2",
+          "track_id": "G01-R08",
+          "label": 0,
+          "score": -1.5771839526749416,
+          "predicted": 0
+        },
+        {
+          "id": "swiss-transfer-G01-R08-3",
+          "track_id": "G01-R08",
+          "label": 0,
+          "score": -2.1127248532571685,
+          "predicted": 0
+        },
+        {
+          "id": "swiss-transfer-G01-Y03-1",
+          "track_id": "G01-Y03",
+          "label": 0,
+          "score": 0.44193882071267643,
+          "predicted": 1
+        },
+        {
+          "id": "swiss-transfer-G01-Y03-2",
+          "track_id": "G01-Y03",
+          "label": 0,
+          "score": 0.2747030216789681,
+          "predicted": 1
+        },
+        {
+          "id": "swiss-transfer-G01-Y03-3",
+          "track_id": "G01-Y03",
+          "label": 0,
+          "score": 0.3109464653025299,
+          "predicted": 1
+        }
+      ]
+    }
+  ],
+  "pooled": {
+    "tp": 64,
+    "fp": 3,
+    "fn": 11,
+    "tn": 37,
+    "precision": 0.9552238805970149,
+    "recall": 0.8533333333333334,
+    "f1": 0.9014084507042254
+  },
+  "limitations": [
+    "All source matches and labels are exposed development material.",
+    "Three handpicked samples per track do not represent detection proposals or full broadcasts.",
+    "Patch identity is not delivered-stone identity or throw-event F1."
+  ]
+}

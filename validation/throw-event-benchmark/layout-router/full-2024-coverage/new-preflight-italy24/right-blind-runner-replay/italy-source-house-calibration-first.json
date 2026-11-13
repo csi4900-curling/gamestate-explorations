@@ -1,0 +1,5163 @@
+{
+  "status": "source_specific_house_plane_calibration_proposals_not_game_state",
+  "source_sha256": "aff12e78edeb5e108d142aed3e19b61c3956b4fddc8b2fd8b202713746771739",
+  "input_sha256": {
+    "handoff": "062caf61191e04aedf985aadc84d83ac34a1adcc6afe1064796a9aa898364f0d",
+    "ellipses": "f788038946b599f391034e412694a48131386d33c7e56a380eecaa2fbb0c7fc6",
+    "reference_frame": "c90084a676fe361e124fb03d1d60bea3f2cf7272548a0c57b9a337b802c696b8",
+    "reference_calibration": "fe7c6c832c2bc6b5095ce932ffd7905a59f9fdf8c0b4e029816e1108d1238402"
+  },
+  "model_code_sha256": "c65994d5e00366fbe405b745d5e88c15d6c213def8b6b32ed86962a77779da05",
+  "runner_sha256": "6ba8100ee8aa0d5629d95e2d32fdcfc7fa485a3f9acd2346ed2796eff30166c9",
+  "reference_house_ellipse": {
+    "center_px": [
+      484.394,
+      151.567
+    ],
+    "axis_lengths_px": [
+      255.979,
+      29.465
+    ],
+    "angle_degrees_opencv": 90.043,
+    "paint_component_count": 1,
+    "coordinate_status": "image_paint_ellipse_not_metric_rink_geometry"
+  },
+  "candidate_count": 48,
+  "status_counts": {
+    "abstain_temporal_geometry_change": 6,
+    "abstain_geometry_checks_failed": 30,
+    "conditional_image_evidence_supported": 11,
+    "abstain_fit_did_not_converge": 1
+  },
+  "rows": [
+    {
+      "candidate_id": "R01-S02",
+      "sample_times_s": [
+        180.875,
+        185.875,
+        190.875
+      ],
+      "status": "abstain_temporal_geometry_change",
+      "middle_frame_fit": {
+        "status": "conditional_image_evidence_supported",
+        "initial_H": [
+          [
+            0.023076403815272407,
+            0.00143277575799693,
+            -11.588325479924224
+          ],
+          [
+            -0.0006954582001004617,
+            0.27372899830181796,
+            -41.56338099763185
+          ],
+          [
+            9.126262243933004e-06,
+            0.004589939528015941,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.02159670269456563,
+            0.0042116812887088365,
+            -11.231101704938384
+          ],
+          [
+            -0.00011166253913919839,
+            0.1977496687057718,
+            -30.253814344347127
+          ],
+          [
+            -7.429051461894093e-05,
+            0.004284125639170002,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 169,
+          "radial_rmse_m": 0.12562410343504074,
+          "median_abs_radial_error_m": 0.042996369008980295,
+          "p95_abs_radial_error_m": 0.18895769696751089,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 58,
+          "radial_rmse_m": 0.12451093259923071,
+          "median_abs_radial_error_m": 0.047796283246362425,
+          "p95_abs_radial_error_m": 0.24889500031114858,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 106,
+          "radial_rmse_m": 0.08381254997817707,
+          "median_abs_radial_error_m": 0.05847862219777167,
+          "p95_abs_radial_error_m": 0.164463669003998,
+          "angular_bins": 11
+        },
+        "middle_frame_ring_check": {
+          "count": 166,
+          "radial_rmse_m": 0.08646192853040954,
+          "median_abs_radial_error_m": 0.04124526459926442,
+          "p95_abs_radial_error_m": 0.16922627326020795,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.7393243009506894,
+          "p90_normal_error_px": 1.6690983717661114,
+          "rings_supported": 3,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.3696,
+          6.3869,
+          6.4043
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 21,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.1668750889637149,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3869,
+          "passes": true
+        },
+        {
+          "ring_status": "insufficient_or_inconsistent_ring_evidence",
+          "ring_p95_abs_radial_error_m": 0.2148641491005292,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3869,
+          "passes": false
+        }
+      ],
+      "conditional_plane_H": null,
+      "cap_center_plane_projections": [],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S05",
+      "sample_times_s": [
+        343.9,
+        348.9,
+        353.9
+      ],
+      "status": "abstain_geometry_checks_failed",
+      "middle_frame_fit": {
+        "status": "abstain_geometry_checks_failed",
+        "initial_H": [
+          [
+            0.022655737711109306,
+            0.0012791442384983967,
+            -11.319220071084057
+          ],
+          [
+            -0.0006827805015306817,
+            0.24437799783632166,
+            -36.83471965335389
+          ],
+          [
+            8.959897102533227e-06,
+            0.004097776410263792,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.02048901419573879,
+            0.0024473896074743576,
+            -10.463403457099693
+          ],
+          [
+            -0.00024003173017372027,
+            0.17937476250177148,
+            -27.341588229195857
+          ],
+          [
+            -8.751041899213646e-05,
+            0.003514692167082537,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 149,
+          "radial_rmse_m": 0.14931207666500496,
+          "median_abs_radial_error_m": 0.04931211124140744,
+          "p95_abs_radial_error_m": 0.3003408986645339,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 51,
+          "radial_rmse_m": 0.14268556167765237,
+          "median_abs_radial_error_m": 0.04885903187911489,
+          "p95_abs_radial_error_m": 0.38009445619920945,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 110,
+          "radial_rmse_m": 0.10092285848720238,
+          "median_abs_radial_error_m": 0.06082639298046344,
+          "p95_abs_radial_error_m": 0.19971771044391887,
+          "angular_bins": 12
+        },
+        "middle_frame_ring_check": {
+          "count": 149,
+          "radial_rmse_m": 0.0969027658799303,
+          "median_abs_radial_error_m": 0.05308063236643634,
+          "p95_abs_radial_error_m": 0.1839484694382575,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.6724099260726678,
+          "p90_normal_error_px": 2.035955148614816,
+          "rings_supported": 3,
+          "status": "insufficient_or_inconsistent_ring_evidence",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.3761,
+          6.3928,
+          6.4097
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 10,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [],
+      "conditional_plane_H": null,
+      "cap_center_plane_projections": [],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S06",
+      "sample_times_s": [
+        393.039,
+        398.039,
+        403.039
+      ],
+      "status": "conditional_image_evidence_supported",
+      "middle_frame_fit": {
+        "status": "conditional_image_evidence_supported",
+        "initial_H": [
+          [
+            0.02224318783438265,
+            0.001223242250112704,
+            -11.070670670340764
+          ],
+          [
+            -0.0006703474033314682,
+            0.23369803260206315,
+            -35.60092395271481
+          ],
+          [
+            8.796741768892466e-06,
+            0.0039186927366644435,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.02166814799850334,
+            0.0009009208588023852,
+            -10.721149203433518
+          ],
+          [
+            0.00016962538280511456,
+            0.19284078434721488,
+            -29.657203104896777
+          ],
+          [
+            0.00012235121733624382,
+            0.0036042945606118604,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 169,
+          "radial_rmse_m": 0.10545928884702806,
+          "median_abs_radial_error_m": 0.03680094646154619,
+          "p95_abs_radial_error_m": 0.15826754429150147,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 58,
+          "radial_rmse_m": 0.11082298909620865,
+          "median_abs_radial_error_m": 0.030904978410873363,
+          "p95_abs_radial_error_m": 0.12232682964326211,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 109,
+          "radial_rmse_m": 0.10405358192819637,
+          "median_abs_radial_error_m": 0.045892185546523745,
+          "p95_abs_radial_error_m": 0.2158790588975973,
+          "angular_bins": 12
+        },
+        "middle_frame_ring_check": {
+          "count": 163,
+          "radial_rmse_m": 0.07967772757164862,
+          "median_abs_radial_error_m": 0.03214588335790025,
+          "p95_abs_radial_error_m": 0.13492391394499875,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.6058916873019401,
+          "p90_normal_error_px": 1.4877721320281942,
+          "rings_supported": 3,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.4159,
+          6.3856,
+          6.3558
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 13,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.14353065421337707,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3856,
+          "passes": true
+        },
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.12775003866091303,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3856,
+          "passes": true
+        }
+      ],
+      "conditional_plane_H": [
+        [
+          0.02166814799850334,
+          0.0009009208588023852,
+          -10.721149203433518
+        ],
+        [
+          0.00016962538280511456,
+          0.19284078434721488,
+          -29.657203104896777
+        ],
+        [
+          0.00012235121733624382,
+          0.0036042945606118604,
+          1.0
+        ]
+      ],
+      "cap_center_plane_projections": [
+        {
+          "local_observation_id": "C01",
+          "colour": "red",
+          "cap_pixel_center": [
+            529.0,
+            160.5
+          ],
+          "cap_center_projected_as_if_on_ice_plane_m": [
+            0.5391,
+            0.8419
+          ],
+          "stone_ground_contact_position_verified": false,
+          "physical_stone_identity_verified": false
+        }
+      ],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S13",
+      "sample_times_s": [
+        682.292,
+        687.292,
+        692.292
+      ],
+      "status": "abstain_geometry_checks_failed",
+      "middle_frame_fit": {
+        "status": "abstain_geometry_checks_failed",
+        "initial_H": [
+          [
+            0.02195793296350262,
+            0.0011717677028554093,
+            -10.94198482524272
+          ],
+          [
+            -0.0006617506201992186,
+            0.22386392131134922,
+            -33.98466386508985
+          ],
+          [
+            8.683929097609283e-06,
+            0.003753792501701446,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.021885811715059086,
+            0.00512055144204878,
+            -11.51259335809641
+          ],
+          [
+            0.000319195395528211,
+            0.19792409539503802,
+            -30.498244375469497
+          ],
+          [
+            -2.2488937387165254e-05,
+            0.0041645214514147155,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 160,
+          "radial_rmse_m": 0.154448515937166,
+          "median_abs_radial_error_m": 0.04010792429616539,
+          "p95_abs_radial_error_m": 0.33659861204110597,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 51,
+          "radial_rmse_m": 0.16633839624292202,
+          "median_abs_radial_error_m": 0.0343885384725342,
+          "p95_abs_radial_error_m": 0.3470452069092649,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 112,
+          "radial_rmse_m": 0.17346817462830766,
+          "median_abs_radial_error_m": 0.05719671151845962,
+          "p95_abs_radial_error_m": 0.4858771148397652,
+          "angular_bins": 12
+        },
+        "middle_frame_ring_check": {
+          "count": 156,
+          "radial_rmse_m": 0.08502945869117455,
+          "median_abs_radial_error_m": 0.03720934332147363,
+          "p95_abs_radial_error_m": 0.1541448320605874,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.5899249616002589,
+          "p90_normal_error_px": 1.673294653992241,
+          "rings_supported": 3,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.3676,
+          6.3897,
+          6.4119
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 12,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [],
+      "conditional_plane_H": null,
+      "cap_center_plane_projections": [],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S14",
+      "sample_times_s": [
+        737.176,
+        742.176,
+        747.176
+      ],
+      "status": "abstain_geometry_checks_failed",
+      "middle_frame_fit": {
+        "status": "abstain_geometry_checks_failed",
+        "initial_H": [
+          [
+            0.021755394246832996,
+            0.001140617589977079,
+            -10.849397363280085
+          ],
+          [
+            -0.0006556466703605314,
+            0.21791275334414792,
+            -33.2200485225639
+          ],
+          [
+            8.603829032725977e-06,
+            0.00365400219355002,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.022106349580796627,
+            0.000605802852845376,
+            -10.88471716867049
+          ],
+          [
+            0.0003257923759284437,
+            0.19629523605924107,
+            -30.275495886590466
+          ],
+          [
+            0.0001767064582265431,
+            0.003622260165016895,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 171,
+          "radial_rmse_m": 0.10050219758895713,
+          "median_abs_radial_error_m": 0.036576715717534736,
+          "p95_abs_radial_error_m": 0.1832743024296476,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 60,
+          "radial_rmse_m": 0.13217355115504117,
+          "median_abs_radial_error_m": 0.04423376670776413,
+          "p95_abs_radial_error_m": 0.24862796756184904,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 94,
+          "radial_rmse_m": 0.13634960282345496,
+          "median_abs_radial_error_m": 0.06259706481793703,
+          "p95_abs_radial_error_m": 0.33818205354887837,
+          "angular_bins": 12
+        },
+        "middle_frame_ring_check": {
+          "count": 160,
+          "radial_rmse_m": 0.08633303926938647,
+          "median_abs_radial_error_m": 0.036729732925882996,
+          "p95_abs_radial_error_m": 0.18183474952157472,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.6006696983506167,
+          "p90_normal_error_px": 1.7586452199656182,
+          "rings_supported": 3,
+          "status": "insufficient_or_inconsistent_ring_evidence",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.4263,
+          6.3872,
+          6.3487
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 16,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [],
+      "conditional_plane_H": null,
+      "cap_center_plane_projections": [],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S19",
+      "sample_times_s": [
+        1060.017,
+        1065.017,
+        1070.017
+      ],
+      "status": "abstain_geometry_checks_failed",
+      "middle_frame_fit": {
+        "status": "abstain_geometry_checks_failed",
+        "initial_H": [
+          [
+            0.022065688800107244,
+            0.0011855832550600202,
+            -10.985668684253634
+          ],
+          [
+            -0.0006649980794123293,
+            0.22650335546205091,
+            -34.425901563526466
+          ],
+          [
+            8.726544404181328e-06,
+            0.003798051031908549,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.02129650709728798,
+            0.0026833860791570414,
+            -10.852964315279225
+          ],
+          [
+            -4.084700898930145e-06,
+            0.19101553340269192,
+            -29.316140665711288
+          ],
+          [
+            -2.8849848936097266e-06,
+            0.003780880433832093,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 128,
+          "radial_rmse_m": 0.13788800127514608,
+          "median_abs_radial_error_m": 0.03904294609500003,
+          "p95_abs_radial_error_m": 0.23939820609002316,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 46,
+          "radial_rmse_m": 0.16369108886035472,
+          "median_abs_radial_error_m": 0.037702434735034096,
+          "p95_abs_radial_error_m": 0.25870589720348075,
+          "angular_bins": 11
+        },
+        "withheld_inner_ring": {
+          "count": 22,
+          "radial_rmse_m": 0.26897402608547555,
+          "median_abs_radial_error_m": 0.12806192871061223,
+          "p95_abs_radial_error_m": 0.47713227401017866,
+          "angular_bins": 8
+        },
+        "middle_frame_ring_check": {
+          "count": 99,
+          "radial_rmse_m": 0.08749581164997543,
+          "median_abs_radial_error_m": 0.03475017484468945,
+          "p95_abs_radial_error_m": 0.22635836166790083,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.6338845235276513,
+          "p90_normal_error_px": 1.902853916638286,
+          "rings_supported": 2,
+          "status": "insufficient_or_inconsistent_ring_evidence",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.3937,
+          6.3944,
+          6.3951
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 12,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [],
+      "conditional_plane_H": null,
+      "cap_center_plane_projections": [],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S21",
+      "sample_times_s": [
+        1168.1,
+        1173.1,
+        1178.1
+      ],
+      "status": "abstain_temporal_geometry_change",
+      "middle_frame_fit": {
+        "status": "conditional_image_evidence_supported",
+        "initial_H": [
+          [
+            0.02144818843135482,
+            0.0010856554522168265,
+            -10.6833360691572
+          ],
+          [
+            -0.0006463883472178479,
+            0.20741234472844555,
+            -31.58636790525839
+          ],
+          [
+            8.48233519610575e-06,
+            0.0034779293592338343,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.019259551448420627,
+            0.002139567660162582,
+            -9.74771296198673
+          ],
+          [
+            6.920988498198787e-05,
+            0.16947543554917835,
+            -26.091998594775806
+          ],
+          [
+            3.6057059544672074e-05,
+            0.0027047346938228606,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 143,
+          "radial_rmse_m": 0.08239478279975561,
+          "median_abs_radial_error_m": 0.03734940418209165,
+          "p95_abs_radial_error_m": 0.15812885790629058,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 50,
+          "radial_rmse_m": 0.10061987750167421,
+          "median_abs_radial_error_m": 0.037388386588819156,
+          "p95_abs_radial_error_m": 0.19653108387961082,
+          "angular_bins": 11
+        },
+        "withheld_inner_ring": {
+          "count": 49,
+          "radial_rmse_m": 0.1316451688976292,
+          "median_abs_radial_error_m": 0.07681164237131599,
+          "p95_abs_radial_error_m": 0.24206839033020355,
+          "angular_bins": 8
+        },
+        "middle_frame_ring_check": {
+          "count": 111,
+          "radial_rmse_m": 0.06883996991043058,
+          "median_abs_radial_error_m": 0.03851302586266536,
+          "p95_abs_radial_error_m": 0.13997632702856078,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.6653976375320962,
+          "p90_normal_error_px": 1.5269891153029522,
+          "rings_supported": 3,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.4042,
+          6.3951,
+          6.386
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 14,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [
+        {
+          "ring_status": "insufficient_or_inconsistent_ring_evidence",
+          "ring_p95_abs_radial_error_m": 0.22766410436762216,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3951,
+          "passes": false
+        },
+        {
+          "ring_status": "insufficient_or_inconsistent_ring_evidence",
+          "ring_p95_abs_radial_error_m": 0.186185258843828,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3951,
+          "passes": false
+        }
+      ],
+      "conditional_plane_H": null,
+      "cap_center_plane_projections": [],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S22",
+      "sample_times_s": [
+        1227.675,
+        1232.675,
+        1237.675
+      ],
+      "status": "abstain_geometry_checks_failed",
+      "middle_frame_fit": {
+        "status": "abstain_geometry_checks_failed",
+        "initial_H": [
+          [
+            0.02176446731618029,
+            0.0011065867399930509,
+            -10.819667757699852
+          ],
+          [
+            -0.0006559201072672594,
+            0.21141122620321523,
+            -32.25154065342231
+          ],
+          [
+            8.607417252575294e-06,
+            0.0035449833588566946,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.01931457851722569,
+            0.0026373406238798273,
+            -9.863624948382313
+          ],
+          [
+            2.1294590626896667e-05,
+            0.17138288318858444,
+            -26.36262878642135
+          ],
+          [
+            -5.270210940752867e-06,
+            0.0028754163617410082,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 128,
+          "radial_rmse_m": 0.11343741617674274,
+          "median_abs_radial_error_m": 0.03745097558612431,
+          "p95_abs_radial_error_m": 0.2780584650616969,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 44,
+          "radial_rmse_m": 0.08134373884526952,
+          "median_abs_radial_error_m": 0.030780515618779702,
+          "p95_abs_radial_error_m": 0.17416759986775363,
+          "angular_bins": 11
+        },
+        "withheld_inner_ring": {
+          "count": 31,
+          "radial_rmse_m": 0.22918620662351968,
+          "median_abs_radial_error_m": 0.1073318685105249,
+          "p95_abs_radial_error_m": 0.5229320653111236,
+          "angular_bins": 7
+        },
+        "middle_frame_ring_check": {
+          "count": 99,
+          "radial_rmse_m": 0.08059459818693811,
+          "median_abs_radial_error_m": 0.031238501533600305,
+          "p95_abs_radial_error_m": 0.17591844445159502,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.48825942217725476,
+          "p90_normal_error_px": 1.5960505826608218,
+          "rings_supported": 3,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.3982,
+          6.4013,
+          6.4044
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 16,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [],
+      "conditional_plane_H": null,
+      "cap_center_plane_projections": [],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S24",
+      "sample_times_s": [
+        1326.967,
+        1331.967,
+        1336.967
+      ],
+      "status": "abstain_geometry_checks_failed",
+      "middle_frame_fit": {
+        "status": "abstain_geometry_checks_failed",
+        "initial_H": [
+          [
+            0.021654959817337508,
+            0.0010945090480204013,
+            -10.772530848108582
+          ],
+          [
+            -0.0006526198578587142,
+            0.2091038068411699,
+            -31.800804891888355
+          ],
+          [
+            8.56410919816107e-06,
+            0.00350629211531558,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.023385686318062884,
+            0.0005508880629666125,
+            -11.52060879029768
+          ],
+          [
+            -2.859358455880144e-05,
+            0.20564827847600814,
+            -31.431785909627674
+          ],
+          [
+            8.312329710668208e-05,
+            0.0045688210062183945,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 126,
+          "radial_rmse_m": 0.12825495694863992,
+          "median_abs_radial_error_m": 0.03151000296602968,
+          "p95_abs_radial_error_m": 0.3336152758905923,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 44,
+          "radial_rmse_m": 0.14285316880500754,
+          "median_abs_radial_error_m": 0.046850581790439993,
+          "p95_abs_radial_error_m": 0.33287008878188284,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 25,
+          "radial_rmse_m": 0.15576994510952558,
+          "median_abs_radial_error_m": 0.10905008168753716,
+          "p95_abs_radial_error_m": 0.28450442190044045,
+          "angular_bins": 7
+        },
+        "middle_frame_ring_check": {
+          "count": 88,
+          "radial_rmse_m": 0.07896593175402082,
+          "median_abs_radial_error_m": 0.03492522579125401,
+          "p95_abs_radial_error_m": 0.16249204156481264,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.5311475698669195,
+          "p90_normal_error_px": 1.6536007191239297,
+          "rings_supported": 2,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 216,
+        "hog_world_y_m_at_three_pixels": [
+          6.4238,
+          6.3988,
+          6.374
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 15,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [],
+      "conditional_plane_H": null,
+      "cap_center_plane_projections": [],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S28",
+      "sample_times_s": [
+        1560.767,
+        1565.767,
+        1570.767
+      ],
+      "status": "conditional_image_evidence_supported",
+      "middle_frame_fit": {
+        "status": "conditional_image_evidence_supported",
+        "initial_H": [
+          [
+            0.021892920917470134,
+            0.0011774741898304597,
+            -10.873338812139258
+          ],
+          [
+            -0.0006597913391569672,
+            0.22495413445516083,
+            -34.28600755504268
+          ],
+          [
+            8.658218116563159e-06,
+            0.0037720734015468695,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.019415754091737614,
+            0.0011201763219527753,
+            -9.668696399256445
+          ],
+          [
+            -0.00011843767614228077,
+            0.17211384575604777,
+            -26.403446133987693
+          ],
+          [
+            2.284273065672304e-05,
+            0.0028533194204373204,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 154,
+          "radial_rmse_m": 0.09664147899042784,
+          "median_abs_radial_error_m": 0.03743262447811335,
+          "p95_abs_radial_error_m": 0.22747037729820307,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 52,
+          "radial_rmse_m": 0.08231620930686555,
+          "median_abs_radial_error_m": 0.04174451003837165,
+          "p95_abs_radial_error_m": 0.18254893424522806,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 71,
+          "radial_rmse_m": 0.06379410606232543,
+          "median_abs_radial_error_m": 0.05364858302418185,
+          "p95_abs_radial_error_m": 0.10387966893809603,
+          "angular_bins": 10
+        },
+        "middle_frame_ring_check": {
+          "count": 131,
+          "radial_rmse_m": 0.06551663657470992,
+          "median_abs_radial_error_m": 0.0388265210213069,
+          "p95_abs_radial_error_m": 0.13075005931432004,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.5329189366096403,
+          "p90_normal_error_px": 1.3322361077947642,
+          "rings_supported": 3,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.4094,
+          6.3947,
+          6.38
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 13,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.1280398233662121,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3947,
+          "passes": true
+        },
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.1749988401867389,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3947,
+          "passes": true
+        }
+      ],
+      "conditional_plane_H": [
+        [
+          0.019415754091737614,
+          0.0011201763219527753,
+          -9.668696399256445
+        ],
+        [
+          -0.00011843767614228077,
+          0.17211384575604777,
+          -26.403446133987693
+        ],
+        [
+          2.284273065672304e-05,
+          0.0028533194204373204,
+          1.0
+        ]
+      ],
+      "cap_center_plane_projections": [
+        {
+          "local_observation_id": "C01",
+          "colour": "yellow",
+          "cap_pixel_center": [
+            489.0,
+            180.0
+          ],
+          "cap_center_projected_as_if_on_ice_plane_m": [
+            0.0179,
+            2.9638
+          ],
+          "stone_ground_contact_position_verified": false,
+          "physical_stone_identity_verified": false
+        }
+      ],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S29",
+      "sample_times_s": [
+        1639.75,
+        1644.75,
+        1649.75
+      ],
+      "status": "abstain_geometry_checks_failed",
+      "middle_frame_fit": {
+        "status": "abstain_geometry_checks_failed",
+        "initial_H": [
+          [
+            0.02195529692985053,
+            0.001177881752505865,
+            -10.932266399055084
+          ],
+          [
+            -0.0006616711775254917,
+            0.22503199850489874,
+            -34.23312741569301
+          ],
+          [
+            8.682886598327963e-06,
+            0.0037733790406348743,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.018035980848828872,
+            0.0032049931024460687,
+            -9.341167046903543
+          ],
+          [
+            -0.00017548153372699599,
+            0.15765982152595673,
+            -24.137947702043686
+          ],
+          [
+            -8.478708922564715e-05,
+            0.0024774633893756967,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 127,
+          "radial_rmse_m": 0.10860602563165694,
+          "median_abs_radial_error_m": 0.034105477244113835,
+          "p95_abs_radial_error_m": 0.21555521591513835,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 43,
+          "radial_rmse_m": 0.12579871776132728,
+          "median_abs_radial_error_m": 0.02259646190408815,
+          "p95_abs_radial_error_m": 0.18554195488890832,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 52,
+          "radial_rmse_m": 0.13895592539118057,
+          "median_abs_radial_error_m": 0.0386466463827051,
+          "p95_abs_radial_error_m": 0.3119884002990341,
+          "angular_bins": 10
+        },
+        "middle_frame_ring_check": {
+          "count": 103,
+          "radial_rmse_m": 0.07322837254760474,
+          "median_abs_radial_error_m": 0.027127417231267548,
+          "p95_abs_radial_error_m": 0.16051007296926487,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.5145995301980272,
+          "p90_normal_error_px": 1.5995287894564862,
+          "rings_supported": 3,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.3699,
+          6.392,
+          6.4142
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 12,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [],
+      "conditional_plane_H": null,
+      "cap_center_plane_projections": [],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S45",
+      "sample_times_s": [
+        2016.711,
+        2021.711,
+        2026.711
+      ],
+      "status": "abstain_temporal_geometry_change",
+      "middle_frame_fit": {
+        "status": "conditional_image_evidence_supported",
+        "initial_H": [
+          [
+            0.022455721957449496,
+            0.0012392429322987722,
+            -11.20870514470568
+          ],
+          [
+            -0.0006767525867331461,
+            0.23675493154978222,
+            -35.95361305838619
+          ],
+          [
+            8.880794819723927e-06,
+            0.0039699513954120835,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.022481968830462672,
+            0.0006787936646876232,
+            -11.1156550720473
+          ],
+          [
+            -0.00028433971588402306,
+            0.2029201081304569,
+            -30.971278387533673
+          ],
+          [
+            3.3261709363383055e-05,
+            0.004255665366575315,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 177,
+          "radial_rmse_m": 0.12310897698754028,
+          "median_abs_radial_error_m": 0.04198608704235185,
+          "p95_abs_radial_error_m": 0.25342170959238003,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 59,
+          "radial_rmse_m": 0.1422810871194998,
+          "median_abs_radial_error_m": 0.041558886260435246,
+          "p95_abs_radial_error_m": 0.2342464181003833,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 116,
+          "radial_rmse_m": 0.1070688164426841,
+          "median_abs_radial_error_m": 0.03585875541637523,
+          "p95_abs_radial_error_m": 0.16744920577981623,
+          "angular_bins": 12
+        },
+        "middle_frame_ring_check": {
+          "count": 170,
+          "radial_rmse_m": 0.07840735365193076,
+          "median_abs_radial_error_m": 0.0366524976910087,
+          "p95_abs_radial_error_m": 0.15826545007315543,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.6184576585826445,
+          "p90_normal_error_px": 1.592505771737401,
+          "rings_supported": 3,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.4136,
+          6.3904,
+          6.3672
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 14,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [
+        {
+          "ring_status": "insufficient_or_inconsistent_ring_evidence",
+          "ring_p95_abs_radial_error_m": 0.20419561169012695,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3904,
+          "passes": false
+        },
+        {
+          "ring_status": "insufficient_or_inconsistent_ring_evidence",
+          "ring_p95_abs_radial_error_m": 0.19326939340953797,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3904,
+          "passes": false
+        }
+      ],
+      "conditional_plane_H": null,
+      "cap_center_plane_projections": [],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S48",
+      "sample_times_s": [
+        2196.55,
+        2201.55,
+        2206.55
+      ],
+      "status": "abstain_geometry_checks_failed",
+      "middle_frame_fit": {
+        "status": "abstain_geometry_checks_failed",
+        "initial_H": [
+          [
+            0.022296115027955282,
+            0.0011704367069315356,
+            -11.07224989233118
+          ],
+          [
+            -0.0006719424807565751,
+            0.2236096371507244,
+            -34.070069596106755
+          ],
+          [
+            8.817673429312605e-06,
+            0.0037495286168831004,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.020243222275370572,
+            9.302785445446976e-05,
+            -9.908650509881754
+          ],
+          [
+            -0.0001710937209549752,
+            0.17755294064677338,
+            -27.186157157558604
+          ],
+          [
+            6.00499029728847e-05,
+            0.003035595657928953,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 169,
+          "radial_rmse_m": 0.1344745320385707,
+          "median_abs_radial_error_m": 0.04914208272145171,
+          "p95_abs_radial_error_m": 0.3066451342541734,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 54,
+          "radial_rmse_m": 0.13439863190547047,
+          "median_abs_radial_error_m": 0.05104523172103148,
+          "p95_abs_radial_error_m": 0.2909844256574442,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 112,
+          "radial_rmse_m": 0.15399638889690762,
+          "median_abs_radial_error_m": 0.053284437431881826,
+          "p95_abs_radial_error_m": 0.4322872770009033,
+          "angular_bins": 12
+        },
+        "middle_frame_ring_check": {
+          "count": 163,
+          "radial_rmse_m": 0.09371173437364665,
+          "median_abs_radial_error_m": 0.0421399801404303,
+          "p95_abs_radial_error_m": 0.17588102287212284,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.7156363985020501,
+          "p90_normal_error_px": 1.638285134106664,
+          "rings_supported": 3,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.4182,
+          6.3884,
+          6.3587
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 12,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [],
+      "conditional_plane_H": null,
+      "cap_center_plane_projections": [],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S49",
+      "sample_times_s": [
+        2250.305,
+        2255.305,
+        2260.305
+      ],
+      "status": "abstain_geometry_checks_failed",
+      "middle_frame_fit": {
+        "status": "abstain_geometry_checks_failed",
+        "initial_H": [
+          [
+            0.022638043376366088,
+            0.0012190831681844145,
+            -11.30862952841297
+          ],
+          [
+            -0.0006822472438233285,
+            0.23290344815733652,
+            -35.403202219709556
+          ],
+          [
+            8.95289934237999e-06,
+            0.0039053689946647887,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.018083871880579635,
+            0.00219350954393197,
+            -9.231729110843744
+          ],
+          [
+            -0.0003312315384624937,
+            0.1567482299984986,
+            -23.93696260906624
+          ],
+          [
+            -8.330451244126329e-05,
+            0.0024190663424315793,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 169,
+          "radial_rmse_m": 0.14060755784545698,
+          "median_abs_radial_error_m": 0.051481571369102364,
+          "p95_abs_radial_error_m": 0.3120687545906101,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 58,
+          "radial_rmse_m": 0.14755481421306338,
+          "median_abs_radial_error_m": 0.05620474102004458,
+          "p95_abs_radial_error_m": 0.35974346877321683,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 97,
+          "radial_rmse_m": 0.1104199370155539,
+          "median_abs_radial_error_m": 0.045425595810920316,
+          "p95_abs_radial_error_m": 0.18842907575921533,
+          "angular_bins": 11
+        },
+        "middle_frame_ring_check": {
+          "count": 157,
+          "radial_rmse_m": 0.08380644118419713,
+          "median_abs_radial_error_m": 0.049333075978969854,
+          "p95_abs_radial_error_m": 0.16827397158899007,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.6308201790350887,
+          "p90_normal_error_px": 1.7824216726414572,
+          "rings_supported": 3,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.383,
+          6.3952,
+          6.4076
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 12,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [],
+      "conditional_plane_H": null,
+      "cap_center_plane_projections": [],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S52",
+      "sample_times_s": [
+        2360.525,
+        2365.525,
+        2370.525
+      ],
+      "status": "abstain_geometry_checks_failed",
+      "middle_frame_fit": {
+        "status": "abstain_geometry_checks_failed",
+        "initial_H": [
+          [
+            0.022117994696407784,
+            0.0011091605323091227,
+            -11.006857065836162
+          ],
+          [
+            -0.0006665744326772061,
+            0.2119029441769337,
+            -32.32834990320233
+          ],
+          [
+            8.74723035379306e-06,
+            0.0035532285786843646,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.017724468640596184,
+            0.0035653918638827637,
+            -9.259649869636744
+          ],
+          [
+            -0.00034691426819415897,
+            0.1543744300443541,
+            -23.532383870227445
+          ],
+          [
+            -0.0001463655654335092,
+            0.0024761837768318322,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 167,
+          "radial_rmse_m": 0.11909664095520328,
+          "median_abs_radial_error_m": 0.04600874991806414,
+          "p95_abs_radial_error_m": 0.2671929345703302,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 55,
+          "radial_rmse_m": 0.15055175075202515,
+          "median_abs_radial_error_m": 0.05802217271703736,
+          "p95_abs_radial_error_m": 0.32912266363776593,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 91,
+          "radial_rmse_m": 0.07955021546348835,
+          "median_abs_radial_error_m": 0.03895572000525904,
+          "p95_abs_radial_error_m": 0.1517059267526021,
+          "angular_bins": 11
+        },
+        "middle_frame_ring_check": {
+          "count": 162,
+          "radial_rmse_m": 0.07861666591563697,
+          "median_abs_radial_error_m": 0.04005083949123528,
+          "p95_abs_radial_error_m": 0.15560315378988115,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.5858844951354808,
+          "p90_normal_error_px": 1.5794267024459,
+          "rings_supported": 3,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.3649,
+          6.4009,
+          6.4377
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 16,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [],
+      "conditional_plane_H": null,
+      "cap_center_plane_projections": [],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S54",
+      "sample_times_s": [
+        2431.474,
+        2436.474,
+        2441.474
+      ],
+      "status": "abstain_geometry_checks_failed",
+      "middle_frame_fit": {
+        "status": "abstain_geometry_checks_failed",
+        "initial_H": [
+          [
+            0.022273366910050905,
+            0.001129732398535551,
+            -11.032473333125047
+          ],
+          [
+            -0.0006712569161746717,
+            0.2158331588695886,
+            -32.87864417764658
+          ],
+          [
+            8.808676997666966e-06,
+            0.0036191311607393175,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.020678946794352445,
+            0.0026672033730509577,
+            -10.521351057045628
+          ],
+          [
+            -0.0002409809804015949,
+            0.18514167817706195,
+            -28.29599901392932
+          ],
+          [
+            -7.341969882344622e-05,
+            0.003677924807738039,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 160,
+          "radial_rmse_m": 0.14781760206459404,
+          "median_abs_radial_error_m": 0.04436594855530063,
+          "p95_abs_radial_error_m": 0.32318224719152794,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 52,
+          "radial_rmse_m": 0.16856253131204282,
+          "median_abs_radial_error_m": 0.05202170036171472,
+          "p95_abs_radial_error_m": 0.3376795447555114,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 112,
+          "radial_rmse_m": 0.1553664458540929,
+          "median_abs_radial_error_m": 0.04847937969321925,
+          "p95_abs_radial_error_m": 0.4620251303563048,
+          "angular_bins": 12
+        },
+        "middle_frame_ring_check": {
+          "count": 157,
+          "radial_rmse_m": 0.07718677870762587,
+          "median_abs_radial_error_m": 0.038996499208811874,
+          "p95_abs_radial_error_m": 0.14502080484515167,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.5988328368932021,
+          "p90_normal_error_px": 1.4904946173687519,
+          "rings_supported": 3,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.3878,
+          6.3995,
+          6.4113
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 15,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [],
+      "conditional_plane_H": null,
+      "cap_center_plane_projections": [],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S56",
+      "sample_times_s": [
+        2530.76,
+        2535.76,
+        2540.76
+      ],
+      "status": "abstain_geometry_checks_failed",
+      "middle_frame_fit": {
+        "status": "abstain_geometry_checks_failed",
+        "initial_H": [
+          [
+            0.022484864331772967,
+            0.0011657709303187003,
+            -11.203688353218055
+          ],
+          [
+            -0.0006776308563004451,
+            0.22271824968035225,
+            -33.92113190518293
+          ],
+          [
+            8.892320053578208e-06,
+            0.0037345816634714347,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.01907145710167783,
+            0.0013243746402572868,
+            -9.537544553283386
+          ],
+          [
+            -0.00021060086307405105,
+            0.16535053581449172,
+            -25.29209118092777
+          ],
+          [
+            -7.379047155961046e-06,
+            0.0026537772237424516,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 169,
+          "radial_rmse_m": 0.11548754904996957,
+          "median_abs_radial_error_m": 0.05384132601246949,
+          "p95_abs_radial_error_m": 0.20667111830867857,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 57,
+          "radial_rmse_m": 0.14428070750321623,
+          "median_abs_radial_error_m": 0.046833582095423765,
+          "p95_abs_radial_error_m": 0.3032972564264621,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 105,
+          "radial_rmse_m": 0.10590238912070066,
+          "median_abs_radial_error_m": 0.043071766118216503,
+          "p95_abs_radial_error_m": 0.2542985646551575,
+          "angular_bins": 12
+        },
+        "middle_frame_ring_check": {
+          "count": 165,
+          "radial_rmse_m": 0.08180698629818545,
+          "median_abs_radial_error_m": 0.043835131477881095,
+          "p95_abs_radial_error_m": 0.15720025708220034,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.7116433518918246,
+          "p90_normal_error_px": 1.7596815221154132,
+          "rings_supported": 3,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.3955,
+          6.3861,
+          6.3767
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 11,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [],
+      "conditional_plane_H": null,
+      "cap_center_plane_projections": [],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S58",
+      "sample_times_s": [
+        2569.893,
+        2574.893,
+        2579.893
+      ],
+      "status": "conditional_image_evidence_supported",
+      "middle_frame_fit": {
+        "status": "conditional_image_evidence_supported",
+        "initial_H": [
+          [
+            0.021847193272634284,
+            0.0011255562618681626,
+            -10.847736129885527
+          ],
+          [
+            -0.0006584132359729986,
+            0.21503531615040838,
+            -32.79433583335372
+          ],
+          [
+            8.640133735569047e-06,
+            0.00360575278337841,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.0199526652812892,
+            0.0016487635019354727,
+            -10.008160548328833
+          ],
+          [
+            1.223803684129809e-05,
+            0.17613940038827441,
+            -27.087806826795788
+          ],
+          [
+            3.527038520708245e-05,
+            0.0030009853456866866,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 167,
+          "radial_rmse_m": 0.10272433510287811,
+          "median_abs_radial_error_m": 0.04310919607786734,
+          "p95_abs_radial_error_m": 0.25603834420697086,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 54,
+          "radial_rmse_m": 0.14211408027594075,
+          "median_abs_radial_error_m": 0.045237244312042346,
+          "p95_abs_radial_error_m": 0.2436364137159413,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 98,
+          "radial_rmse_m": 0.06920275053887928,
+          "median_abs_radial_error_m": 0.030883850627736686,
+          "p95_abs_radial_error_m": 0.13569931334588364,
+          "angular_bins": 12
+        },
+        "middle_frame_ring_check": {
+          "count": 160,
+          "radial_rmse_m": 0.07666582585482219,
+          "median_abs_radial_error_m": 0.03254954837547114,
+          "p95_abs_radial_error_m": 0.14702672571513623,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.53398078600569,
+          "p90_normal_error_px": 1.566607947642919,
+          "rings_supported": 3,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.4063,
+          6.3947,
+          6.3832
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 14,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.1623739820208781,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3947,
+          "passes": true
+        },
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.14308579157252962,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3947,
+          "passes": true
+        }
+      ],
+      "conditional_plane_H": [
+        [
+          0.0199526652812892,
+          0.0016487635019354727,
+          -10.008160548328833
+        ],
+        [
+          1.223803684129809e-05,
+          0.17613940038827441,
+          -27.087806826795788
+        ],
+        [
+          3.527038520708245e-05,
+          0.0030009853456866866,
+          1.0
+        ]
+      ],
+      "cap_center_plane_projections": [
+        {
+          "local_observation_id": "C01",
+          "colour": "yellow",
+          "cap_pixel_center": [
+            438.0,
+            156.0
+          ],
+          "cap_center_projected_as_if_on_ice_plane_m": [
+            -0.6819,
+            0.2664
+          ],
+          "stone_ground_contact_position_verified": false,
+          "physical_stone_identity_verified": false
+        }
+      ],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S59",
+      "sample_times_s": [
+        2597.302,
+        2602.302,
+        2607.302
+      ],
+      "status": "abstain_temporal_geometry_change",
+      "middle_frame_fit": {
+        "status": "conditional_image_evidence_supported",
+        "initial_H": [
+          [
+            0.02280396836980973,
+            0.001270401565534477,
+            -11.437760732755295
+          ],
+          [
+            -0.000687247758557588,
+            0.24270772731454804,
+            -36.833450246737094
+          ],
+          [
+            9.018519402382033e-06,
+            0.004069768998780426,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.020977783739264438,
+            0.001458085492925533,
+            -10.491942903061135
+          ],
+          [
+            1.7285724208096427e-05,
+            0.18350200127931943,
+            -28.16234452463623
+          ],
+          [
+            7.906210851736451e-05,
+            0.0032736706746287884,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 160,
+          "radial_rmse_m": 0.11991964040373118,
+          "median_abs_radial_error_m": 0.04493829207552935,
+          "p95_abs_radial_error_m": 0.2071245956091307,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 56,
+          "radial_rmse_m": 0.11406114580552681,
+          "median_abs_radial_error_m": 0.05703550643482724,
+          "p95_abs_radial_error_m": 0.2115952154264263,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 105,
+          "radial_rmse_m": 0.07756883147079824,
+          "median_abs_radial_error_m": 0.05501826726762693,
+          "p95_abs_radial_error_m": 0.13444858445103672,
+          "angular_bins": 12
+        },
+        "middle_frame_ring_check": {
+          "count": 164,
+          "radial_rmse_m": 0.0808097094323045,
+          "median_abs_radial_error_m": 0.047759111802866516,
+          "p95_abs_radial_error_m": 0.15207037268363813,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.7485214543964851,
+          "p90_normal_error_px": 1.9541030127271781,
+          "rings_supported": 3,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.4162,
+          6.3908,
+          6.3657
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 12,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.15549086038108764,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3908,
+          "passes": true
+        },
+        {
+          "ring_status": "insufficient_or_inconsistent_ring_evidence",
+          "ring_p95_abs_radial_error_m": 0.1827181145440883,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3908,
+          "passes": false
+        }
+      ],
+      "conditional_plane_H": null,
+      "cap_center_plane_projections": [],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S60",
+      "sample_times_s": [
+        2691.3,
+        2696.3,
+        2701.3
+      ],
+      "status": "abstain_geometry_checks_failed",
+      "middle_frame_fit": {
+        "status": "abstain_geometry_checks_failed",
+        "initial_H": [
+          [
+            0.022456912431856754,
+            0.0011606103417109894,
+            -11.164976446786918
+          ],
+          [
+            -0.0006767884642986093,
+            0.22173232934888928,
+            -33.66876080220867
+          ],
+          [
+            8.881265628855292e-06,
+            0.0037180495651956543,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.019199538071207067,
+            0.002121984951716999,
+            -9.718002778573055
+          ],
+          [
+            -0.0001324604209845437,
+            0.16487739262215165,
+            -25.240421504637208
+          ],
+          [
+            -2.2395548127524158e-05,
+            0.0026781405601035454,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 172,
+          "radial_rmse_m": 0.11752328098556035,
+          "median_abs_radial_error_m": 0.04922535709774878,
+          "p95_abs_radial_error_m": 0.22341589435047254,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 57,
+          "radial_rmse_m": 0.16888268373222526,
+          "median_abs_radial_error_m": 0.06779356066898656,
+          "p95_abs_radial_error_m": 0.2855156320360075,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 101,
+          "radial_rmse_m": 0.0823110818288765,
+          "median_abs_radial_error_m": 0.042879509884561795,
+          "p95_abs_radial_error_m": 0.17629491779590056,
+          "angular_bins": 12
+        },
+        "middle_frame_ring_check": {
+          "count": 159,
+          "radial_rmse_m": 0.08138491344765234,
+          "median_abs_radial_error_m": 0.04621854459550967,
+          "p95_abs_radial_error_m": 0.1654204109745591,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.7760820752388916,
+          "p90_normal_error_px": 1.9870636556351438,
+          "rings_supported": 3,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.387,
+          6.3876,
+          6.3882
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 14,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [],
+      "conditional_plane_H": null,
+      "cap_center_plane_projections": [],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S61",
+      "sample_times_s": [
+        2744.529,
+        2749.529,
+        2754.529
+      ],
+      "status": "conditional_image_evidence_supported",
+      "middle_frame_fit": {
+        "status": "conditional_image_evidence_supported",
+        "initial_H": [
+          [
+            0.022868298249743454,
+            0.001192711871604273,
+            -11.346931428448599
+          ],
+          [
+            -0.0006891864810235979,
+            0.22786526367067672,
+            -34.496673061847716
+          ],
+          [
+            9.043960600200185e-06,
+            0.0038208877659012277,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.0176231206673492,
+            0.003312067082260001,
+            -9.116578726945425
+          ],
+          [
+            -0.00034395305252773366,
+            0.14710855866443698,
+            -22.391937806635998
+          ],
+          [
+            -0.00014240485355206263,
+            0.002180830760147367,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 168,
+          "radial_rmse_m": 0.11490044775356177,
+          "median_abs_radial_error_m": 0.05990735908004563,
+          "p95_abs_radial_error_m": 0.21713083851583131,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 53,
+          "radial_rmse_m": 0.15855110489633312,
+          "median_abs_radial_error_m": 0.07666739399424327,
+          "p95_abs_radial_error_m": 0.21268774274742808,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 118,
+          "radial_rmse_m": 0.06877253288024343,
+          "median_abs_radial_error_m": 0.033040031264866765,
+          "p95_abs_radial_error_m": 0.14175010754491937,
+          "angular_bins": 12
+        },
+        "middle_frame_ring_check": {
+          "count": 169,
+          "radial_rmse_m": 0.07395563814079685,
+          "median_abs_radial_error_m": 0.047671214484123814,
+          "p95_abs_radial_error_m": 0.14350137486915274,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.6877502395525231,
+          "p90_normal_error_px": 1.8880304166183357,
+          "rings_supported": 3,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.3499,
+          6.386,
+          6.4228
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 12,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.14663802274605364,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.386,
+          "passes": true
+        },
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.14800932046971405,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.386,
+          "passes": true
+        }
+      ],
+      "conditional_plane_H": [
+        [
+          0.0176231206673492,
+          0.003312067082260001,
+          -9.116578726945425
+        ],
+        [
+          -0.00034395305252773366,
+          0.14710855866443698,
+          -22.391937806635998
+        ],
+        [
+          -0.00014240485355206263,
+          0.002180830760147367,
+          1.0
+        ]
+      ],
+      "cap_center_plane_projections": [
+        {
+          "local_observation_id": "C01",
+          "colour": "yellow",
+          "cap_pixel_center": [
+            438.0,
+            156.0
+          ],
+          "cap_center_projected_as_if_on_ice_plane_m": [
+            -0.6894,
+            0.318
+          ],
+          "stone_ground_contact_position_verified": false,
+          "physical_stone_identity_verified": false
+        }
+      ],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S62",
+      "sample_times_s": [
+        2805.726,
+        2810.726,
+        2815.726
+      ],
+      "status": "abstain_geometry_checks_failed",
+      "middle_frame_fit": {
+        "status": "abstain_geometry_checks_failed",
+        "initial_H": [
+          [
+            0.023230528878420705,
+            0.0011886445047394794,
+            -11.45847042973508
+          ],
+          [
+            -0.0007001030979738706,
+            0.22708820120893985,
+            -34.48218805869649
+          ],
+          [
+            9.187215664401543e-06,
+            0.0038078578358207806,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.018493656428740797,
+            0.004030596611308396,
+            -9.531991789486899
+          ],
+          [
+            -0.000536567251662242,
+            0.14599659504035628,
+            -22.14044839253789
+          ],
+          [
+            -0.00019682190698440933,
+            0.0022528246117515687,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 161,
+          "radial_rmse_m": 0.1551084612263449,
+          "median_abs_radial_error_m": 0.07881086563933004,
+          "p95_abs_radial_error_m": 0.2726998239504248,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 55,
+          "radial_rmse_m": 0.1733859137037456,
+          "median_abs_radial_error_m": 0.08905329225559244,
+          "p95_abs_radial_error_m": 0.25362545924066104,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 114,
+          "radial_rmse_m": 0.10913600675157795,
+          "median_abs_radial_error_m": 0.07398355152397523,
+          "p95_abs_radial_error_m": 0.21041661487942426,
+          "angular_bins": 12
+        },
+        "middle_frame_ring_check": {
+          "count": 150,
+          "radial_rmse_m": 0.09709380626572262,
+          "median_abs_radial_error_m": 0.06485143469627158,
+          "p95_abs_radial_error_m": 0.19839200189547793,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.8047405462120465,
+          "p90_normal_error_px": 2.0616347836780675,
+          "rings_supported": 3,
+          "status": "insufficient_or_inconsistent_ring_evidence",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.3334,
+          6.3796,
+          6.4269
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 67,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [],
+      "conditional_plane_H": null,
+      "cap_center_plane_projections": [],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S70",
+      "sample_times_s": [
+        3485.7,
+        3490.7,
+        3495.7
+      ],
+      "status": "abstain_geometry_checks_failed",
+      "middle_frame_fit": {
+        "status": "abstain_geometry_checks_failed",
+        "initial_H": [
+          [
+            0.021657919991884846,
+            0.0011469278186646962,
+            -10.744593317904872
+          ],
+          [
+            -0.000652709069231472,
+            0.2191183101579592,
+            -33.45305406655984
+          ],
+          [
+            8.565279888768805e-06,
+            0.0036742171978327606,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.020363665900433387,
+            0.0015380582149933453,
+            -10.203726583939142
+          ],
+          [
+            -0.00011857969700422395,
+            0.18304807253114722,
+            -28.063420206770445
+          ],
+          [
+            -2.2130228294464668e-06,
+            0.0034062058176265457,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 130,
+          "radial_rmse_m": 0.07794943794073737,
+          "median_abs_radial_error_m": 0.03326685637481397,
+          "p95_abs_radial_error_m": 0.16571654736722666,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 42,
+          "radial_rmse_m": 0.07187668947788513,
+          "median_abs_radial_error_m": 0.03421554765923085,
+          "p95_abs_radial_error_m": 0.13805219676568084,
+          "angular_bins": 11
+        },
+        "withheld_inner_ring": {
+          "count": 26,
+          "radial_rmse_m": 0.10113769761022898,
+          "median_abs_radial_error_m": 0.0763277574702248,
+          "p95_abs_radial_error_m": 0.1757391736565569,
+          "angular_bins": 7
+        },
+        "middle_frame_ring_check": {
+          "count": 103,
+          "radial_rmse_m": 0.08458912797278736,
+          "median_abs_radial_error_m": 0.033622161516511095,
+          "p95_abs_radial_error_m": 0.17205670987386013,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.44141918013850967,
+          "p90_normal_error_px": 1.5874652090000823,
+          "rings_supported": 3,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.4011,
+          6.3957,
+          6.3903
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 14,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [],
+      "conditional_plane_H": null,
+      "cap_center_plane_projections": [],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S72",
+      "sample_times_s": [
+        3624.108,
+        3629.108,
+        3634.108
+      ],
+      "status": "abstain_geometry_checks_failed",
+      "middle_frame_fit": {
+        "status": "abstain_geometry_checks_failed",
+        "initial_H": [
+          [
+            0.021972413530651793,
+            0.0011764628246963482,
+            -10.937504451512183
+          ],
+          [
+            -0.0006621870239494135,
+            0.22476091512999247,
+            -34.21568965474782
+          ],
+          [
+            8.689655876110043e-06,
+            0.003768833463419492,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.020727210147896354,
+            0.003080090272768637,
+            -10.621582237398874
+          ],
+          [
+            -0.0001388482362370498,
+            0.1870323622634803,
+            -28.67947997988536
+          ],
+          [
+            -5.454591754922112e-05,
+            0.003689494493295396,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 139,
+          "radial_rmse_m": 0.13011630504287788,
+          "median_abs_radial_error_m": 0.03626537623633452,
+          "p95_abs_radial_error_m": 0.2098286183991844,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 47,
+          "radial_rmse_m": 0.09847408318931268,
+          "median_abs_radial_error_m": 0.04234094506613428,
+          "p95_abs_radial_error_m": 0.19849475165692804,
+          "angular_bins": 11
+        },
+        "withheld_inner_ring": {
+          "count": 27,
+          "radial_rmse_m": 0.17282444962261184,
+          "median_abs_radial_error_m": 0.10334467671800107,
+          "p95_abs_radial_error_m": 0.3609710520544886,
+          "angular_bins": 8
+        },
+        "middle_frame_ring_check": {
+          "count": 102,
+          "radial_rmse_m": 0.09155427918876158,
+          "median_abs_radial_error_m": 0.03601156923430693,
+          "p95_abs_radial_error_m": 0.19898587010525529,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.5953609697100374,
+          "p90_normal_error_px": 1.7412813490800756,
+          "rings_supported": 3,
+          "status": "insufficient_or_inconsistent_ring_evidence",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.3867,
+          6.3974,
+          6.4081
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 12,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [],
+      "conditional_plane_H": null,
+      "cap_center_plane_projections": [],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S73",
+      "sample_times_s": [
+        3664.0,
+        3669.0,
+        3674.0
+      ],
+      "status": "abstain_geometry_checks_failed",
+      "middle_frame_fit": {
+        "status": "abstain_geometry_checks_failed",
+        "initial_H": [
+          [
+            0.021784249927066963,
+            0.0011734023219615959,
+            -10.875926584928765
+          ],
+          [
+            -0.0006565162997706783,
+            0.2241762120854247,
+            -34.14822162235582
+          ],
+          [
+            8.615240884726416e-06,
+            0.003759029052366726,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.021515365729179354,
+            0.0018095609998531928,
+            -10.789632890345624
+          ],
+          [
+            0.0001692480734482273,
+            0.1923523347216551,
+            -29.632017798586663
+          ],
+          [
+            9.720416712325682e-05,
+            0.0035909195291277465,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 145,
+          "radial_rmse_m": 0.08549297118505095,
+          "median_abs_radial_error_m": 0.03340562859195151,
+          "p95_abs_radial_error_m": 0.19647153394619138,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 47,
+          "radial_rmse_m": 0.10624230054509752,
+          "median_abs_radial_error_m": 0.029220519690674962,
+          "p95_abs_radial_error_m": 0.21885609741816447,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 56,
+          "radial_rmse_m": 0.18896423398912315,
+          "median_abs_radial_error_m": 0.049733203206032306,
+          "p95_abs_radial_error_m": 0.43958298270844953,
+          "angular_bins": 10
+        },
+        "middle_frame_ring_check": {
+          "count": 110,
+          "radial_rmse_m": 0.06958204295538296,
+          "median_abs_radial_error_m": 0.03560893810711613,
+          "p95_abs_radial_error_m": 0.15008800771921432,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.6083440406255816,
+          "p90_normal_error_px": 1.4318403785927254,
+          "rings_supported": 3,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.4178,
+          6.3952,
+          6.3729
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 13,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [],
+      "conditional_plane_H": null,
+      "cap_center_plane_projections": [],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S78",
+      "sample_times_s": [
+        3918.662,
+        3923.662,
+        3928.662
+      ],
+      "status": "abstain_geometry_checks_failed",
+      "middle_frame_fit": {
+        "status": "abstain_geometry_checks_failed",
+        "initial_H": [
+          [
+            0.021767348059273373,
+            0.0011389526058437262,
+            -10.840492033640574
+          ],
+          [
+            -0.0006560069247983837,
+            0.21759466139119063,
+            -33.16727951270836
+          ],
+          [
+            8.60855652961063e-06,
+            0.0036486683676218933,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.01925859703149375,
+            0.0021254318795822283,
+            -9.763986035652726
+          ],
+          [
+            -0.00011886363693906212,
+            0.17088115210105,
+            -26.221533580206934
+          ],
+          [
+            -1.694332266166082e-05,
+            0.0028813552851353324,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 142,
+          "radial_rmse_m": 0.09456327904383283,
+          "median_abs_radial_error_m": 0.03379594682842568,
+          "p95_abs_radial_error_m": 0.17251660578566028,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 50,
+          "radial_rmse_m": 0.11002180795202963,
+          "median_abs_radial_error_m": 0.03299802002958063,
+          "p95_abs_radial_error_m": 0.24118841147322723,
+          "angular_bins": 11
+        },
+        "withheld_inner_ring": {
+          "count": 66,
+          "radial_rmse_m": 0.11505981565934595,
+          "median_abs_radial_error_m": 0.050848067876439085,
+          "p95_abs_radial_error_m": 0.28116982545041524,
+          "angular_bins": 9
+        },
+        "middle_frame_ring_check": {
+          "count": 126,
+          "radial_rmse_m": 0.08061899272495394,
+          "median_abs_radial_error_m": 0.030535948463552787,
+          "p95_abs_radial_error_m": 0.16698473636346267,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.5025097878150392,
+          "p90_normal_error_px": 1.735969511826477,
+          "rings_supported": 3,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.3979,
+          6.3973,
+          6.3967
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 12,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [],
+      "conditional_plane_H": null,
+      "cap_center_plane_projections": [],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S85",
+      "sample_times_s": [
+        4649.662,
+        4654.662,
+        4659.662
+      ],
+      "status": "abstain_geometry_checks_failed",
+      "middle_frame_fit": {
+        "status": "abstain_geometry_checks_failed",
+        "initial_H": [
+          [
+            0.022894532058045782,
+            0.0013547301756079932,
+            -11.404950448380378
+          ],
+          [
+            -0.0006899770945546215,
+            0.25881854286594963,
+            -39.34003752010273
+          ],
+          [
+            9.054335553600233e-06,
+            0.004339918195930581,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.02195741316934938,
+            0.0016339711869800138,
+            -10.989474901583709
+          ],
+          [
+            0.0004938973062477012,
+            0.19368969081234896,
+            -29.973716033332206
+          ],
+          [
+            0.0001791760568238056,
+            0.003485224797829495,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 167,
+          "radial_rmse_m": 0.0945316764361295,
+          "median_abs_radial_error_m": 0.039293464737547135,
+          "p95_abs_radial_error_m": 0.21167787290951476,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 58,
+          "radial_rmse_m": 0.13726677083247207,
+          "median_abs_radial_error_m": 0.042183049447048204,
+          "p95_abs_radial_error_m": 0.263649819773736,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 111,
+          "radial_rmse_m": 0.1124505207192996,
+          "median_abs_radial_error_m": 0.03807682395835099,
+          "p95_abs_radial_error_m": 0.16109797520161626,
+          "angular_bins": 12
+        },
+        "middle_frame_ring_check": {
+          "count": 166,
+          "radial_rmse_m": 0.06897050825586623,
+          "median_abs_radial_error_m": 0.03475107482785472,
+          "p95_abs_radial_error_m": 0.1397385941293796,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.5669061592040217,
+          "p90_normal_error_px": 1.294231044426827,
+          "rings_supported": 3,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.4228,
+          6.3905,
+          6.3588
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 16,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [],
+      "conditional_plane_H": null,
+      "cap_center_plane_projections": [],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S89",
+      "sample_times_s": [
+        4867.9,
+        4872.9,
+        4877.9
+      ],
+      "status": "abstain_geometry_checks_failed",
+      "middle_frame_fit": {
+        "status": "abstain_geometry_checks_failed",
+        "initial_H": [
+          [
+            0.02220562948186364,
+            0.0011398202139597218,
+            -11.003004339676949
+          ],
+          [
+            -0.0006692154997449865,
+            0.2177604162200147,
+            -33.188080545449665
+          ],
+          [
+            8.781888181770211e-06,
+            0.003651447775888826,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.021305187170994732,
+            -0.0011991975447912656,
+            -10.20899304622259
+          ],
+          [
+            -1.3636195512806184e-05,
+            0.18709713231239505,
+            -28.702476918986772
+          ],
+          [
+            0.0001639366526942241,
+            0.00322660297282955,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 172,
+          "radial_rmse_m": 0.12481741441741151,
+          "median_abs_radial_error_m": 0.04964165394574427,
+          "p95_abs_radial_error_m": 0.25360992139725,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 57,
+          "radial_rmse_m": 0.1655357839681832,
+          "median_abs_radial_error_m": 0.04788899874360264,
+          "p95_abs_radial_error_m": 0.49330531073930634,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 111,
+          "radial_rmse_m": 0.12076725279863341,
+          "median_abs_radial_error_m": 0.06437571232125228,
+          "p95_abs_radial_error_m": 0.20993802667405617,
+          "angular_bins": 12
+        },
+        "middle_frame_ring_check": {
+          "count": 163,
+          "radial_rmse_m": 0.08107444523061347,
+          "median_abs_radial_error_m": 0.04303860048863206,
+          "p95_abs_radial_error_m": 0.1489565776153548,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.6301020041385756,
+          "p90_normal_error_px": 1.7369717598576453,
+          "rings_supported": 3,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.4524,
+          6.3979,
+          6.3444
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 14,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [],
+      "conditional_plane_H": null,
+      "cap_center_plane_projections": [],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S91",
+      "sample_times_s": [
+        4967.743,
+        4972.743,
+        4977.743
+      ],
+      "status": "abstain_geometry_checks_failed",
+      "middle_frame_fit": {
+        "status": "abstain_geometry_checks_failed",
+        "initial_H": [
+          [
+            0.022386087119515185,
+            0.001190852604252923,
+            -11.127839219576611
+          ],
+          [
+            -0.0006746539876861823,
+            0.2275100542899905,
+            -34.6143697021075
+          ],
+          [
+            8.853255615721882e-06,
+            0.0038149315479365665,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.0171863454208523,
+            0.0050836380897072726,
+            -9.274801243895238
+          ],
+          [
+            -0.0006243024036873916,
+            0.15048445612715922,
+            -22.80226338142806
+          ],
+          [
+            -0.00029060046050205106,
+            0.0026339208226667183,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 172,
+          "radial_rmse_m": 0.1317984699837749,
+          "median_abs_radial_error_m": 0.034831431672167956,
+          "p95_abs_radial_error_m": 0.28711931213660247,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 55,
+          "radial_rmse_m": 0.16387731996160812,
+          "median_abs_radial_error_m": 0.03297031360878799,
+          "p95_abs_radial_error_m": 0.3458684231994765,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 111,
+          "radial_rmse_m": 0.12217868242051849,
+          "median_abs_radial_error_m": 0.06960146917665488,
+          "p95_abs_radial_error_m": 0.1894550629820871,
+          "angular_bins": 12
+        },
+        "middle_frame_ring_check": {
+          "count": 157,
+          "radial_rmse_m": 0.08063683631025821,
+          "median_abs_radial_error_m": 0.03693907116474948,
+          "p95_abs_radial_error_m": 0.15408122806375585,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.6568806800254522,
+          "p90_normal_error_px": 2.0328646173615206,
+          "rings_supported": 3,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.3228,
+          6.3996,
+          6.4793
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 15,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [],
+      "conditional_plane_H": null,
+      "cap_center_plane_projections": [],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S92",
+      "sample_times_s": [
+        5010.231,
+        5015.231,
+        5020.231
+      ],
+      "status": "abstain_geometry_checks_failed",
+      "middle_frame_fit": {
+        "status": "abstain_geometry_checks_failed",
+        "initial_H": [
+          [
+            0.022239879094939467,
+            0.0012268386586612118,
+            -11.069557321743558
+          ],
+          [
+            -0.0006702476871886854,
+            0.2343851194012169,
+            -35.56921834408111
+          ],
+          [
+            8.795433227748144e-06,
+            0.003930213937845827,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.02327610837690534,
+            0.0012915564505099413,
+            -11.588414982249327
+          ],
+          [
+            -0.00016192376798872265,
+            0.21254107119167734,
+            -32.49465774409083
+          ],
+          [
+            3.512900347439572e-05,
+            0.004691261495635686,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 164,
+          "radial_rmse_m": 0.14083918552963196,
+          "median_abs_radial_error_m": 0.04429359892298623,
+          "p95_abs_radial_error_m": 0.3220289918987304,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 58,
+          "radial_rmse_m": 0.174746768397608,
+          "median_abs_radial_error_m": 0.03748390764842524,
+          "p95_abs_radial_error_m": 0.42917922235378686,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 113,
+          "radial_rmse_m": 0.12217579567116865,
+          "median_abs_radial_error_m": 0.06804285659741027,
+          "p95_abs_radial_error_m": 0.2225052999950732,
+          "angular_bins": 12
+        },
+        "middle_frame_ring_check": {
+          "count": 161,
+          "radial_rmse_m": 0.09033087475308255,
+          "median_abs_radial_error_m": 0.0406236307216028,
+          "p95_abs_radial_error_m": 0.1972305488917051,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.6305213989828362,
+          "p90_normal_error_px": 2.1786698594191773,
+          "rings_supported": 3,
+          "status": "insufficient_or_inconsistent_ring_evidence",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.4046,
+          6.3874,
+          6.3702
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 14,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [],
+      "conditional_plane_H": null,
+      "cap_center_plane_projections": [],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S93",
+      "sample_times_s": [
+        5076.545,
+        5081.545,
+        5086.545
+      ],
+      "status": "abstain_geometry_checks_failed",
+      "middle_frame_fit": {
+        "status": "abstain_geometry_checks_failed",
+        "initial_H": [
+          [
+            0.022257640818385275,
+            0.0011443350099349541,
+            -11.038230248433399
+          ],
+          [
+            -0.0006707829758028555,
+            0.21862295913570803,
+            -33.30209250572192
+          ],
+          [
+            8.802457638803187e-06,
+            0.0036659110583613158,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.021999744740296447,
+            0.0002813210811974495,
+            -10.800915626434945
+          ],
+          [
+            -5.9860506643451204e-05,
+            0.19622384774101184,
+            -30.03830490741248
+          ],
+          [
+            7.507572857654989e-05,
+            0.003870860970153785,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 167,
+          "radial_rmse_m": 0.13145428596066322,
+          "median_abs_radial_error_m": 0.043581210122799474,
+          "p95_abs_radial_error_m": 0.3030572961402895,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 56,
+          "radial_rmse_m": 0.16257958495018332,
+          "median_abs_radial_error_m": 0.04113667205750371,
+          "p95_abs_radial_error_m": 0.3869549803762175,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 112,
+          "radial_rmse_m": 0.12528724978387812,
+          "median_abs_radial_error_m": 0.04330894456986478,
+          "p95_abs_radial_error_m": 0.2036528450544343,
+          "angular_bins": 12
+        },
+        "middle_frame_ring_check": {
+          "count": 164,
+          "radial_rmse_m": 0.08729280292739514,
+          "median_abs_radial_error_m": 0.03489712050344107,
+          "p95_abs_radial_error_m": 0.1951625435812683,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.6460942479533502,
+          "p90_normal_error_px": 1.8445851738576693,
+          "rings_supported": 3,
+          "status": "insufficient_or_inconsistent_ring_evidence",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.4193,
+          6.3932,
+          6.3672
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 13,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [],
+      "conditional_plane_H": null,
+      "cap_center_plane_projections": [],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S94",
+      "sample_times_s": [
+        5129.9,
+        5134.9,
+        5139.9
+      ],
+      "status": "abstain_geometry_checks_failed",
+      "middle_frame_fit": {
+        "status": "abstain_geometry_checks_failed",
+        "initial_H": [
+          [
+            0.022424727752692546,
+            0.0012401885983584517,
+            -11.173588391306257
+          ],
+          [
+            -0.0006758185081814635,
+            0.23693559919564328,
+            -36.047785059089996
+          ],
+          [
+            8.868537223483264e-06,
+            0.003972980864610874,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.018356698030347576,
+            0.004162581571183025,
+            -9.74184624926317
+          ],
+          [
+            -0.0007899274345183745,
+            0.16074119047216437,
+            -24.262056212977832
+          ],
+          [
+            -0.0002894791936996515,
+            0.003118874393817404,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 161,
+          "radial_rmse_m": 0.14242234837227064,
+          "median_abs_radial_error_m": 0.044881718805358295,
+          "p95_abs_radial_error_m": 0.3721306079955917,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 54,
+          "radial_rmse_m": 0.13637313966470518,
+          "median_abs_radial_error_m": 0.05111423841005436,
+          "p95_abs_radial_error_m": 0.2285859930380072,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 104,
+          "radial_rmse_m": 0.14394589462433574,
+          "median_abs_radial_error_m": 0.08469999736629713,
+          "p95_abs_radial_error_m": 0.3451396560240646,
+          "angular_bins": 11
+        },
+        "middle_frame_ring_check": {
+          "count": 152,
+          "radial_rmse_m": 0.08760086071911657,
+          "median_abs_radial_error_m": 0.04983498230408717,
+          "p95_abs_radial_error_m": 0.17695581945704247,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.7902490543381355,
+          "p90_normal_error_px": 2.3120122504624607,
+          "rings_supported": 3,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.3291,
+          6.3906,
+          6.4542
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 14,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [],
+      "conditional_plane_H": null,
+      "cap_center_plane_projections": [],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S99",
+      "sample_times_s": [
+        5385.501,
+        5390.501,
+        5395.501
+      ],
+      "status": "abstain_temporal_geometry_change",
+      "middle_frame_fit": {
+        "status": "conditional_image_evidence_supported",
+        "initial_H": [
+          [
+            0.022943785417628763,
+            0.001252948828358785,
+            -11.411202018140195
+          ],
+          [
+            -0.0006914614529095318,
+            0.23937341610913934,
+            -36.32056616018614
+          ],
+          [
+            9.073814285188883e-06,
+            0.004013858638915896,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.01935225969999091,
+            0.0040440466008556854,
+            -10.118535657080255
+          ],
+          [
+            -0.00014621583762464239,
+            0.17255718557280827,
+            -26.392666322419608
+          ],
+          [
+            -0.00010635783213613459,
+            0.003212083102543493,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 164,
+          "radial_rmse_m": 0.11277022466648905,
+          "median_abs_radial_error_m": 0.04643971017795179,
+          "p95_abs_radial_error_m": 0.24713603004086201,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 57,
+          "radial_rmse_m": 0.13589290829598913,
+          "median_abs_radial_error_m": 0.049376371148924125,
+          "p95_abs_radial_error_m": 0.22015820745254375,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 112,
+          "radial_rmse_m": 0.08474462365950915,
+          "median_abs_radial_error_m": 0.04990373377112256,
+          "p95_abs_radial_error_m": 0.1713962139186121,
+          "angular_bins": 12
+        },
+        "middle_frame_ring_check": {
+          "count": 162,
+          "radial_rmse_m": 0.08100332800103045,
+          "median_abs_radial_error_m": 0.035921703618278844,
+          "p95_abs_radial_error_m": 0.1755234607758877,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.5485484073030966,
+          "p90_normal_error_px": 1.7826812687999831,
+          "rings_supported": 3,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.369,
+          6.3983,
+          6.4279
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 14,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.17911225060977654,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3983,
+          "passes": true
+        },
+        {
+          "ring_status": "insufficient_or_inconsistent_ring_evidence",
+          "ring_p95_abs_radial_error_m": 0.18839640832653143,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3983,
+          "passes": false
+        }
+      ],
+      "conditional_plane_H": null,
+      "cap_center_plane_projections": [],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S103",
+      "sample_times_s": [
+        5559.419,
+        5564.419,
+        5569.419
+      ],
+      "status": "conditional_image_evidence_supported",
+      "middle_frame_fit": {
+        "status": "conditional_image_evidence_supported",
+        "initial_H": [
+          [
+            0.023178774478511965,
+            0.0012657819074548837,
+            -11.534943292634447
+          ],
+          [
+            -0.0006985433652661258,
+            0.2418251506994943,
+            -36.89108764173118
+          ],
+          [
+            9.16674782072774e-06,
+            0.004054969787454372,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.02040267549191171,
+            0.0022840671149759245,
+            -10.348340078772155
+          ],
+          [
+            -7.233694680641836e-05,
+            0.18220415991229943,
+            -27.93653574348377
+          ],
+          [
+            -1.4274735809370508e-05,
+            0.003409660117084405,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 167,
+          "radial_rmse_m": 0.11833445800057536,
+          "median_abs_radial_error_m": 0.04512885297665181,
+          "p95_abs_radial_error_m": 0.3022700333862238,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 56,
+          "radial_rmse_m": 0.13424475287900983,
+          "median_abs_radial_error_m": 0.05448503983225117,
+          "p95_abs_radial_error_m": 0.20684762095731662,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 107,
+          "radial_rmse_m": 0.09190359249347305,
+          "median_abs_radial_error_m": 0.05211175802659718,
+          "p95_abs_radial_error_m": 0.1821480430604346,
+          "angular_bins": 12
+        },
+        "middle_frame_ring_check": {
+          "count": 168,
+          "radial_rmse_m": 0.08098308495254355,
+          "median_abs_radial_error_m": 0.04246621145750884,
+          "p95_abs_radial_error_m": 0.16636026289653952,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.6356367813715342,
+          "p90_normal_error_px": 1.7012963561409338,
+          "rings_supported": 3,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.3959,
+          6.3969,
+          6.3979
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 15,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.1477936550311287,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3969,
+          "passes": true
+        },
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.1747289705087275,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3969,
+          "passes": true
+        }
+      ],
+      "conditional_plane_H": [
+        [
+          0.02040267549191171,
+          0.0022840671149759245,
+          -10.348340078772155
+        ],
+        [
+          -7.233694680641836e-05,
+          0.18220415991229943,
+          -27.93653574348377
+        ],
+        [
+          -1.4274735809370508e-05,
+          0.003409660117084405,
+          1.0
+        ]
+      ],
+      "cap_center_plane_projections": [
+        {
+          "local_observation_id": "C01",
+          "colour": "red",
+          "cap_pixel_center": [
+            447.0,
+            164.5
+          ],
+          "cap_center_projected_as_if_on_ice_plane_m": [
+            -0.5485,
+            1.289
+          ],
+          "stone_ground_contact_position_verified": false,
+          "physical_stone_identity_verified": false
+        },
+        {
+          "local_observation_id": "C02",
+          "colour": "yellow",
+          "cap_pixel_center": [
+            460.0,
+            161.0
+          ],
+          "cap_center_projected_as_if_on_ice_plane_m": [
+            -0.386,
+            0.885
+          ],
+          "stone_ground_contact_position_verified": false,
+          "physical_stone_identity_verified": false
+        }
+      ],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S104",
+      "sample_times_s": [
+        5589.517,
+        5594.517,
+        5599.517
+      ],
+      "status": "abstain_geometry_checks_failed",
+      "middle_frame_fit": {
+        "status": "abstain_geometry_checks_failed",
+        "initial_H": [
+          [
+            0.022204258911657854,
+            0.0011871518323731875,
+            -11.08118300855655
+          ],
+          [
+            -0.0006691741945964002,
+            0.22680302908110525,
+            -34.607429038407524
+          ],
+          [
+            8.781346148305124e-06,
+            0.0038030760157361093,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.020541764433000678,
+            0.0025445476917534742,
+            -10.447193883756801
+          ],
+          [
+            -0.000267565540548421,
+            0.18734981805034379,
+            -28.63725213639193
+          ],
+          [
+            -6.573022748084015e-05,
+            0.003750228446889973,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 167,
+          "radial_rmse_m": 0.11477429951252809,
+          "median_abs_radial_error_m": 0.04240717369600411,
+          "p95_abs_radial_error_m": 0.25148043354785327,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 57,
+          "radial_rmse_m": 0.11860896442234364,
+          "median_abs_radial_error_m": 0.04730355306589229,
+          "p95_abs_radial_error_m": 0.22240446459592966,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 103,
+          "radial_rmse_m": 0.11127606146930276,
+          "median_abs_radial_error_m": 0.03787180897192943,
+          "p95_abs_radial_error_m": 0.2600793331441726,
+          "angular_bins": 12
+        },
+        "middle_frame_ring_check": {
+          "count": 168,
+          "radial_rmse_m": 0.10384218053406895,
+          "median_abs_radial_error_m": 0.036496970702078246,
+          "p95_abs_radial_error_m": 0.2551820505174139,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.6109577715574781,
+          "p90_normal_error_px": 2.2206405290342315,
+          "rings_supported": 3,
+          "status": "insufficient_or_inconsistent_ring_evidence",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.389,
+          6.3968,
+          6.4046
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 13,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [],
+      "conditional_plane_H": null,
+      "cap_center_plane_projections": [],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S107",
+      "sample_times_s": [
+        5718.867,
+        5723.867,
+        5728.867
+      ],
+      "status": "abstain_geometry_checks_failed",
+      "middle_frame_fit": {
+        "status": "abstain_geometry_checks_failed",
+        "initial_H": [
+          [
+            0.02279560163265469,
+            0.0013500293685511883,
+            -11.331503774959263
+          ],
+          [
+            -0.0006869956085254974,
+            0.2579204628979662,
+            -39.26125635672252
+          ],
+          [
+            9.015210522973692e-06,
+            0.004324859021455316,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.021299922037841364,
+            0.0022487120937281025,
+            -10.77670212961761
+          ],
+          [
+            -0.00016699668767183637,
+            0.19308285659501853,
+            -29.546953186436323
+          ],
+          [
+            -2.9889114511448905e-05,
+            0.003938805781601206,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 170,
+          "radial_rmse_m": 0.11077897662042639,
+          "median_abs_radial_error_m": 0.04468716015252017,
+          "p95_abs_radial_error_m": 0.238770836090077,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 58,
+          "radial_rmse_m": 0.12382152946528874,
+          "median_abs_radial_error_m": 0.03233265693540621,
+          "p95_abs_radial_error_m": 0.2676671167781814,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 105,
+          "radial_rmse_m": 0.13751083545585455,
+          "median_abs_radial_error_m": 0.03385904093359471,
+          "p95_abs_radial_error_m": 0.4157260901653977,
+          "angular_bins": 12
+        },
+        "middle_frame_ring_check": {
+          "count": 168,
+          "radial_rmse_m": 0.07887649417221239,
+          "median_abs_radial_error_m": 0.03442405954870564,
+          "p95_abs_radial_error_m": 0.1722259043525046,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.5652946834230979,
+          "p90_normal_error_px": 1.6753006135961286,
+          "rings_supported": 3,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.3934,
+          6.3946,
+          6.3958
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 13,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [],
+      "conditional_plane_H": null,
+      "cap_center_plane_projections": [],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S109",
+      "sample_times_s": [
+        5746.179,
+        5751.179,
+        5756.179
+      ],
+      "status": "abstain_geometry_checks_failed",
+      "middle_frame_fit": {
+        "status": "abstain_geometry_checks_failed",
+        "initial_H": [
+          [
+            0.022424795531481984,
+            0.0012483871485412974,
+            -11.127081267218516
+          ],
+          [
+            -0.0006758205508444054,
+            0.23850191612734162,
+            -36.34883942995011
+          ],
+          [
+            8.86856402865672e-06,
+            0.003999245162667728,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.023057292881702947,
+            0.00045100743244293277,
+            -11.346675781171779
+          ],
+          [
+            -6.74387610913066e-05,
+            0.2088156553460124,
+            -32.00772344117748
+          ],
+          [
+            8.067569743931737e-05,
+            0.004385840909300977,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 171,
+          "radial_rmse_m": 0.146092827972407,
+          "median_abs_radial_error_m": 0.04522379739314353,
+          "p95_abs_radial_error_m": 0.28328287134312813,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 59,
+          "radial_rmse_m": 0.1558387940020917,
+          "median_abs_radial_error_m": 0.04918931942050819,
+          "p95_abs_radial_error_m": 0.21575878949668445,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 99,
+          "radial_rmse_m": 0.16557374677870743,
+          "median_abs_radial_error_m": 0.05783581579401853,
+          "p95_abs_radial_error_m": 0.4364696205180002,
+          "angular_bins": 12
+        },
+        "middle_frame_ring_check": {
+          "count": 161,
+          "radial_rmse_m": 0.09801189960570265,
+          "median_abs_radial_error_m": 0.04312539354330902,
+          "p95_abs_radial_error_m": 0.2226066350702255,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.5619169573417544,
+          "p90_normal_error_px": 2.003680489751207,
+          "rings_supported": 3,
+          "status": "insufficient_or_inconsistent_ring_evidence",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.4195,
+          6.3929,
+          6.3665
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 13,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [],
+      "conditional_plane_H": null,
+      "cap_center_plane_projections": [],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S110",
+      "sample_times_s": [
+        5872.693,
+        5877.693,
+        5882.693
+      ],
+      "status": "abstain_fit_did_not_converge",
+      "middle_frame_fit": {
+        "status": "abstain_fit_did_not_converge",
+        "optimizer_message": "The maximum number of function evaluations is exceeded."
+      },
+      "first_and_last_frame_checks": [],
+      "conditional_plane_H": null,
+      "cap_center_plane_projections": [],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S116",
+      "sample_times_s": [
+        6211.425,
+        6216.425,
+        6221.425
+      ],
+      "status": "abstain_temporal_geometry_change",
+      "middle_frame_fit": {
+        "status": "conditional_image_evidence_supported",
+        "initial_H": [
+          [
+            0.02193789139138333,
+            0.0011664918369942775,
+            -10.929430436391971
+          ],
+          [
+            -0.000661146623329306,
+            0.22285597748672634,
+            -34.00475382763726
+          ],
+          [
+            8.676003051401843e-06,
+            0.003736891109333967,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.02047163785762149,
+            0.0013191471004457447,
+            -10.219817982341239
+          ],
+          [
+            -1.531198625318666e-05,
+            0.18260513903976758,
+            -28.070856942688675
+          ],
+          [
+            5.0623362896342154e-05,
+            0.003248488376332274,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 153,
+          "radial_rmse_m": 0.09125360336006333,
+          "median_abs_radial_error_m": 0.04162707302944835,
+          "p95_abs_radial_error_m": 0.1846357607642706,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 51,
+          "radial_rmse_m": 0.07962899402183055,
+          "median_abs_radial_error_m": 0.038174155793094355,
+          "p95_abs_radial_error_m": 0.1652022392556599,
+          "angular_bins": 11
+        },
+        "withheld_inner_ring": {
+          "count": 66,
+          "radial_rmse_m": 0.0944431251488548,
+          "median_abs_radial_error_m": 0.05317347518788457,
+          "p95_abs_radial_error_m": 0.16813636859858622,
+          "angular_bins": 10
+        },
+        "middle_frame_ring_check": {
+          "count": 129,
+          "radial_rmse_m": 0.07971125761684891,
+          "median_abs_radial_error_m": 0.041417842999169396,
+          "p95_abs_radial_error_m": 0.16512710315643075,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.5207510665627811,
+          "p90_normal_error_px": 1.5851632881459292,
+          "rings_supported": 3,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.4127,
+          6.3949,
+          6.3772
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 12,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [
+        {
+          "ring_status": "insufficient_or_inconsistent_ring_evidence",
+          "ring_p95_abs_radial_error_m": 0.2021619345986548,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3949,
+          "passes": false
+        },
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.13361714007750486,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3949,
+          "passes": true
+        }
+      ],
+      "conditional_plane_H": null,
+      "cap_center_plane_projections": [],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S119",
+      "sample_times_s": [
+        6472.65,
+        6477.65,
+        6482.65
+      ],
+      "status": "abstain_geometry_checks_failed",
+      "middle_frame_fit": {
+        "status": "abstain_geometry_checks_failed",
+        "initial_H": [
+          [
+            0.0218004523247399,
+            0.0011627874313021504,
+            -10.864992807982311
+          ],
+          [
+            -0.0006570045946719609,
+            0.22214825804511107,
+            -33.88936364251906
+          ],
+          [
+            8.62164861321511e-06,
+            0.00372502393610801,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.019257154927119283,
+            0.0035498445830310687,
+            -9.971693029592812
+          ],
+          [
+            -3.798350632286391e-05,
+            0.17203936500158476,
+            -26.453285790925833
+          ],
+          [
+            -5.182503164808373e-05,
+            0.0030041410592641384,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 126,
+          "radial_rmse_m": 0.11656403079266905,
+          "median_abs_radial_error_m": 0.040107403486956184,
+          "p95_abs_radial_error_m": 0.19496270388149256,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 45,
+          "radial_rmse_m": 0.11735128743027555,
+          "median_abs_radial_error_m": 0.029590955070686986,
+          "p95_abs_radial_error_m": 0.24380373718460133,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 39,
+          "radial_rmse_m": 0.2581963694685382,
+          "median_abs_radial_error_m": 0.08713160180953083,
+          "p95_abs_radial_error_m": 0.534628998467498,
+          "angular_bins": 9
+        },
+        "middle_frame_ring_check": {
+          "count": 100,
+          "radial_rmse_m": 0.08201527332943542,
+          "median_abs_radial_error_m": 0.04170889021850688,
+          "p95_abs_radial_error_m": 0.17312178636706615,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.6275795318481594,
+          "p90_normal_error_px": 1.6274055705113761,
+          "rings_supported": 3,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.3791,
+          6.3954,
+          6.4118
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 12,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [],
+      "conditional_plane_H": null,
+      "cap_center_plane_projections": [],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S134",
+      "sample_times_s": [
+        7129.623,
+        7134.623,
+        7139.623
+      ],
+      "status": "conditional_image_evidence_supported",
+      "middle_frame_fit": {
+        "status": "conditional_image_evidence_supported",
+        "initial_H": [
+          [
+            0.022804071930129816,
+            0.0012877692036467644,
+            -11.359847482658493
+          ],
+          [
+            -0.0006872508795756802,
+            0.24602578051080756,
+            -37.35792909311246
+          ],
+          [
+            9.018560358444632e-06,
+            0.004125406741277766,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.02076573117397024,
+            0.001930262596689763,
+            -10.458475720676718
+          ],
+          [
+            7.689232271815844e-05,
+            0.18603887128798569,
+            -28.658534181042572
+          ],
+          [
+            3.7337810354839646e-05,
+            0.0034183882227902117,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 166,
+          "radial_rmse_m": 0.11061713340094362,
+          "median_abs_radial_error_m": 0.03587579354832804,
+          "p95_abs_radial_error_m": 0.22722605798887957,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 56,
+          "radial_rmse_m": 0.07940734688750312,
+          "median_abs_radial_error_m": 0.050963261545479366,
+          "p95_abs_radial_error_m": 0.13730576967903374,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 115,
+          "radial_rmse_m": 0.1269665145901943,
+          "median_abs_radial_error_m": 0.04884246236321177,
+          "p95_abs_radial_error_m": 0.17301640959284414,
+          "angular_bins": 12
+        },
+        "middle_frame_ring_check": {
+          "count": 162,
+          "radial_rmse_m": 0.07608937324359401,
+          "median_abs_radial_error_m": 0.03816285807767761,
+          "p95_abs_radial_error_m": 0.1438026653382886,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.5120174329576479,
+          "p90_normal_error_px": 1.3794170294327959,
+          "rings_supported": 3,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.4041,
+          6.3957,
+          6.3874
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 15,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.14375134941487666,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3957,
+          "passes": true
+        },
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.15699648296640975,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3957,
+          "passes": true
+        }
+      ],
+      "conditional_plane_H": [
+        [
+          0.02076573117397024,
+          0.001930262596689763,
+          -10.458475720676718
+        ],
+        [
+          7.689232271815844e-05,
+          0.18603887128798569,
+          -28.658534181042572
+        ],
+        [
+          3.7337810354839646e-05,
+          0.0034183882227902117,
+          1.0
+        ]
+      ],
+      "cap_center_plane_projections": [
+        {
+          "local_observation_id": "C01",
+          "colour": "red",
+          "cap_pixel_center": [
+            432.5,
+            155.0
+          ],
+          "cap_center_projected_as_if_on_ice_plane_m": [
+            -0.762,
+            0.1363
+          ],
+          "stone_ground_contact_position_verified": false,
+          "physical_stone_identity_verified": false
+        },
+        {
+          "local_observation_id": "C02",
+          "colour": "yellow",
+          "cap_pixel_center": [
+            432.0,
+            165.0
+          ],
+          "cap_center_projected_as_if_on_ice_plane_m": [
+            -0.7399,
+            1.3107
+          ],
+          "stone_ground_contact_position_verified": false,
+          "physical_stone_identity_verified": false
+        }
+      ],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S135",
+      "sample_times_s": [
+        7163.657,
+        7168.657,
+        7173.657
+      ],
+      "status": "conditional_image_evidence_supported",
+      "middle_frame_fit": {
+        "status": "conditional_image_evidence_supported",
+        "initial_H": [
+          [
+            0.022849846177296244,
+            0.0013294986004525756,
+            -11.316715813647486
+          ],
+          [
+            -0.000688630387223412,
+            0.2539980999220202,
+            -38.719408782398325
+          ],
+          [
+            9.036663169740685e-06,
+            0.004259088098468669,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.02070468842008448,
+            0.0008956267654583507,
+            -10.257689103200235
+          ],
+          [
+            -0.00024295317847956166,
+            0.18660617284656156,
+            -28.572427979567365
+          ],
+          [
+            1.2172305391637163e-06,
+            0.0035384801109492117,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 170,
+          "radial_rmse_m": 0.07007410144031816,
+          "median_abs_radial_error_m": 0.034190748623033174,
+          "p95_abs_radial_error_m": 0.13830740852735252,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 57,
+          "radial_rmse_m": 0.09704259661222712,
+          "median_abs_radial_error_m": 0.04362364947056596,
+          "p95_abs_radial_error_m": 0.20855338760435466,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 109,
+          "radial_rmse_m": 0.06022998691069055,
+          "median_abs_radial_error_m": 0.035733219397257265,
+          "p95_abs_radial_error_m": 0.1109505591943268,
+          "angular_bins": 12
+        },
+        "middle_frame_ring_check": {
+          "count": 169,
+          "radial_rmse_m": 0.06238735909129849,
+          "median_abs_radial_error_m": 0.030442324101647822,
+          "p95_abs_radial_error_m": 0.12616048076554426,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.4730429086120205,
+          "p90_normal_error_px": 1.3246119912448688,
+          "rings_supported": 3,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.4084,
+          6.3955,
+          6.3827
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 14,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.147387615001609,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3955,
+          "passes": true
+        },
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.15052655501384443,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3955,
+          "passes": true
+        }
+      ],
+      "conditional_plane_H": [
+        [
+          0.02070468842008448,
+          0.0008956267654583507,
+          -10.257689103200235
+        ],
+        [
+          -0.00024295317847956166,
+          0.18660617284656156,
+          -28.572427979567365
+        ],
+        [
+          1.2172305391637163e-06,
+          0.0035384801109492117,
+          1.0
+        ]
+      ],
+      "cap_center_plane_projections": [
+        {
+          "local_observation_id": "C01",
+          "colour": "red",
+          "cap_pixel_center": [
+            432.0,
+            155.0
+          ],
+          "cap_center_projected_as_if_on_ice_plane_m": [
+            -0.7582,
+            0.1592
+          ],
+          "stone_ground_contact_position_verified": false,
+          "physical_stone_identity_verified": false
+        },
+        {
+          "local_observation_id": "C02",
+          "colour": "yellow",
+          "cap_pixel_center": [
+            432.0,
+            165.0
+          ],
+          "cap_center_projected_as_if_on_ice_plane_m": [
+            -0.7356,
+            1.3334
+          ],
+          "stone_ground_contact_position_verified": false,
+          "physical_stone_identity_verified": false
+        }
+      ],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S138",
+      "sample_times_s": [
+        7258.68,
+        7263.68,
+        7268.68
+      ],
+      "status": "conditional_image_evidence_supported",
+      "middle_frame_fit": {
+        "status": "conditional_image_evidence_supported",
+        "initial_H": [
+          [
+            0.02266201822048867,
+            0.0012087307818531318,
+            -11.290345281838022
+          ],
+          [
+            -0.0006829697784987767,
+            0.23092564505403923,
+            -35.03682933707902
+          ],
+          [
+            8.962380920032714e-06,
+            0.003872204818787276,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.01861021757643032,
+            0.003097189856401972,
+            -9.623484716218496
+          ],
+          [
+            -0.00031434796923688225,
+            0.16361123258397264,
+            -24.998029183510045
+          ],
+          [
+            -0.00012545557120270356,
+            0.0028202909956283797,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 168,
+          "radial_rmse_m": 0.08310883294249787,
+          "median_abs_radial_error_m": 0.043752342295889424,
+          "p95_abs_radial_error_m": 0.1609559292376197,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 56,
+          "radial_rmse_m": 0.06993567324542417,
+          "median_abs_radial_error_m": 0.0434779750991795,
+          "p95_abs_radial_error_m": 0.13440567302833395,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 120,
+          "radial_rmse_m": 0.06485425355418897,
+          "median_abs_radial_error_m": 0.0548354927646762,
+          "p95_abs_radial_error_m": 0.11798810865135508,
+          "angular_bins": 12
+        },
+        "middle_frame_ring_check": {
+          "count": 168,
+          "radial_rmse_m": 0.07003790260735683,
+          "median_abs_radial_error_m": 0.041645990313483594,
+          "p95_abs_radial_error_m": 0.13680037186063845,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.6096488530347417,
+          "p90_normal_error_px": 1.5003087289264534,
+          "rings_supported": 3,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.3662,
+          6.3945,
+          6.4232
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 14,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.15949387626277775,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3945,
+          "passes": true
+        },
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.16431146357179685,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3945,
+          "passes": true
+        }
+      ],
+      "conditional_plane_H": [
+        [
+          0.01861021757643032,
+          0.003097189856401972,
+          -9.623484716218496
+        ],
+        [
+          -0.00031434796923688225,
+          0.16361123258397264,
+          -24.998029183510045
+        ],
+        [
+          -0.00012545557120270356,
+          0.0028202909956283797,
+          1.0
+        ]
+      ],
+      "cap_center_plane_projections": [
+        {
+          "local_observation_id": "C01",
+          "colour": "red",
+          "cap_pixel_center": [
+            433.0,
+            155.0
+          ],
+          "cap_center_projected_as_if_on_ice_plane_m": [
+            -0.7848,
+            0.1631
+          ],
+          "stone_ground_contact_position_verified": false,
+          "physical_stone_identity_verified": false
+        }
+      ],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S139",
+      "sample_times_s": [
+        7300.325,
+        7305.325,
+        7310.325
+      ],
+      "status": "conditional_image_evidence_supported",
+      "middle_frame_fit": {
+        "status": "conditional_image_evidence_supported",
+        "initial_H": [
+          [
+            0.022520927863394276,
+            0.001255014863203072,
+            -11.17819822353086
+          ],
+          [
+            -0.000678717710170372,
+            0.23976812801379493,
+            -36.40452167307192
+          ],
+          [
+            8.906582468539097e-06,
+            0.004020477242661195,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.02224684829833501,
+            -0.0007556434872278087,
+            -10.711919080134326
+          ],
+          [
+            0.0001274552890310228,
+            0.19837276892111444,
+            -30.55154911232682
+          ],
+          [
+            0.00020962043081587165,
+            0.00359224781390168,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 170,
+          "radial_rmse_m": 0.07936104167480378,
+          "median_abs_radial_error_m": 0.044443461621691216,
+          "p95_abs_radial_error_m": 0.17025237467247872,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 53,
+          "radial_rmse_m": 0.05853124250630463,
+          "median_abs_radial_error_m": 0.03288938078619896,
+          "p95_abs_radial_error_m": 0.11071528322817425,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 118,
+          "radial_rmse_m": 0.06306461577025675,
+          "median_abs_radial_error_m": 0.03880930661239723,
+          "p95_abs_radial_error_m": 0.11734898933888573,
+          "angular_bins": 12
+        },
+        "middle_frame_ring_check": {
+          "count": 168,
+          "radial_rmse_m": 0.06709289974026462,
+          "median_abs_radial_error_m": 0.03662831329998811,
+          "p95_abs_radial_error_m": 0.14080909882242645,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.518197689814752,
+          "p90_normal_error_px": 1.4593160534210177,
+          "rings_supported": 3,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.4511,
+          6.3922,
+          6.3345
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 12,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.15082963033820826,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3922,
+          "passes": true
+        },
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.15050006517939835,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3922,
+          "passes": true
+        }
+      ],
+      "conditional_plane_H": [
+        [
+          0.02224684829833501,
+          -0.0007556434872278087,
+          -10.711919080134326
+        ],
+        [
+          0.0001274552890310228,
+          0.19837276892111444,
+          -30.55154911232682
+        ],
+        [
+          0.00020962043081587165,
+          0.00359224781390168,
+          1.0
+        ]
+      ],
+      "cap_center_plane_projections": [
+        {
+          "local_observation_id": "C01",
+          "colour": "red",
+          "cap_pixel_center": [
+            433.0,
+            155.0
+          ],
+          "cap_center_projected_as_if_on_ice_plane_m": [
+            -0.726,
+            0.1526
+          ],
+          "stone_ground_contact_position_verified": false,
+          "physical_stone_identity_verified": false
+        }
+      ],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S140",
+      "sample_times_s": [
+        7351.883,
+        7356.883,
+        7361.883
+      ],
+      "status": "conditional_image_evidence_supported",
+      "middle_frame_fit": {
+        "status": "conditional_image_evidence_supported",
+        "initial_H": [
+          [
+            0.02257035576285622,
+            0.0011687354898608,
+            -11.25402099407186
+          ],
+          [
+            -0.0006802073286685452,
+            0.22328462296614796,
+            -34.03700950964786
+          ],
+          [
+            8.92613022720494e-06,
+            0.003744078717668153,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.020629174844712515,
+            0.0008544574767928621,
+            -10.278993357104133
+          ],
+          [
+            2.9521339197828177e-06,
+            0.1773772059737196,
+            -27.26757215347235
+          ],
+          [
+            6.673210154371355e-05,
+            0.002976919324190722,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 166,
+          "radial_rmse_m": 0.10722269574343793,
+          "median_abs_radial_error_m": 0.049556894228037884,
+          "p95_abs_radial_error_m": 0.17815685467438436,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 56,
+          "radial_rmse_m": 0.08147446599266428,
+          "median_abs_radial_error_m": 0.03919765829921551,
+          "p95_abs_radial_error_m": 0.15639881898132896,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 115,
+          "radial_rmse_m": 0.08442118519173357,
+          "median_abs_radial_error_m": 0.05453146692082633,
+          "p95_abs_radial_error_m": 0.13834116259049353,
+          "angular_bins": 12
+        },
+        "middle_frame_ring_check": {
+          "count": 159,
+          "radial_rmse_m": 0.07319010569869484,
+          "median_abs_radial_error_m": 0.0481941271184787,
+          "p95_abs_radial_error_m": 0.14285269932525435,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.5507266072743734,
+          "p90_normal_error_px": 1.6931586568543766,
+          "rings_supported": 3,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.4266,
+          6.4037,
+          6.3809
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 13,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.15721404206841377,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.4037,
+          "passes": true
+        },
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.15124461391628566,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.4037,
+          "passes": true
+        }
+      ],
+      "conditional_plane_H": [
+        [
+          0.020629174844712515,
+          0.0008544574767928621,
+          -10.278993357104133
+        ],
+        [
+          2.9521339197828177e-06,
+          0.1773772059737196,
+          -27.26757215347235
+        ],
+        [
+          6.673210154371355e-05,
+          0.002976919324190722,
+          1.0
+        ]
+      ],
+      "cap_center_plane_projections": [
+        {
+          "local_observation_id": "C01",
+          "colour": "red",
+          "cap_pixel_center": [
+            432.5,
+            155.0
+          ],
+          "cap_center_projected_as_if_on_ice_plane_m": [
+            -0.8216,
+            0.1524
+          ],
+          "stone_ground_contact_position_verified": false,
+          "physical_stone_identity_verified": false
+        }
+      ],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S144",
+      "sample_times_s": [
+        7556.542,
+        7561.542,
+        7566.542
+      ],
+      "status": "abstain_geometry_checks_failed",
+      "middle_frame_fit": {
+        "status": "abstain_geometry_checks_failed",
+        "initial_H": [
+          [
+            0.022223814466764143,
+            0.0011763998303603268,
+            -11.096826844729259
+          ],
+          [
+            -0.0006697635442743246,
+            0.22474888018565348,
+            -34.04099498059218
+          ],
+          [
+            8.789079984376563e-06,
+            0.0037686316592004227,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.017582770569980744,
+            0.0019139356653851119,
+            -9.003790005338002
+          ],
+          [
+            -0.0006100932153133354,
+            0.14599078770538143,
+            -22.142539754586963
+          ],
+          [
+            -0.0001592748766185859,
+            0.002132840295588926,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 158,
+          "radial_rmse_m": 0.1254279454370948,
+          "median_abs_radial_error_m": 0.05987452085611311,
+          "p95_abs_radial_error_m": 0.22732370172752706,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 52,
+          "radial_rmse_m": 0.14529293480663352,
+          "median_abs_radial_error_m": 0.07414216568634757,
+          "p95_abs_radial_error_m": 0.2997032092170414,
+          "angular_bins": 12
+        },
+        "withheld_inner_ring": {
+          "count": 120,
+          "radial_rmse_m": 0.13954586747949657,
+          "median_abs_radial_error_m": 0.06883110773645945,
+          "p95_abs_radial_error_m": 0.15366754254923698,
+          "angular_bins": 12
+        },
+        "middle_frame_ring_check": {
+          "count": 149,
+          "radial_rmse_m": 0.08883110346767559,
+          "median_abs_radial_error_m": 0.06096131973986929,
+          "p95_abs_radial_error_m": 0.1588659208600952,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.7000758191496109,
+          "p90_normal_error_px": 2.057741606337039,
+          "rings_supported": 3,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.3584,
+          6.3847,
+          6.4115
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 31,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [],
+      "conditional_plane_H": null,
+      "cap_center_plane_projections": [],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S153",
+      "sample_times_s": [
+        7915.9,
+        7920.9,
+        7925.9
+      ],
+      "status": "abstain_geometry_checks_failed",
+      "middle_frame_fit": {
+        "status": "abstain_geometry_checks_failed",
+        "initial_H": [
+          [
+            0.02193677627579163,
+            0.0011983549578744195,
+            -10.934880442098702
+          ],
+          [
+            -0.0006611130168675489,
+            0.22894336423417133,
+            -34.90880946540502
+          ],
+          [
+            8.675562045194654e-06,
+            0.0038389655597128422,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.02189833701094095,
+            0.002049640848142521,
+            -11.021215695769536
+          ],
+          [
+            8.676365119661006e-05,
+            0.19744849556418148,
+            -30.378826683221675
+          ],
+          [
+            5.700392946767968e-05,
+            0.003906547887209677,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 142,
+          "radial_rmse_m": 0.10566171929802759,
+          "median_abs_radial_error_m": 0.031779546409116066,
+          "p95_abs_radial_error_m": 0.1985078873956959,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 46,
+          "radial_rmse_m": 0.06683648528375731,
+          "median_abs_radial_error_m": 0.034448048471036996,
+          "p95_abs_radial_error_m": 0.15209340496824597,
+          "angular_bins": 11
+        },
+        "withheld_inner_ring": {
+          "count": 44,
+          "radial_rmse_m": 0.15506252016140104,
+          "median_abs_radial_error_m": 0.047524526371469145,
+          "p95_abs_radial_error_m": 0.3714915186313892,
+          "angular_bins": 8
+        },
+        "middle_frame_ring_check": {
+          "count": 113,
+          "radial_rmse_m": 0.084150757267682,
+          "median_abs_radial_error_m": 0.036584765016299814,
+          "p95_abs_radial_error_m": 0.1556782471277065,
+          "angular_bins": 11,
+          "median_normal_error_px": 0.5331940190926737,
+          "p90_normal_error_px": 1.8084107246452343,
+          "rings_supported": 3,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.4073,
+          6.3938,
+          6.3805
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 12,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [],
+      "conditional_plane_H": null,
+      "cap_center_plane_projections": [],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    },
+    {
+      "candidate_id": "R01-S154",
+      "sample_times_s": [
+        7971.55,
+        7976.55,
+        7981.55
+      ],
+      "status": "conditional_image_evidence_supported",
+      "middle_frame_fit": {
+        "status": "conditional_image_evidence_supported",
+        "initial_H": [
+          [
+            0.02180502126553156,
+            0.0011799805550171555,
+            -10.861550262947755
+          ],
+          [
+            -0.0006571422897549889,
+            0.22543297060806447,
+            -34.31909589234583
+          ],
+          [
+            8.623455539119835e-06,
+            0.0037801026165708183,
+            1.0
+          ]
+        ],
+        "fitted_H": [
+          [
+            0.02116373063855317,
+            0.0015179702639078847,
+            -10.587559523808618
+          ],
+          [
+            -4.454034749759394e-05,
+            0.18882594826013144,
+            -28.99424855996455
+          ],
+          [
+            4.282957889615147e-05,
+            0.0035558102536096385,
+            1.0
+          ]
+        ],
+        "training_ring": {
+          "count": 146,
+          "radial_rmse_m": 0.07685443850698047,
+          "median_abs_radial_error_m": 0.03664700581705138,
+          "p95_abs_radial_error_m": 0.15262391527274005,
+          "angular_bins": 12
+        },
+        "heldout_outer_middle_ring": {
+          "count": 50,
+          "radial_rmse_m": 0.09513728057703304,
+          "median_abs_radial_error_m": 0.04142869284731732,
+          "p95_abs_radial_error_m": 0.1924859946132537,
+          "angular_bins": 11
+        },
+        "withheld_inner_ring": {
+          "count": 68,
+          "radial_rmse_m": 0.08651070806205262,
+          "median_abs_radial_error_m": 0.03964012267848055,
+          "p95_abs_radial_error_m": 0.1642088031155918,
+          "angular_bins": 10
+        },
+        "middle_frame_ring_check": {
+          "count": 130,
+          "radial_rmse_m": 0.06823503297693291,
+          "median_abs_radial_error_m": 0.037845637580432134,
+          "p95_abs_radial_error_m": 0.14404508082555248,
+          "angular_bins": 12,
+          "median_normal_error_px": 0.5223676091529181,
+          "p90_normal_error_px": 1.444170184861384,
+          "rings_supported": 3,
+          "status": "supported",
+          "note": "Visible paint consistency; cannot certify occluded areas or physical stone positions."
+        },
+        "hog_line_y_px": 214,
+        "hog_world_y_m_at_three_pixels": [
+          6.4096,
+          6.3934,
+          6.3774
+        ],
+        "monotonic_orientation": true,
+        "optimizer_evaluations": 12,
+        "metric_accuracy_validated": false,
+        "stone_ground_contact_verified": false
+      },
+      "first_and_last_frame_checks": [
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.15372627879856038,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3934,
+          "passes": true
+        },
+        {
+          "ring_status": "supported",
+          "ring_p95_abs_radial_error_m": 0.16079229296026837,
+          "hog_line_y_px": 214,
+          "projected_hog_world_y_m": 6.3934,
+          "passes": true
+        }
+      ],
+      "conditional_plane_H": [
+        [
+          0.02116373063855317,
+          0.0015179702639078847,
+          -10.587559523808618
+        ],
+        [
+          -4.454034749759394e-05,
+          0.18882594826013144,
+          -28.99424855996455
+        ],
+        [
+          4.282957889615147e-05,
+          0.0035558102536096385,
+          1.0
+        ]
+      ],
+      "cap_center_plane_projections": [
+        {
+          "local_observation_id": "C01",
+          "colour": "yellow",
+          "cap_pixel_center": [
+            489.0,
+            179.0
+          ],
+          "cap_center_projected_as_if_on_ice_plane_m": [
+            0.02,
+            2.8863
+          ],
+          "stone_ground_contact_position_verified": false,
+          "physical_stone_identity_verified": false
+        }
+      ],
+      "metric_accuracy_validated": false,
+      "complete_board_verified": false,
+      "simulation_ready": false
+    }
+  ],
+  "limitations": [
+    "The reference calibration, edge search, fit regularizers and gates were developed on exposed footage.",
+    "Ring paint and hog-line agreement are same-source image checks, not surveyed metric accuracy.",
+    "Plane projection of an elevated cap center is not a stone ground-contact position.",
+    "The camera may move between three samples or after them; no transform is extrapolated.",
+    "No complete board, physical throw, persistent stone identity or simulation-ready event is inferred."
+  ]
+}

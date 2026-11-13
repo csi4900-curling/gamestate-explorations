@@ -1,0 +1,222 @@
+{
+  "status": "development_fitted_2024_split_screen_candidate",
+  "source_id": "canada-czech-2024",
+  "source_sha256": "e63c9b063b5b11ad5173083dffe974d909c78e5d01312740b87bccc006402013",
+  "source_interval_s": [
+    95.0,
+    115.0
+  ],
+  "input_sha256": "ad47bbfb7d39aca981bfdc7fa796481a9c32a563398c5582c8d4975acf81307d",
+  "motion_sha256": "230e46b25b82cf4b3be1c81439606a4da3376cd8e0ff47122b55dd7db2a33533",
+  "model_sha256": "f53813d594ed2f820c14d5dac79a4490234e99c3dff28c267ded99b7541f704c",
+  "runner_sha256": "44ccc5d1fc494acaf7f0eadb09f4d9b3eb1349ee1a1492e8baf01cb244a2451b",
+  "events": [
+    {
+      "id": "S01",
+      "track_id": 3,
+      "colour": "red",
+      "crossing_time_s": 96.892,
+      "time_semantics": "observed_track_midpoint",
+      "confirmed_at_s": 97.4,
+      "first_observed_s": 96.4,
+      "evidence_kind": "early_roi_motion_span",
+      "release_time_s": null,
+      "gate_y_px": null,
+      "crossing_x_px": 153.04058441558442,
+      "passage_y_px": 51.25,
+      "velocity_px_s": [
+        -2.9090909090908577,
+        -25.067272727272737
+      ],
+      "observations_at_confirmation": 11,
+      "observed_span_px": 24.5,
+      "median_candidate_bbox_width_px": 8.0,
+      "median_candidate_bbox_height_px": 10.0,
+      "mean_body_support": 0.9327651515151515,
+      "recent_track_duration_s": 1.0,
+      "direction_consistency": 1.0,
+      "view_motion": "negative_y",
+      "observed_track_points": [
+        {
+          "colour": "red",
+          "pixel": [
+            154.0,
+            63.5
+          ],
+          "bbox": [
+            150,
+            59,
+            8,
+            11
+          ],
+          "body_support": 0.6875,
+          "time_s": 96.4
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            154.0,
+            61.5
+          ],
+          "bbox": [
+            150,
+            57,
+            8,
+            11
+          ],
+          "body_support": 0.8125,
+          "time_s": 96.5
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            154.0,
+            60.0
+          ],
+          "bbox": [
+            150,
+            54,
+            8,
+            14
+          ],
+          "body_support": 0.84375,
+          "time_s": 96.6
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            153.5,
+            56.08
+          ],
+          "bbox": [
+            149,
+            52,
+            9,
+            10
+          ],
+          "body_support": 0.9166666666666666,
+          "time_s": 96.7
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            153.5,
+            54.08
+          ],
+          "bbox": [
+            149,
+            50,
+            9,
+            10
+          ],
+          "body_support": 1.0,
+          "time_s": 96.8
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            153.0,
+            51.0
+          ],
+          "bbox": [
+            150,
+            48,
+            6,
+            7
+          ],
+          "body_support": 1.0,
+          "time_s": 96.9
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            153.0,
+            49.0
+          ],
+          "bbox": [
+            150,
+            46,
+            6,
+            7
+          ],
+          "body_support": 1.0,
+          "time_s": 97.0
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            152.0,
+            47.0
+          ],
+          "bbox": [
+            148,
+            44,
+            8,
+            8
+          ],
+          "body_support": 1.0,
+          "time_s": 97.1
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            152.0,
+            44.0
+          ],
+          "bbox": [
+            148,
+            40,
+            8,
+            10
+          ],
+          "body_support": 1.0,
+          "time_s": 97.2
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            151.5,
+            41.0
+          ],
+          "bbox": [
+            148,
+            38,
+            7,
+            7
+          ],
+          "body_support": 1.0,
+          "time_s": 97.3
+        },
+        {
+          "colour": "red",
+          "pixel": [
+            151.5,
+            39.0
+          ],
+          "bbox": [
+            148,
+            36,
+            7,
+            7
+          ],
+          "body_support": 1.0,
+          "time_s": 97.4
+        }
+      ]
+    }
+  ],
+  "withheld_events": [],
+  "decisions": [
+    {
+      "id": "S01",
+      "status": "confirmed",
+      "reason": "compact_tracked_motion",
+      "changed_px_80x80": 398
+    }
+  ],
+  "limitations": [
+    "Motion-area cutoff was chosen after observing three 2024 development recordings.",
+    "The 2024 fixed split-screen left panel is the only supported camera layout.",
+    "Observed passage time is a track midpoint, not exact release time."
+  ]
+}

@@ -1,0 +1,128 @@
+{
+  "status": "development_ice_context_review_score_not_accepted_event_filter",
+  "source_sha256": "2e2b84bb2d9dffa497ee850ddbeaf0d5cae0d697377b6eee6a1ef481f449f3da",
+  "recording": "estonia",
+  "proposal_kind": "bidirectional",
+  "proposals_sha256": "00fe7d69b2d9976f93e1bd9da6b5bb44952e594af2340245d45d171f8f58c7d0",
+  "source_review_sha256": "556c3305b21e0cdee687c6fac6250a1838d74ad72e8b9137edbeafdd948d8c69",
+  "feature_code_sha256": "4e7ea73e5d460f779d84dbe98c71811cd1a12891d9915d1435224e6e0ebd1d86",
+  "runner_sha256": "209aac1719c7c801394b49320c28e12038819b26dc5afa4286a75d6c2ac87cce",
+  "outer_half_size_px": [
+    28,
+    40
+  ],
+  "excluded_inner_half_extent_px": 12,
+  "ice_hsv_rule": {
+    "saturation_less_than": 90,
+    "value_greater_than": 150
+  },
+  "nonice_review_threshold": 0.44,
+  "counts_by_source_class_and_tier": {
+    "moving_stone_short_path": {
+      "isolated_ice_context": 4,
+      "context_cluttered_review": 0
+    },
+    "person_wheelchair_or_clothing": {
+      "isolated_ice_context": 0,
+      "context_cluttered_review": 1
+    }
+  },
+  "rows": [
+    {
+      "raw_track_id": "B006",
+      "source_prefix_class": "moving_stone_short_path",
+      "sample_times_s": [
+        1932.0,
+        1938.0,
+        1939.0
+      ],
+      "sample_nonice_ring_fractions": [
+        0.4054,
+        0.0394,
+        0.0498
+      ],
+      "median_nonice_ring_fraction": 0.0498,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "isolated_ice_context"
+    },
+    {
+      "raw_track_id": "B018",
+      "source_prefix_class": "moving_stone_short_path",
+      "sample_times_s": [
+        2365.0,
+        2367.0,
+        2369.0
+      ],
+      "sample_nonice_ring_fractions": [
+        0.0192,
+        0.1196,
+        0.1935
+      ],
+      "median_nonice_ring_fraction": 0.1196,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "isolated_ice_context"
+    },
+    {
+      "raw_track_id": "B026",
+      "source_prefix_class": "moving_stone_short_path",
+      "sample_times_s": [
+        2558.0,
+        2559.0,
+        2561.0
+      ],
+      "sample_nonice_ring_fractions": [
+        0.0179,
+        0.0091,
+        0.0812
+      ],
+      "median_nonice_ring_fraction": 0.0179,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "isolated_ice_context"
+    },
+    {
+      "raw_track_id": "B028",
+      "source_prefix_class": "moving_stone_short_path",
+      "sample_times_s": [
+        2666.0,
+        2667.0,
+        2669.0
+      ],
+      "sample_nonice_ring_fractions": [
+        0.0213,
+        0.0228,
+        0.0363
+      ],
+      "median_nonice_ring_fraction": 0.0228,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "isolated_ice_context"
+    },
+    {
+      "raw_track_id": "B031",
+      "source_prefix_class": "person_wheelchair_or_clothing",
+      "sample_times_s": [
+        2743.0,
+        2744.0,
+        2746.0
+      ],
+      "sample_nonice_ring_fractions": [
+        0.5499,
+        0.585,
+        0.4418
+      ],
+      "median_nonice_ring_fraction": 0.5499,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "context_cluttered_review"
+    }
+  ],
+  "limitations": [
+    "The threshold was chosen after measuring the selected Italy/Estonia/China development paths.",
+    "Source classes are same-agent short-prefix reviews, not independent physical-throw labels.",
+    "Painted rings, players close to a stone, camera cuts and wheelchair objects can change local ice fraction.",
+    "A review tier cannot reject physical throws without independent recall validation."
+  ]
+}

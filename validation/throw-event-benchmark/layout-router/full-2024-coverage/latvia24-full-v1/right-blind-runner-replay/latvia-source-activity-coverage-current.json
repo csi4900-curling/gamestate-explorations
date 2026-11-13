@@ -1,0 +1,67 @@
+{
+  "status": "development_source_activity_coverage_overlay_not_throw_truth",
+  "source_id": "YCfdKLu-BRc",
+  "source_sha256": "a7431b68ba6fb0df407383973a525a01eadbee2490caa0438a5a11d2df1dba13",
+  "source_interval_s": [
+    0.0,
+    7059.0
+  ],
+  "original_supported_seconds": 6840.0,
+  "original_unknown_seconds": 219.0,
+  "newly_unsupported_seconds": 1655.0,
+  "revised_supported_seconds": 5185.0,
+  "revised_unknown_seconds": 1874.0,
+  "revised_supported_runs": [
+    {
+      "source_run_id": "R01",
+      "layout": "split_2024",
+      "interval_s": [
+        90.0,
+        5015.0
+      ]
+    },
+    {
+      "source_run_id": "R01",
+      "layout": "split_2024",
+      "interval_s": [
+        6670.0,
+        6930.0
+      ]
+    }
+  ],
+  "newly_unsupported_intervals": [
+    {
+      "interval_s": [
+        5015.0,
+        6670.0
+      ],
+      "reason": "left_panel_static_while_right_panel_active",
+      "source_run_id": "R01",
+      "median_left_mae": 1.6307,
+      "median_right_mae": 12.731,
+      "existing_event_ids_inside": []
+    }
+  ],
+  "original_coverage_gaps_s": [
+    [
+      0.0,
+      90.0
+    ],
+    [
+      6930.0,
+      7059.0
+    ]
+  ],
+  "original_event_count_unchanged": 72,
+  "minimum_right_panel_median_mae": 5.0,
+  "timeline_sha256": "6dda6388abc2e8cf795fe9f5732fb9019d3e50ebb7ecb2b9d34a3a3a297202ff",
+  "activity_audit_sha256": "821f1666cdfdb959877b2f9c34b7da771abddca09acd69d578c984dd334eb066",
+  "overlay_code_sha256": "8a30f505dea9ba714d9811703fb2e90b30351deb658479fb4d7ccb206bdfc818",
+  "runner_sha256": "6383a1d9a2cfddbfe34230cb6b28942588410b005697c9ccc881e4efc6809165",
+  "limitations": [
+    "The active-static thresholds were chosen after inspecting Latvia and Italy source frames.",
+    "A static left panel can be a still camera view or frozen feed; this audit does not distinguish them.",
+    "Source-image activity does not label individual delivered stones or estimate throw F1.",
+    "Original candidate events are preserved, including any that fall inside a newly unsupported interval."
+  ]
+}

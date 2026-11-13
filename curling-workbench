@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+CURLING_PROJECT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+cd "$CURLING_PROJECT_DIR"
+exec "$CURLING_PROJECT_DIR/feasibility/scripts/python.sh" -m prototype.workbench "$@"

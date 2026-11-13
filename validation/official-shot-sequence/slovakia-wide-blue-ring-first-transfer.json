@@ -1,0 +1,158 @@
+{
+  "status": "first_frozen_blue_ring_wide_contact_other_recording_transfer",
+  "source_sha256": "eba1d86944a2f4278b6e5e2c7549d12b47e5e8a51bf0c680b2db372c6ec12420",
+  "plan_sha256": "c45b32b4d2845ebcf526a43b857a766f2ee2a59c062af6b0814692234001d3e4",
+  "frozen_sha256": {
+    "video": "eba1d86944a2f4278b6e5e2c7549d12b47e5e8a51bf0c680b2db372c6ec12420",
+    "model": "395ebfd0b23db3c1faa90cfb71af2b33d0774e70dc05e7db8f6cb7924e1bcb47",
+    "prior": "3b673a3ecdedb8842b8e59acd254531694e0f21601c645d75a1c8369ecc83352",
+    "proposal_code": "43b28a9f810d82531c438992e0ad5012bee0a5743424465b36143ac318261cd7",
+    "contact_code": "ec891e0b90616f7218d0ffe0a96dcf9fda32ba1ad10a3b609e2c88ff802ef5dd",
+    "runner": "5f9d38b48ff10f93eb34f5c8d96774dea85ea574cd62017446626f7c6c7e06a0"
+  },
+  "min_patch_score": -0.7,
+  "rows": [
+    {
+      "shot_id": "PREL000103-E01-S05",
+      "counter_anchor_s": 505.0,
+      "sampled_time_count": 9,
+      "wide_ellipse_frame_count": 0,
+      "wide_frames": [],
+      "stable_contact_tracks": [],
+      "overhead_partial_board": [],
+      "source_only_orientation_alternatives": []
+    },
+    {
+      "shot_id": "PREL000103-E02-S15",
+      "counter_anchor_s": 1972.0,
+      "sampled_time_count": 14,
+      "wide_ellipse_frame_count": 0,
+      "wide_frames": [],
+      "stable_contact_tracks": [],
+      "overhead_partial_board": [],
+      "source_only_orientation_alternatives": []
+    },
+    {
+      "shot_id": "PREL000103-E04-S09",
+      "counter_anchor_s": 3549.0,
+      "sampled_time_count": 14,
+      "wide_ellipse_frame_count": 1,
+      "wide_frames": [
+        {
+          "time_s": 3557.0,
+          "ellipse": {
+            "center_px": [
+              289.34,
+              299.19
+            ],
+            "axis_lengths_px": [
+              155.59,
+              296.62
+            ],
+            "angle_degrees": 99.32,
+            "component_bbox_px": [
+              125,
+              192,
+              347,
+              168
+            ],
+            "coordinate_status": "uncalibrated_perspective_ellipse"
+          },
+          "candidates": [
+            {
+              "colour": "red",
+              "cap_pixel": [
+                244.5,
+                353.5
+              ],
+              "patch_score": -0.485,
+              "contact": null
+            }
+          ]
+        }
+      ],
+      "stable_contact_tracks": [],
+      "overhead_partial_board": [],
+      "source_only_orientation_alternatives": []
+    },
+    {
+      "shot_id": "PREL000103-E06-S06",
+      "counter_anchor_s": 5547.0,
+      "sampled_time_count": 14,
+      "wide_ellipse_frame_count": 0,
+      "wide_frames": [],
+      "stable_contact_tracks": [],
+      "overhead_partial_board": [
+        {
+          "colour": "red",
+          "canonical_lateral_house_radii": -0.1474,
+          "longitudinal_house_radii": -1.2204,
+          "supporting_frame_count": 6,
+          "first_seen_s": 5551.0,
+          "last_seen_s": 5561.0,
+          "max_position_spread_house_radii": 0.0337
+        },
+        {
+          "colour": "yellow",
+          "canonical_lateral_house_radii": -0.1218,
+          "longitudinal_house_radii": -0.5192,
+          "supporting_frame_count": 6,
+          "first_seen_s": 5551.0,
+          "last_seen_s": 5561.0,
+          "max_position_spread_house_radii": 0.0129
+        },
+        {
+          "colour": "yellow",
+          "canonical_lateral_house_radii": -0.1598,
+          "longitudinal_house_radii": 0.2885,
+          "supporting_frame_count": 6,
+          "first_seen_s": 5551.0,
+          "last_seen_s": 5561.0,
+          "max_position_spread_house_radii": 0.0274
+        }
+      ],
+      "source_only_orientation_alternatives": []
+    },
+    {
+      "shot_id": "PREL000103-E07-S16",
+      "counter_anchor_s": 7142.0,
+      "sampled_time_count": 14,
+      "wide_ellipse_frame_count": 1,
+      "wide_frames": [
+        {
+          "time_s": 7152.0,
+          "ellipse": {
+            "center_px": [
+              316.0,
+              320.42
+            ],
+            "axis_lengths_px": [
+              91.79,
+              322.41
+            ],
+            "angle_degrees": 90.06,
+            "component_bbox_px": [
+              142,
+              268,
+              348,
+              92
+            ],
+            "coordinate_status": "uncalibrated_perspective_ellipse"
+          },
+          "candidates": []
+        }
+      ],
+      "stable_contact_tracks": [],
+      "overhead_partial_board": [],
+      "source_only_orientation_alternatives": []
+    }
+  ],
+  "limitations": [
+    "The five shot anchors and offsets come from an earlier source-only board scan; this is not an exhaustive recording scan.",
+    "The prior file also contains official postscore fields, which this runner never accesses.",
+    "Wide ellipse detection, cap proposals, grey contact and temporal stability can each miss visible stones.",
+    "Counter anchoring does not verify exact settled-board time or physical throw identity.",
+    "No official diagram is consulted for selection, coordinate orientation or scoring.",
+    "No wide board is exported as simulation-ready state."
+  ]
+}

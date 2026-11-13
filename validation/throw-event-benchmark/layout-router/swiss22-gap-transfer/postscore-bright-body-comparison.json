@@ -1,0 +1,116 @@
+{
+  "status": "development_gap_candidate_score",
+  "source_id": "ZJAMdkERdpE",
+  "source_sha256": "49429abdd3796e8240e66c201d37e94e71a7bb6225890b2492bea26d2f70d560",
+  "raw_sha256": "a0ba4f1cd1bd48d81dc28d9594ec808a08a47732ab1ef0ae5cd73898699f3a01",
+  "screen_sha256": "a13c2fad33d937333bd167ab70ba07b0fac1f9a281194ccd8d76b02f88189a0a",
+  "scorer_sha256": "f5a76cc3ea8b37ff13d90fc919f7192753276873b603ef01d4ef5b6f743307f6",
+  "runner_sha256": "485674fddd10b7460266baf172514fcfb0aeca7a35a3099240a7ee1bbaf35b18",
+  "per_gap": [
+    {
+      "gap_id": "G01",
+      "reference_path": "validation/throw-event-benchmark/layout-router/swiss22-gap-transfer/blind-gap-reference.json",
+      "reference_sha256": "ad273feef7a359bb13d706414974013d822ba5c2b8df9806eb552cd9173eea8a",
+      "scored_interval_s": [
+        3900,
+        4200
+      ],
+      "raw": {
+        "reference_count": 1,
+        "prediction_count": 5,
+        "true_positives": 1,
+        "false_positives": 4,
+        "false_negatives": 0,
+        "precision": 0.2,
+        "recall": 1.0,
+        "f1": 0.3333333333333333,
+        "colour_errors_among_matches": 0,
+        "colour_aware_true_positives": 1,
+        "colour_aware_false_positives": 4,
+        "colour_aware_false_negatives": 0,
+        "colour_aware_precision": 0.2,
+        "colour_aware_recall": 1.0,
+        "colour_aware_f1": 0.3333333333333333,
+        "matches": [
+          {
+            "reference_id": "SW-G01",
+            "prediction_id": "G01-R01",
+            "colour_match": true
+          }
+        ],
+        "missed_reference_ids": [],
+        "extra_prediction_ids": [
+          "G01-Y01",
+          "G01-R02",
+          "G01-Y02",
+          "G01-R03"
+        ],
+        "scoring_tolerance_s": 0.0,
+        "prediction_time_mode": "point",
+        "max_prediction_interval_s": null,
+        "timing_interpretation": "Passage detection within a reference interval; no release-time error inferred."
+      },
+      "screen": {
+        "reference_count": 1,
+        "prediction_count": 1,
+        "true_positives": 1,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "colour_errors_among_matches": 0,
+        "colour_aware_true_positives": 1,
+        "colour_aware_false_positives": 0,
+        "colour_aware_false_negatives": 0,
+        "colour_aware_precision": 1.0,
+        "colour_aware_recall": 1.0,
+        "colour_aware_f1": 1.0,
+        "matches": [
+          {
+            "reference_id": "SW-G01",
+            "prediction_id": "G01-R01",
+            "colour_match": true
+          }
+        ],
+        "missed_reference_ids": [],
+        "extra_prediction_ids": [],
+        "scoring_tolerance_s": 0.0,
+        "prediction_time_mode": "point",
+        "max_prediction_interval_s": null,
+        "timing_interpretation": "Passage detection within a reference interval; no release-time error inferred."
+      }
+    }
+  ],
+  "totals": {
+    "raw": {
+      "true_positives": 1,
+      "false_positives": 4,
+      "false_negatives": 0,
+      "precision": 0.2,
+      "recall": 1.0,
+      "f1": 0.3333333333333333,
+      "colour_aware_true_positives": 1,
+      "colour_aware_false_positives": 4,
+      "colour_aware_false_negatives": 0,
+      "colour_aware_f1": 0.3333333333333333
+    },
+    "screen": {
+      "true_positives": 1,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "colour_aware_true_positives": 1,
+      "colour_aware_false_positives": 0,
+      "colour_aware_false_negatives": 0,
+      "colour_aware_f1": 1.0
+    }
+  },
+  "limitations": [
+    "References are coarse agent-authored development windows, not independent validation.",
+    "Only declared interior gap subintervals are scored; boundary portions are excluded.",
+    "Candidate F1 is not confirmed throw-event F1 or a complete-recording score."
+  ]
+}

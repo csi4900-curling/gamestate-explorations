@@ -1,0 +1,93 @@
+{
+  "status": "postscore_phase_veto_development_not_independent_transfer",
+  "v1_code_sha256": "b496f835615b47ffaf2afa9483626852e6b42c6c2008ca8324aaa656c43f0854",
+  "v2_code_sha256": "dff1cf7a36d02f4d42038429b1175b5896a62982528c311d38f3f87423d0f78e",
+  "runner_sha256": "76cdedb39725c95ce68bd2b5c70fc55cd7db359d36388b927d29998cfd1f55d5",
+  "cases": [
+    {
+      "case": "norway-end7",
+      "source_sha256": "c49fb90959c13b690447dccb87a0b78e0bba8537aa961339a92f934226baf2b3",
+      "prior_sha256": "920f7fc84ed39c96e3eb9bf9a576792b9ebf3d4ab6c09746a824bf92293f9363",
+      "cap_motion_sha256": "35eca99660b288bdf2a7abad8206c3291fd19b7723c87e86ae461284c88bb6cc",
+      "shot_origin_sha256": "477b7822f30af37f95e7665d346395e2ebe4f193af94ead1bc42a53df35997eb",
+      "v1_count": 1,
+      "v2_count": 1,
+      "removed_shot_ids": [],
+      "added_shot_ids": [],
+      "candidates": [
+        {
+          "shot_id": "S465",
+          "interval_s": [
+            6502.4,
+            6518.2
+          ],
+          "colour": "red",
+          "origin_probability": 0.2753131309593432,
+          "following_shot_id": "S466",
+          "first_track_s": 6513.2,
+          "route": "nonorigin_adjacent_same_colour_cap_motion",
+          "identity_status": "provisional_same_colour_not_proven_same_stone"
+        }
+      ]
+    },
+    {
+      "case": "norway-end8",
+      "source_sha256": "c49fb90959c13b690447dccb87a0b78e0bba8537aa961339a92f934226baf2b3",
+      "prior_sha256": "e347ddd39a77c3ddb7860e59b5ca45986468e8593caf76637cc8f762d8e08618",
+      "cap_motion_sha256": "35eca99660b288bdf2a7abad8206c3291fd19b7723c87e86ae461284c88bb6cc",
+      "shot_origin_sha256": "477b7822f30af37f95e7665d346395e2ebe4f193af94ead1bc42a53df35997eb",
+      "v1_count": 0,
+      "v2_count": 0,
+      "removed_shot_ids": [],
+      "added_shot_ids": [],
+      "candidates": []
+    },
+    {
+      "case": "slovakia",
+      "source_sha256": "eba1d86944a2f4278b6e5e2c7549d12b47e5e8a51bf0c680b2db372c6ec12420",
+      "prior_sha256": "3de5ffedf09a204e8a789c91dc983dbc358762f8647fa4ae98658eea679fc12b",
+      "cap_motion_sha256": "91f4db5dd26eff408e7ee8c1b35421bb39e1cb0bbf6410c087d315a2d97b6e15",
+      "shot_origin_sha256": "1a93d01e0aeb399177e3de08f13c56554e06955994d2c2302999d5ea3ab87b38",
+      "v1_count": 0,
+      "v2_count": 0,
+      "removed_shot_ids": [],
+      "added_shot_ids": [],
+      "candidates": []
+    },
+    {
+      "case": "swiss",
+      "source_sha256": "49429abdd3796e8240e66c201d37e94e71a7bb6225890b2492bea26d2f70d560",
+      "prior_sha256": "aaaf56790b1dc241da44b5cc5bb8e4a2d6d75e53d4aa8254fbe229d47a9c463c",
+      "cap_motion_sha256": "bff17c272b4621b9a37d177a2a0658c78da4f86290124e06558740c83429a31a",
+      "shot_origin_sha256": "c436693b5586aef1baa77f43d9e0a3fe3b26139fba0c3c39158c774bbc3ef8bb",
+      "v1_count": 4,
+      "v2_count": 1,
+      "removed_shot_ids": [
+        "S322",
+        "S404",
+        "S566"
+      ],
+      "added_shot_ids": [],
+      "candidates": [
+        {
+          "shot_id": "S171",
+          "interval_s": [
+            2132.8,
+            2148.8
+          ],
+          "colour": "red",
+          "origin_probability": 0.4863246787934253,
+          "following_shot_id": "S172",
+          "first_track_s": 2132.8,
+          "route": "nonorigin_adjacent_same_colour_cap_motion",
+          "identity_status": "provisional_same_colour_not_proven_same_stone"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "The phase requirement was added after seeing false positives in Swiss source frames.",
+    "Existing frozen phase labels may miss true deliveries, so recall is unmeasured.",
+    "No independent physical throw reference is used."
+  ]
+}

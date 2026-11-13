@@ -1,0 +1,139 @@
+{
+  "status": "postreview_line_free_right_span_recall_probe_not_event_detector",
+  "source_id": "canada-china-2024",
+  "source_sha256": "2a0885f28b5496670f99ab159c37aeb270cc454e65b909ce8a37a0398f7771ac",
+  "source_interval_s": [
+    1650,
+    2760
+  ],
+  "transfer_sha256": "f5ddcd57bebc318f493f40d8303b59ee027c80a7370cdf02a218307c620d0c34",
+  "variant_sha256": "91fbf6658333f9b061f9500f56d41490e50ab1affc749371fd356ca94b2f3d69",
+  "coarse_reference_sha256": "28d6c004248c4ccc61e081f459d83f0e260d3c9dcad6cd360fdb09258fad068e",
+  "fallback_code_sha256": "a8efff2f6f5ff3d949045e65f816e2ae68f71ccae30a9333d9e55096bae4ea11",
+  "runner_sha256": "95d8e58496ae124e5580186a5d9dc5ff7ce780bc57b6087ec6a974d4d3ec2897",
+  "rule": {
+    "first_cap_area_at_least_px2": 12,
+    "first_bbox_width_at_least_height": true,
+    "upward_displacement_at_least_px": 60,
+    "maximum_observed_delay_s": 20,
+    "passage_time_semantics": "halfway_observed_upward_motion_span_not_fixed_line"
+  },
+  "existing_variant_prefix_count": 10,
+  "additional_span_prefix_count": 1,
+  "coarse_window_count": 18,
+  "coarse_windows_with_existing_variant_prefix": [
+    "C04",
+    "C05",
+    "C06",
+    "C07",
+    "C08",
+    "C09",
+    "C13",
+    "C14",
+    "C15",
+    "C16"
+  ],
+  "coarse_windows_with_added_span_prefix": [
+    "C17"
+  ],
+  "newly_covered_coarse_window_ids": [
+    "C17"
+  ],
+  "still_uncovered_coarse_window_ids": [
+    "C01",
+    "C02",
+    "C03",
+    "C10",
+    "C11",
+    "C12",
+    "C18"
+  ],
+  "additional_span_review_proposals": [
+    {
+      "raw_track_id": "R048",
+      "colour_claim": "yellow",
+      "passage_kind": "halfway_observed_upward_motion_span_not_fixed_line",
+      "passage": {
+        "time_s": 2669.286,
+        "pixel": [
+          436.14,
+          188.0
+        ],
+        "bracket_s": [
+          2669.0,
+          2670.0
+        ]
+      },
+      "observed_prefix_interval_s": [
+        2668.0,
+        2671.0
+      ],
+      "observed_prefix_points": [
+        {
+          "pixel": [
+            442.0,
+            218.0
+          ],
+          "bbox": [
+            434,
+            214,
+            16,
+            8
+          ],
+          "cap_area_px2": 90.0,
+          "time_s": 2668.0
+        },
+        {
+          "pixel": [
+            437.0,
+            194.0
+          ],
+          "bbox": [
+            430,
+            190,
+            14,
+            8
+          ],
+          "cap_area_px2": 51.0,
+          "time_s": 2669.0
+        },
+        {
+          "pixel": [
+            434.0,
+            173.0
+          ],
+          "bbox": [
+            426,
+            170,
+            16,
+            6
+          ],
+          "cap_area_px2": 47.5,
+          "time_s": 2670.0
+        },
+        {
+          "pixel": [
+            429.0,
+            153.0
+          ],
+          "bbox": [
+            422,
+            148,
+            14,
+            10
+          ],
+          "cap_area_px2": 78.5,
+          "time_s": 2671.0
+        }
+      ],
+      "physical_throw_identity_verified": false,
+      "simulation_ready": false
+    }
+  ],
+  "limitations": [
+    "This fallback was designed after inspecting missed development windows on these recordings.",
+    "A same-colour passage inside a coarse window can be a person or equipment; no source identity is inferred.",
+    "The five-second-still reference is not independently certified or exhaustive; window coverage is not recall.",
+    "This tier adds review proposals and does not change accepted events, precision, recall or F1."
+  ]
+}

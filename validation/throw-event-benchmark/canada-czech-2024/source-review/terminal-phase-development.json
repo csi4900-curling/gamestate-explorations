@@ -1,0 +1,35 @@
+{
+  "status": "agent_source_review_development_evidence_not_independent_labels",
+  "source_id": "yu_YoFrFd20",
+  "source_sha256": "e63c9b063b5b11ad5173083dffe974d909c78e5d01312740b87bccc006402013",
+  "contact_sheet": "final-transition-6300-6400-5s.jpg",
+  "contact_sheet_manifest": "final-transition-6300-6400-5s.json",
+  "official_context": "../official-end-score-context.json",
+  "observations": [
+    {
+      "time_s": 6325,
+      "description": "Stones remain distributed around the house; play or immediate end resolution is still plausible."
+    },
+    {
+      "time_s": 6335,
+      "description": "People begin clearing stones from the house; this is a transition, not a measured last-delivery time."
+    },
+    {
+      "time_s": 6350,
+      "description": "Stones are being gathered and both teams cluster around the house."
+    },
+    {
+      "time_s": 6370,
+      "description": "The right-side scoreboard shows Czechia 4, Canada 13 while players roll away from the house."
+    },
+    {
+      "time_s": 6380,
+      "description": "The same final score remains visible; the left view shows players leaving and no delivered stone on the S143 path."
+    }
+  ],
+  "late_candidate_ids": ["S141", "S142", "S143", "S144", "S145", "S146", "S147"],
+  "late_candidate_time_range_s": [6358.511, 6396.912],
+  "source_reviewed_false_positive_candidate": "S143",
+  "interpretation": "The late candidate cluster overlaps a postgame clearing and exit phase. The contact sheet does not establish an exact last-throw timestamp or independently label all seven candidates. S143 is separately source-reviewed as a wheelchair-footrest false path.",
+  "pipeline_action": "Retain all frozen decisions. Use this as a hard-negative development interval and test a source-derived terminal-phase cue on other recordings before making it a rejection gate."
+}

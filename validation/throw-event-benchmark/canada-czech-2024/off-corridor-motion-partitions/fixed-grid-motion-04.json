@@ -1,0 +1,771 @@
+{
+  "status": "postscore_development_rebased_right_reference_not_transfer_validation",
+  "candidate_source_id": "yu_YoFrFd20",
+  "candidate_source_sha256": "e63c9b063b5b11ad5173083dffe974d909c78e5d01312740b87bccc006402013",
+  "high_resolution_source_sha256": "490b8703b2fcfaa2fbd61f8b45ebc45fd3281f0e9453bb4721f56e64056cd620",
+  "source_offset_s": 0.0,
+  "lookahead_s": 12.0,
+  "sample_period_s": 0.5,
+  "max_corner_displacement_px": 160.0,
+  "candidates_sha256": "5a15d3e4d7dac7be334930edbb222215324b0649cda481e4ab8e6b707723a61d",
+  "vision_calibration_sha256": "03e164c0f26c0b2e3ebca7e85577c5874dbb83128aab52569776e60cd293103b",
+  "rectification_sha256": "fe7c6c832c2bc6b5095ce932ffd7905a59f9fdf8c0b4e029816e1108d1238402",
+  "registration_code_sha256": "648deed967ec5d64b68fdaeea90c202f4f25c689d1961711ac379ee06951d8d0",
+  "detector_code_sha256": "602010aba323a63401a8f7edfe7aee8ed2bd135dfdcb6c4d4308a41d29610dd6",
+  "selector_sha256": "8cae87a9b90904647ccb67cceec2473739ccf1d626b68e1305769b28107d63cd",
+  "runner_sha256": "2b2084161cab0c0671197623c5c9ae1b9322d9f0b0662cdcdbcc59b9e59e084c",
+  "rebase_code_sha256": "6d917ae47e3dfaef45ab5def54f4c5b5ea15c3e82f3d79181e3ac17900904ff9",
+  "right_reference_anchor_time_s": 6525.0,
+  "right_reference_anchor_registration": {
+    "status": "registered",
+    "inliers": 39,
+    "matches": 59,
+    "rmse_px": 1.0726771652157872,
+    "max_corner_displacement_px": 90.02350488819164,
+    "reference_to_current": [
+      [
+        1.1141360242253953,
+        0.08979434438406485,
+        -195.68106569114437
+      ],
+      [
+        -0.005874037539324768,
+        1.0912579823239008,
+        -2.3774273820660925
+      ],
+      [
+        4.258787514731362e-06,
+        1.9325571868452738e-05,
+        1.0
+      ]
+    ],
+    "note": "Feature consistency only; not proof of correct camera identity or metric accuracy."
+  },
+  "conditional_camera_prior": "original_calibration_transported_to_current_frame",
+  "detection_background": "original_clean_reference_transported_to_current_frame",
+  "candidate_count": 1,
+  "selection_status_counts": {
+    "provisional_unique_far_entry_motion_path": 1
+  },
+  "rows": [
+    {
+      "candidate_id": "S26",
+      "crossing_time_s": 793.267,
+      "colour": "red",
+      "view_motion": "negative_y",
+      "receiving_view": "right",
+      "sample_count": 24,
+      "registration_abstentions": 0,
+      "selection": {
+        "status": "provisional_unique_far_entry_motion_path",
+        "path": [
+          {
+            "source_time_s": 800.5,
+            "pixel_center": [
+              1768.7,
+              918.6
+            ],
+            "ground_position_m": [
+              1.0851241021875808,
+              14.571720240891928
+            ],
+            "same_colour_candidate_count": 3
+          },
+          {
+            "source_time_s": 801.0,
+            "pixel_center": [
+              1774.72,
+              884.9
+            ],
+            "ground_position_m": [
+              1.1190278697915412,
+              13.740278046077938
+            ],
+            "same_colour_candidate_count": 1
+          },
+          {
+            "source_time_s": 801.5,
+            "pixel_center": [
+              1778.31,
+              848.26
+            ],
+            "ground_position_m": [
+              1.1547726841408006,
+              12.840845861885231
+            ],
+            "same_colour_candidate_count": 1
+          },
+          {
+            "source_time_s": 802.0,
+            "pixel_center": [
+              1777.59,
+              810.21
+            ],
+            "ground_position_m": [
+              1.1729989324031431,
+              11.828005679261981
+            ],
+            "same_colour_candidate_count": 1
+          },
+          {
+            "source_time_s": 802.5,
+            "pixel_center": [
+              1777.41,
+              773.32
+            ],
+            "ground_position_m": [
+              1.1982593354582713,
+              10.85456304551378
+            ],
+            "same_colour_candidate_count": 1
+          },
+          {
+            "source_time_s": 803.0,
+            "pixel_center": [
+              1778.06,
+              738.03
+            ],
+            "ground_position_m": [
+              1.2272532933258666,
+              9.86994179433502
+            ],
+            "same_colour_candidate_count": 1
+          }
+        ],
+        "sample_count": 6,
+        "first_observation_s": 800.5,
+        "last_observation_s": 803.0,
+        "endpoint_displacement_m": 4.703926154552249,
+        "frames_with_multiple_same_colour_candidates": 1,
+        "unobserved_gap_count": 0,
+        "unobserved_sample_count": 0,
+        "largest_observation_gap_s": 0.5,
+        "release_time_observed": false,
+        "physical_identity_verified": false,
+        "metric_accuracy_verified": false,
+        "simulation_ready": false
+      },
+      "samples": [
+        {
+          "source_time_s": 793.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1854.86,
+                    443.7
+                  ],
+                  "ground_position_m": [
+                    1.814425729751026,
+                    -0.1507892648278898
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1614.93,
+                    456.39
+                  ],
+                  "ground_position_m": [
+                    0.7651590439894508,
+                    0.32654859511839707
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 794.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1854.86,
+                    443.38
+                  ],
+                  "ground_position_m": [
+                    1.8145223231392027,
+                    -0.1632540253949089
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1616.21,
+                    456.86
+                  ],
+                  "ground_position_m": [
+                    0.770230982998691,
+                    0.3447806181809761
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 794.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1854.98,
+                    443.48
+                  ],
+                  "ground_position_m": [
+                    1.8079685951667306,
+                    -0.14056734352325032
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1615.85,
+                    456.6
+                  ],
+                  "ground_position_m": [
+                    0.7677419781988347,
+                    0.33919088665862457
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 795.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1853.29,
+                    443.57
+                  ],
+                  "ground_position_m": [
+                    1.8071341199192592,
+                    -0.15873204342631972
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1615.76,
+                    456.77
+                  ],
+                  "ground_position_m": [
+                    0.7685527962451606,
+                    0.3372625667148207
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 795.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1783.5,
+                    438.34
+                  ],
+                  "ground_position_m": [
+                    1.5140858284925671,
+                    -0.38486617360399483
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1615.04,
+                    456.8
+                  ],
+                  "ground_position_m": [
+                    0.7663625152879369,
+                    0.3425477320297184
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 796.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "yellow",
+                  "pixel_center": [
+                    1677.25,
+                    430.72
+                  ],
+                  "ground_position_m": [
+                    1.0547712161100187,
+                    -0.7033406309901661
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1615.57,
+                    457.13
+                  ],
+                  "ground_position_m": [
+                    0.7692002182891208,
+                    0.35825520163605
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 796.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1615.4,
+                    454.39
+                  ],
+                  "ground_position_m": [
+                    0.7702424178175737,
+                    0.24226724031809133
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 797.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1614.91,
+                    456.73
+                  ],
+                  "ground_position_m": [
+                    0.7666672838124879,
+                    0.33350151428111496
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 797.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1615.28,
+                    456.73
+                  ],
+                  "ground_position_m": [
+                    0.7674759045230409,
+                    0.3375015789839896
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 798.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1616.2,
+                    455.45
+                  ],
+                  "ground_position_m": [
+                    0.7724213800005689,
+                    0.29304519427846965
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 798.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1614.39,
+                    455.46
+                  ],
+                  "ground_position_m": [
+                    0.7640783060770285,
+                    0.2915414138402743
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 799.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1753.01,
+                    1067.38
+                  ],
+                  "ground_position_m": [
+                    0.9497678617546343,
+                    17.77801814478436
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 799.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1758.42,
+                    1009.44
+                  ],
+                  "ground_position_m": [
+                    0.9949348578497288,
+                    16.573001714560235
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1559.61,
+                    448.18
+                  ],
+                  "ground_position_m": [
+                    0.5312210248359979,
+                    -0.020723438629918323
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 800.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1762.06,
+                    974.8
+                  ],
+                  "ground_position_m": [
+                    1.030102081585813,
+                    15.838713346457503
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1506.32,
+                    442.13
+                  ],
+                  "ground_position_m": [
+                    0.29962726064204515,
+                    -0.27128026275349865
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 800.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1648.57,
+                    1043.86
+                  ],
+                  "ground_position_m": [
+                    0.6445179604599868,
+                    17.34982805332516
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1768.7,
+                    918.6
+                  ],
+                  "ground_position_m": [
+                    1.0851241021875808,
+                    14.571720240891928
+                  ]
+                },
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1444.04,
+                    434.72
+                  ],
+                  "ground_position_m": [
+                    0.028305300255083904,
+                    -0.5840760680345273
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 801.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1774.72,
+                    884.9
+                  ],
+                  "ground_position_m": [
+                    1.1190278697915412,
+                    13.740278046077938
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 801.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1778.31,
+                    848.26
+                  ],
+                  "ground_position_m": [
+                    1.1547726841408006,
+                    12.840845861885231
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 802.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1777.59,
+                    810.21
+                  ],
+                  "ground_position_m": [
+                    1.1729989324031431,
+                    11.828005679261981
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 802.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1777.41,
+                    773.32
+                  ],
+                  "ground_position_m": [
+                    1.1982593354582713,
+                    10.85456304551378
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 803.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1778.06,
+                    738.03
+                  ],
+                  "ground_position_m": [
+                    1.2272532933258666,
+                    9.86994179433502
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 803.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": []
+            }
+          }
+        },
+        {
+          "source_time_s": 804.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1791.15,
+                    674.94
+                  ],
+                  "ground_position_m": [
+                    1.3242041184982112,
+                    7.998527745161588
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "source_time_s": 804.5,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": []
+            }
+          }
+        },
+        {
+          "source_time_s": 805.0,
+          "registration_status": "registered",
+          "registration_reason": null,
+          "views": {
+            "right": {
+              "proposals": [
+                {
+                  "colour": "red",
+                  "pixel_center": [
+                    1793.52,
+                    618.13
+                  ],
+                  "ground_position_m": [
+                    1.382115435080174,
+                    6.212866105104011
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Anchor 2044.5 s was chosen after seeing this recording's frozen registration failures.",
+    "The new reference is transported from an old conditional calibration, not independently measured rink geometry.",
+    "A registered image and a selected cap path do not prove a physical throw."
+  ]
+}

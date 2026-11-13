@@ -1,0 +1,101 @@
+{
+  "source_id": "Ns12UZ5nlPk",
+  "source_sha256": "eba1d86944a2f4278b6e5e2c7549d12b47e5e8a51bf0c680b2db372c6ec12420",
+  "source_interval_s": [
+    2400,
+    2700
+  ],
+  "reference_method": "high_visibility_broadcast_counter_proxy",
+  "audit_sha256": "b4e1807c70983a9413c8fd9e3a45f233e64923320f6cdf7bceed1c919b15aa3b",
+  "runner_sha256": "7a00b8cd08c6b8ce0f82848e7720b2a49d0da7a02e21ac437e2bc8c13af5e152",
+  "visible_fraction": 0.9766666666666667,
+  "timing_expansion_s": [
+    15,
+    15
+  ],
+  "reference_limitations": [
+    "A counter update can precede or follow visible stone movement; these are permissive proxy windows.",
+    "The counter reader can flicker or miss a delivery even when the graphic is mostly readable.",
+    "Counter concordance is not independent ground-truth throw F1 or release-time accuracy."
+  ],
+  "events": [
+    {
+      "id": "counter:B01",
+      "colour": "red",
+      "delivery_interval_s": [
+        2400,
+        2447.0
+      ],
+      "counter_evidence_interval_s": [
+        2406.0,
+        2432.0
+      ],
+      "counter_update_s": 2432.0
+    },
+    {
+      "id": "counter:B02",
+      "colour": "yellow",
+      "delivery_interval_s": [
+        2451.0,
+        2502.0
+      ],
+      "counter_evidence_interval_s": [
+        2466.0,
+        2487.0
+      ],
+      "counter_update_s": 2487.0
+    },
+    {
+      "id": "counter:B03",
+      "colour": "red",
+      "delivery_interval_s": [
+        2487.0,
+        2536.0
+      ],
+      "counter_evidence_interval_s": [
+        2502.0,
+        2521.0
+      ],
+      "counter_update_s": 2521.0
+    },
+    {
+      "id": "counter:B04",
+      "colour": "yellow",
+      "delivery_interval_s": [
+        2547.0,
+        2578.0
+      ],
+      "counter_evidence_interval_s": [
+        2562.0,
+        2563.0
+      ],
+      "counter_update_s": 2563.0
+    },
+    {
+      "id": "counter:B05",
+      "colour": "red",
+      "delivery_interval_s": [
+        2601.0,
+        2652.0
+      ],
+      "counter_evidence_interval_s": [
+        2616.0,
+        2637.0
+      ],
+      "counter_update_s": 2637.0
+    },
+    {
+      "id": "counter:B06",
+      "colour": "yellow",
+      "delivery_interval_s": [
+        2665.0,
+        2696.0
+      ],
+      "counter_evidence_interval_s": [
+        2680.0,
+        2681.0
+      ],
+      "counter_update_s": 2681.0
+    }
+  ]
+}

@@ -1,0 +1,121 @@
+{
+  "status": "development_gap_scene_episode_screen",
+  "source_id": "qn9tHfcimlQ",
+  "source_sha256": "c5254bb9103e32c6beac74cf269fc7bcec8ce2c2a710a7d4600c7ddb951f160e",
+  "source_interval_s": [
+    0.0,
+    8356.0
+  ],
+  "input_sha256": "3a4eb32e7a057d98c8c131eb6049344e24c212c46e412879dc24b0092e95923c",
+  "model_sha256": "e55a108f671b52ad3558e52676ef523f46e2f4f3cecfc986853f21df73ca57f2",
+  "runner_sha256": "b56225469bf19f0cd6ecd7feb1bfa739d662315576d40dca23f9c4ad04861d67",
+  "context": [
+    {
+      "id": "G01-Y01",
+      "median_ice_scene_fraction": 0.82141,
+      "sampled_times_s": [
+        3668.0,
+        3669.0,
+        3670.0,
+        3671.0
+      ]
+    }
+  ],
+  "decisions": [
+    {
+      "id": "G01-Y01",
+      "status": "corroborated_gap_candidate",
+      "reason": "earliest_ice_motion_in_episode",
+      "episode_anchor_id": "G01-Y01",
+      "median_ice_scene_fraction": 0.82141
+    }
+  ],
+  "corroborated_candidates": [
+    {
+      "id": "G01-Y01",
+      "gap_id": "G01",
+      "colour": "yellow",
+      "crossing_time_s": 3668.0,
+      "evidence_interval_s": [
+        3668.0,
+        3671.0
+      ],
+      "evidence_kind": "visual_stone_cap_motion_in_unsupported_layout",
+      "status": "unconfirmed_gap_motion_candidate",
+      "release_time_s": null,
+      "visual_track_span_px": 40.0,
+      "visual_track_points": [
+        {
+          "pixel": [
+            420.0,
+            167.0
+          ],
+          "bbox": [
+            408,
+            156,
+            24,
+            22
+          ],
+          "cap_area_px2": 357.5,
+          "neutral_surround_fraction": 0.492816091954023,
+          "white_ice_fraction": 0.6422413793103449,
+          "time_s": 3668.0
+        },
+        {
+          "pixel": [
+            430.0,
+            165.0
+          ],
+          "bbox": [
+            418,
+            154,
+            24,
+            22
+          ],
+          "cap_area_px2": 375.0,
+          "neutral_surround_fraction": 0.4396551724137931,
+          "white_ice_fraction": 0.5545977011494253,
+          "time_s": 3669.0
+        },
+        {
+          "pixel": [
+            437.0,
+            155.0
+          ],
+          "bbox": [
+            426,
+            144,
+            22,
+            22
+          ],
+          "cap_area_px2": 331.0,
+          "neutral_surround_fraction": 0.33779761904761907,
+          "white_ice_fraction": 0.8690476190476191,
+          "time_s": 3670.0
+        },
+        {
+          "pixel": [
+            444.0,
+            135.0
+          ],
+          "bbox": [
+            434,
+            124,
+            20,
+            22
+          ],
+          "cap_area_px2": 331.0,
+          "neutral_surround_fraction": 0.30864197530864196,
+          "white_ice_fraction": 0.8179012345679012,
+          "time_s": 3671.0
+        }
+      ]
+    }
+  ],
+  "withheld_candidates": [],
+  "limitations": [
+    "Ice fraction and episode grouping were chosen after inspecting Canada\u2013China and Sweden\u2013Switzerland gaps.",
+    "Corroborated candidates are not promoted to confirmed timeline events without separate validation.",
+    "Camera motion, a second delivery close in time or moving displaced stones can defeat this rule."
+  ]
+}

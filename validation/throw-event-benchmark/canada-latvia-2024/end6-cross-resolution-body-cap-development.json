@@ -1,0 +1,2990 @@
+{
+  "status": "postinspection_cross_resolution_body_cap_correspondence_not_complete_trajectory",
+  "lowres_source_sha256": "a7431b68ba6fb0df407383973a525a01eadbee2490caa0438a5a11d2df1dba13",
+  "highres_source_sha256": "481542262453e8fc8cce3632736550aa70b9e22702134010a0c4d04cb43bed32",
+  "source_interval_s": [
+    5670,
+    6670
+  ],
+  "input_sha256": {
+    "low_segments": "c81b2e5c4d29f658d080c6e4553fc2bb36577e1fb3df81d17e3f2373fae2a7df",
+    "red_highres": "5205fa48a86dd651b22f359446ee6db55807621ff2a7113deb744deb0d5bb20b",
+    "yellow_highres": "ebe9d1ec10723bc6b1806bf31fa3651c2705c8d2f37ad0c069fcd638dcde356f"
+  },
+  "join_code_sha256": "b6c2ca94f1dd87bdb75ab436decd36eee211a5ecaf494485d45863e9bb05ae25",
+  "runner_sha256": "e08040d071df529018893dad59e37a560d2d2e4f15766d0008f49ed4f2bebf3a",
+  "matching_rule": {
+    "scope": "source-reviewed moving-stone-pixel right-only paths only",
+    "minimum_synchronous_moving_points": 2,
+    "maximum_absolute_horizontal_offset_360p_px": 12,
+    "body_minus_cap_vertical_offset_360p_px": [
+      0,
+      16
+    ],
+    "status": "postinspection_development_rule_not_independent_validation"
+  },
+  "reviewed_proposal_count": 20,
+  "body_path_status_counts": {
+    "unique_compatible_body_path": 16,
+    "not_attempted_person_or_clothing_pixels": 4
+  },
+  "unmatched_highres_path_ids": {
+    "red": [
+      "B005",
+      "B006",
+      "B007"
+    ],
+    "yellow": []
+  },
+  "rows": [
+    {
+      "right_proposal_id": "R01:A387",
+      "episode_id": "E126",
+      "source_prefix_class": "moving_stone_pixels",
+      "colour_claim": "yellow",
+      "observed_motion_onset": {
+        "status": "observed_quiet_to_sustained_directional_motion",
+        "onset_bracket_s": [
+          5670.0,
+          5671.0
+        ],
+        "first_strong_motion_time_s": 5671.0,
+        "last_observed_track_time_s": 5673.0,
+        "observed_moving_points": [
+          {
+            "pixel": [
+              480.0,
+              216.0
+            ],
+            "bbox": [
+              472,
+              212,
+              16,
+              8
+            ],
+            "cap_area_px2": 44.5,
+            "time_s": 5670.0
+          },
+          {
+            "pixel": [
+              471.0,
+              232.0
+            ],
+            "bbox": [
+              464,
+              228,
+              14,
+              8
+            ],
+            "cap_area_px2": 54.5,
+            "time_s": 5671.0
+          },
+          {
+            "pixel": [
+              458.0,
+              259.0
+            ],
+            "bbox": [
+              450,
+              256,
+              16,
+              6
+            ],
+            "cap_area_px2": 47.5,
+            "time_s": 5672.0
+          },
+          {
+            "pixel": [
+              447.0,
+              285.0
+            ],
+            "bbox": [
+              438,
+              280,
+              18,
+              10
+            ],
+            "cap_area_px2": 74.0,
+            "time_s": 5673.0
+          }
+        ],
+        "supporting_step_rates_px_s": [
+          16.0,
+          27.0
+        ],
+        "quiet_end_time_s": 5670.0,
+        "physical_release_time_s": null,
+        "physical_stone_identity_verified": false,
+        "physical_settle_time_s": null
+      },
+      "following_partial_image_state_status": "no_usable_following_observation",
+      "body_path_status": "unique_compatible_body_path",
+      "compatible_highres_paths": [
+        {
+          "highres_path_id": "B001",
+          "highres_path_first_observed_s": 5670,
+          "highres_path_last_observed_s": 5673,
+          "highres_handle_supported_moving_points": [
+            {
+              "time_s": 5671,
+              "center_1080p_px": [
+                1412,
+                721
+              ],
+              "score": 0.62813,
+              "handle_colour_pixels": {
+                "red": 154,
+                "yellow": 663
+              },
+              "handle_colour_claim": "yellow",
+              "handle_supported": true
+            },
+            {
+              "time_s": 5672,
+              "center_1080p_px": [
+                1376,
+                801
+              ],
+              "score": 0.78927,
+              "handle_colour_pixels": {
+                "red": 0,
+                "yellow": 658
+              },
+              "handle_colour_claim": "yellow",
+              "handle_supported": true
+            },
+            {
+              "time_s": 5673,
+              "center_1080p_px": [
+                1340,
+                883
+              ],
+              "score": 0.79755,
+              "handle_colour_pixels": {
+                "red": 0,
+                "yellow": 834
+              },
+              "handle_colour_claim": "yellow",
+              "handle_supported": true
+            }
+          ],
+          "common_observation_count": 4,
+          "median_body_minus_cap_x_360p_px": -0.333,
+          "median_body_minus_cap_y_360p_px": 8.166,
+          "synchronous_points": [
+            {
+              "source_time_s": 5670.0,
+              "cap_center_360p_px": [
+                480.0,
+                216.0
+              ],
+              "body_center_1080p_px": [
+                1438,
+                669
+              ],
+              "body_minus_cap_x_360p_px": -0.667,
+              "body_minus_cap_y_360p_px": 7.0
+            },
+            {
+              "source_time_s": 5671.0,
+              "cap_center_360p_px": [
+                471.0,
+                232.0
+              ],
+              "body_center_1080p_px": [
+                1412,
+                721
+              ],
+              "body_minus_cap_x_360p_px": -0.333,
+              "body_minus_cap_y_360p_px": 8.333
+            },
+            {
+              "source_time_s": 5672.0,
+              "cap_center_360p_px": [
+                458.0,
+                259.0
+              ],
+              "body_center_1080p_px": [
+                1376,
+                801
+              ],
+              "body_minus_cap_x_360p_px": 0.667,
+              "body_minus_cap_y_360p_px": 8.0
+            },
+            {
+              "source_time_s": 5673.0,
+              "cap_center_360p_px": [
+                447.0,
+                285.0
+              ],
+              "body_center_1080p_px": [
+                1340,
+                883
+              ],
+              "body_minus_cap_x_360p_px": -0.333,
+              "body_minus_cap_y_360p_px": 9.333
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "right_proposal_id": "R01:A393",
+      "episode_id": "E127",
+      "source_prefix_class": "moving_stone_pixels",
+      "colour_claim": "red",
+      "observed_motion_onset": {
+        "status": "observed_quiet_to_sustained_directional_motion",
+        "onset_bracket_s": [
+          5713.0,
+          5714.0
+        ],
+        "first_strong_motion_time_s": 5714.0,
+        "last_observed_track_time_s": 5716.0,
+        "observed_moving_points": [
+          {
+            "pixel": [
+              479.0,
+              209.0
+            ],
+            "bbox": [
+              473,
+              204,
+              12,
+              10
+            ],
+            "cap_area_px2": 47.5,
+            "time_s": 5713.0
+          },
+          {
+            "pixel": [
+              487.0,
+              232.0
+            ],
+            "bbox": [
+              480,
+              229,
+              14,
+              6
+            ],
+            "cap_area_px2": 22.5,
+            "time_s": 5714.0
+          },
+          {
+            "pixel": [
+              490.0,
+              254.0
+            ],
+            "bbox": [
+              484,
+              250,
+              12,
+              8
+            ],
+            "cap_area_px2": 32.0,
+            "time_s": 5715.0
+          },
+          {
+            "pixel": [
+              495.0,
+              278.0
+            ],
+            "bbox": [
+              488,
+              274,
+              14,
+              8
+            ],
+            "cap_area_px2": 44.0,
+            "time_s": 5716.0
+          }
+        ],
+        "supporting_step_rates_px_s": [
+          23.0,
+          22.0
+        ],
+        "quiet_end_time_s": 5713.0,
+        "physical_release_time_s": null,
+        "physical_stone_identity_verified": false,
+        "physical_settle_time_s": null
+      },
+      "following_partial_image_state_status": "following_partial_image_observation",
+      "body_path_status": "unique_compatible_body_path",
+      "compatible_highres_paths": [
+        {
+          "highres_path_id": "B001",
+          "highres_path_first_observed_s": 5700,
+          "highres_path_last_observed_s": 5717,
+          "highres_handle_supported_moving_points": [
+            {
+              "time_s": 5714,
+              "center_1080p_px": [
+                1460,
+                719
+              ],
+              "score": 0.85837,
+              "handle_colour_pixels": {
+                "red": 403,
+                "yellow": 0
+              },
+              "handle_colour_claim": "red",
+              "handle_supported": true,
+              "red_handle_supported": true
+            },
+            {
+              "time_s": 5715,
+              "center_1080p_px": [
+                1478,
+                787
+              ],
+              "score": 0.85813,
+              "handle_colour_pixels": {
+                "red": 355,
+                "yellow": 0
+              },
+              "handle_colour_claim": "red",
+              "handle_supported": true,
+              "red_handle_supported": true
+            },
+            {
+              "time_s": 5716,
+              "center_1080p_px": [
+                1490,
+                859
+              ],
+              "score": 0.76682,
+              "handle_colour_pixels": {
+                "red": 464,
+                "yellow": 0
+              },
+              "handle_colour_claim": "red",
+              "handle_supported": true,
+              "red_handle_supported": true
+            },
+            {
+              "time_s": 5717,
+              "center_1080p_px": [
+                1496,
+                933
+              ],
+              "score": 0.69367,
+              "handle_colour_pixels": {
+                "red": 331,
+                "yellow": 0
+              },
+              "handle_colour_claim": "red",
+              "handle_supported": true,
+              "red_handle_supported": true
+            }
+          ],
+          "common_observation_count": 4,
+          "median_body_minus_cap_x_360p_px": 1.333,
+          "median_body_minus_cap_y_360p_px": 8.333,
+          "synchronous_points": [
+            {
+              "source_time_s": 5713.0,
+              "cap_center_360p_px": [
+                479.0,
+                209.0
+              ],
+              "body_center_1080p_px": [
+                1440,
+                655
+              ],
+              "body_minus_cap_x_360p_px": 1.0,
+              "body_minus_cap_y_360p_px": 9.333
+            },
+            {
+              "source_time_s": 5714.0,
+              "cap_center_360p_px": [
+                487.0,
+                232.0
+              ],
+              "body_center_1080p_px": [
+                1460,
+                719
+              ],
+              "body_minus_cap_x_360p_px": -0.333,
+              "body_minus_cap_y_360p_px": 7.667
+            },
+            {
+              "source_time_s": 5715.0,
+              "cap_center_360p_px": [
+                490.0,
+                254.0
+              ],
+              "body_center_1080p_px": [
+                1478,
+                787
+              ],
+              "body_minus_cap_x_360p_px": 2.667,
+              "body_minus_cap_y_360p_px": 8.333
+            },
+            {
+              "source_time_s": 5716.0,
+              "cap_center_360p_px": [
+                495.0,
+                278.0
+              ],
+              "body_center_1080p_px": [
+                1490,
+                859
+              ],
+              "body_minus_cap_x_360p_px": 1.667,
+              "body_minus_cap_y_360p_px": 8.333
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "right_proposal_id": "R01:A396",
+      "episode_id": "E128",
+      "source_prefix_class": "moving_stone_pixels",
+      "colour_claim": "yellow",
+      "observed_motion_onset": {
+        "status": "observed_quiet_to_sustained_directional_motion",
+        "onset_bracket_s": [
+          5759.0,
+          5760.0
+        ],
+        "first_strong_motion_time_s": 5760.0,
+        "last_observed_track_time_s": 5762.0,
+        "observed_moving_points": [
+          {
+            "pixel": [
+              480.0,
+              216.0
+            ],
+            "bbox": [
+              472,
+              212,
+              16,
+              8
+            ],
+            "cap_area_px2": 56.0,
+            "time_s": 5759.0
+          },
+          {
+            "pixel": [
+              470.0,
+              232.0
+            ],
+            "bbox": [
+              462,
+              228,
+              16,
+              8
+            ],
+            "cap_area_px2": 46.0,
+            "time_s": 5760.0
+          },
+          {
+            "pixel": [
+              458.0,
+              257.0
+            ],
+            "bbox": [
+              450,
+              252,
+              16,
+              10
+            ],
+            "cap_area_px2": 74.0,
+            "time_s": 5761.0
+          },
+          {
+            "pixel": [
+              445.0,
+              284.0
+            ],
+            "bbox": [
+              436,
+              280,
+              18,
+              8
+            ],
+            "cap_area_px2": 72.5,
+            "time_s": 5762.0
+          }
+        ],
+        "supporting_step_rates_px_s": [
+          16.0,
+          25.0
+        ],
+        "quiet_end_time_s": 5759.0,
+        "physical_release_time_s": null,
+        "physical_stone_identity_verified": false,
+        "physical_settle_time_s": null
+      },
+      "following_partial_image_state_status": "following_partial_image_observation",
+      "body_path_status": "unique_compatible_body_path",
+      "compatible_highres_paths": [
+        {
+          "highres_path_id": "B002",
+          "highres_path_first_observed_s": 5739,
+          "highres_path_last_observed_s": 5762,
+          "highres_handle_supported_moving_points": [
+            {
+              "time_s": 5760,
+              "center_1080p_px": [
+                1414,
+                719
+              ],
+              "score": 0.62711,
+              "handle_colour_pixels": {
+                "red": 67,
+                "yellow": 625
+              },
+              "handle_colour_claim": "yellow",
+              "handle_supported": true
+            },
+            {
+              "time_s": 5761,
+              "center_1080p_px": [
+                1372,
+                797
+              ],
+              "score": 0.76394,
+              "handle_colour_pixels": {
+                "red": 0,
+                "yellow": 714
+              },
+              "handle_colour_claim": "yellow",
+              "handle_supported": true
+            },
+            {
+              "time_s": 5762,
+              "center_1080p_px": [
+                1334,
+                877
+              ],
+              "score": 0.82877,
+              "handle_colour_pixels": {
+                "red": 1,
+                "yellow": 838
+              },
+              "handle_colour_claim": "yellow",
+              "handle_supported": true
+            }
+          ],
+          "common_observation_count": 4,
+          "median_body_minus_cap_x_360p_px": -0.5,
+          "median_body_minus_cap_y_360p_px": 8.0,
+          "synchronous_points": [
+            {
+              "source_time_s": 5759.0,
+              "cap_center_360p_px": [
+                480.0,
+                216.0
+              ],
+              "body_center_1080p_px": [
+                1438,
+                671
+              ],
+              "body_minus_cap_x_360p_px": -0.667,
+              "body_minus_cap_y_360p_px": 7.667
+            },
+            {
+              "source_time_s": 5760.0,
+              "cap_center_360p_px": [
+                470.0,
+                232.0
+              ],
+              "body_center_1080p_px": [
+                1414,
+                719
+              ],
+              "body_minus_cap_x_360p_px": 1.333,
+              "body_minus_cap_y_360p_px": 7.667
+            },
+            {
+              "source_time_s": 5761.0,
+              "cap_center_360p_px": [
+                458.0,
+                257.0
+              ],
+              "body_center_1080p_px": [
+                1372,
+                797
+              ],
+              "body_minus_cap_x_360p_px": -0.667,
+              "body_minus_cap_y_360p_px": 8.667
+            },
+            {
+              "source_time_s": 5762.0,
+              "cap_center_360p_px": [
+                445.0,
+                284.0
+              ],
+              "body_center_1080p_px": [
+                1334,
+                877
+              ],
+              "body_minus_cap_x_360p_px": -0.333,
+              "body_minus_cap_y_360p_px": 8.333
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "right_proposal_id": "R01:A398",
+      "episode_id": "E129",
+      "source_prefix_class": "moving_stone_pixels",
+      "colour_claim": "red",
+      "observed_motion_onset": {
+        "status": "observed_quiet_to_sustained_directional_motion",
+        "onset_bracket_s": [
+          5791.0,
+          5793.0
+        ],
+        "first_strong_motion_time_s": 5793.0,
+        "last_observed_track_time_s": 5795.0,
+        "observed_moving_points": [
+          {
+            "pixel": [
+              480.0,
+              210.0
+            ],
+            "bbox": [
+              474,
+              206,
+              12,
+              8
+            ],
+            "cap_area_px2": 42.5,
+            "time_s": 5792.0
+          },
+          {
+            "pixel": [
+              487.0,
+              234.0
+            ],
+            "bbox": [
+              480,
+              230,
+              14,
+              8
+            ],
+            "cap_area_px2": 39.5,
+            "time_s": 5793.0
+          },
+          {
+            "pixel": [
+              492.0,
+              259.0
+            ],
+            "bbox": [
+              486,
+              256,
+              12,
+              6
+            ],
+            "cap_area_px2": 28.5,
+            "time_s": 5794.0
+          },
+          {
+            "pixel": [
+              495.0,
+              288.0
+            ],
+            "bbox": [
+              490,
+              286,
+              10,
+              4
+            ],
+            "cap_area_px2": 17.5,
+            "time_s": 5795.0
+          }
+        ],
+        "supporting_step_rates_px_s": [
+          24.0,
+          25.0
+        ],
+        "quiet_end_time_s": 5791.0,
+        "physical_release_time_s": null,
+        "physical_stone_identity_verified": false,
+        "physical_settle_time_s": null
+      },
+      "following_partial_image_state_status": "no_usable_following_observation",
+      "body_path_status": "unique_compatible_body_path",
+      "compatible_highres_paths": [
+        {
+          "highres_path_id": "B002",
+          "highres_path_first_observed_s": 5779,
+          "highres_path_last_observed_s": 5795,
+          "highres_handle_supported_moving_points": [
+            {
+              "time_s": 5793,
+              "center_1080p_px": [
+                1464,
+                727
+              ],
+              "score": 0.7274,
+              "handle_colour_pixels": {
+                "red": 367,
+                "yellow": 0
+              },
+              "handle_colour_claim": "red",
+              "handle_supported": true,
+              "red_handle_supported": true
+            },
+            {
+              "time_s": 5794,
+              "center_1080p_px": [
+                1482,
+                801
+              ],
+              "score": 0.894,
+              "handle_colour_pixels": {
+                "red": 354,
+                "yellow": 0
+              },
+              "handle_colour_claim": "red",
+              "handle_supported": true,
+              "red_handle_supported": true
+            },
+            {
+              "time_s": 5795,
+              "center_1080p_px": [
+                1498,
+                881
+              ],
+              "score": 0.71008,
+              "handle_colour_pixels": {
+                "red": 379,
+                "yellow": 0
+              },
+              "handle_colour_claim": "red",
+              "handle_supported": true,
+              "red_handle_supported": true
+            }
+          ],
+          "common_observation_count": 4,
+          "median_body_minus_cap_x_360p_px": 1.667,
+          "median_body_minus_cap_y_360p_px": 8.166,
+          "synchronous_points": [
+            {
+              "source_time_s": 5792.0,
+              "cap_center_360p_px": [
+                480.0,
+                210.0
+              ],
+              "body_center_1080p_px": [
+                1444,
+                657
+              ],
+              "body_minus_cap_x_360p_px": 1.333,
+              "body_minus_cap_y_360p_px": 9.0
+            },
+            {
+              "source_time_s": 5793.0,
+              "cap_center_360p_px": [
+                487.0,
+                234.0
+              ],
+              "body_center_1080p_px": [
+                1464,
+                727
+              ],
+              "body_minus_cap_x_360p_px": 1.0,
+              "body_minus_cap_y_360p_px": 8.333
+            },
+            {
+              "source_time_s": 5794.0,
+              "cap_center_360p_px": [
+                492.0,
+                259.0
+              ],
+              "body_center_1080p_px": [
+                1482,
+                801
+              ],
+              "body_minus_cap_x_360p_px": 2.0,
+              "body_minus_cap_y_360p_px": 8.0
+            },
+            {
+              "source_time_s": 5795.0,
+              "cap_center_360p_px": [
+                495.0,
+                288.0
+              ],
+              "body_center_1080p_px": [
+                1498,
+                881
+              ],
+              "body_minus_cap_x_360p_px": 4.333,
+              "body_minus_cap_y_360p_px": 5.667
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "right_proposal_id": "R01:A401",
+      "episode_id": "E130",
+      "source_prefix_class": "moving_stone_pixels",
+      "colour_claim": "yellow",
+      "observed_motion_onset": {
+        "status": "observed_quiet_to_sustained_directional_motion",
+        "onset_bracket_s": [
+          5842.0,
+          5843.0
+        ],
+        "first_strong_motion_time_s": 5843.0,
+        "last_observed_track_time_s": 5845.0,
+        "observed_moving_points": [
+          {
+            "pixel": [
+              482.0,
+              218.0
+            ],
+            "bbox": [
+              474,
+              214,
+              16,
+              8
+            ],
+            "cap_area_px2": 56.0,
+            "time_s": 5842.0
+          },
+          {
+            "pixel": [
+              475.0,
+              230.0
+            ],
+            "bbox": [
+              468,
+              226,
+              14,
+              8
+            ],
+            "cap_area_px2": 49.0,
+            "time_s": 5843.0
+          },
+          {
+            "pixel": [
+              463.0,
+              254.0
+            ],
+            "bbox": [
+              454,
+              250,
+              18,
+              8
+            ],
+            "cap_area_px2": 84.0,
+            "time_s": 5844.0
+          },
+          {
+            "pixel": [
+              450.0,
+              279.0
+            ],
+            "bbox": [
+              442,
+              274,
+              16,
+              10
+            ],
+            "cap_area_px2": 88.0,
+            "time_s": 5845.0
+          }
+        ],
+        "supporting_step_rates_px_s": [
+          12.0,
+          24.0
+        ],
+        "quiet_end_time_s": 5842.0,
+        "physical_release_time_s": null,
+        "physical_stone_identity_verified": false,
+        "physical_settle_time_s": null
+      },
+      "following_partial_image_state_status": "following_partial_image_observation",
+      "body_path_status": "unique_compatible_body_path",
+      "compatible_highres_paths": [
+        {
+          "highres_path_id": "B003",
+          "highres_path_first_observed_s": 5811,
+          "highres_path_last_observed_s": 5846,
+          "highres_handle_supported_moving_points": [
+            {
+              "time_s": 5843,
+              "center_1080p_px": [
+                1424,
+                713
+              ],
+              "score": 0.66767,
+              "handle_colour_pixels": {
+                "red": 0,
+                "yellow": 600
+              },
+              "handle_colour_claim": "yellow",
+              "handle_supported": true
+            },
+            {
+              "time_s": 5844,
+              "center_1080p_px": [
+                1388,
+                785
+              ],
+              "score": 0.80806,
+              "handle_colour_pixels": {
+                "red": 0,
+                "yellow": 854
+              },
+              "handle_colour_claim": "yellow",
+              "handle_supported": true
+            },
+            {
+              "time_s": 5845,
+              "center_1080p_px": [
+                1352,
+                861
+              ],
+              "score": 0.8404,
+              "handle_colour_pixels": {
+                "red": 0,
+                "yellow": 818
+              },
+              "handle_colour_claim": "yellow",
+              "handle_supported": true
+            },
+            {
+              "time_s": 5846,
+              "center_1080p_px": [
+                1318,
+                939
+              ],
+              "score": 0.82669,
+              "handle_colour_pixels": {
+                "red": 0,
+                "yellow": 731
+              },
+              "handle_colour_claim": "yellow",
+              "handle_supported": true
+            }
+          ],
+          "common_observation_count": 4,
+          "median_body_minus_cap_x_360p_px": 0.167,
+          "median_body_minus_cap_y_360p_px": 7.667,
+          "synchronous_points": [
+            {
+              "source_time_s": 5842.0,
+              "cap_center_360p_px": [
+                482.0,
+                218.0
+              ],
+              "body_center_1080p_px": [
+                1448,
+                675
+              ],
+              "body_minus_cap_x_360p_px": 0.667,
+              "body_minus_cap_y_360p_px": 7.0
+            },
+            {
+              "source_time_s": 5843.0,
+              "cap_center_360p_px": [
+                475.0,
+                230.0
+              ],
+              "body_center_1080p_px": [
+                1424,
+                713
+              ],
+              "body_minus_cap_x_360p_px": -0.333,
+              "body_minus_cap_y_360p_px": 7.667
+            },
+            {
+              "source_time_s": 5844.0,
+              "cap_center_360p_px": [
+                463.0,
+                254.0
+              ],
+              "body_center_1080p_px": [
+                1388,
+                785
+              ],
+              "body_minus_cap_x_360p_px": -0.333,
+              "body_minus_cap_y_360p_px": 7.667
+            },
+            {
+              "source_time_s": 5845.0,
+              "cap_center_360p_px": [
+                450.0,
+                279.0
+              ],
+              "body_center_1080p_px": [
+                1352,
+                861
+              ],
+              "body_minus_cap_x_360p_px": 0.667,
+              "body_minus_cap_y_360p_px": 8.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "right_proposal_id": "R01:A406",
+      "episode_id": "E131",
+      "source_prefix_class": "moving_stone_pixels",
+      "colour_claim": "red",
+      "observed_motion_onset": {
+        "status": "observed_quiet_to_sustained_directional_motion",
+        "onset_bracket_s": [
+          5882.0,
+          5883.0
+        ],
+        "first_strong_motion_time_s": 5883.0,
+        "last_observed_track_time_s": 5884.0,
+        "observed_moving_points": [
+          {
+            "pixel": [
+              478.0,
+              216.0
+            ],
+            "bbox": [
+              470,
+              212,
+              16,
+              8
+            ],
+            "cap_area_px2": 37.5,
+            "time_s": 5882.0
+          },
+          {
+            "pixel": [
+              472.0,
+              238.0
+            ],
+            "bbox": [
+              466,
+              234,
+              12,
+              8
+            ],
+            "cap_area_px2": 31.0,
+            "time_s": 5883.0
+          },
+          {
+            "pixel": [
+              470.0,
+              271.0
+            ],
+            "bbox": [
+              464,
+              268,
+              12,
+              6
+            ],
+            "cap_area_px2": 37.5,
+            "time_s": 5884.0
+          }
+        ],
+        "supporting_step_rates_px_s": [
+          22.0,
+          33.0
+        ],
+        "quiet_end_time_s": 5882.0,
+        "physical_release_time_s": null,
+        "physical_stone_identity_verified": false,
+        "physical_settle_time_s": null
+      },
+      "following_partial_image_state_status": "following_partial_image_observation",
+      "body_path_status": "unique_compatible_body_path",
+      "compatible_highres_paths": [
+        {
+          "highres_path_id": "B003",
+          "highres_path_first_observed_s": 5860,
+          "highres_path_last_observed_s": 5885,
+          "highres_handle_supported_moving_points": [
+            {
+              "time_s": 5883,
+              "center_1080p_px": [
+                1422,
+                739
+              ],
+              "score": 0.77679,
+              "handle_colour_pixels": {
+                "red": 390,
+                "yellow": 0
+              },
+              "handle_colour_claim": "red",
+              "handle_supported": true,
+              "red_handle_supported": true
+            },
+            {
+              "time_s": 5884,
+              "center_1080p_px": [
+                1410,
+                837
+              ],
+              "score": 0.8011,
+              "handle_colour_pixels": {
+                "red": 416,
+                "yellow": 0
+              },
+              "handle_colour_claim": "red",
+              "handle_supported": true,
+              "red_handle_supported": true
+            },
+            {
+              "time_s": 5885,
+              "center_1080p_px": [
+                1394,
+                943
+              ],
+              "score": 0.67713,
+              "handle_colour_pixels": {
+                "red": 458,
+                "yellow": 0
+              },
+              "handle_colour_claim": "red",
+              "handle_supported": true,
+              "red_handle_supported": true
+            }
+          ],
+          "common_observation_count": 3,
+          "median_body_minus_cap_x_360p_px": 0.0,
+          "median_body_minus_cap_y_360p_px": 8.333,
+          "synchronous_points": [
+            {
+              "source_time_s": 5882.0,
+              "cap_center_360p_px": [
+                478.0,
+                216.0
+              ],
+              "body_center_1080p_px": [
+                1434,
+                677
+              ],
+              "body_minus_cap_x_360p_px": 0.0,
+              "body_minus_cap_y_360p_px": 9.667
+            },
+            {
+              "source_time_s": 5883.0,
+              "cap_center_360p_px": [
+                472.0,
+                238.0
+              ],
+              "body_center_1080p_px": [
+                1422,
+                739
+              ],
+              "body_minus_cap_x_360p_px": 2.0,
+              "body_minus_cap_y_360p_px": 8.333
+            },
+            {
+              "source_time_s": 5884.0,
+              "cap_center_360p_px": [
+                470.0,
+                271.0
+              ],
+              "body_center_1080p_px": [
+                1410,
+                837
+              ],
+              "body_minus_cap_x_360p_px": 0.0,
+              "body_minus_cap_y_360p_px": 8.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "right_proposal_id": "R01:A407",
+      "episode_id": "E132",
+      "source_prefix_class": "moving_stone_pixels",
+      "colour_claim": "yellow",
+      "observed_motion_onset": {
+        "status": "observed_quiet_to_sustained_directional_motion",
+        "onset_bracket_s": [
+          5929.0,
+          5930.0
+        ],
+        "first_strong_motion_time_s": 5930.0,
+        "last_observed_track_time_s": 5931.0,
+        "observed_moving_points": [
+          {
+            "pixel": [
+              487.0,
+              217.0
+            ],
+            "bbox": [
+              480,
+              212,
+              14,
+              10
+            ],
+            "cap_area_px2": 81.5,
+            "time_s": 5929.0
+          },
+          {
+            "pixel": [
+              492.0,
+              243.0
+            ],
+            "bbox": [
+              484,
+              238,
+              16,
+              10
+            ],
+            "cap_area_px2": 54.5,
+            "time_s": 5930.0
+          },
+          {
+            "pixel": [
+              496.0,
+              273.0
+            ],
+            "bbox": [
+              488,
+              268,
+              16,
+              10
+            ],
+            "cap_area_px2": 70.0,
+            "time_s": 5931.0
+          }
+        ],
+        "supporting_step_rates_px_s": [
+          26.0,
+          30.0
+        ],
+        "quiet_end_time_s": 5929.0,
+        "physical_release_time_s": null,
+        "physical_stone_identity_verified": false,
+        "physical_settle_time_s": null
+      },
+      "following_partial_image_state_status": "following_partial_image_observation",
+      "body_path_status": "unique_compatible_body_path",
+      "compatible_highres_paths": [
+        {
+          "highres_path_id": "B004",
+          "highres_path_first_observed_s": 5899,
+          "highres_path_last_observed_s": 5932,
+          "highres_handle_supported_moving_points": [
+            {
+              "time_s": 5930,
+              "center_1080p_px": [
+                1476,
+                753
+              ],
+              "score": 0.75609,
+              "handle_colour_pixels": {
+                "red": 0,
+                "yellow": 739
+              },
+              "handle_colour_claim": "yellow",
+              "handle_supported": true
+            },
+            {
+              "time_s": 5931,
+              "center_1080p_px": [
+                1492,
+                845
+              ],
+              "score": 0.86935,
+              "handle_colour_pixels": {
+                "red": 0,
+                "yellow": 767
+              },
+              "handle_colour_claim": "yellow",
+              "handle_supported": true
+            },
+            {
+              "time_s": 5932,
+              "center_1080p_px": [
+                1506,
+                945
+              ],
+              "score": 0.811,
+              "handle_colour_pixels": {
+                "red": 0,
+                "yellow": 769
+              },
+              "handle_colour_claim": "yellow",
+              "handle_supported": true
+            }
+          ],
+          "common_observation_count": 3,
+          "median_body_minus_cap_x_360p_px": 0.0,
+          "median_body_minus_cap_y_360p_px": 8.667,
+          "synchronous_points": [
+            {
+              "source_time_s": 5929.0,
+              "cap_center_360p_px": [
+                487.0,
+                217.0
+              ],
+              "body_center_1080p_px": [
+                1460,
+                677
+              ],
+              "body_minus_cap_x_360p_px": -0.333,
+              "body_minus_cap_y_360p_px": 8.667
+            },
+            {
+              "source_time_s": 5930.0,
+              "cap_center_360p_px": [
+                492.0,
+                243.0
+              ],
+              "body_center_1080p_px": [
+                1476,
+                753
+              ],
+              "body_minus_cap_x_360p_px": 0.0,
+              "body_minus_cap_y_360p_px": 8.0
+            },
+            {
+              "source_time_s": 5931.0,
+              "cap_center_360p_px": [
+                496.0,
+                273.0
+              ],
+              "body_center_1080p_px": [
+                1492,
+                845
+              ],
+              "body_minus_cap_x_360p_px": 1.333,
+              "body_minus_cap_y_360p_px": 8.667
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "right_proposal_id": "R01:A408",
+      "episode_id": "E133",
+      "source_prefix_class": "moving_stone_pixels",
+      "colour_claim": "red",
+      "observed_motion_onset": {
+        "status": "observed_quiet_to_sustained_directional_motion",
+        "onset_bracket_s": [
+          6014.0,
+          6016.0
+        ],
+        "first_strong_motion_time_s": 6016.0,
+        "last_observed_track_time_s": 6018.0,
+        "observed_moving_points": [
+          {
+            "pixel": [
+              486.0,
+              221.0
+            ],
+            "bbox": [
+              480,
+              216,
+              12,
+              10
+            ],
+            "cap_area_px2": 50.5,
+            "time_s": 6015.0
+          },
+          {
+            "pixel": [
+              492.0,
+              246.0
+            ],
+            "bbox": [
+              486,
+              242,
+              12,
+              8
+            ],
+            "cap_area_px2": 31.5,
+            "time_s": 6016.0
+          },
+          {
+            "pixel": [
+              497.0,
+              272.0
+            ],
+            "bbox": [
+              492,
+              268,
+              10,
+              8
+            ],
+            "cap_area_px2": 28.0,
+            "time_s": 6017.0
+          },
+          {
+            "pixel": [
+              505.0,
+              300.0
+            ],
+            "bbox": [
+              500,
+              296,
+              10,
+              8
+            ],
+            "cap_area_px2": 36.0,
+            "time_s": 6018.0
+          }
+        ],
+        "supporting_step_rates_px_s": [
+          25.0,
+          26.0
+        ],
+        "quiet_end_time_s": 6014.0,
+        "physical_release_time_s": null,
+        "physical_stone_identity_verified": false,
+        "physical_settle_time_s": null
+      },
+      "following_partial_image_state_status": "following_partial_image_observation",
+      "body_path_status": "unique_compatible_body_path",
+      "compatible_highres_paths": [
+        {
+          "highres_path_id": "B004",
+          "highres_path_first_observed_s": 5950,
+          "highres_path_last_observed_s": 6018,
+          "highres_handle_supported_moving_points": [
+            {
+              "time_s": 6016,
+              "center_1080p_px": [
+                1484,
+                763
+              ],
+              "score": 0.81492,
+              "handle_colour_pixels": {
+                "red": 351,
+                "yellow": 0
+              },
+              "handle_colour_claim": "red",
+              "handle_supported": true,
+              "red_handle_supported": true
+            },
+            {
+              "time_s": 6017,
+              "center_1080p_px": [
+                1504,
+                843
+              ],
+              "score": 0.81503,
+              "handle_colour_pixels": {
+                "red": 348,
+                "yellow": 0
+              },
+              "handle_colour_claim": "red",
+              "handle_supported": true,
+              "red_handle_supported": true
+            },
+            {
+              "time_s": 6018,
+              "center_1080p_px": [
+                1526,
+                927
+              ],
+              "score": 0.69724,
+              "handle_colour_pixels": {
+                "red": 473,
+                "yellow": 0
+              },
+              "handle_colour_claim": "red",
+              "handle_supported": true,
+              "red_handle_supported": true
+            }
+          ],
+          "common_observation_count": 4,
+          "median_body_minus_cap_x_360p_px": 3.167,
+          "median_body_minus_cap_y_360p_px": 8.834,
+          "synchronous_points": [
+            {
+              "source_time_s": 6015.0,
+              "cap_center_360p_px": [
+                486.0,
+                221.0
+              ],
+              "body_center_1080p_px": [
+                1460,
+                689
+              ],
+              "body_minus_cap_x_360p_px": 0.667,
+              "body_minus_cap_y_360p_px": 8.667
+            },
+            {
+              "source_time_s": 6016.0,
+              "cap_center_360p_px": [
+                492.0,
+                246.0
+              ],
+              "body_center_1080p_px": [
+                1484,
+                763
+              ],
+              "body_minus_cap_x_360p_px": 2.667,
+              "body_minus_cap_y_360p_px": 8.333
+            },
+            {
+              "source_time_s": 6017.0,
+              "cap_center_360p_px": [
+                497.0,
+                272.0
+              ],
+              "body_center_1080p_px": [
+                1504,
+                843
+              ],
+              "body_minus_cap_x_360p_px": 4.333,
+              "body_minus_cap_y_360p_px": 9.0
+            },
+            {
+              "source_time_s": 6018.0,
+              "cap_center_360p_px": [
+                505.0,
+                300.0
+              ],
+              "body_center_1080p_px": [
+                1526,
+                927
+              ],
+              "body_minus_cap_x_360p_px": 3.667,
+              "body_minus_cap_y_360p_px": 9.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "right_proposal_id": "R01:A413",
+      "episode_id": "E134",
+      "source_prefix_class": "moving_stone_pixels",
+      "colour_claim": "yellow",
+      "observed_motion_onset": {
+        "status": "observed_quiet_to_sustained_directional_motion",
+        "onset_bracket_s": [
+          6074.0,
+          6075.0
+        ],
+        "first_strong_motion_time_s": 6075.0,
+        "last_observed_track_time_s": 6076.0,
+        "observed_moving_points": [
+          {
+            "pixel": [
+              469.0,
+              217.0
+            ],
+            "bbox": [
+              462,
+              212,
+              14,
+              10
+            ],
+            "cap_area_px2": 51.0,
+            "time_s": 6074.0
+          },
+          {
+            "pixel": [
+              471.0,
+              244.0
+            ],
+            "bbox": [
+              462,
+              240,
+              18,
+              8
+            ],
+            "cap_area_px2": 68.5,
+            "time_s": 6075.0
+          },
+          {
+            "pixel": [
+              470.0,
+              280.0
+            ],
+            "bbox": [
+              462,
+              276,
+              16,
+              8
+            ],
+            "cap_area_px2": 65.0,
+            "time_s": 6076.0
+          }
+        ],
+        "supporting_step_rates_px_s": [
+          27.0,
+          36.0
+        ],
+        "quiet_end_time_s": 6074.0,
+        "physical_release_time_s": null,
+        "physical_stone_identity_verified": false,
+        "physical_settle_time_s": null
+      },
+      "following_partial_image_state_status": "following_partial_image_observation",
+      "body_path_status": "unique_compatible_body_path",
+      "compatible_highres_paths": [
+        {
+          "highres_path_id": "B005",
+          "highres_path_first_observed_s": 6065,
+          "highres_path_last_observed_s": 6076,
+          "highres_handle_supported_moving_points": [
+            {
+              "time_s": 6075,
+              "center_1080p_px": [
+                1414,
+                757
+              ],
+              "score": 0.75025,
+              "handle_colour_pixels": {
+                "red": 0,
+                "yellow": 725
+              },
+              "handle_colour_claim": "yellow",
+              "handle_supported": true
+            },
+            {
+              "time_s": 6076,
+              "center_1080p_px": [
+                1414,
+                865
+              ],
+              "score": 0.82578,
+              "handle_colour_pixels": {
+                "red": 0,
+                "yellow": 740
+              },
+              "handle_colour_claim": "yellow",
+              "handle_supported": true
+            }
+          ],
+          "common_observation_count": 3,
+          "median_body_minus_cap_x_360p_px": 0.333,
+          "median_body_minus_cap_y_360p_px": 8.333,
+          "synchronous_points": [
+            {
+              "source_time_s": 6074.0,
+              "cap_center_360p_px": [
+                469.0,
+                217.0
+              ],
+              "body_center_1080p_px": [
+                1408,
+                675
+              ],
+              "body_minus_cap_x_360p_px": 0.333,
+              "body_minus_cap_y_360p_px": 8.0
+            },
+            {
+              "source_time_s": 6075.0,
+              "cap_center_360p_px": [
+                471.0,
+                244.0
+              ],
+              "body_center_1080p_px": [
+                1414,
+                757
+              ],
+              "body_minus_cap_x_360p_px": 0.333,
+              "body_minus_cap_y_360p_px": 8.333
+            },
+            {
+              "source_time_s": 6076.0,
+              "cap_center_360p_px": [
+                470.0,
+                280.0
+              ],
+              "body_center_1080p_px": [
+                1414,
+                865
+              ],
+              "body_minus_cap_x_360p_px": 1.333,
+              "body_minus_cap_y_360p_px": 8.333
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "right_proposal_id": "R01:A422",
+      "episode_id": "E135",
+      "source_prefix_class": "person_or_clothing_pixels",
+      "colour_claim": "red",
+      "observed_motion_onset": {
+        "status": "no_supported_quiet_to_motion_transition"
+      },
+      "following_partial_image_state_status": "not_applied_person_pixels",
+      "body_path_status": "not_attempted_person_or_clothing_pixels",
+      "compatible_highres_paths": []
+    },
+    {
+      "right_proposal_id": "R01:A424",
+      "episode_id": "E136",
+      "source_prefix_class": "person_or_clothing_pixels",
+      "colour_claim": "red",
+      "observed_motion_onset": {
+        "status": "observed_quiet_to_sustained_directional_motion",
+        "onset_bracket_s": [
+          6153.0,
+          6157.0
+        ],
+        "first_strong_motion_time_s": 6157.0,
+        "last_observed_track_time_s": 6158.0,
+        "observed_moving_points": [
+          {
+            "pixel": [
+              563.0,
+              180.0
+            ],
+            "bbox": [
+              556,
+              176,
+              14,
+              8
+            ],
+            "cap_area_px2": 40.0,
+            "time_s": 6156.0
+          },
+          {
+            "pixel": [
+              561.5,
+              195.0
+            ],
+            "bbox": [
+              558,
+              190,
+              7,
+              10
+            ],
+            "cap_area_px2": 31.5,
+            "time_s": 6157.0
+          },
+          {
+            "pixel": [
+              569.0,
+              212.5
+            ],
+            "bbox": [
+              560,
+              207,
+              18,
+              11
+            ],
+            "cap_area_px2": 71.0,
+            "time_s": 6158.0
+          }
+        ],
+        "supporting_step_rates_px_s": [
+          15.0,
+          17.5
+        ],
+        "quiet_end_time_s": 6153.0,
+        "physical_release_time_s": null,
+        "physical_stone_identity_verified": false,
+        "physical_settle_time_s": null
+      },
+      "following_partial_image_state_status": "not_applied_person_pixels",
+      "body_path_status": "not_attempted_person_or_clothing_pixels",
+      "compatible_highres_paths": []
+    },
+    {
+      "right_proposal_id": "R01:A427",
+      "episode_id": "E137",
+      "source_prefix_class": "person_or_clothing_pixels",
+      "colour_claim": "red",
+      "observed_motion_onset": {
+        "status": "insufficient_observations"
+      },
+      "following_partial_image_state_status": "not_applied_person_pixels",
+      "body_path_status": "not_attempted_person_or_clothing_pixels",
+      "compatible_highres_paths": []
+    },
+    {
+      "right_proposal_id": "R01:A431",
+      "episode_id": "E138",
+      "source_prefix_class": "person_or_clothing_pixels",
+      "colour_claim": "red",
+      "observed_motion_onset": {
+        "status": "insufficient_observations"
+      },
+      "following_partial_image_state_status": "not_applied_person_pixels",
+      "body_path_status": "not_attempted_person_or_clothing_pixels",
+      "compatible_highres_paths": []
+    },
+    {
+      "right_proposal_id": "R01:A441",
+      "episode_id": "E139",
+      "source_prefix_class": "moving_stone_pixels",
+      "colour_claim": "red",
+      "observed_motion_onset": {
+        "status": "observed_quiet_to_sustained_directional_motion",
+        "onset_bracket_s": [
+          6279.0,
+          6280.0
+        ],
+        "first_strong_motion_time_s": 6280.0,
+        "last_observed_track_time_s": 6282.0,
+        "observed_moving_points": [
+          {
+            "pixel": [
+              491.0,
+              211.0
+            ],
+            "bbox": [
+              484,
+              208,
+              14,
+              6
+            ],
+            "cap_area_px2": 41.5,
+            "time_s": 6279.0
+          },
+          {
+            "pixel": [
+              494.0,
+              229.5
+            ],
+            "bbox": [
+              486,
+              226,
+              16,
+              7
+            ],
+            "cap_area_px2": 32.0,
+            "time_s": 6280.0
+          },
+          {
+            "pixel": [
+              492.5,
+              251.0
+            ],
+            "bbox": [
+              489,
+              248,
+              7,
+              6
+            ],
+            "cap_area_px2": 10.5,
+            "time_s": 6281.0
+          },
+          {
+            "pixel": [
+              497.0,
+              280.0
+            ],
+            "bbox": [
+              492,
+              278,
+              10,
+              4
+            ],
+            "cap_area_px2": 23.5,
+            "time_s": 6282.0
+          }
+        ],
+        "supporting_step_rates_px_s": [
+          18.5,
+          21.5
+        ],
+        "quiet_end_time_s": 6279.0,
+        "physical_release_time_s": null,
+        "physical_stone_identity_verified": false,
+        "physical_settle_time_s": null
+      },
+      "following_partial_image_state_status": "following_partial_image_observation",
+      "body_path_status": "unique_compatible_body_path",
+      "compatible_highres_paths": [
+        {
+          "highres_path_id": "B008",
+          "highres_path_first_observed_s": 6263,
+          "highres_path_last_observed_s": 6283,
+          "highres_handle_supported_moving_points": [
+            {
+              "time_s": 6280,
+              "center_1080p_px": [
+                1482,
+                713
+              ],
+              "score": 0.77078,
+              "handle_colour_pixels": {
+                "red": 309,
+                "yellow": 0
+              },
+              "handle_colour_claim": "red",
+              "handle_supported": true,
+              "red_handle_supported": true
+            },
+            {
+              "time_s": 6281,
+              "center_1080p_px": [
+                1492,
+                779
+              ],
+              "score": 0.84118,
+              "handle_colour_pixels": {
+                "red": 250,
+                "yellow": 0
+              },
+              "handle_colour_claim": "red",
+              "handle_supported": true,
+              "red_handle_supported": true
+            },
+            {
+              "time_s": 6282,
+              "center_1080p_px": [
+                1500,
+                859
+              ],
+              "score": 0.75234,
+              "handle_colour_pixels": {
+                "red": 350,
+                "yellow": 0
+              },
+              "handle_colour_claim": "red",
+              "handle_supported": true,
+              "red_handle_supported": true
+            },
+            {
+              "time_s": 6283,
+              "center_1080p_px": [
+                1510,
+                939
+              ],
+              "score": 0.69314,
+              "handle_colour_pixels": {
+                "red": 388,
+                "yellow": 0
+              },
+              "handle_colour_claim": "red",
+              "handle_supported": true,
+              "red_handle_supported": true
+            }
+          ],
+          "common_observation_count": 4,
+          "median_body_minus_cap_x_360p_px": 1.5,
+          "median_body_minus_cap_y_360p_px": 8.084,
+          "synchronous_points": [
+            {
+              "source_time_s": 6279.0,
+              "cap_center_360p_px": [
+                491.0,
+                211.0
+              ],
+              "body_center_1080p_px": [
+                1472,
+                657
+              ],
+              "body_minus_cap_x_360p_px": -0.333,
+              "body_minus_cap_y_360p_px": 8.0
+            },
+            {
+              "source_time_s": 6280.0,
+              "cap_center_360p_px": [
+                494.0,
+                229.5
+              ],
+              "body_center_1080p_px": [
+                1482,
+                713
+              ],
+              "body_minus_cap_x_360p_px": 0.0,
+              "body_minus_cap_y_360p_px": 8.167
+            },
+            {
+              "source_time_s": 6281.0,
+              "cap_center_360p_px": [
+                492.5,
+                251.0
+              ],
+              "body_center_1080p_px": [
+                1492,
+                779
+              ],
+              "body_minus_cap_x_360p_px": 4.833,
+              "body_minus_cap_y_360p_px": 8.667
+            },
+            {
+              "source_time_s": 6282.0,
+              "cap_center_360p_px": [
+                497.0,
+                280.0
+              ],
+              "body_center_1080p_px": [
+                1500,
+                859
+              ],
+              "body_minus_cap_x_360p_px": 3.0,
+              "body_minus_cap_y_360p_px": 6.333
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "right_proposal_id": "R01:A444",
+      "episode_id": "E140",
+      "source_prefix_class": "moving_stone_pixels",
+      "colour_claim": "yellow",
+      "observed_motion_onset": {
+        "status": "observed_quiet_to_sustained_directional_motion",
+        "onset_bracket_s": [
+          6348.0,
+          6350.0
+        ],
+        "first_strong_motion_time_s": 6350.0,
+        "last_observed_track_time_s": 6351.0,
+        "observed_moving_points": [
+          {
+            "pixel": [
+              483.0,
+              222.0
+            ],
+            "bbox": [
+              476,
+              218,
+              14,
+              8
+            ],
+            "cap_area_px2": 45.0,
+            "time_s": 6349.0
+          },
+          {
+            "pixel": [
+              482.0,
+              254.0
+            ],
+            "bbox": [
+              474,
+              250,
+              16,
+              8
+            ],
+            "cap_area_px2": 79.5,
+            "time_s": 6350.0
+          },
+          {
+            "pixel": [
+              479.0,
+              289.0
+            ],
+            "bbox": [
+              470,
+              284,
+              18,
+              10
+            ],
+            "cap_area_px2": 101.0,
+            "time_s": 6351.0
+          }
+        ],
+        "supporting_step_rates_px_s": [
+          32.0,
+          35.0
+        ],
+        "quiet_end_time_s": 6348.0,
+        "physical_release_time_s": null,
+        "physical_stone_identity_verified": false,
+        "physical_settle_time_s": null
+      },
+      "following_partial_image_state_status": "following_partial_image_observation",
+      "body_path_status": "unique_compatible_body_path",
+      "compatible_highres_paths": [
+        {
+          "highres_path_id": "B006",
+          "highres_path_first_observed_s": 6336,
+          "highres_path_last_observed_s": 6351,
+          "highres_handle_supported_moving_points": [
+            {
+              "time_s": 6350,
+              "center_1080p_px": [
+                1448,
+                787
+              ],
+              "score": 0.77685,
+              "handle_colour_pixels": {
+                "red": 0,
+                "yellow": 788
+              },
+              "handle_colour_claim": "yellow",
+              "handle_supported": true
+            },
+            {
+              "time_s": 6351,
+              "center_1080p_px": [
+                1440,
+                891
+              ],
+              "score": 0.88487,
+              "handle_colour_pixels": {
+                "red": 0,
+                "yellow": 913
+              },
+              "handle_colour_claim": "yellow",
+              "handle_supported": true
+            }
+          ],
+          "common_observation_count": 3,
+          "median_body_minus_cap_x_360p_px": 1.0,
+          "median_body_minus_cap_y_360p_px": 8.0,
+          "synchronous_points": [
+            {
+              "source_time_s": 6349.0,
+              "cap_center_360p_px": [
+                483.0,
+                222.0
+              ],
+              "body_center_1080p_px": [
+                1454,
+                685
+              ],
+              "body_minus_cap_x_360p_px": 1.667,
+              "body_minus_cap_y_360p_px": 6.333
+            },
+            {
+              "source_time_s": 6350.0,
+              "cap_center_360p_px": [
+                482.0,
+                254.0
+              ],
+              "body_center_1080p_px": [
+                1448,
+                787
+              ],
+              "body_minus_cap_x_360p_px": 0.667,
+              "body_minus_cap_y_360p_px": 8.333
+            },
+            {
+              "source_time_s": 6351.0,
+              "cap_center_360p_px": [
+                479.0,
+                289.0
+              ],
+              "body_center_1080p_px": [
+                1440,
+                891
+              ],
+              "body_minus_cap_x_360p_px": 1.0,
+              "body_minus_cap_y_360p_px": 8.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "right_proposal_id": "R01:A452",
+      "episode_id": "E141",
+      "source_prefix_class": "moving_stone_pixels",
+      "colour_claim": "red",
+      "observed_motion_onset": {
+        "status": "observed_quiet_to_sustained_directional_motion",
+        "onset_bracket_s": [
+          6403.0,
+          6404.0
+        ],
+        "first_strong_motion_time_s": 6404.0,
+        "last_observed_track_time_s": 6405.0,
+        "observed_moving_points": [
+          {
+            "pixel": [
+              489.0,
+              214.0
+            ],
+            "bbox": [
+              482,
+              210,
+              14,
+              8
+            ],
+            "cap_area_px2": 50.5,
+            "time_s": 6403.0
+          },
+          {
+            "pixel": [
+              494.5,
+              236.0
+            ],
+            "bbox": [
+              489,
+              232,
+              11,
+              8
+            ],
+            "cap_area_px2": 29.0,
+            "time_s": 6404.0
+          },
+          {
+            "pixel": [
+              498.0,
+              260.5
+            ],
+            "bbox": [
+              492,
+              258,
+              12,
+              5
+            ],
+            "cap_area_px2": 17.0,
+            "time_s": 6405.0
+          }
+        ],
+        "supporting_step_rates_px_s": [
+          22.0,
+          24.5
+        ],
+        "quiet_end_time_s": 6403.0,
+        "physical_release_time_s": null,
+        "physical_stone_identity_verified": false,
+        "physical_settle_time_s": null
+      },
+      "following_partial_image_state_status": "following_partial_image_observation",
+      "body_path_status": "unique_compatible_body_path",
+      "compatible_highres_paths": [
+        {
+          "highres_path_id": "B009",
+          "highres_path_first_observed_s": 6383,
+          "highres_path_last_observed_s": 6405,
+          "highres_handle_supported_moving_points": [
+            {
+              "time_s": 6404,
+              "center_1080p_px": [
+                1488,
+                733
+              ],
+              "score": 0.79223,
+              "handle_colour_pixels": {
+                "red": 159,
+                "yellow": 0
+              },
+              "handle_colour_claim": "red",
+              "handle_supported": true,
+              "red_handle_supported": true
+            },
+            {
+              "time_s": 6405,
+              "center_1080p_px": [
+                1502,
+                803
+              ],
+              "score": 0.9034,
+              "handle_colour_pixels": {
+                "red": 279,
+                "yellow": 0
+              },
+              "handle_colour_claim": "red",
+              "handle_supported": true,
+              "red_handle_supported": true
+            }
+          ],
+          "common_observation_count": 3,
+          "median_body_minus_cap_x_360p_px": 1.667,
+          "median_body_minus_cap_y_360p_px": 8.333,
+          "synchronous_points": [
+            {
+              "source_time_s": 6403.0,
+              "cap_center_360p_px": [
+                489.0,
+                214.0
+              ],
+              "body_center_1080p_px": [
+                1472,
+                667
+              ],
+              "body_minus_cap_x_360p_px": 1.667,
+              "body_minus_cap_y_360p_px": 8.333
+            },
+            {
+              "source_time_s": 6404.0,
+              "cap_center_360p_px": [
+                494.5,
+                236.0
+              ],
+              "body_center_1080p_px": [
+                1488,
+                733
+              ],
+              "body_minus_cap_x_360p_px": 1.5,
+              "body_minus_cap_y_360p_px": 8.333
+            },
+            {
+              "source_time_s": 6405.0,
+              "cap_center_360p_px": [
+                498.0,
+                260.5
+              ],
+              "body_center_1080p_px": [
+                1502,
+                803
+              ],
+              "body_minus_cap_x_360p_px": 2.667,
+              "body_minus_cap_y_360p_px": 7.167
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "right_proposal_id": "R01:A455",
+      "episode_id": "E142",
+      "source_prefix_class": "moving_stone_pixels",
+      "colour_claim": "yellow",
+      "observed_motion_onset": {
+        "status": "observed_quiet_to_sustained_directional_motion",
+        "onset_bracket_s": [
+          6464.0,
+          6466.0
+        ],
+        "first_strong_motion_time_s": 6466.0,
+        "last_observed_track_time_s": 6467.0,
+        "observed_moving_points": [
+          {
+            "pixel": [
+              488.0,
+              224.0
+            ],
+            "bbox": [
+              480,
+              220,
+              16,
+              8
+            ],
+            "cap_area_px2": 55.5,
+            "time_s": 6465.0
+          },
+          {
+            "pixel": [
+              500.0,
+              249.0
+            ],
+            "bbox": [
+              492,
+              244,
+              16,
+              10
+            ],
+            "cap_area_px2": 59.5,
+            "time_s": 6466.0
+          },
+          {
+            "pixel": [
+              509.0,
+              274.0
+            ],
+            "bbox": [
+              500,
+              270,
+              18,
+              8
+            ],
+            "cap_area_px2": 62.5,
+            "time_s": 6467.0
+          }
+        ],
+        "supporting_step_rates_px_s": [
+          25.0,
+          25.0
+        ],
+        "quiet_end_time_s": 6464.0,
+        "physical_release_time_s": null,
+        "physical_stone_identity_verified": false,
+        "physical_settle_time_s": null
+      },
+      "following_partial_image_state_status": "following_partial_image_observation",
+      "body_path_status": "unique_compatible_body_path",
+      "compatible_highres_paths": [
+        {
+          "highres_path_id": "B007",
+          "highres_path_first_observed_s": 6450,
+          "highres_path_last_observed_s": 6468,
+          "highres_handle_supported_moving_points": [
+            {
+              "time_s": 6466,
+              "center_1080p_px": [
+                1502,
+                771
+              ],
+              "score": 0.76293,
+              "handle_colour_pixels": {
+                "red": 0,
+                "yellow": 735
+              },
+              "handle_colour_claim": "yellow",
+              "handle_supported": true
+            },
+            {
+              "time_s": 6467,
+              "center_1080p_px": [
+                1530,
+                847
+              ],
+              "score": 0.85058,
+              "handle_colour_pixels": {
+                "red": 0,
+                "yellow": 807
+              },
+              "handle_colour_claim": "yellow",
+              "handle_supported": true
+            },
+            {
+              "time_s": 6468,
+              "center_1080p_px": [
+                1560,
+                935
+              ],
+              "score": 0.80265,
+              "handle_colour_pixels": {
+                "red": 0,
+                "yellow": 1068
+              },
+              "handle_colour_claim": "yellow",
+              "handle_supported": true
+            }
+          ],
+          "common_observation_count": 3,
+          "median_body_minus_cap_x_360p_px": 0.667,
+          "median_body_minus_cap_y_360p_px": 8.0,
+          "synchronous_points": [
+            {
+              "source_time_s": 6465.0,
+              "cap_center_360p_px": [
+                488.0,
+                224.0
+              ],
+              "body_center_1080p_px": [
+                1466,
+                693
+              ],
+              "body_minus_cap_x_360p_px": 0.667,
+              "body_minus_cap_y_360p_px": 7.0
+            },
+            {
+              "source_time_s": 6466.0,
+              "cap_center_360p_px": [
+                500.0,
+                249.0
+              ],
+              "body_center_1080p_px": [
+                1502,
+                771
+              ],
+              "body_minus_cap_x_360p_px": 0.667,
+              "body_minus_cap_y_360p_px": 8.0
+            },
+            {
+              "source_time_s": 6467.0,
+              "cap_center_360p_px": [
+                509.0,
+                274.0
+              ],
+              "body_center_1080p_px": [
+                1530,
+                847
+              ],
+              "body_minus_cap_x_360p_px": 1.0,
+              "body_minus_cap_y_360p_px": 8.333
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "right_proposal_id": "R01:A462",
+      "episode_id": "E143",
+      "source_prefix_class": "moving_stone_pixels",
+      "colour_claim": "red",
+      "observed_motion_onset": {
+        "status": "observed_quiet_to_sustained_directional_motion",
+        "onset_bracket_s": [
+          6518.0,
+          6519.0
+        ],
+        "first_strong_motion_time_s": 6519.0,
+        "last_observed_track_time_s": 6520.0,
+        "observed_moving_points": [
+          {
+            "pixel": [
+              480.5,
+              216.0
+            ],
+            "bbox": [
+              473,
+              212,
+              15,
+              8
+            ],
+            "cap_area_px2": 59.5,
+            "time_s": 6518.0
+          },
+          {
+            "pixel": [
+              479.5,
+              240.0
+            ],
+            "bbox": [
+              473,
+              236,
+              13,
+              8
+            ],
+            "cap_area_px2": 43.0,
+            "time_s": 6519.0
+          },
+          {
+            "pixel": [
+              480.0,
+              274.0
+            ],
+            "bbox": [
+              472,
+              270,
+              16,
+              8
+            ],
+            "cap_area_px2": 49.0,
+            "time_s": 6520.0
+          }
+        ],
+        "supporting_step_rates_px_s": [
+          24.0,
+          34.0
+        ],
+        "quiet_end_time_s": 6518.0,
+        "physical_release_time_s": null,
+        "physical_stone_identity_verified": false,
+        "physical_settle_time_s": null
+      },
+      "following_partial_image_state_status": "following_partial_image_observation",
+      "body_path_status": "unique_compatible_body_path",
+      "compatible_highres_paths": [
+        {
+          "highres_path_id": "B010",
+          "highres_path_first_observed_s": 6476,
+          "highres_path_last_observed_s": 6520,
+          "highres_handle_supported_moving_points": [
+            {
+              "time_s": 6519,
+              "center_1080p_px": [
+                1442,
+                745
+              ],
+              "score": 0.81638,
+              "handle_colour_pixels": {
+                "red": 419,
+                "yellow": 0
+              },
+              "handle_colour_claim": "red",
+              "handle_supported": true,
+              "red_handle_supported": true
+            },
+            {
+              "time_s": 6520,
+              "center_1080p_px": [
+                1444,
+                849
+              ],
+              "score": 0.78978,
+              "handle_colour_pixels": {
+                "red": 559,
+                "yellow": 0
+              },
+              "handle_colour_claim": "red",
+              "handle_supported": true,
+              "red_handle_supported": true
+            }
+          ],
+          "common_observation_count": 3,
+          "median_body_minus_cap_x_360p_px": 1.167,
+          "median_body_minus_cap_y_360p_px": 9.0,
+          "synchronous_points": [
+            {
+              "source_time_s": 6518.0,
+              "cap_center_360p_px": [
+                480.5,
+                216.0
+              ],
+              "body_center_1080p_px": [
+                1440,
+                675
+              ],
+              "body_minus_cap_x_360p_px": -0.5,
+              "body_minus_cap_y_360p_px": 9.0
+            },
+            {
+              "source_time_s": 6519.0,
+              "cap_center_360p_px": [
+                479.5,
+                240.0
+              ],
+              "body_center_1080p_px": [
+                1442,
+                745
+              ],
+              "body_minus_cap_x_360p_px": 1.167,
+              "body_minus_cap_y_360p_px": 8.333
+            },
+            {
+              "source_time_s": 6520.0,
+              "cap_center_360p_px": [
+                480.0,
+                274.0
+              ],
+              "body_center_1080p_px": [
+                1444,
+                849
+              ],
+              "body_minus_cap_x_360p_px": 1.333,
+              "body_minus_cap_y_360p_px": 9.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "right_proposal_id": "R01:A471",
+      "episode_id": "E144",
+      "source_prefix_class": "moving_stone_pixels",
+      "colour_claim": "yellow",
+      "observed_motion_onset": {
+        "status": "observed_quiet_to_sustained_directional_motion",
+        "onset_bracket_s": [
+          6583.0,
+          6585.0
+        ],
+        "first_strong_motion_time_s": 6585.0,
+        "last_observed_track_time_s": 6586.0,
+        "observed_moving_points": [
+          {
+            "pixel": [
+              492.0,
+              228.0
+            ],
+            "bbox": [
+              484,
+              224,
+              16,
+              8
+            ],
+            "cap_area_px2": 51.0,
+            "time_s": 6584.0
+          },
+          {
+            "pixel": [
+              501.0,
+              254.0
+            ],
+            "bbox": [
+              492,
+              250,
+              18,
+              8
+            ],
+            "cap_area_px2": 60.5,
+            "time_s": 6585.0
+          },
+          {
+            "pixel": [
+              511.0,
+              281.0
+            ],
+            "bbox": [
+              502,
+              276,
+              18,
+              10
+            ],
+            "cap_area_px2": 88.5,
+            "time_s": 6586.0
+          }
+        ],
+        "supporting_step_rates_px_s": [
+          26.0,
+          27.0
+        ],
+        "quiet_end_time_s": 6583.0,
+        "physical_release_time_s": null,
+        "physical_stone_identity_verified": false,
+        "physical_settle_time_s": null
+      },
+      "following_partial_image_state_status": "following_partial_image_observation",
+      "body_path_status": "unique_compatible_body_path",
+      "compatible_highres_paths": [
+        {
+          "highres_path_id": "B008",
+          "highres_path_first_observed_s": 6552,
+          "highres_path_last_observed_s": 6586,
+          "highres_handle_supported_moving_points": [
+            {
+              "time_s": 6585,
+              "center_1080p_px": [
+                1506,
+                787
+              ],
+              "score": 0.77976,
+              "handle_colour_pixels": {
+                "red": 0,
+                "yellow": 790
+              },
+              "handle_colour_claim": "yellow",
+              "handle_supported": true
+            },
+            {
+              "time_s": 6586,
+              "center_1080p_px": [
+                1534,
+                869
+              ],
+              "score": 0.84554,
+              "handle_colour_pixels": {
+                "red": 0,
+                "yellow": 891
+              },
+              "handle_colour_claim": "yellow",
+              "handle_supported": true
+            }
+          ],
+          "common_observation_count": 3,
+          "median_body_minus_cap_x_360p_px": 0.333,
+          "median_body_minus_cap_y_360p_px": 8.333,
+          "synchronous_points": [
+            {
+              "source_time_s": 6584.0,
+              "cap_center_360p_px": [
+                492.0,
+                228.0
+              ],
+              "body_center_1080p_px": [
+                1474,
+                707
+              ],
+              "body_minus_cap_x_360p_px": -0.667,
+              "body_minus_cap_y_360p_px": 7.667
+            },
+            {
+              "source_time_s": 6585.0,
+              "cap_center_360p_px": [
+                501.0,
+                254.0
+              ],
+              "body_center_1080p_px": [
+                1506,
+                787
+              ],
+              "body_minus_cap_x_360p_px": 1.0,
+              "body_minus_cap_y_360p_px": 8.333
+            },
+            {
+              "source_time_s": 6586.0,
+              "cap_center_360p_px": [
+                511.0,
+                281.0
+              ],
+              "body_center_1080p_px": [
+                1534,
+                869
+              ],
+              "body_minus_cap_x_360p_px": 0.333,
+              "body_minus_cap_y_360p_px": 8.667
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "right_proposal_id": "R01:A478",
+      "episode_id": "E145",
+      "source_prefix_class": "moving_stone_pixels",
+      "colour_claim": "red",
+      "observed_motion_onset": {
+        "status": "observed_quiet_to_sustained_directional_motion",
+        "onset_bracket_s": [
+          6655.0,
+          6656.0
+        ],
+        "first_strong_motion_time_s": 6656.0,
+        "last_observed_track_time_s": 6658.0,
+        "observed_moving_points": [
+          {
+            "pixel": [
+              483.5,
+              218.0
+            ],
+            "bbox": [
+              475,
+              214,
+              17,
+              8
+            ],
+            "cap_area_px2": 76.5,
+            "time_s": 6655.0
+          },
+          {
+            "pixel": [
+              481.0,
+              233.0
+            ],
+            "bbox": [
+              474,
+              229,
+              14,
+              8
+            ],
+            "cap_area_px2": 32.5,
+            "time_s": 6656.0
+          },
+          {
+            "pixel": [
+              477.0,
+              266.0
+            ],
+            "bbox": [
+              470,
+              262,
+              14,
+              8
+            ],
+            "cap_area_px2": 36.0,
+            "time_s": 6657.0
+          },
+          {
+            "pixel": [
+              475.5,
+              299.5
+            ],
+            "bbox": [
+              467,
+              295,
+              17,
+              9
+            ],
+            "cap_area_px2": 56.5,
+            "time_s": 6658.0
+          }
+        ],
+        "supporting_step_rates_px_s": [
+          15.0,
+          33.0
+        ],
+        "quiet_end_time_s": 6655.0,
+        "physical_release_time_s": null,
+        "physical_stone_identity_verified": false,
+        "physical_settle_time_s": null
+      },
+      "following_partial_image_state_status": "no_usable_following_observation",
+      "body_path_status": "unique_compatible_body_path",
+      "compatible_highres_paths": [
+        {
+          "highres_path_id": "B011",
+          "highres_path_first_observed_s": 6645,
+          "highres_path_last_observed_s": 6658,
+          "highres_handle_supported_moving_points": [
+            {
+              "time_s": 6656,
+              "center_1080p_px": [
+                1444,
+                725
+              ],
+              "score": 0.77322,
+              "handle_colour_pixels": {
+                "red": 395,
+                "yellow": 0
+              },
+              "handle_colour_claim": "red",
+              "handle_supported": true,
+              "red_handle_supported": true
+            },
+            {
+              "time_s": 6657,
+              "center_1080p_px": [
+                1434,
+                823
+              ],
+              "score": 0.87004,
+              "handle_colour_pixels": {
+                "red": 462,
+                "yellow": 0
+              },
+              "handle_colour_claim": "red",
+              "handle_supported": true,
+              "red_handle_supported": true
+            },
+            {
+              "time_s": 6658,
+              "center_1080p_px": [
+                1430,
+                923
+              ],
+              "score": 0.69135,
+              "handle_colour_pixels": {
+                "red": 478,
+                "yellow": 0
+              },
+              "handle_colour_claim": "red",
+              "handle_supported": true,
+              "red_handle_supported": true
+            }
+          ],
+          "common_observation_count": 4,
+          "median_body_minus_cap_x_360p_px": 0.666,
+          "median_body_minus_cap_y_360p_px": 8.333,
+          "synchronous_points": [
+            {
+              "source_time_s": 6655.0,
+              "cap_center_360p_px": [
+                483.5,
+                218.0
+              ],
+              "body_center_1080p_px": [
+                1448,
+                679
+              ],
+              "body_minus_cap_x_360p_px": -0.833,
+              "body_minus_cap_y_360p_px": 8.333
+            },
+            {
+              "source_time_s": 6656.0,
+              "cap_center_360p_px": [
+                481.0,
+                233.0
+              ],
+              "body_center_1080p_px": [
+                1444,
+                725
+              ],
+              "body_minus_cap_x_360p_px": 0.333,
+              "body_minus_cap_y_360p_px": 8.667
+            },
+            {
+              "source_time_s": 6657.0,
+              "cap_center_360p_px": [
+                477.0,
+                266.0
+              ],
+              "body_center_1080p_px": [
+                1434,
+                823
+              ],
+              "body_minus_cap_x_360p_px": 1.0,
+              "body_minus_cap_y_360p_px": 8.333
+            },
+            {
+              "source_time_s": 6658.0,
+              "cap_center_360p_px": [
+                475.5,
+                299.5
+              ],
+              "body_center_1080p_px": [
+                1430,
+                923
+              ],
+              "body_minus_cap_x_360p_px": 1.167,
+              "body_minus_cap_y_360p_px": 8.167
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Match geometry was set after inspecting the Latvia body/cap offsets.",
+    "Source classes and body/handle paths are same-match development evidence, not independent throw labels.",
+    "Synchronous pixel correspondence does not prove identity across a long stationary lead-in.",
+    "High-resolution paths still leave this camera; their last point is not the throw end or settled position.",
+    "No metric ice calibration, complete board or simulation-ready trajectory is inferred."
+  ]
+}

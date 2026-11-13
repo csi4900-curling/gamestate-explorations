@@ -1,0 +1,132 @@
+{
+  "status": "source_gate_horizon_sensitivity_with_retrospective_postscore_not_validation",
+  "input_sha256": {
+    "short_source_scan": "b440da843389bddff49d44a3e3e45eccd725ce2172f0d2f9b67c9e2470fce525",
+    "long_source_scan": "608de5b78e4a5b9127f015b5620c641e92bd398ebb8ba5bf9e1791ad5cdf7fc5",
+    "short_postscore": "07f31d738e3128eaa31b8f96c12238f656cf373133e354271e2bd3fa535b9298",
+    "long_postscore": "3dc8ed3008b06e627cef79a3c7b7d2c069cfedae15be2711b300d118e0e96f0e"
+  },
+  "runner_sha256": "f49071a4a9f8d24ea4d123fd3ecdeb388c9f6e310ee90062143cfe7da677c5d3",
+  "short_horizon_s": 32,
+  "long_horizon_s": 90,
+  "short_stable_candidate_count": 68,
+  "long_stable_candidate_count": 82,
+  "gained_stable_candidate_ids": [
+    "S64",
+    "S78",
+    "S115",
+    "S121",
+    "S156",
+    "S199",
+    "S220",
+    "S421",
+    "S439",
+    "S557",
+    "S591",
+    "S599",
+    "S603",
+    "S610"
+  ],
+  "lost_stable_candidate_ids": [],
+  "short_earliest_group_postscore": {
+    "candidate_count": 25,
+    "observed_stone_count": 89,
+    "matched_observed_stone_count": 89,
+    "complete_diagram_symbol_match_count": 23
+  },
+  "long_earliest_group_postscore": {
+    "candidate_count": 34,
+    "observed_stone_count": 142,
+    "matched_observed_stone_count": 136,
+    "complete_diagram_symbol_match_count": 28
+  },
+  "new_earliest_scored_candidates": [
+    {
+      "candidate_id": "S78",
+      "official_shot_id": "PREL001501-E01-S15",
+      "post_camera_shot_id": "S83",
+      "observed_stones": 4,
+      "matched_observed_stones": 4,
+      "official_symbols": 4,
+      "complete_diagram_symbol_match": true
+    },
+    {
+      "candidate_id": "S115",
+      "official_shot_id": "PREL001501-E02-S09",
+      "post_camera_shot_id": "S120",
+      "observed_stones": 7,
+      "matched_observed_stones": 7,
+      "official_symbols": 7,
+      "complete_diagram_symbol_match": true
+    },
+    {
+      "candidate_id": "S121",
+      "official_shot_id": "PREL001501-E02-S10",
+      "post_camera_shot_id": "S124",
+      "observed_stones": 8,
+      "matched_observed_stones": 8,
+      "official_symbols": 8,
+      "complete_diagram_symbol_match": true
+    },
+    {
+      "candidate_id": "S156",
+      "official_shot_id": "PREL001501-E02-S15",
+      "post_camera_shot_id": "S159",
+      "observed_stones": 11,
+      "matched_observed_stones": 11,
+      "official_symbols": 11,
+      "complete_diagram_symbol_match": true
+    },
+    {
+      "candidate_id": "S421",
+      "official_shot_id": "PREL001501-E06-S12",
+      "post_camera_shot_id": "S424",
+      "observed_stones": 4,
+      "matched_observed_stones": 4,
+      "official_symbols": 4,
+      "complete_diagram_symbol_match": true
+    },
+    {
+      "candidate_id": "S591",
+      "official_shot_id": "PREL001501-E08-S10",
+      "post_camera_shot_id": "S594",
+      "observed_stones": 5,
+      "matched_observed_stones": 4,
+      "official_symbols": 5,
+      "complete_diagram_symbol_match": false
+    },
+    {
+      "candidate_id": "S599",
+      "official_shot_id": "PREL001501-E08-S11",
+      "post_camera_shot_id": "S602",
+      "observed_stones": 4,
+      "matched_observed_stones": 2,
+      "official_symbols": 4,
+      "complete_diagram_symbol_match": false
+    },
+    {
+      "candidate_id": "S603",
+      "official_shot_id": "PREL001501-E08-S12",
+      "post_camera_shot_id": "S606",
+      "observed_stones": 5,
+      "matched_observed_stones": 3,
+      "official_symbols": 5,
+      "complete_diagram_symbol_match": false
+    },
+    {
+      "candidate_id": "S610",
+      "official_shot_id": "PREL001501-E08-S13",
+      "post_camera_shot_id": "S613",
+      "observed_stones": 5,
+      "matched_observed_stones": 4,
+      "official_symbols": 5,
+      "complete_diagram_symbol_match": false
+    }
+  ],
+  "limitations": [
+    "Earliest camera group is chosen by source time, never by official diagram score.",
+    "Both scores are retrospective, on a selected subset with orientation support.",
+    "A longer window can include unlisted true throws or transitions despite stopping before the next detected candidate.",
+    "This sensitivity result does not choose a production horizon or estimate unseen-match accuracy."
+  ]
+}

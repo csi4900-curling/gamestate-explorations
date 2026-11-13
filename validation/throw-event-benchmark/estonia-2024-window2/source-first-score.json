@@ -1,0 +1,71 @@
+{
+  "source_id": "PXGfMeiTKMA",
+  "reference_method": "agent_blind",
+  "source_interval_s": [
+    3000,
+    3300
+  ],
+  "reference_sha256": "9e74fcfc4ae24357f6cbbc016f7564c76aa307cd3881ba0040196a6605420ebf",
+  "predictions_sha256": "c49c62d1030aef6f84d96d24bef2209949401925f4835672551b2e10db6f8231",
+  "scorer_sha256": "f5a76cc3ea8b37ff13d90fc919f7192753276873b603ef01d4ef5b6f743307f6",
+  "score": {
+    "reference_count": 6,
+    "prediction_count": 6,
+    "true_positives": 6,
+    "false_positives": 0,
+    "false_negatives": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "colour_errors_among_matches": 0,
+    "colour_aware_true_positives": 6,
+    "colour_aware_false_positives": 0,
+    "colour_aware_false_negatives": 0,
+    "colour_aware_precision": 1.0,
+    "colour_aware_recall": 1.0,
+    "colour_aware_f1": 1.0,
+    "matches": [
+      {
+        "reference_id": "W01",
+        "prediction_id": "R01-S74",
+        "colour_match": true
+      },
+      {
+        "reference_id": "W02",
+        "prediction_id": "R01-S75",
+        "colour_match": true
+      },
+      {
+        "reference_id": "W03",
+        "prediction_id": "R01-S76",
+        "colour_match": true
+      },
+      {
+        "reference_id": "W04",
+        "prediction_id": "R01-S77",
+        "colour_match": true
+      },
+      {
+        "reference_id": "W05",
+        "prediction_id": "R01-S79",
+        "colour_match": true
+      },
+      {
+        "reference_id": "W06",
+        "prediction_id": "R01-S80",
+        "colour_match": true
+      }
+    ],
+    "missed_reference_ids": [],
+    "extra_prediction_ids": [],
+    "scoring_tolerance_s": 0.0,
+    "prediction_time_mode": "point",
+    "max_prediction_interval_s": null,
+    "timing_interpretation": "Passage detection within a reference interval; no release-time error inferred."
+  },
+  "limits": [
+    "An F1 score inherits the completeness and independence limits of its reference.",
+    "One-to-one interval agreement is not release-time accuracy.",
+    "Full-match accuracy requires exhaustive labels across direction and camera changes."
+  ]
+}

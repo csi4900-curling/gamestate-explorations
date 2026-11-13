@@ -1,0 +1,2651 @@
+{
+  "status": "postinspection_cap_area_gate_sensitivity_not_identity_accuracy",
+  "source_video_sha256": "c5254bb9103e32c6beac74cf269fc7bcec8ce2c2a710a7d4600c7ddb951f160e",
+  "input_sha256": {
+    "one_step_scale_transfer": "ab4fea50f4422c7b3f70143d49536ebff7f45868d5b42047ae520c120677d82d"
+  },
+  "runner_sha256": "c187d57063f450a58356a49fa459b07c29848487e8ebc8f2898e59c309542464",
+  "selector_code_sha256": "5f92c54fc00285264a025c91a4c41c5fa936641df6f6191ed81ed807c67acacf",
+  "gate_definitions": {
+    "scaled_czech_absolute_area": "20/9 to 700/9 source px\u00b2; Czech-developed absolute contour gate scaled by resolution area",
+    "past_cap_area_0p33_to_3": "next contour area between 1/3 and 3 times last observed source cap area",
+    "past_cap_area_0p5_to_2": "next contour area between 1/2 and 2 times last observed source cap area",
+    "past_cap_area_0p75_to_1p5": "next contour area between 3/4 and 1.5 times last observed source cap area",
+    "no_area_limit_diagnostic": "all raw colour contours in the search ROI"
+  },
+  "in_shot_track_count": 143,
+  "status_counts_by_gate": {
+    "scaled_czech_absolute_area": {
+      "no_cap_inside_motion_gate": 134,
+      "unique_motion_gate_choice": 8,
+      "competing_caps_inside_motion_gate": 1
+    },
+    "past_cap_area_0p33_to_3": {
+      "no_cap_inside_motion_gate": 34,
+      "unique_motion_gate_choice": 109
+    },
+    "past_cap_area_0p5_to_2": {
+      "no_cap_inside_motion_gate": 34,
+      "unique_motion_gate_choice": 109
+    },
+    "past_cap_area_0p75_to_1p5": {
+      "no_cap_inside_motion_gate": 37,
+      "unique_motion_gate_choice": 106
+    },
+    "no_area_limit_diagnostic": {
+      "no_cap_inside_motion_gate": 30,
+      "unique_motion_gate_choice": 111,
+      "competing_caps_inside_motion_gate": 2
+    }
+  },
+  "absolute_gate_failure_reason_counts": {
+    "all_components_excluded_by_absolute_area": 116,
+    "components_fail_motion_gate": 13,
+    "no_raw_colour_component": 5
+  },
+  "rows": [
+    {
+      "episode_id": "S28-R01",
+      "camera_shot_id": "S28",
+      "colour": "red",
+      "last_cap_area_px2_360": 219.0,
+      "next_frame_raw_component_areas_px2_360": [
+        222.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "no_cap_inside_motion_gate",
+        "past_cap_area_0p5_to_2": "no_cap_inside_motion_gate",
+        "past_cap_area_0p75_to_1p5": "no_cap_inside_motion_gate",
+        "no_area_limit_diagnostic": "no_cap_inside_motion_gate"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S34-R01",
+      "camera_shot_id": "S34",
+      "colour": "red",
+      "last_cap_area_px2_360": 223.5,
+      "next_frame_raw_component_areas_px2_360": [
+        755.0,
+        49.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "no_cap_inside_motion_gate",
+        "past_cap_area_0p5_to_2": "no_cap_inside_motion_gate",
+        "past_cap_area_0p75_to_1p5": "no_cap_inside_motion_gate",
+        "no_area_limit_diagnostic": "no_cap_inside_motion_gate"
+      },
+      "absolute_gate_failure_reason": "components_fail_motion_gate",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S37-Y01",
+      "camera_shot_id": "S37",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 404.0,
+      "next_frame_raw_component_areas_px2_360": [
+        396.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S40-R01",
+      "camera_shot_id": "S40",
+      "colour": "red",
+      "last_cap_area_px2_360": 281.0,
+      "next_frame_raw_component_areas_px2_360": [
+        611.0,
+        268.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S47-Y01",
+      "camera_shot_id": "S47",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 321.5,
+      "next_frame_raw_component_areas_px2_360": [
+        348.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S50-R01",
+      "camera_shot_id": "S50",
+      "colour": "red",
+      "last_cap_area_px2_360": 185.5,
+      "next_frame_raw_component_areas_px2_360": [
+        163.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S53-Y01",
+      "camera_shot_id": "S53",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 365.0,
+      "next_frame_raw_component_areas_px2_360": [
+        362.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S56-R01",
+      "camera_shot_id": "S56",
+      "colour": "red",
+      "last_cap_area_px2_360": 240.5,
+      "next_frame_raw_component_areas_px2_360": [
+        209.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S56-R02",
+      "camera_shot_id": "S56",
+      "colour": "red",
+      "last_cap_area_px2_360": 211.0,
+      "next_frame_raw_component_areas_px2_360": [],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "no_cap_inside_motion_gate",
+        "past_cap_area_0p5_to_2": "no_cap_inside_motion_gate",
+        "past_cap_area_0p75_to_1p5": "no_cap_inside_motion_gate",
+        "no_area_limit_diagnostic": "no_cap_inside_motion_gate"
+      },
+      "absolute_gate_failure_reason": "no_raw_colour_component",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S59-Y01",
+      "camera_shot_id": "S59",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 332.0,
+      "next_frame_raw_component_areas_px2_360": [
+        324.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S67-Y01",
+      "camera_shot_id": "S67",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 323.5,
+      "next_frame_raw_component_areas_px2_360": [
+        320.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S70-R01",
+      "camera_shot_id": "S70",
+      "colour": "red",
+      "last_cap_area_px2_360": 177.5,
+      "next_frame_raw_component_areas_px2_360": [
+        194.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S80-R01",
+      "camera_shot_id": "S80",
+      "colour": "red",
+      "last_cap_area_px2_360": 216.0,
+      "next_frame_raw_component_areas_px2_360": [
+        221.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S82-Y01",
+      "camera_shot_id": "S82",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 276.0,
+      "next_frame_raw_component_areas_px2_360": [
+        277.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S86-R01",
+      "camera_shot_id": "S86",
+      "colour": "red",
+      "last_cap_area_px2_360": 172.0,
+      "next_frame_raw_component_areas_px2_360": [
+        853.0,
+        172.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S86-R02",
+      "camera_shot_id": "S86",
+      "colour": "red",
+      "last_cap_area_px2_360": 170.5,
+      "next_frame_raw_component_areas_px2_360": [
+        451.5,
+        170.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S88-Y01",
+      "camera_shot_id": "S88",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 328.5,
+      "next_frame_raw_component_areas_px2_360": [
+        354.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S90-R01",
+      "camera_shot_id": "S90",
+      "colour": "red",
+      "last_cap_area_px2_360": 179.0,
+      "next_frame_raw_component_areas_px2_360": [
+        168.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S93-Y01",
+      "camera_shot_id": "S93",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 351.0,
+      "next_frame_raw_component_areas_px2_360": [
+        369.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S104-Y01",
+      "camera_shot_id": "S104",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 328.5,
+      "next_frame_raw_component_areas_px2_360": [
+        331.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S109-R01",
+      "camera_shot_id": "S109",
+      "colour": "red",
+      "last_cap_area_px2_360": 234.0,
+      "next_frame_raw_component_areas_px2_360": [
+        191.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "no_cap_inside_motion_gate",
+        "past_cap_area_0p5_to_2": "no_cap_inside_motion_gate",
+        "past_cap_area_0p75_to_1p5": "no_cap_inside_motion_gate",
+        "no_area_limit_diagnostic": "no_cap_inside_motion_gate"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S114-Y01",
+      "camera_shot_id": "S114",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 351.0,
+      "next_frame_raw_component_areas_px2_360": [
+        340.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S117-R01",
+      "camera_shot_id": "S117",
+      "colour": "red",
+      "last_cap_area_px2_360": 98.0,
+      "next_frame_raw_component_areas_px2_360": [
+        77.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "unique_motion_gate_choice",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": null,
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S124-Y01",
+      "camera_shot_id": "S124",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 382.0,
+      "next_frame_raw_component_areas_px2_360": [
+        388.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S132-R01",
+      "camera_shot_id": "S132",
+      "colour": "red",
+      "last_cap_area_px2_360": 46.5,
+      "next_frame_raw_component_areas_px2_360": [
+        39.5,
+        36.5,
+        21.0,
+        19.0,
+        13.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "competing_caps_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "competing_caps_inside_motion_gate"
+      },
+      "absolute_gate_failure_reason": null,
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S133-Y01",
+      "camera_shot_id": "S133",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 363.5,
+      "next_frame_raw_component_areas_px2_360": [
+        354.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S138-R01",
+      "camera_shot_id": "S138",
+      "colour": "red",
+      "last_cap_area_px2_360": 230.5,
+      "next_frame_raw_component_areas_px2_360": [
+        217.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S143-Y01",
+      "camera_shot_id": "S143",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 381.5,
+      "next_frame_raw_component_areas_px2_360": [
+        380.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S151-Y01",
+      "camera_shot_id": "S151",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 276.0,
+      "next_frame_raw_component_areas_px2_360": [
+        267.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S155-R01",
+      "camera_shot_id": "S155",
+      "colour": "red",
+      "last_cap_area_px2_360": 211.5,
+      "next_frame_raw_component_areas_px2_360": [
+        206.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S160-Y01",
+      "camera_shot_id": "S160",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 308.5,
+      "next_frame_raw_component_areas_px2_360": [
+        316.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S164-R01",
+      "camera_shot_id": "S164",
+      "colour": "red",
+      "last_cap_area_px2_360": 228.5,
+      "next_frame_raw_component_areas_px2_360": [
+        205.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S170-Y01",
+      "camera_shot_id": "S170",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 327.5,
+      "next_frame_raw_component_areas_px2_360": [
+        304.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S174-R01",
+      "camera_shot_id": "S174",
+      "colour": "red",
+      "last_cap_area_px2_360": 212.0,
+      "next_frame_raw_component_areas_px2_360": [
+        201.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S178-Y01",
+      "camera_shot_id": "S178",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 297.5,
+      "next_frame_raw_component_areas_px2_360": [
+        301.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S182-R01",
+      "camera_shot_id": "S182",
+      "colour": "red",
+      "last_cap_area_px2_360": 218.5,
+      "next_frame_raw_component_areas_px2_360": [
+        1290.0,
+        220.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "no_cap_inside_motion_gate",
+        "past_cap_area_0p5_to_2": "no_cap_inside_motion_gate",
+        "past_cap_area_0p75_to_1p5": "no_cap_inside_motion_gate",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S191-R01",
+      "camera_shot_id": "S191",
+      "colour": "red",
+      "last_cap_area_px2_360": 243.0,
+      "next_frame_raw_component_areas_px2_360": [
+        414.5,
+        241.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S194-Y01",
+      "camera_shot_id": "S194",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 381.0,
+      "next_frame_raw_component_areas_px2_360": [
+        387.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S198-R01",
+      "camera_shot_id": "S198",
+      "colour": "red",
+      "last_cap_area_px2_360": 208.0,
+      "next_frame_raw_component_areas_px2_360": [
+        191.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S202-Y01",
+      "camera_shot_id": "S202",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 277.5,
+      "next_frame_raw_component_areas_px2_360": [
+        273.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S207-R01",
+      "camera_shot_id": "S207",
+      "colour": "red",
+      "last_cap_area_px2_360": 190.5,
+      "next_frame_raw_component_areas_px2_360": [
+        145.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "no_cap_inside_motion_gate",
+        "past_cap_area_0p5_to_2": "no_cap_inside_motion_gate",
+        "past_cap_area_0p75_to_1p5": "no_cap_inside_motion_gate",
+        "no_area_limit_diagnostic": "no_cap_inside_motion_gate"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S217-R01",
+      "camera_shot_id": "S217",
+      "colour": "red",
+      "last_cap_area_px2_360": 199.0,
+      "next_frame_raw_component_areas_px2_360": [
+        1306.0,
+        199.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "competing_caps_inside_motion_gate"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S228-R01",
+      "camera_shot_id": "S228",
+      "colour": "red",
+      "last_cap_area_px2_360": 205.0,
+      "next_frame_raw_component_areas_px2_360": [
+        1007.5,
+        221.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S230-Y01",
+      "camera_shot_id": "S230",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 46.5,
+      "next_frame_raw_component_areas_px2_360": [
+        165.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "no_cap_inside_motion_gate",
+        "past_cap_area_0p5_to_2": "no_cap_inside_motion_gate",
+        "past_cap_area_0p75_to_1p5": "no_cap_inside_motion_gate",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S233-R01",
+      "camera_shot_id": "S233",
+      "colour": "red",
+      "last_cap_area_px2_360": 204.0,
+      "next_frame_raw_component_areas_px2_360": [],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "no_cap_inside_motion_gate",
+        "past_cap_area_0p5_to_2": "no_cap_inside_motion_gate",
+        "past_cap_area_0p75_to_1p5": "no_cap_inside_motion_gate",
+        "no_area_limit_diagnostic": "no_cap_inside_motion_gate"
+      },
+      "absolute_gate_failure_reason": "no_raw_colour_component",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S233-Y01",
+      "camera_shot_id": "S233",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 32.0,
+      "next_frame_raw_component_areas_px2_360": [
+        51.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "no_cap_inside_motion_gate",
+        "past_cap_area_0p5_to_2": "no_cap_inside_motion_gate",
+        "past_cap_area_0p75_to_1p5": "no_cap_inside_motion_gate",
+        "no_area_limit_diagnostic": "no_cap_inside_motion_gate"
+      },
+      "absolute_gate_failure_reason": "components_fail_motion_gate",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S234-R01",
+      "camera_shot_id": "S234",
+      "colour": "red",
+      "last_cap_area_px2_360": 57.0,
+      "next_frame_raw_component_areas_px2_360": [
+        53.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "unique_motion_gate_choice",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": null,
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S235-R01",
+      "camera_shot_id": "S235",
+      "colour": "red",
+      "last_cap_area_px2_360": 100.0,
+      "next_frame_raw_component_areas_px2_360": [
+        30.0,
+        5.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "no_cap_inside_motion_gate",
+        "past_cap_area_0p5_to_2": "no_cap_inside_motion_gate",
+        "past_cap_area_0p75_to_1p5": "no_cap_inside_motion_gate",
+        "no_area_limit_diagnostic": "no_cap_inside_motion_gate"
+      },
+      "absolute_gate_failure_reason": "components_fail_motion_gate",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S238-Y01",
+      "camera_shot_id": "S238",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 155.0,
+      "next_frame_raw_component_areas_px2_360": [
+        143.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S241-R01",
+      "camera_shot_id": "S241",
+      "colour": "red",
+      "last_cap_area_px2_360": 97.0,
+      "next_frame_raw_component_areas_px2_360": [
+        73.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "unique_motion_gate_choice",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": null,
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S246-Y01",
+      "camera_shot_id": "S246",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 315.0,
+      "next_frame_raw_component_areas_px2_360": [
+        304.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S256-Y01",
+      "camera_shot_id": "S256",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 313.5,
+      "next_frame_raw_component_areas_px2_360": [
+        303.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S265-Y01",
+      "camera_shot_id": "S265",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 305.0,
+      "next_frame_raw_component_areas_px2_360": [
+        312.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S269-R01",
+      "camera_shot_id": "S269",
+      "colour": "red",
+      "last_cap_area_px2_360": 180.0,
+      "next_frame_raw_component_areas_px2_360": [
+        180.0,
+        40.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "components_fail_motion_gate",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S271-R01",
+      "camera_shot_id": "S271",
+      "colour": "red",
+      "last_cap_area_px2_360": 70.5,
+      "next_frame_raw_component_areas_px2_360": [
+        51.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "no_cap_inside_motion_gate",
+        "past_cap_area_0p5_to_2": "no_cap_inside_motion_gate",
+        "past_cap_area_0p75_to_1p5": "no_cap_inside_motion_gate",
+        "no_area_limit_diagnostic": "no_cap_inside_motion_gate"
+      },
+      "absolute_gate_failure_reason": "components_fail_motion_gate",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S279-R01",
+      "camera_shot_id": "S279",
+      "colour": "red",
+      "last_cap_area_px2_360": 205.5,
+      "next_frame_raw_component_areas_px2_360": [
+        191.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "no_cap_inside_motion_gate",
+        "past_cap_area_0p5_to_2": "no_cap_inside_motion_gate",
+        "past_cap_area_0p75_to_1p5": "no_cap_inside_motion_gate",
+        "no_area_limit_diagnostic": "no_cap_inside_motion_gate"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S284-Y01",
+      "camera_shot_id": "S284",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 336.0,
+      "next_frame_raw_component_areas_px2_360": [
+        352.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S294-Y01",
+      "camera_shot_id": "S294",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 331.0,
+      "next_frame_raw_component_areas_px2_360": [
+        53.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "no_cap_inside_motion_gate",
+        "past_cap_area_0p5_to_2": "no_cap_inside_motion_gate",
+        "past_cap_area_0p75_to_1p5": "no_cap_inside_motion_gate",
+        "no_area_limit_diagnostic": "no_cap_inside_motion_gate"
+      },
+      "absolute_gate_failure_reason": "components_fail_motion_gate",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S303-R01",
+      "camera_shot_id": "S303",
+      "colour": "red",
+      "last_cap_area_px2_360": 53.0,
+      "next_frame_raw_component_areas_px2_360": [
+        48.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "unique_motion_gate_choice",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": null,
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S303-R02",
+      "camera_shot_id": "S303",
+      "colour": "red",
+      "last_cap_area_px2_360": 37.5,
+      "next_frame_raw_component_areas_px2_360": [
+        5.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "unique_motion_gate_choice",
+        "past_cap_area_0p33_to_3": "no_cap_inside_motion_gate",
+        "past_cap_area_0p5_to_2": "no_cap_inside_motion_gate",
+        "past_cap_area_0p75_to_1p5": "no_cap_inside_motion_gate",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": null,
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S304-Y01",
+      "camera_shot_id": "S304",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 306.5,
+      "next_frame_raw_component_areas_px2_360": [
+        289.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S307-R01",
+      "camera_shot_id": "S307",
+      "colour": "red",
+      "last_cap_area_px2_360": 114.0,
+      "next_frame_raw_component_areas_px2_360": [
+        137.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S310-R01",
+      "camera_shot_id": "S310",
+      "colour": "red",
+      "last_cap_area_px2_360": 112.0,
+      "next_frame_raw_component_areas_px2_360": [
+        112.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S310-Y01",
+      "camera_shot_id": "S310",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 268.5,
+      "next_frame_raw_component_areas_px2_360": [
+        261.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S313-R01",
+      "camera_shot_id": "S313",
+      "colour": "red",
+      "last_cap_area_px2_360": 184.0,
+      "next_frame_raw_component_areas_px2_360": [
+        163.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "no_cap_inside_motion_gate",
+        "past_cap_area_0p5_to_2": "no_cap_inside_motion_gate",
+        "past_cap_area_0p75_to_1p5": "no_cap_inside_motion_gate",
+        "no_area_limit_diagnostic": "no_cap_inside_motion_gate"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S316-R01",
+      "camera_shot_id": "S316",
+      "colour": "red",
+      "last_cap_area_px2_360": 91.0,
+      "next_frame_raw_component_areas_px2_360": [
+        91.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S316-Y01",
+      "camera_shot_id": "S316",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 395.5,
+      "next_frame_raw_component_areas_px2_360": [
+        404.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S321-R01",
+      "camera_shot_id": "S321",
+      "colour": "red",
+      "last_cap_area_px2_360": 122.0,
+      "next_frame_raw_component_areas_px2_360": [
+        105.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S328-R01",
+      "camera_shot_id": "S328",
+      "colour": "red",
+      "last_cap_area_px2_360": 94.0,
+      "next_frame_raw_component_areas_px2_360": [
+        86.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "no_cap_inside_motion_gate",
+        "past_cap_area_0p5_to_2": "no_cap_inside_motion_gate",
+        "past_cap_area_0p75_to_1p5": "no_cap_inside_motion_gate",
+        "no_area_limit_diagnostic": "no_cap_inside_motion_gate"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S332-Y01",
+      "camera_shot_id": "S332",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 339.0,
+      "next_frame_raw_component_areas_px2_360": [
+        315.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "no_cap_inside_motion_gate",
+        "past_cap_area_0p5_to_2": "no_cap_inside_motion_gate",
+        "past_cap_area_0p75_to_1p5": "no_cap_inside_motion_gate",
+        "no_area_limit_diagnostic": "no_cap_inside_motion_gate"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S336-R01",
+      "camera_shot_id": "S336",
+      "colour": "red",
+      "last_cap_area_px2_360": 169.5,
+      "next_frame_raw_component_areas_px2_360": [
+        156.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S341-Y01",
+      "camera_shot_id": "S341",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 291.0,
+      "next_frame_raw_component_areas_px2_360": [
+        284.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S345-R01",
+      "camera_shot_id": "S345",
+      "colour": "red",
+      "last_cap_area_px2_360": 153.5,
+      "next_frame_raw_component_areas_px2_360": [
+        153.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S350-R01",
+      "camera_shot_id": "S350",
+      "colour": "red",
+      "last_cap_area_px2_360": 95.0,
+      "next_frame_raw_component_areas_px2_360": [
+        102.0,
+        5.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "components_fail_motion_gate",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S350-Y01",
+      "camera_shot_id": "S350",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 312.0,
+      "next_frame_raw_component_areas_px2_360": [
+        307.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S354-R01",
+      "camera_shot_id": "S354",
+      "colour": "red",
+      "last_cap_area_px2_360": 180.0,
+      "next_frame_raw_component_areas_px2_360": [
+        155.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S358-Y01",
+      "camera_shot_id": "S358",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 335.5,
+      "next_frame_raw_component_areas_px2_360": [
+        323.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S361-R02",
+      "camera_shot_id": "S361",
+      "colour": "red",
+      "last_cap_area_px2_360": 182.5,
+      "next_frame_raw_component_areas_px2_360": [
+        172.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "no_cap_inside_motion_gate",
+        "past_cap_area_0p5_to_2": "no_cap_inside_motion_gate",
+        "past_cap_area_0p75_to_1p5": "no_cap_inside_motion_gate",
+        "no_area_limit_diagnostic": "no_cap_inside_motion_gate"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S367-Y01",
+      "camera_shot_id": "S367",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 319.5,
+      "next_frame_raw_component_areas_px2_360": [
+        336.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S371-R01",
+      "camera_shot_id": "S371",
+      "colour": "red",
+      "last_cap_area_px2_360": 133.5,
+      "next_frame_raw_component_areas_px2_360": [
+        127.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S373-Y01",
+      "camera_shot_id": "S373",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 211.5,
+      "next_frame_raw_component_areas_px2_360": [
+        206.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S378-R01",
+      "camera_shot_id": "S378",
+      "colour": "red",
+      "last_cap_area_px2_360": 96.5,
+      "next_frame_raw_component_areas_px2_360": [
+        89.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S381-R01",
+      "camera_shot_id": "S381",
+      "colour": "red",
+      "last_cap_area_px2_360": 108.5,
+      "next_frame_raw_component_areas_px2_360": [],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "no_cap_inside_motion_gate",
+        "past_cap_area_0p5_to_2": "no_cap_inside_motion_gate",
+        "past_cap_area_0p75_to_1p5": "no_cap_inside_motion_gate",
+        "no_area_limit_diagnostic": "no_cap_inside_motion_gate"
+      },
+      "absolute_gate_failure_reason": "no_raw_colour_component",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S383-Y01",
+      "camera_shot_id": "S383",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 297.5,
+      "next_frame_raw_component_areas_px2_360": [
+        277.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S388-R01",
+      "camera_shot_id": "S388",
+      "colour": "red",
+      "last_cap_area_px2_360": 163.0,
+      "next_frame_raw_component_areas_px2_360": [
+        143.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "no_cap_inside_motion_gate",
+        "past_cap_area_0p5_to_2": "no_cap_inside_motion_gate",
+        "past_cap_area_0p75_to_1p5": "no_cap_inside_motion_gate",
+        "no_area_limit_diagnostic": "no_cap_inside_motion_gate"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S391-R01",
+      "camera_shot_id": "S391",
+      "colour": "red",
+      "last_cap_area_px2_360": 273.0,
+      "next_frame_raw_component_areas_px2_360": [
+        732.5,
+        66.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "no_cap_inside_motion_gate",
+        "past_cap_area_0p5_to_2": "no_cap_inside_motion_gate",
+        "past_cap_area_0p75_to_1p5": "no_cap_inside_motion_gate",
+        "no_area_limit_diagnostic": "no_cap_inside_motion_gate"
+      },
+      "absolute_gate_failure_reason": "components_fail_motion_gate",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S393-Y01",
+      "camera_shot_id": "S393",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 210.5,
+      "next_frame_raw_component_areas_px2_360": [
+        190.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "no_cap_inside_motion_gate",
+        "past_cap_area_0p5_to_2": "no_cap_inside_motion_gate",
+        "past_cap_area_0p75_to_1p5": "no_cap_inside_motion_gate",
+        "no_area_limit_diagnostic": "no_cap_inside_motion_gate"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S396-R02",
+      "camera_shot_id": "S396",
+      "colour": "red",
+      "last_cap_area_px2_360": 89.5,
+      "next_frame_raw_component_areas_px2_360": [
+        83.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "no_cap_inside_motion_gate",
+        "past_cap_area_0p5_to_2": "no_cap_inside_motion_gate",
+        "past_cap_area_0p75_to_1p5": "no_cap_inside_motion_gate",
+        "no_area_limit_diagnostic": "no_cap_inside_motion_gate"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S397-R01",
+      "camera_shot_id": "S397",
+      "colour": "red",
+      "last_cap_area_px2_360": 81.5,
+      "next_frame_raw_component_areas_px2_360": [
+        69.5,
+        69.0,
+        63.0,
+        10.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "no_cap_inside_motion_gate",
+        "past_cap_area_0p5_to_2": "no_cap_inside_motion_gate",
+        "past_cap_area_0p75_to_1p5": "no_cap_inside_motion_gate",
+        "no_area_limit_diagnostic": "no_cap_inside_motion_gate"
+      },
+      "absolute_gate_failure_reason": "components_fail_motion_gate",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S399-R01",
+      "camera_shot_id": "S399",
+      "colour": "red",
+      "last_cap_area_px2_360": 136.0,
+      "next_frame_raw_component_areas_px2_360": [
+        132.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S399-Y01",
+      "camera_shot_id": "S399",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 376.5,
+      "next_frame_raw_component_areas_px2_360": [
+        354.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S402-R01",
+      "camera_shot_id": "S402",
+      "colour": "red",
+      "last_cap_area_px2_360": 129.0,
+      "next_frame_raw_component_areas_px2_360": [
+        129.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S402-R02",
+      "camera_shot_id": "S402",
+      "colour": "red",
+      "last_cap_area_px2_360": 109.0,
+      "next_frame_raw_component_areas_px2_360": [
+        1852.5,
+        4.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "unique_motion_gate_choice",
+        "past_cap_area_0p33_to_3": "no_cap_inside_motion_gate",
+        "past_cap_area_0p5_to_2": "no_cap_inside_motion_gate",
+        "past_cap_area_0p75_to_1p5": "no_cap_inside_motion_gate",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": null,
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S405-R01",
+      "camera_shot_id": "S405",
+      "colour": "red",
+      "last_cap_area_px2_360": 155.5,
+      "next_frame_raw_component_areas_px2_360": [
+        155.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S405-Y01",
+      "camera_shot_id": "S405",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 301.5,
+      "next_frame_raw_component_areas_px2_360": [
+        313.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S409-R01",
+      "camera_shot_id": "S409",
+      "colour": "red",
+      "last_cap_area_px2_360": 217.5,
+      "next_frame_raw_component_areas_px2_360": [
+        189.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S412-R01",
+      "camera_shot_id": "S412",
+      "colour": "red",
+      "last_cap_area_px2_360": 132.5,
+      "next_frame_raw_component_areas_px2_360": [
+        79.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "no_cap_inside_motion_gate",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S412-R02",
+      "camera_shot_id": "S412",
+      "colour": "red",
+      "last_cap_area_px2_360": 73.0,
+      "next_frame_raw_component_areas_px2_360": [
+        107.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S412-Y01",
+      "camera_shot_id": "S412",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 300.5,
+      "next_frame_raw_component_areas_px2_360": [
+        290.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S417-R01",
+      "camera_shot_id": "S417",
+      "colour": "red",
+      "last_cap_area_px2_360": 133.5,
+      "next_frame_raw_component_areas_px2_360": [
+        133.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S417-R02",
+      "camera_shot_id": "S417",
+      "colour": "red",
+      "last_cap_area_px2_360": 162.5,
+      "next_frame_raw_component_areas_px2_360": [
+        154.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S422-R01",
+      "camera_shot_id": "S422",
+      "colour": "red",
+      "last_cap_area_px2_360": 111.0,
+      "next_frame_raw_component_areas_px2_360": [
+        111.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S422-Y01",
+      "camera_shot_id": "S422",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 236.5,
+      "next_frame_raw_component_areas_px2_360": [
+        242.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S428-R01",
+      "camera_shot_id": "S428",
+      "colour": "red",
+      "last_cap_area_px2_360": 248.0,
+      "next_frame_raw_component_areas_px2_360": [
+        255.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S428-R02",
+      "camera_shot_id": "S428",
+      "colour": "red",
+      "last_cap_area_px2_360": 157.0,
+      "next_frame_raw_component_areas_px2_360": [
+        147.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S435-R01",
+      "camera_shot_id": "S435",
+      "colour": "red",
+      "last_cap_area_px2_360": 98.0,
+      "next_frame_raw_component_areas_px2_360": [
+        98.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S436-R01",
+      "camera_shot_id": "S436",
+      "colour": "red",
+      "last_cap_area_px2_360": 87.5,
+      "next_frame_raw_component_areas_px2_360": [
+        155.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "no_cap_inside_motion_gate",
+        "past_cap_area_0p5_to_2": "no_cap_inside_motion_gate",
+        "past_cap_area_0p75_to_1p5": "no_cap_inside_motion_gate",
+        "no_area_limit_diagnostic": "no_cap_inside_motion_gate"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S437-Y01",
+      "camera_shot_id": "S437",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 245.5,
+      "next_frame_raw_component_areas_px2_360": [
+        224.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S441-R01",
+      "camera_shot_id": "S441",
+      "colour": "red",
+      "last_cap_area_px2_360": 109.5,
+      "next_frame_raw_component_areas_px2_360": [
+        109.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S445-R01",
+      "camera_shot_id": "S445",
+      "colour": "red",
+      "last_cap_area_px2_360": 58.0,
+      "next_frame_raw_component_areas_px2_360": [
+        138.5,
+        91.0,
+        43.5,
+        17.0,
+        3.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "no_cap_inside_motion_gate",
+        "past_cap_area_0p5_to_2": "no_cap_inside_motion_gate",
+        "past_cap_area_0p75_to_1p5": "no_cap_inside_motion_gate",
+        "no_area_limit_diagnostic": "no_cap_inside_motion_gate"
+      },
+      "absolute_gate_failure_reason": "components_fail_motion_gate",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S446-R01",
+      "camera_shot_id": "S446",
+      "colour": "red",
+      "last_cap_area_px2_360": 103.5,
+      "next_frame_raw_component_areas_px2_360": [
+        103.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S446-Y01",
+      "camera_shot_id": "S446",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 320.5,
+      "next_frame_raw_component_areas_px2_360": [
+        335.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S450-R01",
+      "camera_shot_id": "S450",
+      "colour": "red",
+      "last_cap_area_px2_360": 151.0,
+      "next_frame_raw_component_areas_px2_360": [
+        137.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S454-Y01",
+      "camera_shot_id": "S454",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 237.5,
+      "next_frame_raw_component_areas_px2_360": [
+        221.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S457-R01",
+      "camera_shot_id": "S457",
+      "colour": "red",
+      "last_cap_area_px2_360": 105.5,
+      "next_frame_raw_component_areas_px2_360": [
+        105.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S484-Y01",
+      "camera_shot_id": "S484",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 305.5,
+      "next_frame_raw_component_areas_px2_360": [
+        298.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S488-R01",
+      "camera_shot_id": "S488",
+      "colour": "red",
+      "last_cap_area_px2_360": 164.5,
+      "next_frame_raw_component_areas_px2_360": [
+        150.5,
+        3.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "components_fail_motion_gate",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S494-Y01",
+      "camera_shot_id": "S494",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 339.5,
+      "next_frame_raw_component_areas_px2_360": [
+        361.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S505-R01",
+      "camera_shot_id": "S505",
+      "colour": "red",
+      "last_cap_area_px2_360": 149.5,
+      "next_frame_raw_component_areas_px2_360": [
+        128.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S511-Y01",
+      "camera_shot_id": "S511",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 327.0,
+      "next_frame_raw_component_areas_px2_360": [
+        312.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "no_cap_inside_motion_gate",
+        "past_cap_area_0p5_to_2": "no_cap_inside_motion_gate",
+        "past_cap_area_0p75_to_1p5": "no_cap_inside_motion_gate",
+        "no_area_limit_diagnostic": "no_cap_inside_motion_gate"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S516-Y01",
+      "camera_shot_id": "S516",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 136.5,
+      "next_frame_raw_component_areas_px2_360": [
+        90.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "no_cap_inside_motion_gate",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S523-R01",
+      "camera_shot_id": "S523",
+      "colour": "red",
+      "last_cap_area_px2_360": 135.5,
+      "next_frame_raw_component_areas_px2_360": [
+        113.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S530-Y01",
+      "camera_shot_id": "S530",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 361.5,
+      "next_frame_raw_component_areas_px2_360": [
+        372.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S538-R04",
+      "camera_shot_id": "S538",
+      "colour": "red",
+      "last_cap_area_px2_360": 36.0,
+      "next_frame_raw_component_areas_px2_360": [
+        238.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "no_cap_inside_motion_gate",
+        "past_cap_area_0p5_to_2": "no_cap_inside_motion_gate",
+        "past_cap_area_0p75_to_1p5": "no_cap_inside_motion_gate",
+        "no_area_limit_diagnostic": "no_cap_inside_motion_gate"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S540-Y01",
+      "camera_shot_id": "S540",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 375.0,
+      "next_frame_raw_component_areas_px2_360": [
+        374.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S544-R01",
+      "camera_shot_id": "S544",
+      "colour": "red",
+      "last_cap_area_px2_360": 82.0,
+      "next_frame_raw_component_areas_px2_360": [
+        88.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S545-R01",
+      "camera_shot_id": "S545",
+      "colour": "red",
+      "last_cap_area_px2_360": 202.5,
+      "next_frame_raw_component_areas_px2_360": [
+        71.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "no_cap_inside_motion_gate",
+        "past_cap_area_0p5_to_2": "no_cap_inside_motion_gate",
+        "past_cap_area_0p75_to_1p5": "no_cap_inside_motion_gate",
+        "no_area_limit_diagnostic": "no_cap_inside_motion_gate"
+      },
+      "absolute_gate_failure_reason": "components_fail_motion_gate",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S548-R01",
+      "camera_shot_id": "S548",
+      "colour": "red",
+      "last_cap_area_px2_360": 116.5,
+      "next_frame_raw_component_areas_px2_360": [
+        108.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S549-R01",
+      "camera_shot_id": "S549",
+      "colour": "red",
+      "last_cap_area_px2_360": 67.0,
+      "next_frame_raw_component_areas_px2_360": [
+        75.0,
+        73.5,
+        4.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "unique_motion_gate_choice",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": null,
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S553-Y01",
+      "camera_shot_id": "S553",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 365.0,
+      "next_frame_raw_component_areas_px2_360": [
+        350.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S557-R01",
+      "camera_shot_id": "S557",
+      "colour": "red",
+      "last_cap_area_px2_360": 43.0,
+      "next_frame_raw_component_areas_px2_360": [
+        82.5,
+        78.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "no_cap_inside_motion_gate",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S560-R01",
+      "camera_shot_id": "S560",
+      "colour": "red",
+      "last_cap_area_px2_360": 74.5,
+      "next_frame_raw_component_areas_px2_360": [
+        65.5,
+        22.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "no_cap_inside_motion_gate",
+        "past_cap_area_0p5_to_2": "no_cap_inside_motion_gate",
+        "past_cap_area_0p75_to_1p5": "no_cap_inside_motion_gate",
+        "no_area_limit_diagnostic": "no_cap_inside_motion_gate"
+      },
+      "absolute_gate_failure_reason": "components_fail_motion_gate",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S563-Y01",
+      "camera_shot_id": "S563",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 215.0,
+      "next_frame_raw_component_areas_px2_360": [
+        211.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S566-R06",
+      "camera_shot_id": "S566",
+      "colour": "red",
+      "last_cap_area_px2_360": 35.0,
+      "next_frame_raw_component_areas_px2_360": [
+        39.5,
+        9.5,
+        4.5,
+        4.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "unique_motion_gate_choice",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": null,
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S569-R01",
+      "camera_shot_id": "S569",
+      "colour": "red",
+      "last_cap_area_px2_360": 324.5,
+      "next_frame_raw_component_areas_px2_360": [
+        353.5,
+        153.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S570-R01",
+      "camera_shot_id": "S570",
+      "colour": "red",
+      "last_cap_area_px2_360": 130.0,
+      "next_frame_raw_component_areas_px2_360": [
+        114.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S571-R01",
+      "camera_shot_id": "S571",
+      "colour": "red",
+      "last_cap_area_px2_360": 100.5,
+      "next_frame_raw_component_areas_px2_360": [
+        250.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "no_cap_inside_motion_gate",
+        "past_cap_area_0p5_to_2": "no_cap_inside_motion_gate",
+        "past_cap_area_0p75_to_1p5": "no_cap_inside_motion_gate",
+        "no_area_limit_diagnostic": "no_cap_inside_motion_gate"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S575-Y01",
+      "camera_shot_id": "S575",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 308.5,
+      "next_frame_raw_component_areas_px2_360": [
+        310.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S577-R01",
+      "camera_shot_id": "S577",
+      "colour": "red",
+      "last_cap_area_px2_360": 95.5,
+      "next_frame_raw_component_areas_px2_360": [
+        87.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S582-Y01",
+      "camera_shot_id": "S582",
+      "colour": "yellow",
+      "last_cap_area_px2_360": 369.5,
+      "next_frame_raw_component_areas_px2_360": [
+        365.0
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S587-R01",
+      "camera_shot_id": "S587",
+      "colour": "red",
+      "last_cap_area_px2_360": 122.5,
+      "next_frame_raw_component_areas_px2_360": [
+        106.5
+      ],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "unique_motion_gate_choice",
+        "past_cap_area_0p5_to_2": "unique_motion_gate_choice",
+        "past_cap_area_0p75_to_1p5": "unique_motion_gate_choice",
+        "no_area_limit_diagnostic": "unique_motion_gate_choice"
+      },
+      "absolute_gate_failure_reason": "all_components_excluded_by_absolute_area",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S590-R01",
+      "camera_shot_id": "S590",
+      "colour": "red",
+      "last_cap_area_px2_360": 51.5,
+      "next_frame_raw_component_areas_px2_360": [],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "no_cap_inside_motion_gate",
+        "past_cap_area_0p5_to_2": "no_cap_inside_motion_gate",
+        "past_cap_area_0p75_to_1p5": "no_cap_inside_motion_gate",
+        "no_area_limit_diagnostic": "no_cap_inside_motion_gate"
+      },
+      "absolute_gate_failure_reason": "no_raw_colour_component",
+      "physical_stone_identity_verified": false
+    },
+    {
+      "episode_id": "S614-R01",
+      "camera_shot_id": "S614",
+      "colour": "red",
+      "last_cap_area_px2_360": 76.5,
+      "next_frame_raw_component_areas_px2_360": [],
+      "status_by_gate": {
+        "scaled_czech_absolute_area": "no_cap_inside_motion_gate",
+        "past_cap_area_0p33_to_3": "no_cap_inside_motion_gate",
+        "past_cap_area_0p5_to_2": "no_cap_inside_motion_gate",
+        "past_cap_area_0p75_to_1p5": "no_cap_inside_motion_gate",
+        "no_area_limit_diagnostic": "no_cap_inside_motion_gate"
+      },
+      "absolute_gate_failure_reason": "no_raw_colour_component",
+      "physical_stone_identity_verified": false
+    }
+  ],
+  "limitations": [
+    "Relative-size gates were considered after inspecting the 2022 failure; these are in-sample diagnostic variants, not a frozen transfer result.",
+    "A next-frame colour contour matching a past cap size and motion can still be a different stone, player, graphic or tracking splice.",
+    "The comparison uses existing shot-scoped cap tracks, not independently labelled physical throws or complete game states.",
+    "No variant should be promoted without source-pixel error review and independent cross-camera validation."
+  ]
+}

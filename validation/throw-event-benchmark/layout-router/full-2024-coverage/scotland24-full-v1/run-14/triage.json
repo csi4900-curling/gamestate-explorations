@@ -1,0 +1,52 @@
+{
+  "status": "candidate_triage_not_physical_event_validation",
+  "source_id": "mKtmFW-B5UI",
+  "source_sha256": "6007ff0d33771aec1aa45f26b5e9271f151e77bcbb6c85a4b613e3aaf3163eae",
+  "source_interval_s": [
+    7110.0,
+    7200.0
+  ],
+  "raw_sha256": "e0eafbf5190f2247310faa7d66e12d1cdf9f61c51f54a47e9692c64ffc03a58b",
+  "confirmation_sha256": "4f38cfc14ce57f99281b75d260f903f7c3ff93e2b2ca096d05b0cdcd1ba657c7",
+  "triage_code_sha256": "a008d7e9a875561d23d2d55abba31765a2ae2c13f124b8fb6d396492441e6836",
+  "counts": {
+    "proposed": 2,
+    "auto_confirmed": 1,
+    "needs_review": 1
+  },
+  "proposals": [
+    {
+      "id": "S01",
+      "crossing_time_s": 7126.42,
+      "colour": "red",
+      "disposition": "auto_confirmed_candidate",
+      "stage_evidence": [
+        {
+          "stage": "span_context",
+          "decision": "supported",
+          "reason": "compact_tracked_motion"
+        }
+      ],
+      "release_time_s": null
+    },
+    {
+      "id": "S02",
+      "crossing_time_s": 7135.002,
+      "colour": "red",
+      "disposition": "needs_review",
+      "stage_evidence": [
+        {
+          "stage": "span_context",
+          "decision": "needs_review",
+          "reason": "outside_ice_corridor"
+        }
+      ],
+      "release_time_s": null
+    }
+  ],
+  "limitations": [
+    "Review proposals are not confirmed throws and must not be silently discarded.",
+    "The span-context gate is development-fitted and covers only the known 2024 split-screen layout.",
+    "First observed motion and passage times are not exact physical release times."
+  ]
+}

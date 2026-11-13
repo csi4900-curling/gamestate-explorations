@@ -1,0 +1,27 @@
+{
+  "schema_version": "curling-workbench-profile-v1",
+  "inference_python": ".venv-detector/bin/python",
+  "state_python": ".venv/bin/python",
+  "state_dependencies": "/home/user/curling-state-deps",
+  "colour_dependencies": "/home/user/curling-colour-deps",
+  "colour_cache": "/home/user/curling-colour-model-cache",
+  "detector_checkpoint": "research/shared-stone-detector-2026-10-22/stones_v4.pt",
+  "detector_backend": "openvino_gpu",
+  "runtime_note": "Explicit Intel GPU execution with the restored, pinned OpenCL runtime. Use pytorch for an explicit CPU profile; no silent device fallback.",
+  "runtime_environment": {
+    "OCL_ICD_VENDORS": "/home/user/curling-project/workbench-data/intel-compute-runtime/etc/OpenCL/vendors",
+    "LD_LIBRARY_PATH": "/home/user/curling-project/workbench-data/opencl-loader/lib"
+  },
+  "detector_export": "research/shared-stone-detector-2026-10-22/stones_v4_openvino_model",
+  "line_config": "prototype/config/line-events.example.json",
+  "match_config": "prototype/config/learned-directional-two-view-development.example.json",
+  "colour_config": "prototype/config/stone-colour.example.json",
+  "state_config": {
+    "house_radius_m": 1.829,
+    "stone_radius_m": 0.139,
+    "duplicate_nms_iou": 0.7,
+    "duplicate_nms_provenance": "Declared upstream default, not a learned optimum."
+  },
+  "max_upload_bytes": 8589934592,
+  "evidence_boundary": "Development pipeline. Geometry and physical stone identity remain unverified; current house points are conditional. Rotation is experimental and has no validated physical count."
+}

@@ -1,0 +1,171 @@
+{
+  "status": "first_source_only_temporal_isolation_of_possible_edits_not_verified_cut_score",
+  "source_id": "ZJAMdkERdpE",
+  "source_sha256": "49429abdd3796e8240e66c201d37e94e71a7bb6225890b2492bea26d2f70d560",
+  "plan_sha256": "4035c4c80a6199e1c45b972105bc777bb536d3dd5b9a7f8653e53e6334380e69",
+  "possible_edits_sha256": "6b2306d75fed17317c60ef26c1d8ebc275c159076dd60b9b2619289a0e7f4fdb",
+  "sha256": {
+    "video": "49429abdd3796e8240e66c201d37e94e71a7bb6225890b2492bea26d2f70d560",
+    "possible_scan_plan": "27ccf35f053044d5150a09c31dce06df41fe36036289d15dd3d0a35c8f3d3c3f",
+    "scene_code": "5c4049a0e82853cb36e0eee4fd7e1bb009babc08318b3ce8b53566f309b883e9",
+    "isolation_code": "6947a95a41940a3951f076ff6f6176afba8567c6cf22d58accb18b089ef6af06",
+    "runner": "688e5b2ff91df98c6e3a3751ce64f56e04f1316806dcb445c19e999e40b105a3"
+  },
+  "pair_spacing_s": 0.2,
+  "counts": {
+    "nonisolated_change": 3,
+    "isolated_spike": 3
+  },
+  "rows": [
+    {
+      "time_s": 236.6,
+      "shot_id": "S21",
+      "adjacent_pair_metrics": [
+        {
+          "gray_change": 60.53,
+          "hist_distance": 0.1643,
+          "hard_cut": false
+        },
+        {
+          "gray_change": 69.025,
+          "hist_distance": 0.343,
+          "hard_cut": false
+        },
+        {
+          "gray_change": 56.475,
+          "hist_distance": 0.2508,
+          "hard_cut": false
+        }
+      ],
+      "gray_isolation_ratio": 1.14,
+      "hist_isolation_ratio": 1.368,
+      "isolated_spike": false
+    },
+    {
+      "time_s": 607.0,
+      "shot_id": "S46",
+      "adjacent_pair_metrics": [
+        {
+          "gray_change": 0.165,
+          "hist_distance": 0.0222,
+          "hard_cut": false
+        },
+        {
+          "gray_change": 61.523,
+          "hist_distance": 0.3193,
+          "hard_cut": false
+        },
+        {
+          "gray_change": 1.569,
+          "hist_distance": 0.0324,
+          "hard_cut": false
+        }
+      ],
+      "gray_isolation_ratio": 39.212,
+      "hist_isolation_ratio": 9.855,
+      "isolated_spike": true
+    },
+    {
+      "time_s": 1434.0,
+      "shot_id": "S104",
+      "adjacent_pair_metrics": [
+        {
+          "gray_change": 65.318,
+          "hist_distance": 0.1302,
+          "hard_cut": false
+        },
+        {
+          "gray_change": 72.476,
+          "hist_distance": 0.2742,
+          "hard_cut": false
+        },
+        {
+          "gray_change": 45.746,
+          "hist_distance": 0.1753,
+          "hard_cut": false
+        }
+      ],
+      "gray_isolation_ratio": 1.11,
+      "hist_isolation_ratio": 1.564,
+      "isolated_spike": false
+    },
+    {
+      "time_s": 5182.4,
+      "shot_id": "S403",
+      "adjacent_pair_metrics": [
+        {
+          "gray_change": 58.044,
+          "hist_distance": 0.3089,
+          "hard_cut": false
+        },
+        {
+          "gray_change": 64.519,
+          "hist_distance": 0.3311,
+          "hard_cut": false
+        },
+        {
+          "gray_change": 42.701,
+          "hist_distance": 0.4038,
+          "hard_cut": false
+        }
+      ],
+      "gray_isolation_ratio": 1.112,
+      "hist_isolation_ratio": 0.82,
+      "isolated_spike": false
+    },
+    {
+      "time_s": 6104.8,
+      "shot_id": "S482",
+      "adjacent_pair_metrics": [
+        {
+          "gray_change": 30.047,
+          "hist_distance": 0.0863,
+          "hard_cut": false
+        },
+        {
+          "gray_change": 62.009,
+          "hist_distance": 0.3113,
+          "hard_cut": false
+        },
+        {
+          "gray_change": 21.745,
+          "hist_distance": 0.0915,
+          "hard_cut": false
+        }
+      ],
+      "gray_isolation_ratio": 2.064,
+      "hist_isolation_ratio": 3.402,
+      "isolated_spike": true
+    },
+    {
+      "time_s": 7388.0,
+      "shot_id": "S567",
+      "adjacent_pair_metrics": [
+        {
+          "gray_change": 28.707,
+          "hist_distance": 0.0629,
+          "hard_cut": false
+        },
+        {
+          "gray_change": 61.641,
+          "hist_distance": 0.2561,
+          "hard_cut": false
+        },
+        {
+          "gray_change": 10.811,
+          "hist_distance": 0.0524,
+          "hard_cut": false
+        }
+      ],
+      "gray_isolation_ratio": 2.147,
+      "hist_isolation_ratio": 4.072,
+      "isolated_spike": true
+    }
+  ],
+  "limitations": [
+    "Thresholds were selected after inspecting China and Swiss development examples.",
+    "An isolated spike is a source-only edit cue, not a verified camera cut.",
+    "Gradual edits and cuts accompanied by foreground motion can fail isolation.",
+    "No event labels, counter colours or official shots enter the calculation."
+  ]
+}

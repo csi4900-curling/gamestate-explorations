@@ -1,0 +1,79 @@
+{
+  "status": "prediction_selected_source_frames_not_independent_throw_labels",
+  "source_sha256": "a7431b68ba6fb0df407383973a525a01eadbee2490caa0438a5a11d2df1dba13",
+  "probe_sha256": "9036741e5c53e9cb9d5960e51abce5f440eb2a9cfa5cc3e17a7ab29c4805b4e2",
+  "episodes_sha256": "63ab09daee4eb95c60658df533587073f94d0971d30a459c9fdd16c675fce115",
+  "runner_sha256": "743e9a0001dae3d15fd27b5e40d6d6510d25731047507a0fa66c070813df6008",
+  "selection": "all right-only episodes with passage in inclusive declared interval",
+  "selection_interval_s": [
+    330.0,
+    370.0
+  ],
+  "rows": [
+    {
+      "episode_id": "E010",
+      "right_proposal_id": "R01:A008",
+      "passage_time_s": 348.636,
+      "colour_claim": "red",
+      "direction": "negative_y",
+      "sheet": "sheet-01.jpg",
+      "samples": [
+        {
+          "source_time_s": 347.0,
+          "decoded_frame_index": 10410,
+          "pixel": [
+            424.0,
+            317.5
+          ],
+          "bbox": [
+            416,
+            313,
+            16,
+            9
+          ]
+        },
+        {
+          "source_time_s": 349.0,
+          "decoded_frame_index": 10470,
+          "pixel": [
+            432.5,
+            281.5
+          ],
+          "bbox": [
+            425,
+            278,
+            15,
+            7
+          ]
+        },
+        {
+          "source_time_s": 351.0,
+          "decoded_frame_index": 10530,
+          "pixel": [
+            445.0,
+            255.0
+          ],
+          "bbox": [
+            440,
+            252,
+            10,
+            6
+          ]
+        }
+      ]
+    }
+  ],
+  "sheets": [
+    {
+      "file": "sheet-01.jpg",
+      "sha256": "58a90be1680f9d2bf61b097b26afd7f7b71611a6d80d5f5d2ba4138623f2ae9c",
+      "right_proposal_ids": [
+        "R01:A008"
+      ]
+    }
+  ],
+  "limitations": [
+    "Three sampled frames can identify a marked object but cannot verify a complete delivery.",
+    "This is source review after proposal generation, not independent event validation."
+  ]
+}

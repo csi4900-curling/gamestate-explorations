@@ -1,0 +1,162 @@
+{
+  "status": "development_counter_shot_alignment_audit",
+  "source_sha256": "49429abdd3796e8240e66c201d37e94e71a7bb6225890b2492bea26d2f70d560",
+  "source_interval_s": [
+    1200,
+    1500
+  ],
+  "shot_score_sha256": "1d27adcca43c6c566e3cbe6d2a32c570fda26256c7f8a2556e196431fb4d74fb",
+  "counter_audit_sha256": "4dce9235e6b0aaea1e81338b922ea79e5d111440076680fbfd06b7fbd3a4703a",
+  "motion_audit_sha256": {
+    "shot-transition-motion": "e462b4e7a78dbbc0ac2307bf7e165be45879a18e4f67d6b211c5c3cbc2a22b05"
+  },
+  "alignment_code_sha256": "f967868c4cee032efecc38ca015b2723fb0c39cecf7d8f33661ea038d05990ca",
+  "runner_sha256": "2b6a153c82a1fb59832a18242210a14225a2867605ed0d3fa0f27539f45bb3a3",
+  "counter_event_count": 5,
+  "associated_count": 5,
+  "associated_agent_positive_count": 5,
+  "rows": [
+    {
+      "counter_id": "B01",
+      "colour": "yellow",
+      "counter_evidence_interval_s": [
+        1217.0,
+        1218.0
+      ],
+      "counter_update_s": 1218.0,
+      "shot_id": "S02",
+      "status": "associated",
+      "candidate_shots": [
+        {
+          "shot_id": "S02",
+          "interval_s": [
+            1201.8,
+            1221.0
+          ],
+          "origin_probability": 0.8418227515898974,
+          "motion_channels": [
+            "shot-transition-motion"
+          ]
+        }
+      ],
+      "development_label": 1
+    },
+    {
+      "counter_id": "B02",
+      "colour": "red",
+      "counter_evidence_interval_s": [
+        1268.0,
+        1283.0
+      ],
+      "counter_update_s": 1283.0,
+      "shot_id": "S06",
+      "status": "associated",
+      "candidate_shots": [
+        {
+          "shot_id": "S06",
+          "interval_s": [
+            1242.6,
+            1273.0
+          ],
+          "origin_probability": 0.9784775689621715,
+          "motion_channels": [
+            "shot-transition-motion"
+          ]
+        }
+      ],
+      "development_label": 1
+    },
+    {
+      "counter_id": "B03",
+      "colour": "yellow",
+      "counter_evidence_interval_s": [
+        1307.0,
+        1308.0
+      ],
+      "counter_update_s": 1308.0,
+      "shot_id": "S08",
+      "status": "associated",
+      "candidate_shots": [
+        {
+          "shot_id": "S08",
+          "interval_s": [
+            1296.2,
+            1313.6
+          ],
+          "origin_probability": 0.9974386904562034,
+          "motion_channels": [
+            "shot-transition-motion"
+          ]
+        }
+      ],
+      "development_label": 1
+    },
+    {
+      "counter_id": "B04",
+      "colour": "red",
+      "counter_evidence_interval_s": [
+        1356.0,
+        1363.0
+      ],
+      "counter_update_s": 1363.0,
+      "shot_id": "S13",
+      "status": "associated",
+      "candidate_shots": [
+        {
+          "shot_id": "S13",
+          "interval_s": [
+            1350.4,
+            1364.8
+          ],
+          "origin_probability": 0.9848207430280806,
+          "motion_channels": [
+            "shot-transition-motion"
+          ]
+        },
+        {
+          "shot_id": "S12",
+          "interval_s": [
+            1342.2,
+            1350.4
+          ],
+          "origin_probability": 0.22288433760445545,
+          "motion_channels": [
+            "shot-transition-motion"
+          ]
+        }
+      ],
+      "development_label": 1
+    },
+    {
+      "counter_id": "B05",
+      "colour": "red",
+      "counter_evidence_interval_s": [
+        1462.0,
+        1465.0
+      ],
+      "counter_update_s": 1465.0,
+      "shot_id": "S21",
+      "status": "associated",
+      "candidate_shots": [
+        {
+          "shot_id": "S21",
+          "interval_s": [
+            1445.4,
+            1466.8
+          ],
+          "origin_probability": 0.9473821988100741,
+          "motion_channels": [
+            "shot-transition-motion"
+          ]
+        }
+      ],
+      "development_label": 1
+    }
+  ],
+  "limitations": [
+    "This is a postscore development audit on exposed footage, not held-out F1.",
+    "Counter updates are delayed and not always visible; no update is not evidence of no throw.",
+    "Shot labels are agent-authored and were used only after association for auditing.",
+    "A shot association does not locate release time or prove physical stone identity."
+  ]
+}

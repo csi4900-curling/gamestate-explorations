@@ -1,0 +1,106 @@
+{
+  "status": "development_ice_context_review_score_not_accepted_event_filter",
+  "source_sha256": "aff12e78edeb5e108d142aed3e19b61c3956b4fddc8b2fd8b202713746771739",
+  "recording": "italy",
+  "proposal_kind": "bidirectional",
+  "proposals_sha256": "b2edffc230bbb8031b35ccc3813dff2a4886fc59b3eb2d7ad4ad69de3c55c1af",
+  "source_review_sha256": "556c3305b21e0cdee687c6fac6250a1838d74ad72e8b9137edbeafdd948d8c69",
+  "feature_code_sha256": "4e7ea73e5d460f779d84dbe98c71811cd1a12891d9915d1435224e6e0ebd1d86",
+  "runner_sha256": "209aac1719c7c801394b49320c28e12038819b26dc5afa4286a75d6c2ac87cce",
+  "outer_half_size_px": [
+    28,
+    40
+  ],
+  "excluded_inner_half_extent_px": 12,
+  "ice_hsv_rule": {
+    "saturation_less_than": 90,
+    "value_greater_than": 150
+  },
+  "nonice_review_threshold": 0.44,
+  "counts_by_source_class_and_tier": {
+    "moving_stone_short_path": {
+      "isolated_ice_context": 4,
+      "context_cluttered_review": 0
+    }
+  },
+  "rows": [
+    {
+      "raw_track_id": "B001",
+      "source_prefix_class": "moving_stone_short_path",
+      "sample_times_s": [
+        1682.0,
+        1683.0,
+        1685.0
+      ],
+      "sample_nonice_ring_fractions": [
+        0.0786,
+        0.0368,
+        0.0215
+      ],
+      "median_nonice_ring_fraction": 0.0368,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "isolated_ice_context"
+    },
+    {
+      "raw_track_id": "B018",
+      "source_prefix_class": "moving_stone_short_path",
+      "sample_times_s": [
+        2240.0,
+        2241.0,
+        2242.0
+      ],
+      "sample_nonice_ring_fractions": [
+        0.0078,
+        0.0192,
+        0.0125
+      ],
+      "median_nonice_ring_fraction": 0.0125,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "isolated_ice_context"
+    },
+    {
+      "raw_track_id": "B019",
+      "source_prefix_class": "moving_stone_short_path",
+      "sample_times_s": [
+        2349.0,
+        2350.0,
+        2351.0
+      ],
+      "sample_nonice_ring_fractions": [
+        0.0169,
+        0.0083,
+        0.02
+      ],
+      "median_nonice_ring_fraction": 0.0169,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "isolated_ice_context"
+    },
+    {
+      "raw_track_id": "B023",
+      "source_prefix_class": "moving_stone_short_path",
+      "sample_times_s": [
+        2467.0,
+        2468.0,
+        2469.0
+      ],
+      "sample_nonice_ring_fractions": [
+        0.0137,
+        0.0067,
+        0.0145
+      ],
+      "median_nonice_ring_fraction": 0.0137,
+      "coordinate_frame": "640x360_source_right_panel_pixels",
+      "physical_stone_identity_verified": false,
+      "review_tier": "isolated_ice_context"
+    }
+  ],
+  "limitations": [
+    "The threshold was chosen after measuring the selected Italy/Estonia/China development paths.",
+    "Source classes are same-agent short-prefix reviews, not independent physical-throw labels.",
+    "Painted rings, players close to a stone, camera cuts and wheelchair objects can change local ice fraction.",
+    "A review tier cannot reject physical throws without independent recall validation."
+  ]
+}
