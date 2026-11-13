@@ -1,8 +1,12 @@
 > Current scope: one reliable left/right split-screen trajectory pipeline with stable stone identity, with explicit operator calibration now authorized when no independently reliable learned calibration exists. No per-video inference code or threshold tuning is permitted. This document includes historical work. See [the current execution inventory](../docs/CURRENT_PIPELINE.md) before using old commands or claims.
 
-# Prototype guide
+# Prototype and experiment archive
 
-**Current entry point:** see [the project README](../README.md) and [code audit](../validation/AUDIT.md). The latest demo is [two-view linkage](cross-view/index.html). Run `scripts/validate.py` from the project root for current checks. The upload server below remains the historical image indexer.
+**For new analyses, use the [app-workbench](../README.md).** Its
+[operating and execution guide](../docs/WORKBENCH.md) identifies the active code
+path inside this directory. The milestone instructions below describe historical
+experiments, including the older upload/indexing server; they are not the current
+application launch instructions.
 
 ---
 

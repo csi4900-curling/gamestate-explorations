@@ -1,3 +1,7 @@
+> **Navigation, 12 November 2026:** use the [app-workbench guide](WORKBENCH.md)
+> for current operation and execution stages. This file preserves the earlier
+> pipeline audit and dated development updates; it is not the app execution guide.
+
 > **10 November 2026 — current development path:** the public app is
 > `./curling-workbench` (loopback port 8766). Explicit operator calibration fits
 > one consistent physical camera from source rink markings. Inference reuses it
