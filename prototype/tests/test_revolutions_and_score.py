@@ -76,3 +76,59 @@ def test_revolutions_lag_curve_and_fixed_rate_sense_on_synthetic_rotating_blob()
     sense = fixed_rate_loop_sense(t, images, est['rate_hz'])
     assert sense['screen_loop_sense'] == 'clockwise'
     assert sense['explained_fraction'] > 0.8
+
+
+def test_right_to_left_departure_uses_own_hog_crossing_for_spin_window(tmp_path):
+    # Right-to-left throw: primary crossing_time_s is on the LEFT receiving panel (t=100s),
+    # while the RIGHT departure segment crossed its own hog line at t=82s and ended at t=88s.
+    import cv2
+    from prototype.throw_revolutions import run as run_revolutions
+
+    fps = 30.0
+    video_path = tmp_path / 'clip.mp4'
+    writer = cv2.VideoWriter(str(video_path), cv2.VideoWriter_fourcc(*'mp4v'), fps, (160, 120))
+    yy, xx = np.mgrid[0:120, 0:160]
+    for fi in range(300):  # 0..10s
+        frame = np.full((120, 160, 3), 180, dtype=np.uint8)
+        ti = fi / fps
+        ang = 2 * np.pi * ti / 2.0  # 2.0s period
+        cx = 80 + 10 * np.cos(ang)
+        cy = 50 + 4 * np.sin(ang)
+        frame[((xx - cx) ** 2 + (yy - cy) ** 2) <= 20] = (20, 20, 220)
+        writer.write(frame)
+    writer.release()
+
+    pub = tmp_path / 'obs'; pub.mkdir()
+    (pub / 'protocol.json').write_text(json.dumps({'source_sha256': 'x', 'source_fps': fps, 'sample_step_frames': 3}))
+    with (pub / 'match-observations.jsonl').open('w') as f:
+        for fi in range(0, 300, 3):
+            f.write(json.dumps({
+                'frame_index': fi, 'time_s': fi / fps,
+                'boards': {'left': {'stones': []}, 'right': {'stones': [{
+                    'tracker_id': 7, 'bbox_xyxy': [50.0, 30.0, 110.0, 90.0],
+                    'body_point_support': {'status': 'full_body_box'},
+                }]}},
+            }) + '\n')
+
+    # Primary crossing is at 25.0s (receiving left panel), way past the right departure (0..9.9s)!
+    agg = {'events': [{
+        'candidate_id': 'R1',
+        'event_prediction': {'crossing_time_s': 25.0},
+        'segments': [{
+            'role': 'departure', 'rink_panel': 'right', 'camera': 'right_split', 'tracker_id': 7,
+            'pixel_points': [{'time_s': 0.0}, {'time_s': 9.9}],
+            'hog_crossing_evidence': {'crossing_time_s': 4.5},
+        }],
+    }]}
+    eff = {'events': [{'event_id': 'R1', 'status': 'review_proposal', 'panel': 'left',
+                       'delivered_tracker_id': 99, 'arrival_time_s': 22.0, 'settle_interval_s': [28.0, 30.0]}]}
+    (tmp_path / 'agg.json').write_text(json.dumps(agg))
+    (tmp_path / 'eff.json').write_text(json.dumps(eff))
+    out = run_revolutions(public_run=pub, aggregate=tmp_path / 'agg.json', effects=tmp_path / 'eff.json',
+                          video=video_path, output=tmp_path / 'rev.json')
+    ev = out['events'][0]
+    assert ev['sending']['status'] == 'observed_period_estimate'
+    assert abs(ev['sending']['period_s'] - 2.0) < 0.2
+    # Travel time should start at sending interval start (~4.0s, near hog release), not parked time (0.0s).
+    assert ev['modeled_whole_throw_estimate'] is not None
+    assert ev['modeled_whole_throw_estimate']['travel_interval_s'][0] >= 3.9

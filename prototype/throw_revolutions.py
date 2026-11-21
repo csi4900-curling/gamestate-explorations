@@ -294,7 +294,16 @@ def run(*, public_run, aggregate, effects, video, output, settings=None):
             s = dep_segs[0]
             panel = s.get('rink_panel') or {'left_split': 'left', 'right_split': 'right'}[s['camera']]
             pts = s['pixel_points']
-            dep_info = (panel, s['tracker_id'], max(0.0, pts[0]['time_s']), pts[-1]['time_s'])
+            s0, s1 = max(0.0, pts[0]['time_s']), pts[-1]['time_s']
+            hog_ev = s.get('hog_crossing_evidence') or {}
+            primary_c = event['event_prediction']['crossing_time_s']
+            if hog_ev.get('crossing_time_s') is not None:
+                dep_cross = float(hog_ev['crossing_time_s'])
+            elif s0 - 1.0 <= primary_c <= s1 + 1.0:
+                dep_cross = float(primary_c)
+            else:
+                dep_cross = max(s0, s1 - 5.0)
+            dep_info = (panel, s['tracker_id'], s0, s1, dep_cross)
             needed.add((panel, s['tracker_id']))
         rec_info = None
         if eff.get('status') == 'review_proposal' and eff.get('settle_interval_s'):
@@ -336,11 +345,12 @@ def run(*, public_run, aggregate, effects, video, output, settings=None):
                 'modeled_whole_throw_estimate': None,
             }
             if dep_info is not None:
-                panel, tid, s0, s1 = dep_info
-                # Trim sending window around visible handle passage (up to 10s past crossing).
-                c = event['event_prediction']['crossing_time_s']
-                win_start = max(s0, c - 3.5)
-                win_end = min(s1, c + 10.0)
+                panel, tid, s0, s1, dep_cross = dep_info
+                # Trim sending window to free-sliding travel near/after hog release
+                # (rules require release before the hog line; earlier frames have the
+                # delivery stick holding the handle stationary and occluding spin).
+                win_start = max(s0, dep_cross - 0.5)
+                win_end = min(s1, dep_cross + 10.0)
                 entry['sending'] = analyse_view(
                     cap, fps, track_rows.get((panel, tid), []), win_start, win_end, max_gap_frames,
                     allow_half_turn=True, filmstrip_path=spin_dir / f'{eid}-sending.png', settings=settings,
@@ -358,7 +368,8 @@ def run(*, public_run, aggregate, effects, video, output, settings=None):
             # Separate constant-rate extrapolation over travel time (never reported as observed).
             rate = entry['sending'].get('rate_hz')
             if rate is not None and eff.get('status') == 'review_proposal' and eff.get('settle_interval_s'):
-                start_t = dep_info[2] if dep_info is not None else event['event_prediction']['crossing_time_s']
+                send_iv = entry['sending'].get('interval_s')
+                start_t = float(send_iv[0]) if send_iv else (dep_info[4] if dep_info is not None else event['event_prediction']['crossing_time_s'])
                 stop_t = float(eff['settle_interval_s'][0])
                 travel_s = max(0.0, stop_t - start_t)
                 if travel_s > 0:
