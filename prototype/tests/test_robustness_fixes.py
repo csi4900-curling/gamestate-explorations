@@ -1,6 +1,6 @@
 from prototype.camera_motion_role import recover_missing_role
 from prototype.directional_handoff import metric_crossings, resolve_short_receiving_approaches
-from prototype.throw_effect import DEFAULTS, in_play, quiet_interval
+from prototype.throw_effect import DEFAULTS, effect, in_play, quiet_interval
 
 
 def test_empty_house_quiet_interval_resolves_only_when_camera_registered():
@@ -105,3 +105,88 @@ def test_one_sided_missing_role_recovery_handles_brief_gap_across_crossing():
     recovered = recover_missing_role(event, samples, 0.2, primary)
     assert recovered['role'] == 'departure'
     assert recovered['status'] == 'one_sided_registered_track_observations'
+
+
+def test_opposite_colour_collision_id_swap_is_repaired_and_preserves_caller_inputs():
+    # Models a 5 Hz ByteTrack momentum-transfer swap (like NOR-CZE Throw 10):
+    # Track 4 (red) rests at (0.73, 0.72); delivered Track 104 (yellow) approaches
+    # from (0.66, 2.50) -> (0.66, 1.13) at t=15.8s. At t=16.0s ByteTrack swaps IDs:
+    # track 4 jumps backward to (0.76, 1.05) and rolls right to (1.47, 0.92) in play,
+    # while track 104 jumps forward to (0.71, 0.66) and exits past the back line (-2.46).
+    t_pre = [round(10.0 + i * 0.2, 1) for i in range(30)]  # 10.0 .. 15.8
+    t_post = [round(16.0 + i * 0.2, 1) for i in range(45)]  # 16.0 .. 24.8
+    t4_raw = [(t, [0.73, 0.72]) for t in t_pre]
+    # Swapped tail of 4: really yellow stone rolling right to [1.47, 0.92] by 18.0s
+    for i, t in enumerate(t_post):
+        frac = min(1.0, i / 10.0)
+        t4_raw.append((t, [0.76 + 0.71 * frac, 1.05 - 0.13 * frac]))
+    t104_raw = [(t, [0.66, 1.13 + (15.8 - t) * 1.4]) for t in t_pre if t >= 12.0]
+    # Swapped tail of 104: really red stone shooting straight out past back line [-2.46]
+    for i, t in enumerate(t_post):
+        frac = min(1.0, i / 10.0)
+        t104_raw.append((t, [0.71 - 0.08 * frac, 0.66 - 3.12 * frac]))
+    # One stationary red stone near button so points_lying changes if yellow stays in house
+    t70 = [(t, [0.35, 0.35]) for t in t_pre + t_post]
+
+    tracks = {'right': {4: t4_raw, 104: t104_raw, 70: t70}}
+    orig_t104_last = list(t104_raw[-1][1])
+    colours = {
+        '4': {'samples': [{'time_s': 11.0, 'prediction': 'red'}, {'time_s': 24.0, 'prediction': 'yellow'}]},
+        '104': {'samples': [{'time_s': 13.0, 'prediction': 'yellow'}, {'time_s': 20.0, 'prediction': 'red'}]},
+        '70': {'samples': [{'time_s': 11.0, 'prediction': 'red'}, {'time_s': 24.0, 'prediction': 'red'}]},
+    }
+    rec = {'event_id': 'L3', 'crossing_time_s': 11.0,
+           'proposal': {'time_s': 20.0, 'panel': 'right', 'receiving_tracker_id': 104}}
+    res = effect(
+        rec, tracks, house_radius_m=1.829, stone_radius_m=0.139,
+        hog_y_by_panel={'right': 6.401}, settings=DEFAULTS, search_end_s=24.8,
+        colours=colours, groups=['red', 'yellow'],
+    )
+    assert res['status'] == 'review_proposal'
+    assert len(res['collision_swaps_repaired']) == 1
+    swap = res['collision_swaps_repaired'][0]
+    assert swap['tracker_ids'] == [4, 104]
+    assert swap['swap_time_s'] == 16.0
+    assert swap['basis'] == 'opposite_colour_and_kinematic_collision_swap'
+    assert swap['physical_identity_verified'] is False
+
+    by_after = {s['after_tracker_id']: s for s in res['stones']}
+    assert by_after[104]['colour'] == 'yellow'
+    assert by_after[104]['change'] == 'delivered'
+    assert by_after[104]['in_play_after'] is True
+    assert abs(by_after[104]['after_m'][0] - 1.47) < 0.05
+    assert by_after[4]['colour'] == 'red'
+    assert by_after[4]['change'] == 'moved'
+    assert by_after[4]['in_play_after'] is False
+    assert res['tracks_with_inconsistent_colour'] == []
+    assert res['points_lying_after']['conditional_points_by_group'] == {'red': 1, 'yellow': 0}
+    # Caller inputs must not be mutated when mutate_state=False.
+    assert tracks['right'][104][-1][1] == orig_t104_last
+    assert colours['104']['samples'][-1]['prediction'] == 'red'
+
+
+def test_normal_close_collision_does_not_trigger_false_swap():
+    # Delivered yellow stone hits resting red stone and does NOT swap IDs.
+    t_pre = [round(10.0 + i * 0.2, 1) for i in range(30)]
+    t_post = [round(16.0 + i * 0.2, 1) for i in range(45)]
+    t4 = [(t, [0.0, 0.5]) for t in t_pre] + [
+        (t, [0.0, 0.5 - min(1.0, i / 10.0) * 3.0]) for i, t in enumerate(t_post)
+    ]
+    t9 = [(t, [0.0, 0.85 + (15.8 - t) * 1.2]) for t in t_pre if t >= 12.0] + [
+        (t, [0.25 * min(1.0, i / 10.0), 0.78 - 0.05 * min(1.0, i / 10.0)]) for i, t in enumerate(t_post)
+    ]
+    colours = {
+        '4': {'samples': [{'time_s': 11.0, 'prediction': 'red'}, {'time_s': 20.0, 'prediction': 'red'}]},
+        '9': {'samples': [{'time_s': 13.0, 'prediction': 'yellow'}, {'time_s': 20.0, 'prediction': 'yellow'}]},
+    }
+    rec = {'event_id': 'L4', 'crossing_time_s': 11.0,
+           'proposal': {'time_s': 20.0, 'panel': 'right', 'receiving_tracker_id': 9}}
+    res = effect(
+        rec, {'right': {4: t4, 9: t9}}, house_radius_m=1.829, stone_radius_m=0.139,
+        hog_y_by_panel={'right': 6.401}, settings=DEFAULTS, search_end_s=24.8,
+        colours=colours, groups=['red', 'yellow'],
+    )
+    assert res['collision_swaps_repaired'] == []
+    by_after = {s['after_tracker_id']: s for s in res['stones']}
+    assert by_after[9]['colour'] == 'yellow' and by_after[9]['in_play_after'] is True
+    assert by_after[4]['colour'] == 'red' and by_after[4]['in_play_after'] is False

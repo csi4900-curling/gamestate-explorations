@@ -210,16 +210,159 @@ def throw_extents(aggregate, observations, *, house_radius_m, stone_radius_m, ho
     return {**aggregate, 'events': annotated}, {**aggregate, 'events': display, 'throw_extent_display': scope}
 
 
+def _clone_colours(colours):
+    if not colours:
+        return None
+    return {
+        k: {**v, 'samples': [dict(s) for s in v.get('samples', [])]}
+        for k, v in colours.items()
+    }
+
+
+def repair_collision_swaps(panel_tracks, colours, delivered, window_start, window_end,
+                           stone_radius_m, region, *, delivered_colour_hint=None):
+    """Repair tracker ID swaps at hard-sphere stone collisions within one throw window.
+
+    At lower frame rates (e.g. 5 Hz) a constant-velocity tracker can swap IDs
+    when an incoming stone transfers momentum to a resting stone: the struck
+    stone shoots along the incoming velocity vector while the incoming stone
+    stops or deflects near the impact point. Because physical stones cannot
+    pass through each other, the true assignment has a strictly smaller step
+    sum than the swapped assignment, and opposite-colour collisions also invert
+    track colours across the impact timestamp.
+
+    Operates on the provided mutable dicts (callers should pass throw-local or
+    panel-local copies) and returns a list of explicit repair provenance records.
+    """
+    applied = []
+    seen = set()
+    max_swaps = 16
+
+    def colour_before(tid, t_cutoff):
+        if colours:
+            samps = [r for r in colours.get(str(tid), {}).get('samples', [])
+                     if r.get('prediction') and r['time_s'] <= t_cutoff + 0.05]
+            if samps:
+                return max(samps, key=lambda r: r['time_s'])['prediction']
+        if tid == delivered and delivered_colour_hint:
+            return delivered_colour_hint
+        return None
+
+    def colour_after(tid, t_cutoff):
+        if not colours:
+            return None
+        samps = sorted(
+            [r for r in colours.get(str(tid), {}).get('samples', [])
+             if r.get('prediction') and r['time_s'] >= t_cutoff - 0.05],
+            key=lambda r: r['time_s'],
+        )
+        if not samps:
+            return None
+        # Immediate post-impact sample within this throw window is always relevant.
+        if samps[0]['time_s'] <= window_end + 2.0:
+            return samps[0]['prediction']
+        # A later sample (e.g. from sparse track-wide sampling) is only trusted
+        # if the track remained in play at the end of this throw; stones that
+        # exited behind the backboards can overlap parked stones much later.
+        post_pts = [p for t, p in panel_tracks.get(tid, [])
+                    if t_cutoff <= t <= window_end + 0.5 and p is not None]
+        if post_pts and region(post_pts[-1]):
+            return samps[0]['prediction']
+        return None
+
+    for _ in range(max_swaps):
+        active = {}
+        for tid, samples in panel_tracks.items():
+            sub = {t: p for t, p in samples if window_start <= t <= window_end and p is not None}
+            if len(sub) >= 2:
+                active[tid] = sub
+        tids = sorted(active)
+        best = None
+        for i, a in enumerate(tids):
+            da = active[a]
+            for b in tids[i+1:]:
+                db = active[b]
+                common = sorted(set(da) & set(db))
+                if len(common) < 2:
+                    continue
+                for k in range(len(common) - 1):
+                    t_prev, t_cur = common[k], common[k+1]
+                    if t_cur - t_prev <= 0 or t_cur - t_prev > 0.65:
+                        continue
+                    if (a, b, t_cur) in seen:
+                        continue
+                    ap, ac = da[t_prev], da[t_cur]
+                    bp, bc = db[t_prev], db[t_cur]
+                    if min(math.dist(ap, bp), math.dist(ac, bc)) > 5.0 * stone_radius_m:
+                        continue
+                    d_unswapped = math.dist(ap, ac) + math.dist(bp, bc)
+                    d_swapped = math.dist(ap, bc) + math.dist(bp, ac)
+                    saving = d_unswapped - d_swapped
+                    if d_unswapped <= 0 or d_swapped >= 0.75 * d_unswapped or saving < 0.15:
+                        continue
+                    ba, bb = colour_before(a, t_prev), colour_before(b, t_prev)
+                    aa, ab = colour_after(a, t_cur), colour_after(b, t_cur)
+                    opposite_before = ba is not None and bb is not None and ba != bb
+                    a_flipped = opposite_before and aa == bb
+                    b_flipped = opposite_before and ab == ba
+                    a_kept = opposite_before and aa == ba
+                    b_kept = opposite_before and ab == bb
+                    basis = None
+                    if opposite_before and (a_flipped or b_flipped) and not (a_kept or b_kept):
+                        basis = 'opposite_colour_and_kinematic_collision_swap'
+                    elif (not (a_kept or b_kept)
+                          and d_swapped < 0.50 * d_unswapped
+                          and saving >= 0.30
+                          and max(math.dist(ap, ac), math.dist(bp, bc)) >= 2.0 * stone_radius_m):
+                        basis = 'kinematic_collision_swap_unverified'
+                    if basis is None:
+                        continue
+                    cand = (t_cur, -saving, a, b, t_prev, t_cur, d_unswapped, d_swapped, basis, ba, aa, bb, ab)
+                    if best is None or cand[:2] < best[:2]:
+                        best = cand
+        if best is None:
+            break
+        _, _, a, b, t_prev, t_cur, d_unswapped, d_swapped, basis, ba, aa, bb, ab = best
+        seen.add((a, b, t_cur))
+        # Swap trajectory tails from t_cur onwards.
+        sa, sb = panel_tracks[a], panel_tracks[b]
+        panel_tracks[a] = [x for x in sa if x[0] < t_cur] + [x for x in sb if x[0] >= t_cur]
+        panel_tracks[b] = [x for x in sb if x[0] < t_cur] + [x for x in sa if x[0] >= t_cur]
+        # Swap post-impact colour samples from t_cur onwards so colour consistency follows physical stones.
+        if colours is not None:
+            ka, kb = str(a), str(b)
+            ea = colours.setdefault(ka, {'samples': []})
+            eb = colours.setdefault(kb, {'samples': []})
+            ca, cb = ea.get('samples', []), eb.get('samples', [])
+            ea['samples'] = [r for r in ca if r['time_s'] < t_cur] + [r for r in cb if r['time_s'] >= t_cur]
+            eb['samples'] = [r for r in cb if r['time_s'] < t_cur] + [r for r in ca if r['time_s'] >= t_cur]
+        applied.append({
+            'tracker_ids': [a, b],
+            'prev_time_s': t_prev,
+            'swap_time_s': t_cur,
+            'unswapped_step_sum_m': round(d_unswapped, 4),
+            'swapped_step_sum_m': round(d_swapped, 4),
+            'basis': basis,
+            'colour_before': {str(a): ba, str(b): bb},
+            'colour_after_raw': {str(a): aa, str(b): ab},
+            'physical_identity_verified': False,
+        })
+    return applied
+
+
 def effect(record, tracks, *, house_radius_m, stone_radius_m, hog_y_by_panel, settings, search_end_s,
-           colours=None, groups=None, registered_times=None):
+           colours=None, groups=None, registered_times=None, delivered_colour_hint=None,
+           mutate_state=False):
     proposal = record['proposal']
     base = {'event_id': record['event_id'], 'crossing_time_s': record['crossing_time_s']}
     if 'time_s' not in proposal:
         return {**base, 'status': 'unresolved', 'reason': proposal.get('reason')}
     panel, delivered = proposal['panel'], proposal['receiving_tracker_id']
-    panel_tracks = tracks.get(panel, {})
-    if delivered not in panel_tracks:
+    raw_panel_tracks = tracks.get(panel, {})
+    if delivered not in raw_panel_tracks:
         return {**base, 'status': 'unresolved', 'reason': 'delivered_track_missing_from_observations'}
+    panel_tracks = raw_panel_tracks if mutate_state else {k: list(v) for k, v in raw_panel_tracks.items()}
+    working_colours = colours if mutate_state else _clone_colours(colours)
     arrival = panel_tracks[delivered][0][0]
 
     def region(position):
@@ -231,6 +374,13 @@ def effect(record, tracks, *, house_radius_m, stone_radius_m, hog_y_by_panel, se
     if settle is None:
         return {**base, 'status': 'unresolved', 'reason': 'no_quiet_board_interval_before_next_candidate',
                 'panel': panel, 'delivered_tracker_id': delivered, 'arrival_time_s': arrival}
+    swaps_repaired = repair_collision_swaps(
+        panel_tracks, working_colours, delivered, arrival - 0.5, settle[1],
+        stone_radius_m, region, delivered_colour_hint=delivered_colour_hint,
+    )
+    if swaps_repaired:
+        settle = quiet_interval(panel_tracks, delivered, arrival, search_end_s, region, settings,
+                                registered_times=registered_times) or settle
     minimum = settings['minimum_window_samples']
     before = {}; after = {}
     for tracker_id, samples in panel_tracks.items():
@@ -257,10 +407,12 @@ def effect(record, tracks, *, house_radius_m, stone_radius_m, hog_y_by_panel, se
         noise = max(b['scatter_m'], a['scatter_m']) if b and a else None
         middle = (settle[0]+settle[1])/2
         if b:
-            colour, switched = colour_at(colours, old, arrival, not_after=True)
-            later = colour_at(colours, new, middle)[0] if a else None
+            colour, switched = colour_at(working_colours, old, arrival, not_after=True)
+            later = colour_at(working_colours, new, middle)[0] if a else None
         else:
-            colour, switched = colour_at(colours, new, middle)
+            colour, switched = colour_at(working_colours, new, middle)
+            if new == delivered and colour is None and delivered_colour_hint:
+                colour = delivered_colour_hint
             later = None
         change = ('delivered' if new == delivered and old is None else
                   'left_view_or_lost' if a is None else 'appeared_unexplained' if b is None else
@@ -281,6 +433,9 @@ def effect(record, tracks, *, house_radius_m, stone_radius_m, hog_y_by_panel, se
 
     stones = [row(old, *links.get(old, (None, None))) for old in sorted(before)]
     stones += [row(None, new, None) for new in sorted(set(after)-{v[0] for v in links.values()})]
+    delivered_row = next((s for s in stones if s['after_tracker_id'] == delivered), None)
+    delivered_colour = (delivered_row['colour'] if delivered_row and delivered_row['colour']
+                        else colour_at(working_colours, delivered, arrival)[0] or delivered_colour_hint)
     # The delivered stone's path is kept even when it leaves play and has no board row.
     moving = {delivered} | {s['before_tracker_id'] if s['before_tracker_id'] is not None else s['after_tracker_id']
                             for s in stones if s['change'] != 'unchanged'}
@@ -292,6 +447,7 @@ def effect(record, tracks, *, house_radius_m, stone_radius_m, hog_y_by_panel, se
         if s['change'] == 'moved' and s['after_tracker_id'] != s['before_tracker_id']:
             moving.add(s['after_tracker_id'])
     return {**base, 'status': 'review_proposal', 'panel': panel, 'delivered_tracker_id': delivered,
+            'delivered_colour': delivered_colour,
             'arrival_time_s': arrival, 'settle_interval_s': settle, 'stones': stones,
             'paths': {str(k): path(panel_tracks[k], arrival-settings['before_window_s'], settle[1])
                       for k in sorted(moving)},
@@ -305,9 +461,11 @@ def effect(record, tracks, *, house_radius_m, stone_radius_m, hog_y_by_panel, se
                                                ['conditional_points_by_group', 'unresolved_observations', 'status']},
             'settle_selection': 'Earliest window with no net in-play stone displacement after arrival.',
             'superseded_motion_proposal_interval_s': proposal.get('stationary_interval_s'),
+            'collision_swaps_repaired': swaps_repaired,
             'tracks_with_inconsistent_colour': [s['after_tracker_id'] if s['after_tracker_id'] is not None
                                            else s['before_tracker_id'] for s in stones
-                                           if s['colour_differs_along_track']],
+                                           if s['colour_differs_along_track']
+                                           and (s['in_play_before'] or s['in_play_after'] or s['change'] == 'delivered')],
             'limitations': ['Quiet-window proposal is not a verified settled board.',
                             'A stone whose tracker ID changes while moving appears as lost plus appeared.',
                             'A moving stone without observations in a window cannot block that window.',
@@ -349,6 +507,7 @@ function draw(t){const e=current();ctx.clearRect(0,0,canvas.width,canvas.height)
  for(const y of [0,f.hog]){const a=f.px([-w,y]),b=f.px([w,y]);ctx.beginPath();ctx.moveTo(...a);ctx.lineTo(...b);ctx.stroke()}
  ctx.fillStyle='#233746';ctx.font='13px system-ui';ctx.fillText('hog line',f.px([-w,f.hog])[0]+4,f.px([-w,f.hog])[1]-4);
  const colourOf={};for(const s of e.stones){for(const k of [s.before_tracker_id,s.after_tracker_id])if(k!==null)colourOf[k]=s.colour}
+ if(e.delivered_colour&&!colourOf[e.delivered_tracker_id])colourOf[e.delivered_tracker_id]=e.delivered_colour;
  for(const [id,rows] of Object.entries(e.paths)){ctx.strokeStyle=fill[colourOf[id]]||'#777';ctx.lineWidth=2;let last=null;ctx.beginPath();
   for(const [time,x,y] of rows){if(x===null){last=null;continue}const p=f.px([x,y]);
    if(last!==null&&time-last<0.25)ctx.lineTo(...p);else ctx.moveTo(...p);last=time}ctx.stroke()}
@@ -371,6 +530,7 @@ function show(seek=true){const e=current(),status=document.querySelector('#statu
  showSpin(e);
  if(e.status==='unresolved'){status.textContent='No board change available: '+e.reason+'.';if(seek)video.currentTime=e.crossing_time_s;draw(null);return}
  status.textContent='Arrives '+e.arrival_time_s.toFixed(1)+' s · board after '+e.settle_interval_s[0].toFixed(1)+'–'+e.settle_interval_s[1].toFixed(1)+' s · in play '+e.in_play.before+' → '+e.in_play.after+
+  (e.collision_swaps_repaired?.length?' · repaired '+e.collision_swaps_repaired.length+' collision ID swap'+(e.collision_swaps_repaired.length>1?'s':'')+' ('+e.collision_swaps_repaired.map(s=>s.tracker_ids.join('↔')+' @ '+s.swap_time_s.toFixed(1)+'s').join(', ')+')':'')+
   (e.tracks_with_inconsistent_colour.length?' · colour not consistent along track '+e.tracks_with_inconsistent_colour.join(', ')+' (identity may switch at some point)':'');
  const p=e.points_lying_after;if(p)points.textContent=p.conditional_points_by_group?Object.entries(p.conditional_points_by_group).map(([g,v])=>(D.group_to_team[g]||g)+' lying '+v).join(' · ')+' (estimated from this board)':'Points lying unavailable: an in-house stone has no colour';
  table.innerHTML='<tr><th>Stone</th><th>Colour</th><th>Change</th><th>Moved (m)</th><th>After</th></tr>'+e.stones.filter(s=>s.change!=='unchanged'&&(s.in_play_before||s.in_play_after)).map(s=>
@@ -424,14 +584,25 @@ def run(*, public_run, states, config_path, match_config, output, video=None, tr
     event_by_id = ({e['candidate_id']: e for e in json.loads(Path(aggregate).read_text())['events']}
                    if aggregate else {})
     tracks, registered = load_tracks_and_registration(public_run/'match-observations.jsonl')
+    repaired_tracks = {panel: {tid: list(s) for tid, s in ptracks.items()} for panel, ptracks in tracks.items()}
+    repaired_colours = ({panel: _clone_colours(c) for panel, c in colours.items()}
+                        if colours else None)
     records = [_fallback_record(r, event_by_id) for r in payload['events']]
     ends = [r['crossing_time_s'] for r in records[1:]]+[protocol['source_interval_s'][1]]
-    events = [effect(r, tracks, house_radius_m=config['house_radius_m'],
-                     stone_radius_m=config['stone_radius_m'], hog_y_by_panel=hog, settings=settings,
-                     search_end_s=end, groups=list(config.get('group_to_team', {})) or None,
-                     colours=(colours or {}).get(r['proposal'].get('panel')),
-                     registered_times=registered.get(r['proposal'].get('panel')))
-              for r, end in zip(records, ends)]
+    events = []
+    for r, end in zip(records, ends):
+        panel = r['proposal'].get('panel')
+        agg_ev = event_by_id.get(r['event_id']) or {}
+        hint = agg_ev.get('colour') if isinstance(agg_ev.get('colour'), str) else None
+        events.append(effect(
+            r, repaired_tracks, house_radius_m=config['house_radius_m'],
+            stone_radius_m=config['stone_radius_m'], hog_y_by_panel=hog, settings=settings,
+            search_end_s=end, groups=list(config.get('group_to_team', {})) or None,
+            colours=(repaired_colours or {}).get(panel),
+            registered_times=registered.get(panel),
+            delivered_colour_hint=hint,
+            mutate_state=True,
+        ))
     result = {'schema_version': 'curling-throw-effect-v1', 'development': True,
               'source_sha256': protocol['source_sha256'], 'events': events,
               'dimensions': {**{k: config[k] for k in ['house_radius_m', 'stone_radius_m']},
@@ -440,6 +611,7 @@ def run(*, public_run, states, config_path, match_config, output, video=None, tr
               'summary': {'candidates': len(events),
                           'with_board_change': sum(e['status'] == 'review_proposal' for e in events),
                           'unresolved': [e['event_id'] for e in events if e['status'] == 'unresolved'],
+                          'collision_swaps_repaired': sum(len(e.get('collision_swaps_repaired', [])) for e in events),
                           'stone_colours': 'per_track_samples' if colours else 'unavailable',
                           'verified_settled_boards': 0, 'physical_identity_verified': False},
               'provenance': {'settings': settings, 'code_sha256': digest(__file__),
