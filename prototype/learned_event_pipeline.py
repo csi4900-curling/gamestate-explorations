@@ -181,6 +181,7 @@ def run(video,output,config_path,checkpoint,*,start,end,source_id,match_state_co
                         hog_y_by_panel=observer.config['local_hog_y_m'],
                         max_geometry_gap_s=max(1.5, 2.5 / max(probe_hz, 0.1)),
                     )
+                    probe_states.clear()
                     windows = _merge_windows(
                         windows + [(c['crossing_time_s'] - before_s, c['crossing_time_s'] + after_s) for c in probe_crossings],
                         start, end)

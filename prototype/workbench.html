@@ -246,7 +246,7 @@ setInterval(guard(async()=>{
  // A response for a background job must not replace a newly opened form or selection.
  if(!$('setup').hidden||current?.id!==id)return;
  current=updated;
- if(current.state==='done')eventRows=await api('/api/jobs/'+id+'/events');
+ if(current.state==='done'){eventRows=await api('/api/jobs/'+id+'/events');loadScoreAndRocks(id,navigationRevision)}
  if(!$('setup').hidden||current?.id!==id)return;
  paintJob();await refresh();
  if(current.state==='failed')$('logs').textContent=JSON.stringify(await api('/api/jobs/'+id+'/logs'),null,2);
