@@ -801,6 +801,7 @@ def main():
     parser.add_argument("--stone-detector-checkpoint", type=Path, help="Learned stone scene/board detector; use a Python environment with both detector and CoTracker dependencies")
     parser.add_argument('--stone-detector-head',choices=['checkpoint','end2end','conventional'],default='checkpoint')
     parser.add_argument('--stone-detector-threads',type=int,default=4)
+    parser.add_argument("--stone-detector-device", default="cpu", help="PyTorch detector execution device (cpu, cuda); openvino_gpu always targets the Intel GPU")
     parser.add_argument("--stone-colour-config", type=Path, help="Optional OpenCLIP snapshot colour predictions; requires --track-throws and a learned detector")
     parser.add_argument('--score-layout-memory', action='store_true', help='Development offline score/layout evidence and synchronized viewer; requires learned line events and match-state config')
     parser.add_argument("--projection-config", type=Path, help="JSON feature heights in metres for dense trajectories and snapshots")
@@ -884,6 +885,8 @@ def main():
     if args.stone_detector_backend == 'openvino_gpu':
         if not args.event_line_config or not args.stone_detector_export:
             parser.error('OpenVINO GPU requires --event-line-config and --stone-detector-export')
+        if args.stone_detector_device != 'cpu':
+            parser.error('--stone-detector-device applies to the pytorch backend only')
     elif args.stone_detector_export:
         parser.error('--stone-detector-export requires --stone-detector-backend openvino_gpu')
     if args.stone_detector_threads<1:
@@ -937,7 +940,8 @@ def main():
                                  source_id=args.source_id, match_state_config=args.match_state_config,detection_cache=args.detection_cache,
                                  detection_cache_prefix_samples=args.detection_cache_prefix_samples,
                                  detector_backend=args.stone_detector_backend,detector_export=args.stone_detector_export,
-                                 detector_head=args.stone_detector_head,detector_threads=args.stone_detector_threads)
+                                 detector_head=args.stone_detector_head,detector_threads=args.stone_detector_threads,
+                                 detector_device=args.stone_detector_device)
         if args.score_layout_memory:
             from prototype.match_state_timeline import run as assemble_match_state
             state_config = json.loads(args.match_state_config.read_text())
