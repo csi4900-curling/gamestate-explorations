@@ -6,6 +6,7 @@ An explicitly selected SIFT similarity mode verifies and aligns static source im
 """
 from pathlib import Path
 import collections
+from concurrent.futures import ThreadPoolExecutor
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import time
@@ -29,20 +30,30 @@ REGISTRATION_POLICY = {
 }
 
 
-def panel_features(image, panel, exclude_mask=None):
+def panel_features(image, panel, exclude_mask=None, *, scale=1.0, nfeatures=1800):
     # Compute separately: global nfeatures otherwise lets the textured receiving
     # view consume the departure view's entire feature budget.
     offset = 0 if panel == 'left' else 960
     crop = image[:, offset:offset+960]
-    hsv = cv2.cvtColor(crop, cv2.COLOR_BGR2HSV)
+    if exclude_mask is not None and exclude_mask.shape != (1080, 1920):
+        raise ValueError('Foreground mask must use canonical source pixels')
+    if scale != 1.0:
+        nw, nh = round(960 * scale), round(1080 * scale)
+        work = cv2.resize(crop, (nw, nh), interpolation=cv2.INTER_AREA)
+    else:
+        work = crop
+    hsv = cv2.cvtColor(work, cv2.COLOR_BGR2HSV)
     mask = ((hsv[:, :, 2] > 110) & ((hsv[:, :, 1] < 110) |
             ((hsv[:, :, 0] > 85) & (hsv[:, :, 0] < 135)))).astype('uint8') * 255
     if exclude_mask is not None:
-        if exclude_mask.shape!=(1080,1920):raise ValueError('Foreground mask must use canonical source pixels')
-        mask[exclude_mask[:,offset:offset+960]>0]=0
-    kp, desc = cv2.SIFT_create(nfeatures=1800, contrastThreshold=.01).detectAndCompute(
-        cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY), mask)
-    points = np.array([(k.pt[0]+offset, k.pt[1]) for k in kp], np.float32).reshape(-1, 2)
+        panel_exclude = exclude_mask[:, offset:offset+960]
+        if scale != 1.0:
+            panel_exclude = cv2.resize(panel_exclude, (work.shape[1], work.shape[0]), interpolation=cv2.INTER_NEAREST)
+        mask[panel_exclude > 0] = 0
+    kp, desc = cv2.SIFT_create(nfeatures=nfeatures, contrastThreshold=.01).detectAndCompute(
+        cv2.cvtColor(work, cv2.COLOR_BGR2GRAY), mask)
+    inv_scale = 1.0 / scale
+    points = np.array([(k.pt[0]*inv_scale + offset, k.pt[1]*inv_scale) for k in kp], np.float32).reshape(-1, 2)
     return points, desc
 
 
@@ -90,10 +101,21 @@ def register(reference_features, current_features, *, mutual=False):
 
 
 class CalibratedCameraGeometry:
-    def __init__(self, bundle_path, *, alignment='locked',foreground_checkpoint=None,foreground_sha256=None):
+    def __init__(self, bundle_path, *, alignment='locked',foreground_checkpoint=None,foreground_sha256=None,
+                 fast_scale=None, fast_nfeatures=1200, parallel_panels=False):
         if alignment not in ('locked','static_feature_similarity'):
             raise ValueError('Unknown explicit-camera alignment method')
+        if fast_scale is not None:
+            fast_scale = float(fast_scale)
+            if not (0.1 <= fast_scale < 1.0):
+                raise ValueError('fast_scale must lie in [0.1, 1.0)')
         self.alignment=alignment
+        self.fast_scale = fast_scale if alignment == 'static_feature_similarity' else None
+        self.fast_nfeatures = int(fast_nfeatures)
+        self.parallel_panels = bool(parallel_panels)
+        self._pool = ThreadPoolExecutor(max_workers=2) if (self.parallel_panels and self.alignment == 'static_feature_similarity') else None
+        self.fast_accepted = 0
+        self.fallback_attempts = 0
         self.bundle_path = Path(bundle_path)
         self.bundle = load_bundle(bundle_path)
         if alignment!='static_feature_similarity' and any(p.get('projection_scope')=='operator_template_alignment' for a in self.bundle['calibrations'] for p in a['panels'].values()):
@@ -123,7 +145,13 @@ class CalibratedCameraGeometry:
                                      'interval': asset['valid_interval_s'], 'H': H,
                                      'verifier': PoseVerifier(frame, record, panel),
                                      'features':panel_features(frame,panel,foreground) if alignment=='static_feature_similarity' else None,
+                                     'fast_features':panel_features(frame,panel,foreground,scale=self.fast_scale,nfeatures=self.fast_nfeatures) if self.fast_scale is not None else None,
                                      'prior': self.camera_prior(record,H,H,region,np.eye(3))})
+
+    def close(self):
+        if self._pool is not None:
+            self._pool.shutdown(wait=False)
+            self._pool = None
 
     @staticmethod
     def camera_prior(record, reference_H, current_H, region, image_alignment):
@@ -138,19 +166,52 @@ class CalibratedCameraGeometry:
                     'temporal_model':'One fitted static camera, transported only through verified source-image registration.'}}
 
     def observe(self, frame, time_s):
-        start = time.perf_counter(); image = cv2.resize(frame, (1920, 1080)); result = {}; self._current = {}
-        foreground=self.foreground.mask(image) if self.foreground is not None else None
+        start = time.perf_counter()
+        image = frame if frame.shape[:2] == (1080, 1920) else cv2.resize(frame, (1920, 1080))
+        result = {}; self._current = {}
+        active_anchors = {}
         for panel in ('left', 'right'):
             anchors = [a for a in self.anchors if a['panel'] == panel and a['interval'][0] <= time_s < a['interval'][1]]
             if len(anchors) != 1:
                 result[panel] = None, {'status': 'calibration_required', 'reason': 'No unambiguous calibration interval'}, None
                 self.counts[panel+':calibration_required'] += 1
-                continue
-            anchor = anchors[0]
+            else:
+                active_anchors[panel] = anchors[0]
+        foreground = None
+        fast_results = {}
+        if self.alignment == 'static_feature_similarity' and self.fast_scale is not None and active_anchors:
+            def run_fast(panel_name):
+                anc = active_anchors[panel_name]
+                try:
+                    return register(anc['fast_features'], panel_features(image, panel_name, None,
+                                                                         scale=self.fast_scale,
+                                                                         nfeatures=self.fast_nfeatures))
+                except (ValueError, cv2.error, np.linalg.LinAlgError) as exc:
+                    return None, {'status': 'alignment_unverified', 'reason': str(exc)}
+            if self._pool is not None and len(active_anchors) == 2:
+                futs = {p: self._pool.submit(run_fast, p) for p in active_anchors}
+                fast_results = {p: f.result() for p, f in futs.items()}
+            else:
+                fast_results = {p: run_fast(p) for p in active_anchors}
+        elif self.foreground is not None and active_anchors:
+            foreground = self.foreground.mask(image)
+        for panel, anchor in active_anchors.items():
             try:
                 inverse_alignment=np.eye(3)
                 if self.alignment=='static_feature_similarity':
-                    A,diagnostic=register(anchor['features'],panel_features(image,panel,foreground))
+                    if panel in fast_results:
+                        A, diagnostic = fast_results[panel]
+                        if A is not None:
+                            self.fast_accepted += 1
+                            diagnostic['registration_tier'] = f'fast_scale_{self.fast_scale:g}'
+                        else:
+                            self.fallback_attempts += 1
+                            if self.foreground is not None and foreground is None:
+                                foreground = self.foreground.mask(image)
+                            A, diagnostic = register(anchor['features'], panel_features(image, panel, foreground))
+                            diagnostic['registration_tier'] = 'full_res_fallback'
+                    else:
+                        A,diagnostic=register(anchor['features'],panel_features(image,panel,foreground))
                     supported=A is not None
                     if supported:
                         scale=np.diag([1/3.,1/3.,1.])
@@ -197,5 +258,10 @@ class CalibratedCameraGeometry:
                 'foreground_model':self.foreground.provenance if self.foreground is not None else None,
                 'foreground_mask_frames':self.foreground.frames if self.foreground is not None else 0,
                 'foreground_seconds':self.foreground.seconds if self.foreground is not None else 0.,
+                'fast_scale':self.fast_scale,
+                'fast_nfeatures':self.fast_nfeatures if self.fast_scale is not None else None,
+                'parallel_panels':self.parallel_panels,
+                'fast_accepted':self.fast_accepted,
+                'fallback_attempts':self.fallback_attempts,
                 'failure_policy': 'No inferred replacement geometry; missing alignment or unsupported image region remains missing.',
                 'physical_metric_accuracy_validated': False, 'camera_feed_synchronization_verified': False}

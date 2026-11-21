@@ -61,6 +61,8 @@ not verify the later rebuild's proposals.
 
 ## What still needs verification
 
+The [playbook delivery map](docs/PLAYBOOK_DELIVERY.md) connects all 18 original steps to their evidence requirements and the latest same-input workbench regression.
+
 The application runs a **development pipeline**. We have not yet established:
 
 - **Reliability on unseen matches:** the same frozen pipeline must be evaluated

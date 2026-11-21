@@ -65,6 +65,12 @@ def test_missing_receiver_and_never_quiet_board_stay_unresolved():
     assert result['reason'] == 'no_quiet_board_interval_before_next_candidate'
 
 
+def test_missing_metric_observations_do_not_establish_a_quiet_board():
+    missing = [(time, None) for time, _ in delivered()]
+    result = effect(record(), {'right': {9: missing}}, search_end_s=40, **GEOMETRY)
+    assert result['reason'] == 'no_quiet_board_interval_before_next_candidate'
+
+
 def test_delivered_stone_that_leaves_play_keeps_its_path_and_is_not_on_the_board():
     through = [(round(10+i*0.1, 1), [0.0, 8.0-12.0*i/50]) for i in range(51)]
     result = effect(record(), {'right': {9: through, 1: still([1.0, 1.0], 0.0, 40.0)}}, search_end_s=40.0, **GEOMETRY)
@@ -92,6 +98,9 @@ def test_receiving_trajectory_display_ends_at_quiet_board_and_aggregate_keeps_al
             stream.write(json.dumps({'time_s': t, 'boards': {'right': {'stones': stones}}})+'\n')
     aggregate = {'source_interval_s': [0, 60], 'events': [aggregate_event('L1', 8.0, 9, handled),
                                                           aggregate_event('L2', 48.0, 7, restless)]}
+    receiver = aggregate['events'][0]['segments'][1]
+    receiver['geometry_samples'] = [{'time_s': time, 'rink_position_m': position} for time, position in handled]
+    receiver['rink_last_time_s'] = handled[-1][0]
     full, view = throw_extents(aggregate, tmp_path/'observations.jsonl', house_radius_m=1.829,
                                stone_radius_m=0.139, hog_y_by_panel={'right': 6.401})
     extent = full['events'][0]['throw_extent']
@@ -100,6 +109,10 @@ def test_receiving_trajectory_display_ends_at_quiet_board_and_aggregate_keeps_al
     assert extent['end_time_s'] == round(extent['quiet_interval_s'][1] + DEFAULTS['quiet_tail_s'], 3) < 25
     assert len(full['events'][0]['segments'][1]['pixel_points']) == len(handled)
     shown = view['events'][0]['segments'][1]
+    assert shown['rink_last_time_s'] == shown['geometry_samples'][-1]['time_s']
+    assert shown['rink_last_m'] == shown['geometry_samples'][-1]['rink_position_m']
+    assert shown['rink_sample_count'] == len(shown['geometry_samples'])
+    assert full['events'][0]['segments'][1]['rink_last_time_s'] == handled[-1][0]
     assert shown['pixel_points'][-1]['time_s'] <= extent['end_time_s'] < 25
     assert len(shown['geometry_samples']) == len(shown['pixel_points'])
     assert shown['samples_after_throw_end_not_displayed'] == len(handled)-len(shown['pixel_points'])

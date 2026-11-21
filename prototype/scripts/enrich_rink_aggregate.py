@@ -76,6 +76,17 @@ def first_last(samples, field="rink_position_m"):
     return (rows[0], rows[-1]) if rows else (None, None)
 
 
+def rink_endpoints(samples):
+    first, last = first_last(samples)
+    return {
+        "rink_sample_count": sum(sample.get("rink_position_m") is not None for sample in samples),
+        "rink_first_m": first["rink_position_m"] if first else None,
+        "rink_last_m": last["rink_position_m"] if last else None,
+        "rink_first_time_s": first["time_s"] if first else None,
+        "rink_last_time_s": last["time_s"] if last else None,
+    }
+
+
 def enrich(aggregate, *, aggregate_path=None, lateral_sign=1.0,
            tee_distance=TEE_DISTANCE_M,
            max_plausible_speed=MAX_PLAUSIBLE_SPEED_M_S):
@@ -120,14 +131,8 @@ def enrich(aggregate, *, aggregate_path=None, lateral_sign=1.0,
                         s.get("rink_ice_plane_m") is not None for s in samples)
                     else "no_local_position"
                 )
-            first, last = first_last(samples)
             mapped_segment["geometry_samples"] = samples
-            mapped_segment["rink_sample_count"] = sum(
-                1 for s in samples if s.get("rink_position_m") is not None)
-            mapped_segment["rink_first_m"] = first["rink_position_m"] if first else None
-            mapped_segment["rink_last_m"] = last["rink_position_m"] if last else None
-            mapped_segment["rink_first_time_s"] = first["time_s"] if first else None
-            mapped_segment["rink_last_time_s"] = last["time_s"] if last else None
+            mapped_segment.update(rink_endpoints(samples))
             mapped_segment["physical_identity_verified"] = False
             segment_count += 1
             sample_count += len(samples)

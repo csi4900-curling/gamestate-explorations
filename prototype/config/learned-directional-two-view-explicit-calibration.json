@@ -17,9 +17,15 @@
     1,
     0.5
   ],
-  "score_sample_interval_s": 10,
+  "score_sample_interval_s": 20,
   "ocr_model_dir": "../../validation/full-match-development-2026-10-23/ocr-models",
   "geometry_mode": "explicit_source_calibration_v1",
+  "geometry_schedule": {
+    "mode": "two_pass_probe_v1",
+    "probe_hz": 1.0,
+    "before_s": 6.0,
+    "after_s": 35.0
+  },
   "handoff_method": "observed_motion_bidirectional_hog_crossing_development",
   "local_hog_y_m": {
     "left": -6.401,
@@ -27,6 +33,9 @@
   },
   "source_calibration_bundle": null,
   "camera_alignment": "static_feature_similarity",
+  "registration_fast_scale": 0.5,
+  "registration_fast_nfeatures": 1200,
+  "registration_parallel_panels": true,
   "geometry_opencv_threads": 4,
   "camera_foreground_checkpoint": "../../models/camera-foreground/yolov8n-seg.pt",
   "camera_foreground_sha256": "a7cd8f929e1903d78a12a48efecab430209f18dc46cb96c3599a5980c63c423c"

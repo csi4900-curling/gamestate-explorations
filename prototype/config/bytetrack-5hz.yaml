@@ -1,0 +1,12 @@
+# Upstream ByteTrack configuration for 5 Hz (0.2 s) curling-stone sampling.
+# Slightly wider match_thresh (0.85 vs 0.80 at 10 Hz) accommodates 0.2 s box
+# displacement on fast-moving distant stones; track_buffer 15 preserves a 3.0 s
+# occlusion memory matching the 10 Hz profile (30 frames at 10 Hz = 3.0 s).
+
+tracker_type: bytetrack
+track_high_thresh: 0.25
+track_low_thresh: 0.1
+new_track_thresh: 0.25
+track_buffer: 15
+match_thresh: 0.85
+fuse_score: True

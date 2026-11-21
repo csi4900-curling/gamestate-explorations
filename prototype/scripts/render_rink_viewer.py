@@ -49,6 +49,18 @@ def role_at(timeline, panel, time_s):
     return chosen
 
 
+def inferred_throw_direction(event):
+    if event.get("observation_only"):
+        return "unknown"
+    directions = {
+        "left_to_right" if (segment["rink_panel"] == "left") == (segment["role"] == "departure") else "right_to_left"
+        for segment in event["segments"]
+        if segment.get("rink_panel") in ("left", "right") and segment.get("role") in ("departure", "receiving")
+        and segment.get("pixel_points")
+    }
+    return next(iter(directions)) if len(directions) == 1 else "unknown"
+
+
 def compact_event(event):
     prediction = event["event_prediction"]
     segments = []
@@ -126,6 +138,7 @@ def compact_event(event):
         links.append(compact)
     return {
         "id": event["candidate_id"],
+        "inferred_throw_direction": inferred_throw_direction(event),
         "unassigned_segment_ids": unassigned,
         "display_receiving_candidate": display_candidate,
         "receiving_display_policy": "first_crossing_strictly_after_departure" if display_candidate else None,
@@ -149,7 +162,7 @@ def compact_event(event):
 
 
 def write_board_chunks(observations_path, output_dir, events, hog_y_m,
-                       board_hz=1.0, tee_distance=34.747):
+                       board_hz=1.0, tee_distance=34.747, lateral_sign=1.0):
     timeline = role_timeline(events)
     folder = output_dir / "board-data"
     folder.mkdir(exist_ok=True)
@@ -191,7 +204,7 @@ def write_board_chunks(observations_path, output_dir, events, hog_y_m,
                     try:
                         xy = rink_position(local, panel=panel, role=role,
                                            hog_y_m=hog_y_m,
-                                           tee_distance=tee_distance)
+                                           tee_distance=tee_distance, lateral_sign=lateral_sign)
                     except ValueError:
                         continue
                     stones.append([round(xy[0], 3), round(xy[1], 3),
@@ -259,7 +272,9 @@ def render(aggregate_path, video, output_dir, *, match_observations=None,
     board = None
     if match_observations is not None:
         board = write_board_chunks(match_observations, output_dir,
-                                   aggregate["events"], hog_y_m, board_hz=board_hz)
+                                   aggregate["events"], hog_y_m, board_hz=board_hz,
+                                   tee_distance=aggregate["rink_coordinate_system"]["tee_distance_m"],
+                                   lateral_sign=aggregate["rink_transform"].get("lateral_sign", 1.0))
     state = None
     if state_timeline is not None:
         state = compact_state(json.loads(Path(state_timeline).read_text()))
@@ -342,28 +357,45 @@ const rink=document.getElementById('rink'), ctx=rink.getContext('2d');
 const sel=document.getElementById('events'), status=document.getElementById('status');
 const SCALE=24, CX=220, BOTTOM=900;
 window.RINK_SCALE=SCALE;
-const px=x=>CX+x*SCALE, py=y=>BOTTOM-y*SCALE;
+function videoOrientation(event){
+ const signs=new Set();
+ for(const seg of event.segments){
+  const hog=D.transform?.hog_y_m?.[seg.panel];
+  if(Number.isFinite(hog)&&hog!==0&&['departure','receiving'].includes(seg.role))
+   signs.add(Math.sign(hog)*(seg.role==='departure'?1:-1));
+ }
+ return signs.size===1?[...signs][0]:null;
+}
 const boardCache={}; let boardLoading=new Set();
 window.boardCache=boardCache;
 window.receiveBoardChunk=(k,rows)=>{boardCache[k]=rows;boardLoading.delete(k)};
 function loadBoard(t){if(!B||!B.chunks)return;const k=Math.floor(t/60);if(k in B.chunks&&!boardCache[k]&&!boardLoading.has(k)){boardLoading.add(k);const s=document.createElement('script');s.src='board-data/'+k+'.js';document.body.append(s)}}
 D.events.forEach((e,i)=>{const o=document.createElement('option');o.value=i;o.textContent=e.id+' · '+e.time_s.toFixed(2)+' s · '+(e.colour||'colour?')+' · '+(e.links.length? e.links[0].spatial_consistency:'no link');sel.append(o)});
 if(!D.events.length){const o=document.createElement('option');o.textContent='No events';sel.append(o)}
+const requestedFragment=new URLSearchParams(location.search).get('fragment');
+if(requestedFragment!==null){
+ const index=D.events.findIndex(event=>event.observation_only&&event.id===requestedFragment);
+ if(index>=0)sel.value=String(index);
+ else{sel.selectedIndex=-1;status.textContent='Requested camera fragment is unavailable. Select a track to review.'}
+}
 document.getElementById('meta').textContent=JSON.stringify({rink:D.rink,transform:D.transform,summary:D.summary,provenance:D.provenance,board:D.board},null,2);
 function indexAt(times,t){let lo=0,hi=times.length;while(lo<hi){const m=(lo+hi)>>1;if(times[m]<=t+1e-6)lo=m+1;else hi=m}return Math.max(0,Math.min(times.length-1,lo-1))}
 function nearestAt(times,t){const i=indexAt(times,t);return i+1<times.length&&Math.abs(times[i+1]-t)<Math.abs(times[i]-t)?i+1:i}
 function drawRink(event,t){
+ const direction=videoOrientation(event),down=direction===1,tee=D.rink.tee_distance_m;
+ const px=x=>CX+x*SCALE*(Math.sign(D.transform?.lateral_sign)||1);
+ const py=y=>BOTTOM-(down?tee-y:y)*SCALE;
  ctx.clearRect(0,0,rink.width,rink.height);
  ctx.fillStyle='#fff';ctx.fillRect(0,0,rink.width,rink.height);
  // sheet and markings
  // the sheet is |x|<=2.375 from y=0 to y=tee distance
- const left=px(-2.375), right=px(2.375), top=py(D.rink.tee_distance_m), bottom=py(0);
+ const left=Math.min(px(-2.375),px(2.375)), right=Math.max(px(-2.375),px(2.375)), top=Math.min(py(tee),py(0)), bottom=Math.max(py(tee),py(0));
  ctx.strokeStyle='#c7d3d7';ctx.strokeRect(left,top,right-left,bottom-top);
  ctx.beginPath();ctx.moveTo(px(0),top);ctx.lineTo(px(0),bottom);ctx.strokeStyle='#dbe4e6';ctx.stroke();
  for(const y of [6.401, D.rink.tee_distance_m-6.401]){ctx.beginPath();ctx.moveTo(left,py(y));ctx.lineTo(right,py(y));ctx.strokeStyle='#9fb3ba';ctx.setLineDash([6,5]);ctx.stroke();ctx.setLineDash([])}
  function house(y){for(const r of [1.829,1.219,0.610]){ctx.beginPath();ctx.arc(px(0),py(y),r*SCALE,0,Math.PI*2);ctx.strokeStyle=r===1.829?'#9fb3ba':'#c7d3d7';ctx.stroke()}ctx.fillStyle='#6f8188';ctx.beginPath();ctx.arc(px(0),py(y),3,0,Math.PI*2);ctx.fill()}
  house(0);house(D.rink.tee_distance_m);
- ctx.fillStyle='#40545c';ctx.font='12px system-ui';ctx.fillText('delivery tee',px(0)+8,bottom-6);ctx.fillText('receiving tee',px(0)+8,top+14);
+ ctx.fillStyle='#40545c';ctx.font='12px system-ui';ctx.fillText('delivery tee',px(0)+8,py(0)+(down?14:-6));ctx.fillText('receiving tee',px(0)+8,py(tee)+(down?-6:14));
  ctx.fillText('hog',left+4,py(6.401)-4);ctx.fillText('hog',left+4,py(D.rink.tee_distance_m-6.401)-4);
  ctx.save();ctx.translate(14,py(17));ctx.rotate(-Math.PI/2);ctx.fillStyle='#7e8b91';ctx.fillText('longitudinal metres (0 delivery → '+D.rink.tee_distance_m.toFixed(1)+' receiving)',0,0);ctx.restore();
  // board stones at displayed time
@@ -371,7 +403,7 @@ function drawRink(event,t){
  const colors={departure:'#2166c9',receiving:'#d4791b'};
  for(const seg of event.segments){if(!seg.times.length)continue;const col=colors[seg.role]||'#6f8188';ctx.strokeStyle=col;ctx.fillStyle=col;ctx.lineWidth=2;ctx.beginPath();seg.xy.forEach((p,i)=>{const X=px(p[0]),Y=py(p[1]);i&&!seg.break_before?.[i]?ctx.lineTo(X,Y):ctx.moveTo(X,Y)});ctx.stroke();for(const p of seg.xy){ctx.beginPath();ctx.arc(px(p[0]),py(p[1]),1.6,0,Math.PI*2);ctx.fill()}const st0=seg.times[0],st1=seg.times[seg.times.length-1];if(t>=st0-1e-6&&t<=st1+1e-6){const i=nearestAt(seg.times,t);if(Math.abs(t-seg.times[i])>(seg.sample_step_s??0)/2+1e-6)continue;const p=seg.xy[i];ctx.beginPath();ctx.arc(px(p[0]),py(p[1]),5,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();ctx.strokeStyle=col;ctx.lineWidth=3;ctx.stroke()}}
  for(const link of event.links){if(link.temporal_relation!=='unobserved_gap')continue;const a=event.segments.find(s=>s.id===link.departure_segment),b=event.segments.find(s=>s.id===link.receiving_segment);if(!a||!b||!a.xy.length||!b.xy.length)continue;const A=a.xy[a.xy.length-1],Bp=b.xy[0];ctx.beginPath();ctx.moveTo(px(A[0]),py(A[1]));ctx.lineTo(px(Bp[0]),py(Bp[1]));ctx.strokeStyle=link.spatial_consistency==='consistent'?'#7e8b91':'#c0392b';ctx.setLineDash([5,5]);ctx.lineWidth=2;ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='#5b6b72';ctx.font='12px system-ui';ctx.fillText('gap '+link.gap_m.toFixed(2)+' m / '+link.gap_s.toFixed(2)+' s',(px(A[0])+px(Bp[0]))/2+6,(py(A[1])+py(Bp[1]))/2)}
- document.getElementById('rink-note').textContent='Equal x/y scale: '+SCALE+' px per metre. Grey dots are detected board stones at the displayed source time; they are not verified stone identities and colour is unknown. Trajectory breaks retain missing geometry and observation gaps.';
+ document.getElementById('rink-note').textContent=(direction===null?'Video direction unresolved; delivery tee shown at bottom.':'Video-aligned: delivery travels '+(down?'down':'up')+' the screen.')+' Equal x/y scale: '+SCALE+' px per metre. Grey dots are detected board stones at the displayed source time; they are not verified stone identities and colour is unknown. Trajectory breaks retain missing geometry and observation gaps.';
 }
 function drawOverlay(event,t){
  window.overlayAudit=[];
@@ -385,7 +417,7 @@ function linkTiming(link){if(link.temporal_relation==='overlap')return 'overlap 
 function stateAt(t){if(!window.STATE_DATA||!window.STATE_DATA.samples.length||t<window.STATE_DATA.samples[0][0]-1e-6)return null;let lo=0,hi=window.STATE_DATA.samples.length;while(lo<hi){const m=(lo+hi)>>1;if(window.STATE_DATA.samples[m][0]<=t+1e-6)lo=m+1;else hi=m}return window.STATE_DATA.samples[Math.max(0,Math.min(window.STATE_DATA.samples.length-1,lo-1))]}
 let stopAt=null;
 function draw(){
- if(!D.events.length){drawRink({segments:[],links:[]},0);return}
+ if(!D.events.length||sel.selectedIndex<0){drawRink({segments:[],links:[]},0);if(D.events.length)requestAnimationFrame(draw);return}
  const event=D.events[Number(sel.value)];
  window.currentEvent=event;
  const t=presentedTime??(video.readyState>=1?video.currentTime:event.time_s);
@@ -393,6 +425,7 @@ function draw(){
  window.frameAudit={presented_time_s:presentedTime,requested_time_s:video.currentTime,waiting_for_frame:video.seeking||(frameCallbacks&&presentedTime===null)};
  drawRink(event,t);drawOverlay(event,t);
  const link=event.links[0];status.textContent='Source '+t.toFixed(2)+' s · '+event.id+' crossing '+event.time_s.toFixed(2)+' s'+(event.observation_only?' · unresolved camera observation':'')+' · '+(link?('handoff '+link.identity_status+'; '+linkTiming(link)+(link.colour_consistency?('; colour '+link.colour_consistency):'')):'no cross-view link')+' · colour '+(event.colour||'unknown')+' ('+(event.colour_status||'unavailable')+'; not team/identity) · physical identity unverified';
+ if(!event.observation_only){const direction={left_to_right:'left panel → right panel',right_to_left:'right panel → left panel'}[event.inferred_throw_direction];status.textContent+=direction?' · inferred travel: '+direction:' · travel direction unknown'}
  if(event.throw_extent){status.textContent+=event.throw_extent.status==='quiet_board_proposal'?' · throw ends '+event.throw_extent.end_time_s.toFixed(1)+' s':' · throw end unresolved ('+event.throw_extent.reason+')'}
  const agreement=event.camera_consistency;
  if(event.display_receiving_candidate)status.textContent+=' · receiving candidate shown: first crossing strictly after departure (display rule; association unresolved)';
@@ -400,9 +433,9 @@ function draw(){
  if(agreement)status.textContent+=agreement.paired_samples?' · camera disagreement: median '+agreement.median_m.toFixed(2)+' m, max '+agreement.maximum_m.toFixed(2)+' m across '+agreement.paired_samples+' simultaneous samples (not absolute accuracy)':' · camera agreement unavailable: no comparable simultaneous observations';
  requestAnimationFrame(draw)
 }
-function choose(){stopAt=null;video.pause();const e=D.events[Number(sel.value)];if(!e)return;video.currentTime=Math.max(0,e.time_s);}
+function choose(){stopAt=null;video.pause();const e=D.events[sel.selectedIndex];if(!e)return;video.currentTime=Math.max(0,e.time_s);}
 sel.onchange=choose;
-document.getElementById('play').onclick=()=>{const e=D.events[Number(sel.value)];if(!e)return;video.currentTime=Math.max(0,e.start_s);stopAt=e.end_s;video.play()};
+document.getElementById('play').onclick=()=>{const e=D.events[sel.selectedIndex];if(!e)return;video.currentTime=Math.max(0,e.start_s);stopAt=e.end_s;video.play()};
 document.getElementById('back').onclick=()=>{stopAt=null;video.pause();video.currentTime=Math.max(0,video.currentTime-0.5)};
 document.getElementById('next').onclick=()=>{stopAt=null;video.pause();video.currentTime=Math.min(video.duration||1e9,video.currentTime+0.5)};
 video.addEventListener('pause',()=>{stopAt=null});

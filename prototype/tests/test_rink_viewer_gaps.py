@@ -1,6 +1,23 @@
 from prototype.scripts.render_rink_viewer import compact_event
 
 
+def test_inferred_direction_is_separate_from_identity_and_crossing_sign():
+    def segment(panel, role):
+        return {'segment_id': panel+role, 'rink_panel': panel, 'role': role,
+                'pixel_points': [{'time_s': 1., 'pixel': [10, 10]}], 'associated': False}
+
+    event = {'candidate_id': 'candidate', 'event_prediction': {'crossing_time_s': 1., 'direction': 'negative'},
+             'segments': [segment('left', 'receiving')]}
+    assert compact_event(event)['inferred_throw_direction'] == 'right_to_left'
+    event['segments'] = [segment('left', 'departure'), segment('right', 'receiving')]
+    assert compact_event(event)['inferred_throw_direction'] == 'left_to_right'
+    assert not compact_event(event)['physical_identity_verified']
+    assert compact_event({**event, 'observation_only': True})['inferred_throw_direction'] == 'unknown'
+    event['segments'].append(segment('right', 'departure'))
+    assert compact_event(event)['inferred_throw_direction'] == 'unknown'
+    assert compact_event({**event, 'segments': []})['inferred_throw_direction'] == 'unknown'
+
+
 def test_viewer_keeps_calibration_failure_and_detection_gaps_visible():
     event = {'candidate_id': 'candidate', 'event_prediction': {'crossing_time_s': 1.},
              'segments': [{'segment_id': 'track', 'geometry_samples': [

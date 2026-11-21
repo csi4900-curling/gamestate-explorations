@@ -3,13 +3,14 @@
 Reuses the existing learned aggregate's observation joining and typed segments.
 Does not modify detections, fit geometry, tune a match or assert physical identity.
 """
+from bisect import bisect_left, bisect_right
 import copy
 import json
 from pathlib import Path
 from prototype.detection_cache import digest
 from prototype.learned_event_aggregate import assemble
-from prototype.camera_motion_role import role_for_event
-from prototype.directional_handoff import metric_crossings,hypotheses
+from prototype.camera_motion_role import ROLE_LOOKAROUND_S, recover_missing_role, role_for_event
+from prototype.directional_handoff import metric_crossings,hypotheses,resolve_colour_ties,resolve_short_receiving_approaches
 
 
 def clip_segment(segment, interval, sample_step):
@@ -34,10 +35,12 @@ def retain_camera_crossings(crossings, events, hypotheses, output_events):
                  ('left' if e['crossing_point_normalized'][0]<.5 else 'right')==crossing['panel']]
         candidates=[key for key,h in hypotheses.items() if any(c['id']==crossing['id'] for c in h['candidates'])]
         linked=[e['candidate_id'] for e in output_events if e.get('cross_view_links') and
-                e['candidate_id'] in candidates]
+                e['candidate_id'] in candidates and
+                hypotheses[e['candidate_id']].get('selected_counterpart_id', crossing['id']) == crossing['id']]
         result.append({**crossing,'primary_track_event_ids':primary,'candidate_event_ids':candidates,
                        'provisional_link_event_ids':linked,
                        'association_status':'primary_track_observation' if primary else
+                          'provisional_unique_colour_match' if len(linked)==1 and hypotheses[linked[0]].get('selected_counterpart_id') else
                           'provisional_unique_temporal_link' if len(linked)==1 else 'unresolved_or_ambiguous',
                        'physical_identity_verified':False,'physical_delivery_verified':False})
     return result
@@ -59,7 +62,7 @@ def camera_fragment_events(crossings, by_id):
     return fragments
 
 
-def build(video, run_dir, output, *, hog_y_by_panel):
+def build(video, run_dir, output, *, hog_y_by_panel, track_colours=None):
     run_dir=Path(run_dir);output=Path(output)
     if output.exists():raise ValueError('Preserve existing aggregate')
     events=json.loads((run_dir/'events.json').read_text())
@@ -70,13 +73,40 @@ def build(video, run_dir, output, *, hog_y_by_panel):
             for line in stream:yield json.loads(line)
     wanted_times={o['time_s'] for e in events['events'] for o in e['observations']}
     role_rows=[]
+    ordered = sorted(events['events'], key=lambda e:e['crossing_time_s'])
+    crossing_times = [e['crossing_time_s'] for e in ordered]
+    step_s = events['sample_step_frames'] / events['source_fps'] if events.get('source_fps') else None
+    margin = ROLE_LOOKAROUND_S + max((e['observations'][-1]['time_s']-e['observations'][0]['time_s']
+                                      for e in ordered), default=0.)
+    nearby = {e['id']:[] for e in ordered}
+    bracket_pixels = {e['id']:{o['time_s']:o['pixel'] for o in e['observations']} for e in ordered}
     def evidence_rows():
         for row in rows('match-observations.jsonl'):
             if row['time_s'] in wanted_times:role_rows.append(row)
+            t = row['time_s']
+            for e in ordered[bisect_left(crossing_times,t-margin):bisect_right(crossing_times,t+margin)]:
+                panel = 'left' if e['crossing_point_normalized'][0] < .5 else 'right'
+                stones = [s for s in row['boards'][panel]['stones'] if s['tracker_id'] == e['track_id']]
+                expected = bracket_pixels[e['id']].get(t)
+                if len(stones) == 1 and (expected is None or stones[0]['pixel'] == expected):
+                    nearby[e['id']].append((t, stones[0]['height_adjusted_local_m']))
             yield row
     metric=metric_crossings(evidence_rows(),hog_y_by_panel=hog_y_by_panel)
     roles={e['id']:role_for_event(e,role_rows,width) for e in events['events']}
+    for e in ordered:
+        if step_s is None or 'observed_bracket_s' not in e:
+            continue
+        roles[e['id']] = recover_missing_role(e, nearby[e['id']], step_s, roles[e['id']])
     handoffs=hypotheses(events['events'],roles,metric,events['source_interval_s'])
+    if track_colours is not None:
+        colours = json.loads(Path(track_colours).read_text())
+        if (colours['source_sha256'] != events['source_sha256'] or
+                colours['provenance']['observations_sha256'] != digest(run_dir/'match-observations.jsonl')):
+            raise ValueError('Track colours belong to a different observation stream')
+        resolve_colour_ties(events['events'], handoffs, colours['tracks'])
+    short_approaches = resolve_short_receiving_approaches(
+        events['events'], handoffs, rows('match-observations.jsonl'), hog_y_by_panel=hog_y_by_panel)
+    metric = sorted(metric + short_approaches, key=lambda e: e['crossing_time_s'])
     extras=[]
     for crossing in metric:
         a,b=crossing['observations'];fraction=(crossing['crossing_time_s']-a['time_s'])/(b['time_s']-a['time_s'])
@@ -91,12 +121,14 @@ def build(video, run_dir, output, *, hog_y_by_panel):
         primary.update(role=role['role'],role_status=role['status'],role_evidence=role)
         result.update(handoff_hypothesis=hypothesis,association_method=hypothesis['basis'],association_issues=[])
         for candidate in hypothesis['candidates']:
+            if candidate['id'] != hypothesis.get('selected_counterpart_id', candidate['id']):
+                continue
             other=clip_segment(by_id[candidate['id']]['segments'][0],hypothesis['interval_s'],events['sample_step_frames'])
             other.update(segment_id=event['id']+':'+candidate['role']+':'+str(candidate['track_id']),
                          role=candidate['role'],role_status='observed_metric_hog_crossing_role_hypothesis',
                          hog_crossing_evidence=candidate)
             result['segments'].append(other)
-            if hypothesis['status']=='provisional_unique_temporal_hog_crossing' and primary['pixel_points'] and other['pixel_points']:
+            if hypothesis['status'] in ('provisional_unique_temporal_hog_crossing','provisional_unique_colour_match','provisional_unique_receiving_approach_short_of_hog') and primary['pixel_points'] and other['pixel_points']:
                 departure=primary if primary['role']=='departure' else other
                 receiving=other if primary['role']=='departure' else primary
                 result['cross_view_links'].append({'departure_segment':departure['segment_id'],
@@ -116,6 +148,8 @@ def build(video, run_dir, output, *, hog_y_by_panel):
                 'events_sha256':digest(run_dir/'events.json'),'observations_sha256':digest(run_dir/'observations.jsonl'),
                 'board_observations_sha256':digest(run_dir/'match-observations.jsonl'),
                 'match_observation_run':str(run_dir.resolve()),'local_hog_y_m':hog_y_by_panel}}
+    if track_colours is not None:
+        result['provenance']['track_colours_sha256'] = digest(track_colours)
     code=output.with_suffix('.code');code.mkdir(parents=True)
     names=['directional_event_aggregate.py','directional_handoff.py','camera_motion_role.py',
            'learned_event_aggregate.py','line_crossing_events.py']

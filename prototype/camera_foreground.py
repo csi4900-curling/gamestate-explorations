@@ -32,7 +32,9 @@ class CameraForeground:
         started=time.perf_counter();previous=torch.get_num_threads()
         try:
             result=self.model.predict(image,classes=[0],conf=.25,imgsz=640,device='cpu',verbose=False)[0]
-        finally:torch.set_num_threads(previous)
+        finally:
+            if previous!=self.threads:
+                torch.set_num_threads(previous)
         mask=np.zeros(image.shape[:2],np.uint8)
         if result.masks is not None:
             for polygon in result.masks.xy:

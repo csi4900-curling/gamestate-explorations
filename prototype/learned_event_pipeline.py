@@ -12,6 +12,26 @@ from prototype.line_crossing_events import LineCrossings,validate_config
 from prototype.stone_detector import StoneDetector
 
 
+def _merge_windows(intervals, start_s, end_s):
+    clipped = sorted((max(start_s, a), min(end_s, b)) for a, b in intervals if b > start_s and a < end_s)
+    merged = []
+    for a, b in clipped:
+        if merged and a <= merged[-1][1]:
+            merged[-1] = (merged[-1][0], max(merged[-1][1], b))
+        else:
+            merged.append((a, b))
+    return merged
+
+
+def _in_windows(time_s, windows):
+    for a, b in windows:
+        if a <= time_s <= b:
+            return True
+        if a > time_s:
+            break
+    return False
+
+
 def digest(path):
     h=hashlib.sha256()
     with Path(path).open('rb') as stream:
@@ -76,6 +96,10 @@ def run(video,output,config_path,checkpoint,*,start,end,source_id,match_state_co
         for name in ('match_observation.py','scoreboard_observation.py'):
             p=Path(__file__).with_name(name)
             (output/'code-snapshot'/name).write_bytes(p.read_bytes())
+    # Split two-pass execution: Pass 1 runs iGPU detection + ByteTrack + primary
+    # line crossings with CPU idle; Pass 2 runs CPU camera geometry + OCR with
+    # iGPU idle (avoids shared-TDP throttling on integrated GPUs and enables
+    # verified scheduled geometry).
     try:
         with (output/'observations.jsonl').open('w') as f:
             for frame_index in range(first,stop):
@@ -100,14 +124,110 @@ def run(video,output,config_path,checkpoint,*,start,end,source_id,match_state_co
                      'detector_wall_seconds':prediction['wall_seconds'],'upstream_speed_ms':prediction['upstream_speed_ms'],
                      'detection_reused':prediction.get('reused_from_cache',False),
                      'prior_detector_wall_seconds':prediction.get('prior_detector_wall_seconds')}
-                f.write(json.dumps(row)+'\n');f.flush()
-                if observer is not None:observer.observe(frame,row)
+                f.write(json.dumps(row)+'\n')
                 nframes+=1
                 if nframes%25==0:
-                    progress={'status':'running','samples':nframes,'source_time_s':now,'crossings':len(crossings.events),
+                    f.flush()
+                    progress={'status':'running','phase':'detection','samples':nframes,'source_time_s':now,'crossings':len(crossings.events),
                               'wall_seconds':time.perf_counter()-started,'detector_seconds':detection_s,'events_so_far':crossings.events}
                     pending=output/'progress.pending.json';pending.write_text(json.dumps(progress));pending.replace(output/'progress.json')
                     print(json.dumps({k:v for k,v in progress.items() if k!='events_so_far'}),flush=True)
+            f.flush()
+        cap.release()
+        if observer is not None:
+            source_size_px = tuple(protocol['source_size_px'])
+            sched = observer.config.get('geometry_schedule')
+            use_schedule = isinstance(sched, dict) and sched.get('mode') == 'two_pass_probe_v1' and 'local_hog_y_m' in observer.config
+            probe_cache = {}
+            windows = None
+            if use_schedule:
+                from prototype.directional_handoff import metric_crossings
+                probe_hz = float(sched.get('probe_hz', 1.0))
+                before_s = float(sched.get('before_s', 6.0))
+                after_s = float(sched.get('after_s', 35.0))
+                probe_stride = max(1, round(protocol['effective_sample_hz'] / probe_hz))
+                windows = _merge_windows([(e['crossing_time_s'] - before_s, e['crossing_time_s'] + after_s)
+                                          for e in crossings.events], start, end)
+                # Sub-pass 2a: uninterrupted coarse probe across both panels to detect
+                # arrival-only or reverse-direction metric crossings outside primary windows.
+                cap_probe = cv2.VideoCapture(str(video))
+                cap_probe.set(cv2.CAP_PROP_POS_FRAMES, first)
+                probe_states = []
+                try:
+                    with (output/'observations.jsonl').open() as obs_in:
+                        sample_idx = 0
+                        next_row = json.loads(obs_in.readline()) if nframes else None
+                        for frame_index in range(first, stop):
+                            if not cap_probe.grab():
+                                raise RuntimeError(f'Decode failed during geometry probe at frame {frame_index}')
+                            if next_row is None or frame_index != next_row['frame_index']:
+                                continue
+                            if sample_idx % probe_stride == 0:
+                                ok, frame = cap_probe.retrieve()
+                                if not ok:
+                                    raise RuntimeError('Frame retrieval failed during geometry probe')
+                                state = observer.observe(frame, next_row, write_stream=False, run_ocr=False)
+                                probe_cache[frame_index] = state
+                                probe_states.append(state)
+                            sample_idx += 1
+                            line = obs_in.readline()
+                            next_row = json.loads(line) if line else None
+                finally:
+                    cap_probe.release()
+                if probe_states:
+                    probe_crossings = metric_crossings(probe_states, hog_y_by_panel=observer.config['local_hog_y_m'])
+                    windows = _merge_windows(
+                        windows + [(c['crossing_time_s'] - before_s, c['crossing_time_s'] + after_s) for c in probe_crossings],
+                        start, end)
+            # Sub-pass 2b: single sequential pass writing chronological match-observations.jsonl.
+            cap_geo = cv2.VideoCapture(str(video))
+            cap_geo.set(cv2.CAP_PROP_POS_FRAMES, first)
+            geo_done = 0
+            try:
+                with (output/'observations.jsonl').open() as obs_in:
+                    line = obs_in.readline()
+                    next_row = json.loads(line) if line else None
+                    for frame_index in range(first, stop):
+                        if not cap_geo.grab():
+                            raise RuntimeError(f'Decode failed during geometry pass at frame {frame_index}')
+                        if next_row is None or frame_index != next_row['frame_index']:
+                            continue
+                        now = next_row['time_s']
+                        ocr_due = observer.next_score is None or now + 1e-8 >= observer.next_score
+                        if frame_index in probe_cache:
+                            cached_state = probe_cache.pop(frame_index)
+                            ocr_frame = None
+                            if ocr_due:
+                                ok, ocr_frame = cap_geo.retrieve()
+                                if not ok:
+                                    raise RuntimeError('Frame retrieval failed during OCR')
+                            observer.write_state(cached_state, frame=ocr_frame)
+                        elif (not use_schedule) or _in_windows(now, windows):
+                            ok, frame = cap_geo.retrieve()
+                            if not ok:
+                                raise RuntimeError('Frame retrieval failed during geometry pass')
+                            observer.observe(frame, next_row)
+                        else:
+                            ocr_frame = None
+                            if ocr_due:
+                                ok, ocr_frame = cap_geo.retrieve()
+                                if not ok:
+                                    raise RuntimeError('Frame retrieval failed during OCR')
+                            observer.observe_skipped(next_row, source_size_px, frame=ocr_frame)
+                        geo_done += 1
+                        if geo_done % 25 == 0:
+                            progress = {'status': 'running', 'phase': 'geometry', 'samples': geo_done, 'total_samples': nframes,
+                                        'source_time_s': now, 'crossings': len(crossings.events),
+                                        'wall_seconds': time.perf_counter() - started, 'detector_seconds': detection_s,
+                                        'geometry_seconds': observer.geometry_s, 'events_so_far': crossings.events}
+                            pending = output / 'progress.pending.json'
+                            pending.write_text(json.dumps(progress))
+                            pending.replace(output / 'progress.json')
+                            print(json.dumps({k: v for k, v in progress.items() if k != 'events_so_far'}), flush=True)
+                        line = obs_in.readline()
+                        next_row = json.loads(line) if line else None
+            finally:
+                cap_geo.release()
     except Exception as exc:
         (output/'failure.json').write_text(json.dumps({'status':'failed','error':f'{type(exc).__name__}: {exc}',
             'sampled_frames':nframes,'events_so_far':crossings.events,'wall_seconds':time.perf_counter()-started},indent=2))

@@ -26,7 +26,8 @@ def assemble(spec):
     result.mkdir()
     config = json.loads(Path(spec["match_config"]).read_text())
     aggregate_path = result / "aggregate.json"
-    build(spec["video"], run, aggregate_path, hog_y_by_panel=config["local_hog_y_m"])
+    build(spec["video"], run, aggregate_path, hog_y_by_panel=config["local_hog_y_m"],
+          track_colours=output / "track-colours.json")
     aggregate = json.loads(aggregate_path.read_text())
     attach_event_colours(aggregate, output / "event-colours.json")
     rink = annotate(enrich(aggregate, aggregate_path=aggregate_path))
@@ -109,6 +110,52 @@ def boards(spec):
         aggregate=result / "aggregate-rink.json",
         track_colours=colours if colours.exists() else None,
     )
+    from prototype.throw_revolutions import run as run_revolutions
+    from prototype.match_score_and_rocks import build as build_score_and_rocks
+    rev_path = result / "throws/revolutions.json"
+    rev_payload = run_revolutions(
+        public_run=output / "observations",
+        aggregate=result / "aggregate-rink.json",
+        effects=result / "throws/effects.json",
+        video=spec["video"],
+        output=rev_path,
+    )
+    score_rocks_path = result / "score-and-rocks.json"
+    score_rocks = build_score_and_rocks(
+        aggregate=result / "aggregate-rink.json",
+        effects=result / "throws/effects.json",
+        state_config=spec["state_config"],
+        score_observations=output / "observations/score-observations.jsonl",
+        revolutions=rev_path,
+        output=score_rocks_path,
+    )
+    # Attach revolutions and inferred end/rock-pair context to throws/effects.json & effects.js
+    # so the Throws viewer displays them alongside the before/after board.
+    effects_path = result / "throws/effects.json"
+    effects_data = json.loads(effects_path.read_text())
+    rev_by_id = {e["event_id"]: e for e in rev_payload.get("events", [])}
+    ctx_by_id = {t["event_id"]: t for t in score_rocks.get("throws", [])}
+    for ev in effects_data["events"]:
+        eid = ev["event_id"]
+        if eid in rev_by_id:
+            ev["revolutions"] = rev_by_id[eid]
+        if eid in ctx_by_id:
+            c = ctx_by_id[eid]
+            ev["match_context"] = {
+                "end_index": c.get("end_index"),
+                "throw_in_end": c.get("throw_in_end"),
+                "direction": c.get("direction"),
+                "team": c.get("team"),
+                "colour": c.get("colour"),
+                "team_slot": c.get("team_slot"),
+                "rock_pair": c.get("rock_pair"),
+                "kinematics": c.get("kinematics"),
+                "provenance": c.get("rock_slot_provenance"),
+            }
+    effects_data["revolutions_summary"] = rev_payload["summary"]
+    effects_data["score_and_rocks_summary"] = score_rocks["summary"]
+    effects_path.write_text(json.dumps(effects_data, indent=2, allow_nan=False) + "\n")
+    (result / "throws/effects.js").write_text("window.THROW_EFFECTS=" + json.dumps(effects_data, allow_nan=False) + ";\n")
 
 
 def finish(spec):
@@ -137,7 +184,9 @@ def finish(spec):
         "metric_geometry_accuracy_verified": False,
         "official_scoring_verified": False,
         "physical_revolutions": None,
-        "rotation_status": "Unavailable: physical handle landmarks and angular tracking are not validated.",
+        "rotation_status": "Development crop-period probe attached where observable; physical handle landmarks and angular counts remain unvalidated.",
+        "revolutions_summary": throws.get("revolutions_summary"),
+        "score_and_rocks_summary": throws.get("score_and_rocks_summary"),
         "confidence_status": "No calibrated complete-pipeline probability. Model scores/posteriors remain component evidence.",
         "measurement_scope": "Availability counts; accuracy requires timestamped source reviews.",
         "pipeline_spec_sha256": digest(output / "spec.json"),

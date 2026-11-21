@@ -77,3 +77,27 @@ def test_unresolved_camera_track_uses_same_rink_mapping_without_an_event_link():
     assert f['segments'][0]['geometry_samples'][0]['rink_position_m'][0]==.3
     assert not f['segments'][0]['physical_identity_verified']
     assert f['segments'][0]['geometry_samples'][0]['rink_position_m'][1]==34.747-6.4
+
+
+def test_colour_ties_require_known_opposite_rivals_and_no_shared_crossings():
+    from prototype.directional_handoff import resolve_colour_ties
+
+    cases = [
+        ('red', 'yellow', {}, 'r1'),
+        ('yellow', 'red', {}, 'r2'),
+        ('red', 'red', {}, None),
+        ('red', None, {}, None),
+        ('yellow', 'yellow', {}, None),
+        ('red', 'yellow', {'r1': ['A', 'B']}, None),
+    ]
+    for first, second, shared, expected in cases:
+        candidates = [{'id': 'r1', 'track_id': 1, 'panel': 'right'},
+                      {'id': 'r2', 'track_id': 2, 'panel': 'right'}]
+        hypothesis = {'status': 'ambiguous', 'candidates': candidates,
+                      'role_evidence': {'role': 'departure', 'panel': 'left'},
+                      'shared_counterpart_candidates': shared}
+        resolve_colour_ties([{'id': 'A', 'track_id': 3}], {'A': hypothesis},
+                            {'left': {'3': 'red'}, 'right': {'1': first, '2': second}})
+        assert hypothesis.get('selected_counterpart_id') == expected
+        assert hypothesis['status'] == ('ambiguous' if expected is None else 'provisional_unique_colour_match')
+        assert hypothesis['candidates'] == candidates

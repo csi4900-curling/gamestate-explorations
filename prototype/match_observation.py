@@ -89,7 +89,10 @@ class MatchObserver:
             from prototype.calibrated_camera_geometry import CalibratedCameraGeometry
             self.geometry=CalibratedCameraGeometry(bundle_path,alignment=cfg.get('camera_alignment','locked'),
                 foreground_checkpoint=resolve(cfg['camera_foreground_checkpoint']) if cfg.get('camera_foreground_checkpoint') else None,
-                foreground_sha256=cfg.get('camera_foreground_sha256'))
+                foreground_sha256=cfg.get('camera_foreground_sha256'),
+                fast_scale=cfg.get('registration_fast_scale'),
+                fast_nfeatures=cfg.get('registration_fast_nfeatures', 1200),
+                parallel_panels=bool(cfg.get('registration_parallel_panels', False)))
             if cfg.get('camera_foreground_checkpoint'):self.files.append(resolve(cfg['camera_foreground_checkpoint']))
         elif geometry_mode=='original_split_geometry_with_anchor_reuse':
             from prototype.split_camera_geometry import SplitCameraGeometry
@@ -99,7 +102,7 @@ class MatchObserver:
             self.geometry=ParallelNativeGeometry(calibration_path,annotations_path,resolve(cfg['reference_frames']))
         elif geometry_mode!='direct_low_resolution_reference_registration':
             raise ValueError('Unknown geometry mode')
-        self.next_score=None;self.last_score={};self.count=0;self.geometry_s=0;self.ocr_s=0
+        self.next_score=None;self.last_score={};self.count=0;self.geometry_s=0;self.ocr_s=0;self.geometry_skipped_frames=0
         self.stream=(self.output/'match-observations.jsonl').open('w')
         self.score_stream=(self.output/'score-observations.jsonl').open('w')
         self.provenance={'config':cfg,'config_sha256':sha(self.config_path),
@@ -132,10 +135,109 @@ class MatchObserver:
         for name in code_names:(snapshot/name).write_bytes(Path(__file__).with_name(name).read_bytes())
         (self.output/'match-observation-protocol.json').write_text(json.dumps(self.provenance,indent=2))
 
-    def observe(self,frame,row):
+    def _record_ocr(self, frame, now):
+        score = None
+        if self.next_score is None or now + 1e-8 >= self.next_score:
+            score = self.ocr.observe(frame, now)
+            self.ocr_s += score['wall_seconds']
+            self.next_score = now + self.interval
+            self.score_stream.write(json.dumps(score) + '\n')
+            self.score_stream.flush()
+            for team, total in score['totals'].items():
+                if total['value'] is not None:
+                    self.last_score[team] = {'observed_at_s': now, **total}
+        return score
+
+    def _record_coverage(self, state):
+        now = state['time_s']
+        frame_index = state['frame_index']
+        for panel, board in state['boards'].items():
+            diag = board['registration']
+            if diag.get('status') == 'geometry_skipped_inactive_interval':
+                self.open_calibration_gaps[panel] = None
+                continue
+            coverage = self.calibration_coverage[panel]
+            coverage['frames'] += 1
+            registered = board['homography_normalized_pixels_to_local_metres'] is not None
+            coverage['registered_frames'] += int(registered)
+            coverage['unsupported_stone_points'] += sum(
+                1 for s in board['stones']
+                if (s.get('height_correction') or {}).get('status') == 'outside_calibration_support'
+            )
+            if not registered:
+                gap = self.open_calibration_gaps[panel]
+                if gap is None or gap['status'] != diag['status']:
+                    gap = {'panel': panel, 'start_s': now, 'end_s': now, 'first_frame': frame_index,
+                           'last_frame': frame_index, 'sampled_frames': 0, 'status': diag['status'],
+                           'reason': diag.get('reason')}
+                    self.calibration_gaps[panel].append(gap)
+                    self.open_calibration_gaps[panel] = gap
+                gap['end_s'] = now
+                gap['last_frame'] = frame_index
+                gap['sampled_frames'] += 1
+            else:
+                self.open_calibration_gaps[panel] = None
+
+    def write_state(self, state, frame=None):
+        now = state['time_s']
+        if frame is not None and state.get('score_observation') is None and (self.next_score is None or now + 1e-8 >= self.next_score):
+            state['score_observation'] = self._record_ocr(frame, now)
+        self._record_coverage(state)
+        state['last_observed_totals'] = {k: {**v, 'age_s': now - v['observed_at_s']} for k, v in self.last_score.items()}
+        self.stream.write(json.dumps(state) + '\n')
+        self.count += 1
+        if self.count % 25 == 0:
+            self.stream.flush()
+        return state
+
+    def observe_skipped(self, row, source_size_px, *, frame=None, write_stream=True):
+        now = row['time_s']
+        w, h = source_size_px
+        from prototype.stone_measurement import body_point_support
+        track_by_det = {t['detection_index']: t['track_id'] for t in row['tracked_observations']}
+        boards = {}
+        for panel in self.references:
+            stones = []
+            for detection_index, d in enumerate(row['detections']):
+                x, _ = d['pixel']
+                if (x < w / 2) != (panel == 'left'):
+                    continue
+                support = body_point_support(d, [w, h])
+                stones.append({**d, 'tracker_id': track_by_det.get(detection_index),
+                               'body_point_support': support,
+                               'physical_identity': None, 'team': None,
+                               'ice_plane_local_m': None, 'height_adjusted_local_m': None,
+                               'height_correction': {'status': 'geometry_skipped_inactive_interval',
+                                                     'reason': 'Outside scheduled active throw and probe windows'}})
+            boards[panel] = {
+                'stones': stones,
+                'registration': {'status': 'geometry_skipped_inactive_interval',
+                                 'reason': 'Outside scheduled active throw and probe windows',
+                                 'calibration_refitted': False, 'physical_accuracy_verified': False},
+                'homography_normalized_pixels_to_local_metres': None,
+                'complete_board_verified': False, 'end_identity': None,
+            }
+        self.geometry_skipped_frames += 1
+        score = self._record_ocr(frame, now) if frame is not None else None
+        state = {'time_s': now, 'frame_index': row['frame_index'], 'boards': boards,
+                 'score_observation': score,
+                 'last_observed_totals': {k: {**v, 'age_s': now - v['observed_at_s']} for k, v in self.last_score.items()},
+                 'current_end': None, 'current_points_from_stones': None,
+                 'physical_identity_verified': False}
+        if write_stream:
+            self._record_coverage(state)
+            self.stream.write(json.dumps(state) + '\n')
+            self.count += 1
+            if self.count % 25 == 0:
+                self.stream.flush()
+        return state
+
+    def observe(self,frame,row,*,write_stream=True,run_ocr=True):
         now=row['time_s'];started=time.perf_counter();normalized=cv2.resize(frame,(640,360))
         boards={};h,w=frame.shape[:2]
         registered=self.geometry.observe(frame,now) if self.geometry is not None else None
+        track_by_det={t['detection_index']:t['track_id'] for t in row['tracked_observations']}
+        from prototype.stone_measurement import body_point_support
         for panel,(reference,H,region,desc) in self.references.items():
             if registered is not None:
                 target,diag,prior=registered[panel]
@@ -145,36 +247,19 @@ class MatchObserver:
                     prior=transported_reference_camera(H,target,region) if target is not None else None
                 except (ValueError,np.linalg.LinAlgError,FloatingPointError) as exc:
                     prior=None;diag={**diag,'height_prior_failure':str(exc)}
-            coverage=self.calibration_coverage[panel]
-            coverage['frames']+=1
-            coverage['registered_frames']+=int(target is not None)
-            if target is None:
-                gap=self.open_calibration_gaps[panel]
-                if gap is None or gap['status']!=diag['status']:
-                    gap={'panel':panel,'start_s':now,'end_s':now,'first_frame':row['frame_index'],
-                         'last_frame':row['frame_index'],'sampled_frames':0,'status':diag['status'],
-                         'reason':diag.get('reason')}
-                    self.calibration_gaps[panel].append(gap)
-                    self.open_calibration_gaps[panel]=gap
-                gap['end_s']=now;gap['last_frame']=row['frame_index'];gap['sampled_frames']+=1
-            else:
-                self.open_calibration_gaps[panel]=None
             stones=[]
             for detection_index,d in enumerate(row['detections']):
                 x,y=d['pixel'];is_left=x<w/2
                 if is_left!=(panel=='left'):continue
                 pixel=np.asarray([x*640/w,y*360/h])
-                from prototype.stone_measurement import body_point_support
                 support=body_point_support(d,[w,h])
                 if self.provenance.get('manual_calibration') and not support['centre_supported']:
                     raw=q=None;correction={**support,'reason':'Clipped box midpoint is not the complete stone body centre'}
                 elif hasattr(self.geometry,'point_supported') and not self.geometry.point_supported(panel,pixel):
                     raw=q=None;correction={'status':'outside_calibration_support','reason':'Missing alignment or point outside explicitly supported image region'}
-                    coverage['unsupported_stone_points']+=1
                 else:
                     raw,q,correction=project_body(target,pixel,region,prior,self.heights)
-                tracks=[t['track_id'] for t in row['tracked_observations'] if t['detection_index']==detection_index]
-                stones.append({**d,'tracker_id':tracks[0] if len(tracks)==1 else None,
+                stones.append({**d,'tracker_id':track_by_det.get(detection_index),
                     'body_point_support':support,
                     'physical_identity':None,'team':None,
                     'ice_plane_local_m':raw,'height_adjusted_local_m':q,
@@ -183,22 +268,26 @@ class MatchObserver:
                            'homography_normalized_pixels_to_local_metres':target.tolist() if target is not None else None,
                            'complete_board_verified':False,'end_identity':None}
         self.geometry_s+=time.perf_counter()-started
-        score=None
-        if self.next_score is None or now+1e-8>=self.next_score:
-            score=self.ocr.observe(frame,now);self.ocr_s+=score['wall_seconds'];self.next_score=now+self.interval
-            self.score_stream.write(json.dumps(score)+'\n');self.score_stream.flush()
-            for team,total in score['totals'].items():
-                if total['value'] is not None:self.last_score[team]={'observed_at_s':now,**total}
+        score=self._record_ocr(frame,now) if run_ocr else None
         state={'time_s':now,'frame_index':row['frame_index'],'boards':boards,
                'score_observation':score,'last_observed_totals':{k:{**v,'age_s':now-v['observed_at_s']} for k,v in self.last_score.items()},
                'current_end':None,'current_points_from_stones':None,
                'physical_identity_verified':False}
-        self.stream.write(json.dumps(state)+'\n');self.stream.flush();self.count+=1
+        if write_stream:
+            self._record_coverage(state)
+            self.stream.write(json.dumps(state)+'\n')
+            self.count+=1
+            if self.count%25==0:self.stream.flush()
         return state
 
     def close(self):
+        self.stream.flush()
         self.stream.close();self.score_stream.close()
+        if self.geometry is not None and hasattr(self.geometry, 'close'):
+            self.geometry.close()
         summary={'samples':self.count,'geometry_seconds':self.geometry_s,'ocr_seconds':self.ocr_s,
+                 'geometry_skipped_frames':self.geometry_skipped_frames,
+                 'geometry_schedule':self.config.get('geometry_schedule'),
                  'last_observed_totals':self.last_score,'new_calibration_fits':0,
                  'physical_trajectory_accuracy_measured':False}
         if self.geometry is not None:

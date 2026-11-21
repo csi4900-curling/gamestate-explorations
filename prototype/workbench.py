@@ -57,7 +57,7 @@ def own_data_directory(data):
 
 
 class Workbench:
-    def __init__(self, root=ROOT, data=None, profile=None):
+    def __init__(self, root=ROOT, data=None, profile=None, external_jobs=()):
         self.root = Path(root).resolve()
         self.data = Path(data or self.root / "workbench-data").resolve()
         self.data.mkdir(parents=True, exist_ok=True)
@@ -71,10 +71,13 @@ class Workbench:
         self.lock = threading.RLock()
         self.processes = {}
         self.cancelled = set()
+        self.history_lock = threading.Lock()
+        self.history_cache = {}
         self.runtime_failures = {}
+        self.external_jobs = {self.identifier(job) for job in external_jobs}
         for p in (self.data / "jobs").glob("*/job.json"):
             row = json.loads(p.read_text())
-            if row["state"] in ["running", "queued"]:
+            if row["state"] in ["running", "queued"] and row["id"] not in self.external_jobs:
                 row.update(
                     state="interrupted",
                     message="Application restarted. Existing outputs preserved; create a new run to process again.",
@@ -106,6 +109,7 @@ class Workbench:
                 self.update(identifier,**failure)
                 self.runtime_failures.pop(identifier,None)
             except OSError:pass  # Keep the live API truthful while storage is unavailable.
+        result["externally_managed"] = identifier in self.external_jobs and result["state"] in ("queued", "running")
         result["reviews"] = self.reviews(identifier)
         from prototype.review_presentation import focused_views
         result=focused_views(self,result)
@@ -598,20 +602,6 @@ class Workbench:
                 ],
             ),
             (
-                "trajectories",
-                inference,
-                [],
-                [
-                    wrapper,
-                    "-m",
-                    "prototype.product_pipeline",
-                    "--stage",
-                    "assemble",
-                    "--spec",
-                    spec_path,
-                ],
-            ),
-            (
                 "stone_colours",
                 inference,
                 [p["colour_dependencies"]],
@@ -627,6 +617,20 @@ class Workbench:
                     str(output / "track-colours.json"),
                     "--config",
                     spec["colour_config"],
+                ],
+            ),
+            (
+                "trajectories",
+                inference,
+                [],
+                [
+                    wrapper,
+                    "-m",
+                    "prototype.product_pipeline",
+                    "--stage",
+                    "assemble",
+                    "--spec",
+                    spec_path,
                 ],
             ),
             (
@@ -761,6 +765,8 @@ class Workbench:
 
     def cancel(self, identifier):
         self.identifier(identifier)
+        if self.job(identifier)["externally_managed"]:
+            raise ValueError("This run is managed by another worker")
         self.cancelled.add(identifier)
         if self.job(identifier)["state"] == "queued":
             self.update(identifier, state="cancelled", message="Cancelled before processing")
@@ -851,12 +857,22 @@ class Workbench:
         if not path.exists():
             return []
         doc = json.loads(path.read_text())
+        effects_path = self.data / "jobs" / identifier / "result/throws/effects.json"
+        clips = {}
+        if effects_path.is_file():
+            for effect in json.loads(effects_path.read_text())["events"]:
+                quiet = effect.get("settle_interval_s")
+                if quiet and effect.get("arrival_time_s") is not None:
+                    # Include the departure crossing, the receiving approach, and both quiet-window bounds.
+                    start = min(effect["crossing_time_s"], effect["arrival_time_s"]) - 2
+                    clips[effect["event_id"]] = [max(row.get("start_s") or 0, start), *quiet]
         scores = {entry['event_id']: entry
                   for entry in doc.get('detected_throw_scoring', {}).get('history', [])}
         return [
             {
                 "event_id": e["event_id"],
                 "time_s": e["crossing_time_s"],
+                "review_clip_s": clips.get(e["event_id"]),
                 "proposal_time_s": e["proposal"].get("time_s"),
                 "post_throw_points": scores.get(e['event_id'], {}).get('estimated_points'),
                 "post_throw_point_status": scores.get(e['event_id'], {}).get('status', 'unavailable'),
@@ -865,6 +881,19 @@ class Workbench:
             }
             for e in doc["events"]
         ]
+
+    def stone_histories(self, identifier):
+        from prototype.stone_history import from_job
+        job = self.data/'jobs'/self.identifier(identifier)
+        if json.loads((job/'job.json').read_text())['state'] != 'done':
+            raise ValueError('Stone history requires a completed run')
+        with self.history_lock:
+            if identifier not in self.history_cache:
+                data = from_job(job)
+                if len(self.history_cache) >= 8:
+                    self.history_cache.pop(next(iter(self.history_cache)))
+                self.history_cache[identifier] = data
+            return self.history_cache[identifier]
 
     def reviews(self, identifier):
         path = self.data / "jobs" / self.identifier(identifier) / "reviews.json"
@@ -887,6 +916,27 @@ class Workbench:
             }
             write(self.data / "jobs" / identifier / "reviews.json", rows)
         return rows
+
+    def score_and_rocks(self, identifier):
+        folder = self.data / "jobs" / self.identifier(identifier)
+        saved = folder / "result/score-and-rocks.json"
+        if saved.exists():
+            return json.loads(saved.read_text())
+        agg = folder / "result/aggregate-rink.json"
+        eff = folder / "result/throws/effects.json"
+        state_cfg = folder / "state.json"
+        if not (agg.exists() and eff.exists() and state_cfg.exists()):
+            return {"ends": [], "throws": [], "rock_pair_summary": [], "summary": {}}
+        from prototype.match_score_and_rocks import build as build_score_and_rocks
+        rev = folder / "result/throws/revolutions.json"
+        score_obs = folder / "observations/score-observations.jsonl"
+        return build_score_and_rocks(
+            aggregate=agg,
+            effects=eff,
+            state_config=state_cfg,
+            score_observations=score_obs if score_obs.exists() else None,
+            revolutions=rev if rev.exists() else None,
+        )
 
     def report(self, identifier):
         job = self.job(identifier)
@@ -981,9 +1031,13 @@ class Handler(VideoHandler):
             if path == "/api/calibrations":
                 video_id = parse_qs(urlsplit(self.path).query).get('video_id', [''])[0]
                 return self.respond(200, self.app.calibrations.list(video_id))
-            match = re.fullmatch(r"/api/jobs/([a-f0-9]{12})(?:/(events|report|logs))?", path)
+            match = re.fullmatch(r"/api/jobs/([a-f0-9]{12})(?:/(events|report|logs|stone-histories|score-and-rocks))?", path)
             if match:
                 identifier, action = match.groups()
+                if action == "stone-histories":
+                    return self.respond(200, self.app.stone_histories(identifier))
+                if action == "score-and-rocks":
+                    return self.respond(200, self.app.score_and_rocks(identifier))
                 if action == "events":
                     return self.respond(200, self.app.events(identifier))
                 if action == "report":
@@ -1077,6 +1131,7 @@ class Handler(VideoHandler):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--external-job", action="append", default=[], help="Active job managed by a separate worker; preserve it during startup recovery")
     parser.add_argument("--port", type=int, default=8766)
     parser.add_argument("--data", type=Path)
     parser.add_argument("--profile", type=Path)
@@ -1089,7 +1144,7 @@ def main():
             # Bind before startup recovery: a second server on an occupied port
             # must not mark existing jobs interrupted as a side effect.
             with ThreadingHTTPServer(("127.0.0.1", args.port), Handler) as server:
-                app = Workbench(data=args.data, profile=args.profile)
+                app = Workbench(data=args.data, profile=args.profile, external_jobs=args.external_job)
                 server.RequestHandlerClass=partial(Handler,app=app)
                 if args.import_result:
                     if not args.video:parser.error("--import-result requires --video")
