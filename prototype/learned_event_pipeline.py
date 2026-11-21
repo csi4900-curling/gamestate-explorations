@@ -39,7 +39,7 @@ def digest(path):
     return h.hexdigest()
 
 
-def run(video,output,config_path,checkpoint,*,start,end,source_id,match_state_config=None,detection_cache=None,detection_cache_prefix_samples=None,detector_backend='pytorch',detector_export=None,detector_head='checkpoint',detector_threads=4):
+def run(video,output,config_path,checkpoint,*,start,end,source_id,match_state_config=None,detection_cache=None,detection_cache_prefix_samples=None,detector_backend='pytorch',detector_export=None,detector_head='checkpoint',detector_threads=4,detector_device='cpu'):
     from ultralytics.trackers.byte_tracker import BYTETracker
     from ultralytics.engine.results import Boxes
     from ultralytics.utils import YAML
@@ -65,7 +65,7 @@ def run(video,output,config_path,checkpoint,*,start,end,source_id,match_state_co
     if output.exists():raise ValueError('Preserve previous output')
     output.mkdir(parents=True);(output/'config.json').write_text(json.dumps(config,indent=2))
     (output/'tracker.yaml').write_bytes(tracker_path.read_bytes())
-    detector=StoneDetector(checkpoint,backend=detector_backend,export=detector_export,head=detector_head,threads=detector_threads);tracker=BYTETracker(SimpleNamespace(**tracker_settings));crossings=LineCrossings(config)
+    detector=StoneDetector(checkpoint,device=detector_device,backend=detector_backend,export=detector_export,head=detector_head,threads=detector_threads);tracker=BYTETracker(SimpleNamespace(**tracker_settings));crossings=LineCrossings(config)
     step=max(1,round(fps/config['sample_hz']));first=round(start*fps);stop=round(end*fps)
     cap.set(cv2.CAP_PROP_POS_FRAMES,first);nframes=0;detection_s=association_s=0
     files=[Path(__file__),Path(__file__).with_name('line_crossing_events.py'),Path(__file__).with_name('stone_detector.py'),Path(__file__).with_name('detection_cache.py'),Path(__file__).parent/'scripts/run_throw_pipeline.py']
