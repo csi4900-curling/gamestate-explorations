@@ -45,3 +45,20 @@ def test_same_id_at_endpoints_does_not_bridge_conflict(failure):
     assert result['membership']['B/0']=='B/0'
     assert result['next_events']['A/0']=='B'
     assert result['stops']['A/0']
+
+
+def test_collision_swap_repair_preserves_cross_throw_stone_history():
+    # Throw A repairs 3 <-> 38 at t=2.0; in raw observations, stone 38 sits at [0,0] under raw ID 3.
+    a = event('A', 1, [3, 4], 'delivered')
+    a['stones'][0].update(before_tracker_id=None, after_tracker_id=38)
+    a['collision_swaps_repaired'] = [{'tracker_ids': [3, 38], 'swap_time_s': 2.0}]
+    b = event('B', 7, [9, 10], 'unchanged')
+    b['stones'][0].update(before_tracker_id=38, after_tracker_id=38)
+    frames = [dict(time_s=i, frame_index=i, current_end=1, boards={'right': {'stones': [
+        dict(tracker_id=3, height_adjusted_local_m=[0, 0]),
+        dict(tracker_id=38, height_adjusted_local_m=[0, -3.0]),
+    ]}}) for i in range(4, 11)]
+    result = histories({'events': [a, b]}, frames, .139, 1, 1)
+    assert result['membership']['B/0'] == 'A/0'
+    assert [r['event'] for r in result['groups']['A/0']] == ['A', 'B']
+    assert 'A/0' not in result['stops']

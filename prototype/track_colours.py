@@ -37,8 +37,11 @@ def candidates(path, settings):
     for key, rows in tracks.items():
         if len(rows) < settings['minimum_track_observations']:
             continue
-        count = settings['samples_per_track']
-        chosen[key] = [rows[round(i*(len(rows)-1)/(count-1))] for i in range(count)]
+        count = min(settings['samples_per_track'], len(rows))
+        if count <= 1:
+            chosen[key] = [rows[0]]
+        else:
+            chosen[key] = [rows[round(i*(len(rows)-1)/(count-1))] for i in range(count)]
     return chosen, len(tracks)
 
 
@@ -65,7 +68,7 @@ def run(*, public_run, video, config_path, output, settings=None):
     protocol = json.loads((public_run/'protocol.json').read_text())
     if settings is None or 'minimum_track_observations' not in settings:
         eff_hz = float(protocol.get('effective_sample_hz') or 10.0)
-        settings = {**DEFAULTS, 'minimum_track_observations': max(5, round(2.0 * eff_hz)), **(settings or {})}
+        settings = {**DEFAULTS, 'minimum_track_observations': max(3, round(0.6 * eff_hz)), **(settings or {})}
     else:
         settings = {**DEFAULTS, **settings}
     if digest(video) != protocol['source_sha256']:

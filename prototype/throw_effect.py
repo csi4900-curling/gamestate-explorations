@@ -350,6 +350,50 @@ def repair_collision_swaps(panel_tracks, colours, delivered, window_start, windo
     return applied
 
 
+def _deduplicate_window_tracks(window_map, stone_radius_m, *, delivered=None, priority_ids=(),
+                               colours=None, ref_time_s=0.0, label='after'):
+    """Drop duplicate overlapping tracker boxes within one stone radius in a single window.
+
+    Two distinct physical stones cannot have centres closer than one stone radius
+    (their minimum touching separation is 2 * stone_radius_m). Short-lived
+    duplicate detector/tracker boxes right on top of a resting stone otherwise
+    appear as phantom stones with missing colour and block house scoring.
+    """
+    priority = set(priority_ids)
+    ranked = sorted(
+        window_map,
+        key=lambda tid: (
+            1 if tid == delivered else 0,
+            1 if tid in priority else 0,
+            1 if colour_at(colours, tid, ref_time_s)[0] is not None else 0,
+            window_map[tid]['samples'],
+            -window_map[tid]['scatter_m'],
+            -tid,
+        ),
+        reverse=True,
+    )
+    kept = {}
+    merged = []
+    for tid in ranked:
+        pos = window_map[tid]['position_m']
+        clash = None
+        for ktid, kdata in kept.items():
+            d = math.dist(pos, kdata['position_m'])
+            if d < stone_radius_m:
+                clash = (ktid, d)
+                break
+        if clash is not None:
+            merged.append({
+                'window': label,
+                'dropped_tracker_id': tid,
+                'kept_tracker_id': clash[0],
+                'separation_m': round(clash[1], 4),
+            })
+        else:
+            kept[tid] = window_map[tid]
+    return kept, merged
+
+
 def effect(record, tracks, *, house_radius_m, stone_radius_m, hog_y_by_panel, settings, search_end_s,
            colours=None, groups=None, registered_times=None, delivered_colour_hint=None,
            mutate_state=False):
@@ -382,14 +426,24 @@ def effect(record, tracks, *, house_radius_m, stone_radius_m, hog_y_by_panel, se
         settle = quiet_interval(panel_tracks, delivered, arrival, search_end_s, region, settings,
                                 registered_times=registered_times) or settle
     minimum = settings['minimum_window_samples']
-    before = {}; after = {}
+    before_raw = {}; after_raw = {}
     for tracker_id, samples in panel_tracks.items():
         if tracker_id != delivered:
             found = window(samples, arrival-settings['before_window_s'],
                            arrival-settings['before_guard_s'], minimum)
-            if found: before[tracker_id] = found
+            if found: before_raw[tracker_id] = found
         found = window(samples, settle[0], settle[1], minimum)
-        if found: after[tracker_id] = found
+        if found: after_raw[tracker_id] = found
+    middle_t = (settle[0] + settle[1]) / 2
+    before, merged_before = _deduplicate_window_tracks(
+        before_raw, stone_radius_m, delivered=None, priority_ids=set(after_raw),
+        colours=working_colours, ref_time_s=arrival, label='before',
+    )
+    after, merged_after = _deduplicate_window_tracks(
+        after_raw, stone_radius_m, delivered=delivered, priority_ids=set(before),
+        colours=working_colours, ref_time_s=middle_t, label='after',
+    )
+    duplicates_merged = merged_before + merged_after
     links = {k: (k, 'same_tracker') for k in before if k in after}
     # Two distinct stone centres cannot lie within one stone radius of each other.
     free = [k for k in after if k not in before and k != delivered]
@@ -408,11 +462,17 @@ def effect(record, tracks, *, house_radius_m, stone_radius_m, hog_y_by_panel, se
         middle = (settle[0]+settle[1])/2
         if b:
             colour, switched = colour_at(working_colours, old, arrival, not_after=True)
-            later = colour_at(working_colours, new, middle)[0] if a else None
+            later, later_switched = colour_at(working_colours, new, middle) if a else (None, None)
+            colour_basis = 'last_track_sample_before_arrival'
+            if colour is None and later is not None:
+                colour, switched = later, later_switched
+                colour_basis = 'linked_after_track_sample_nearest_settled_board'
         else:
             colour, switched = colour_at(working_colours, new, middle)
+            colour_basis = 'track_sample_nearest_settled_board'
             if new == delivered and colour is None and delivered_colour_hint:
                 colour = delivered_colour_hint
+                colour_basis = 'event_crossing_colour_hint'
             later = None
         change = ('delivered' if new == delivered and old is None else
                   'left_view_or_lost' if a is None else 'appeared_unexplained' if b is None else
@@ -426,7 +486,7 @@ def effect(record, tracks, *, house_radius_m, stone_radius_m, hog_y_by_panel, se
                 'in_play_before': b and region(b['position_m']),
                 'in_play_after': a and region(a['position_m']),
                 'colour': colour,
-                'colour_basis': 'last_track_sample_before_arrival' if b else 'track_sample_nearest_settled_board',
+                'colour_basis': colour_basis,
                 'colour_differs_after_throw': bool(colour and later and later != colour),
                 'colour_differs_along_track': switched,
                 'physical_identity_verified': False}
@@ -462,6 +522,7 @@ def effect(record, tracks, *, house_radius_m, stone_radius_m, hog_y_by_panel, se
             'settle_selection': 'Earliest window with no net in-play stone displacement after arrival.',
             'superseded_motion_proposal_interval_s': proposal.get('stationary_interval_s'),
             'collision_swaps_repaired': swaps_repaired,
+            'duplicate_tracks_merged': duplicates_merged,
             'tracks_with_inconsistent_colour': [s['after_tracker_id'] if s['after_tracker_id'] is not None
                                            else s['before_tracker_id'] for s in stones
                                            if s['colour_differs_along_track']
@@ -508,13 +569,15 @@ function draw(t){const e=current();ctx.clearRect(0,0,canvas.width,canvas.height)
  ctx.fillStyle='#233746';ctx.font='13px system-ui';ctx.fillText('hog line',f.px([-w,f.hog])[0]+4,f.px([-w,f.hog])[1]-4);
  const colourOf={};for(const s of e.stones){for(const k of [s.before_tracker_id,s.after_tracker_id])if(k!==null)colourOf[k]=s.colour}
  if(e.delivered_colour&&!colourOf[e.delivered_tracker_id])colourOf[e.delivered_tracker_id]=e.delivered_colour;
+ const stepGap=dim.sample_step_s?Math.max(0.25,1.5*dim.sample_step_s):0.35;
+ const syncTol=dim.sample_step_s?Math.max(0.15,0.85*dim.sample_step_s):0.2;
  for(const [id,rows] of Object.entries(e.paths)){ctx.strokeStyle=fill[colourOf[id]]||'#777';ctx.lineWidth=2;let last=null;ctx.beginPath();
   for(const [time,x,y] of rows){if(x===null){last=null;continue}const p=f.px([x,y]);
-   if(last!==null&&time-last<0.25)ctx.lineTo(...p);else ctx.moveTo(...p);last=time}ctx.stroke()}
+   if(last!==null&&time-last<stepGap)ctx.lineTo(...p);else ctx.moveTo(...p);last=time}ctx.stroke()}
  for(const s of e.stones){if(s.change!=='unchanged'&&s.before_m)stone(f,s.before_m,s.colour,{hollow:true,dash:[4,3]});
   if(s.after_m)stone(f,s.after_m,s.colour,{alpha:s.in_play_after?1:0.3})}
  if(t!==null&&t>=e.arrival_time_s-2.1&&t<=e.settle_interval_s[1])for(const [id,rows] of Object.entries(e.paths)){
-  let best=null;for(const r of rows)if(r[1]!==null&&Math.abs(r[0]-t)<0.15&&(!best||Math.abs(r[0]-t)<Math.abs(best[0]-t)))best=r;
+  let best=null;for(const r of rows)if(r[1]!==null&&Math.abs(r[0]-t)<syncTol&&(!best||Math.abs(r[0]-t)<Math.abs(best[0]-t)))best=r;
   if(best){const [x,y]=f.px([best[1],best[2]]);ctx.beginPath();ctx.arc(x,y,dim.stone_radius_m*S+4,0,Math.PI*2);ctx.lineWidth=3;ctx.strokeStyle='#0a84a8';ctx.stroke()}}}
 function showSpin(e){const box=document.querySelector('#spinBox'),obs=document.querySelector('#spinObs'),mod=document.querySelector('#spinModel'),img=document.querySelector('#spinStrip');
  const r=e.revolutions;if(!r){box.hidden=true;return}box.hidden=false;const s=r.sending||{};
@@ -603,10 +666,13 @@ def run(*, public_run, states, config_path, match_config, output, video=None, tr
             delivered_colour_hint=hint,
             mutate_state=True,
         ))
+    step_s = (protocol['sample_step_frames'] / protocol['source_fps']
+              if protocol.get('sample_step_frames') and protocol.get('source_fps') else None)
     result = {'schema_version': 'curling-throw-effect-v1', 'development': True,
               'source_sha256': protocol['source_sha256'], 'events': events,
               'dimensions': {**{k: config[k] for k in ['house_radius_m', 'stone_radius_m']},
-                             'sheet_half_width_m': settings['sheet_half_width_m'], 'hog_y_by_panel_m': hog},
+                             'sheet_half_width_m': settings['sheet_half_width_m'], 'hog_y_by_panel_m': hog,
+                             **({'sample_step_s': round(step_s, 4)} if step_s is not None else {})},
               'group_to_team': config.get('group_to_team', {}),
               'summary': {'candidates': len(events),
                           'with_board_change': sum(e['status'] == 'review_proposal' for e in events),

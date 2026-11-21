@@ -60,8 +60,26 @@ def histories(effects, frames, radius, step, fps):
     ordered = iter(sorted(checks, key=lambda c:c['start']))
     pending = next(ordered, None)
     active = []
+    # Track chronological collision-swap repairs recorded in effects.json so logical
+    # stone IDs map cleanly back to raw tracker IDs in immutable match-observations.jsonl.
+    swap_events = []
+    for ev_idx, ev in enumerate(events):
+        panel = ev.get('panel')
+        for sw_idx, sw in enumerate(ev.get('collision_swaps_repaired') or []):
+            tids = sw.get('tracker_ids') or []
+            if panel and len(tids) == 2 and sw.get('swap_time_s') is not None:
+                swap_events.append((float(sw['swap_time_s']), ev_idx, sw_idx, panel, tids[0], tids[1]))
+    swap_events.sort()
+    swap_pos = 0
+    logical_to_raw = {}
     for row in frames:
         t = row['time_s']
+        while swap_pos < len(swap_events) and swap_events[swap_pos][0] <= t + 1e-6:
+            _, _, _, spanel, a, b = swap_events[swap_pos]
+            l2r = logical_to_raw.setdefault(spanel, {})
+            ra, rb = l2r.get(a, a), l2r.get(b, b)
+            l2r[a], l2r[b] = rb, ra
+            swap_pos += 1
         while pending and pending['start'] <= t + 1e-6:
             active.append(pending)
             pending = next(ordered, None)
@@ -77,7 +95,8 @@ def histories(effects, frames, radius, step, fps):
                 c['last_frame'] = row['frame_index']
                 continue
             stones = board['stones']
-            own = [s.get('height_adjusted_local_m') for s in stones if s['tracker_id'] == c['track']]
+            raw_track = logical_to_raw.get(c['panel'], {}).get(c['track'], c['track'])
+            own = [s.get('height_adjusted_local_m') for s in stones if s['tracker_id'] == raw_track]
             pos = own[0] if len(own) == 1 else None
             end = row.get('current_end')
             reason = None
@@ -92,7 +111,7 @@ def histories(effects, frames, radius, step, fps):
                 reason = 'Stone moved between throws'
             elif c['last_point'] is not None and math.dist(pos, c['last_point']) > max(radius, 3.0 * step / fps if t >= c['arrival'] else radius):
                 reason = 'Abrupt position change'
-            elif any(s['tracker_id'] != c['track'] and s.get('height_adjusted_local_m') is not None
+            elif any(s['tracker_id'] != raw_track and s.get('height_adjusted_local_m') is not None
                      and math.dist(pos, s['height_adjusted_local_m']) <= radius for s in stones):
                 reason = 'Competing stone near the tracked position'
             if reason:

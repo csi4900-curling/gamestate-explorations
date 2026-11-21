@@ -144,9 +144,10 @@ def run(video,output,config_path,checkpoint,*,start,end,source_id,match_state_co
                 from prototype.directional_handoff import metric_crossings
                 probe_hz = float(sched.get('probe_hz', 1.0))
                 before_s = float(sched.get('before_s', 6.0))
+                primary_before_s = float(sched.get('primary_before_s', max(before_s, 16.0)))
                 after_s = float(sched.get('after_s', 35.0))
                 probe_stride = max(1, round(protocol['effective_sample_hz'] / probe_hz))
-                windows = _merge_windows([(e['crossing_time_s'] - before_s, e['crossing_time_s'] + after_s)
+                windows = _merge_windows([(e['crossing_time_s'] - primary_before_s, e['crossing_time_s'] + after_s)
                                           for e in crossings.events], start, end)
                 # Sub-pass 2a: uninterrupted coarse probe across both panels to detect
                 # arrival-only or reverse-direction metric crossings outside primary windows.
@@ -175,7 +176,11 @@ def run(video,output,config_path,checkpoint,*,start,end,source_id,match_state_co
                 finally:
                     cap_probe.release()
                 if probe_states:
-                    probe_crossings = metric_crossings(probe_states, hog_y_by_panel=observer.config['local_hog_y_m'])
+                    probe_crossings = metric_crossings(
+                        probe_states,
+                        hog_y_by_panel=observer.config['local_hog_y_m'],
+                        max_geometry_gap_s=max(1.5, 2.5 / max(probe_hz, 0.1)),
+                    )
                     windows = _merge_windows(
                         windows + [(c['crossing_time_s'] - before_s, c['crossing_time_s'] + after_s) for c in probe_crossings],
                         start, end)

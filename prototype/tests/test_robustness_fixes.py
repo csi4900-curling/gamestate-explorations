@@ -190,3 +190,50 @@ def test_normal_close_collision_does_not_trigger_false_swap():
     by_after = {s['after_tracker_id']: s for s in res['stones']}
     assert by_after[9]['colour'] == 'yellow' and by_after[9]['in_play_after'] is True
     assert by_after[4]['colour'] == 'red' and by_after[4]['in_play_after'] is False
+
+
+def test_overlapping_duplicate_tracker_box_is_deduplicated_and_does_not_block_scoring():
+    # Stone 10 (red) sits in house at (0.5, 0.5); a short-lived uncoloured duplicate box 99
+    # overlaps within 1.5 cm at (0.51, 0.51) during the settled window.
+    t_all = [round(10.0 + i * 0.2, 1) for i in range(60)]
+    t10 = [(t, [0.50, 0.50]) for t in t_all]
+    t99 = [(t, [0.51, 0.51]) for t in t_all if 17.0 <= t <= 20.0]
+    t_del = [(t, [0.0, max(0.0, 5.0 - (t - 12.0) * 1.0)]) for t in t_all if t >= 12.0]
+    colours = {
+        '10': {'samples': [{'time_s': 11.0, 'prediction': 'red'}]},
+        '20': {'samples': [{'time_s': 13.0, 'prediction': 'yellow'}]},
+    }
+    rec = {'event_id': 'L5', 'crossing_time_s': 11.0,
+           'proposal': {'time_s': 19.0, 'panel': 'right', 'receiving_tracker_id': 20}}
+    res = effect(
+        rec, {'right': {10: t10, 99: t99, 20: t_del}}, house_radius_m=1.829, stone_radius_m=0.139,
+        hog_y_by_panel={'right': 6.401}, settings=DEFAULTS, search_end_s=21.8,
+        colours=colours, groups=['red', 'yellow'],
+    )
+    assert res['points_lying_after']['status'] == 'conditional_on_supplied_observations'
+    assert res['points_lying_after']['conditional_points_by_group'] == {'red': 0, 'yellow': 1}
+    assert any(m['dropped_tracker_id'] == 99 and m['kept_tracker_id'] == 10 for m in res['duplicate_tracks_merged'])
+
+
+def test_stationary_linked_stone_falls_back_to_after_track_colour_when_before_missing():
+    # Stone 10 (uncoloured) sits at (0.6, 0.6) before arrival, re-tracked as 11 (red) after arrival.
+    t_pre = [round(10.0 + i * 0.2, 1) for i in range(15)]
+    t_post = [round(15.0 + i * 0.2, 1) for i in range(30)]
+    t10 = [(t, [0.60, 0.60]) for t in t_pre]
+    t11 = [(t, [0.61, 0.60]) for t in t_post]
+    t_del = [(t, [0.0, max(0.0, 5.0 - (t - 13.0) * 1.2)]) for t in [round(13.0 + i * 0.2, 1) for i in range(40)]]
+    colours = {
+        '11': {'samples': [{'time_s': 18.0, 'prediction': 'red'}]},
+        '20': {'samples': [{'time_s': 14.0, 'prediction': 'yellow'}]},
+    }
+    rec = {'event_id': 'L6', 'crossing_time_s': 12.0,
+           'proposal': {'time_s': 18.0, 'panel': 'right', 'receiving_tracker_id': 20}}
+    res = effect(
+        rec, {'right': {10: t10, 11: t11, 20: t_del}}, house_radius_m=1.829, stone_radius_m=0.139,
+        hog_y_by_panel={'right': 6.401}, settings=DEFAULTS, search_end_s=20.8,
+        colours=colours, groups=['red', 'yellow'],
+    )
+    row = next(s for s in res['stones'] if s['before_tracker_id'] == 10)
+    assert row['after_tracker_id'] == 11 and row['colour'] == 'red'
+    assert row['colour_basis'] == 'linked_after_track_sample_nearest_settled_board'
+    assert res['points_lying_after']['status'] == 'conditional_on_supplied_observations'
