@@ -715,26 +715,59 @@ def _fallback_record(record, event_by_id):
                                     'fallback': 'aggregate_receiving_segment'}}
 
 
-def run(*, public_run, states, config_path, match_config, output, video=None, track_colours=None,
+def _records_from_aggregate(aggregate_doc):
+    """Build throw-effect candidate records directly from aggregate-rink.json."""
+    records = []
+    ordered = sorted(aggregate_doc.get('events', []),
+                     key=lambda e: e['event_prediction']['crossing_time_s'])
+    for event in ordered:
+        eid = event['candidate_id']
+        t_cross = event['event_prediction']['crossing_time_s']
+        receivers = [s for s in event.get('segments', [])
+                     if s.get('role') == 'receiving' and s.get('pixel_points')]
+        if len(receivers) == 1:
+            rec = receivers[0]
+            panel = rec.get('rink_panel') or {'left_split': 'left', 'right_split': 'right'}[rec['camera']]
+            proposal = {
+                'time_s': rec['pixel_points'][0]['time_s'],
+                'panel': panel,
+                'receiving_tracker_id': rec['tracker_id'],
+                'stationary_interval_s': None,
+            }
+        else:
+            proposal = {'status': 'unresolved', 'reason': 'missing_or_ambiguous_receiving_segment'}
+        records.append({'event_id': eid, 'crossing_time_s': t_cross, 'proposal': proposal})
+    return records
+
+
+def run(*, public_run, states=None, config_path, match_config, output, video=None, track_colours=None,
         aggregate=None, settings=None):
     public_run, output = Path(public_run), Path(output)
     if output.exists():
         raise ValueError('Preserve previous throw-effect output; choose a new directory')
+    if states is None and aggregate is None:
+        raise ValueError('Either aggregate or states must be provided')
     settings = {**DEFAULTS, **(settings or {})}
     config = json.loads(Path(config_path).read_text())
     hog = json.loads(Path(match_config).read_text())['local_hog_y_m']
-    payload = json.loads(Path(states).read_text())
     protocol = json.loads((public_run/'protocol.json').read_text())
-    if payload['source_sha256'] != protocol['source_sha256']:
-        raise ValueError('Post-throw states do not match public run')
+    aggregate_doc = json.loads(Path(aggregate).read_text()) if aggregate else None
+    event_by_id = ({e['candidate_id']: e for e in aggregate_doc['events']} if aggregate_doc else {})
+    if states is not None:
+        payload = json.loads(Path(states).read_text())
+        if payload['source_sha256'] != protocol['source_sha256']:
+            raise ValueError('Post-throw states do not match public run')
+        records = [_fallback_record(r, event_by_id) for r in payload['events']]
+    else:
+        agg_source = (aggregate_doc.get('context') or {}).get('source_sha256') or aggregate_doc.get('source_sha256')
+        if agg_source and agg_source != protocol['source_sha256']:
+            raise ValueError('Aggregate does not match public run')
+        records = _records_from_aggregate(aggregate_doc)
     colours = json.loads(Path(track_colours).read_text())['evidence'] if track_colours else None
-    event_by_id = ({e['candidate_id']: e for e in json.loads(Path(aggregate).read_text())['events']}
-                   if aggregate else {})
     tracks, registered = load_tracks_and_registration(public_run/'match-observations.jsonl')
     repaired_tracks = {panel: {tid: list(s) for tid, s in ptracks.items()} for panel, ptracks in tracks.items()}
     repaired_colours = ({panel: _clone_colours(c) for panel, c in colours.items()}
                         if colours else None)
-    records = [_fallback_record(r, event_by_id) for r in payload['events']]
     ends = [r['crossing_time_s'] for r in records[1:]]+[protocol['source_interval_s'][1]]
     events = []
     for r, end in zip(records, ends):
@@ -766,8 +799,9 @@ def run(*, public_run, states, config_path, match_config, output, video=None, tr
                           'verified_settled_boards': 0, 'physical_identity_verified': False},
               'provenance': {'settings': settings, 'code_sha256': digest(__file__),
                              'input_sha256': {'observations': digest(public_run/'match-observations.jsonl'),
-                                              'states': digest(states), 'config': digest(config_path),
+                                              'config': digest(config_path),
                                               'match_config': digest(match_config),
+                                              **({'states': digest(states)} if states else {}),
                                               **({'aggregate': digest(aggregate)} if aggregate else {}),
                                               **({'track_colours': digest(track_colours)} if track_colours else {})},
                              'mode': 'Postprocessing replay; saved detection, tracking and geometry unchanged.'}}

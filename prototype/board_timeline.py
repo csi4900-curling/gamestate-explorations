@@ -45,6 +45,29 @@ class BoardTimeline:
         if len(self.pending) == self.chunk_size:
             self.flush()
 
+    def append_raw(self, raw, track_colours=None):
+        """Append one raw board-observation row with track-level OpenCLIP colours."""
+        if self.times and raw['time_s'] <= self.times[-1]:
+            raise ValueError('Board timeline must be strictly chronological')
+        boards = {}
+        for panel, board in raw['boards'].items():
+            panel_cols = (track_colours or {}).get(panel, {})
+            stones = []
+            for s in board['stones']:
+                tid = s.get('tracker_id')
+                height = s.get('height_adjusted_local_m') or [None, None]
+                plane = s.get('ice_plane_local_m') or [None, None]
+                col = panel_cols.get(str(tid)) if tid is not None else None
+                stones.append([tid, *s['pixel'], *height, col, *plane])
+            boards[panel] = {'stones': stones}
+        self.pending.append({
+            'time_s': raw['time_s'], 'frame_index': raw['frame_index'],
+            'boards': boards, 'last_observed_totals': raw.get('last_observed_totals', {}),
+        })
+        self.times.append(raw['time_s'])
+        if len(self.pending) == self.chunk_size:
+            self.flush()
+
     def flush(self):
         if not self.pending:
             return

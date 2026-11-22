@@ -699,8 +699,8 @@ class Workbench:
             ),
             (
                 "boards",
-                state_python,
-                [p["state_dependencies"]],
+                inference,
+                [],
                 [
                     wrapper,
                     "-m",
@@ -713,7 +713,7 @@ class Workbench:
             ),
             (
                 "report",
-                state_python,
+                inference,
                 [],
                 [
                     wrapper,
@@ -902,6 +902,32 @@ class Workbench:
 
     def events(self, identifier):
         row = self.job(identifier)
+        effects_path = self.data / "jobs" / identifier / "result/throws/effects.json"
+        if not row.get("events_path") and effects_path.is_file():
+            eff_doc = json.loads(effects_path.read_text())
+            g2t = eff_doc.get("group_to_team") or {}
+            out = []
+            for e in eff_doc.get("events", []):
+                quiet = e.get("settle_interval_s")
+                clip = None
+                if quiet and e.get("arrival_time_s") is not None:
+                    start = min(e["crossing_time_s"], e["arrival_time_s"]) - 2
+                    clip = [max(row.get("start_s") or 0, start), *quiet]
+                pts_obj = e.get("points_lying_after") or {}
+                by_group = pts_obj.get("conditional_points_by_group")
+                team_pts = ({g2t.get(g, g): v for g, v in by_group.items()}
+                            if isinstance(by_group, dict) else None)
+                out.append({
+                    "event_id": e["event_id"],
+                    "time_s": e["crossing_time_s"],
+                    "review_clip_s": clip,
+                    "proposal_time_s": quiet[0] if quiet else None,
+                    "post_throw_points": team_pts,
+                    "post_throw_point_status": pts_obj.get("status", "unavailable"),
+                    "status": e.get("status", "unresolved"),
+                    "physical_revolutions": None,
+                })
+            return out
         path = (
             Path(row["events_path"])
             if row.get("events_path")
@@ -910,22 +936,13 @@ class Workbench:
         if not path.exists():
             return []
         doc = json.loads(path.read_text())
-        effects_path = self.data / "jobs" / identifier / "result/throws/effects.json"
-        clips = {}
-        if effects_path.is_file():
-            for effect in json.loads(effects_path.read_text())["events"]:
-                quiet = effect.get("settle_interval_s")
-                if quiet and effect.get("arrival_time_s") is not None:
-                    # Include the departure crossing, the receiving approach, and both quiet-window bounds.
-                    start = min(effect["crossing_time_s"], effect["arrival_time_s"]) - 2
-                    clips[effect["event_id"]] = [max(row.get("start_s") or 0, start), *quiet]
         scores = {entry['event_id']: entry
                   for entry in doc.get('detected_throw_scoring', {}).get('history', [])}
         return [
             {
                 "event_id": e["event_id"],
                 "time_s": e["crossing_time_s"],
-                "review_clip_s": clips.get(e["event_id"]),
+                "review_clip_s": None,
                 "proposal_time_s": e["proposal"].get("time_s"),
                 "post_throw_points": scores.get(e['event_id'], {}).get('estimated_points'),
                 "post_throw_point_status": scores.get(e['event_id'], {}).get('status', 'unavailable'),

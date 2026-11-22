@@ -151,28 +151,17 @@ def observation_view(spec):
 
 
 def boards(spec):
-    from prototype.stone_motion import run as fit_motion
-    from prototype.post_throw_state import run
+    from prototype.post_throw_state import build_board_viewer
+    from prototype.throw_effect import run as throw_effects
+    from prototype.throw_revolutions import run as run_revolutions
+    from prototype.match_score_and_rocks import build as build_score_and_rocks
 
     output = Path(spec["output"])
     result = output / "result"
-    fit_motion(output / "observations", output / "motion-model")
-    legacy_event_colours = output / "event-colours.json"
-    run(
-        public_run=output / "observations",
-        aggregate=result / "aggregate-rink.json",
-        event_colours=legacy_event_colours if legacy_event_colours.exists() else None,
-        motion_dir=output / "motion-model",
-        config_path=spec["state_config"],
-        video=spec["video"],
-        output=result / "boards",
-        state_timeline=result / "state-timeline.json",
-    )
-    from prototype.throw_effect import run as throw_effects
     colours = output / "track-colours.json"
     throw_effects(
         public_run=output / "observations",
-        states=result / "boards/states.json",
+        states=None,
         config_path=spec["state_config"],
         match_config=spec["match_config"],
         output=result / "throws",
@@ -180,8 +169,14 @@ def boards(spec):
         aggregate=result / "aggregate-rink.json",
         track_colours=colours if colours.exists() else None,
     )
-    from prototype.throw_revolutions import run as run_revolutions
-    from prototype.match_score_and_rocks import build as build_score_and_rocks
+    build_board_viewer(
+        public_run=output / "observations",
+        effects=result / "throws/effects.json",
+        config_path=spec["state_config"],
+        video=spec["video"],
+        output=result / "boards",
+        track_colours=colours if colours.exists() else None,
+    )
     rev_path = result / "throws/revolutions.json"
     rev_payload = run_revolutions(
         public_run=output / "observations",

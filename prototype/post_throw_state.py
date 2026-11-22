@@ -361,6 +361,100 @@ def run(*, public_run, aggregate, event_colours, motion_dir, config_path, video,
     return payload
 
 
+def build_board_viewer(*, public_run, effects, config_path, video, output, track_colours=None):
+    """Lightweight frame-indexed stone-observations viewer backed by throw_effect and track colours.
+
+    Avoids superseded HMM motion fitting, duplicate board re-scoring, and hidden JPEG
+    snapshot decoding while preserving the full synchronized video/projection board viewer.
+    """
+    from collections import Counter
+
+    started = time.perf_counter()
+    public_run, output = Path(public_run), Path(output)
+    if output.exists() and any(output.iterdir()):
+        raise ValueError('Preserve previous board output; choose a new output directory')
+    config = json.loads(Path(config_path).read_text())
+    protocol = json.loads((public_run / 'protocol.json').read_text())
+    effects_doc = json.loads(Path(effects).read_text())
+    source_hash = protocol['source_sha256']
+    if digest(video) != source_hash or effects_doc['source_sha256'] != source_hash:
+        raise ValueError('Video/effects source does not match public run')
+    colour_map = {'left': {}, 'right': {}}
+    if track_colours and Path(track_colours).exists():
+        tc_doc = json.loads(Path(track_colours).read_text())
+        for panel in ('left', 'right'):
+            panel_cols = dict(tc_doc.get('tracks', {}).get(panel, {}))
+            for tid, ev in tc_doc.get('evidence', {}).get(panel, {}).items():
+                if panel_cols.get(tid) is None:
+                    preds = [r.get('prediction') for r in ev.get('samples', []) if r.get('prediction')]
+                    if preds:
+                        panel_cols[tid] = Counter(preds).most_common(1)[0][0]
+            colour_map[panel] = panel_cols
+    output.mkdir(parents=True, exist_ok=True)
+    timeline = BoardTimeline(output / 'board-timeline')
+    with (public_run / 'match-observations.jsonl').open() as stream:
+        for line in stream:
+            row = json.loads(line)
+            boards = {}
+            for p, b in row['boards'].items():
+                boards[p], _ = suppress_duplicates(b, config['duplicate_nms_iou'])
+            timeline.append_raw({**row, 'boards': boards}, colour_map)
+    proposals = []
+    for ev in effects_doc.get('events', []):
+        settle = ev.get('settle_interval_s')
+        proposal = (
+            {'status': 'review_proposal', 'time_s': settle[0], 'panel': ev.get('panel'),
+             'receiving_tracker_id': ev.get('delivered_tracker_id'),
+             'stationary_interval_s': settle}
+            if ev.get('status') == 'review_proposal' and settle else
+            {'status': 'unresolved', 'reason': ev.get('reason', 'unresolved')}
+        )
+        proposals.append({
+            'event_id': ev['event_id'],
+            'crossing_time_s': ev['crossing_time_s'],
+            'proposal': proposal,
+            'state': None,
+            'points_lying_after': ev.get('points_lying_after'),
+            'physical_revolutions': None,
+            'rotation_status': 'Development crop-period probe attached in throws view; physical revolutions unvalidated.',
+        })
+    inputs = {
+        'protocol': public_run / 'protocol.json',
+        'boards': public_run / 'match-observations.jsonl',
+        'effects': Path(effects),
+        'config': Path(config_path),
+    }
+    if track_colours and Path(track_colours).exists():
+        inputs['track_colours'] = Path(track_colours)
+    payload = {
+        'development': True,
+        'source_sha256': source_hash,
+        'events': proposals,
+        'timeline': timeline.finish(protocol),
+        'source_size_px': protocol.get('source_size_px'),
+        'source_fps': protocol['source_fps'],
+        'dimensions': {k: config[k] for k in ['house_radius_m', 'stone_radius_m']},
+        'summary': {
+            'candidates': len(proposals),
+            'review_proposals': sum('time_s' in r['proposal'] for r in proposals),
+            'snapshots': 0,
+            'verified_settled_boards': 0,
+            'physical_revolution_estimates': 0,
+        },
+        'provenance': {
+            'input_sha256': {k: digest(v) for k, v in inputs.items()},
+            'code_sha256': {k: digest(Path(__file__).parent / k) for k in ['post_throw_state.py', 'board_timeline.py']},
+            'config': config,
+            'wall_s': time.perf_counter() - started,
+            'mode': 'Lightweight board observation viewer backed by throw_effect quiet intervals and track colours.',
+            'opencv': cv2.__version__,
+        },
+    }
+    render(output, video, payload, config)
+    write_json(output / 'manifest.json', {k: v for k, v in payload.items() if k != 'events'})
+    return payload
+
+
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(description=__doc__)
