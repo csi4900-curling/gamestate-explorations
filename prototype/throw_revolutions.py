@@ -359,9 +359,10 @@ def run(*, public_run, aggregate, effects, video, output, settings=None):
                 entry['sending']['tracker_id'] = tid
             if rec_info is not None:
                 panel, tid, r0, r1 = rec_info
+                rec_strip = (spin_dir / f'{eid}-receiving.png') if dep_info is None else None
                 entry['receiving'] = analyse_view(
                     cap, fps, track_rows.get((panel, tid), []), r0, r1, max_gap_frames,
-                    allow_half_turn=False, filmstrip_path=None, settings=settings,
+                    allow_half_turn=False, filmstrip_path=rec_strip, settings=settings,
                 )
                 entry['receiving']['panel'] = panel
                 entry['receiving']['tracker_id'] = tid

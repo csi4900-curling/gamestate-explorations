@@ -540,7 +540,7 @@ video{width:100%;display:block}main{max-width:1440px}.views{display:grid;grid-te
 canvas{width:100%;background:#f4f8fa}.note{background:#fff5d9;padding:12px}table{border-collapse:collapse;font-size:14px}
 td,th{padding:3px 8px;text-align:left;border-bottom:1px solid #d5e1e4}#points{font-size:20px;font-weight:600}
 #context{font-size:14px;color:#3d5c66;margin:6px 0}#spinBox{margin-top:12px;padding:10px 12px;background:#f4f8fa;border:1px solid #d5e1e4;border-radius:6px;font-size:14px}
-#spinStrip{display:block;max-width:100%;margin-top:8px;border-radius:4px;image-rendering:auto}</style><main>
+#spinStrip{display:block;max-width:100%;margin-top:8px;border-radius:4px;image-rendering:auto}#spinStrip[hidden]{display:none}</style><main>
 <h1>Throws</h1>
 <p class="note">Each throw: receiving-house stones before the delivered stone arrives, observed paths of stones that moved, and the board in the first quiet interval afterwards. Positions depend on calibration; tracker IDs are provisional and the quiet interval is a proposal.</p>
 <select id="pick" aria-label="Throw"></select> <button id="play">Play throw</button> <button id="after">Go to board after</button>
@@ -580,13 +580,14 @@ function draw(t){const e=current();ctx.clearRect(0,0,canvas.width,canvas.height)
   let best=null;for(const r of rows)if(r[1]!==null&&Math.abs(r[0]-t)<syncTol&&(!best||Math.abs(r[0]-t)<Math.abs(best[0]-t)))best=r;
   if(best){const [x,y]=f.px([best[1],best[2]]);ctx.beginPath();ctx.arc(x,y,dim.stone_radius_m*S+4,0,Math.PI*2);ctx.lineWidth=3;ctx.strokeStyle='#0a84a8';ctx.stroke()}}}
 function showSpin(e){const box=document.querySelector('#spinBox'),obs=document.querySelector('#spinObs'),mod=document.querySelector('#spinModel'),img=document.querySelector('#spinStrip');
- const r=e.revolutions;if(!r){box.hidden=true;return}box.hidden=false;const s=r.sending||{};
- if(s.period_s){const sense=s.sense?.screen_loop_sense?' · screen loop: '+s.sense.screen_loop_sense+' (unverified)':'';
-  obs.textContent='Observed sending-view spin (development): '+s.period_s.toFixed(2)+' s/turn ('+s.rate_hz.toFixed(2)+' rev/s) · '+s.observed_turns_in_interval+' turns over '+s.duration_s.toFixed(1)+' s ['+s.basis+']'+sense;
+ const r=e.revolutions;if(!r){box.hidden=true;return}box.hidden=false;const s=r.sending||{},rc=r.receiving||{};
+ const useRec=!s.period_s&&rc.period_s;const v=useRec?rc:s;const viewLabel=useRec?'receiving-view':'sending-view';
+ if(v.period_s){const sense=v.sense?.screen_loop_sense?' · screen loop: '+v.sense.screen_loop_sense+' (unverified)':'';
+  obs.textContent='Observed '+viewLabel+' spin (development): '+v.period_s.toFixed(2)+' s/turn ('+v.rate_hz.toFixed(2)+' rev/s) · '+v.observed_turns_in_interval+' turns over '+v.duration_s.toFixed(1)+' s ['+v.basis+']'+sense;
  }else obs.textContent='Observed sending-view spin: unavailable ('+(s.basis||s.reason||s.status||'no clear peak')+').';
  const m=r.modeled_whole_throw_estimate;
  mod.textContent=m?'Modeled whole-throw extrapolation (not observed): ~'+m.estimated_turns+' turns over '+m.travel_duration_s.toFixed(1)+' s travel (constant-rate assumption).':'Whole-throw extrapolation unavailable.';
- if(s.filmstrip){img.src='spin/'+encodeURIComponent(s.filmstrip);img.hidden=false}else{img.removeAttribute('src');img.hidden=true}}
+ const strip=s.filmstrip||rc.filmstrip;if(strip){img.src='spin/'+encodeURIComponent(strip);img.hidden=false}else{img.removeAttribute('src');img.hidden=true}}
 function show(seek=true){const e=current(),status=document.querySelector('#status'),points=document.querySelector('#points'),table=document.querySelector('#changes'),ctxEl=document.querySelector('#context');
  table.innerHTML='';points.textContent='';stopAt=null;
  const mc=e.match_context;ctxEl.textContent=mc?('Inferred End '+mc.end_index+' · Throw #'+mc.throw_in_end+(mc.team?' · '+mc.team:'')+(mc.rock_pair?' · Rule-based Rock Pair '+mc.rock_pair:'')+(mc.kinematics?' · Rec speed '+mc.kinematics.receiving_mean_speed_m_s+' m/s'+(mc.kinematics.lateral_curl_m!==null?' · Curl '+mc.kinematics.lateral_curl_m.toFixed(2)+' m':''):'')):'';

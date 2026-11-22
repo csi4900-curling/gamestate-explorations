@@ -1,6 +1,6 @@
 import json
 from prototype.detection_cache import digest
-from prototype.directional_event_aggregate import build
+from prototype.directional_event_aggregate import build, promote_calibrated_receiving_crossings
 
 
 def test_receiving_primary_links_to_earlier_opposite_panel_departure(tmp_path):
@@ -33,3 +33,39 @@ def test_receiving_primary_links_to_earlier_opposite_panel_departure(tmp_path):
     assert link['departure_segment']=='A:departure:2'
     assert link['receiving_segment']=='A:primary' and link['gap_s']==2
     assert not link['physical_identity_verified']
+
+
+def test_unclaimed_calibrated_receiving_crossing_is_promoted_without_duplicating_paired_throws():
+    primary = [
+        # Left departure at t=10s whose receiving counterpart arrives on right at t=22s.
+        {'id': 'L00001', 'track_id': 1, 'crossing_time_s': 10.0, 'crossing_point_normalized': [0.2, 0.4]},
+        # Left receiving at t=90s (same track_id 3 on left).
+        {'id': 'L00002', 'track_id': 3, 'crossing_time_s': 90.0, 'crossing_point_normalized': [0.2, 0.4]},
+    ]
+    roles = {
+        'L00001': {'role': 'departure', 'panel': 'left', 'status': 'observed'},
+        'L00002': {'role': 'receiving', 'panel': 'left', 'status': 'observed'},
+    }
+    def mc(cid, panel, role, tid, t):
+        return {
+            'id': cid, 'panel': panel, 'role': role, 'track_id': tid, 'crossing_time_s': t,
+            'observed_bracket_s': [t - 0.1, t + 0.1], 'confirmed_at_s': t + 0.1,
+            'crossing_point_normalized': [0.5, 1.0], 'direction': 'negative', 'hog_y_m': 6.401 if panel == 'right' else -6.401,
+            'observations': [
+                {'time_s': t - 0.1, 'pixel': [1400.0 if panel == 'right' else 400.0, 600.0]},
+                {'time_s': t + 0.1, 'pixel': [1400.0 if panel == 'right' else 400.0, 580.0]},
+            ],
+        }
+    metric = [
+        mc('m1', 'right', 'receiving', 10, 22.0),   # paired with L00001 (dt=12s <= 30s) -> MUST NOT promote
+        mc('m2', 'right', 'receiving', 20, 55.0),   # missed left departure! -> MUST promote as M00001
+        mc('m3', 'left',  'receiving', 3,  90.1),   # same panel & track as L00002 -> MUST NOT promote
+        mc('m4', 'right', 'departure', 30, 75.0),   # departure crossing -> not promoted by itself
+    ]
+    promoted, updated_roles = promote_calibrated_receiving_crossings(primary, roles, metric, 1920, 1080)
+    assert [e['id'] for e in promoted] == ['M00001']
+    assert promoted[0]['track_id'] == 20
+    assert promoted[0]['crossing_time_s'] == 55.0
+    assert promoted[0]['source'] == 'calibrated_metric_hog_crossing'
+    assert updated_roles['M00001']['panel'] == 'right'
+    assert updated_roles['M00001']['role'] == 'receiving'

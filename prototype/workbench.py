@@ -36,6 +36,32 @@ def write(path, value):
     temporary.replace(path)
 
 
+def _calibrated_hog_line_normalized(calibration_assets, panel="left", hog_y_m=-6.401, half_width_m=2.375):
+    """Project the calibrated hog line endpoints into [0, 1] source-image fractions."""
+    import numpy as np
+    for asset in calibration_assets or []:
+        rec = (asset.get("panels") or {}).get(panel)
+        if not rec or not rec.get("H_normalized_source_to_local_m"):
+            continue
+        try:
+            H = np.asarray(rec["H_normalized_source_to_local_m"], dtype=float)
+            Hinv = np.linalg.inv(H)
+            pts = []
+            for x_m in (-half_width_m, half_width_m):
+                v = Hinv @ np.array([x_m, hog_y_m, 1.0], dtype=float)
+                if abs(v[2]) < 1e-12:
+                    raise ValueError("singular")
+                pts.append([
+                    float(min(1.0, max(0.0, (v[0] / v[2]) / 640.0))),
+                    float(min(1.0, max(0.0, (v[1] / v[2]) / 360.0))),
+                ])
+            if pts[0] != pts[1]:
+                return pts
+        except Exception:
+            continue
+    return None
+
+
 def finite(value, name, low=None):
     value = float(value)
     if not math.isfinite(value) or (low is not None and value < low):
@@ -288,7 +314,11 @@ class Workbench:
                                           ['observations.jsonl','protocol.json','config.json', 'progress.json' if partial else 'events.json']},
                                'scope': 'Detector observations only. Tracker, calibration, associations and downstream stages rerun. Exact model/runtime/decoder/adapter checks occur before replay.'}
             if partial:detection_cache['prefix_samples']=verified['verified_sampled_frames']
-        line = request.get("line", defaults["line"])
+        raw_line = request.get("line")
+        if not raw_line and calibration_assets:
+            line = _calibrated_hog_line_normalized(calibration_assets) or defaults["line"]
+        else:
+            line = defaults["line"] if raw_line is None else raw_line
         if len(line) != 2 or any(len(p) != 2 for p in line):
             raise ValueError("Choose two event-line points")
         line = [[finite(v, "line coordinate", 0) for v in p] for p in line]

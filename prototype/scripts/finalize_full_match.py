@@ -38,22 +38,53 @@ from prototype.scripts.render_rink_viewer import render as render_rink
 DEV_ROOT = Path("/home/user/curling-baseline-recovery-development")
 
 
-def attach_event_colours(aggregate, path):
+def attach_event_colours(aggregate, path, *, track_colours_path=None):
     """Attach post-hoc OpenCLIP event colour evidence; does not alter inference."""
+    from collections import Counter
     document = json.loads(Path(path).read_text())
     by_id = {row["event_id"]: row for row in document.get("events", [])}
+    track_doc = (
+        json.loads(Path(track_colours_path).read_text())
+        if track_colours_path and Path(track_colours_path).exists()
+        else None
+    )
     attached = 0
     for event in aggregate.get("events", []):
         row = by_id.get(event["candidate_id"])
-        if row is None:
-            continue
-        event["colour"] = row.get("colour")
-        event["colour_status"] = row.get("colour_status")
-        event["colour_observations"] = row.get("observations")
-        for segment in event.get("segments", []):
-            if segment.get("role") == "departure":
-                segment["colour"] = row.get("colour")
-        attached += 1
+        if row is not None:
+            event["colour"] = row.get("colour")
+            event["colour_status"] = row.get("colour_status")
+            event["colour_observations"] = row.get("observations")
+            for segment in event.get("segments", []):
+                if segment.get("role") == "departure":
+                    segment["colour"] = row.get("colour")
+            attached += 1
+        elif track_doc is not None:
+            # Promoted calibrated metric hog crossings (e.g. M00001) were not in
+            # observations/events.json; attach colour from track-colours.json.
+            colour = None
+            for seg in event.get("segments", []):
+                panel = seg.get("rink_panel") or (
+                    "left" if seg.get("camera") == "left_split" else "right"
+                )
+                tid = seg.get("tracker_id")
+                if tid is None:
+                    continue
+                colour = track_doc.get("tracks", {}).get(panel, {}).get(str(tid))
+                if colour is None:
+                    samps = [
+                        r.get("prediction")
+                        for r in track_doc.get("evidence", {}).get(panel, {}).get(str(tid), {}).get("samples", [])
+                        if r.get("prediction")
+                    ]
+                    if samps:
+                        colour = Counter(samps).most_common(1)[0][0]
+                if colour is not None:
+                    break
+            if colour is not None:
+                event["colour"] = colour
+                event["colour_status"] = "track_colour_fallback"
+                attached += 1
     aggregate["event_colour"] = {
         "summary": document.get("summary"),
         "reference_comparison": document.get("reference_comparison"),

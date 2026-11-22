@@ -62,6 +62,78 @@ def camera_fragment_events(crossings, by_id):
     return fragments
 
 
+def promote_calibrated_receiving_crossings(primary_events, roles, metric, width, height, *, max_flight_s=30.0):
+    """Promote calibrated receiving hog crossings missed by a single-panel pixel event line.
+
+    A single manual pixel line on one panel can miss an entire throwing direction
+    when players or wheelchairs occlude departures on that camera while the
+    opposite calibrated receiving hog line sees every stone cleanly. Because
+    both hog lines are explicitly calibrated, unclaimed receiving crossings in
+    ``metric`` represent physical arriving throws without per-video tuning.
+
+    Returns ``(promoted_events, updated_roles)`` without mutating ``primary_events``.
+    """
+    updated_roles = dict(roles)
+    ordered_primary = sorted(primary_events, key=lambda e: e['crossing_time_s'])
+    rec_crossings = [mc for mc in metric if mc.get('role') == 'receiving']
+    claimed = set()
+
+    # Rule 1: already represented on the same panel (same track_id, or same-panel
+    # receiving crossing within 2.0 s across a brief pixel-vs-metric offset).
+    for mc in rec_crossings:
+        for e in ordered_primary:
+            ep = updated_roles.get(e['id'], {}).get('panel') or (
+                'left' if e['crossing_point_normalized'][0] < 0.5 else 'right'
+            )
+            if ep != mc['panel']:
+                continue
+            if (e['track_id'] == mc['track_id'] or
+                    (updated_roles.get(e['id'], {}).get('role') == 'receiving' and
+                     abs(e['crossing_time_s'] - mc['crossing_time_s']) <= 2.0)):
+                claimed.add(mc['id'])
+                break
+
+    # Rule 2: already represented by a primary departure on the opposite panel
+    # within physical stone flight time [0, max_flight_s].
+    for e in ordered_primary:
+        role_info = updated_roles.get(e['id'], {})
+        if role_info.get('role') != 'departure' or role_info.get('panel') not in ('left', 'right'):
+            continue
+        opp = 'right' if role_info['panel'] == 'left' else 'left'
+        cands = [mc for mc in rec_crossings
+                 if mc['panel'] == opp and mc['id'] not in claimed
+                 and 0.0 <= mc['crossing_time_s'] - e['crossing_time_s'] <= max_flight_s]
+        if cands:
+            claimed.add(cands[0]['id'])
+
+    promoted = []
+    for mc in rec_crossings:
+        if mc['id'] in claimed:
+            continue
+        pid = f'M{len(promoted) + 1:05d}'
+        a, b = mc['observations']
+        span = b['time_s'] - a['time_s']
+        frac = (mc['crossing_time_s'] - a['time_s']) / span if span > 0 else 0.0
+        px = [a['pixel'][i] + frac * (b['pixel'][i] - a['pixel'][i]) for i in range(2)]
+        pe = {
+            **mc,
+            'id': pid,
+            'metric_crossing_id': mc['id'],
+            'metric_crossing_point_normalized': mc['crossing_point_normalized'],
+            'crossing_point_normalized': [px[0] / width, px[1] / height],
+            'source': 'calibrated_metric_hog_crossing',
+            'physical_identity_verified': False,
+        }
+        promoted.append(pe)
+        updated_roles[pid] = {
+            'role': 'receiving',
+            'panel': mc['panel'],
+            'status': 'calibrated_metric_hog_crossing',
+            'hog_y_m': mc['hog_y_m'],
+        }
+    return promoted, updated_roles
+
+
 def build(video, run_dir, output, *, hog_y_by_panel, track_colours=None):
     run_dir=Path(run_dir);output=Path(output)
     if output.exists():raise ValueError('Preserve existing aggregate')
@@ -97,15 +169,19 @@ def build(video, run_dir, output, *, hog_y_by_panel, track_colours=None):
         if step_s is None or 'observed_bracket_s' not in e:
             continue
         roles[e['id']] = recover_missing_role(e, nearby[e['id']], step_s, roles[e['id']])
-    handoffs=hypotheses(events['events'],roles,metric,events['source_interval_s'])
+    promoted, roles = promote_calibrated_receiving_crossings(
+        events['events'], roles, metric, width, height
+    )
+    working_events = sorted(events['events'] + promoted, key=lambda e: e['crossing_time_s'])
+    handoffs=hypotheses(working_events,roles,metric,events['source_interval_s'])
     if track_colours is not None:
         colours = json.loads(Path(track_colours).read_text())
         if (colours['source_sha256'] != events['source_sha256'] or
                 colours['provenance']['observations_sha256'] != digest(run_dir/'match-observations.jsonl')):
             raise ValueError('Track colours belong to a different observation stream')
-        resolve_colour_ties(events['events'], handoffs, colours['tracks'])
+        resolve_colour_ties(working_events, handoffs, colours['tracks'])
     short_approaches = resolve_short_receiving_approaches(
-        events['events'], handoffs, rows('match-observations.jsonl'), hog_y_by_panel=hog_y_by_panel)
+        working_events, handoffs, rows('match-observations.jsonl'), hog_y_by_panel=hog_y_by_panel)
     metric = sorted(metric + short_approaches, key=lambda e: e['crossing_time_s'])
     extras=[]
     for crossing in metric:
@@ -113,12 +189,14 @@ def build(video, run_dir, output, *, hog_y_by_panel, track_colours=None):
         pixel=[a['pixel'][i]+fraction*(b['pixel'][i]-a['pixel'][i]) for i in range(2)]
         extras.append({**crossing,'metric_crossing_point_normalized':crossing['crossing_point_normalized'],
                        'crossing_point_normalized':[pixel[0]/width,pixel[1]/height]})
-    raw=assemble({**events,'events':events['events']+extras},rows('observations.jsonl'),
+    raw=assemble({**events,'events':working_events+extras},rows('observations.jsonl'),
                  rows('match-observations.jsonl'),[width,height])
     by_id={e['candidate_id']:e for e in raw['events']};output_events=[]
-    for event in events['events']:
+    for event in working_events:
         result=by_id[event['id']];primary=result['segments'][0];role=roles[event['id']];hypothesis=handoffs[event['id']]
         primary.update(role=role['role'],role_status=role['status'],role_evidence=role)
+        if event.get('source') == 'calibrated_metric_hog_crossing':
+            result['event_source'] = 'calibrated_metric_hog_crossing'
         result.update(handoff_hypothesis=hypothesis,association_method=hypothesis['basis'],association_issues=[])
         for candidate in hypothesis['candidates']:
             if candidate['id'] != hypothesis.get('selected_counterpart_id', candidate['id']):
@@ -139,7 +217,7 @@ def build(video, run_dir, output, *, hog_y_by_panel, track_colours=None):
                 result['failure_reasons']=[x for x in result['failure_reasons'] if x!='cross_view_identity_unresolved']+['cross_view_identity_provisional']
         if hypothesis['status']=='ambiguous':result['association_issues'].append('multiple_or_shared_counterpart_crossings')
         output_events.append(result)
-    camera_crossings=retain_camera_crossings(extras,events['events'],handoffs,output_events)
+    camera_crossings=retain_camera_crossings(extras,working_events,handoffs,output_events)
     result={**raw,'schema_version':'learned-directional-event-track-bridge-development-v1','events':output_events,
             'camera_crossings':camera_crossings,
             'unresolved_camera_fragments':camera_fragment_events(camera_crossings,by_id),
@@ -147,7 +225,9 @@ def build(video, run_dir, output, *, hog_y_by_panel, track_colours=None):
             'handoff_development_enabled':True,'provenance':{
                 'events_sha256':digest(run_dir/'events.json'),'observations_sha256':digest(run_dir/'observations.jsonl'),
                 'board_observations_sha256':digest(run_dir/'match-observations.jsonl'),
-                'match_observation_run':str(run_dir.resolve()),'local_hog_y_m':hog_y_by_panel}}
+                'match_observation_run':str(run_dir.resolve()),'local_hog_y_m':hog_y_by_panel,
+                'primary_pixel_line_events':len(events['events']),
+                'promoted_calibrated_receiving_crossings':len(promoted)}}
     if track_colours is not None:
         result['provenance']['track_colours_sha256'] = digest(track_colours)
     code=output.with_suffix('.code');code.mkdir(parents=True)

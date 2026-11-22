@@ -29,7 +29,8 @@ def assemble(spec):
     build(spec["video"], run, aggregate_path, hog_y_by_panel=config["local_hog_y_m"],
           track_colours=output / "track-colours.json")
     aggregate = json.loads(aggregate_path.read_text())
-    attach_event_colours(aggregate, output / "event-colours.json")
+    attach_event_colours(aggregate, output / "event-colours.json",
+                         track_colours_path=output / "track-colours.json")
     rink = annotate(enrich(aggregate, aggregate_path=aggregate_path))
     rink_path = result / "aggregate-rink.json"
     # The stored aggregate keeps every tracked sample; the trajectory view stops each
@@ -166,13 +167,16 @@ def finish(spec):
     aggregate = json.loads((result / "aggregate-rink.json").read_text())
     throws = json.loads((result / "throws/effects.json").read_text())
     fragment_samples=[p for e in aggregate.get('unresolved_camera_fragments',[]) for s in e['segments'] for p in s.get('geometry_samples',[])]
+    total_candidates = len(aggregate["events"])
     summary = {
         "schema_version": "curling-product-result-v1",
         "development": True,
         "source_sha256": digest(spec["video"]),
-        "event_candidates": len(events["events"]),
+        "event_candidates": total_candidates,
+        "primary_pixel_line_events": len(events["events"]),
+        "promoted_calibrated_receiving_events": max(0, total_candidates - len(events["events"])),
         "post_throw_proposals": board["summary"]["review_proposals"],
-        "unresolved_post_throw_candidates": len(events["events"])
+        "unresolved_post_throw_candidates": total_candidates
         - board["summary"]["review_proposals"],
         "observed_board_frames": len(board["timeline"]["times"]),
         "trajectory_viewer": "trajectories/index.html",
