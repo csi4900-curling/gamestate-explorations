@@ -213,7 +213,7 @@ def run(*, public_run, aggregate, event_colours, motion_dir, config_path, video,
     import ijson
     with Path(aggregate).open('rb') as stream:
         aggregate_source = next(ijson.items(stream, 'context.source_sha256'), None)
-    colours = json.loads(Path(event_colours).read_text())
+    colours = json.loads(Path(event_colours).read_text()) if event_colours is not None else {'source_sha256': source_hash, 'events': []}
     if aggregate_source != source_hash or colours['source_sha256'] != source_hash:
         raise ValueError('Aggregate/colour source does not match public run')
     events = compact_events(aggregate)
@@ -320,8 +320,9 @@ def run(*, public_run, aggregate, event_colours, motion_dir, config_path, video,
     finally: cap.release()
     inputs={'protocol':public_run/'protocol.json','observations':public_run/'observations.jsonl',
             'boards':public_run/'match-observations.jsonl','aggregate':Path(aggregate),
-            'colours':Path(event_colours),'motion':motion_dir/'manifest.json','config':Path(config_path),
+            'motion':motion_dir/'manifest.json','config':Path(config_path),
             'left_motion':motion_dir/'left.npz','right_motion':motion_dir/'right.npz'}
+    if event_colours is not None:inputs['colours']=Path(event_colours)
     if state_timeline:inputs['state_timeline']=Path(state_timeline)
     payload={'development':True,'source_sha256':source_hash,'events':proposals,
              'timeline':timeline.finish(protocol), 'source_size_px':protocol.get('source_size_px'),

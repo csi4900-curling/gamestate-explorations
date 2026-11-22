@@ -369,7 +369,16 @@ class Workbench:
         code_root = output / "code"
         code_root.mkdir()
         code_hashes = {}
-        for source in (self.root / "prototype").rglob("*"):
+        skip_dirs = {
+            "tests", "runs", "vision", "rectification", "cross-view",
+            "throw-analysis", "throw-segments", "stone-accuracy",
+            "trajectory-accuracy", "pre-gate-audit", "body-localization",
+            "continuous", "gate-study", "spin", "spin-feasibility",
+            "reasoning", "release-audit", "evidence", "sources", "demo",
+            "uploads", "__pycache__",
+        }
+        proto_root = self.root / "prototype"
+        for source in proto_root.rglob("*"):
             if not source.is_file() or source.suffix not in {
                 ".py",
                 ".js",
@@ -378,6 +387,9 @@ class Workbench:
                 ".yaml",
                 ".yml",
             }:
+                continue
+            rel_proto = source.relative_to(proto_root)
+            if any(part in skip_dirs or part.startswith("full-match-") for part in rel_proto.parts[:-1]):
                 continue
             relative = source.relative_to(self.root)
             target = code_root / relative
@@ -552,10 +564,9 @@ class Workbench:
                     "score-observations.jsonl",
                 ]
             }
-            # Also reuse verified event/track colours when observations and colour config are unchanged.
-            prev_ec = previous / "event-colours.json"
+            # Also reuse verified track colours when observations and colour config are unchanged.
             prev_tc = previous / "track-colours.json"
-            if prev_ec.is_file() and prev_tc.is_file():
+            if prev_tc.is_file():
                 try:
                     tc_doc = json.loads(prev_tc.read_text())
                     eff_hz = float(events.get("effective_sample_hz") or 10.0)
@@ -566,10 +577,8 @@ class Workbench:
                             and tc_doc.get("provenance", {}).get("model", {}).get("config_sha256")
                             == digest(output / "colour.json")
                             and min_obs <= max(3, round(0.6 * eff_hz))):
-                        shutil.copyfile(prev_ec, output / "event-colours.json")
                         shutil.copyfile(prev_tc, output / "track-colours.json")
                         spec["reused_colours_from"] = identifier
-                        spec["reused_input_sha256"]["event-colours.json"] = digest(output / "event-colours.json")
                         spec["reused_input_sha256"]["track-colours.json"] = digest(output / "track-colours.json")
                 except Exception:
                     pass
@@ -657,24 +666,6 @@ class Workbench:
         stages = [
             ("observations", inference, [], observation),
             (
-                "colour",
-                inference,
-                [p["colour_dependencies"]],
-                [
-                    wrapper,
-                    "-m",
-                    "prototype.scripts.classify_event_colours",
-                    "--video",
-                    spec["video"],
-                    "--events",
-                    str(output / "observations/events.json"),
-                    "--output",
-                    str(output / "event-colours.json"),
-                    "--config",
-                    spec["colour_config"],
-                ],
-            ),
-            (
                 "stone_colours",
                 inference,
                 [p["colour_dependencies"]],
@@ -736,22 +727,9 @@ class Workbench:
             ),
         ]
         if spec.get("reused_observations_from"):
-            stages[0] = (
-                "observation_view",
-                inference,
-                [],
-                [
-                    wrapper,
-                    "-m",
-                    "prototype.product_pipeline",
-                    "--stage",
-                    "observation-view",
-                    "--spec",
-                    spec_path,
-                ],
-            )
+            stages = [s for s in stages if s[0] != "observations"]
         if spec.get("reused_colours_from"):
-            stages = [s for s in stages if s[0] not in ("colour", "stone_colours")]
+            stages = [s for s in stages if s[0] != "stone_colours"]
         started = time.time()
         record = []
         try:

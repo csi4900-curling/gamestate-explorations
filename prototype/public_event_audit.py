@@ -8,8 +8,6 @@ import hashlib
 import json
 from pathlib import Path
 
-from prototype.throw_event_benchmark import evaluate_events
-
 
 def verified_candidate_precision(scored, references):
     """Known positive references can verify precision without exhaustive recall labels.
@@ -77,6 +75,7 @@ def audit_prefix(protocol, progress, observations, references):
         raise ValueError('Crossings inconsistent with progress snapshot')
     lo = protocol['source_interval_s'][0]
     refs = [r for r in references['events'] if lo <= r['delivery_interval_s'][0] and r['delivery_interval_s'][1] <= stop]
+    from prototype.throw_event_benchmark import evaluate_events
     scored = evaluate_events(predictions, refs, (lo, stop), tolerance_s=0, evaluate_colour=False)
     return dict(partial_run=True, complete_requested_scan=False,
                 source_sha256=protocol['source_sha256'], verified_sampled_frames=count,
@@ -102,6 +101,7 @@ def audit(public_run, reference_path):
         coverage = verify_scan(events, (json.loads(line) for line in stream))
     lo, hi = events['source_interval_s']
     refs = [r for r in references['events'] if lo <= r['delivery_interval_s'][0] and r['delivery_interval_s'][1] <= hi]
+    from prototype.throw_event_benchmark import evaluate_events
     scored = evaluate_events(events['events'], refs, (lo, hi), tolerance_s=0, evaluate_colour=False)
     precision = verified_candidate_precision(scored, refs)
     extras = set(scored['extra_prediction_ids'])

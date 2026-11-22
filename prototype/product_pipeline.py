@@ -12,12 +12,77 @@ def write(path, value):
     Path(path).write_text(json.dumps(value, indent=2, allow_nan=False) + "\n")
 
 
+def attach_event_colours(aggregate, *, track_colours_path, event_colours_path=None):
+    """Attach OpenCLIP track-level stone colours to every event (primary or promoted)."""
+    from collections import Counter
+
+    track_doc = (
+        json.loads(Path(track_colours_path).read_text())
+        if track_colours_path and Path(track_colours_path).exists()
+        else None
+    )
+    event_doc = (
+        json.loads(Path(event_colours_path).read_text())
+        if event_colours_path and Path(event_colours_path).exists()
+        else None
+    )
+    by_id = {row["event_id"]: row for row in (event_doc or {}).get("events", [])}
+    attached = 0
+    for event in aggregate.get("events", []):
+        colour = None
+        status = None
+        if track_doc is not None:
+            # Prefer receiving segment colour (clean unobstructed stone view), then departure.
+            ordered_segs = sorted(
+                event.get("segments", []),
+                key=lambda s: 0 if s.get("role") == "receiving" else 1,
+            )
+            for seg in ordered_segs:
+                panel = seg.get("rink_panel") or (
+                    "left" if seg.get("camera") == "left_split" else "right"
+                )
+                tid = seg.get("tracker_id")
+                if tid is None:
+                    continue
+                colour = track_doc.get("tracks", {}).get(panel, {}).get(str(tid))
+                if colour is None:
+                    samps = [
+                        r.get("prediction")
+                        for r in track_doc.get("evidence", {}).get(panel, {}).get(str(tid), {}).get("samples", [])
+                        if r.get("prediction")
+                    ]
+                    if samps:
+                        colour = Counter(samps).most_common(1)[0][0]
+                if colour is not None:
+                    status = "track_colour_openclip"
+                    break
+        if colour is None and event["candidate_id"] in by_id:
+            row = by_id[event["candidate_id"]]
+            colour = row.get("colour")
+            status = row.get("colour_status")
+            event["colour_observations"] = row.get("observations")
+        if colour is not None:
+            event["colour"] = colour
+            event["colour_status"] = status
+            for seg in event.get("segments", []):
+                if seg.get("role") == "departure":
+                    seg["colour"] = colour
+            attached += 1
+    aggregate["event_colour"] = {
+        "summary": (track_doc or event_doc or {}).get("summary"),
+        "provenance": (track_doc or event_doc or {}).get("provenance"),
+        "attached_events": attached,
+        "physical_identity_verified": False,
+        "team_mapping_established": False,
+    }
+    return aggregate
+
+
 def assemble(spec):
     from prototype.directional_event_aggregate import build
     from prototype.scripts.enrich_rink_aggregate import enrich
     from prototype.scripts.build_state_timeline import build as build_state, END_SIZE
     from prototype.scripts.render_rink_viewer import render
-    from prototype.scripts.finalize_full_match import attach_event_colours
     from prototype.cross_camera_consistency import annotate
 
     output = Path(spec["output"])
@@ -29,8 +94,11 @@ def assemble(spec):
     build(spec["video"], run, aggregate_path, hog_y_by_panel=config["local_hog_y_m"],
           track_colours=output / "track-colours.json")
     aggregate = json.loads(aggregate_path.read_text())
-    attach_event_colours(aggregate, output / "event-colours.json",
-                         track_colours_path=output / "track-colours.json")
+    attach_event_colours(
+        aggregate,
+        track_colours_path=output / "track-colours.json",
+        event_colours_path=output / "event-colours.json",
+    )
     rink = annotate(enrich(aggregate, aggregate_path=aggregate_path))
     rink_path = result / "aggregate-rink.json"
     # The stored aggregate keeps every tracked sample; the trajectory view stops each
@@ -89,10 +157,11 @@ def boards(spec):
     output = Path(spec["output"])
     result = output / "result"
     fit_motion(output / "observations", output / "motion-model")
+    legacy_event_colours = output / "event-colours.json"
     run(
         public_run=output / "observations",
         aggregate=result / "aggregate-rink.json",
-        event_colours=output / "event-colours.json",
+        event_colours=legacy_event_colours if legacy_event_colours.exists() else None,
         motion_dir=output / "motion-model",
         config_path=spec["state_config"],
         video=spec["video"],
