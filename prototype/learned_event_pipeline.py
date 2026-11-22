@@ -68,7 +68,7 @@ def run(video,output,config_path,checkpoint,*,start,end,source_id,match_state_co
     detector=StoneDetector(checkpoint,backend=detector_backend,export=detector_export,head=detector_head,threads=detector_threads);tracker=BYTETracker(SimpleNamespace(**tracker_settings));crossings=LineCrossings(config)
     step=max(1,round(fps/config['sample_hz']));first=round(start*fps);stop=round(end*fps)
     cap.set(cv2.CAP_PROP_POS_FRAMES,first);nframes=0;detection_s=association_s=0
-    files=[Path(__file__),Path(__file__).with_name('line_crossing_events.py'),Path(__file__).with_name('stone_detector.py'),Path(__file__).with_name('detection_cache.py'),Path(__file__).parent/'scripts/run_throw_pipeline.py']
+    files=[Path(__file__),Path(__file__).with_name('line_crossing_events.py'),Path(__file__).with_name('stone_detector.py'),Path(__file__).with_name('detection_cache.py')]
     (output/'code-snapshot').mkdir()
     for p in files:(output/'code-snapshot'/p.name).write_bytes(p.read_bytes())
     protocol={'status':'running','source_id':source_id,'source_sha256':source_hash,'source_interval_s':[start,end],
