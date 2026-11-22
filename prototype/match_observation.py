@@ -14,9 +14,7 @@ import cv2
 import numpy as np
 
 sys.path.insert(0,str(Path(__file__).resolve().parent))
-from camera_geometry import features, transfer
-from body_localization import feature_heights, transported_reference_camera, localize
-from vision_core import project
+from body_localization import feature_heights, transported_reference_camera, localize, project
 from prototype.scoreboard_observation import ScoreboardObserver
 
 
@@ -68,6 +66,7 @@ class MatchObserver:
             annotations={'method':'Explicit operator-selected source rink markings',
                          'coordinate_convention':'Tee origin, +x camera-right, +y foreground; signed hog coordinates in config'}
         else:
+            from camera_geometry import features
             calibration_path=resolve(cfg['calibration']);annotations_path=resolve(cfg['reference_annotations'])
             self.heights=feature_heights(cfg.get('feature_heights_m'))
             calibration=json.loads(calibration_path.read_text());annotations=json.loads(annotations_path.read_text())
@@ -123,13 +122,18 @@ class MatchObserver:
             self.provenance['manual_calibration']=True
         self.provenance['ocr_versions']={p:importlib.metadata.version(p) for p in ('rapidocr','onnxruntime')}
         self.provenance['ocr_model_sha256']={p.name:sha(p) for p in resolve(cfg['ocr_model_dir']).glob('*.onnx')}
-        code_names=('match_observation.py','match_observation_report.py','scoreboard_observation.py','score_grid.py',
-                    'camera_geometry.py','body_localization.py','stone_measurement.py','vision_core.py','rectification_core.py','automatic_house_calibration.py',
-                    'split_camera_geometry.py','source_specific_house_calibration.py','split_house_ellipse_v2.py','split_house_reference.py','house_affine_transfer_audit.py')
-        if geometry_mode in ('parallel_native_geometry_development_v1', 'parallel_native_geometry_development_v2'):
-            code_names += ('parallel_camera_geometry.py',)
         if geometry_mode=='explicit_source_calibration_v1':
-            code_names += ('rink_calibration.py','pinhole_calibration.py','rink_template.py','calibrated_camera_geometry.py','calibration_pose.py','camera_foreground.py')
+            code_names=('match_observation.py','scoreboard_observation.py','score_grid.py',
+                        'body_localization.py','stone_measurement.py','rink_calibration.py',
+                        'pinhole_calibration.py','rink_template.py','calibrated_camera_geometry.py',
+                        'calibration_pose.py','camera_foreground.py')
+        else:
+            code_names=('match_observation.py','match_observation_report.py','scoreboard_observation.py','score_grid.py',
+                        'camera_geometry.py','body_localization.py','stone_measurement.py','vision_core.py','rectification_core.py','automatic_house_calibration.py',
+                        'split_camera_geometry.py','source_specific_house_calibration.py','split_house_ellipse_v2.py','split_house_reference.py','house_affine_transfer_audit.py')
+            if geometry_mode in ('parallel_native_geometry_development_v1', 'parallel_native_geometry_development_v2'):
+                code_names += ('parallel_camera_geometry.py',)
+        code_names=tuple(name for name in code_names if Path(__file__).with_name(name).exists())
         self.provenance['code_sha256']={name:sha(Path(__file__).with_name(name)) for name in code_names}
         snapshot=self.output/'code-snapshot';snapshot.mkdir(exist_ok=True)
         for name in code_names:(snapshot/name).write_bytes(Path(__file__).with_name(name).read_bytes())
@@ -242,6 +246,7 @@ class MatchObserver:
             if registered is not None:
                 target,diag,prior=registered[panel]
             else:
+                from camera_geometry import transfer
                 target,diag=transfer(reference,normalized,H,region,reference_features=desc)
                 try:
                     prior=transported_reference_camera(H,target,region) if target is not None else None

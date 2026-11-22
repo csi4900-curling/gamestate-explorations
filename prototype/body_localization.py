@@ -7,7 +7,16 @@ assumptions, not measured parameters; output positions remain provisional.
 from __future__ import annotations
 import cv2
 import numpy as np
-from vision_core import project, detect_caps
+
+
+def project(H, points):
+    points = np.asarray(points, dtype=np.float64).reshape(-1, 2)
+    if not len(points):
+        return np.empty((0, 2))
+    q = np.column_stack([points, np.ones(len(points))]) @ np.asarray(H).T
+    if not np.isfinite(q).all() or np.any(np.abs(q[:, 2]) < 1e-10):
+        raise ValueError('Invalid planar projection')
+    return q[:, :2] / q[:, 2, None]
 
 VERSION = 'body-geometry-v1'
 STONE_RADIUS_M = .139
@@ -160,6 +169,7 @@ def detect_and_localize(image,H,view,registered_reference=None,camera_prior=None
     if ratio>=.65:
         proposals,rejected=body_proposals(image,H,view);branch='body_outline'
     else:
+        from vision_core import detect_caps
         proposals,detail=detect_caps(image,H,view,registered_reference);rejected=detail['rejected'];branch='cap_with_body_support'
         for p in proposals:p['proposal_kind']=branch
     for i,p in enumerate(proposals):

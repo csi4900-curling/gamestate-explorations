@@ -301,11 +301,6 @@ def run(video,output,config_path,checkpoint,*,start,end,source_id,match_state_co
                            'No colour gate, surrounding-motion veto, minimum speed/span gate or cross-track time suppression is applied.']}
     (output/'events.json').write_text(json.dumps(result,indent=2))
     render(result,config,video,output)
-    if observer is not None:
-        from prototype.match_observation_report import render as render_match
-        render_match(output,video,crossings.events)
-        page=output/'index.html'
-        page.write_text(page.read_text().replace('<select id="events">','<p><a href="match-observations.html">Synchronized board and score observations (development)</a></p><select id="events">'))
     return result
 
 

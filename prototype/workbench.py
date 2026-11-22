@@ -410,7 +410,8 @@ class Workbench:
         match_path = self.path(self.profile["match_config"])
         match = json.loads(match_path.read_text())
         for key in ["calibration", "reference_annotations", "reference_frames", "ocr_model_dir"]:
-            match[key] = str((match_path.parent / match[key]).resolve())
+            if match.get(key):
+                match[key] = str((match_path.parent / match[key]).resolve())
         if match.get('camera_foreground_checkpoint'):
             match['camera_foreground_checkpoint']=str((match_path.parent/match['camera_foreground_checkpoint']).resolve())
         match.update(feature_heights_m=heights, scoreboard_team_labels=teams)
