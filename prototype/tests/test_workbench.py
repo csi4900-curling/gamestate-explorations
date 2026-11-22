@@ -34,15 +34,15 @@ def app(tmp_path):
     config.mkdir(parents=True)
     actual = Path(__file__).resolve().parents[1] / "config"
     for name in [
-        "line-events.example.json",
-        "learned-directional-two-view-development.example.json",
+        "line-events-5hz.json",
+        "bytetrack-5hz.yaml",
+        "learned-directional-two-view-explicit-calibration.json",
         "stone-colour.example.json",
         "workbench.json",
     ]:
-        source = actual / ('workbench-legacy-baseline.json' if name == 'workbench.json' else name)
-        (config / name).write_bytes(source.read_bytes())
+        (config / name).write_bytes((actual / name).read_bytes())
     (root / "prototype/component.py").write_text("VERSION = 1\n")
-    (root / "prototype/match_board_plot.js").write_text("window.fixture = true;\n")
+    (root / "prototype/calibration_ui.js").write_text("window.fixture = true;\n")
     video = root / "video.mp4"
     writer = cv2.VideoWriter(str(video), cv2.VideoWriter_fourcc(*"mp4v"), 30, (64, 64))
     assert writer.isOpened()
@@ -50,6 +50,7 @@ def app(tmp_path):
         writer.write(np.full((64, 64, 3), i * 3, dtype=np.uint8))
     writer.release()
     app = Workbench(root=root)
+    app.profile["calibration_required"] = False
     yield app
     app.pool.shutdown(wait=True)
 
@@ -170,7 +171,7 @@ def test_settings_are_saved_without_rewriting_shared_profile(app):
     assert json.loads((folder / "spec.json").read_text())["source_sha256"] == asset["source_sha256"]
     (app.root / "prototype/component.py").write_text("VERSION = 2\n")
     assert (folder / "code/prototype/component.py").read_text() == "VERSION = 1\n"
-    assert (folder / "code/prototype/match_board_plot.js").is_file()
+    assert (folder / "code/prototype/calibration_ui.js").is_file()
     app.cancel(identifier)
     assert app.job(identifier)["state"] == "cancelled"
 
