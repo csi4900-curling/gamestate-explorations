@@ -109,13 +109,27 @@ def run(video,output,config_path,checkpoint,*,start,end,source_id,match_state_co
                         continue
                     try:
                         Hinv = np.linalg.inv(np.asarray(rec['H_normalized_source_to_local_m'], dtype=float))
-                        pts = []
+                        raw_pts = []
                         for xm in (-2.375, 2.375):
                             v = Hinv @ np.array([xm, float(hog_y), 1.0], dtype=float)
                             if abs(v[2]) < 1e-12:
                                 raise ValueError('singular')
-                            pts.append([float(min(1.0, max(0.0, (v[0] / v[2]) / 640.0))),
-                                        float(min(1.0, max(0.0, (v[1] / v[2]) / 360.0)))])
+                            raw_pts.append(((v[0] / v[2]) / 640.0, (v[1] / v[2]) / 360.0))
+                        x_lo, x_hi = (0.0, 0.5) if panel_name == 'left' else (0.5, 1.0)
+                        (x0, y0), (x1, y1) = sorted(raw_pts, key=lambda pt: pt[0])
+                        if x1 < x_lo or x0 > x_hi:
+                            continue
+                        if x1 - x0 > 1e-12:
+                            if x0 < x_lo:
+                                y0 = y0 + (x_lo - x0) * (y1 - y0) / (x1 - x0)
+                                x0 = x_lo
+                            if x1 > x_hi:
+                                y1 = y0 + (x_hi - x0) * (y1 - y0) / (x1 - x0)
+                                x1 = x_hi
+                        pts = [
+                            [float(min(x_hi, max(x_lo, x0))), float(min(1.0, max(0.0, y0)))],
+                            [float(min(x_hi, max(x_lo, x1))), float(min(1.0, max(0.0, y1)))],
+                        ]
                         if pts[0] != pts[1]:
                             aux_lines.append({'id': f"sched_{asset.get('id', '0')}_{panel_name}",
                                               'endpoints_normalized': pts,

@@ -36,9 +36,33 @@ def write(path, value):
     temporary.replace(path)
 
 
+def _clip_segment_x(p0, p1, x_lo, x_hi):
+    """Clip a 2D line segment to [x_lo, x_hi] in x and [0, 1] in y."""
+    x0, y0 = p0
+    x1, y1 = p1
+    if x0 > x1:
+        x0, y0, x1, y1 = x1, y1, x0, y0
+    if x1 < x_lo or x0 > x_hi:
+        return None
+    dx = x1 - x0
+    if dx > 1e-12:
+        if x0 < x_lo:
+            y0 = y0 + (x_lo - x0) * (y1 - y0) / dx
+            x0 = x_lo
+        if x1 > x_hi:
+            y1 = y0 + (x_hi - x0) * (y1 - y0) / (x1 - x0)
+            x1 = x_hi
+    pts = [
+        [float(min(x_hi, max(x_lo, x0))), float(min(1.0, max(0.0, y0)))],
+        [float(min(x_hi, max(x_lo, x1))), float(min(1.0, max(0.0, y1)))],
+    ]
+    return pts if pts[0] != pts[1] else None
+
+
 def _calibrated_hog_line_normalized(calibration_assets, panel="left", hog_y_m=-6.401, half_width_m=2.375):
-    """Project the calibrated hog line endpoints into [0, 1] source-image fractions."""
+    """Project the calibrated hog line endpoints into [0, 1] source-image fractions, clipped to panel."""
     import numpy as np
+    x_lo, x_hi = (0.0, 0.5) if panel == "left" else (0.5, 1.0)
     for asset in calibration_assets or []:
         rec = (asset.get("panels") or {}).get(panel)
         if not rec or not rec.get("H_normalized_source_to_local_m"):
@@ -46,16 +70,14 @@ def _calibrated_hog_line_normalized(calibration_assets, panel="left", hog_y_m=-6
         try:
             H = np.asarray(rec["H_normalized_source_to_local_m"], dtype=float)
             Hinv = np.linalg.inv(H)
-            pts = []
+            raw_pts = []
             for x_m in (-half_width_m, half_width_m):
                 v = Hinv @ np.array([x_m, hog_y_m, 1.0], dtype=float)
                 if abs(v[2]) < 1e-12:
                     raise ValueError("singular")
-                pts.append([
-                    float(min(1.0, max(0.0, (v[0] / v[2]) / 640.0))),
-                    float(min(1.0, max(0.0, (v[1] / v[2]) / 360.0))),
-                ])
-            if pts[0] != pts[1]:
+                raw_pts.append(((v[0] / v[2]) / 640.0, (v[1] / v[2]) / 360.0))
+            pts = _clip_segment_x(raw_pts[0], raw_pts[1], x_lo, x_hi)
+            if pts is not None:
                 return pts
         except Exception:
             continue

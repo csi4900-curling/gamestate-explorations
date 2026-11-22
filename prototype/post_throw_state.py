@@ -27,6 +27,8 @@ def compact_events(path):
             events.append({
                 'candidate_id': event['candidate_id'],
                 'event_prediction': {'crossing_time_s': event['event_prediction']['crossing_time_s']},
+                'colour': event.get('colour'),
+                'colour_status': event.get('colour_status'),
                 'segments': [dict(role=s['role'], camera=s['camera'],
                                   rink_panel=s.get('rink_panel'), tracker_id=s.get('tracker_id'),
                                   pixel_points=([{'time_s': s['pixel_points'][0]['time_s']}]
@@ -215,7 +217,17 @@ def run(*, public_run, aggregate, event_colours, motion_dir, config_path, video,
     if aggregate_source != source_hash or colours['source_sha256'] != source_hash:
         raise ValueError('Aggregate/colour source does not match public run')
     events = compact_events(aggregate)
-    observer = BoardStateEvidence(events, colours['events'], group_to_team=config['group_to_team'],
+    merged_colours = list(colours['events'])
+    seen_colour_ids = {r['event_id'] for r in merged_colours}
+    for ev in events:
+        if ev['candidate_id'] not in seen_colour_ids and ev.get('colour'):
+            merged_colours.append({
+                'event_id': ev['candidate_id'],
+                'colour': ev['colour'],
+                'colour_status': ev.get('colour_status') or 'aggregate_track_colour_fallback',
+            })
+            seen_colour_ids.add(ev['candidate_id'])
+    observer = BoardStateEvidence(events, merged_colours, group_to_team=config['group_to_team'],
                                   house_radius_m=config['house_radius_m'], stone_radius_m=config['stone_radius_m'])
     # NpzFile decompresses on every key lookup: materialize each array once.
     motion = {}

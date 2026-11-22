@@ -140,11 +140,18 @@ def build(events_path, match_observations_path, score_observations_path,
           *, aggregate_rink_path=None, sample_hz=1.0, end_size=END_SIZE, team_labels=("CAN", "SWE")):
     events = json.loads(Path(events_path).read_text())
     event_list = events.get("events") or []
-    event_times = sorted(event["crossing_time_s"] for event in event_list)
     if aggregate_rink_path is not None:
         aggregate = json.loads(Path(aggregate_rink_path).read_text())
-        timeline = role_timeline(aggregate.get("events") or [])
+        agg_events = aggregate.get("events") or []
+        event_times = sorted(
+            e["event_prediction"]["crossing_time_s"]
+            for e in agg_events
+            if isinstance(e.get("event_prediction"), dict)
+            and e["event_prediction"].get("crossing_time_s") is not None
+        )
+        timeline = role_timeline(agg_events)
     else:
+        event_times = sorted(event["crossing_time_s"] for event in event_list)
         # Fallback only: direction is a line-crossing direction, not a
         # verified camera role. Prefer the enriched aggregate.
         fallback = []

@@ -1,3 +1,5 @@
+import json
+
 from prototype.camera_motion_role import recover_missing_role
 from prototype.directional_handoff import metric_crossings, resolve_short_receiving_approaches
 from prototype.throw_effect import DEFAULTS, effect, in_play, quiet_interval
@@ -284,3 +286,116 @@ def test_pre_hog_registered_before_window_recovers_resting_stones_when_pre_arriv
     assert row10['before_tracker_id'] == 10 and row10['change'] == 'unchanged'
     assert row10['colour'] == 'red'  # pre-impact not_after=True, not late noisy t=60s yellow!
     assert res['points_lying_after']['conditional_points_by_group'] == {'red': 1, 'yellow': 0}
+
+
+def test_post_settle_stationary_occlusion_recovers_resting_stone_not_knockout():
+    # Resting red stone 10 at (0.15, 0.40) is occluded by a player during settle (~18-20s)
+    # and reappears as track 11 stationary at (0.16, 0.40) from 22.0-26.0s.
+    # Resting red stone 12 at (-1.5, 0.0) is genuinely knocked out and never reappears.
+    t_pre = [round(10.0 + i * 0.2, 1) for i in range(15)]
+    t_all = [round(10.0 + i * 0.2, 1) for i in range(85)]  # 10.0 .. 26.8
+    t10 = [(t, [0.15, 0.40]) for t in t_pre]
+    t11 = [(t, [0.16, 0.40]) for t in t_all if 22.0 <= t <= 26.0]
+    t12 = [(t, [-1.50, 0.00]) for t in t_pre]
+    t_del = [(t, [-1.20, max(-0.20, 5.0 - (t - 13.0) * 1.2)]) for t in t_all if t >= 13.0]
+    colours = {
+        '10': {'samples': [{'time_s': 11.0, 'prediction': 'red'}]},
+        '11': {'samples': [{'time_s': 24.0, 'prediction': 'red'}]},
+        '12': {'samples': [{'time_s': 11.0, 'prediction': 'red'}]},
+        '20': {'samples': [{'time_s': 14.0, 'prediction': 'yellow'}]},
+    }
+    rec = {'event_id': 'L54', 'crossing_time_s': 12.0,
+           'proposal': {'time_s': 19.0, 'panel': 'left', 'receiving_tracker_id': 20}}
+    res = effect(
+        rec, {'left': {10: t10, 11: t11, 12: t12, 20: t_del}}, house_radius_m=1.829, stone_radius_m=0.139,
+        hog_y_by_panel={'left': -6.401}, settings=DEFAULTS, search_end_s=28.0,
+        colours=colours, groups=['red', 'yellow'],
+    )
+    row10 = next(s for s in res['stones'] if s['before_tracker_id'] == 10)
+    assert row10['after_tracker_id'] == 11
+    assert row10['link'] == 'reappeared_after_settle_occlusion'
+    assert row10['change'] == 'unchanged'
+    assert row10['colour'] == 'red'
+    row12 = next(s for s in res['stones'] if s['before_tracker_id'] == 12)
+    assert row12['change'] == 'left_view_or_lost'
+    assert len(res['occluded_stones_recovered']) == 1
+    assert res['points_lying_after']['conditional_points_by_group'] == {'red': 1, 'yellow': 0}
+
+
+def test_short_unconfirmed_pixel_line_flicker_is_filtered_in_aggregate(tmp_path):
+    from prototype.detection_cache import digest
+    from prototype.directional_event_aggregate import build
+    video = tmp_path / 'v.bin'
+    video.write_bytes(b'flicker fixture')
+    run = tmp_path / 'run'
+    run.mkdir()
+    observations, boards = [], []
+    # Track 99 flickers for 2 frames near left line without crossing metric hog or arriving on right.
+    for i in range(6):
+        t = i * 0.2
+        raw = {'time_s': t, 'frame_index': i, 'tracked_observations': []}
+        state = {'time_s': t, 'frame_index': i, 'boards': {
+            p: {'stones': [], 'registration': {'status': 'fixture'},
+                'homography_normalized_pixels_to_local_metres': [[1, 0, 0], [0, 1, 0], [0, 0, 1]]}
+            for p in ('left', 'right')
+        }}
+        if i in (1, 2):
+            px = [100.0, 200.0 - 5.0 * i]
+            raw['tracked_observations'].append({
+                'track_id': 99, 'point_normalized': [px[0] / 640, px[1] / 360],
+                'pixel': px, 'bbox_xyxy': [90, 180, 110, 210], 'confidence': 0.6,
+            })
+            state['boards']['left']['stones'].append({
+                'tracker_id': 99, 'pixel': px, 'confidence': 0.6,
+                'ice_plane_local_m': [0.0, -5.0 - 0.1 * i], 'height_adjusted_local_m': [0.0, -5.0 - 0.1 * i],
+            })
+        observations.append(raw)
+        boards.append(state)
+    flicker = {
+        'id': 'L00055', 'track_id': 99, 'crossing_time_s': 0.3, 'crossing_point_normalized': [100 / 640, 192 / 360],
+        'observed_bracket_s': [0.2, 0.4],
+        'observations': [
+            {'time_s': 0.2, 'pixel': [100.0, 195.0]},
+            {'time_s': 0.4, 'pixel': [100.0, 190.0]},
+        ],
+    }
+    (run / 'events.json').write_text(json.dumps({
+        'source_sha256': digest(video), 'source_size_px': [640, 360],
+        'source_interval_s': [0.0, 2.0], 'sample_step_frames': 1, 'source_fps': 5.0,
+        'events': [flicker],
+    }))
+    for name, rows in (('observations.jsonl', observations), ('match-observations.jsonl', boards)):
+        (run / name).write_text(''.join(json.dumps(r) + '\n' for r in rows))
+    out = build(video, run, tmp_path / 'agg.json', hog_y_by_panel={'left': -6.401, 'right': 6.401})
+    assert out['events'] == []
+    dropped = out['provenance']['filtered_short_unconfirmed_pixel_line_flickers']
+    assert len(dropped) == 1 and dropped[0]['event_id'] == 'L00055'
+
+
+def test_state_timeline_counts_promoted_aggregate_events(tmp_path):
+    from prototype.scripts.build_state_timeline import build as build_state
+    (tmp_path / 'events.json').write_text(json.dumps({'events': [{'id': 'L1', 'crossing_time_s': 10.0}]}))
+    (tmp_path / 'agg.json').write_text(json.dumps({'events': [
+        {'candidate_id': 'L1', 'event_prediction': {'crossing_time_s': 10.0},
+         'segments': [{'role': 'receiving', 'rink_panel': 'left'}]},
+        {'candidate_id': 'M1', 'event_prediction': {'crossing_time_s': 20.0},
+         'segments': [{'role': 'receiving', 'rink_panel': 'right'}]},
+        {'candidate_id': 'M2', 'event_prediction': {'crossing_time_s': 30.0},
+         'segments': [{'role': 'receiving', 'rink_panel': 'right'}]},
+    ]}))
+    (tmp_path / 'obs.jsonl').write_text(json.dumps({
+        'time_s': 35.0, 'boards': {'left': {'stones': []}, 'right': {'stones': []}},
+    }) + '\n')
+    (tmp_path / 'score.jsonl').write_text('')
+    res = build_state(tmp_path / 'events.json', tmp_path / 'obs.jsonl', tmp_path / 'score.jsonl',
+                      aggregate_rink_path=tmp_path / 'agg.json')
+    assert res['samples'][0]['deliveries_before'] == 3
+
+
+def test_calibrated_hog_line_clipped_to_panel_half():
+    from prototype.workbench import _clip_segment_x
+    # Right-panel line bleeding across x=0.5 centerline to x=0.437 must clip cleanly to [0.5, 1.0].
+    clipped = _clip_segment_x((0.437, 0.580), (1.040, 0.592), 0.5, 1.0)
+    assert clipped is not None
+    assert clipped[0][0] == 0.5 and clipped[1][0] == 1.0
+    assert 0.580 < clipped[0][1] < clipped[1][1] < 0.592

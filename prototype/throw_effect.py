@@ -482,6 +482,55 @@ def effect(record, tracks, *, house_radius_m, stone_radius_m, hog_y_by_panel, se
         if len(near) == 1:
             links[old] = (near[0], 'stationary_position'); free.remove(near[0])
 
+    # Recover resting in-play stones temporarily occluded by a player/sweeper during
+    # the 2 s settle window when directly re-observed stationary at the exact same
+    # position (< 0.10 m) shortly after settle and strictly before the next throw.
+    occluded_recovered = []
+    reappear_limit = min(settle[1] + 15.0, search_end_s)
+    if reappear_limit > settle[1] + 0.4:
+        for old in sorted(set(before) - set(links)):
+            p0 = before[old]['position_m']
+            if not region(p0):
+                continue
+            if any(math.dist(p0, a_val['position_m']) < stone_radius_m for a_val in after.values()):
+                continue
+            old_col, _ = colour_at(working_colours, old, before_end, not_after=True)
+            best = None
+            for re_tid, samps in panel_tracks.items():
+                if re_tid in after or re_tid == delivered:
+                    continue
+                near_pts = [(t, p) for t, p in samps
+                            if p is not None and settle[1] <= t <= reappear_limit and math.dist(p, p0) <= 0.10]
+                if len(near_pts) < minimum:
+                    continue
+                span = near_pts[-1][0] - near_pts[0][0]
+                if span < 0.4:
+                    continue
+                centre = [median(p[0] for _, p in near_pts), median(p[1] for _, p in near_pts)]
+                if math.dist(centre, p0) > 0.10:
+                    continue
+                scat = median(math.dist(p, centre) for _, p in near_pts)
+                if scat > 0.04:
+                    continue
+                re_mid = (near_pts[0][0] + near_pts[-1][0]) / 2.0
+                re_col, _ = colour_at(working_colours, re_tid, re_mid)
+                if old_col and re_col and old_col != re_col:
+                    continue
+                cand = (near_pts[0][0], re_tid, centre, len(near_pts), scat, near_pts[-1][0])
+                if best is None or cand[0] < best[0]:
+                    best = cand
+            if best is not None:
+                t0, re_tid, centre, n_pts, scat, t1 = best
+                after[re_tid] = {'position_m': centre, 'samples': n_pts, 'scatter_m': scat}
+                links[old] = (re_tid, 'reappeared_after_settle_occlusion')
+                occluded_recovered.append({
+                    'before_tracker_id': old, 'after_tracker_id': re_tid,
+                    'position_before_m': p0, 'position_reappeared_m': centre,
+                    'distance_m': round(math.dist(p0, centre), 4),
+                    'reappeared_window_s': [round(t0, 3), round(t1, 3)],
+                    'samples': n_pts, 'scatter_m': round(scat, 4),
+                })
+
     def house(position):
         return max(0., math.hypot(*position)-stone_radius_m) <= house_radius_m
 
@@ -556,6 +605,7 @@ def effect(record, tracks, *, house_radius_m, stone_radius_m, hog_y_by_panel, se
             'superseded_motion_proposal_interval_s': proposal.get('stationary_interval_s'),
             'collision_swaps_repaired': swaps_repaired,
             'duplicate_tracks_merged': duplicates_merged,
+            'occluded_stones_recovered': occluded_recovered,
             'tracks_with_inconsistent_colour': [s['after_tracker_id'] if s['after_tracker_id'] is not None
                                            else s['before_tracker_id'] for s in stones
                                            if s['colour_differs_along_track']
