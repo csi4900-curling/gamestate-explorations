@@ -23,10 +23,74 @@ from urllib.parse import parse_qs, unquote, urlsplit
 import uuid
 
 from prototype.detection_cache import digest
-from prototype.server import Handler as VideoHandler
 
 ROOT = Path(__file__).resolve().parents[1]
 WEB = Path(__file__).with_name("workbench.html")
+
+
+class VideoHandler(SimpleHTTPRequestHandler):
+    """Minimal JSON + byte-range handler so large local videos seek cleanly in the browser."""
+
+    def respond(self, code, obj):
+        payload = json.dumps(obj).encode()
+        self.send_response(code)
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Content-Length", str(len(payload)))
+        self.end_headers()
+        self.wfile.write(payload)
+
+    def send_head(self):
+        self._range = None
+        path = Path(self.translate_path(self.path))
+        value = self.headers.get("Range")
+        if value and path.is_file() and path.suffix.lower() in {".mp4", ".webm", ".mov", ".mkv"}:
+            size = path.stat().st_size
+
+            def unsatisfiable():
+                self.send_response(416)
+                self.send_header("Content-Range", f"bytes */{size}")
+                self.send_header("Content-Length", "0")
+                self.end_headers()
+
+            m = re.fullmatch(r"bytes=(\d*)-(\d*)", value)
+            if not m or not any(m.groups()):
+                unsatisfiable()
+                return None
+            a, b = m.groups()
+            if a:
+                start = int(a)
+                end = min(int(b), size - 1) if b else size - 1
+            else:
+                start = max(0, size - int(b))
+                end = size - 1
+            if start >= size or start > end:
+                unsatisfiable()
+                return None
+            f = path.open("rb")
+            f.seek(start)
+            self._range = end - start + 1
+            self.send_response(206)
+            self.send_header("Content-Type", self.guess_type(str(path)))
+            self.send_header("Accept-Ranges", "bytes")
+            self.send_header("Content-Range", f"bytes {start}-{end}/{size}")
+            self.send_header("Content-Length", str(self._range))
+            self.end_headers()
+            return f
+        return super().send_head()
+
+    def copyfile(self, source, outputfile):
+        try:
+            if self._range is None:
+                return shutil.copyfileobj(source, outputfile)
+            remaining = self._range
+            while remaining:
+                chunk = source.read(min(256 * 1024, remaining))
+                if not chunk:
+                    break
+                outputfile.write(chunk)
+                remaining -= len(chunk)
+        except (BrokenPipeError, ConnectionResetError):
+            pass
 
 
 def write(path, value):
@@ -612,8 +676,7 @@ class Workbench:
         code_root = Path(spec["code_root"])
         # Preserve the venv executable path: resolving its symlink loses the venv.
         inference = (self.root / p["inference_python"]).absolute()
-        state_python = (self.root / p["state_python"]).absolute()
-        required = [inference, state_python, self.path(p["detector_checkpoint"])]
+        required = [inference, self.path(p["detector_checkpoint"])]
         if p["detector_backend"] == "openvino_gpu":
             required.append(self.path(p["detector_export"]))
         for path in required:

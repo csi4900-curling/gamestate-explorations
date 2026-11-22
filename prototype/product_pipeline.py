@@ -142,14 +142,6 @@ def assemble(spec):
                board_hz=1.,title='Unresolved camera tracks — event identity unknown')
 
 
-def observation_view(spec):
-    from prototype.match_observation_report import render
-
-    output = Path(spec["output"]) / "observations"
-    events = json.loads((output / "events.json").read_text())
-    render(output, Path(spec["video"]), events["events"])
-
-
 def boards(spec):
     from prototype.post_throw_state import build_board_viewer
     from prototype.throw_effect import run as throw_effects
@@ -329,13 +321,12 @@ def finish(spec):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
-        "--stage", choices=["observation-view", "assemble", "boards", "finish"], required=True
+        "--stage", choices=["assemble", "boards", "finish"], required=True
     )
     parser.add_argument("--spec", type=Path, required=True)
     args = parser.parse_args()
     spec = json.loads(args.spec.read_text())
     {
-        "observation-view": observation_view,
         "assemble": assemble,
         "boards": boards,
         "finish": finish,

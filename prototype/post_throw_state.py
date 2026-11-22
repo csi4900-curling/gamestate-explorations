@@ -1,10 +1,5 @@
-"""Post-throw review proposals from saved public-pipeline observations.
-
-This stage replays existing observations; it does not rerun detection/geometry.
-Low apparent motion proposes a review frame, never certifies a settled board.
-All event candidates, including missing receivers, are retained.
-"""
-import bisect
+"""Synchronized stone-observations viewer backed by saved detections, geometry, and track colours."""
+from collections import Counter
 import html
 import json
 import os
@@ -14,71 +9,8 @@ import time
 import cv2
 import numpy as np
 
-from prototype.detection_cache import digest
-from prototype.game_board_state import BoardStateEvidence
 from prototype.board_timeline import BoardTimeline
-
-
-def compact_events(path):
-    import ijson
-    events = []
-    with Path(path).open('rb') as stream:
-        for event in ijson.items(stream, 'events.item', use_float=True):
-            events.append({
-                'candidate_id': event['candidate_id'],
-                'event_prediction': {'crossing_time_s': event['event_prediction']['crossing_time_s']},
-                'colour': event.get('colour'),
-                'colour_status': event.get('colour_status'),
-                'segments': [dict(role=s['role'], camera=s['camera'],
-                                  rink_panel=s.get('rink_panel'), tracker_id=s.get('tracker_id'),
-                                  pixel_points=([{'time_s': s['pixel_points'][0]['time_s']}]
-                                                if s.get('pixel_points') else []))
-                             for s in event.get('segments', [])],
-            })
-    return sorted(events, key=lambda e: e['event_prediction']['crossing_time_s'])
-
-
-def propose_frame(event, next_time, motion, step):
-    receivers = [s for s in event['segments'] if s['role'] == 'receiving' and s['pixel_points']]
-    if len(receivers) != 1:
-        return {'status': 'unresolved', 'reason': 'missing_or_ambiguous_receiving_segment'}
-    receiver = receivers[0]
-    panel = receiver.get('rink_panel') or {'left_split': 'left', 'right_split': 'right'}[receiver['camera']]
-    m = motion[panel]
-    ids = np.flatnonzero((m['track_id'] == receiver['tracker_id']) &
-                        (m['time_s'] >= receiver['pixel_points'][0]['time_s']) &
-                        (m['time_s'] < next_time))
-    if not len(ids):
-        return {'status': 'unresolved', 'reason': 'no_receiving_motion_observations'}
-    # A moving observation must precede the proposed stationary interval.
-    # A visibility gap splits runs even if the same tracker ID reappears.
-    runs = []; current = []; seen_moving = False; previous = None
-    for i in ids[np.argsort(m['frame_index'][ids])]:
-        contiguous = previous is not None and int(m['frame_index'][i])-previous == step
-        if not contiguous:
-            if current: runs.append(current)
-            current = []; seen_moving = False
-        if not m['stationary'][i]:
-            if current: runs.append(current)
-            current = []; seen_moving = True
-        elif seen_moving:
-            current.append(int(i))
-        previous = int(m['frame_index'][i])
-    if current: runs.append(current)
-    if not runs:
-        return {'status': 'unresolved', 'reason': 'no_observed_moving_to_stationary_transition'}
-    # Longest contiguous run, earliest on ties. No per-event duration threshold.
-    chosen = max(runs, key=len)
-    i = chosen[len(chosen)//2]
-    return {'status': 'review_proposal', 'frame_index': int(m['frame_index'][i]),
-            'time_s': float(m['time_s'][i]), 'panel': panel,
-            'receiving_tracker_id': receiver['tracker_id'],
-            'stationary_interval_s': [float(m['time_s'][chosen[0]]), float(m['time_s'][chosen[-1]])],
-            'motion_observations': len(chosen),
-            'posterior_stationary': float(m['posterior_stationary'][i]),
-            'selection': 'Midpoint of longest contiguous low-motion run after visible motion, before next candidate.',
-            'limitations': ['Offline model posterior is not calibrated physical settlement confidence.',
-                            'Collision, identity switch, camera motion or repositioning may invalidate this proposal.']}
+from prototype.detection_cache import digest
 
 
 def suppress_duplicates(board, iou):
@@ -196,171 +128,6 @@ if(video.readyState>=1)initializeVideo();
     (output/'index.html').write_text(template.replace('VIDEO_URL',video_url))
 
 
-def run(*, public_run, aggregate, event_colours, motion_dir, config_path, video, output,
-        state_timeline=None):
-    started = time.perf_counter()
-    public_run, motion_dir, output = map(Path, (public_run, motion_dir, output))
-    if output.exists() and any(output.iterdir()):
-        raise ValueError('Preserve previous post-throw output; choose a new output directory')
-    config = json.loads(Path(config_path).read_text())
-    protocol = json.loads((public_run/'protocol.json').read_text())
-    model = json.loads((motion_dir/'manifest.json').read_text())
-    source_hash = protocol['source_sha256']
-    if digest(video) != source_hash or model['source_sha256'] != source_hash:
-        raise ValueError('Video/motion source does not match public run')
-    if model['observations_sha256'] != digest(public_run/'observations.jsonl'):
-        raise ValueError('Motion model does not match saved tracker observations')
-    import ijson
-    with Path(aggregate).open('rb') as stream:
-        aggregate_source = next(ijson.items(stream, 'context.source_sha256'), None)
-    colours = json.loads(Path(event_colours).read_text()) if event_colours is not None else {'source_sha256': source_hash, 'events': []}
-    if aggregate_source != source_hash or colours['source_sha256'] != source_hash:
-        raise ValueError('Aggregate/colour source does not match public run')
-    events = compact_events(aggregate)
-    merged_colours = list(colours['events'])
-    seen_colour_ids = {r['event_id'] for r in merged_colours}
-    for ev in events:
-        if ev['candidate_id'] not in seen_colour_ids and ev.get('colour'):
-            merged_colours.append({
-                'event_id': ev['candidate_id'],
-                'colour': ev['colour'],
-                'colour_status': ev.get('colour_status') or 'aggregate_track_colour_fallback',
-            })
-            seen_colour_ids.add(ev['candidate_id'])
-    observer = BoardStateEvidence(events, merged_colours, group_to_team=config['group_to_team'],
-                                  house_radius_m=config['house_radius_m'], stone_radius_m=config['stone_radius_m'])
-    # NpzFile decompresses on every key lookup: materialize each array once.
-    motion = {}
-    for p in ('left', 'right'):
-        with np.load(motion_dir/(p+'.npz')) as archive:
-            motion[p] = {key: archive[key] for key in archive.files}
-    proposals = []
-    for i,event in enumerate(events):
-        proposal = propose_frame(event, events[i+1]['event_prediction']['crossing_time_s']
-                                 if i+1<len(events) else protocol['source_interval_s'][1],
-                                 motion, protocol['sample_step_frames'])
-        proposals.append({'event_id':event['candidate_id'],
-                          'crossing_time_s':event['event_prediction']['crossing_time_s'], 'proposal':proposal,
-                          'state':None, 'physical_revolutions':None,
-                          'rotation_status':'No identifiable angular observations supplied; not inferred from translation.'})
-    targets = {r['proposal']['frame_index'] for r in proposals if 'frame_index' in r['proposal']}
-    context_payload = json.loads(Path(state_timeline).read_text()) if state_timeline else {}
-    contexts = context_payload.get('samples', [])
-    from prototype.detected_throw_score import DeliveryEndContext
-    from prototype.scripts.build_state_timeline import END_SIZE
-    end_size = config.get('deliveries_per_end', context_payload.get('summary', {}).get('end_size_assumption', END_SIZE))
-    delivery_context = DeliveryEndContext(events, end_size=end_size, start_s=protocol['source_interval_s'][0])
-    times = [s['t'] for s in contexts]
-    epochs = []; previous = object(); epoch = None
-    for s in contexts:
-        if s['current_end'] != previous: epoch=s['t'];previous=s['current_end']
-        epochs.append(epoch)
-    output.mkdir(parents=True,exist_ok=True)
-    timeline = BoardTimeline(output/'board-timeline')
-    selected = {};track_memory={'left':{},'right':{}}
-    with (public_run/'match-observations.jsonl').open() as stream:
-        for line in stream:
-            row=json.loads(line)
-            for p,b in row['boards'].items():
-                for s in b['stones']:
-                    tracker_id=s.get('tracker_id')
-                    if tracker_id is not None:
-                        track_memory[p][tracker_id]={
-                            'time_s':row['time_s'],'frame_index':row['frame_index'],
-                            'pixel':s['pixel'],'position_m':s.get('height_adjusted_local_m')}
-            raw=row; suppressed={}; boards={}
-            for p,b in row['boards'].items():
-                boards[p],suppressed[p]=suppress_duplicates(b, config['duplicate_nms_iou'])
-            row={**row,'boards':boards}
-            index=bisect.bisect_right(times,row['time_s'])-1
-            context = delivery_context.at(row['time_s'])
-            if index >= 0 and contexts[index]['current_end_status'].startswith('observed'):
-                context = {'current_end': contexts[index]['current_end'],
-                           'status': contexts[index]['current_end_status'], 'epoch_start_s': epochs[index],
-                           'basis': 'Existing observed scoreboard marker context; observation remains unverified.'}
-            # Never promote a motion proposal to a physically settled state.
-            settlement={'status':'candidate_low_motion_unverified',
-                        'basis':'Per-recording upstream HMM; source review pending.'}
-            state=observer.observe(row,settlement=settlement,end_context=context,track_memory=track_memory)
-            state['last_observed_totals']=raw.get('last_observed_totals',{})
-            state['totals_provenance']='Saved OCR with observation time/age; not confirmed end points.'
-            timeline.append(state,raw)
-            if row['frame_index'] not in targets: continue
-            before_state=observer.observe(raw,settlement=settlement,end_context=context,track_memory=track_memory)
-            state['suppressed_duplicate_observations']=suppressed
-            state['conditional_visible_points_before_nms']={p:b['conditional_visible_board_points']
-                                                           for p,b in before_state['boards'].items()}
-            state['motion_evidence']={}
-            for p,b in boards.items():
-                m=motion[p]; at=np.flatnonzero(m['frame_index']==row['frame_index'])
-                by_id={int(m['track_id'][i]):int(i) for i in at}
-                state['motion_evidence'][p]=[{
-                    'tracker_id':s.get('tracker_id'),
-                    'stationary_hypothesis':bool(m['stationary'][by_id[s['tracker_id']]]) if s.get('tracker_id') in by_id else None,
-                    'posterior_stationary':float(m['posterior_stationary'][by_id[s['tracker_id']]]) if s.get('tracker_id') in by_id else None,
-                } for s in b['stones']]
-            selected[row['frame_index']]=state
-    output.mkdir(parents=True,exist_ok=True); (output/'snapshots').mkdir()
-    cap=cv2.VideoCapture(str(Path(video).resolve()))
-    if not cap.isOpened(): raise ValueError('Cannot open source video')
-    try:
-        for r in proposals:
-            frame=r['proposal'].get('frame_index')
-            if frame is None: continue
-            r['state']=selected.get(frame)
-            if r['state'] is None:
-                r['proposal']['board_status']='missing_saved_board_row';continue
-            cap.set(cv2.CAP_PROP_POS_FRAMES,frame);ok,image=cap.read()
-            decoded=round(cap.get(cv2.CAP_PROP_POS_FRAMES))-1
-            if not ok or decoded!=frame:
-                r['snapshot_status']={'status':'failed','decoded_frame':decoded};continue
-            filename='snapshots/'+r['event_id']+'.jpg'
-            if not cv2.imwrite(str(output/filename),image):raise IOError('Snapshot write failed')
-            r['snapshot']=filename;r['snapshot_status']={'status':'decoded_source_frame','frame_index':decoded}
-    finally: cap.release()
-    inputs={'protocol':public_run/'protocol.json','observations':public_run/'observations.jsonl',
-            'boards':public_run/'match-observations.jsonl','aggregate':Path(aggregate),
-            'motion':motion_dir/'manifest.json','config':Path(config_path),
-            'left_motion':motion_dir/'left.npz','right_motion':motion_dir/'right.npz'}
-    if event_colours is not None:inputs['colours']=Path(event_colours)
-    if state_timeline:inputs['state_timeline']=Path(state_timeline)
-    payload={'development':True,'source_sha256':source_hash,'events':proposals,
-             'timeline':timeline.finish(protocol), 'source_size_px':protocol.get('source_size_px'),
-             'source_fps':protocol['source_fps'],
-             'dimensions':{k:config[k] for k in ['house_radius_m','stone_radius_m']},
-             'summary':{'candidates':len(proposals),'review_proposals':sum('time_s' in r['proposal'] for r in proposals),
-                        'snapshots':sum('snapshot' in r for r in proposals),
-                        'verified_settled_boards':0,'physical_revolution_estimates':0},
-             'provenance':{'input_sha256':{k:digest(v) for k,v in inputs.items()},
-                           'code_sha256':{k:digest(Path(__file__).parent/k) for k in ['post_throw_state.py','game_board_state.py','house_points.py','board_timeline.py','detected_throw_score.py']},
-                           'config':config,'wall_s':time.perf_counter()-started,
-                           'mode':'Postprocessing replay; saved detection, tracking and geometry unchanged.',
-                           'opencv':cv2.__version__,
-                           'changed_component':'OpenCV NMS on saved board boxes only; original detections/tracks preserved.'}}
-    payload['detected_throw_scoring'] = {
-        'scope': 'Event-associated stone subset, provisional points per throw; never summed into official totals.',
-        'physical_identity_verified': False,
-        'history': [dict(event_id=r['event_id'], time_s=r['proposal']['time_s'],
-                         panel=r['proposal']['panel'],
-                         end_context=r['state']['end_context'],
-                         **{k: v for k, v in r['state']['boards'][r['proposal']['panel']]['detected_throw_score'].items()
-                            if k in ('estimated_points', 'status', 'stale_event_ids', 'unresolved')})
-                    for r in proposals if r['state'] is not None and 'time_s' in r['proposal']],
-        'unresolved_post_throw_candidates': [r['event_id'] for r in proposals if r['state'] is None],
-    }
-    from prototype.detected_throw_score import build_match_ledger
-    payload['detected_throw_scoring']['match_ledger'] = build_match_ledger(
-        events, proposals, end_size=end_size, teams=list(config['group_to_team'].values()),
-        start_s=protocol['source_interval_s'][0])
-    from prototype.score_tracking import build as build_scores
-    score_observations = public_run/'score-observations.jsonl'
-    if score_observations.exists():
-        payload['score_tracking'] = build_scores(score_observations)
-    render(output,video,payload,config)
-    write_json(output/'manifest.json',{k:v for k,v in payload.items() if k!='events'})
-    return payload
-
-
 def build_board_viewer(*, public_run, effects, config_path, video, output, track_colours=None):
     """Lightweight frame-indexed stone-observations viewer backed by throw_effect and track colours.
 
@@ -458,9 +225,9 @@ def build_board_viewer(*, public_run, effects, config_path, video, output, track
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(description=__doc__)
-    for name in ('public-run', 'aggregate', 'event-colours', 'motion-dir', 'video', 'output'):
+    for name in ('public-run', 'effects', 'video', 'output'):
         parser.add_argument('--' + name, required=True)
     parser.add_argument('--config', dest='config_path', required=True)
-    parser.add_argument('--state-timeline')
+    parser.add_argument('--track-colours')
     args = parser.parse_args()
-    run(**vars(args))
+    build_board_viewer(**vars(args))

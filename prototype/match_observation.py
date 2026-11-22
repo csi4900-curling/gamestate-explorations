@@ -50,89 +50,52 @@ class MatchObserver:
         self.interval=float(cfg['score_sample_interval_s'])
         if not np.isfinite(self.interval) or self.interval<=0:raise ValueError('Positive score interval required')
         resolve=lambda p:(self.config_path.parent/p).resolve()
-        geometry_mode=cfg.get('geometry_mode','direct_low_resolution_reference_registration')
+        geometry_mode=cfg.get('geometry_mode')
+        if geometry_mode!='explicit_source_calibration_v1':
+            raise ValueError('Explicit source calibration (explicit_source_calibration_v1) is required')
         self.heights=feature_heights(cfg.get('feature_heights_m'))
         self.calibration_coverage={panel:{'frames':0,'registered_frames':0,'unsupported_stone_points':0} for panel in ('left','right')}
         self.calibration_gaps={panel:[] for panel in ('left','right')}
         self.open_calibration_gaps={panel:None for panel in ('left','right')}
-        if geometry_mode=='explicit_source_calibration_v1':
-            from prototype.rink_calibration import load_bundle
-            bundle_path=resolve(cfg['source_calibration_bundle'])
-            bundle=load_bundle(bundle_path)
-            self.files=[bundle_path]+[(bundle_path.parent/p['frame']['image_path']).resolve()
-                for asset in bundle['calibrations'] for p in asset['panels'].values()]
-            self.references={panel:(None,None,(0,0,320,360) if panel=='left' else (320,0,640,360),None)
-                             for panel in ('left','right')}
-            annotations={'method':'Explicit operator-selected source rink markings',
-                         'coordinate_convention':'Tee origin, +x camera-right, +y foreground; signed hog coordinates in config'}
-        else:
-            from camera_geometry import features
-            calibration_path=resolve(cfg['calibration']);annotations_path=resolve(cfg['reference_annotations'])
-            self.heights=feature_heights(cfg.get('feature_heights_m'))
-            calibration=json.loads(calibration_path.read_text());annotations=json.loads(annotations_path.read_text())
-            self.references={};self.files=[calibration_path,annotations_path]
-            for panel in ('left','right'):
-                spec=annotations['views'][panel];path=resolve(cfg['reference_frames'])/spec['reference_frame']
-                native=cv2.imread(str(path))
-                if native is None:raise ValueError(f'Cannot read geometry reference {path}')
-                h,w=native.shape[:2];frame=cv2.resize(native,(640,360))
-                region=(0,0,320,360) if panel=='left' else (320,0,640,360)
-                H=np.asarray(calibration[panel]['refined_H'])@np.diag([w/640,h/360,1])
-                self.references[panel]=(frame,H,region,features(frame,region))
-                self.files.append(path)
+        from prototype.rink_calibration import load_bundle
+        from prototype.calibrated_camera_geometry import CalibratedCameraGeometry
+        bundle_path=resolve(cfg['source_calibration_bundle'])
+        bundle=load_bundle(bundle_path)
+        self.files=[bundle_path]+[(bundle_path.parent/p['frame']['image_path']).resolve()
+            for asset in bundle['calibrations'] for p in asset['panels'].values()]
+        self.references={panel:(None,None,(0,0,320,360) if panel=='left' else (320,0,640,360),None)
+                         for panel in ('left','right')}
+        annotations={'method':'Explicit operator-selected source rink markings',
+                     'coordinate_convention':'Tee origin, +x camera-right, +y foreground; signed hog coordinates in config'}
         self.ocr=ScoreboardObserver(team_labels=cfg['scoreboard_team_labels'],
             model_dir=resolve(cfg['ocr_model_dir']),crop_normalized=cfg['scoreboard_crop_normalized'])
-        self.geometry=None
-        geometry_mode=cfg.get('geometry_mode','direct_low_resolution_reference_registration')
-        if geometry_mode=='explicit_source_calibration_v1':
-            from prototype.calibrated_camera_geometry import CalibratedCameraGeometry
-            self.geometry=CalibratedCameraGeometry(bundle_path,alignment=cfg.get('camera_alignment','locked'),
-                foreground_checkpoint=resolve(cfg['camera_foreground_checkpoint']) if cfg.get('camera_foreground_checkpoint') else None,
-                foreground_sha256=cfg.get('camera_foreground_sha256'),
-                fast_scale=cfg.get('registration_fast_scale'),
-                fast_nfeatures=cfg.get('registration_fast_nfeatures', 1200),
-                parallel_panels=bool(cfg.get('registration_parallel_panels', False)))
-            if cfg.get('camera_foreground_checkpoint'):self.files.append(resolve(cfg['camera_foreground_checkpoint']))
-        elif geometry_mode=='original_split_geometry_with_anchor_reuse':
-            from prototype.split_camera_geometry import SplitCameraGeometry
-            self.geometry=SplitCameraGeometry(calibration_path,annotations_path,resolve(cfg['reference_frames']))
-        elif geometry_mode in ('parallel_native_geometry_development_v1', 'parallel_native_geometry_development_v2'):
-            from prototype.parallel_camera_geometry import ParallelNativeGeometry
-            self.geometry=ParallelNativeGeometry(calibration_path,annotations_path,resolve(cfg['reference_frames']))
-        elif geometry_mode!='direct_low_resolution_reference_registration':
-            raise ValueError('Unknown geometry mode')
+        self.geometry=CalibratedCameraGeometry(bundle_path,alignment=cfg.get('camera_alignment','locked'),
+            foreground_checkpoint=resolve(cfg['camera_foreground_checkpoint']) if cfg.get('camera_foreground_checkpoint') else None,
+            foreground_sha256=cfg.get('camera_foreground_sha256'),
+            fast_scale=cfg.get('registration_fast_scale'),
+            fast_nfeatures=cfg.get('registration_fast_nfeatures', 1200),
+            parallel_panels=bool(cfg.get('registration_parallel_panels', False)))
+        if cfg.get('camera_foreground_checkpoint'):self.files.append(resolve(cfg['camera_foreground_checkpoint']))
         self.next_score=None;self.last_score={};self.count=0;self.geometry_s=0;self.ocr_s=0;self.geometry_skipped_frames=0
         self.stream=(self.output/'match-observations.jsonl').open('w')
         self.score_stream=(self.output/'score-observations.jsonl').open('w')
         self.provenance={'config':cfg,'config_sha256':sha(self.config_path),
             'geometry_opencv_threads':cv2.getNumThreads(),
             'reference_sha256':{str(p):sha(p) for p in self.files},
-            'calibration_origin':annotations['method'],'geometry_method':'Existing fixed reference calibration + baseline SIFT image registration; per-frame registration, no new calibration fits',
+            'calibration_origin':annotations['method'],
+            'geometry_method':'Explicit source calibration and verified image registration; no automatic refit or unrelated reference mapping.',
+            'source_calibration_bundle_sha256':sha(bundle_path),
+            'manual_calibration':True,
             'coordinate_system':annotations['coordinate_convention'],
             'identity_status':'Upstream tracker labels only; cross-view and physical identities unverified',
             'score_status':'Raw OCR observation; team labels configured metadata, not inferred from stone colour',
-            'scope':'Development observation stage; does not replace dense CoTracker or establish complete trajectories'}
-        if self.geometry is not None:
-            self.provenance['geometry_method']='Original native departure registration; existing automatic receiving house/hog fit, followed by shared anchor registration across events. Legacy initializer heuristics retained.'
-        if geometry_mode in ('parallel_native_geometry_development_v1', 'parallel_native_geometry_development_v2'):
-            self.provenance['geometry_method']='Source parallel-boundary vanishing point and native paint/wheelchair constraints, followed by recording-local anchor registration in both views. No stone-fitted alignment or feed offset.'
-        if geometry_mode=='explicit_source_calibration_v1':
-            self.provenance['geometry_method']='Explicit source calibration and verified image registration; no automatic refit or unrelated reference mapping.'
-            self.provenance['source_calibration_bundle_sha256']=sha(bundle_path)
-            self.provenance['manual_calibration']=True
+            'scope':'Development observation stage'}
         self.provenance['ocr_versions']={p:importlib.metadata.version(p) for p in ('rapidocr','onnxruntime')}
         self.provenance['ocr_model_sha256']={p.name:sha(p) for p in resolve(cfg['ocr_model_dir']).glob('*.onnx')}
-        if geometry_mode=='explicit_source_calibration_v1':
-            code_names=('match_observation.py','scoreboard_observation.py','score_grid.py',
-                        'body_localization.py','stone_measurement.py','rink_calibration.py',
-                        'pinhole_calibration.py','rink_template.py','calibrated_camera_geometry.py',
-                        'calibration_pose.py','camera_foreground.py')
-        else:
-            code_names=('match_observation.py','match_observation_report.py','scoreboard_observation.py','score_grid.py',
-                        'camera_geometry.py','body_localization.py','stone_measurement.py','vision_core.py','rectification_core.py','automatic_house_calibration.py',
-                        'split_camera_geometry.py','source_specific_house_calibration.py','split_house_ellipse_v2.py','split_house_reference.py','house_affine_transfer_audit.py')
-            if geometry_mode in ('parallel_native_geometry_development_v1', 'parallel_native_geometry_development_v2'):
-                code_names += ('parallel_camera_geometry.py',)
+        code_names=('match_observation.py','scoreboard_observation.py','score_grid.py',
+                    'body_localization.py','stone_measurement.py','rink_calibration.py',
+                    'pinhole_calibration.py','rink_template.py','calibrated_camera_geometry.py',
+                    'calibration_pose.py','camera_foreground.py')
         code_names=tuple(name for name in code_names if Path(__file__).with_name(name).exists())
         self.provenance['code_sha256']={name:sha(Path(__file__).with_name(name)) for name in code_names}
         snapshot=self.output/'code-snapshot';snapshot.mkdir(exist_ok=True)
@@ -237,21 +200,13 @@ class MatchObserver:
         return state
 
     def observe(self,frame,row,*,write_stream=True,run_ocr=True):
-        now=row['time_s'];started=time.perf_counter();normalized=cv2.resize(frame,(640,360))
+        now=row['time_s'];started=time.perf_counter()
         boards={};h,w=frame.shape[:2]
-        registered=self.geometry.observe(frame,now) if self.geometry is not None else None
+        registered=self.geometry.observe(frame,now)
         track_by_det={t['detection_index']:t['track_id'] for t in row['tracked_observations']}
         from prototype.stone_measurement import body_point_support
-        for panel,(reference,H,region,desc) in self.references.items():
-            if registered is not None:
-                target,diag,prior=registered[panel]
-            else:
-                from camera_geometry import transfer
-                target,diag=transfer(reference,normalized,H,region,reference_features=desc)
-                try:
-                    prior=transported_reference_camera(H,target,region) if target is not None else None
-                except (ValueError,np.linalg.LinAlgError,FloatingPointError) as exc:
-                    prior=None;diag={**diag,'height_prior_failure':str(exc)}
+        for panel,(_,_,region,_) in self.references.items():
+            target,diag,prior=registered[panel]
             stones=[]
             for detection_index,d in enumerate(row['detections']):
                 x,y=d['pixel'];is_left=x<w/2
