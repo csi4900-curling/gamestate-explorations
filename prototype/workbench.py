@@ -530,6 +530,27 @@ class Workbench:
                     "score-observations.jsonl",
                 ]
             }
+            # Also reuse verified event/track colours when observations and colour config are unchanged.
+            prev_ec = previous / "event-colours.json"
+            prev_tc = previous / "track-colours.json"
+            if prev_ec.is_file() and prev_tc.is_file():
+                try:
+                    tc_doc = json.loads(prev_tc.read_text())
+                    eff_hz = float(events.get("effective_sample_hz") or 10.0)
+                    min_obs = tc_doc.get("provenance", {}).get("settings", {}).get("minimum_track_observations", 999)
+                    if (tc_doc.get("source_sha256") == old["source_sha256"]
+                            and tc_doc.get("provenance", {}).get("observations_sha256")
+                            == spec["reused_input_sha256"]["match-observations.jsonl"]
+                            and tc_doc.get("provenance", {}).get("model", {}).get("config_sha256")
+                            == digest(output / "colour.json")
+                            and min_obs <= max(3, round(0.6 * eff_hz))):
+                        shutil.copyfile(prev_ec, output / "event-colours.json")
+                        shutil.copyfile(prev_tc, output / "track-colours.json")
+                        spec["reused_colours_from"] = identifier
+                        spec["reused_input_sha256"]["event-colours.json"] = digest(output / "event-colours.json")
+                        spec["reused_input_sha256"]["track-colours.json"] = digest(output / "track-colours.json")
+                except Exception:
+                    pass
             write(output / "spec.json", spec)
             self.update(
                 new,
@@ -707,6 +728,8 @@ class Workbench:
                     spec_path,
                 ],
             )
+        if spec.get("reused_colours_from"):
+            stages = [s for s in stages if s[0] not in ("colour", "stone_colours")]
         started = time.time()
         record = []
         try:
