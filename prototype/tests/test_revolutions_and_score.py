@@ -18,6 +18,16 @@ def test_segment_ends_detects_direction_reversals_and_ignores_single_glitch():
     assert rock_pair_label(1) == '1-2 (Lead)'
     assert rock_pair_label(4) == '3-4 (Second)'
     assert rock_pair_label(7) == '7-8 (Fourth/Skip)'
+    # An unresolved false-positive candidate inside a 16-throw end must not overflow into a fake end.
+    with_fp = (
+        [{'direction': 'left_to_right', 'board_status': 'review_proposal'}] * 8
+        + [{'direction': 'left_to_right', 'board_status': 'unresolved'}]
+        + [{'direction': 'left_to_right', 'board_status': 'review_proposal'}] * 8
+        + [{'direction': 'right_to_left', 'board_status': 'review_proposal'}] * 6
+    )
+    ends_fp = segment_ends(with_fp)
+    assert ends_fp[:17] == [1] * 17
+    assert ends_fp[17:] == [2] * 6
 
 
 def test_match_score_and_rocks_separates_provisional_board_and_ocr_unknown(tmp_path):

@@ -74,12 +74,13 @@ def segment_ends(throws, max_throws_per_end=16):
                 end_idx += 1
                 current_dir = d
                 count_in_end = 0
-        elif count_in_end >= max_throws_per_end:
+        elif count_in_end >= max_throws_per_end and item.get('board_status') != 'unresolved':
             end_idx += 1
             count_in_end = 0
             if d is not None:
                 current_dir = d
-        count_in_end += 1
+        if item.get('board_status') != 'unresolved':
+            count_in_end += 1
         assigned.append(end_idx)
     return assigned
 
@@ -190,7 +191,8 @@ def build(*, aggregate, effects, state_config, score_observations=None, revoluti
             'board_status': ee['status'],
             'points_lying_after': ee.get('points_lying_after'),
             'kinematics': throw_kinematics(ae, ee),
-            'spin_rate_hz': (rev_by_id.get(eid, {}).get('sending') or {}).get('rate_hz'),
+            'spin_rate_hz': ((rev_by_id.get(eid, {}).get('sending') or {}).get('rate_hz')
+                             or (rev_by_id.get(eid, {}).get('receiving') or {}).get('rate_hz')),
         })
 
     end_numbers = segment_ends(raw_throws)
@@ -205,7 +207,7 @@ def build(*, aggregate, effects, state_config, score_observations=None, revoluti
         if end_entry['direction'] is None and item['direction'] is not None:
             end_entry['direction'] = item['direction']
         team_slot = None
-        if item['colour'] in ('red', 'yellow'):
+        if item.get('board_status') != 'unresolved' and item['colour'] in ('red', 'yellow'):
             end_entry['team_counts'][item['colour']] += 1
             team_slot = end_entry['team_counts'][item['colour']]
         item['end_index'] = end_num

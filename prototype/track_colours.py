@@ -48,7 +48,7 @@ def candidates(path, settings):
 def read_sample(cap, frame_index):
     """Decode nearby samples in order, with exact-seek fallback for gaps or failures."""
     position = round(cap.get(cv2.CAP_PROP_POS_FRAMES))
-    if 0 <= frame_index - position <= 30:
+    if 0 <= frame_index - position <= 180:
         if all(cap.grab() for _ in range(frame_index - position)):
             ok, image = cap.read()
             if ok and round(cap.get(cv2.CAP_PROP_POS_FRAMES)) == frame_index + 1:

@@ -426,18 +426,48 @@ def effect(record, tracks, *, house_radius_m, stone_radius_m, hog_y_by_panel, se
         settle = quiet_interval(panel_tracks, delivered, arrival, search_end_s, region, settings,
                                 registered_times=registered_times) or settle
     minimum = settings['minimum_window_samples']
+    before_start = arrival - settings['before_window_s']
+    before_end = arrival - settings['before_guard_s']
+    before_basis = 'pre_arrival'
     before_raw = {}; after_raw = {}
     for tracker_id, samples in panel_tracks.items():
         if tracker_id != delivered:
-            found = window(samples, arrival-settings['before_window_s'],
-                           arrival-settings['before_guard_s'], minimum)
+            found = window(samples, before_start, before_end, minimum)
             if found: before_raw[tracker_id] = found
         found = window(samples, settle[0], settle[1], minimum)
         if found: after_raw[tracker_id] = found
+    # When scheduled geometry opened after far-ice arrival (so pre-arrival had no
+    # registered frames), fall back to the earliest registered pre-hog window
+    # while the delivered stone is still beyond the hog line and cannot disturb
+    # any in-play stone.
+    if not before_raw and registered_times is not None:
+        reg_pre = bisect_right(registered_times, before_end) - bisect_left(registered_times, before_start)
+        if reg_pre < minimum:
+            hog_abs = abs(hog_y_by_panel[panel])
+            first_near_hog = next(
+                (t for t, p in panel_tracks[delivered]
+                 if p is not None and abs(p[1]) <= hog_abs + 0.5),
+                None,
+            )
+            limit_end = (first_near_hog - settings['before_guard_s']
+                         if first_near_hog is not None else settle[0] - settings['before_guard_s'])
+            if limit_end > arrival:
+                idx0 = bisect_left(registered_times, arrival)
+                if idx0 < len(registered_times) and registered_times[idx0] < limit_end:
+                    cand_start = registered_times[idx0]
+                    cand_end = min(limit_end, cand_start + settings['before_window_s'])
+                    reg_cand = bisect_right(registered_times, cand_end) - bisect_left(registered_times, cand_start)
+                    if reg_cand >= minimum:
+                        before_start, before_end = cand_start, cand_end
+                        before_basis = 'registered_pre_hog_fallback'
+                        for tracker_id, samples in panel_tracks.items():
+                            if tracker_id != delivered:
+                                found = window(samples, before_start, before_end, minimum)
+                                if found: before_raw[tracker_id] = found
     middle_t = (settle[0] + settle[1]) / 2
     before, merged_before = _deduplicate_window_tracks(
         before_raw, stone_radius_m, delivered=None, priority_ids=set(after_raw),
-        colours=working_colours, ref_time_s=arrival, label='before',
+        colours=working_colours, ref_time_s=before_end, label='before',
     )
     after, merged_after = _deduplicate_window_tracks(
         after_raw, stone_radius_m, delivered=delivered, priority_ids=set(before),
@@ -461,7 +491,7 @@ def effect(record, tracks, *, house_radius_m, stone_radius_m, hog_y_by_panel, se
         noise = max(b['scatter_m'], a['scatter_m']) if b and a else None
         middle = (settle[0]+settle[1])/2
         if b:
-            colour, switched = colour_at(working_colours, old, arrival, not_after=True)
+            colour, switched = colour_at(working_colours, old, before_end, not_after=True)
             later, later_switched = colour_at(working_colours, new, middle) if a else (None, None)
             colour_basis = 'last_track_sample_before_arrival'
             if colour is None and later is not None:
@@ -508,7 +538,10 @@ def effect(record, tracks, *, house_radius_m, stone_radius_m, hog_y_by_panel, se
             moving.add(s['after_tracker_id'])
     return {**base, 'status': 'review_proposal', 'panel': panel, 'delivered_tracker_id': delivered,
             'delivered_colour': delivered_colour,
-            'arrival_time_s': arrival, 'settle_interval_s': settle, 'stones': stones,
+            'arrival_time_s': arrival,
+            'before_window_s': [round(before_start, 3), round(before_end, 3)],
+            'before_window_basis': before_basis,
+            'settle_interval_s': settle, 'stones': stones,
             'paths': {str(k): path(panel_tracks[k], arrival-settings['before_window_s'], settle[1])
                       for k in sorted(moving)},
             'counts': {k: sum(s['change'] == k for s in stones) for k in

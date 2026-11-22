@@ -86,6 +86,9 @@ def resolve_short_receiving_approaches(events, handoffs, rows, *, hog_y_by_panel
         hog_y = hog_y_by_panel[rec_panel]
         hog_abs = abs(hog_y)
         start, end = h['interval_s']
+        # A real curling delivery reaches the opposite hog line within ~35 s;
+        # never link a stale/false departure to an unrelated stone minutes later.
+        end = min(end, start + 35.0)
         matches = []
         for (panel, tid), pts in tracks.items():
             if panel != rec_panel:

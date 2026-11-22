@@ -90,12 +90,44 @@ def run(video,output,config_path,checkpoint,*,start,end,source_id,match_state_co
         protocol['detection_cache']=cache.provenance
     (output/'protocol.json').write_text(json.dumps(protocol,indent=2))
     observer=None
+    aux_schedule_crossings=None
     if match_state_config is not None:
         from prototype.match_observation import MatchObserver
         observer=MatchObserver(match_state_config,output)
         for name in ('match_observation.py','scoreboard_observation.py'):
             p=Path(__file__).with_name(name)
             (output/'code-snapshot'/name).write_bytes(p.read_bytes())
+        # Auto-project both calibrated hog lines for 5 Hz Pass 2 window scheduling
+        # so fast throws on either panel never rely solely on the 1 Hz probe.
+        if (observer.geometry is not None and hasattr(observer.geometry, 'bundle')
+                and 'local_hog_y_m' in observer.config):
+            aux_lines = []
+            for asset in observer.geometry.bundle.get('calibrations', []):
+                for panel_name, hog_y in observer.config['local_hog_y_m'].items():
+                    rec = (asset.get('panels') or {}).get(panel_name)
+                    if not rec or not rec.get('H_normalized_source_to_local_m'):
+                        continue
+                    try:
+                        Hinv = np.linalg.inv(np.asarray(rec['H_normalized_source_to_local_m'], dtype=float))
+                        pts = []
+                        for xm in (-2.375, 2.375):
+                            v = Hinv @ np.array([xm, float(hog_y), 1.0], dtype=float)
+                            if abs(v[2]) < 1e-12:
+                                raise ValueError('singular')
+                            pts.append([float(min(1.0, max(0.0, (v[0] / v[2]) / 640.0))),
+                                        float(min(1.0, max(0.0, (v[1] / v[2]) / 360.0)))])
+                        if pts[0] != pts[1]:
+                            aux_lines.append({'id': f"sched_{asset.get('id', '0')}_{panel_name}",
+                                              'endpoints_normalized': pts,
+                                              'direction': 'both', 'deadband_normalized': 0})
+                    except Exception:
+                        continue
+            if aux_lines:
+                aux_schedule_crossings = LineCrossings({
+                    'schema_version': 'stone-line-events-v1', 'sample_hz': config['sample_hz'],
+                    'detector_confidence': config['detector_confidence'],
+                    'tracker_config': config['tracker_config'], 'lines': aux_lines,
+                })
     # Split two-pass execution: Pass 1 runs iGPU detection + ByteTrack + primary
     # line crossings with CPU idle; Pass 2 runs CPU camera geometry + OCR with
     # iGPU idle (avoids shared-TDP throttling on integrated GPUs and enables
@@ -120,6 +152,7 @@ def run(video,output,config_path,checkpoint,*,start,end,source_id,match_state_co
                     observations.append({'track_id':int(tr[4]),'point_normalized':[x/frame.shape[1],y/frame.shape[0]],
                                          'pixel':[x,y],'bbox_xyxy':d['bbox_xyxy'],'confidence':d['confidence'],'detection_index':index})
                 now=frame_index/fps;crossings.update(observations,now)
+                if aux_schedule_crossings is not None:aux_schedule_crossings.update(observations,now)
                 row={'time_s':now,'frame_index':frame_index,'detections':prediction['detections'],'tracked_observations':observations,
                      'detector_wall_seconds':prediction['wall_seconds'],'upstream_speed_ms':prediction['upstream_speed_ms'],
                      'detection_reused':prediction.get('reused_from_cache',False),
@@ -143,12 +176,15 @@ def run(video,output,config_path,checkpoint,*,start,end,source_id,match_state_co
             if use_schedule:
                 from prototype.directional_handoff import metric_crossings
                 probe_hz = float(sched.get('probe_hz', 1.0))
-                before_s = float(sched.get('before_s', 6.0))
+                before_s = float(sched.get('before_s', 12.0))
                 primary_before_s = float(sched.get('primary_before_s', max(before_s, 16.0)))
                 after_s = float(sched.get('after_s', 35.0))
                 probe_stride = max(1, round(protocol['effective_sample_hz'] / probe_hz))
+                aux_windows = ([(e['crossing_time_s'] - before_s, e['crossing_time_s'] + after_s)
+                                for e in aux_schedule_crossings.events]
+                               if aux_schedule_crossings is not None else [])
                 windows = _merge_windows([(e['crossing_time_s'] - primary_before_s, e['crossing_time_s'] + after_s)
-                                          for e in crossings.events], start, end)
+                                          for e in crossings.events] + aux_windows, start, end)
                 # Sub-pass 2a: uninterrupted coarse probe across both panels to detect
                 # arrival-only or reverse-direction metric crossings outside primary windows.
                 cap_probe = cv2.VideoCapture(str(video))

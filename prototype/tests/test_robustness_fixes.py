@@ -89,6 +89,25 @@ def test_short_receiving_approach_resolves_unique_hogged_stone_only():
     ) == []
     assert handoffs_amb['L00001']['status'] == 'unresolved'
 
+    # Stale departure >35s before an unrelated stone approach MUST NOT link.
+    handoffs_late = {
+        'L00001': {
+            'status': 'unresolved',
+            'role_evidence': {'role': 'departure', 'panel': 'left'},
+            'interval_s': [10.0, 90.0],
+            'candidates': [],
+        }
+    }
+    late_rows = []
+    for i, y in enumerate([16.0, 14.0, 12.0, 10.0, 8.0, 6.7]):
+        late_rows.append({'time_s': 58.0 + i * 1.0, 'boards': {'left': {'stones': []}, 'right': {'stones': [
+            {'tracker_id': 99, 'height_adjusted_local_m': [0.0, y], 'pixel': [1400.0, 700.0 - i * 10], 'confidence': 0.9}
+        ]}}})
+    assert resolve_short_receiving_approaches(
+        events, handoffs_late, late_rows, hog_y_by_panel={'left': -6.401, 'right': 6.401}
+    ) == []
+    assert handoffs_late['L00001']['status'] == 'unresolved'
+
 
 def test_one_sided_missing_role_recovery_handles_brief_gap_across_crossing():
     event = {'track_id': 9, 'observed_bracket_s': [10.0, 10.2], 'crossing_point_normalized': [0.2, 0.2]}
@@ -237,3 +256,31 @@ def test_stationary_linked_stone_falls_back_to_after_track_colour_when_before_mi
     assert row['after_tracker_id'] == 11 and row['colour'] == 'red'
     assert row['colour_basis'] == 'linked_after_track_sample_nearest_settled_board'
     assert res['points_lying_after']['status'] == 'conditional_on_supplied_observations'
+
+
+def test_pre_hog_registered_before_window_recovers_resting_stones_when_pre_arrival_unregistered():
+    # Delivered stone 20 appears far beyond hog line at t=10.0 (geometry skipped until t=11.0),
+    # crosses hog line (y=6.401) around t=15.0, and settles at t=20.0.
+    # Resting red stone 10 sits on button (0.1, 0.1) throughout, with a late noisy yellow sample at t=60.0.
+    t_reg = [round(11.0 + i * 0.2, 1) for i in range(65)]  # 11.0 .. 23.8 (registered)
+    t_del = [(round(10.0 + i * 0.2, 1), None) for i in range(5)] + [
+        (t, [0.5, max(0.5, 12.0 - (t - 11.0) * 1.4)]) for t in t_reg
+    ]
+    t10 = [(t, [0.1, 0.1]) for t in t_reg]
+    colours = {
+        '10': {'samples': [{'time_s': 8.0, 'prediction': 'red'}, {'time_s': 60.0, 'prediction': 'yellow'}]},
+        '20': {'samples': [{'time_s': 15.0, 'prediction': 'yellow'}]},
+    }
+    rec = {'event_id': 'M1', 'crossing_time_s': 15.0,
+           'proposal': {'time_s': 20.0, 'panel': 'right', 'receiving_tracker_id': 20}}
+    res = effect(
+        rec, {'right': {10: t10, 20: t_del}}, house_radius_m=1.829, stone_radius_m=0.139,
+        hog_y_by_panel={'right': 6.401}, settings=DEFAULTS, search_end_s=23.8,
+        colours=colours, groups=['red', 'yellow'], registered_times=t_reg,
+    )
+    assert res['before_window_basis'] == 'registered_pre_hog_fallback'
+    assert res['in_play']['before'] == 1
+    row10 = next(s for s in res['stones'] if s['after_tracker_id'] == 10)
+    assert row10['before_tracker_id'] == 10 and row10['change'] == 'unchanged'
+    assert row10['colour'] == 'red'  # pre-impact not_after=True, not late noisy t=60s yellow!
+    assert res['points_lying_after']['conditional_points_by_group'] == {'red': 1, 'yellow': 0}
