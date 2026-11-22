@@ -695,7 +695,8 @@ class Workbench:
         spec_path = str(output / "spec.json")
         observation = [
             wrapper,
-            "prototype/scripts/run_throw_pipeline.py",
+            "-m",
+            "prototype.learned_event_pipeline",
             "--video",
             spec["video"],
             "--source-id",
@@ -706,7 +707,6 @@ class Workbench:
             str(spec["end_s"]),
             "--event-line-config",
             spec["line_config"],
-            "--events-only",
             "--match-state-config",
             spec["match_config"],
             "--stone-detector-checkpoint",

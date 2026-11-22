@@ -322,3 +322,34 @@ D.result.events.forEach((e,i)=>{const o=document.createElement('option');o.value
 function draw(){c.width=v.videoWidth;c.height=v.videoHeight;const x=c.getContext('2d');x.strokeStyle='#00e663';x.lineWidth=3;for(const l of D.config.lines){x.beginPath();l.endpoints_normalized.forEach((p,i)=>x[i?'lineTo':'moveTo'](p[0]*c.width,p[1]*c.height));x.stroke()}const e=D.result.events[Number(sel.value)];if(e){x.strokeStyle='#ff981a';for(const o of e.observations){x.beginPath();x.arc(o.point_normalized[0]*c.width,o.point_normalized[1]*c.height,6,0,Math.PI*2);x.stroke()}}document.querySelector('#status').textContent=D.result.events.length+' crossings · source '+v.currentTime.toFixed(3)+' s';if(stop!==null&&v.currentTime>=stop){v.pause();stop=null}requestAnimationFrame(draw)}
 function choose(){stop=null;v.pause();v.currentTime=D.result.events[Number(sel.value)]?.crossing_time_s??D.result.source_interval_s[0]}
 sel.onchange=choose;document.querySelector('#play').onclick=()=>{const e=D.result.events[Number(sel.value)];if(!e)return;v.currentTime=Math.max(D.result.source_interval_s[0],e.observed_bracket_s[0]-1);stop=Math.min(D.result.source_interval_s[1],e.observed_bracket_s[1]+1);v.play()};document.querySelector('#play').disabled=!D.result.events.length;v.addEventListener('loadedmetadata',choose);if(v.readyState>=1)choose();requestAnimationFrame(draw);</script>'''
+
+
+if __name__ == '__main__':
+    import argparse
+    p = argparse.ArgumentParser(description='Run two-pass stone detection, tracking, camera geometry, and OCR.')
+    p.add_argument('--video', type=Path, required=True)
+    p.add_argument('--source-id', required=True)
+    p.add_argument('--start', type=float, required=True)
+    p.add_argument('--end', type=float, required=True)
+    p.add_argument('--event-line-config', type=Path, required=True)
+    p.add_argument('--match-state-config', type=Path, default=None)
+    p.add_argument('--stone-detector-checkpoint', type=Path, required=True)
+    p.add_argument('--stone-detector-backend', default='pytorch')
+    p.add_argument('--stone-detector-export', type=Path, default=None)
+    p.add_argument('--stone-detector-head', default='checkpoint')
+    p.add_argument('--stone-detector-threads', type=int, default=4)
+    p.add_argument('--detection-cache', type=Path, default=None)
+    p.add_argument('--detection-cache-prefix-samples', type=int, default=None)
+    p.add_argument('--output-dir', type=Path, required=True)
+    args = p.parse_args()
+    run(
+        args.video, args.output_dir, args.event_line_config, args.stone_detector_checkpoint,
+        start=args.start, end=args.end, source_id=args.source_id,
+        match_state_config=args.match_state_config,
+        detection_cache=args.detection_cache,
+        detection_cache_prefix_samples=args.detection_cache_prefix_samples,
+        detector_backend=args.stone_detector_backend,
+        detector_export=args.stone_detector_export,
+        detector_head=args.stone_detector_head,
+        detector_threads=args.stone_detector_threads,
+    )
