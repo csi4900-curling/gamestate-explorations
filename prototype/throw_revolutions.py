@@ -69,11 +69,13 @@ def registered_crops(cap, fps, boxes, first, last, settings=SETTINGS):
     cap.set(cv2.CAP_PROP_POS_FRAMES, frames[0])
     times, images = [], []
     for f in range(frames[0], frames[-1] + 1):
-        ok, frame = cap.read()
-        if not ok:
+        if not cap.grab():
             break
         if f not in smooth:
             continue
+        ok, frame = cap.retrieve()
+        if not ok:
+            break
         x0, y0, x1, y1 = smooth[f]
         w, h = x1 - x0, y1 - y0
         if w <= 1 or h <= 1:
@@ -132,7 +134,11 @@ def estimate_period(curve, shortest_s=1.0, full_turn_minimum=FULL_TURN_MINIMUM, 
     if len(curve) < 5:
         return None
     lags, values = curve[:, 0], curve[:, 1]
-    smooth = np.convolve(np.pad(values, 2, mode='edge'), np.ones(5) / 5.0, mode='valid')
+    step = float(np.median(np.diff(lags))) if len(lags) >= 2 else 0.1
+    win = max(3, int(round(0.45 / max(step, 0.02))) | 1)
+    win = min(win, len(values) if len(values) % 2 == 1 else len(values) - 1)
+    pad = win // 2
+    smooth = np.convolve(np.pad(values, pad, mode='edge'), np.ones(win) / float(win), mode='valid')
     peaks = [i for i in range(1, len(lags) - 1)
              if lags[i] >= shortest_s and smooth[i] > smooth[i - 1] and smooth[i] >= smooth[i + 1]]
     if not peaks:

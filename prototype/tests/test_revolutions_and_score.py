@@ -142,3 +142,13 @@ def test_right_to_left_departure_uses_own_hog_crossing_for_spin_window(tmp_path)
     # Travel time should start at sending interval start (~4.0s, near hog release), not parked time (0.0s).
     assert ev['modeled_whole_throw_estimate'] is not None
     assert ev['modeled_whole_throw_estimate']['travel_interval_s'][0] >= 3.9
+
+
+def test_estimate_period_5hz_uses_time_based_smoothing_window():
+    # At 5 Hz (step=0.2s), a narrow peak around 2.6s must not be flattened by a 1.0s boxcar.
+    lags = np.arange(0.2, 6.0, 0.2)
+    vals = np.exp(-0.5 * ((lags - 2.6) / 0.25) ** 2) * 0.45 + 0.05 * np.cos(2 * np.pi * lags / 2.6)
+    curve = np.column_stack([lags, vals])
+    est = estimate_period(curve)
+    assert est is not None and est['period_s'] is not None
+    assert abs(est['period_s'] - 2.6) <= 0.21

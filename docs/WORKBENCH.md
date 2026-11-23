@@ -1,9 +1,10 @@
 # App-workbench guide
 
 The app-workbench is the public entry point for new analyses. This guide describes
-the current application path, checked against `prototype/workbench.py` and
-`prototype/product_pipeline.py` on 12 November 2026. It describes implementation,
-not independently validated trajectory performance.
+the active application path in `prototype/workbench.py` and
+`prototype/product_pipeline.py` (39 active modules, single `.venv-detector`
+runtime). It describes implementation, not independently validated trajectory
+performance.
 
 ## Start and configure
 
@@ -16,18 +17,12 @@ From the project root:
 Open **http://127.0.0.1:8766**. The launcher uses
 `feasibility/scripts/python.sh` to run `prototype.workbench`.
 
-The default [profile](../prototype/config/workbench.json) specifies separate
-inference and state Python environments, detector weights/export, colour and
-state dependency directories, model cache, runtime environment and pipeline
-configuration files. Its default backend is explicit Intel GPU inference with
-local pinned OpenCL libraries. CPU execution requires an explicit `pytorch`
-profile. There is no silent device fallback.
-
-A fresh clone does not include all runtime assets. Before analysing a recording,
-provision the environments and model assets named by the selected profile and its
-referenced configurations. Several default paths are specific to the development
-machine; configure those paths for the host. The model/colour/OCR dependencies,
-recordings and full local evidence are not all distributed with the code.
+The default [profile](../prototype/config/workbench.json) specifies the Python
+environment (`.venv-detector/bin/python`), OpenCLIP colour dependencies and
+cache, YOLOv8 stone detector weights/export, runtime environment, and pipeline
+configuration files. Its default backend is explicit Intel GPU inference
+(`openvino_gpu`) with pinned local OpenCL libraries. CPU execution requires an
+explicit `pytorch` profile; there is no silent device fallback.
 
 To use an alternative configured profile or isolated job store:
 
@@ -53,128 +48,69 @@ systemctl --user stop curling-workbench.service
 
 ## Analyse and review
 
-Load a local recording or upload it, select an interval, and open **Camera
-calibration**. Choose clear source frames for each panel, mark visible ring arcs,
-lines or named intersections, reserve separate check points, inspect the projected
-markings and confirm the operator record. Select saved records whose pose validity
-intervals cover the analysis interval without ambiguous overlaps. Set the event
-crossing line, team/colour mapping and physical settings in the analysis form.
+Load a local recording (or upload it), select an interval, and open **Camera
+calibration**. Choose clear source frames for both panels, align the interactive
+rink template (or use the advanced point editor), inspect the projected overlays
+for both cameras, and confirm the operator record. Explicit calibration defines
+both hog lines automatically — no manual event line is required.
 
-The default calibration workflow fits a physical camera from operator markings
-and reuses it through source-image similarity alignment. A pinned upstream person
-segmenter excludes predicted foreground from registration feature selection;
-it does not identify stones or calibrate the rink. Unsupported framing changes
-and insufficient alignment support leave explicit geometry gaps. Calibration
-without longitudinal perspective support is limited to its bounded marked region.
-The saved source frames, inputs, reviewer and checks remain part of the run.
-Engineering residual checks do not certify absolute position accuracy.
+The calibration workflow fits a physical camera from operator markings and
+reuses it across frames through SIFT similarity RANSAC. A pinned upstream
+YOLOv8-seg person segmenter excludes predicted foreground from registration
+feature selection; it does not identify stones or calibrate the rink.
+Unsupported framing changes and insufficient alignment support leave explicit
+geometry gaps. Saved source frames, inputs, reviewer, and checks are snapshotted
+with every run. Engineering residual checks do not certify absolute position
+accuracy.
 
-Completed runs open on **Throws**: before-board observations, paths of moving
-stones, the proposed quiet board and points lying on it. **Trajectories** and
-**Stone observations** provide synchronized source review. Unresolved tracks,
-missing geometry and ambiguous camera associations require review. Candidate
-reviews persist separately from predictions and can be downloaded as JSON.
-Review-subset precision is not full-match accuracy; missed-event labels are
-needed to measure recall.
+Completed runs open on **Throws**: before-board observations, observed paths of
+moving stones, collision ID-swap repairs, recovered post-settle occlusions,
+settled board, points lying, kinematics, and crop-period spin estimates.
+**Stone observations**, **Top-view trajectory**, **Stone history**, and **Match
+score & rock-pair comparison** provide synchronized review. Candidate reviews
+persist separately from predictions and can be downloaded as JSON.
 
 ## Application execution path
 
-`Workbench.prepare()` saves the source identity, interval, operator settings,
-calibration bundle and job specification. It copies executable/view assets from
-`prototype/` into the job's `code/` directory and records hashes. Shared model and
-research assets remain external inputs; this snapshot is not a portable runtime.
-`Workbench.execute()` runs the following stages in order:
+`Workbench.prepare()` saves source identity, interval, operator settings,
+calibration bundle, and job specification, and snapshots the active `prototype/`
+files (44 files) with SHA-256 hashes into `job/code/`. `Workbench.execute()`
+runs five stages in order:
 
 | Stage | Invoked implementation | Purpose |
 | --- | --- | --- |
-| `observations` | `scripts/run_throw_pipeline.py` with `--event-line-config`, `--events-only` and `--match-state-config`; dispatches to `learned_event_pipeline.py` | Learned detections, tracking, event candidates and synchronized geometry/board observations. |
-| `colour` | `scripts/classify_event_colours.py` | Existing OpenCLIP component classifies event stone colours. |
-| `trajectories` | `product_pipeline.py --stage assemble` | Directional aggregation, camera-consistency annotations, throw extents, state timeline and trajectory/fragment viewers. |
-| `stone_colours` | `track_colours.py` | Existing colour component classifies tracked stones. |
-| `boards` | `product_pipeline.py --stage boards` | Motion/state proposals and the per-throw board-change view using `throw_effect.py`. |
-| `report` | `product_pipeline.py --stage finish` | Result summary, calibration evidence view and linked result page. |
+| `observations` | `python -m prototype.learned_event_pipeline` | Pass 1: OpenVINO GPU YOLOv8 stone detection + ByteTrack + dual-hog scheduling. Pass 2: 1 Hz probe + scheduled SIFT camera registration + RapidOCR scoreboard polling. |
+| `stone_colours` | `python -m prototype.track_colours` | Unified OpenCLIP ViT-B-32 colour classification across all tracked stones (sequential GOP-aware video decoding). |
+| `trajectories` | `python -m prototype.product_pipeline --stage assemble` | Calibrated dual-panel hog-crossing aggregation & promotion (`directional_event_aggregate.py`), colour attachment, shared-rink projection, camera consistency, throw extents, state timeline, and synchronized trajectory viewer. |
+| `boards` | `python -m prototype.product_pipeline --stage boards` | Per-throw before/after boards, hard-sphere collision ID-swap repair, duplicate box merging, post-settle occlusion recovery (`throw_effect.py`), lightweight frame-indexed board viewer (`post_throw_state.py`), crop-period spin probe (`throw_revolutions.py`), and end/score/rock-pair analytics (`match_score_and_rocks.py`). |
+| `report` | `python -m prototype.product_pipeline --stage finish` | Result summary, explicit calibration review page, media URL wiring, and linked result landing page. |
 
-The observation runner also contains historical routes. Its filename alone does
-not identify the app's behavior: the saved command and configuration select the
-learned-event route above. The actual per-run commands and times are recorded in
-`stages.json`.
-
-Useful code entry points:
-
-- [Application server and orchestration](../prototype/workbench.py)
-- [Application UI](../prototype/workbench.html)
-- [Calibration records](../prototype/calibration_store.py)
-- [Learned observation pipeline](../prototype/learned_event_pipeline.py)
-- [Product assembly](../prototype/product_pipeline.py)
-- [Verified detector reuse](../prototype/detection_cache.py)
-- [Review presentation](../prototype/review_presentation.py)
-- [Metric/identity evaluator](../prototype/trajectory_benchmark.py)
+Actual per-run commands and wall times are recorded in `stages.json`.
 
 ## Saved outputs and recovery
 
 Each local `workbench-data/jobs/<job-id>/` includes `spec.json`, `job.json`,
-`code/`, per-run configuration files, `stages.json`, stage logs, observations and
-results. Explicit-calibration runs also snapshot calibration records and assets.
-The result directory contains `summary.json`, trajectory aggregates, a state
-timeline and the Throws, Trajectories, Stone observations and calibration viewers.
-The aggregates retain samples separately from the throw-extent display copy.
-
-A process restart preserves outputs and marks queued/running jobs interrupted.
-The service restarts the server after process failure; it does not automatically
-restart expensive analysis work.
+`code/`, per-run configuration files, `stages.json`, stage logs, observations,
+`track-colours.json`, and `result/`.
 
 - **Detector-scan selection in a new analysis:** reuses a verified complete scan
   for the exact interval, or an interrupted scan's committed prefix on the same
   starting frame and sampling grid. Remaining detections are computed afresh;
-  tracking, geometry and later stages rerun.
+  tracking, geometry, and downstream stages rerun.
 - **Retry remaining stages:** after a failed/interrupted run with a complete
   observation scan, verifies saved coverage and copies observations into a new
-  run. The failed run remains intact.
-- **Rebuild outputs:** uses verified completed observations in a separate
-  development run with current downstream code. Original predictions and outputs
-  remain preserved. This does not measure fresh inference runtime or transfer.
-
-Reuse provenance is recorded with the new run. A partial scan is not labelled
-complete. A job reaching `done` means execution finished, not that its accuracy
-or physical identity passed acceptance.
+  run while preserving the failed run intact.
+- **Rebuild outputs:** reuses verified completed observations (and verified
+  `track-colours.json` when inputs match) in a separate development run with
+  current downstream code. Original outputs remain untouched.
 
 ## Verification
 
-Focused workbench checks:
+Run the complete test suite (zero extra dependency paths required):
 
 ```sh
-PYTHONPATH=/path/to/state-deps:$PWD feasibility/scripts/python.sh -m pytest -q \
-  prototype/tests/test_workbench.py \
-  prototype/tests/test_workbench_detection_reuse.py \
-  prototype/tests/test_trajectory_benchmark.py \
-  prototype/tests/test_throw_effect.py
+PYTHONPATH="$PWD" feasibility/scripts/python.sh -m pytest -q prototype/tests
 ```
 
-Broader component/behavioral suite:
-
-```sh
-PYTHONPATH=/path/to/state-deps:$PWD feasibility/scripts/python.sh -m pytest -q prototype/tests \
-  --ignore prototype/tests/test_online_checkpoint.py
-```
-
-Replace the dependency path for the host. The excluded checkpoint test requires
-PyTorch, which the default state environment does not provide. Neither command
-establishes complete-pipeline accuracy. Acceptance requires the actual app run
-and synchronized outputs, timestamped independent references, event TP/FP/FN,
-physical identity, observable coverage/gaps and metric error. See the
-[acceptance contract](LEFT_RIGHT_REQUIREMENTS.md).
-
-## Known limits
-
-Physical identity, absolute geometry accuracy, complete-match reliability and
-physical revolution counts remain unvalidated. Provisional position targets are
-10 cm median and 25 cm p95; camera disagreement cannot substitute for independent
-metric references. All inspected CAN/NOR runs remain development evidence.
-Norway–Sweden remains reserved for frozen evaluation.
-
-Scoring/state code includes OCR chronology, event-count end hypotheses and
-estimated house points. Missed/extra events can misalign inferred ends; tracker
-fragmentation affects associated board state. Per-throw points are not official
-match totals. Historical score/OCR/spin descriptions and their caveats are retained
-in the [previous README](history/README-before-workbench-navigation-2026-11-12.md);
-they are not a promise that every panel appears in the current focused UI.
+See [CURRENT_PIPELINE.md](CURRENT_PIPELINE.md) for the complete 39-module code
+map.
