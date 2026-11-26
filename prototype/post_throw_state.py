@@ -49,7 +49,7 @@ canvas{width:100%;background:#f4f8fa}pre{white-space:pre-wrap;font:13px ui-monos
 <select id="pick" aria-label="Event candidate"></select><button id="seek">Go to crossing</button>
 <label>Projection <select id="projection"><option value="height">Height-adjusted</option><option value="plane">Ice plane (no height correction)</option></select></label>
 <label>Orientation <select id="orientation"><option value="source">Match source · +Y down</option><option value="math">Coordinate axes · +Y up</option></select></label>
-<div class="views"><div><div class="player"><video id="video" controls preload="metadata" src="VIDEO_URL"></video><canvas id="source-overlay"></canvas></div>
+<div class="views"><div><div class="player"><video id="video" controls preload="auto" src="VIDEO_URL"></video><canvas id="source-overlay"></canvas></div>
 <p id="clock"></p><a id="snapshot">Open timestamped source snapshot</a></div><div>
 <canvas id="layout" width="600" height="680"></canvas></div></div>
 <details><summary>Current observation evidence</summary><pre id="evidence"></pre></details></main><script src="states.js"></script><script>
@@ -114,12 +114,12 @@ video.addEventListener('seeking',()=>{
  // A paused seek within the already presented frame may produce no new callback.
  const sameFrame=hasDecodedFrame&&presentedTime!==null&&video.currentTime>=presentedTime-1e-7&&video.currentTime<presentedTime+1/data.source_fps+1e-7;
  if(!sameFrame){hasDecodedFrame=false;presentedTime=null;clear('Seeking source video…')}});
-video.addEventListener('seeked',()=>{if(hasDecodedFrame)renderAt(presentedTime)});
+video.addEventListener('seeked',()=>{if(!hasDecodedFrame&&video.readyState>=2){presentedTime=video.currentTime;hasDecodedFrame=true}if(hasDecodedFrame)renderAt(presentedTime)});
 if(video.requestVideoFrameCallback){const frame=(_,m)=>{presentedTime=m.mediaTime;hasDecodedFrame=true;renderAt(presentedTime);video.requestVideoFrameCallback(frame)};video.requestVideoFrameCallback(frame)}
 else video.addEventListener('timeupdate',()=>{presentedTime=video.currentTime;renderAt(presentedTime)});
 let initialized=false;
-function initializeVideo(){if(initialized)return;initialized=true;overlay.width=video.videoWidth;overlay.height=video.videoHeight;show()}
-video.addEventListener('loadedmetadata',initializeVideo);clear('Waiting for source video…');show(false);
+function initializeVideo(){if(initialized)return;initialized=true;overlay.width=video.videoWidth;overlay.height=video.videoHeight;show(!window.frameElement?.dataset?.tab)}
+video.addEventListener('loadedmetadata',initializeVideo);clear('Waiting for source video…');show(false);window.showBoard=show;
 // The cached local video can load metadata before states.js finishes loading.
 if(video.readyState>=1)initializeVideo();
 </script></html>'''

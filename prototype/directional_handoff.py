@@ -7,7 +7,7 @@ Temporal uniqueness is not physical identity; all competing crossings survive.
 from prototype.line_crossing_events import LineCrossings
 
 
-def metric_crossings(rows, *, hog_y_by_panel, sheet_half_width_m=2.375, max_geometry_gap_s=1.5):
+def metric_crossings(rows, *, hog_y_by_panel, sheet_half_width_m=2.375, max_geometry_gap_s=4.5):
     if set(hog_y_by_panel)!={'left','right'} or any(not y for y in hog_y_by_panel.values()):
         raise ValueError('Explicit signed hog coordinates are required for both panels')
     engines={}
@@ -148,8 +148,129 @@ def resolve_short_receiving_approaches(events, handoffs, rows, *, hog_y_by_panel
     return added
 
 
-def hypotheses(events, roles, crossings, source_interval):
+def resolve_post_hog_departures(events, handoffs, rows, *, hog_y_by_panel, sheet_half_width_m=2.375, track_colours=None):
+    """Link unresolved receiving events to a unique departure track emerging past hog occlusion."""
+    unresolved = [
+        e for e in events
+        if handoffs[e['id']]['status'] == 'unresolved'
+        and handoffs[e['id']]['role_evidence'].get('role') == 'receiving'
+        and handoffs[e['id']].get('interval_s')
+    ]
+    if not unresolved:
+        return []
+    used_tracks = set()
+    for e in events:
+        h_e = handoffs[e['id']]
+        e_panel = h_e['role_evidence'].get('panel')
+        if e_panel and e.get('track_id') is not None:
+            used_tracks.add((e_panel, e['track_id']))
+        if h_e['status'] != 'unresolved':
+            sel_id = h_e.get('selected_counterpart_id')
+            cands = h_e.get('candidates') or []
+            chosen = (
+                [c for c in cands if c.get('id') == sel_id]
+                if sel_id is not None
+                else (cands if len(cands) == 1 else [])
+            )
+            for c in chosen:
+                if c.get('panel') and c.get('track_id') is not None:
+                    used_tracks.add((c['panel'], c['track_id']))
+    tracks = {}
+    for row in rows:
+        t = row['time_s']
+        for panel in hog_y_by_panel:
+            for s in row['boards'][panel]['stones']:
+                tid = s.get('tracker_id')
+                xy = s.get('height_adjusted_local_m')
+                if tid is None or xy is None:
+                    continue
+                tracks.setdefault((panel, tid), []).append((t, xy, s['pixel'], s['confidence']))
+    added = []
+    for event in unresolved:
+        h = handoffs[event['id']]
+        rec_panel = h['role_evidence']['panel']
+        dep_panel = 'right' if rec_panel == 'left' else 'left'
+        hog_y = hog_y_by_panel[dep_panel]
+        hog_abs = abs(hog_y)
+        sign = 1.0 if hog_y > 0 else -1.0
+        start, end = h['interval_s']
+        start = max(start, end - 30.0)
+        matches = []
+        for (panel, tid), pts in tracks.items():
+            if panel != dep_panel or (panel, tid) in used_tracks:
+                continue
+            in_win = [
+                p for p in pts
+                if start <= p[0] <= end
+                and sign * p[1][1] >= hog_abs - 1.0
+                and abs(p[1][0]) <= sheet_half_width_m
+            ]
+            if len(in_win) < 4:
+                continue
+            y_proj = [sign * p[1][1] for p in in_win]
+            if not (hog_abs - 1.0 <= y_proj[0] <= hog_abs + 6.5):
+                continue
+            if y_proj[-1] - y_proj[0] < 5.0 or y_proj[-1] < hog_abs + 7.0:
+                continue
+            earlier = [sign * p[1][1] for p in pts if p[0] < start]
+            if earlier and max(earlier) > hog_abs + 6.5:
+                continue
+            first_obs, second_obs = in_win[0], in_win[1]
+            cand = {
+                'id': f'post_hog_dep:{dep_panel}:{tid}',
+                'line_id': dep_panel + '_hog_post_emergence',
+                'track_id': tid,
+                'crossing_time_s': first_obs[0],
+                'observed_bracket_s': [first_obs[0], second_obs[0]],
+                'confirmed_at_s': second_obs[0],
+                'crossing_point_normalized': [
+                    (first_obs[1][0] + sheet_half_width_m) / (2 * sheet_half_width_m),
+                    first_obs[1][1] / hog_y,
+                ],
+                'direction': 'positive',
+                'time_semantics': 'first_mapped_departure_after_hog_occlusion',
+                'release_time_s': None,
+                'point_kind': 'body_box_center',
+                'colour': None,
+                'physical_identity_verified': False,
+                'status': 'departure_emerged_past_hog',
+                'observations': [
+                    {'time_s': first_obs[0], 'track_id': tid, 'pixel': first_obs[2], 'camera_local_m': first_obs[1], 'confidence': first_obs[3]},
+                    {'time_s': second_obs[0], 'track_id': tid, 'pixel': second_obs[2], 'camera_local_m': second_obs[1], 'confidence': second_obs[3]},
+                ],
+                'panel': dep_panel,
+                'role': 'departure',
+                'hog_y_m': hog_y,
+                'initial_abs_y_m': y_proj[0],
+                'max_abs_y_m': max(y_proj),
+                'departure_travel_m': y_proj[-1] - y_proj[0],
+            }
+            matches.append(cand)
+        if len(matches) > 1 and track_colours:
+            primary_col = track_colours.get(rec_panel, {}).get(str(event.get('track_id')))
+            if primary_col in ('red', 'yellow'):
+                col_matches = [
+                    m for m in matches
+                    if track_colours.get(dep_panel, {}).get(str(m['track_id'])) == primary_col
+                ]
+                if len(col_matches) == 1:
+                    matches = col_matches
+        if len(matches) == 1:
+            cand = matches[0]
+            used_tracks.add((dep_panel, cand['track_id']))
+            h.update(
+                status='provisional_unique_post_hog_departure',
+                candidates=[cand],
+                basis='Unique opposite-panel departure track emerging past the hog line and travelling toward far ice.',
+            )
+            added.append(cand)
+    return added
+
+
+def hypotheses(events, roles, crossings, source_interval, *, max_flight_s=35.0):
     ordered=sorted(events,key=lambda e:e['crossing_time_s']);result={}
+    primary_by_track={(roles[e['id']].get('panel'),e.get('track_id')):e['crossing_time_s']
+                      for e in ordered if e.get('track_id') is not None}
     for i,event in enumerate(ordered):
         evidence=roles[event['id']];role=evidence['role'];panel=evidence.get('panel')
         common={'role_evidence':evidence,'physical_identity_verified':False,
@@ -161,11 +282,18 @@ def hypotheses(events, roles, crossings, source_interval):
         t=event['crossing_time_s']
         if role=='departure':
             start=t;end=ordered[i+1]['crossing_time_s'] if i+1<len(ordered) else source_interval[1]
+            end=min(end,t+max_flight_s)
             target='receiving';candidates=[c for c in crossings if start<=c['crossing_time_s']<end]
         else:
             start=ordered[i-1]['crossing_time_s'] if i else source_interval[0];end=t
+            start=max(start,t-max_flight_s)
             target='departure';candidates=[c for c in crossings if start<c['crossing_time_s']<=end]
-        candidates=[c for c in candidates if c['panel']!=panel and c['role']==target]
+        candidates=[
+            c for c in candidates
+            if c['panel']!=panel and c['role']==target
+            and not ((c['panel'],c.get('track_id')) in primary_by_track
+                     and abs(primary_by_track[(c['panel'],c.get('track_id'))]-t)>2.0)
+        ]
         result[event['id']]={**common,'interval_s':[start,end],'candidate_role':target,
             'candidates':candidates,'status':'provisional_unique_temporal_hog_crossing' if len(candidates)==1
             else 'ambiguous' if candidates else 'unresolved'}

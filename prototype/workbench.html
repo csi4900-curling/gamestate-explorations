@@ -2,8 +2,8 @@
 <title>Curling · Match workbench</title>
 <style>
 :root{font:15px/1.5 system-ui,sans-serif;color:#213c43;background:#f4f7f7;--ink:#153b42;--teal:#096d70;--line:#dce6e7}
-*{box-sizing:border-box}body{margin:0}button,input,select{font:inherit}button,a.button{cursor:pointer;border:1px solid var(--line);border-radius:7px;background:white;padding:9px 14px;color:var(--ink);text-decoration:none}button:hover,a.button:hover{background:#eaf3f3}button.primary{background:var(--teal);border-color:var(--teal);color:white}button:disabled{opacity:.5;cursor:wait}
-header{height:72px;background:white;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px}header strong{font-size:21px;letter-spacing:-.5px}header small{color:#638087;margin-left:15px}.shell{display:grid;grid-template-columns:265px minmax(0,1fr);min-height:calc(100vh - 72px)}aside{background:#edf3f3;border-right:1px solid var(--line);padding:22px 15px;position:sticky;top:0;max-height:calc(100vh - 72px);overflow-y:auto}aside>button{width:100%}.run{display:block;width:100%;text-align:left;margin-top:10px;padding:13px;background:transparent}.run.active{background:white;border-color:#6aa7a8}.run small{display:block;color:#617c82}.content{padding:25px 30px;max-width:1660px;width:100%;margin:0 auto}h1{font-size:27px;margin:0 0 5px;letter-spacing:-.6px}h2{font-size:18px;margin-top:0}.muted{color:#627b80}.tag{display:inline-block;padding:3px 9px;border-radius:20px;background:#e3f0ee;color:#216860;font-size:12px}.tag.failed{background:#fbe7e1;color:#9a3a25}.tag.running{background:#e2effb;color:#275e83}.tag.imported{background:#ecedf2;color:#5c6173}.toolbar{display:flex;justify-content:space-between;gap:15px;align-items:center;margin-bottom:20px}.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:20px 0}.card,.panel{background:white;border:1px solid var(--line);border-radius:9px;padding:18px}.card strong{display:block;font-size:25px}.card span{color:#657d82;font-size:13px}.notice{background:#fff7e7;border:1px solid #eedfc1;border-radius:7px;padding:11px 15px;color:#70572d;margin:15px 0}.review-grid{display:grid;grid-template-columns:230px minmax(0,1fr);gap:15px}.events{max-height:650px;overflow:auto}.event{display:block;width:100%;text-align:left;border:0;border-bottom:1px solid var(--line);border-radius:0;padding:10px}.event.active{background:#e2f1f0}.event small{display:block;color:#6e8085}.review-controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}.tabs{display:flex;gap:8px;align-items:center;margin-bottom:10px}.tabs button.active{background:var(--teal);color:white}iframe{width:100%;height:850px;border:1px solid var(--line);border-radius:6px;background:white}input,select{border:1px solid #cbdadb;border-radius:6px;padding:8px;background:white;max-width:100%}input[type=number]{width:125px}label{display:block;font-size:13px;color:#526f76;margin:9px 0 4px}.fields{display:flex;gap:18px;flex-wrap:wrap}.fields>div{flex:1;min-width:150px}.source{position:relative;max-width:960px;margin:18px 0}.source video{width:100%;display:block}.source canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.source.draw canvas{pointer-events:auto;cursor:crosshair}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;max-height:350px;overflow:auto}#message{position:fixed;bottom:20px;right:20px;background:#183e45;color:white;max-width:550px;padding:15px 20px;border-radius:9px;display:none;z-index:10}[hidden]{display:none!important}a{color:var(--teal)}progress{width:100%;accent-color:var(--teal)}.step{display:inline-block;padding:6px 10px;border:1px solid var(--line);margin:5px 5px 5px 0;border-radius:5px}.step.done{background:#e6f3ee}.step.running{background:#e4eff9}@media(max-width:1100px){.shell{grid-template-columns:210px 1fr}.content{padding:20px}.cards{grid-template-columns:repeat(2,1fr)}.review-grid{grid-template-columns:1fr}.events{max-height:200px}}@media(max-width:700px){.shell{display:block}aside{border-right:0}.toolbar{flex-wrap:wrap}header small{display:none}}
+*{box-sizing:border-box}body{margin:0}button,input,select{font:inherit}button,a.button{cursor:pointer;border:1px solid var(--line);border-radius:7px;background:white;padding:9px 14px;color:var(--ink);text-decoration:none}button:hover,a.button:hover{background:#eaf3f3}button.primary{background:var(--teal);border-color:var(--teal);color:white}button:disabled{opacity:.5;cursor:not-allowed}button:active:not(:disabled),a.button:active{transform:translateY(1px)}button[aria-busy=true],body.busy,body.busy button{cursor:progress}button[aria-busy=true]{opacity:.7}summary,select,label:has(input[type=checkbox]){cursor:pointer}button:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var(--teal);outline-offset:2px}.viewer-stack::before{content:'Loading view…';grid-area:1/1;align-self:center;justify-self:center;color:#627b80}
+header{height:72px;background:white;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px}header strong{font-size:21px;letter-spacing:-.5px}header small{color:#638087;margin-left:15px}.shell{display:grid;grid-template-columns:265px minmax(0,1fr);min-height:calc(100vh - 72px)}aside{background:#edf3f3;border-right:1px solid var(--line);padding:22px 15px;position:sticky;top:0;max-height:calc(100vh - 72px);overflow-y:auto}aside>button{width:100%}.run{display:block;width:100%;text-align:left;margin-top:10px;padding:13px;background:transparent}.run.active{background:white;border-color:#6aa7a8}.run small{display:block;color:#617c82}.content{padding:25px 30px;max-width:1660px;width:100%;margin:0 auto}h1{font-size:27px;margin:0 0 5px;letter-spacing:-.6px}h2{font-size:18px;margin-top:0}.muted{color:#627b80}.tag{display:inline-block;padding:3px 9px;border-radius:20px;background:#e3f0ee;color:#216860;font-size:12px}.tag.failed{background:#fbe7e1;color:#9a3a25}.tag.running{background:#e2effb;color:#275e83}.tag.imported{background:#ecedf2;color:#5c6173}.toolbar{display:flex;justify-content:space-between;gap:15px;align-items:center;margin-bottom:20px}.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:20px 0}.card,.panel{background:white;border:1px solid var(--line);border-radius:9px;padding:18px}.card strong{display:block;font-size:25px}.card span{color:#657d82;font-size:13px}.notice{background:#fff7e7;border:1px solid #eedfc1;border-radius:7px;padding:11px 15px;color:#70572d;margin:15px 0}.review-grid{display:grid;grid-template-columns:230px minmax(0,1fr);gap:15px}.events{max-height:650px;overflow:auto}.event{display:block;width:100%;text-align:left;border:0;border-bottom:1px solid var(--line);border-radius:0;padding:10px}.event.active{background:#e2f1f0}.event small{display:block;color:#6e8085}.review-controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}.tabs{display:flex;gap:8px;align-items:center;margin-bottom:10px}.tabs button.active{background:var(--teal);color:white}iframe{width:100%;height:850px;border:1px solid var(--line);border-radius:6px;background:white}.viewer-stack{display:grid;position:relative}.viewer-stack>iframe{grid-area:1/1;width:100%;height:850px;border:1px solid var(--line);border-radius:6px;background:white}.viewer-stack>iframe.inactive{visibility:hidden!important;pointer-events:none;z-index:-1}input,select{border:1px solid #cbdadb;border-radius:6px;padding:8px;background:white;max-width:100%}input[type=number]{width:125px}label{display:block;font-size:13px;color:#526f76;margin:9px 0 4px}.fields{display:flex;gap:18px;flex-wrap:wrap}.fields>div{flex:1;min-width:150px}.source{position:relative;max-width:960px;margin:18px 0}.source video{width:100%;display:block}.source canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.source.draw canvas{pointer-events:auto;cursor:crosshair}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;max-height:350px;overflow:auto}#message{position:fixed;bottom:20px;right:20px;background:#183e45;color:white;max-width:550px;padding:15px 20px;border-radius:9px;display:none;z-index:10}[hidden]{display:none!important}a{color:var(--teal)}progress{width:100%;accent-color:var(--teal)}.step{display:inline-block;padding:6px 10px;border:1px solid var(--line);margin:5px 5px 5px 0;border-radius:5px}.step.done{background:#e6f3ee}.step.running{background:#e4eff9}@media(max-width:1100px){.shell{grid-template-columns:210px 1fr}.content{padding:20px}.cards{grid-template-columns:repeat(2,1fr)}.review-grid{grid-template-columns:1fr}.events{max-height:200px}}@media(max-width:700px){.shell{display:block}aside{border-right:0}.toolbar{flex-wrap:wrap}header small{display:none}}
 
 .calibration-frame-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:end}.calibration-frame-bar label{margin:0}.calibration-frame-bar select,.calibration-frame-bar input{display:block}.calibration-workspace{display:block;max-width:800px;margin:0 auto}#calibrationAction{margin:0 0 8px}#calibrationViewport{overflow:auto;background:#172c34;border-radius:8px;max-height:760px;min-height:200px;display:flex;justify-content:center;align-items:start}#calibrationCanvas{max-width:none}.calibration-adjustments{padding:16px;background:#f0f5f5;border-radius:8px}.calibration-adjustments input[type=range]{width:100%;padding:0}.calibration-adjustments button{margin-top:5px}.calibration-adjustments{margin-top:12px}.calibration-adjustments p{margin:0 0 8px}.calibration-adjustments label{margin-top:20px}.calibration-adjustments output{float:right;font-variant-numeric:tabular-nums}.calibration-details{margin-top:20px;border-top:1px solid var(--line);padding-top:12px}#calibrationResult{white-space:pre-wrap;font-size:14px}#calibrationPointCount{font-size:12px}#savedCalibrations label{display:flex;align-items:center;gap:8px;flex-wrap:wrap}#savedCalibrations button{padding:5px 10px}@media(max-width:800px){.calibration-workspace{grid-template-columns:1fr}.calibration-adjustments{order:-1}#calibrationTemplateControls{display:flex;gap:12px}#calibrationTemplateControls>div{flex:1;min-width:0}}
 .calibration-preview-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.calibration-preview-card{background:#edf3f3;border-radius:8px;padding:14px}.calibration-preview-card canvas{display:block;width:100%;height:auto;background:#183139;border-radius:6px}.calibration-preview-card p{overflow-wrap:anywhere}.calibration-preview-card[data-status="rejected"]{border:2px solid #ba513b}@media(max-width:800px){.calibration-preview-grid{grid-template-columns:1fr}}
@@ -13,7 +13,7 @@ header{height:72px;background:white;border-bottom:1px solid var(--line);display:
 <main class="content">
 <section id="empty"><h1>Your match workspace</h1><p class="muted">Load a left/right split-screen recording or import an existing run to review events, trajectories and board observations.</p><button class="primary" id="emptyNew" disabled>Start an analysis</button></section>
 <section id="setup" hidden><h1>New match analysis</h1><p class="muted">Supported format: simultaneous left/right rink cameras. Camera calibration (which defines both hog lines) and physical dimensions are saved with this run.</p>
-<div class="panel"><h2>1 · Recording</h2><div class="fields"><div><label>Existing local video path (avoids copying)</label><input id="path" style="width:100%" placeholder="/path/to/match.mp4"><button id="loadPath">Load video</button></div><div><label>Or select a video to upload</label><input type="file" id="upload" accept="video/*"></div></div><p id="videoMeta" class="muted"></p>
+<div class="panel"><h2>1 · Recording</h2><div class="fields"><div><label for="knownVideos">Saved local recordings</label><select id="knownVideos" style="width:100%"><option value="">Choose a saved local recording…</option></select><label for="path">Or paste local video path (avoids copying)</label><input id="path" list="knownVideoPaths" style="width:100%" placeholder="/path/to/match.mp4"><datalist id="knownVideoPaths"></datalist><button id="loadPath" style="margin-top:6px">Load video</button></div><div><label>Or select a video to upload</label><input type="file" id="upload" accept="video/*"></div></div><p id="videoMeta" class="muted"></p>
 <div class="source" id="source"><video id="preview" controls preload="metadata"></video></div>
 <div class="fields"><div><label>Start time (seconds)</label><input id="start" type="number" min="0" step=".1" value="0"></div><div><label>End time (seconds)</label><input id="end" type="number" min="0" step=".1"></div><div><label>Run name</label><input id="name" placeholder="Match review"></div></div></div>
 <p><label for="detectionCacheJob">Detector scan</label><select id="detectionCacheJob"><option value="">Run fresh detection</option></select><span class="muted"> Saved scans reuse detections only; tracking and calibration run again. Source, model and frame coverage are checked.</span></p>
@@ -51,61 +51,145 @@ header{height:72px;background:white;border-bottom:1px solid var(--line);display:
 <details class="panel" id="unresolvedCameraObservations" hidden style="margin-bottom:15px"><summary id="unresolvedCameraHeading"></summary><p>These stone crossings have no unique event association. They may include a delivery whose departure was hidden, competing associations, clearing or other motion. They are not confirmed additional throws.</p><div id="unresolvedCameraRows" class="review-controls"></div><p><a id="unresolvedCameraTrajectories" target="_blank" rel="noopener" hidden>Open camera trajectory fragments ↗</a></p><video id="unresolvedCameraVideo" controls preload="metadata" hidden style="width:100%;max-width:960px;margin-top:12px"></video></details>
 <details class="panel" id="scoreRocksPanel" hidden style="margin-bottom:15px"><summary id="scoreRocksHeading">Match score &amp; rock-pair comparison (development)</summary><p class="muted" id="scoreRocksNote">End boundaries are inferred from throw direction reversals. Board scores are provisional estimates from each end's final throw; OCR scoreboard totals are shown separately. Rock pairs (1–2 Lead, 3–4 Second, 5–6 Third, 7–8 Skip) follow delivery-order rules (engraved handle numbers are not readable at 1080p).</p><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px"><div><h3 style="margin:8px 0">End-by-end score</h3><table style="width:100%;border-collapse:collapse;font-size:13px" id="endsScoreTable"></table></div><div><h3 style="margin:8px 0">Cross-end rock-pair comparison</h3><table style="width:100%;border-collapse:collapse;font-size:13px" id="rockPairTable"></table></div></div></details>
 <div class="review-grid" id="reviewArea"><div class="panel" style="padding:0"><div style="padding:12px"><strong>Event review</strong><select id="filter" aria-label="Review filter"><option value="all">All candidates</option><option value="unreviewed">Unreviewed</option></select></div><div id="events" class="events"></div></div>
-<div><div class="tabs"><button id="throwTab">Throw result</button><button id="boardTab" class="active">Stone observations</button><button id="trajectoryTab">Top-view trajectory</button><button id="throwCrossing" hidden>Go to throw crossing</button><a id="openViewer" target="_blank" rel="noopener">Open viewer ↗</a></div><p id="viewTiming" class="muted"></p><iframe id="viewer" title="Synchronized match review"></iframe>
+<div><div class="tabs"><button id="throwTab">Throw result</button><button id="boardTab" class="active">Stone observations</button><button id="trajectoryTab">Top-view trajectory</button><button id="throwCrossing" hidden>Go to throw crossing</button><a id="openViewer" target="_blank" rel="noopener">Open viewer ↗</a></div><p id="viewTiming" class="muted"></p><div class="viewer-stack"><iframe id="viewer-throw" data-tab="throw" class="inactive" inert aria-hidden="true" title="Throw result review"></iframe><iframe id="viewer" data-tab="board" title="Synchronized match review"></iframe><iframe id="viewer-trajectory" data-tab="trajectory" class="inactive" inert aria-hidden="true" title="Top-view trajectory review"></iframe></div>
 <section class="panel" id="historyPanel" hidden><label for="historyStone">Stone history</label><select id="historyStone"></select>
 <p id="historyStatus" class="muted"></p><div id="historyThrows" class="review-controls"></div></section>
 <div class="panel" style="margin-top:12px"><strong id="selectedEvent">Select an event to review</strong><div class="review-controls"><button data-label="throw">✓ Throw</button><button data-label="false_detection">✕ False detection</button><button data-label="uncertain">? Uncertain</button><input id="note" placeholder="Review note" style="flex:1"><input id="reviewer" aria-label="Reviewer" value="user" placeholder="Reviewer name" style="width:140px"></div><p class="muted" id="reviewEvidence">Reviews record that predictions were visible. Missed throws require separate source annotation before recall can be measured.</p></div></div></div></section>
 </main></div><div id="message" role="status"></div>
 <script>
 const $=id=>document.getElementById(id);let defaults,asset,current=null,eventRows=[],selectedEvent=null,tab='board',jobs=[],navigationRevision=0;
-function message(text){$('message').textContent=text;$('message').style.display='block';setTimeout(()=>$('message').style.display='none',6000)}
-async function api(path,body){const r=await fetch(path,body===undefined?{}:{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const d=await r.json();if(!r.ok)throw Error(d.error||r.statusText);return d}
-function guard(fn){return async(...args)=>{try{await fn(...args)}catch(e){message(e.message)}}}
+let messageTimer=null;
+function message(text){$('message').textContent=text;$('message').style.display='block';clearTimeout(messageTimer);messageTimer=setTimeout(()=>$('message').style.display='none',6000)}
+async function api(path,body){
+ let r;try{r=await fetch(path,body===undefined?{}:{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})}catch(_){throw Error('Workbench server is not reachable')}
+ let d;try{d=await r.json()}catch(_){throw Error(r.ok?'Unexpected server response':'Server error '+r.status)}
+ if(!r.ok)throw Error(d?.error||r.statusText);return d}
+// Busy feedback for clicked buttons; ignores repeat clicks while the action is pending.
+function guard(fn){return async(...args)=>{
+ const el=args[0]?.currentTarget,busy=el instanceof HTMLButtonElement;
+ if(busy){if(el.getAttribute('aria-busy')==='true')return;el.setAttribute('aria-busy','true')}
+ try{await fn(...args)}catch(e){message(e.message)}finally{if(busy)el.removeAttribute('aria-busy')}}}
+let busyCount=0;
+async function withBusy(promise){busyCount++;document.body.classList.add('busy');try{return await promise}finally{if(!--busyCount)document.body.classList.remove('busy')}}
 function section(id){for(const name of ['empty','setup','job'])$(name).hidden=name!==id}
 function jobLabel(j){if(j.imported)return 'Imported result';if(j.state!=='done')return j.state;if(j.summary?.calibration?.status==='gaps_present')return 'Calibration review required';if(j.summary?.trajectory_status==='incomplete')return 'Association review required';return 'Processed · unverified'}
 function formatTime(t){return Math.floor(t/60)+':'+String(Math.floor(t%60)).padStart(2,'0')}
 function detectionChoices(){const previous=$('detectionCacheJob').value;$('detectionCacheJob').replaceChildren(new Option('Run fresh detection',''));if(asset)for(const j of jobs){if(j.source_sha256===asset.source_sha256&&j.start_s===Number($('start').value)){const complete=j.has_completed_detector_scan&&j.end_s===Number($('end').value),prefix=j.committed_detector_prefix&&Number($('end').value)>j.committed_detector_prefix.last_source_time_s;if(complete||prefix)$('detectionCacheJob').append(new Option(j.name+' · '+(complete?'complete scan':'resume through '+j.committed_detector_prefix.last_source_time_s.toFixed(1)+'s; detect remainder')+' · '+j.id,j.id))}}if(Array.from($('detectionCacheJob').options).some(o=>o.value===previous))$('detectionCacheJob').value=previous}
 for(const id of ['start','end'])$(id).addEventListener('input',detectionChoices);
-function setup(){if(!defaults){message('Loading configuration…');return}navigationRevision++;history.replaceState(null,'','/');section('setup');asset=null;$('startRun').disabled=true;$('red').value=defaults.teams[0];$('yellow').value=defaults.teams[1];$('houseRadius').value=defaults.dimensions.house_radius_m;$('houseRadius').readOnly=!!defaults.calibration_required;$('stoneRadius').value=defaults.dimensions.stone_radius_m;$('capHeight').value=defaults.heights.cap_with_body_support;$('bodyHeight').value=defaults.heights.body_box_center;$('defaults').textContent=JSON.stringify(defaults,null,2)}
-function loaded(a){asset=a;$('preview').src='/media/'+a.id;$('start').value=0;$('end').value=String(a.duration_s);$('name').value=a.name;$('videoMeta').textContent=a.name+' · '+formatTime(a.duration_s)+' · '+a.size_px.join(' × ')+' · '+a.fps.toFixed(2)+' fps';$('startRun').disabled=!!defaults.calibration_required;window.CalibrationUI?.reset(a);detectionChoices()}
-$('new').onclick=setup;$('emptyNew').onclick=setup;$('loadPath').onclick=guard(async()=>loaded(await api('/api/videos',{path:$('path').value})));
-$('upload').onchange=guard(async()=>{const file=$('upload').files[0];if(!file)return;message('Uploading '+file.name);const r=await fetch('/api/upload?name='+encodeURIComponent(file.name),{method:'POST',body:file});const a=await r.json();if(!r.ok)throw Error(a.error);loaded(a)});
-$('startRun').onclick=guard(async()=>{if(!asset)throw Error('Load a video first');$('startRun').disabled=true;try{const j=await api('/api/jobs',{video_id:asset.id,calibration_ids:window.CalibrationUI?.ids()||[],detection_cache_job_id:$('detectionCacheJob').value||null,name:$('name').value,start_s:Number($('start').value),end_s:Number($('end').value),teams:[$('red').value,$('yellow').value],heights:{cap_with_body_support:Number($('capHeight').value),body_box_center:Number($('bodyHeight').value)},dimensions:{house_radius_m:Number($('houseRadius').value),stone_radius_m:Number($('stoneRadius').value)}});await refresh();await showJob(j.id)}finally{$('startRun').disabled=false}});
-async function refresh(){jobs=await api('/api/jobs');$('runs').replaceChildren();for(const j of jobs){const b=document.createElement('button');b.className='run'+(current?.id===j.id?' active':'');const strong=document.createElement('strong');strong.textContent=j.name;const small=document.createElement('small');small.textContent=jobLabel(j);b.append(strong,small);b.onclick=guard(()=>showJob(j.id));$('runs').append(b)}if(asset&&!$('setup').hidden)detectionChoices()}
-let desiredTime=0,resumePlayback=false,clipEnd=null,seekRevision=0;
+function populateKnownVideos(){
+ const sel=$('knownVideos'),list=$('knownVideoPaths');
+ sel.replaceChildren(new Option('Choose a saved local recording…',''));list.replaceChildren();
+ for(const v of (defaults?.videos||[])){
+  const label=(v.label||v.name)+' · '+formatTime(v.duration_s);
+  sel.append(new Option(label,v.path));
+  const opt=document.createElement('option');opt.value=v.path;opt.label=label;list.append(opt);
+ }
+ if(asset?.path&&Array.from(sel.options).some(o=>o.value===asset.path))sel.value=asset.path;
+}
+let uploadingVideo=false;
+function setup(){if(!defaults){message('Loading configuration…');return}navigationRevision++;history.replaceState(null,'','/');section('setup');asset=null;$('startRun').disabled=true;populateKnownVideos();$('path').value='';$('upload').value='';$('videoMeta').textContent='';$('preview').removeAttribute('src');$('loadPath').disabled=uploadingVideo;$('upload').disabled=uploadingVideo;$('red').value=defaults.teams[0];$('yellow').value=defaults.teams[1];$('houseRadius').value=defaults.dimensions.house_radius_m;$('houseRadius').readOnly=!!defaults.calibration_required;$('stoneRadius').value=defaults.dimensions.stone_radius_m;$('capHeight').value=defaults.heights.cap_with_body_support;$('bodyHeight').value=defaults.heights.body_box_center;$('defaults').textContent=JSON.stringify(defaults,null,2)}
+function loaded(a){asset=a;$('preview').src='/media/'+a.id;$('start').value=0;$('end').value=String(a.duration_s);$('name').value=a.name;$('videoMeta').textContent=a.name+' · '+formatTime(a.duration_s)+' · '+a.size_px.join(' × ')+' · '+a.fps.toFixed(2)+' fps';$('startRun').disabled=!!defaults.calibration_required;window.CalibrationUI?.reset(a);detectionChoices();if(Array.from($('knownVideos').options).some(o=>o.value===a.path))$('knownVideos').value=a.path;api('/api/videos').then(v=>{if(defaults){defaults.videos=v;if(!$('setup').hidden)populateKnownVideos()}}).catch(()=>{})}
+async function uploadSelectedVideo(){
+ const file=$('upload').files[0];
+ if(!file||uploadingVideo)return;
+ uploadingVideo=true;$('loadPath').disabled=true;$('upload').disabled=true;
+ $('videoMeta').textContent='Uploading '+file.name+'…';
+ message('Uploading '+file.name);
+ try{
+  const r=await fetch('/api/upload?name='+encodeURIComponent(file.name),{method:'POST',body:file});
+  const a=await r.json();
+  if(!r.ok)throw Error(a.error);
+  $('upload').value='';
+  loaded(a);
+ }catch(err){
+  $('videoMeta').textContent='';
+  throw err;
+ }finally{
+  uploadingVideo=false;$('loadPath').disabled=false;$('upload').disabled=false;
+ }
+}
+$('new').onclick=setup;$('emptyNew').onclick=setup;$('loadPath').onclick=guard(async()=>{
+ if(uploadingVideo){message('Video upload is still in progress…');return}
+ const raw=$('path').value.trim();
+ if(!raw&&$('upload').files[0])return uploadSelectedVideo();
+ loaded(await api('/api/videos',{path:raw}));
+});
+$('path').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('loadPath').click()}});
+$('knownVideos').onchange=()=>{if($('knownVideos').value){$('path').value=$('knownVideos').value;$('loadPath').click()}};
+$('upload').onchange=guard(uploadSelectedVideo);
+$('startRun').onclick=guard(async()=>{if(!asset)throw Error('Load a video first');$('startRun').disabled=true;try{const j=await api('/api/jobs',{video_id:asset.id,calibration_ids:window.CalibrationUI?.ids()||[],detection_cache_job_id:$('detectionCacheJob').value||null,name:$('name').value,start_s:Number($('start').value),end_s:Number($('end').value),teams:[$('red').value,$('yellow').value],heights:{cap_with_body_support:Number($('capHeight').value),body_box_center:Number($('bodyHeight').value)},dimensions:{house_radius_m:Number($('houseRadius').value),stone_radius_m:Number($('stoneRadius').value)}});await showJob(j.id)}finally{$('startRun').disabled=false}});
+function markActiveRun(id){for(const b of $('runs').children)b.classList.toggle('active',b.dataset.id===id)}
+let refreshing=null,refreshAgain=false;
+// Coalesce overlapping refreshes: one request in flight, at most one queued.
+function refresh(){if(refreshing){refreshAgain=true;return refreshing}
+ refreshing=(async()=>{try{do{refreshAgain=false;jobs=await api('/api/jobs');paintRuns()}while(refreshAgain)}finally{refreshing=null}})();return refreshing}
+function paintRuns(){$('runs').replaceChildren();for(const j of jobs){const b=document.createElement('button');b.className='run'+(current?.id===j.id?' active':'');b.dataset.id=j.id;const strong=document.createElement('strong');strong.textContent=j.name;const small=document.createElement('small');small.textContent=jobLabel(j);b.append(strong,small);b.onclick=guard(()=>showJob(j.id));$('runs').append(b)}if(asset&&!$('setup').hidden)detectionChoices()}
+let desiredTime=0,resumePlayback=false,clipEnd=null;
+const TABS=['throw','board','trajectory'],TAB_URLS={throw:'throw_url',board:'board_url',trajectory:'trajectory_url'},seekRevisionByTab={throw:0,board:0,trajectory:0};
 function selectedRow(){return eventRows.find(e=>e.event_id===selectedEvent)}
-function loadedViewer(){
- const f=$('viewer');
- return f.contentDocument?.URL===f.src && f.contentDocument.readyState==='complete';
+function viewerFrame(name=tab){return document.querySelector('iframe[data-tab="'+name+'"]')}
+function viewerUrl(name){
+ const key=TAB_URLS[name],base=current?.presentation_supported===false?null:current?.[key],revision=current?.viewer_revisions?.[key];
+ return base&&revision?base+(base.includes('?')?'&':'?')+'view='+encodeURIComponent(revision):base||null
+}
+function loadedViewer(name=tab){
+ const f=viewerFrame(name),src=f?.getAttribute('src');
+ return !!src&&f.contentDocument?.URL===f.src&&f.contentDocument.readyState==='complete';
 }
 function switchView(next){
  if(next===tab)return;
- if(loadedViewer()){
-  const video=$('viewer').contentDocument.querySelector('video');
-  if(video?.readyState>=1){desiredTime=video.currentTime;resumePlayback=!video.paused;video.pause()}
+ if(loadedViewer(tab)){
+  const video=viewerFrame(tab).contentDocument.querySelector('video');
+  if(video?.readyState>=1){
+   desiredTime=video.currentTime;resumePlayback=!video.paused;
+   if(!video.paused){video._programmaticPause=true;video.pause()}
+  }
  }
- tab=next;viewer()
+ tab=next;viewer();
+ if(loadedViewer(tab))syncViewer(tab);
 }
 function viewer(){
  if(tab!=='throw'||!current.throw_url)$('historyPanel').hidden=true;
- const key={board:'board_url',trajectory:'trajectory_url',throw:'throw_url'}[tab];
- const base=current.presentation_supported===false?null:current[key],revision=current.viewer_revisions?.[key];
- const url=base&&revision?base+(base.includes('?')?'&':'?')+'view='+encodeURIComponent(revision):base;
- for(const [name,button] of [['throw','throwTab'],['board','boardTab'],['trajectory','trajectoryTab']]){
-  $(button).classList.toggle('active',tab===name);$(button).disabled=!current[{board:'board_url',trajectory:'trajectory_url',throw:'throw_url'}[name]]
+ const url=viewerUrl(tab);
+ for(const name of TABS){
+  const button=$(name+'Tab'),u=viewerUrl(name),f=viewerFrame(name),active=name===tab;
+  button.classList.toggle('active',active);button.disabled=!u;
+  if(f){
+   f.id=active?'viewer':'viewer-'+name;
+   f.classList.toggle('inactive',!active);
+   if(active){f.removeAttribute('inert');f.removeAttribute('aria-hidden')}
+   else{f.setAttribute('inert','');f.setAttribute('aria-hidden','true')}
+   if(u){
+    if(f.getAttribute('src')!==u){f._syncedEventId=null;f.style.visibility='hidden';f.src=u}
+   }else if(f.hasAttribute('src')){
+    f._syncedEventId=null;f.removeAttribute('src')
+   }
+  }
  }
  $('viewTiming').textContent=tab==='throw'?'The board summarizes the whole throw. Dashed circles show starting positions, filled circles show the proposed result, and blue rings follow the video.':tab==='trajectory'?'Lines show the full tracked paths. The moving markers follow the video.':'';
  $('throwTab').hidden=!current.throw_url;$('openViewer').hidden=!url;
- if(url){if($('viewer').getAttribute('src')!==url){$('viewer').style.visibility='hidden';$('viewer').src=url}$('openViewer').href=url}
- else $('viewer').removeAttribute('src')
+ if(url)$('openViewer').href=url;
 }
-function eventList(){$('throwCrossing').hidden=!selectedEvent;const reviews=current.reviews||{};$('events').replaceChildren();for(const e of eventRows){if($('filter').value==='unreviewed'&&reviews[e.event_id])continue;const b=document.createElement('button');b.className='event'+(selectedEvent===e.event_id?' active':'');b.textContent=e.event_id+' · '+formatTime(e.time_s);const small=document.createElement('small');small.textContent='Source crossing';small.textContent+=reviews[e.event_id]?' · reviewed '+reviews[e.event_id].label:'';b.append(small);b.onclick=()=>{selectedEvent=e.event_id;$('selectedEvent').textContent=e.event_id+' · crossing at '+e.time_s.toFixed(1)+' s';$('note').value=reviews[e.event_id]?.note||'';seek(e.time_s);eventList()};$('events').append(b)}}
+function eventList(){$('throwCrossing').hidden=!selectedEvent;const reviews=current.reviews||{};$('events').replaceChildren();for(const e of eventRows){if($('filter').value==='unreviewed'&&reviews[e.event_id])continue;const b=document.createElement('button');b.className='event'+(selectedEvent===e.event_id?' active':'');b.textContent=e.event_id+' · '+formatTime(e.time_s);const small=document.createElement('small');small.textContent='Source crossing';small.textContent+=reviews[e.event_id]?' · reviewed '+reviews[e.event_id].label:'';b.append(small);b.onclick=()=>{selectedEvent=e.event_id;$('selectedEvent').textContent=e.event_id+' · crossing at '+e.time_s.toFixed(1)+' s';$('note').value=reviews[e.event_id]?.note||'';seek(e.time_s);eventList();$('events').querySelector('.event.active')?.focus({preventScroll:true})};$('events').append(b)}}
+function syncAllViewers(){for(const name of TABS)if(loadedViewer(name))syncViewer(name)}
+function mirrorTimeToInactiveViewers(){
+ for(const name of TABS){
+  if(name===tab||!loadedViewer(name))continue;
+  const bgVideo=viewerFrame(name).contentDocument.querySelector('video');
+  if(!bgVideo||bgVideo.readyState<1)continue;
+  if(!bgVideo.paused){bgVideo._programmaticPause=true;bgVideo.pause()}
+  if(Math.abs(bgVideo.currentTime-desiredTime)>1e-3){
+   bgVideo._targetSeekTime=desiredTime;
+   bgVideo.currentTime=desiredTime;
+  }
+ }
+}
 function seek(t,play=false,end=null){
  desiredTime=t;resumePlayback=play;clipEnd=end;
- if(loadedViewer())syncViewer()
+ syncAllViewers();
 }
 function markHistoryStone(key){
- const f=$('viewer'),doc=f.contentDocument,canvas=doc?.querySelector('#rink');
+ const f=viewerFrame('throw'),doc=f?.contentDocument,canvas=doc?.querySelector('#rink');
  if(!canvas)return;
  let marker=doc.getElementById('history-marker');
  if(marker)marker.remove();
@@ -167,52 +251,93 @@ async function openHistory(key){
  }
 }
 $('historyStone').onchange=e=>openHistory(e.target.value);
-function syncViewer(){
- const frame=$('viewer'),doc=frame.contentDocument,v=doc.querySelector('video'),row=selectedRow();
+function syncViewer(name=tab){
+ if(!loadedViewer(name))return;
+ const frame=viewerFrame(name),doc=frame.contentDocument,v=doc.querySelector('video'),row=selectedRow();
  if(!row||!v)return;
- const revision=++seekRevision,select=doc.querySelector(tab==='trajectory'?'#events':'#pick');
- const data=tab==='trajectory'?frame.contentWindow.RINK_DATA:tab==='throw'?frame.contentWindow.THROW_EFFECTS:frame.contentWindow.POST_THROW;
+ const revision=++seekRevisionByTab[name],select=doc.querySelector(name==='trajectory'?'#events':'#pick');
+ const data=name==='trajectory'?frame.contentWindow.RINK_DATA:name==='throw'?frame.contentWindow.THROW_EFFECTS:frame.contentWindow.POST_THROW;
  if(select&&data?.events){
   const index=data.events.findIndex(e=>(e.event_id??e.id)===row.event_id);
-  select.selectedIndex=index;
-  if(index<0){v.pause();doc.body.hidden=true;message('Selected throw is unavailable in this view');return}
+  if(index<0){v._programmaticPause=true;v.pause();doc.body.hidden=true;if(name===tab)message('Selected throw is unavailable in this view');return}
   doc.body.hidden=false;
-  if(tab==='throw'){frame.contentWindow.showThrow?.(false);historyControls(data.events[index])}
+  const eventKey=(current?.id||'')+'/'+row.event_id;
+  if(frame._syncedEventId!==eventKey){
+   select.selectedIndex=index;
+   frame._syncedEventId=eventKey;
+   if(name==='throw')frame.contentWindow.showThrow?.(false);
+   else if(name==='board')frame.contentWindow.showBoard?.(false);
+  }
+  if(name==='throw'&&tab==='throw')historyControls(data.events[index]);
  }
  const apply=()=>{
-  if(revision!==seekRevision||!loadedViewer()||doc!==frame.contentDocument)return;
-  v.pause();v.currentTime=desiredTime;
-  if(resumePlayback)v.play().catch(()=>{});
+  if(revision!==seekRevisionByTab[name]||!loadedViewer(name)||doc!==frame.contentDocument)return;
+  const shouldPlay=name===tab&&resumePlayback;
+  if(!shouldPlay&&!v.paused){v._programmaticPause=true;v.pause()}
+  if(Math.abs(v.currentTime-desiredTime)>1e-3){
+   v._targetSeekTime=desiredTime;
+   v.currentTime=desiredTime;
+  }
+  if(shouldPlay&&v.paused)v.play().catch(()=>{});
  };
  if(v.readyState>=1)apply();else v.addEventListener('loadedmetadata',apply,{once:true})
 }
-$('viewer').addEventListener('load',()=>{
- if(!loadedViewer())return;
- const doc=$('viewer').contentDocument,v=doc.querySelector('video');
- const style=doc.createElement('style');style.textContent='body{margin:10px!important}h1,.note,#events,#pick,#seek,#snapshot{display:none!important}';doc.head.append(style);
- if(tab==='throw'){
-  const canvas=doc.querySelector('#rink'),w=$('viewer').contentWindow;
-  if(canvas&&typeof w.frame==='function')canvas.onclick=ev=>{
-   const e=w.THROW_EFFECTS?.events.find(x=>x.event_id===selectedEvent);if(!e?.stones)return;
-   const rect=canvas.getBoundingClientRect(),x=(ev.clientX-rect.left)*canvas.width/rect.width,y=(ev.clientY-rect.top)*canvas.height/rect.height;
-   const view=w.frame(e),hits=[];
-   e.stones.forEach((s,i)=>{if(!s.in_play_before&&!s.in_play_after)return;
-    const points=[s.after_m];if(s.change!=='unchanged')points.push(s.before_m);
-    if(points.some(p=>{if(!p)return false;const [a,b]=view.px(p);return Math.hypot(x-a,y-b)<=12}))hits.push(i)});
-   if(hits.length===1)openHistory(e.event_id+'/'+hits[0]);else if(hits.length>1)message('Overlapping positions. Choose a track in Stone history.')
+for(const name of TABS){
+ const frame=viewerFrame(name);
+ frame.addEventListener('load',()=>{
+  if(!loadedViewer(name))return;
+  const doc=frame.contentDocument,v=doc.querySelector('video');
+  const style=doc.createElement('style');style.textContent='body{margin:10px!important}h1,.note,#events,#pick,#seek,#snapshot{display:none!important}';doc.head.append(style);
+  if(name==='throw'){
+   const canvas=doc.querySelector('#rink'),w=frame.contentWindow;
+   if(canvas&&typeof w.frame==='function')canvas.onclick=ev=>{
+    const e=w.THROW_EFFECTS?.events.find(x=>x.event_id===selectedEvent);if(!e?.stones)return;
+    const rect=canvas.getBoundingClientRect(),x=(ev.clientX-rect.left)*canvas.width/rect.width,y=(ev.clientY-rect.top)*canvas.height/rect.height;
+    const view=w.frame(e),hits=[];
+    e.stones.forEach((s,i)=>{if(!s.in_play_before&&!s.in_play_after)return;
+     const points=[s.after_m];if(s.change!=='unchanged')points.push(s.before_m);
+     if(points.some(p=>{if(!p)return false;const [a,b]=view.px(p);return Math.hypot(x-a,y-b)<=12}))hits.push(i)});
+    if(hits.length===1)openHistory(e.event_id+'/'+hits[0]);else if(hits.length>1)message('Overlapping positions. Choose a track in Stone history.')
+   }
   }
- }
- if(v){
-  const checkEnd=t=>{if(clipEnd!==null&&!v.paused&&!v.seeking&&v.currentTime>=clipEnd&&t>=clipEnd){v.pause();v.currentTime=clipEnd;clipEnd=null;resumePlayback=false}};
-  if(v.requestVideoFrameCallback){const tick=(_,m)=>{checkEnd(m.mediaTime);v.requestVideoFrameCallback(tick)};v.requestVideoFrameCallback(tick)}
-  else v.addEventListener('timeupdate',()=>checkEnd(v.currentTime));
-  if(current.throw_url&&(tab==='throw'||tab==='trajectory')){
-   const play=doc.getElementById('play');if(play){play.textContent='Play throw';play.onclick=()=>{const clip=selectedRow()?.review_clip_s;if(clip)seek(clip[0],true,clip[2]);else message('No resolved throw interval for this candidate')}}
-   const after=doc.getElementById('after');if(after)after.onclick=()=>{const clip=selectedRow()?.review_clip_s;if(clip)seek(clip[1])}
+  if(v){
+   const checkEnd=t=>{
+    if(name!==tab||clipEnd===null||v.paused||v.seeking||v.currentTime<clipEnd||t<clipEnd)return;
+    v._programmaticPause=true;v.pause();
+    if(Math.abs(v.currentTime-clipEnd)>1e-3){v._targetSeekTime=clipEnd;v.currentTime=clipEnd}
+    desiredTime=clipEnd;clipEnd=null;resumePlayback=false;
+    mirrorTimeToInactiveViewers();
+   };
+   if(v.requestVideoFrameCallback){const tick=(_,m)=>{checkEnd(m.mediaTime);v.requestVideoFrameCallback(tick)};v.requestVideoFrameCallback(tick)}
+   else v.addEventListener('timeupdate',()=>checkEnd(v.currentTime));
+   v.addEventListener('pause',()=>{
+    if(v._programmaticPause){v._programmaticPause=false;return}
+    if(name!==tab)return;
+    desiredTime=v.currentTime;resumePlayback=false;clipEnd=null;
+    mirrorTimeToInactiveViewers();
+   });
+   v.addEventListener('play',()=>{if(name===tab)resumePlayback=true});
+   v.addEventListener('seeking',()=>{
+    if(name!==tab)return;
+    if(v._targetSeekTime!==undefined&&Math.abs(v.currentTime-v._targetSeekTime)<=0.05)return;
+    v._targetSeekTime=undefined;desiredTime=v.currentTime;
+    mirrorTimeToInactiveViewers();
+   });
+   v.addEventListener('seeked',()=>{
+    if(v._targetSeekTime!==undefined&&Math.abs(v.currentTime-v._targetSeekTime)<=0.05){v._targetSeekTime=undefined;return}
+    if(name!==tab)return;
+    v._targetSeekTime=undefined;desiredTime=v.currentTime;
+    mirrorTimeToInactiveViewers();
+   });
+   v.addEventListener('timeupdate',()=>{if(name===tab&&!v.paused&&!v.seeking)desiredTime=v.currentTime});
+   if(current?.throw_url&&(name==='throw'||name==='trajectory')){
+    const play=doc.getElementById('play');if(play){play.textContent='Play throw';play.onclick=()=>{const clip=selectedRow()?.review_clip_s;if(clip)seek(clip[0],true,clip[2]);else message('No resolved throw interval for this candidate')}}
+    const after=doc.getElementById('after');if(after)after.onclick=()=>{const clip=selectedRow()?.review_clip_s;if(clip)seek(clip[1])}
+   }
   }
- }
- syncViewer();$('viewer').style.visibility='visible'
-});
+  syncViewer(name);frame.style.visibility='';
+ });
+}
 function paintUnresolvedCameraObservations(){const rows=current.summary?.unresolved_camera_crossings||[];$('unresolvedCameraObservations').hidden=!rows.length;$('unresolvedCameraHeading').textContent=rows.length+' unresolved camera crossing observations';$('unresolvedCameraRows').replaceChildren();const tracks=$('unresolvedCameraTrajectories');tracks.hidden=!current.summary?.unresolved_camera_fragments_viewer;if(!tracks.hidden)tracks.href=current.result_url.replace(/index\.html$/,'camera-fragments/index.html');for(const row of rows){const b=document.createElement('button');b.textContent=row.panel+' · '+formatTime(row.crossing_time_s)+' · '+row.role+(row.candidate_event_ids?.length?' · competing event association':' · unassigned');b.onclick=()=>{const v=$('unresolvedCameraVideo'),job=current.id;v.hidden=false;v.pause();const show=()=>{if(current?.id===job)v.currentTime=row.crossing_time_s};const url='/media/'+current.video_id;if(v.getAttribute('src')!==url){v.src=url;v.addEventListener('loadedmetadata',show,{once:true})}else if(v.readyState)show();else v.addEventListener('loadedmetadata',show,{once:true})};const group=document.createElement('div');group.append(b);
  if(!tracks.hidden&&row.id){const link=document.createElement('a');link.href=tracks.href+'?fragment='+encodeURIComponent(row.id);link.target='_blank';link.rel='noopener';link.textContent='Top view for track '+row.track_id+' ↗';group.append(' ',link)}
  $('unresolvedCameraRows').append(group)}}
@@ -226,8 +351,24 @@ function paintScoreAndRocks(data){const panel=$('scoreRocksPanel'),et=$('endsSco
  et.innerHTML='<tr><th style="text-align:left;border-bottom:1px solid #d5e1e4;padding:4px">End</th><th style="text-align:left;border-bottom:1px solid #d5e1e4;padding:4px">Throws</th><th style="text-align:left;border-bottom:1px solid #d5e1e4;padding:4px">Board end pts</th><th style="text-align:left;border-bottom:1px solid #d5e1e4;padding:4px">Running board</th><th style="text-align:left;border-bottom:1px solid #d5e1e4;padding:4px">OCR total</th></tr>'+data.ends.map(e=>{const bp=e.provisional_end_score_from_board?teams.map(t=>t+' '+(e.provisional_end_score_from_board[t]??0)).join('–'):'unavailable';const rb=teams.map(t=>t+' '+(e.provisional_running_total_from_board?.[t]??0)).join('–');const oc=e.ocr_running_total_observation?teams.map(t=>t+' '+(e.ocr_running_total_observation.totals?.[t]??'?')).join('–'):'unreadable';return '<tr><td style="padding:4px;border-bottom:1px solid #edf3f3">'+esc(e.end_index)+'</td><td style="padding:4px;border-bottom:1px solid #edf3f3">'+esc(e.detected_throws)+'</td><td style="padding:4px;border-bottom:1px solid #edf3f3">'+esc(bp)+'</td><td style="padding:4px;border-bottom:1px solid #edf3f3">'+esc(rb)+'</td><td style="padding:4px;border-bottom:1px solid #edf3f3">'+esc(oc)+'</td></tr>'}).join('');
  rt.innerHTML='<tr><th style="text-align:left;border-bottom:1px solid #d5e1e4;padding:4px">Team</th><th style="text-align:left;border-bottom:1px solid #d5e1e4;padding:4px">Rock pair</th><th style="text-align:left;border-bottom:1px solid #d5e1e4;padding:4px">Throws</th><th style="text-align:left;border-bottom:1px solid #d5e1e4;padding:4px">Med speed</th><th style="text-align:left;border-bottom:1px solid #d5e1e4;padding:4px">Med |curl|</th><th style="text-align:left;border-bottom:1px solid #d5e1e4;padding:4px">Med spin</th></tr>'+(data.rock_pair_summary||[]).map(r=>'<tr><td style="padding:4px;border-bottom:1px solid #edf3f3">'+esc(r.team)+'</td><td style="padding:4px;border-bottom:1px solid #edf3f3">'+esc(r.rock_pair)+'</td><td style="padding:4px;border-bottom:1px solid #edf3f3">'+esc(r.throws_observed)+'</td><td style="padding:4px;border-bottom:1px solid #edf3f3">'+(r.median_receiving_speed_m_s!==null?r.median_receiving_speed_m_s.toFixed(2)+' m/s':'—')+'</td><td style="padding:4px;border-bottom:1px solid #edf3f3">'+(r.median_abs_curl_m!==null?r.median_abs_curl_m.toFixed(2)+' m':'—')+'</td><td style="padding:4px;border-bottom:1px solid #edf3f3">'+(r.median_spin_rate_hz!==null?r.median_spin_rate_hz.toFixed(2)+' rev/s':'—')+'</td></tr>').join('')}
 async function loadScoreAndRocks(id,revision){$('scoreRocksPanel').hidden=true;try{const data=await api('/api/jobs/'+id+'/score-and-rocks');if(revision===navigationRevision&&current?.id===id)paintScoreAndRocks(data)}catch(_){}}
-async function showJob(id){$('unresolvedCameraVideo').pause();$('unresolvedCameraVideo').hidden=true;const revision=++navigationRevision;const job=await api('/api/jobs/'+id),events=await api('/api/jobs/'+id+'/events');if(revision!==navigationRevision)return;history.replaceState(null,'','?job='+encodeURIComponent(id));historyBoard=null;historyKey=null;$('historyPanel').hidden=true;$('scoreRocksPanel').hidden=true;current=job;eventRows=events;selectedEvent=events[0]?.event_id??null;desiredTime=events[0]?.time_s??0;resumePlayback=false;clipEnd=null;tab=current.throw_url?'throw':current.board_url?'board':'trajectory';$('logs').textContent='';if(current.state==='failed')$('logs').textContent=JSON.stringify(await api('/api/jobs/'+id+'/logs'),null,2);$('selectedEvent').textContent=selectedEvent||'Select an event to review';paintJob();if(current.state==='done')loadScoreAndRocks(id,revision);if(loadedViewer())syncViewer();await refresh()}
-$('throwTab').onclick=()=>switchView('throw');$('boardTab').onclick=()=>switchView('board');$('trajectoryTab').onclick=()=>switchView('trajectory');
+function loadLogs(id){api('/api/jobs/'+id+'/logs').then(l=>{if(current?.id===id)$('logs').textContent=JSON.stringify(l,null,2)}).catch(()=>{})}
+async function showJob(id){$('unresolvedCameraVideo').pause();$('unresolvedCameraVideo').hidden=true;const revision=++navigationRevision;markActiveRun(id);
+ if(!$('job').hidden&&current?.id!==id){$('jobStatus').textContent='Loading…';$('jobStatus').className='tag running'}
+ let job,events;try{[job,events]=await withBusy(Promise.all([api('/api/jobs/'+id),api('/api/jobs/'+id+'/events')]))}catch(err){if(revision===navigationRevision){markActiveRun(current?.id);if(current&&!$('job').hidden)paintJob()}throw err}
+ if(revision!==navigationRevision)return;history.replaceState(null,'','?job='+encodeURIComponent(id));historyBoard=null;historyKey=null;historyRequest=null;historyJob=null;$('historyPanel').hidden=true;$('scoreRocksPanel').hidden=true;current=job;eventRows=events;selectedEvent=events[0]?.event_id??null;desiredTime=events[0]?.time_s??0;resumePlayback=false;clipEnd=null;tab=current.throw_url?'throw':current.board_url?'board':'trajectory';$('logs').textContent='';if(current.state==='failed')loadLogs(id);$('selectedEvent').textContent=selectedEvent||'Select an event to review';paintJob();if(current.state==='done'){loadScoreAndRocks(id,revision);prefetchHistory(id)}syncAllViewers();refresh().catch(()=>{})}
+// Stone histories take seconds to build server-side; start before the user asks.
+function prefetchHistory(id){if(!current?.throw_url||(historyRequest&&historyJob===id))return;historyJob=id;historyRequest=api('/api/jobs/'+id+'/stone-histories');historyRequest.catch(()=>{if(historyJob===id)historyRequest=null})}
+for(const [id,name] of [['throwTab','throw'],['boardTab','board'],['trajectoryTab','trajectory']]){
+ const btn=$(id);
+ btn.onclick=()=>switchView(name);
+ const prime=()=>{
+  if(name===tab||!loadedViewer(tab))return;
+  const v=viewerFrame(tab).contentDocument.querySelector('video');
+  if(v?.readyState>=1&&!v.paused&&!v.seeking){desiredTime=v.currentTime;mirrorTimeToInactiveViewers()}
+ };
+ btn.addEventListener('pointerenter',prime);
+ btn.addEventListener('focus',prime);
+}
 $('throwCrossing').onclick=()=>{const e=selectedRow();if(e)seek(e.time_s)};$('filter').onchange=eventList;
 for(const b of document.querySelectorAll('[data-label]'))b.onclick=guard(async()=>{if(!selectedEvent)throw Error('Select an event first');current.reviews=await api('/api/jobs/'+current.id+'/review',{event_id:selectedEvent,label:b.dataset.label,note:$('note').value,reviewer:$('reviewer').value||'user'});paintJob()});
 $('retry').onclick=guard(async()=>{const j=await api('/api/jobs/'+current.id+'/retry',{});await showJob(j.id)});
@@ -235,17 +376,21 @@ $('rebuild').onclick=guard(async()=>{const j=await api('/api/jobs/'+current.id+'
 $('cancel').onclick=guard(async()=>{await api('/api/jobs/'+current.id+'/cancel',{});message('Cancellation requested; existing outputs will be preserved.')});
 $('download').onclick=guard(async()=>{const report=await api('/api/jobs/'+current.id+'/report');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(report,null,2)],{type:'application/json'}));a.download='curling-review-'+current.id+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)});
 $('import').onclick=guard(async()=>{const j=await api('/api/import',{viewer:$('importViewer').value,video:$('importVideo').value,trajectory:$('importTrajectory').value||null});await showJob(j.id)});
-setInterval(guard(async()=>{
+let polling=false;
+setInterval(async()=>{
+ if(polling||document.hidden)return;polling=true;
+ try{
  if(!$('setup').hidden){if(jobs.some(j=>['queued','running'].includes(j.state)))await refresh();return}
  if(!current||!['queued','running'].includes(current.state))return;
- const id=current.id,updated=await api('/api/jobs/'+id);
+ const id=current.id,revision=navigationRevision,updated=await api('/api/jobs/'+id);
  // A response for a background job must not replace a newly opened form or selection.
- if(!$('setup').hidden||current?.id!==id)return;
- current=updated;
+ if(!$('setup').hidden||current?.id!==id||revision!==navigationRevision)return;
+ const previousState=current.state;current=updated;
  if(current.state==='done'){eventRows=await api('/api/jobs/'+id+'/events');loadScoreAndRocks(id,navigationRevision)}
- if(!$('setup').hidden||current?.id!==id)return;
- paintJob();await refresh();
- if(current.state==='failed')$('logs').textContent=JSON.stringify(await api('/api/jobs/'+id+'/logs'),null,2);
-}),1500);
+ if(!$('setup').hidden||current?.id!==id||revision!==navigationRevision)return;
+ paintJob();if(current.state!==previousState)refresh().catch(()=>{});
+ if(current.state==='failed')loadLogs(id);
+ }catch(e){message(e.message)}finally{polling=false}
+},1500);
 guard(async()=>{const initialRevision=navigationRevision,requested=new URLSearchParams(location.search).get('job');defaults=await api('/api/defaults');$('new').disabled=false;$('emptyNew').disabled=false;await refresh();if(navigationRevision===initialRevision&&requested&&jobs.some(j=>j.id===requested))await showJob(requested)})();
 </script><script src="/files/prototype/calibration_template.js?v=20261111-calibration-flow1"></script><script src="/files/prototype/calibration_ui.js?v=20261111-calibration-flow1"></script></html>

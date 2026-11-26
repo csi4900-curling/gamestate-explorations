@@ -627,7 +627,7 @@ td,th{padding:3px 8px;text-align:left;border-bottom:1px solid #d5e1e4}#points{fo
 <h1>Throws</h1>
 <p class="note">Each throw: receiving-house stones before the delivered stone arrives, observed paths of stones that moved, and the board in the first quiet interval afterwards. Positions depend on calibration; tracker IDs are provisional and the quiet interval is a proposal.</p>
 <select id="pick" aria-label="Throw"></select> <button id="play">Play throw</button> <button id="after">Go to board after</button>
-<div class="views"><div><video id="video" controls preload="metadata" src="VIDEO_URL"></video>
+<div class="views"><div><video id="video" controls preload="auto" src="VIDEO_URL"></video>
 <p id="context"></p><p id="status"></p><p id="points"></p><table id="changes"></table>
 <div id="spinBox" hidden><div id="spinObs"></div><div id="spinModel" style="color:#5c6f77;margin-top:4px"></div><img id="spinStrip" alt="Stabilized stone crop strip" hidden></div></div>
 <div><canvas id="rink" width="420" height="720"></canvas>
@@ -689,10 +689,11 @@ document.querySelector('#play').onclick=()=>{const e=current();if(e.status==='un
  video.currentTime=Math.max(0,e.arrival_time_s-2);stopAt=e.settle_interval_s[1];video.play()};
 document.querySelector('#after').onclick=()=>show();
 video.addEventListener('pause',()=>{stopAt=null});
+video.addEventListener('seeked',()=>draw(video.currentTime));
 function tick(t){if(stopAt!==null&&t>=stopAt){video.pause();stopAt=null}draw(t)}
 if(video.requestVideoFrameCallback){const f=(_,m)=>{tick(m.mediaTime);video.requestVideoFrameCallback(f)};video.requestVideoFrameCallback(f)}
 else video.addEventListener('timeupdate',()=>tick(video.currentTime));
-video.addEventListener('loadedmetadata',()=>show());show(false);window.showThrow=show;
+video.addEventListener('loadedmetadata',()=>show(!window.frameElement?.dataset?.tab));show(false);window.showThrow=show;
 window.throwAudit=()=>({event:current().event_id,time:video.currentTime,status:document.querySelector('#status').textContent,points:document.querySelector('#points').textContent});
 </script></html>'''
 

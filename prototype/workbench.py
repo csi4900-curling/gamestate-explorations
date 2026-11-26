@@ -197,7 +197,15 @@ class Workbench:
                 write(p, row)
 
     def path(self, value):
-        p = Path(value)
+        if isinstance(value, Path):
+            s = str(value)
+        else:
+            s = str(value).strip()
+            while len(s) >= 2 and s[0] == s[-1] and s[0] in ("'", '"', "`"):
+                s = s[1:-1].strip()
+            if s.startswith("file://"):
+                s = unquote(urlsplit(s).path)
+        p = Path(s).expanduser()
         return (self.root / p).resolve() if not p.is_absolute() else p.resolve()
 
     def identifier(self, value):
@@ -262,6 +270,57 @@ class Workbench:
                 pass
         return result
 
+    def job_list(self):
+        """Lightweight sidebar rows; avoids rebuilding viewer presentations per job."""
+        rows = []
+        cache = self.__dict__.setdefault("_job_list_cache", {})
+        for p in (self.data / "jobs").glob("*/job.json"):
+            identifier = p.parent.name
+            events_path = p.parent / "observations/events.json"
+            try:
+                stat = p.stat()
+                events_stat = events_path.stat() if events_path.exists() else None
+            except OSError:
+                continue
+            key = (stat.st_mtime_ns, stat.st_size,
+                   events_stat and (events_stat.st_mtime_ns, events_stat.st_size))
+            cached = cache.get(identifier)
+            if cached and cached[0] == key:
+                row = dict(cached[1])
+            else:
+                try:
+                    full = json.loads(p.read_text())
+                except (OSError, json.JSONDecodeError):
+                    continue
+                summary = full.get("summary") or {}
+                row = {k: full.get(k) for k in (
+                    "id", "name", "state", "message", "imported", "created_at",
+                    "start_s", "end_s", "source_sha256", "video_id")}
+                row["summary"] = {
+                    "calibration": {"status": (summary.get("calibration") or {}).get("status")},
+                    "trajectory_status": summary.get("trajectory_status"),
+                }
+                complete = False
+                if events_stat is not None:
+                    try:
+                        complete = json.loads(events_path.read_text()).get("status") == "development_complete_event_stage"
+                    except (OSError, json.JSONDecodeError):
+                        pass
+                row["has_completed_detector_scan"] = complete
+                row["committed_detector_prefix"] = None
+                if row["state"] in ("failed", "interrupted", "cancelled") and not complete and events_stat is not None:
+                    try:
+                        from prototype.detection_cache import verify_committed_prefix
+                        row["committed_detector_prefix"] = verify_committed_prefix(events_path.parent)
+                    except (OSError, ValueError, KeyError, TypeError):
+                        pass
+                cache[identifier] = (key, dict(row))
+            failure = self.runtime_failures.get(identifier)
+            if failure:
+                row.update(failure)
+            rows.append(row)
+        return sorted(rows, key=lambda x: x.get("created_at") or 0, reverse=True)
+
     def jobs(self):
         return sorted(
             [self.job(p.parent.name) for p in (self.data / "jobs").glob("*/job.json")],
@@ -277,8 +336,32 @@ class Workbench:
             if not asset.is_file():
                 return match[0]
             return 'src=' + match[1] + match[2] + '?data=' + digest(asset)[:16] + match[1]
-        return re.sub(r'''src=(["'])(states\.js|rink-data\.js|effects\.js)(?:\?[^"']*)?\1''',
-                      version, path.read_text()).encode()
+        text = re.sub(r'''src=(["'])(states\.js|rink-data\.js|effects\.js)(?:\?[^"']*)?\1''',
+                      version, path.read_text())
+        text = re.sub(r'(<video\b[^>]*\bpreload=)(["\'])metadata\2', r'\1\2auto\2', text)
+        if "window.frameElement?.dataset?.tab" not in text:
+            text = text.replace(
+                "video.addEventListener('loadedmetadata',()=>show());",
+                "video.addEventListener('seeked',()=>draw(video.currentTime));video.addEventListener('loadedmetadata',()=>show(!window.frameElement?.dataset?.tab));",
+            )
+            text = text.replace(
+                "function initializeVideo(){if(initialized)return;initialized=true;overlay.width=video.videoWidth;overlay.height=video.videoHeight;show()}",
+                "function initializeVideo(){if(initialized)return;initialized=true;overlay.width=video.videoWidth;overlay.height=video.videoHeight;show(!window.frameElement?.dataset?.tab)}",
+            )
+            text = text.replace(
+                "video.addEventListener('seeked',()=>{if(hasDecodedFrame)renderAt(presentedTime)});",
+                "video.addEventListener('seeked',()=>{if(!hasDecodedFrame&&video.readyState>=2){presentedTime=video.currentTime;hasDecodedFrame=true}if(hasDecodedFrame)renderAt(presentedTime)});",
+            )
+            if "window.showBoard=" not in text:
+                text = text.replace(
+                    "video.addEventListener('loadedmetadata',initializeVideo);clear('Waiting for source video…');show(false);",
+                    "video.addEventListener('loadedmetadata',initializeVideo);clear('Waiting for source video…');show(false);window.showBoard=show;",
+                )
+            text = text.replace(
+                "video.addEventListener('loadedmetadata',choose);if(video.readyState>=1)choose();",
+                "video.addEventListener('seeking',()=>{if(Math.abs(video.currentTime-(presentedTime??-1))>1e-3)presentedTime=null});video.addEventListener('seeked',()=>{if(video.readyState>=2)presentedTime=video.currentTime});if(!window.frameElement?.dataset?.tab){video.addEventListener('loadedmetadata',choose);if(video.readyState>=1)choose();}",
+            )
+        return text.encode()
 
     def update(self, identifier, **values):
         with self.lock:
@@ -296,7 +379,20 @@ class Workbench:
     def register_video(self, path):
         import cv2
 
+        if isinstance(path, str) and not path.strip().strip("'\"`"):
+            raise ValueError("Enter a video path")
         path = self.path(path)
+        if path.is_dir():
+            preferred = path / "source-1080p.mp4"
+            if preferred.is_file():
+                path = preferred.resolve()
+            else:
+                candidates = [
+                    p for p in path.iterdir()
+                    if p.is_file() and p.suffix.lower() in {".mp4", ".webm", ".mov", ".mkv"}
+                ]
+                if len(candidates) == 1:
+                    path = candidates[0].resolve()
         if not path.is_file():
             raise ValueError("Video file does not exist")
         cap = cv2.VideoCapture(str(path))
@@ -332,6 +428,39 @@ class Workbench:
         write(self.data / "videos" / (result["id"] + ".json"), result)
         return result
 
+    def videos(self):
+        job_names = {}
+        job_rows = []
+        for p in (self.data / "jobs").glob("*/job.json"):
+            try:
+                job_rows.append(json.loads(p.read_text()))
+            except (OSError, json.JSONDecodeError):
+                continue
+        for row in sorted(job_rows, key=lambda r: r.get("created_at", 0)):
+            sha = row.get("source_sha256")
+            if sha and row.get("name"):
+                job_names[sha] = row["name"]
+        uploads_dir = (self.data / "uploads").resolve()
+        by_sha = {}
+        for p in sorted((self.data / "videos").glob("*.json"), key=lambda x: x.stat().st_mtime, reverse=True):
+            try:
+                v = json.loads(p.read_text())
+                fpath = Path(v["path"]).resolve()
+                if not fpath.is_file():
+                    continue
+            except (OSError, KeyError, json.JSONDecodeError):
+                continue
+            sha = v.get("source_sha256") or str(fpath)
+            is_upload = fpath.is_relative_to(uploads_dir)
+            prev = by_sha.get(sha)
+            if prev is not None and (is_upload or not prev[0]):
+                continue
+            parent_name = fpath.parent.name
+            fallback = f"{parent_name}/{fpath.name}" if parent_name else fpath.name
+            label = f"{job_names[sha]} · {fallback}" if sha in job_names else fallback
+            by_sha[sha] = (is_upload, {**v, "path": str(fpath), "label": label})
+        return [item[1] for item in by_sha.values()]
+
     def defaults(self):
         line_path = self.path(self.profile["line_config"])
         match_path = self.path(self.profile["match_config"])
@@ -346,6 +475,7 @@ class Workbench:
             "rotation_status": "Experimental: handle localization tested; physical angular tracking and revolution counts unavailable.",
             "calibration_required": bool(self.profile.get("calibration_required", False)),
             "calibration": self.calibrations.options(),
+            "videos": self.videos(),
         }
 
     def prepare(self, request):
@@ -1160,8 +1290,10 @@ class Handler(VideoHandler):
                 return
             if path == "/api/defaults":
                 return self.respond(200, self.app.defaults())
+            if path == "/api/videos":
+                return self.respond(200, self.app.videos())
             if path == "/api/jobs":
-                return self.respond(200, self.app.jobs())
+                return self.respond(200, self.app.job_list())
             if path == "/api/calibrations":
                 video_id = parse_qs(urlsplit(self.path).query).get('video_id', [''])[0]
                 return self.respond(200, self.app.calibrations.list(video_id))

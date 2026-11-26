@@ -349,3 +349,51 @@ def test_event_api_exposes_post_throw_points_and_keeps_missing_results_unknown(a
     assert first['proposal_time_s'] == .2
     assert missing['proposal_time_s'] is None
     assert missing['post_throw_points'] is None
+
+
+def test_register_video_normalizes_pasted_paths_and_lists_known_videos(app):
+    import shutil
+    video_path = app.root / "video.mp4"
+    upload_copy = app.data / "uploads" / "dup-video.mp4"
+    shutil.copyfile(video_path, upload_copy)
+
+    # Register upload copy first, then canonical path via quoted/spaced/file:// inputs.
+    app.register_video(upload_copy)
+    for raw in [
+        f"  {video_path}\n",
+        f'"{video_path}"',
+        f"'{video_path}'",
+        f"`{video_path}`",
+        f"file://{video_path}",
+        str(app.root),
+    ]:
+        reg = app.register_video(raw)
+        assert reg["path"] == str(video_path.resolve())
+
+    job = app.prepare({"video_id": reg["id"]})
+    app.update(job, name="Canonical Match")
+
+    listed = app.defaults()["videos"]
+    assert len(listed) == 1
+    assert listed[0]["path"] == str(video_path.resolve())
+    assert listed[0]["label"].startswith("Canonical Match · ")
+
+    preferred_dir = app.root / "match_dir"
+    preferred_dir.mkdir()
+    shutil.copyfile(video_path, preferred_dir / "other.mp4")
+    shutil.copyfile(video_path, preferred_dir / "source-1080p.mp4")
+    assert app.register_video(str(preferred_dir))["path"] == str((preferred_dir / "source-1080p.mp4").resolve())
+    with pytest.raises(ValueError, match="Enter a video path"):
+        app.register_video("   ")
+
+
+def test_sidebar_job_list_matches_full_job_rows_and_tracks_updates(app):
+    asset = app.register_video(app.root / "video.mp4")
+    identifier = app.prepare({"video_id": asset["id"]})
+    [row] = app.job_list()
+    full = app.job(identifier)
+    for key in ("id", "name", "state", "start_s", "end_s", "source_sha256",
+                "has_completed_detector_scan", "committed_detector_prefix"):
+        assert row[key] == full[key]
+    app.update(identifier, state="failed", message="changed")
+    assert app.job_list()[0]["state"] == "failed"

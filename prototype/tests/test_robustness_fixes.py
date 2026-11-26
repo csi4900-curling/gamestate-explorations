@@ -1,7 +1,12 @@
 import json
 
 from prototype.camera_motion_role import recover_missing_role
-from prototype.directional_handoff import metric_crossings, resolve_short_receiving_approaches
+from prototype.directional_handoff import (
+    hypotheses,
+    metric_crossings,
+    resolve_post_hog_departures,
+    resolve_short_receiving_approaches,
+)
 from prototype.throw_effect import DEFAULTS, effect, in_play, quiet_interval
 
 
@@ -399,3 +404,180 @@ def test_calibrated_hog_line_clipped_to_panel_half():
     assert clipped is not None
     assert clipped[0][0] == 0.5 and clipped[1][0] == 1.0
     assert 0.580 < clipped[0][1] < clipped[1][1] < 0.592
+
+
+def test_post_hog_departure_resolves_unique_wheelchair_occluded_departure():
+    def base_handoffs():
+        return {
+            'M00001': {
+                'status': 'unresolved',
+                'role_evidence': {'role': 'receiving', 'panel': 'right'},
+                'interval_s': [780.0, 819.0],
+                'candidates': [],
+            }
+        }
+
+    events = [{'id': 'M00001', 'crossing_time_s': 819.0, 'track_id': 200}]
+
+    def make_rows(tracks_spec):
+        # tracks_spec: list of (tid, times_and_y)
+        by_t = {}
+        for tid, pts in tracks_spec:
+            for t, y in pts:
+                by_t.setdefault(t, []).append({
+                    'tracker_id': tid, 'height_adjusted_local_m': [0.1, y],
+                    'pixel': [200.0, 300.0], 'confidence': 0.9,
+                })
+        return [{'time_s': t, 'boards': {'left': {'stones': stones}, 'right': {'stones': []}}}
+                for t, stones in sorted(by_t.items())]
+
+    # Unique left departure emerging past |y|=6.401 at y=-7.8m and travelling to -24.0m.
+    good_pts = [(808.0 + i * 1.0, -7.8 - i * 4.0) for i in range(5)]  # -7.8 .. -23.8
+    handoffs = base_handoffs()
+    added = resolve_post_hog_departures(
+        events, handoffs, make_rows([(1421, good_pts)]),
+        hog_y_by_panel={'left': -6.401, 'right': 6.401},
+    )
+    assert len(added) == 1
+    assert handoffs['M00001']['status'] == 'provisional_unique_post_hog_departure'
+    assert handoffs['M00001']['candidates'][0]['track_id'] == 1421
+    assert handoffs['M00001']['candidates'][0]['role'] == 'departure'
+
+    # Competing post-hog departures resolve via track_colours when only one matches primary colour.
+    rival_pts = [(809.0 + i * 1.0, -8.2 - i * 4.0) for i in range(5)]
+    rows_two = make_rows([(1421, good_pts), (1422, rival_pts)])
+    handoffs_col = base_handoffs()
+    added_col = resolve_post_hog_departures(
+        events, handoffs_col, rows_two,
+        hog_y_by_panel={'left': -6.401, 'right': 6.401},
+        track_colours={'right': {'200': 'red'}, 'left': {'1421': 'red', '1422': 'yellow'}},
+    )
+    assert len(added_col) == 1 and handoffs_col['M00001']['candidates'][0]['track_id'] == 1421
+
+    # Same-colour competing post-hog departures MUST stay unresolved.
+    handoffs_same = base_handoffs()
+    assert resolve_post_hog_departures(
+        events, handoffs_same, rows_two,
+        hog_y_by_panel={'left': -6.401, 'right': 6.401},
+        track_colours={'right': {'200': 'red'}, 'left': {'1421': 'red', '1422': 'red'}},
+    ) == []
+    assert handoffs_same['M00001']['status'] == 'unresolved'
+
+    # Reject track already sitting > hog_abs + 6.5m before the window, and track moving < 5m.
+    pre_far_pts = [(770.0, -15.0)] + good_pts
+    short_pts = [(808.0 + i * 1.0, -7.8 - i * 1.0) for i in range(4)]  # travels only 3m
+    handoffs_rej = base_handoffs()
+    assert resolve_post_hog_departures(
+        events, handoffs_rej, make_rows([(1423, pre_far_pts), (1424, short_pts)]),
+        hog_y_by_panel={'left': -6.401, 'right': 6.401},
+    ) == []
+    assert handoffs_rej['M00001']['status'] == 'unresolved'
+
+
+def test_hypotheses_excludes_earlier_primary_event_track_and_caps_flight_window():
+    events = [
+        {'id': 'L00001', 'crossing_time_s': 739.4, 'track_id': 1347},
+        {'id': 'M00001', 'crossing_time_s': 819.0, 'track_id': 200},
+    ]
+    roles = {
+        'L00001': {'role': 'departure', 'panel': 'left'},
+        'M00001': {'role': 'receiving', 'panel': 'right'},
+    }
+    # Metric hog crossing of L00001's own track 1347 at 739.6s falls inside (739.4, 819.0],
+    # and another stale crossing sits at 760.0s (>35s before 819.0s). Neither may link to M00001.
+    crossings = [
+        {'id': 'metric:left:1347', 'panel': 'left', 'track_id': 1347, 'role': 'departure', 'crossing_time_s': 739.6},
+        {'id': 'metric:left:1399', 'panel': 'left', 'track_id': 1399, 'role': 'departure', 'crossing_time_s': 760.0},
+    ]
+    h = hypotheses(events, roles, crossings, [700.0, 900.0])
+    assert h['M00001']['status'] == 'unresolved'
+    assert h['M00001']['candidates'] == []
+    assert h['M00001']['interval_s'] == [819.0 - 35.0, 819.0]
+
+
+def test_backfill_stationary_panel_geometry_recovers_skipped_and_brief_unverified_frames():
+    import cv2
+    import numpy as np
+    from prototype.directional_event_aggregate import backfill_stationary_panel_geometry
+
+    # Build a realistic perspective homography from rink markings in left panel [0..320, 0..360].
+    world_pts = np.array([[-1.5, 0.0], [1.5, 0.0], [-1.5, -6.401], [1.5, -6.401]], np.float32)
+    image_pts = np.array([[100.0, 290.0], [220.0, 290.0], [120.0, 210.0], [200.0, 210.0]], np.float32)
+    H = cv2.getPerspectiveTransform(image_pts, world_pts)
+    H_list = H.tolist()
+
+    px_stone = [160.0 * 3.0, 170.0 * 3.0]  # 1920x1080 coords -> (160, 170) normalized
+    rows = [
+        {
+            'time_s': 10.0,
+            'boards': {
+                'left': {
+                    'homography_normalized_pixels_to_local_metres': H_list,
+                    'registration': {'status': 'source_calibration_registered', 'calibration_id': 'cal-1'},
+                    'stones': [],
+                },
+                'right': {'homography_normalized_pixels_to_local_metres': None, 'registration': {'status': 'alignment_unverified'}, 'stones': []},
+            },
+        },
+        {
+            'time_s': 10.4,
+            'boards': {
+                'left': {
+                    'homography_normalized_pixels_to_local_metres': None,
+                    'registration': {'status': 'geometry_skipped_inactive_interval'},
+                    'stones': [
+                        {'tracker_id': 7, 'pixel': px_stone, 'body_point_support': {'status': 'full_body_box', 'centre_supported': True},
+                         'ice_plane_local_m': None, 'height_adjusted_local_m': None},
+                        {'tracker_id': 8, 'pixel': [10.0, 10.0], 'body_point_support': {'status': 'censored_body_box', 'centre_supported': False},
+                         'ice_plane_local_m': None, 'height_adjusted_local_m': None},
+                    ],
+                },
+                'right': {'homography_normalized_pixels_to_local_metres': None, 'registration': {'status': 'alignment_unverified'}, 'stones': []},
+            },
+        },
+        {
+            'time_s': 10.8,
+            'boards': {
+                'left': {
+                    'homography_normalized_pixels_to_local_metres': None,
+                    'registration': {'status': 'alignment_unverified'},
+                    'stones': [
+                        {'tracker_id': 7, 'pixel': px_stone, 'body_point_support': {'status': 'full_body_box', 'centre_supported': True},
+                         'ice_plane_local_m': None, 'height_adjusted_local_m': None},
+                    ],
+                },
+                'right': {'homography_normalized_pixels_to_local_metres': None, 'registration': {'status': 'alignment_unverified'}, 'stones': []},
+            },
+        },
+    ]
+    out = backfill_stationary_panel_geometry(rows, (1920, 1080), max_gap_s=15.0)
+    skipped_stones = {s['tracker_id']: s for s in out[1]['boards']['left']['stones']}
+    assert skipped_stones[7]['height_adjusted_local_m'] is not None
+    assert skipped_stones[7]['height_correction']['backfilled_from_nearest_registered_frame_s'] == 10.0
+    assert skipped_stones[8]['height_adjusted_local_m'] is None
+    unverified_stone = out[2]['boards']['left']['stones'][0]
+    assert unverified_stone['height_adjusted_local_m'] is not None
+    assert out[1]['boards']['left']['registration']['backfilled_from_time_s'] == 10.0
+
+
+def test_trim_far_field_overlap_removes_extrapolated_tail_while_keeping_handoff_overlap():
+    from prototype.directional_event_aggregate import trim_far_field_overlap
+
+    dep_times = [10.0 + i * 0.2 for i in range(15)]  # 10.0 .. 12.8
+    dep = {
+        'segment_id': 'dep', 'role': 'departure',
+        'pixel_points': [{'time_s': t, 'frame_index': i, 'pixel': [100.0, 100.0], 'confidence': 0.9} for i, t in enumerate(dep_times)],
+        'geometry_samples': [{'time_s': t, 'conditional_height_adjusted_position_m': [0.2, -(12.0 + i * 1.0)]} for i, t in enumerate(dep_times)],
+    }
+    rec_times = [11.0 + i * 0.2 for i in range(10)]  # 11.0 .. 12.8
+    rec = {
+        'segment_id': 'rec', 'role': 'receiving',
+        'pixel_points': [{'time_s': t, 'frame_index': 5 + i, 'pixel': [500.0, 200.0], 'confidence': 0.9} for i, t in enumerate(rec_times)],
+        'geometry_samples': [{'time_s': t, 'conditional_height_adjusted_position_m': [0.2, 17.5 - i * 1.0]} for i, t in enumerate(rec_times)],
+    }
+    dep_t, rec_t = trim_far_field_overlap(dep, rec, 1)
+    # Receiving begins near-field (|y|=17.5 -> y_dep=17.25) at t_hand=11.0s.
+    # Departure tail with t > 11.4s and |y| > max(17.5, 17.75) is trimmed, keeping overlap up to t=11.4s (i=7 -> |y|=19.0? wait i=6 is 11.2, |y|=18; i=7 is 11.4, |y|=19).
+    assert dep_t['geometry_samples'][-1]['time_s'] == 11.4
+    assert rec_t['geometry_samples'][0]['time_s'] == 11.0
+    assert len(set(g['time_s'] for g in dep_t['geometry_samples']) & set(g['time_s'] for g in rec_t['geometry_samples'])) == 3

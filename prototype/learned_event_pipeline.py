@@ -190,8 +190,8 @@ def run(video,output,config_path,checkpoint,*,start,end,source_id,match_state_co
             if use_schedule:
                 from prototype.directional_handoff import metric_crossings
                 probe_hz = float(sched.get('probe_hz', 1.0))
-                before_s = float(sched.get('before_s', 12.0))
-                primary_before_s = float(sched.get('primary_before_s', max(before_s, 16.0)))
+                before_s = float(sched.get('before_s', 18.0))
+                primary_before_s = float(sched.get('primary_before_s', max(before_s, 18.0)))
                 after_s = float(sched.get('after_s', 35.0))
                 probe_stride = max(1, round(protocol['effective_sample_hz'] / probe_hz))
                 aux_windows = ([(e['crossing_time_s'] - before_s, e['crossing_time_s'] + after_s)

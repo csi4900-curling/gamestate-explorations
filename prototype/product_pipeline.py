@@ -100,6 +100,7 @@ def assemble(spec):
         event_colours_path=output / "event-colours.json",
     )
     rink = annotate(enrich(aggregate, aggregate_path=aggregate_path))
+    del aggregate
     rink_path = result / "aggregate-rink.json"
     # The stored aggregate keeps every tracked sample; the trajectory view stops each
     # receiving track at the throw's first quiet board instead of at tracker loss.

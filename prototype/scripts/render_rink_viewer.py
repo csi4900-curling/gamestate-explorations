@@ -332,7 +332,7 @@ table{border-collapse:collapse;font-size:13px}td,th{padding:4px 8px;border-botto
 <span class="legend"><span><i class="sw" style="background:#2166c9"></i>departure fragment</span><span><i class="sw" style="background:#d4791b"></i>receiving fragment</span><span><i class="sw" style="background:#7e8b91"></i>board stones (identity/colour unknown)</span><span class="small">track markers = body-box centres, not stone centres</span></span>
 <main>
  <div>
-  <div id="source"><video id="video" controls preload="metadata" src="__VIDEO__"></video><canvas id="overlay"></canvas></div>
+  <div id="source"><video id="video" controls preload="auto" src="__VIDEO__"></video><canvas id="overlay"></canvas></div>
   <div id="status"></div>
   
   <details><summary>Configuration and provenance</summary><pre id="meta"></pre></details>
@@ -439,7 +439,9 @@ document.getElementById('play').onclick=()=>{const e=D.events[sel.selectedIndex]
 document.getElementById('back').onclick=()=>{stopAt=null;video.pause();video.currentTime=Math.max(0,video.currentTime-0.5)};
 document.getElementById('next').onclick=()=>{stopAt=null;video.pause();video.currentTime=Math.min(video.duration||1e9,video.currentTime+0.5)};
 video.addEventListener('pause',()=>{stopAt=null});
-video.addEventListener('loadedmetadata',choose);if(video.readyState>=1)choose();
+video.addEventListener('seeking',()=>{if(Math.abs(video.currentTime-(presentedTime??-1))>1e-3)presentedTime=null});
+video.addEventListener('seeked',()=>{if(video.readyState>=2)presentedTime=video.currentTime});
+if(!window.frameElement?.dataset?.tab){video.addEventListener('loadedmetadata',choose);if(video.readyState>=1)choose();}
 draw();
 </script>'''
 
