@@ -848,6 +848,8 @@ class Workbench:
         ]
         if p["detector_backend"] == "openvino_gpu":
             observation += ["--stone-detector-export", str(self.path(p["detector_export"]))]
+        elif p.get("detector_device"):
+            observation += ["--stone-detector-device", str(p["detector_device"])]
         if spec.get('detection_cache'):
             cache = spec['detection_cache']
             for name, expected in cache['sha256'].items():
